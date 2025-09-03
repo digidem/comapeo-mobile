@@ -7,13 +7,17 @@ import {HeaderText} from './Text/HeaderText';
 import DeviceIcon from '../images/DeviceIcon.svg';
 import {CloseIcon} from './icons';
 import {WHITE, BLUE_GREY, DARK_ORANGE} from '../lib/styles';
-import {useStorageStatusStore} from '../contexts/StorageStatusStoreContext';
+import {
+  isLowStorage,
+  useStorageReadingQuery,
+} from '../hooks/useStorageReadingQuery';
 
 export function MenuHeader() {
   const navigation = useNavigation();
   const {data: deviceData} = useOwnDeviceInfo();
   const deviceName = deviceData?.name;
-  const isLow = useStorageStatusStore(s => s.isLow);
+  const {data} = useStorageReadingQuery();
+  const isLow = isLowStorage(data?.freeBytes ?? null);
 
   return (
     <View style={styles.container}>

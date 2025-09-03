@@ -26,6 +26,8 @@ import {
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
 import {useAuthContext} from '../../contexts/AuthContext';
+import {invalidateStorageReading} from '../../hooks/useStorageReadingQuery';
+import {useQueryClient} from '@tanstack/react-query';
 
 const m = defineMessages({
   observation: {
@@ -99,6 +101,7 @@ export const ObservationCreate = ({
   const value = usePersistedDraftObservation(store => store.value);
   const attachments = usePersistedDraftObservation(store => store.attachments);
   const {updateTags, clearDraft} = useDraftObservation();
+  const queryClient = useQueryClient();
 
   const {
     mutateAsync: createPhotoAttachmentAsync,
@@ -232,7 +235,7 @@ export const ObservationCreate = ({
         navigation.navigate('ErrorBottomSheet');
         return;
       }
-
+      invalidateStorageReading(queryClient);
       clearDraft();
       navigation.popTo('Home', {screen: 'Map'});
       if (isTracking) {
@@ -251,6 +254,7 @@ export const ObservationCreate = ({
     value,
     preset,
     authState,
+    queryClient,
   ]);
 
   const checkAccuracyAndLocation = React.useCallback(() => {

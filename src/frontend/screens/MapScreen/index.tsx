@@ -33,7 +33,14 @@ import {useTracking} from '../../hooks/useTracking';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
 import {useResetMapLayout} from '../../hooks/useResetMapLayout';
-import {useStorageStatusStore} from '../../contexts/StorageStatusStoreContext';
+import {
+  useLowStorageBannerActions,
+  useLowStorageBannerState,
+} from '../../contexts/LowStorageBannerContext';
+import {
+  useStorageReadingQuery,
+  isLowStorage,
+} from '../../hooks/useStorageReadingQuery';
 import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
 
 // This is the default zoom used when the map first loads, and also the zoom
@@ -72,8 +79,12 @@ export const MapScreen = ({
   const {authState} = useAuthContext();
   const {savedLocation} = useNonReactiveSavedLocation();
   const initialPositionSet = React.useRef(false);
-  const {setDismissedMapBannerSession, dismissedMapBannerSession, isLow} =
-    useStorageStatusStore();
+  const dismissedMapBannerSession = useLowStorageBannerState(
+    s => s.dismissedMapBannerSession,
+  );
+  const {setDismissedMapBannerSession} = useLowStorageBannerActions();
+  const {data} = useStorageReadingQuery();
+  const isLow = isLowStorage(data?.freeBytes ?? null);
   const insets = useSafeAreaInsets();
   const BANNER_TOP = insets.top + 75;
 

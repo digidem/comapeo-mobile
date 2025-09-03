@@ -12,13 +12,30 @@ import type {MapeoClientApi} from '@comapeo/ipc';
 
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
+import {ActiveProjectProvider} from '../contexts/ActiveProjectContext';
 
 import {HomeHeader} from './HomeHeader';
-import {useStorageStatusStore} from '../contexts/StorageStatusStoreContext';
 
 jest.mock('../hooks/useCurrentTime', () => ({
   useCurrentTime: () => new Date(),
 }));
+
+let mockFreeBytes: number | null = null;
+let mockTotalBytes: number | null = 64 * 1024 * 1024 * 1024;
+jest.mock('../hooks/useStorageReadingQuery', () => {
+  const LOW = 500 * 1024 * 1024;
+  return {
+    __esModule: true,
+    useStorageReadingQuery: () => ({
+      data:
+        mockFreeBytes == null || mockTotalBytes == null
+          ? null
+          : {freeBytes: mockFreeBytes, totalBytes: mockTotalBytes},
+    }),
+    isLowStorage: (free: number | null, threshold: number = LOW) =>
+      (free ?? Infinity) <= threshold,
+  };
+});
 
 const Stack = createNativeStackNavigator<{HomeHeaderRoute: undefined}>();
 
@@ -50,50 +67,53 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
   let manager: MapeoManager;
   let client: MapeoClientApi;
   let onTeardown: Array<() => unknown> = [];
+  let projectId: string;
 
   beforeEach(async () => {
     onTeardown = [];
 
-    const managerSetup = await createManager({
-      name: 'test',
-      deviceType: 'mobile',
-    });
-    manager = managerSetup.manager;
-
-    await managerSetup.fastifyController.start();
-    onTeardown.push(() => managerSetup.fastifyController.stop());
+    const setup = await createManager({name: 'test', deviceType: 'mobile'});
+    manager = setup.manager;
+    await setup.fastifyController.start();
+    onTeardown.push(() => setup.fastifyController.stop());
 
     const ipc = setUpIPC({manager});
     client = ipc.client;
     onTeardown.push(ipc.stop);
 
-    const projectId = await client.createProject({name: 'Test Project'});
-    await client.getProject(projectId);
+    projectId = await client.createProject({name: undefined});
+
+    mockTotalBytes = 64 * 1024 * 1024 * 1024;
+    mockFreeBytes = null;
   });
 
   afterEach(async () => {
-    useStorageStatusStore.setState({
-      freeBytes: null,
-      totalBytes: null,
-      isLow: false,
-      dismissedMapBannerSession: false,
-    });
-
     for (const fn of onTeardown) await fn();
   });
 
-  function renderHeader({isOnline = true}: {isOnline?: boolean} = {}) {
+  const renderHeader = ({
+    isOnline = true,
+    activeProjectId = projectId,
+  }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
     const appProviders = createAppProvidersWrapper({
       mapeoApi: client,
       isOnline,
+      activeProjectId,
     });
     onTeardown.push(appProviders.teardown);
 
     const utils = render(
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name="HomeHeaderRoute" component={HomeHeaderScreen} />
-        </Stack.Navigator>
+        <React.Suspense fallback={null}>
+          <ActiveProjectProvider activeProjectId={activeProjectId}>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              <Stack.Screen
+                name="HomeHeaderRoute"
+                component={HomeHeaderScreen}
+              />
+            </Stack.Navigator>
+          </ActiveProjectProvider>
+        </React.Suspense>
       </NavigationContainer>,
       {wrapper: appProviders.wrapper},
     );
@@ -105,24 +125,22 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
     onTeardown.unshift(safeUnmount);
 
     return utils;
-  }
+  };
 
   it('shows badge when isLow is true', async () => {
+    mockFreeBytes = 100 * 1024 * 1024;
     renderHeader();
 
     await screen.findByTestId('drawer-icon-home');
-
-    useStorageStatusStore.getState().setPartial({isLow: true});
 
     expect(await screen.findByTestId('low-storage-badge')).toBeTruthy();
   });
 
   it('hides badge when isLow is false', async () => {
+    mockFreeBytes = 600 * 1024 * 1024;
     renderHeader();
 
     await screen.findByTestId('drawer-icon-home');
-
-    useStorageStatusStore.getState().setPartial({isLow: false});
 
     expect(screen.queryByTestId('low-storage-badge')).toBeNull();
   });

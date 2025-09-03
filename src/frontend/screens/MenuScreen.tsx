@@ -18,8 +18,11 @@ import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
 import {NEW_DARK_GREY, BLACK, WHITE} from '../lib/styles';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
 import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard.tsx';
-import {useStorageStatusStore} from '../contexts/StorageStatusStoreContext.ts';
 import {MenuLowStorageAlert} from '../sharedComponents/Storage/MenuLowStorageAlert.tsx';
+import {
+  isLowStorage,
+  useStorageReadingQuery,
+} from '../hooks/useStorageReadingQuery.ts';
 
 const m = defineMessages({
   aboutCoMapeo: {
@@ -67,7 +70,10 @@ export function MenuScreen() {
   const displayTitle =
     role === 'solo' ? projectInfo.projectHeader : projectInfo.projectName;
 
-  const {isLow, freeBytes, totalBytes} = useStorageStatusStore();
+  const {data} = useStorageReadingQuery();
+  const isLow = isLowStorage(data?.freeBytes ?? null);
+  const freeBytes = data?.freeBytes ?? null;
+  const totalBytes = data?.totalBytes ?? null;
   function calcUsedPct(
     freeBytes: number | null | undefined,
     totalBytes: number | null | undefined,

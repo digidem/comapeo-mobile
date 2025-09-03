@@ -12,7 +12,10 @@ import ProjectCoordinatorIcon from '../images/ProjectCoordinator.svg';
 import ProjectParticipantIcon from '../images/ProjectParticipant.svg';
 import NoProjectIcon from '../images/NoProjectIcon.svg';
 import {SvgProps} from 'react-native-svg';
-import {useStorageStatusStore} from '../contexts/StorageStatusStoreContext';
+import {
+  useStorageReadingQuery,
+  isLowStorage,
+} from '../hooks/useStorageReadingQuery';
 
 type HomeHeaderProps = BottomTabHeaderProps & {
   backgroundColor: string;
@@ -26,7 +29,8 @@ export function HomeHeader({
 }: HomeHeaderProps) {
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
-  const isLow = useStorageStatusStore(s => s.isLow);
+  const {data} = useStorageReadingQuery();
+  const isLow = isLowStorage(data?.freeBytes ?? null);
 
   const projectName =
     'projectHeader' in projectDetails

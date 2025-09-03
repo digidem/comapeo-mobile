@@ -1,7 +1,13 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {render, screen} from '@testing-library/react-native';
+import {
+  render,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from '@testing-library/react-native';
 
 import type {MapeoManager} from '@comapeo/core';
 import type {MapeoClientApi} from '@comapeo/ipc';
@@ -11,7 +17,6 @@ import {
   setUpIPC,
 } from '../../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../../tests/integration/helpers/react';
-import {useStorageStatusStore} from '../../contexts/StorageStatusStoreContext';
 
 jest.mock('@rnmapbox/maps', () => {
   const React = require('react');
@@ -68,9 +73,33 @@ jest.mock('./CurrentTrack/UserTooltipMarker', () => ({
   UserTooltipMarker: () => null,
 }));
 
+let mockFreeBytes: number | null = null;
+let mockTotalBytes: number | null = 64 * 1024 * 1024 * 1024;
+
+jest.mock('../../hooks/useStorageReadingQuery', () => {
+  const LOW = 500 * 1024 * 1024;
+  return {
+    __esModule: true,
+    LOW_THRESHOLD_BYTES: LOW,
+    useStorageReadingQuery: () => ({
+      data:
+        mockFreeBytes == null || mockTotalBytes == null
+          ? null
+          : {freeBytes: mockFreeBytes, totalBytes: mockTotalBytes},
+    }),
+    isLowStorage: (free: number | null, threshold: number = LOW) =>
+      (free ?? Infinity) <= threshold,
+  };
+});
+
+jest.mock('../../hooks/server/presets', () => ({
+  usePresetsQuery: () => ({data: []}),
+}));
+
 process.env.MAPBOX_ACCESS_TOKEN = 'test-token';
 
 import {MapScreen} from '.';
+import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 
 const Stack = createNativeStackNavigator<{Map: undefined}>();
 
@@ -78,6 +107,7 @@ describe('MapScreen low-storage banner', () => {
   let manager: MapeoManager;
   let client: MapeoClientApi;
   let onTeardown: Array<() => unknown> = [];
+  let projectId: string;
 
   beforeEach(async () => {
     onTeardown = [];
@@ -95,77 +125,89 @@ describe('MapScreen low-storage banner', () => {
     client = ipc.client;
     onTeardown.push(ipc.stop);
 
-    const projectId = await client.createProject({name: 'Test Project'});
-    await client.getProject(projectId);
+    projectId = await client.createProject({name: 'Test Project'});
+    mockTotalBytes = 64 * 1024 * 1024 * 1024;
+    mockFreeBytes = null;
   });
 
   afterEach(async () => {
-    useStorageStatusStore.setState({
-      freeBytes: null,
-      totalBytes: null,
-      isLow: false,
-      dismissedMapBannerSession: false,
-    });
-
     for (const fn of onTeardown) await fn();
   });
 
-  function renderMap({isOnline = true}: {isOnline?: boolean} = {}) {
-    const app = createAppProvidersWrapper({mapeoApi: client, isOnline});
+  const renderMap = ({
+    isOnline = true,
+    activeProjectId = projectId,
+  }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
+    const app = createAppProvidersWrapper({
+      mapeoApi: client,
+      isOnline,
+      activeProjectId,
+    });
     onTeardown.push(app.teardown);
 
-    const r = render(
+    const tree = render(
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Map" component={MapScreen} />
-        </Stack.Navigator>
+        <React.Suspense fallback={null}>
+          <ActiveProjectProvider activeProjectId={activeProjectId}>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              <Stack.Screen name="Map" component={MapScreen} />
+            </Stack.Navigator>
+          </ActiveProjectProvider>
+        </React.Suspense>
       </NavigationContainer>,
       {wrapper: app.wrapper},
     );
 
     const safeUnmount = async () => {
-      r.unmount();
+      tree.unmount();
       await new Promise(res => setTimeout(res, 0));
     };
     onTeardown.unshift(safeUnmount);
 
-    return r;
-  }
+    return tree;
+  };
 
   it('shows banner when isLow is true and not dismissed', async () => {
+    mockFreeBytes = 100 * 1024 * 1024;
     renderMap();
-
-    useStorageStatusStore.getState().setPartial({
-      isLow: true,
-      dismissedMapBannerSession: false,
-    });
-
     expect(await screen.findByTestId('MAP:low-storage-banner')).toBeTruthy();
   });
 
-  it('hides banner when dismissed this session', async () => {
+  it('hides banner after dismiss tap (still low)', async () => {
+    mockFreeBytes = 100 * 1024 * 1024;
+    const user = userEvent.setup();
     renderMap();
 
-    useStorageStatusStore.getState().setPartial({
-      isLow: true,
-      dismissedMapBannerSession: true,
-    });
+    const banner = await screen.findByTestId('MAP:low-storage-banner');
+    const closeBtn = within(banner).getByRole('button');
+    await user.press(closeBtn);
+
+    await waitFor(() =>
+      expect(screen.queryByTestId('MAP:low-storage-banner')).toBeNull(),
+    );
 
     expect(screen.queryByTestId('MAP:low-storage-banner')).toBeNull();
   });
 
-  it('resets dismissal when storage recovers (banner re-appears on next low)', async () => {
+  it('resets dismissal when storage recovers, then shows again when low returns', async () => {
+    mockFreeBytes = 100 * 1024 * 1024;
+    const user = userEvent.setup();
     renderMap();
 
-    useStorageStatusStore.getState().setPartial({
-      isLow: true,
-      dismissedMapBannerSession: true,
-    });
+    const banner = await screen.findByTestId('MAP:low-storage-banner');
+    const closeBtn = within(banner).getByRole('button');
+    await user.press(closeBtn);
+
+    await waitFor(() =>
+      expect(screen.queryByTestId('MAP:low-storage-banner')).toBeNull(),
+    );
+
+    mockFreeBytes = 600 * 1024 * 1024;
+    renderMap();
     expect(screen.queryByTestId('MAP:low-storage-banner')).toBeNull();
 
-    useStorageStatusStore.getState().setPartial({isLow: false});
-
-    useStorageStatusStore.getState().setPartial({isLow: true});
+    mockFreeBytes = 100 * 1024 * 1024;
+    renderMap();
     expect(await screen.findByTestId('MAP:low-storage-banner')).toBeTruthy();
   });
 });

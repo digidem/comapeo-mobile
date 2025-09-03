@@ -33,7 +33,7 @@ import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
 import {createMapeoApi} from './lib/createMapeoApi.ts';
-import {useStorageStatus} from './hooks/useStorageStatus.ts';
+import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -132,6 +132,7 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 });
 
 const savedLocationStore = createSavedLocationStore({persist: true});
+const lowStorageBannerStore = createLowStorageBannerStore();
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
@@ -182,11 +183,6 @@ const App = () => {
     ]).then(() => setPermissionsAsked(true));
   }, []);
 
-  function StorageStatusListener() {
-    useStorageStatus({pollMs: 300000});
-    return null;
-  }
-
   return (
     <LocaleStoreProvider value={persistedLocaleStore}>
       <IntlProvider>
@@ -205,8 +201,8 @@ const App = () => {
             }
             savedLocationStore={savedLocationStore}
             activeProjectIdStore={persistedActiveProjectIdStore}
-            metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
-            <StorageStatusListener />
+            metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+            lowStorageBannerStore={lowStorageBannerStore}>
             <AppNavigator
               permissionAsked={permissionsAsked}
               navigationIntegration={navigationIntegration}

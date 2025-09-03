@@ -1355,6 +1355,17 @@
   "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Diagnostische informatie delen"
   },
+  "screens.PhotoPreviewModal.attachedAtTime": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "Bijgevoegd op het moment van de waarneming"
+  },
+  "screens.PhotoPreviewModal.attachedBy": {
+    "description": "Label for the person who attached the photo to the observation",
+    "message": "Bijgevoegd door {name}"
+  },
+  "screens.PhotoPreviewModal.distanceFromObs": {
+    "message": "Bijgevoegd {distance} van waarneming"
+  },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Foto verwijderen"
   },
@@ -1373,8 +1384,16 @@
     "description": "Describes image layout when taking photo vertically",
     "message": "Staand"
   },
+  "screens.PhotoPreviewModal.timeAttached": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "{formattedNum} bijgevoegd na waarneming"
+  },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "Gevalideerd door CoMapeo"
+  },
+  "screens.PhotoPreviewModal.verifiedOriginal": {
+    "description": "Text indicating that the photo is a verified original",
+    "message": "Dit is een ongecontroleerd origineel dat is geverifieerd."
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Over Awana Digitaal"

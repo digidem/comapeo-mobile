@@ -83,7 +83,7 @@
       ["./expo-config-plugins/removeExpoInputStyles.js"],
       ["./expo-config-plugins/targetArmArchsOnly.js"],
       ["./expo-config-plugins/increaseJavaMemory.js"],
-      ["./expo-config-plugins/flagSecure"],
+      ["./expo-config-plugins/flagSecure/index.js"],
       ["./expo-config-plugins/customPermissionText.js"],
       [
         "react-native-share",

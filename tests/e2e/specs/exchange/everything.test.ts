@@ -17,6 +17,6 @@ describe('Exchange - Exchange Settings for Everything', () => {
       $(byResourceId('EXCHANGE.radio-selected-everything')),
     ).toBeDisplayed();
     await $(byText('Close')).click();
-    await expect($(byTextMatches('Exchange everything'))).toBeDisplayed();
+    await expect($(byTextMatches('Exchange Everything'))).toBeDisplayed();
   });
 });

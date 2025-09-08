@@ -111,6 +111,7 @@ import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/shar
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
 import {CreateProjectScreen} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/CreateProject.tsx';
 import {NameSoloProjectScreen} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/NameSoloProject.tsx';
+import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -445,6 +446,11 @@ export const createDefaultScreenGroup = ({
         name="DraftPhotoPreviewModal"
         component={DraftPhotoPreviewModal}
         options={DraftPhotoPreviewModalNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="ExportSuccess"
+        component={ExportSuccess}
+        options={{headerShown: false}}
       />
     </RootStack.Group>
     <RootStack.Group

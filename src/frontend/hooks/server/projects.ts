@@ -17,6 +17,8 @@ import {useAppLanguageTag} from '../useAppLanguageTag';
 import {useIntl} from 'react-intl';
 import noop from '../../lib/noop';
 
+type ExportOutcome = 'saved' | 'cancelled';
+
 export function useProjectSettings() {
   const {projectId} = useActiveProject();
   return useComapeoProjectSettings({projectId});
@@ -90,59 +92,57 @@ export function useExportObservations({projectId}: {projectId: string}) {
   const lang = useAppLanguageTag();
   const {formatDate} = useIntl();
 
-  return useMutation({
+  function isUserCancelled(err: unknown): boolean {
+    return (
+      typeof err === 'object' &&
+      err !== null &&
+      'message' in err &&
+      (err as {message?: string}).message ===
+        'user canceled the document picker'
+    );
+  }
+
+  return useMutation<ExportOutcome, Error, {exportType: Exports}>({
     retry: false,
     networkMode: 'always',
-    mutationFn: async ({exportType}: {exportType: Exports}) => {
+    mutationFn: async ({exportType}) => {
       const exportDir = FileSystem.cacheDirectory + 'exports/';
       const exportDirectory = await FileSystem.getInfoAsync(exportDir);
-
-      function dealWithError(err: unknown) {
-        if (
-          typeof err === 'object' &&
-          err !== null &&
-          'message' in err &&
-          err.message === 'user canceled the document picker'
-        ) {
-          //don't surface error if user cancels doc picker
-          return;
-        }
-        throw err;
-      }
 
       if (!exportDirectory.exists) {
         await FileSystem.makeDirectoryAsync(exportDir);
       }
+
+      const fileName = `CoMapeo_Obsvns_${formatDate(Date.now())}`;
+
       if (exportType === 'Observation' || exportType === 'Tracks') {
-        return exportNoMedia
-          .mutateAsync({
+        try {
+          const path = await exportNoMedia.mutateAsync({
             path: normalizeFilePath(exportDir),
             exportOptions: {
               lang,
               observations: exportType === 'Observation',
               tracks: exportType === 'Tracks',
             },
-          })
-          .then(async path => {
-            const filepath = `file://${path}`;
-            const results = await saveDocuments({
-              sourceUris: [filepath],
-              mimeType: 'application/geo+json',
-              fileName: `CoMapeo_Obsvns_${formatDate(Date.now())}`,
-            });
+          });
 
-            FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
-              //do nothing as it is a temp file system that will eventually delete itself
-              noop();
-            });
+          const filepath = `file://${path}`;
+          await saveDocuments({
+            sourceUris: [filepath],
+            mimeType: 'application/geo+json',
+            fileName,
+          });
 
-            return results;
-          })
-          .catch(dealWithError);
+          FileSystem.deleteAsync(filepath, {idempotent: true}).catch(noop);
+          return 'saved';
+        } catch (err) {
+          if (isUserCancelled(err)) return 'cancelled';
+          throw err instanceof Error ? err : new Error(String(err));
+        }
       }
 
-      return await exportWithMedia
-        .mutateAsync({
+      try {
+        const path = await exportWithMedia.mutateAsync({
           path: normalizeFilePath(exportDir),
           exportOptions: {
             lang,
@@ -150,23 +150,21 @@ export function useExportObservations({projectId}: {projectId: string}) {
             tracks: false,
             attachments: true,
           },
-        })
-        .then(async path => {
-          const filepath = `file://${path}`;
-          const results = await saveDocuments({
-            sourceUris: [filepath],
-            mimeType: 'application/zip',
-            fileName: `CoMapeo_Obsvns_${formatDate(Date.now())}`,
-          });
+        });
 
-          FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
-            //do nothing as it is a temp file system that will eventually delete itself
-            noop();
-          });
+        const filepath = `file://${path}`;
+        await saveDocuments({
+          sourceUris: [filepath],
+          mimeType: 'application/zip',
+          fileName,
+        });
 
-          return results;
-        })
-        .catch(dealWithError);
+        FileSystem.deleteAsync(filepath, {idempotent: true}).catch(noop);
+        return 'saved';
+      } catch (err) {
+        if (isUserCancelled(err)) return 'cancelled';
+        throw err instanceof Error ? err : new Error(String(err));
+      }
     },
   });
 }

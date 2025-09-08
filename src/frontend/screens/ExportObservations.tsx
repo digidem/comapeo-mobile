@@ -75,6 +75,11 @@ export const ExportObservations = ({
     exportAndShare.mutate(
       {exportType: typeToExport},
       {
+        onSuccess: outcome => {
+          if (outcome === 'saved') {
+            navigation.replace('ExportSuccess', {exportType: typeToExport});
+          }
+        },
         onError: err => {
           Sentry.captureException(err);
           navigation.navigate('ErrorBottomSheet');

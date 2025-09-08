@@ -81,10 +81,11 @@ export const ExportSuccess = ({
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: 'white',
     padding: 20,
     paddingTop: 80,
     alignItems: 'center',
-    height: '100%',
     justifyContent: 'space-between',
   },
 });

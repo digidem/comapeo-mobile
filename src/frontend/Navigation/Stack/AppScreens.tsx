@@ -447,11 +447,6 @@ export const createDefaultScreenGroup = ({
         component={DraftPhotoPreviewModal}
         options={DraftPhotoPreviewModalNavOptions({intl})}
       />
-      <RootStack.Screen
-        name="ExportSuccess"
-        component={ExportSuccess}
-        options={{headerShown: false}}
-      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -493,6 +488,15 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="ConfirmPasscodeSheet"
         component={ConfirmPasscodeBottomSheet}
+      />
+      <RootStack.Screen
+        name="ExportSuccess"
+        component={ExportSuccess}
+        options={{
+          headerShown: false,
+          contentStyle: {backgroundColor: 'white'},
+          animation: 'none',
+        }}
       />
     </RootStack.Group>
   </>

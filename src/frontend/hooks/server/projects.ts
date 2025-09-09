@@ -17,7 +17,14 @@ import {useAppLanguageTag} from '../useAppLanguageTag';
 import {useIntl} from 'react-intl';
 import noop from '../../lib/noop';
 
-type ExportOutcome = 'saved' | 'cancelled';
+export function isUserCancelled(err: unknown): boolean {
+  return (
+    typeof err === 'object' &&
+    err !== null &&
+    'message' in err &&
+    (err as {message?: string}).message === 'user canceled the document picker'
+  );
+}
 
 export function useProjectSettings() {
   const {projectId} = useActiveProject();
@@ -92,20 +99,10 @@ export function useExportObservations({projectId}: {projectId: string}) {
   const lang = useAppLanguageTag();
   const {formatDate} = useIntl();
 
-  function isUserCancelled(err: unknown): boolean {
-    return (
-      typeof err === 'object' &&
-      err !== null &&
-      'message' in err &&
-      (err as {message?: string}).message ===
-        'user canceled the document picker'
-    );
-  }
-
-  return useMutation<ExportOutcome, Error, {exportType: Exports}>({
+  return useMutation({
     retry: false,
     networkMode: 'always',
-    mutationFn: async ({exportType}) => {
+    mutationFn: async ({exportType}: {exportType: Exports}) => {
       const exportDir = FileSystem.cacheDirectory + 'exports/';
       const exportDirectory = await FileSystem.getInfoAsync(exportDir);
 
@@ -116,33 +113,34 @@ export function useExportObservations({projectId}: {projectId: string}) {
       const fileName = `CoMapeo_Obsvns_${formatDate(Date.now())}`;
 
       if (exportType === 'Observation' || exportType === 'Tracks') {
-        try {
-          const path = await exportNoMedia.mutateAsync({
+        return exportNoMedia
+          .mutateAsync({
             path: normalizeFilePath(exportDir),
             exportOptions: {
               lang,
               observations: exportType === 'Observation',
               tracks: exportType === 'Tracks',
             },
-          });
+          })
+          .then(async path => {
+            const filepath = `file://${path}`;
+            const results = await saveDocuments({
+              sourceUris: [filepath],
+              mimeType: 'application/geo+json',
+              fileName,
+            });
 
-          const filepath = `file://${path}`;
-          await saveDocuments({
-            sourceUris: [filepath],
-            mimeType: 'application/geo+json',
-            fileName,
-          });
+            FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
+              //do nothing as it is a temp file system that will eventually delete itself
+              noop();
+            });
 
-          FileSystem.deleteAsync(filepath, {idempotent: true}).catch(noop);
-          return 'saved';
-        } catch (err) {
-          if (isUserCancelled(err)) return 'cancelled';
-          throw err instanceof Error ? err : new Error(String(err));
-        }
+            return results;
+          });
       }
 
-      try {
-        const path = await exportWithMedia.mutateAsync({
+      return await exportWithMedia
+        .mutateAsync({
           path: normalizeFilePath(exportDir),
           exportOptions: {
             lang,
@@ -150,21 +148,22 @@ export function useExportObservations({projectId}: {projectId: string}) {
             tracks: false,
             attachments: true,
           },
-        });
+        })
+        .then(async path => {
+          const filepath = `file://${path}`;
+          const results = await saveDocuments({
+            sourceUris: [filepath],
+            mimeType: 'application/zip',
+            fileName,
+          });
 
-        const filepath = `file://${path}`;
-        await saveDocuments({
-          sourceUris: [filepath],
-          mimeType: 'application/zip',
-          fileName,
-        });
+          FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
+            //do nothing as it is a temp file system that will eventually delete itself
+            noop();
+          });
 
-        FileSystem.deleteAsync(filepath, {idempotent: true}).catch(noop);
-        return 'saved';
-      } catch (err) {
-        if (isUserCancelled(err)) return 'cancelled';
-        throw err instanceof Error ? err : new Error(String(err));
-      }
+          return results;
+        });
     },
   });
 }

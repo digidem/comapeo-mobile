@@ -12,7 +12,7 @@ import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
-import {useShouldShowAppUsagePrompt} from '../../lib/shouldShowAppUsagePrompt';
+import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
 import {createAppUsagePromptScreens} from './UsagePromptScreens';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();

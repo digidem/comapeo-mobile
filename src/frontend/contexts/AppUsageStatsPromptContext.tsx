@@ -7,6 +7,8 @@ import {
 } from 'zustand/middleware';
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 
+// const TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
+
 // Do not change!
 export const STORAGE_KEY = 'AppUsageStatsPrompt';
 
@@ -16,7 +18,6 @@ export const AppUsageStatsPromptSchemaV0 = v.object({
   lastPromptAt: v.union([v.number(), v.null()]),
   promptCount: v.number(),
   optInStartedAt: v.optional(v.union([v.number(), v.null()])),
-  optInExpiresAt: v.optional(v.union([v.number(), v.null()])),
 });
 
 export type AppUsageStatsPromptState = v.InferOutput<
@@ -29,7 +30,6 @@ const initialState: AppUsageStatsPromptState = {
   lastPromptAt: null,
   promptCount: 0,
   optInStartedAt: null,
-  optInExpiresAt: null,
 };
 
 function createInitialState(): AppUsageStatsPromptState {
@@ -39,11 +39,20 @@ function createInitialState(): AppUsageStatsPromptState {
     lastPromptAt: null,
     promptCount: 0,
     optInStartedAt: null,
-    optInExpiresAt: null,
   };
 }
 
-export function createAppUsageStatsPromptStore({persist} = {persist: false}) {
+type createAppUsageStatsPromptStoreProps = {
+  persist: boolean;
+  appUsageMetricsOptIn: () => void;
+  appUsageMetricsOptOut: () => void;
+};
+
+export function createAppUsageStatsPromptStore({
+  persist,
+  appUsageMetricsOptIn,
+  appUsageMetricsOptOut,
+}: createAppUsageStatsPromptStoreProps) {
   let store: StoreApi<AppUsageStatsPromptState>;
 
   if (persist) {
@@ -68,23 +77,21 @@ export function createAppUsageStatsPromptStore({persist} = {persist: false}) {
     setOptedIn: (optedIn: boolean) => {
       const now = Date.now();
       const state = store.getState();
-      const TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
 
       if (optedIn) {
+        appUsageMetricsOptIn();
         store.setState({
+          ...createInitialState(),
           optedIn: true,
-          lastPromptAt: now,
-          promptCount: state.promptCount,
           optInStartedAt: now,
-          optInExpiresAt: now + TWELVE_MONTHS_MS,
         });
       } else {
+        appUsageMetricsOptOut();
         store.setState({
           optedIn: false,
           lastPromptAt: now,
           promptCount: state.promptCount + 1,
           optInStartedAt: null,
-          optInExpiresAt: null,
         });
       }
     },

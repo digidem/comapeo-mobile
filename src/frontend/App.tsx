@@ -34,6 +34,7 @@ import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
 import {createAppUsageStatsPromptStore} from './contexts/AppUsageStatsPromptContext.tsx';
 import {createMapeoApi} from './lib/createMapeoApi.ts';
+import PostHog from 'posthog-react-native';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -97,6 +98,8 @@ const mapeoApi = createMapeoApi({serverStateStore});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 
+const posthog = new PostHog('', {defaultOptIn: false});
+
 SplashScreen.setOptions({fade: true});
 SplashScreen.preventAutoHideAsync().catch(err => {
   console.log(err);
@@ -135,6 +138,12 @@ const savedLocationStore = createSavedLocationStore({persist: true});
 
 const appUsageStatsPromptStore = createAppUsageStatsPromptStore({
   persist: true,
+  appUsageMetricsOptIn: () => {
+    posthog.optIn();
+  },
+  appUsageMetricsOptOut: () => {
+    posthog.optOut();
+  },
 });
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store

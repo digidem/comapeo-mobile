@@ -5,6 +5,6 @@ describe('CoMapeo E2E Flow', function () {
   require('./solo.test');
   require('../solo-project/helper/minimal-project-creation.test');
   require('./no-devices.test');
-  require('./everything.test');
   require('./previews.test');
+  require('./everything.test');
 });

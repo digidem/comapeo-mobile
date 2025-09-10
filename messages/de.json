@@ -1355,6 +1355,17 @@
   "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Diagnoseinformationen teilen"
   },
+  "screens.PhotoPreviewModal.attachedAtTime": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "Angehängt zum Zeitpunkt der Beobachtung"
+  },
+  "screens.PhotoPreviewModal.attachedBy": {
+    "description": "Label for the person who attached the photo to the observation",
+    "message": "Angefügt von {name}"
+  },
+  "screens.PhotoPreviewModal.distanceFromObs": {
+    "message": "Angehängter {distance} von Beobachtung"
+  },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Foto löschen"
   },
@@ -1373,8 +1384,16 @@
     "description": "Describes image layout when taking photo vertically",
     "message": "Hochformat"
   },
+  "screens.PhotoPreviewModal.timeAttached": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "Angehängter {formattedNum} nach Beobachtung"
+  },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "Bestätigt von CoMapeo"
+  },
+  "screens.PhotoPreviewModal.verifiedOriginal": {
+    "description": "Text indicating that the photo is a verified original",
+    "message": "Dies ist ein verifiziertes unverändertes Original."
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Über Awana Digital"

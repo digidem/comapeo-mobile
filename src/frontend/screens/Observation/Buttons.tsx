@@ -198,18 +198,37 @@ export const ButtonFields = ({
         completedFields.push({label: field.label, value: displayedValue});
       }
 
-      const subject = `${t(m.comapeoData, {projectName: name || t(m.defaultProjectName)})} - _*${preset ? preset.name : t(m.fallbackCategoryName)}*_`;
-
       const date = formatDate(observation.createdAt, {format: 'long'});
 
-      const location =
+      // Insert a zero-width space after every 3 digits inside long numbers (>=4 digits)
+      function breakLongNumbersForWhatsApp(s: string): string {
+        return s.replace(/\d{4,}/g, m =>
+          m.replace(/(\d{3})(?=\d)/g, '$1\u200B'),
+        );
+      }
+
+      // Wrap coordinates for WhatsApp so they don't autolink;
+      function formatCoordsForWhatsApp(coordText: string): string {
+        return `\`${breakLongNumbersForWhatsApp(coordText)}\``;
+      }
+
+      const subject =
+        `${t(m.comapeoData, {projectName: name || t(m.defaultProjectName)})}` +
+        ` - _*${preset ? preset.name : t(m.fallbackCategoryName)}*_` +
+        ` - ${date}`;
+
+      const coordsText =
         observation.lat !== undefined && observation.lon !== undefined
-          ? `${t(m.location)} ${formatCoords({
+          ? formatCoords({
               lon: observation.lon,
               lat: observation.lat,
               format: coordinateFormat,
-            })}`
-          : '';
+            })
+          : undefined;
+
+      const location = coordsText
+        ? `${t(m.location)} ${formatCoordsForWhatsApp(coordsText)}`
+        : '';
 
       const precision = observation.metadata?.position?.coords?.accuracy
         ? `${t(m.precision)} ${observation.metadata.position.coords.accuracy}m`
@@ -225,7 +244,6 @@ export const ButtonFields = ({
 
       const body = [
         subject,
-        date,
         location,
         precision,
         displayedFields && `[${displayedFields}]`,
@@ -235,7 +253,7 @@ export const ButtonFields = ({
       const footer = `— ${t(m.shareMessageFooter)} —`;
 
       await openShare.mutateAsync({
-        subject: subject,
+        subject,
         title:
           base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
         urls: !base64Urls.length ? undefined : base64Urls,

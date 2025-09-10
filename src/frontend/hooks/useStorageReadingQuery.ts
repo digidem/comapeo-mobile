@@ -1,7 +1,7 @@
 import DeviceInfo from 'react-native-device-info';
 import {useSuspenseQuery} from '@tanstack/react-query';
 
-export const STORAGE_QUERY_KEY = ['device', 'storage', 'reading'] as const;
+export const STORAGE_QUERY_KEY = ['storageReading'] as const;
 
 async function getReading(): Promise<{freeBytes: number; totalBytes: number}> {
   const [freeBytes, totalBytes] = await Promise.all([

@@ -23,7 +23,6 @@ jest.mock('../hooks/useCurrentTime', () => ({
 let mockFreeBytes: number | null = null;
 let mockTotalBytes: number | null = 64 * 1024 * 1024 * 1024;
 jest.mock('../hooks/useStorageReadingQuery', () => {
-  const LOW = 500 * 1024 * 1024;
   return {
     __esModule: true,
     useStorageReadingQuery: () => ({
@@ -32,8 +31,6 @@ jest.mock('../hooks/useStorageReadingQuery', () => {
           ? null
           : {freeBytes: mockFreeBytes, totalBytes: mockTotalBytes},
     }),
-    isLowStorage: (free: number | null, threshold: number = LOW) =>
-      (free ?? Infinity) <= threshold,
   };
 });
 

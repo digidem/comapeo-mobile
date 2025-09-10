@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {DARK_ORANGE, WHITE} from '../lib/styles';
+import {DARK_ORANGE, WHITE} from '../../lib/styles';
 
 type Props = {
   testID: string;

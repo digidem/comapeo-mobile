@@ -1,21 +1,20 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 
 import DeviceIcon from '../images/DeviceIcon.svg';
 import {IconButton} from './IconButton';
 import {HeaderText} from './Text/HeaderText';
-import {BLUE_GREY, DARK_GREY, DARK_ORANGE, WHITE} from '../lib/styles';
+import {BLUE_GREY, DARK_GREY} from '../lib/styles';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import ProjectCoordinatorIcon from '../images/ProjectCoordinator.svg';
 import ProjectParticipantIcon from '../images/ProjectParticipant.svg';
 import NoProjectIcon from '../images/NoProjectIcon.svg';
 import {SvgProps} from 'react-native-svg';
-import {
-  useStorageReadingQuery,
-  isLowStorage,
-} from '../hooks/useStorageReadingQuery';
+import {isLowStorage} from '../lib/storage';
+import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery';
+import {ExclamationBadge} from './ExclamationBadge';
 
 type HomeHeaderProps = BottomTabHeaderProps & {
   backgroundColor: string;
@@ -30,7 +29,7 @@ export function HomeHeader({
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
   const {data} = useStorageReadingQuery();
-  const isLow = isLowStorage(data?.freeBytes ?? null);
+  const isLow = isLowStorage(data.freeBytes);
 
   const projectName =
     'projectHeader' in projectDetails
@@ -95,12 +94,8 @@ export function HomeHeader({
               accessibilityLabel="Open Menu"
             />
             {isLow && (
-              <View
-                testID="low-storage-badge"
-                accessibilityLabel="Low storage alert"
-                style={styles.badge}
-                pointerEvents="none">
-                <Text style={styles.mark}>!</Text>
+              <View style={{position: 'absolute', top: -2, right: -2}}>
+                <ExclamationBadge testID="low-storage-badge" />
               </View>
             )}
           </View>
@@ -145,23 +140,5 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  badge: {
-    position: 'absolute',
-    top: -2,
-    right: -2,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: DARK_ORANGE,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  mark: {
-    color: WHITE,
-    fontSize: 7,
-    fontWeight: '700',
-    includeFontPadding: false,
-    textAlign: 'center',
   },
 });

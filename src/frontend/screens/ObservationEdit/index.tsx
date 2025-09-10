@@ -27,8 +27,8 @@ import {
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
 import * as Sentry from '@sentry/react-native';
-import {invalidateStorageReading} from '../../hooks/useStorageReadingQuery.ts';
 import {useQueryClient} from '@tanstack/react-query';
+import {STORAGE_QUERY_KEY} from '../../hooks/useStorageReadingQuery.ts';
 
 const m = defineMessages({
   observation: {
@@ -203,7 +203,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
               : undefined,
           },
         }).then(() => {
-          invalidateStorageReading(queryClient);
+          queryClient.invalidateQueries({queryKey: STORAGE_QUERY_KEY});
         });
       } catch (err) {
         Sentry.captureException(err);

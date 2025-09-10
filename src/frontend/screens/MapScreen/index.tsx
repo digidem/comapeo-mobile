@@ -37,10 +37,8 @@ import {
   useLowStorageBannerActions,
   useLowStorageBannerState,
 } from '../../contexts/LowStorageBannerContext';
-import {
-  useStorageReadingQuery,
-  isLowStorage,
-} from '../../hooks/useStorageReadingQuery';
+import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
+import {isLowStorage} from '../../lib/storage';
 import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
 
 // This is the default zoom used when the map first loads, and also the zoom
@@ -84,7 +82,7 @@ export const MapScreen = ({
   );
   const {setDismissedMapBannerSession} = useLowStorageBannerActions();
   const {data} = useStorageReadingQuery();
-  const isLow = isLowStorage(data?.freeBytes ?? null);
+  const isLow = isLowStorage(data.freeBytes);
   const insets = useSafeAreaInsets();
   const BANNER_TOP = insets.top + 75;
 

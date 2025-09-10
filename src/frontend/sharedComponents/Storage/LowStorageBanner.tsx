@@ -8,7 +8,7 @@ import {BLUE_GREY, DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
 
 type Props = {
   onDismiss: () => void;
-  testID?: string;
+  testID: string;
 };
 
 const m = defineMessages({

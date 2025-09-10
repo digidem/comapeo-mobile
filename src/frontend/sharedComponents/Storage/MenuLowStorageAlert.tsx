@@ -37,8 +37,8 @@ export function MenuLowStorageAlert({
   percentUsed,
 }: MenuLowStorageAlertProps) {
   const {formatMessage} = useIntl();
-  const pct = Math.min(100, Math.max(0, Math.round(percentUsed)));
-  const progress = Math.max(0.00000001, Math.min(1, pct / 100));
+  const percentage = Math.min(100, Math.max(0, Math.round(percentUsed)));
+  const progress = Math.max(0.00000001, Math.min(1, percentage / 100));
   const free =
     !freeBytes || freeBytes < 0
       ? 0
@@ -67,7 +67,7 @@ export function MenuLowStorageAlert({
         <View
           accessible
           accessibilityRole="progressbar"
-          accessibilityValue={{now: pct, min: 0, max: 100}}
+          accessibilityValue={{now: percentage, min: 0, max: 100}}
           accessibilityLabel={formatMessage(m.onlyLeft, {free})}
           style={styles.progressWrap}>
           <Bar

@@ -19,10 +19,8 @@ import {NEW_DARK_GREY, BLACK, WHITE} from '../lib/styles';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
 import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard.tsx';
 import {MenuLowStorageAlert} from '../sharedComponents/Storage/MenuLowStorageAlert.tsx';
-import {
-  isLowStorage,
-  useStorageReadingQuery,
-} from '../hooks/useStorageReadingQuery.ts';
+import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery.ts';
+import {isLowStorage, calcUsedPercentage} from '../lib/storage';
 
 const m = defineMessages({
   aboutCoMapeo: {
@@ -71,18 +69,9 @@ export function MenuScreen() {
     role === 'solo' ? projectInfo.projectHeader : projectInfo.projectName;
 
   const {data} = useStorageReadingQuery();
-  const isLow = isLowStorage(data?.freeBytes ?? null);
-  const freeBytes = data?.freeBytes ?? null;
-  const totalBytes = data?.totalBytes ?? null;
-  function calcUsedPct(
-    freeBytes: number | null | undefined,
-    totalBytes: number | null | undefined,
-  ): number {
-    if (!totalBytes || totalBytes <= 0) return 0;
-    const free = Math.max(0, freeBytes ?? 0);
-    const used = Math.max(0, totalBytes - free);
-    return Math.round((used / totalBytes) * 100);
-  }
+  const {freeBytes, totalBytes} = data;
+  const isLow = isLowStorage(freeBytes);
+  const percentUsed = calcUsedPercentage(freeBytes, totalBytes);
 
   return (
     <View style={styles.container}>
@@ -90,7 +79,7 @@ export function MenuScreen() {
         {isLow && (
           <MenuLowStorageAlert
             freeBytes={freeBytes}
-            percentUsed={calcUsedPct(freeBytes, totalBytes)}
+            percentUsed={percentUsed}
           />
         )}
         <View>

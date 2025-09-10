@@ -1,23 +1,22 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 import {HeaderText} from './Text/HeaderText';
 import DeviceIcon from '../images/DeviceIcon.svg';
 import {CloseIcon} from './icons';
-import {WHITE, BLUE_GREY, DARK_ORANGE} from '../lib/styles';
-import {
-  isLowStorage,
-  useStorageReadingQuery,
-} from '../hooks/useStorageReadingQuery';
+import {WHITE, BLUE_GREY} from '../lib/styles';
+import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery';
+import {isLowStorage} from '../lib/storage';
+import {ExclamationBadge} from './ExclamationBadge';
 
 export function MenuHeader() {
   const navigation = useNavigation();
   const {data: deviceData} = useOwnDeviceInfo();
   const deviceName = deviceData?.name;
   const {data} = useStorageReadingQuery();
-  const isLow = isLowStorage(data?.freeBytes ?? null);
+  const isLow = isLowStorage(data.freeBytes);
 
   return (
     <View style={styles.container}>
@@ -25,12 +24,8 @@ export function MenuHeader() {
         <View style={styles.deviceWrap} pointerEvents="box-none">
           <DeviceIcon width={32} height={32} />
           {isLow && (
-            <View
-              testID="low-storage-badge-settings"
-              accessibilityLabel="Low storage alert"
-              style={styles.badge}
-              pointerEvents="none">
-              <Text style={styles.mark}>!</Text>
+            <View style={{position: 'absolute', top: -2, right: -2}}>
+              <ExclamationBadge testID="low-storage-badge-settings" />
             </View>
           )}
         </View>
@@ -68,23 +63,5 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  badge: {
-    position: 'absolute',
-    top: -2,
-    right: -2,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: DARK_ORANGE,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  mark: {
-    color: WHITE,
-    fontSize: 7,
-    fontWeight: '700',
-    includeFontPadding: false,
-    textAlign: 'center',
   },
 });

@@ -26,8 +26,8 @@ import {
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {invalidateStorageReading} from '../../hooks/useStorageReadingQuery';
 import {useQueryClient} from '@tanstack/react-query';
+import {STORAGE_QUERY_KEY} from '../../hooks/useStorageReadingQuery';
 
 const m = defineMessages({
   observation: {
@@ -235,7 +235,7 @@ export const ObservationCreate = ({
         navigation.navigate('ErrorBottomSheet');
         return;
       }
-      invalidateStorageReading(queryClient);
+      queryClient.invalidateQueries({queryKey: STORAGE_QUERY_KEY});
       clearDraft();
       navigation.popTo('Home', {screen: 'Map'});
       if (isTracking) {

@@ -231,12 +231,38 @@ export const ObservationMetadata: NativeNavigationComponent<
     },
   );
 
+  function handleNumberInString(raw: string, decimals: number): string {
+    return raw.replace(/-?\d+(?:\.\d+)?/, match => {
+      const n = Number(match);
+      if (!Number.isFinite(n)) return match;
+      return n.toFixed(decimals);
+    });
+  }
+
+  function formatValueForShare(key: string, raw: number | string): string {
+    const decimals =
+      key === 'latitude' || key === 'longitude' ? 5 : key === 'speed' ? 2 : 0;
+
+    if (typeof raw === 'number') return raw.toFixed(decimals);
+    return handleNumberInString(raw, decimals);
+  }
+
+  function roundUtmInLocationLine(
+    locationLine: string,
+    coordinateFormat: unknown,
+  ): string {
+    return String(coordinateFormat) === 'utm'
+      ? locationLine.replace(/-?\d+\.\d+/g, m => String(Math.round(Number(m))))
+      : locationLine;
+  }
+
   async function handlePressShare() {
     const metadataAsFormattedString = filteredListData
       .map(item => {
         const key = Object.keys(item)[0] as string;
         const data = item[key]!;
-        return `${data.label}: ${data.value} ${data.unit}`;
+        const formattedVal = formatValueForShare(key, data.value);
+        return `${data.label}: ${formattedVal} ${data.unit}`;
       })
       .join('\n');
 
@@ -256,13 +282,17 @@ export const ObservationMetadata: NativeNavigationComponent<
 
     const time = formatTime(createdAt, {timeStyle: 'medium'});
 
-    const formattedLocation =
+    const baseLocation =
       lat === undefined || lon === undefined
         ? ''
         : `${formatMessage(m.location)}: ${formatCoords({lat, lon, format: coordinateFormat})}`;
 
+    const formattedLocation = baseLocation
+      ? roundUtmInLocationLine(baseLocation, coordinateFormat)
+      : '';
+
     await openShare.mutateAsync({
-      subject: `${projectName} - ${formatDate(createdAt, {format: 'long'})} - ${categoryName}`,
+      subject: `${projectName}, ${categoryName}, ${formatDate(createdAt, {format: 'long'})}`,
       message: `${projectName} - ${categoryName}\n${date}\n${time}\n${formattedLocation}\n${metadataAsFormattedString}\n\n${footer}`,
       failOnCancel: false,
     });

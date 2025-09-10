@@ -37,7 +37,10 @@ export const SavedPhotoThumbnailImage = ({
   const image = useAttachmentUrlQuery(photo, 'thumbnail');
 
   return (
-    <ThumbnailContainer size={size} onPress={image.error ? undefined : onPress}>
+    <ThumbnailContainer
+      accessibilityLabel="View saved photo."
+      size={size}
+      onPress={image.error ? undefined : onPress}>
       <ThumbnailImage error={image.error || undefined} uri={image.url} />
     </ThumbnailContainer>
   );

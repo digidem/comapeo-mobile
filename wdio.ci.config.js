@@ -10,8 +10,20 @@ const config = {
   user: process.env.BROWSERSTACK_USERNAME,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
   hostname: 'hub.browserstack.com',
-  specs: [path.resolve(__dirname, 'tests/e2e/specs/flow.test.ts')],
-  maxInstances: 1,
+  specs: [
+    path.resolve(__dirname, 'tests/e2e/specs/audio/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/exchange/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/multiple-projects/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/observations/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/onboarding/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/passcode/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/settings/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/solo-project/index.tsx'),
+    path.resolve(__dirname, 'tests/e2e/specs/tracks/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/remote-archive/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/photos/index.test.ts'),
+  ],
+  maxInstances: 5,
   services: [
     [
       'browserstack',

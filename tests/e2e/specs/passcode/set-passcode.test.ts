@@ -3,11 +3,8 @@ import {describe, it} from 'mocha';
 import {byTextMatches, byResourceId, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Passcode - Set Passcode Flow', () => {
-  it('should navigate to Security screen from drawer', async () => {
-    const securityOption = await $(byText('Security'));
-    await securityOption.click();
-
+describe('Passcode - show passcode not set', () => {
+  it('should show passcode not set', async () => {
     await expect($(byText('Security'))).toBeDisplayed();
     await expect($(byText('App Passcode'))).toBeDisplayed();
     await expect($(byText('Passcode not set'))).toBeDisplayed();

@@ -42,9 +42,12 @@ export type RootStackParamsList = {
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
   Experiments: undefined;
-  PhotoPreviewModal: {
-    observationDocId?: string;
-    photo: SavedPhoto | ProcessedDraftPhoto;
+  DraftPhotoPreviewModal: {
+    photo: ProcessedDraftPhoto;
+  };
+  AttachedPhotoPreviewModal: {
+    photo: SavedPhoto;
+    observationDocId: string;
   };
   ConfirmDeletePhoto: {
     onSuccess?: () => void;
@@ -155,7 +158,18 @@ export type OnboardingParamsList = {
   Success: {deviceName: string};
 };
 
-export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;
+export type ProjectOnboardingParamsList = {
+  ProjectsIntro: undefined;
+  JoinProject: undefined;
+  OnboardingStartNewProject: undefined;
+  OnboardingCreateProject: undefined;
+  MapOnOwn: undefined;
+  ProjectCreatedOnboarding: {projectId: string; name: string};
+};
+
+export type AppStackParamsList = RootStackParamsList &
+  OnboardingParamsList &
+  ProjectOnboardingParamsList;
 
 export type NativeRootNavigationProps<
   ScreenName extends keyof AppStackParamsList,

@@ -22,9 +22,5 @@ describe('Passcode - Obscure Passcode Visibility', () => {
     await expect(obscurePassNotYetAvailable).toBeDisplayed();
     obscurePassNotYetAvailable.click();
     await expect($(byText('Security'))).toBeDisplayed();
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    if (await backBtn.isDisplayed()) {
-      await backBtn.click();
-    }
   });
 });

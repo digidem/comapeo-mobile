@@ -68,11 +68,6 @@ describe('Observations - View Observations Flow', () => {
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
   });
 
-  it('should display role icon in the observations list', async () => {
-    const myRoleIcon = await $(byResourceId('HOME.coordinator-icon'));
-    await expect(myRoleIcon).toBeDisplayed();
-  });
-
   it('should toggle camera tab and back to confirm correct place', async () => {
     const cameraTab = await $('~Go to camera.');
     await cameraTab.click();

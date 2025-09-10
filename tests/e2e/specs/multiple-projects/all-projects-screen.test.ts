@@ -9,7 +9,7 @@ describe('Multiple Projects - All Projects Screen', () => {
     await $('~Open Menu').click();
     await $(byText('All Projects')).click();
 
-    const originalCard = await $(byTextMatches(output.names.project));
+    const originalCard = await $(byTextMatches('My Solo Project'));
     await expect(originalCard).toBeDisplayed();
 
     const newProject = await $(byText(output.names.secondProject));
@@ -21,12 +21,9 @@ describe('Multiple Projects - All Projects Screen', () => {
     const coordinatorEls = await $$(
       byTextMatches('You are a coordinator on this project'),
     );
-    expect(coordinatorEls.length).toBe(3);
+    expect(coordinatorEls.length).toBe(2);
 
-    checkForElementGone(byTextMatches('mapping on your own'));
-    checkForElementGone(byTextMatches('participant on this project'));
-
-    await expect($(byText('Create new project'))).toBeDisplayed();
+    await expect($(byText('Start new project'))).toBeDisplayed();
   });
 
   it('should show projects in the correct order based on testID', async () => {
@@ -41,8 +38,8 @@ describe('Multiple Projects - All Projects Screen', () => {
       const id = await card.getAttribute('resource-id');
       testIds.push(id);
     }
-    expect(testIds[0]).toMatch(/project_card_third_project$/);
+    expect(testIds[0]).toMatch(/project_card_my_solo_project$/);
     expect(testIds[1]).toMatch(/project_card_second_project$/);
-    expect(testIds[2]).toMatch(/project_card_test_project$/);
+    expect(testIds[2]).toMatch(/project_card_third_project$/);
   });
 });

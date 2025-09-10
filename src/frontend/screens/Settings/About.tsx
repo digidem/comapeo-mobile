@@ -50,8 +50,18 @@ const m = defineMessages({
   },
   emojiSource: {
     id: 'screens.AboutSettings.emojiSource',
-    defaultMessage: 'Emojis source:',
+    defaultMessage: 'Emojis source',
     description: 'Label for the source of emojis used in CoMapeo',
+  },
+  releaseNameLabel: {
+    id: 'screens.AboutSettings.releaseNameLabel',
+    defaultMessage: 'Release name',
+    description: 'Label for the release name',
+  },
+  releaseName: {
+    id: 'screens.AboutSettings.releaseName',
+    defaultMessage: 'Preview',
+    description: 'The CoMapeo chosen release name for the version of the app',
   },
 });
 
@@ -117,6 +127,12 @@ export const AboutSettings = () => {
           <ListItemText
             primary={t(m.emojiSource)}
             secondary="https://openmoji.org/"
+          />
+        </ListItem>
+        <ListItem disableGutters>
+          <ListItemText
+            primary={t(m.releaseNameLabel)}
+            secondary={t(m.releaseName)}
           />
         </ListItem>
       </List>

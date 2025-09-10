@@ -51,6 +51,10 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
 const config = {
   preset: 'jest-expo',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  // https://react-native-documents.github.io/docs/sponsor-only/jest-mocks
+  setupFiles: [
+    './node_modules/@react-native-documents/picker/jest/build/jest/setup.js',
+  ],
   setupFilesAfterEnv: ['@rnmapbox/maps/setup-jest', './jest.setup.js'],
   transform: {
     '\\.[jt]sx?$': [

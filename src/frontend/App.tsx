@@ -33,6 +33,7 @@ import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
 import {createMapeoApi} from './lib/createMapeoApi.ts';
+import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -131,6 +132,7 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 });
 
 const savedLocationStore = createSavedLocationStore({persist: true});
+const lowStorageBannerStore = createLowStorageBannerStore();
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
@@ -199,7 +201,8 @@ const App = () => {
             }
             savedLocationStore={savedLocationStore}
             activeProjectIdStore={persistedActiveProjectIdStore}
-            metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
+            metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+            lowStorageBannerStore={lowStorageBannerStore}>
             <AppNavigator
               permissionAsked={permissionsAsked}
               navigationIntegration={navigationIntegration}

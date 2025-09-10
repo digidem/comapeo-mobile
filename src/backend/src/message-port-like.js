@@ -85,7 +85,7 @@ class MessagePortLike extends TypedEmitter {
    * @param {any} listener
    */
   removeEventListener(event, listener) {
-    this.removeEventListener(event, listener)
+    this.removeListener(event, listener)
   }
 }
 

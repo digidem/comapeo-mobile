@@ -14,7 +14,7 @@ import NoProjectIcon from '../images/NoProjectIcon.svg';
 import {SvgProps} from 'react-native-svg';
 import {isLowStorage} from '../lib/storage';
 import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery';
-import {ExclamationBadge} from './storage/ExclamationBadge';
+import {ExclamationBadge} from './Storage/ExclamationBadge';
 
 type HomeHeaderProps = BottomTabHeaderProps & {
   backgroundColor: string;

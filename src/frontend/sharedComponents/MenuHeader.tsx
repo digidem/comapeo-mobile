@@ -9,7 +9,7 @@ import {CloseIcon} from './icons';
 import {WHITE, BLUE_GREY} from '../lib/styles';
 import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery';
 import {isLowStorage} from '../lib/storage';
-import {ExclamationBadge} from './storage/ExclamationBadge';
+import {ExclamationBadge} from './Storage/ExclamationBadge';
 
 export function MenuHeader() {
   const navigation = useNavigation();

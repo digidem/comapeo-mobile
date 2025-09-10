@@ -12,11 +12,7 @@ import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
-import {
-  useAppUsageStatsPromptState,
-  useAppUsageStatsPromptActions,
-} from '../../contexts/AppUsageStatsPromptContext';
-import {shouldShowAppUsagePrompt} from '../../lib/shouldShowAppUsagePrompt';
+import {useShouldShowAppUsagePrompt} from '../../lib/shouldShowAppUsagePrompt';
 import {createAppUsagePromptScreens} from './UsagePromptScreens';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
@@ -25,22 +21,9 @@ export const RootStackNavigator = () => {
   const {formatMessage} = useIntl();
   const security = useAuthContext();
   const {navigate} = useNavigationFromRoot();
-  const {recordCompleteOnboarding} = useAppUsageStatsPromptActions();
-  const completedOnboardingAt = useAppUsageStatsPromptState(
-    state => state.completedOnboardingAt,
-  );
-  const usagePromptState = useAppUsageStatsPromptState(s => s);
-  const showUsagePrompt = shouldShowAppUsagePrompt(usagePromptState);
 
   const {data: deviceInfo} = useOwnDeviceInfo();
-
-  React.useEffect(() => {
-    // If user already has a device name (i.e., they’ve onboarded in a previous version)
-    // but the store has no completion timestamp (new feature), seed it now.
-    if (deviceInfo.name && completedOnboardingAt === null) {
-      recordCompleteOnboarding();
-    }
-  }, [deviceInfo?.name, completedOnboardingAt, recordCompleteOnboarding]);
+  const showUsagePrompt = useShouldShowAppUsagePrompt(deviceInfo.name);
 
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {

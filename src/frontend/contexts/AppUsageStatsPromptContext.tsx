@@ -110,7 +110,7 @@ const AppUsageStatsPromptContext =
 
 export const AppUsageStatsPromptProvider = AppUsageStatsPromptContext.Provider;
 
-function useAppUsageStatsPromptStore() {
+export function useAppUsageStatsPromptStore() {
   const value = useContext(AppUsageStatsPromptContext);
   if (!value) {
     throw new Error('AppUsageStatsPromptProvider missing');

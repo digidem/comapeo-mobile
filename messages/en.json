@@ -25,23 +25,20 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
-  "Export.Success.done": {
+  "ExportSuccess.done": {
     "message": "Done"
   },
-  "Export.Success.exportBody": {
-    "message": "have been downloaded to your device."
+  "ExportSuccess.obs": {
+    "message": "<bold>All observations</bold> have been downloaded to your device."
   },
-  "Export.Success.title": {
+  "ExportSuccess.obsMedia": {
+    "message": "<bold>All observations with media</bold> have been downloaded to your device."
+  },
+  "ExportSuccess.title": {
     "message": "Success!"
   },
-  "Export.Success.typeObservations": {
-    "message": "All Observations"
-  },
-  "Export.Success.typeObservationsWithMedia": {
-    "message": "All Observations with Media"
-  },
-  "Export.Success.typeTracks": {
-    "message": "Tracks"
+  "ExportSuccess.tracks": {
+    "message": "<bold>Tracks</bold> have been downloaded to your device."
   },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Go Back"

@@ -493,9 +493,7 @@ export const createDefaultScreenGroup = ({
         name="ExportSuccess"
         component={ExportSuccess}
         options={{
-          headerShown: false,
           contentStyle: {backgroundColor: 'white'},
-          animation: 'none',
         }}
       />
     </RootStack.Group>

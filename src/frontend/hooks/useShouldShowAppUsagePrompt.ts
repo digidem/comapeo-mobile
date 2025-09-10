@@ -1,7 +1,6 @@
 import {
   useAppUsageStatsPromptActions,
   useAppUsageStatsPromptStore,
-  type AppUsageStatsPromptState,
 } from '../contexts/AppUsageStatsPromptContext';
 
 export function useShouldShowAppUsagePrompt(deviceName: string | undefined) {

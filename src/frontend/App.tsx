@@ -98,7 +98,7 @@ const mapeoApi = createMapeoApi({serverStateStore});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 
-const posthog = new PostHog('', {defaultOptIn: false});
+const postHog = new PostHog('', {defaultOptIn: false});
 
 SplashScreen.setOptions({fade: true});
 SplashScreen.preventAutoHideAsync().catch(err => {
@@ -139,10 +139,10 @@ const savedLocationStore = createSavedLocationStore({persist: true});
 const appUsageStatsPromptStore = createAppUsageStatsPromptStore({
   persist: true,
   appUsageMetricsOptIn: () => {
-    posthog.optIn();
+    postHog.optIn();
   },
   appUsageMetricsOptOut: () => {
-    posthog.optOut();
+    postHog.optOut();
   },
 });
 
@@ -201,6 +201,7 @@ const App = () => {
         {/* ServerLoading requires internationalization to be set up */}
         <ServerLoading serverStateStore={serverStateStore}>
           <AppProviders
+            postHog={postHog}
             queryClient={queryClient}
             localDiscoveryController={localDiscoveryController}
             mapeoApi={mapeoApi}

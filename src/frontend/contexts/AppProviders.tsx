@@ -43,6 +43,7 @@ import {
   AppUsageStatsPromptProvider,
   AppUsageStatsPromptStore,
 } from './AppUsageStatsPromptContext';
+import PostHog, {PostHogProvider} from 'posthog-react-native';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -58,6 +59,7 @@ type AppProvidersProps = {
   savedLocationStore: SavedLocationStore;
   queryClient: QueryClient;
   appUsageStatsPromptStore: AppUsageStatsPromptStore;
+  postHog?: PostHog;
 };
 
 export const AppProviders = ({
@@ -74,6 +76,7 @@ export const AppProviders = ({
   savedLocationStore,
   queryClient,
   appUsageStatsPromptStore,
+  postHog,
 }: AppProvidersProps) => {
   return (
     <AppUsageStatsPromptProvider value={appUsageStatsPromptStore}>
@@ -101,7 +104,13 @@ export const AppProviders = ({
                                             persistedDrafObservationStore
                                           }>
                                           <AuthProvider>
-                                            {children}
+                                            {postHog ? (
+                                              <PostHogProvider client={postHog}>
+                                                {children}
+                                              </PostHogProvider>
+                                            ) : (
+                                              children
+                                            )}
                                           </AuthProvider>
                                         </DraftObservationProvider>
                                       </PhotoPromiseProvider>

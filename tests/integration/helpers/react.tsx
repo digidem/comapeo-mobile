@@ -156,7 +156,11 @@ export function createAppProvidersWrapper({
     persist: false,
   });
 
-  const appUsageStatsPromptStore = createAppUsageStatsPromptStore();
+  const appUsageStatsPromptStore = createAppUsageStatsPromptStore({
+    persist: false,
+    appUsageMetricsOptIn: () => {},
+    appUsageMetricsOptOut: () => {},
+  });
 
   const OuterWrapper = createMinimalWrapper();
   const wrapper = ({children}: {children: ReactNode}) => {

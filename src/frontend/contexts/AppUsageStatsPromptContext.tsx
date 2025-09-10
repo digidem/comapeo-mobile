@@ -81,7 +81,8 @@ export function createAppUsageStatsPromptStore({
       if (optedIn) {
         appUsageMetricsOptIn();
         store.setState({
-          ...createInitialState(),
+          lastPromptAt: null,
+          promptCount: 0,
           optedIn: true,
           optInStartedAt: now,
         });

@@ -124,7 +124,7 @@ export const DeviceNaming = ({
 
 function useTemporaryError() {
   const [errorTimeout, setErrorTimeout] = React.useState(false);
-  const timer = React.useRef<NodeJS.Timeout | undefined>();
+  const timer = React.useRef<NodeJS.Timeout | undefined>(undefined);
 
   React.useEffect(() => {
     if (errorTimeout && !timer.current) {

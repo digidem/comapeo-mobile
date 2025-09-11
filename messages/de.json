@@ -339,6 +339,21 @@
     "description": "Button to share an observation",
     "message": "Teilen"
   },
+  "Storage.MapBanner.title": {
+    "message": "Ihr Gerät hat wenig Speicherplatz."
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "Speicherplatz freigeben"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "Nur {free}MB auf Ihrem Gerät übrig"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "Einige Funktionen funktionieren möglicherweise nicht mehr."
+  },
+  "Storage.MenuAlert.title": {
+    "message": "Ihr Gerät hat wenig Speicherplatz."
+  },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "Tracks beenden"
   },

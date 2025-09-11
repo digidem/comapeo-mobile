@@ -200,16 +200,11 @@ export const ButtonFields = ({
 
       const date = formatDate(observation.createdAt, {format: 'long'});
 
-      // Insert a zero-width space after every 3 digits inside long numbers (>=4 digits)
+      // Insert a zero-width space after every 5 digits inside long numbers (>=6 digits) so it doesn't autolink
       function breakLongNumbersForWhatsApp(s: string): string {
-        return s.replace(/\d{4,}/g, m =>
-          m.replace(/(\d{3})(?=\d)/g, '$1\u200B'),
+        return s.replace(/\d{6,}/g, m =>
+          m.replace(/(\d{5})(?=\d)/g, '$1\u200B'),
         );
-      }
-
-      // Wrap coordinates for WhatsApp so they don't autolink;
-      function formatCoordsForWhatsApp(coordText: string): string {
-        return `\`${breakLongNumbersForWhatsApp(coordText)}\``;
       }
 
       const subject =
@@ -227,7 +222,7 @@ export const ButtonFields = ({
           : undefined;
 
       const location = coordsText
-        ? `${t(m.location)} ${formatCoordsForWhatsApp(coordsText)}`
+        ? `${t(m.location)} ${breakLongNumbersForWhatsApp(coordsText)}`
         : '';
 
       const precision = observation.metadata?.position?.coords?.accuracy

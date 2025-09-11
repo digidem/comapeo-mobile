@@ -86,6 +86,7 @@
     "nanoid": "5.1.5",
     "nodejs-mobile-react-native": "18.20.4",
     "p-timeout": "6.1.4",
+    "promise": "8.3.0",
     "react": "19.0.0",
     "react-hook-form": "7.62.0",
     "react-intl": "7.1.11",

@@ -3,7 +3,6 @@ import {Text, StyleSheet, StyleProp, ViewStyle, TextInput} from 'react-native';
 
 import {
   CodeField,
-  Cursor,
   useClearByFocusCell,
   MaskSymbol,
   isLastFilledCell,
@@ -66,7 +65,7 @@ export const PasscodeInput = React.forwardRef<
           symbol
         );
       } else if (isFocused) {
-        textChild = <Cursor />;
+        textChild = '|';
       }
 
       return (

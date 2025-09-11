@@ -35,7 +35,8 @@ export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
   const [cameraReady, setCameraReady] = React.useState(false);
   const ref = React.useRef<ExpoCameraView>(null);
-  const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
+  const accelerometerMeasurement =
+    React.useRef<AccelerometerMeasurement | null>(null);
   const [permissionsResponse] = useCameraPermissions();
   const location = useLocationState(store => store.location);
 

@@ -339,6 +339,21 @@
     "description": "Button to share an observation",
     "message": "Delen"
   },
+  "Storage.MapBanner.title": {
+    "message": "Uw apparaat heeft een lage opslag."
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "Maak ruimte vrij"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "Alleen {free}mb over op je apparaat"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "Sommige functies werken mogelijk niet meer."
+  },
+  "Storage.MenuAlert.title": {
+    "message": "Uw apparaat heeft een lage opslag."
+  },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "Tracks afsluiten"
   },

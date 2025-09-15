@@ -77,6 +77,7 @@ export const AppProviders = ({
   savedLocationStore,
   queryClient,
   appUsageStatsPromptStore,
+  lowStorageBannerStore,
 }: AppProvidersProps) => {
   return (
     <AppUsageStatsPromptProvider value={appUsageStatsPromptStore}>

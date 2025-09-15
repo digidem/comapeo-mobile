@@ -41,6 +41,10 @@ import {
   AppUsageStatsPromptProvider,
   AppUsageStatsPromptStore,
 } from './AppUsageStatsPromptContext';
+import {
+  LowStorageBannerStoreProvider,
+  type LowStorageBannerStore,
+} from './LowStorageBannerContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -56,6 +60,7 @@ type AppProvidersProps = {
   savedLocationStore: SavedLocationStore;
   queryClient: QueryClient;
   appUsageStatsPromptStore: AppUsageStatsPromptStore;
+  lowStorageBannerStore: LowStorageBannerStore;
 };
 
 export const AppProviders = ({
@@ -83,29 +88,33 @@ export const AppProviders = ({
                 value={manualEntryCoordinateFormatStore}>
                 <TrackStoreProvider value={trackStore}>
                   <QueryClientProvider client={queryClient}>
-                    <SafeAreaProvider>
-                      <GestureHandlerRootView style={styles.flex}>
-                        <SavedLocationStoreProvider value={savedLocationStore}>
-                          <LocationProvider>
-                            <LocalDiscoveryProvider
-                              value={localDiscoveryController}>
-                              <ClientApiProvider clientApi={mapeoApi}>
-                                <BottomSheetModalProvider>
-                                  <PhotoPromiseProvider>
-                                    <DraftObservationProvider
-                                      draftObservationStore={
-                                        persistedDrafObservationStore
-                                      }>
-                                      <AuthProvider>{children}</AuthProvider>
-                                    </DraftObservationProvider>
-                                  </PhotoPromiseProvider>
-                                </BottomSheetModalProvider>
-                              </ClientApiProvider>
-                            </LocalDiscoveryProvider>
-                          </LocationProvider>
-                        </SavedLocationStoreProvider>
-                      </GestureHandlerRootView>
-                    </SafeAreaProvider>
+                    <LowStorageBannerStoreProvider
+                      value={lowStorageBannerStore}>
+                      <SafeAreaProvider>
+                        <GestureHandlerRootView style={styles.flex}>
+                          <SavedLocationStoreProvider
+                            value={savedLocationStore}>
+                            <LocationProvider>
+                              <LocalDiscoveryProvider
+                                value={localDiscoveryController}>
+                                <ClientApiProvider clientApi={mapeoApi}>
+                                  <BottomSheetModalProvider>
+                                    <PhotoPromiseProvider>
+                                      <DraftObservationProvider
+                                        draftObservationStore={
+                                          persistedDrafObservationStore
+                                        }>
+                                        <AuthProvider>{children}</AuthProvider>
+                                      </DraftObservationProvider>
+                                    </PhotoPromiseProvider>
+                                  </BottomSheetModalProvider>
+                                </ClientApiProvider>
+                              </LocalDiscoveryProvider>
+                            </LocationProvider>
+                          </SavedLocationStoreProvider>
+                        </GestureHandlerRootView>
+                      </SafeAreaProvider>
+                    </LowStorageBannerStoreProvider>
                   </QueryClientProvider>
                 </TrackStoreProvider>
               </ManualEntryCoordinateFormatStoreProvider>

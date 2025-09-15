@@ -52,17 +52,50 @@ jobs:
       - name: Get APK URL from EAS
         id: get-apk-url
         run: |
+          set -euo pipefail
           COMMIT=${{ github.event.pull_request.head.sha || github.sha }}
-          URL=$(eas build:list \
-            --platform android \
-            --status finished \
-            --buildProfile test \
-            --gitCommitHash "$COMMIT" \
-            --limit 1 --json | jq -r '.[0].artifacts.buildUrl')
-          if [ -z "$URL" ] || [ "$URL" = "null" ]; then
-            echo "No finished EAS build found for commit $COMMIT"
+
+          ATTEMPTS=6
+          SLEEP=5
+          URL=""
+          BID=""
+          JSON=""
+
+          for i in $(seq 1 $ATTEMPTS); do
+            JSON=$(eas build:list \
+              --platform android \
+              --status finished \
+              --buildProfile test \
+              --limit 50 \
+              --json)
+
+            echo "$JSON" | jq -e . >/dev/null || { echo "Non-JSON output from eas build:list"; echo "$JSON"; exit 1; }
+
+            URL=$(echo "$JSON" | jq -r --arg COMMIT "$COMMIT" '
+              map(select(.gitCommitHash == $COMMIT)) | first | .artifacts.buildUrl // empty')
+            BID=$(echo "$JSON" | jq -r --arg COMMIT "$COMMIT" '
+              map(select(.gitCommitHash == $COMMIT)) | first | .id // empty')
+
+            if [ -n "$URL" ]; then
+              echo "Matched build for commit: $BID"
+              break
+            fi
+
+            echo "No finished build for commit yet; retrying in ${SLEEP}s... ($i/$ATTEMPTS)"
+            sleep $SLEEP
+          done
+
+          if [ -z "$URL" ]; then
+            URL=$(echo "$JSON" | jq -r '.[0].artifacts.buildUrl // empty')
+            BID=$(echo "$JSON" | jq -r '.[0].id // empty')
+            [ -n "$URL" ] && echo "Using newest finished test build: $BID"
+          fi
+
+          if [ -z "$URL" ]; then
+            echo "No finished EAS build found (commit or fallback)."
             exit 1
           fi
+
           echo "url=$URL" >> $GITHUB_OUTPUT
 
       - name: Download APK

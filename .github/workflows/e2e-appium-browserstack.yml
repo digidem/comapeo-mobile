@@ -26,72 +26,48 @@ jobs:
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
-          token: ${{ secrets.EXPO }}
+          token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Free Up Space
+      - name: Run EAS Workflow (E2E With Repack)
         run: |
-          echo "Disk space before cleanup:"
-          df -h
-          sudo rm -rf /usr/local/.ghcup
-          sudo rm -rf /opt/hostedtoolcache/CodeQL
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/local/share/boost
-          sudo apt-get clean
-          echo "Disk space after cleanup:"
-          df -h
+          eas workflow:run .eas/workflows/e2e-with-repack.yml --non-interactive --wait
 
-      - name: Cache Dependencies
-        id: cache-dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            path: |
-             ~/.gradle/caches/
-             ~/.gradle/wrapper/
-             ~/.gradle/daemon/
-             node_modules
-          key: dependencies-cache-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            dependencies-cache-
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install Dependencies
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: Build APK
-        env:
-          SENTRY_DISABLE_AUTO_UPLOAD: 'true'
-          EXPO_PUBLIC_E2E_TEST: 'true'
-          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-          COMAPEO_METRICS_URL: ${{ secrets.COMAPEO_METRICS_URL }}
-          COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
+      - name: Ensure jq
         run: |
-          npm run extract-messages
-          npx expo prebuild -p android
-          eas build --platform android --profile test --local
+          sudo apt-get update
+          sudo apt-get install -y jq
 
-      - name: Find Built APK
-        id: find-apk
-        run: echo "APK_PATH=$(ls -t build-*.apk | head -n 1)" >> $GITHUB_ENV
+      - name: Get APK URL from EAS
+        id: get-apk-url
+        run: |
+          COMMIT=${{ github.event.pull_request.head.sha || github.sha }}
+          URL=$(eas build:list \
+            --platform android \
+            --status finished \
+            --buildProfile test \
+            --gitCommitHash "$COMMIT" \
+            --limit 1 --json | jq -r '.[0].artifacts.buildUrl')
+          if [ -z "$URL" ] || [ "$URL" = "null" ]; then
+            echo "No finished EAS build found for commit $COMMIT"
+            exit 1
+          fi
+          echo "url=$URL" >> $GITHUB_OUTPUT
+
+      - name: Download APK
+        run: |
+          curl -L "${{ steps.get-apk-url.outputs.url }}" -o app-under-test.apk
 
       - name: Upload APK to BrowserStack
         id: upload
-        run: |
-          APP_URL=$(curl -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
-            -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
-            -F "file=@$APK_PATH" | jq -r '.app_url')
-          echo "app_url=$APP_URL" >> $GITHUB_ENV
-          echo "app_url=$APP_URL" >> $GITHUB_OUTPUT
         env:
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        run: |
+          APP_URL=$(curl -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
+            -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
+            -F "file=@app-under-test.apk" | jq -r '.app_url')
+          echo "app_url=$APP_URL" >> $GITHUB_ENV
+          echo "app_url=$APP_URL" >> $GITHUB_OUTPUT
 
   run-e2e-tests:
     runs-on: ubuntu-latest

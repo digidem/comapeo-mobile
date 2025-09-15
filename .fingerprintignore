@@ -1,0 +1,7 @@
+**/*.md
+docs/**
+.github/**
+tests/**
+test-results/**
+**/messages/*.json
+**/translations/*.json

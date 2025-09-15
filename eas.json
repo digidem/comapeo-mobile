@@ -37,6 +37,9 @@
       "env": {
         "APP_VARIANT": "releaseCandidate",
         "EXPO_PUBLIC_E2E_TEST": "true"
+      },
+      "android": {
+        "buildType": "apk"
       }
     },
     "production": {

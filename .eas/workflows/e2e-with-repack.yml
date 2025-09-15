@@ -1,0 +1,55 @@
+name: E2E (Fingerprint - Repack - Fallback Build)
+
+on:
+  pull_request:
+    branches: ['main', 'develop', 'release/**']
+
+jobs:
+  fingerprint:
+    id: fingerprint
+    name: Fingerprint
+    type: fingerprint
+    params:
+      platform: android
+    env:
+      APP_VARIANT: releaseCandidate
+      EXPO_PUBLIC_E2E_TEST: 'true'
+      SENTRY_DISABLE_AUTO_UPLOAD: 'true'
+
+  get_build:
+    id: get_build
+    name: Get Matching Build
+    type: get-build
+    needs: [fingerprint]
+    params:
+      platform: android
+      fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
+      app_identifier: com.comapeo.rc
+
+  repack:
+    id: repack
+    name: Repack
+    type: repack
+    needs: [get_build]
+    if: ${{ needs.get_build.outputs.build_id }}
+    params:
+      build_id: ${{ needs.get_build.outputs.build_id }}
+      profile: test
+    env:
+      APP_VARIANT: releaseCandidate
+      EXPO_PUBLIC_E2E_TEST: 'true'
+      SENTRY_DISABLE_AUTO_UPLOAD: 'true'
+
+  build:
+    id: build
+    name: Build (fallback)
+    type: build
+    needs: [get_build]
+    if: ${{ !needs.get_build.outputs.build_id }}
+    params:
+      platform: android
+      profile: test
+    env:
+      APP_VARIANT: releaseCandidate
+      EXPO_PUBLIC_E2E_TEST: 'true'
+      SENTRY_DISABLE_AUTO_UPLOAD: 'true'

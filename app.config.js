@@ -22,6 +22,7 @@ const APP_NAME_SUFFIX =
 
 const pkgVersion = require('./package.json').version;
 const pkgVersionBase = pkgVersion.replace(/-.*/, '');
+const IS_E2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
 
 /** @type {string} */
 let appVersionSuffix =
@@ -32,7 +33,7 @@ let appVersionSuffix =
     preRelease: '-pre',
   }[APP_VARIANT] ?? '-dev';
 
-if (APP_VARIANT !== 'production') {
+if (APP_VARIANT !== 'production' && !IS_E2E) {
   try {
     // SHA of commit this version was built from
     const commitSha =

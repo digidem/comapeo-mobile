@@ -60,23 +60,54 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq
 
-      - name: Build test APK on EAS (blocking)
-        id: eas-build
+      - name: Run EAS Workflow (Fingerprint → Repack → Fallback)
+        id: eas-wf
         env:
           EAS_ACCESS_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          APP_VARIANT: releaseCandidate
+          EXPO_PUBLIC_E2E_TEST: 'true'
         run: |
           set -euo pipefail
-          OUT=$(eas build --platform android --profile test --non-interactive --json --wait)
-          echo "$OUT" | jq -e .
-          URL=$(echo "$OUT" | jq -r '.[0].artifacts.buildUrl // empty')
-          if [ -z "$URL" ]; then
-            echo "No artifacts.buildUrl found in EAS output"
+          OUT=$(eas workflow:run .eas/workflows/e2e-with-repack.yml --non-interactive --wait --json)
+          echo "$OUT" | jq -e . >/dev/null
+
+          URL=$(echo "$OUT" | jq -r '(.artifacts.applicationArchiveUrl? // .artifacts.buildUrl? // empty)')
+
+          if [ -z "${URL}" ]; then
+            URL=$(
+              echo "$OUT" | jq -r '
+                [
+                  (.jobs // [] | .[] | select((.id=="repack" or .name|test("Repack")) and (.status=="FINISHED"))
+                    | (.artifacts.applicationArchiveUrl? // .artifacts.buildUrl?)),
+                  (.jobs // [] | .[] | select((.id=="build" or .name|test("Build")) and (.status=="FINISHED"))
+                    | (.artifacts.applicationArchiveUrl? // .artifacts.buildUrl?))
+                ]
+                | flatten
+                | map(select(. != null and . != ""))
+                | first // empty
+              '
+            )
+          fi
+
+          if [ -z "${URL}" ]; then
+            echo "No direct artifact URL in workflow JSON; falling back to latest finished Android 'test' build."
+            LIST=$(eas build:list --platform android --status finished --buildProfile test --limit 10 --json)
+            URL=$(echo "$LIST" | jq -r '
+              (if type=="array" then . else (.items // .builds // .data // []) end)
+              | first | .artifacts.buildUrl // empty
+            ')
+          fi
+
+          if [ -z "${URL}" ]; then
+            echo "Could not determine APK URL from workflow or fallback."
+            echo "Workflow JSON (truncated keys):"; echo "$OUT" | jq 'keys' || true
             exit 1
           fi
-          echo "app_url=$URL" >> $GITHUB_OUTPUT
+
+          echo "app_url=${URL}" >> $GITHUB_OUTPUT
 
       - name: Download APK
-        run: curl -L "${{ steps.eas-build.outputs.app_url }}" -o app-under-test.apk
+        run: curl -L "${{ steps.eas-wf.outputs.app_url }}" -o app-under-test.apk
 
       - name: Upload APK to BrowserStack
         id: upload

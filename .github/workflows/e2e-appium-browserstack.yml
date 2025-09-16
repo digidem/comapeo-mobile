@@ -73,6 +73,7 @@ jobs:
       - name: Get APK URL from EAS
         id: get-apk-url
         env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
           EAS_PROJECT_ID: 2d5b8137-12ec-45aa-9c23-56b6a1c522b7
         run: |
           set -euo pipefail
@@ -84,28 +85,25 @@ jobs:
           BID=""
           JSON=""
 
+          ROOT_FILTER='(if type=="array" then . else (.items // .builds // .data // []) end)'
+
           fetch_json() {
-            if ! OUT=$(eas build:list \
-                --project-id "$EAS_PROJECT_ID" \
-                --platform android \
-                --status finished \
-                --buildProfile test \
-                --limit 50 \
-                --json 2>eas_err.log); then
-              echo "eas build:list failed. STDERR:"
-              cat eas_err.log || true
-              exit 1
-            fi
-            echo "$OUT"
+            eas build:list \
+              --project-id "$EAS_PROJECT_ID" \
+              --platform android \
+              --status finished \
+              --buildProfile test \
+              --limit 50 \
+              --json
           }
 
           for i in $(seq 1 $ATTEMPTS); do
             JSON="$(fetch_json)"
             echo "$JSON" | jq -e . >/dev/null || { echo "Non-JSON output from eas build:list"; echo "$JSON"; exit 1; }
-            URL=$(echo "$JSON" | jq -r --arg COMMIT "$COMMIT" '
-              map(select(.gitCommitHash == $COMMIT)) | first | .artifacts.buildUrl // empty')
-            BID=$(echo "$JSON" | jq -r --arg COMMIT "$COMMIT" '
-              map(select(.gitCommitHash == $COMMIT)) | first | .id // empty')
+            URL=$(echo "$JSON" | jq -r --arg COMMIT "$COMMIT" \
+              "try ($ROOT_FILTER | map(select(.gitCommitHash == \$COMMIT)) | first | .artifacts.buildUrl) catch \"\"")
+            BID=$(echo "$JSON" | jq -r --arg COMMIT "$COMMIT" \
+              "try ($ROOT_FILTER | map(select(.gitCommitHash == \$COMMIT)) | first | .id) catch \"\"")
 
             if [ -n "$URL" ]; then
               echo "Matched build for commit: $BID"
@@ -117,15 +115,15 @@ jobs:
           done
 
           if [ -z "$URL" ]; then
-            URL=$(echo "$JSON" | jq -r '.[0].artifacts.buildUrl // empty')
-            BID=$(echo "$JSON" | jq -r '.[0].id // empty')
+            URL=$(echo "$JSON" | jq -r "try ($ROOT_FILTER | first | .artifacts.buildUrl) catch \"\"")
+            BID=$(echo "$JSON" | jq -r "try ($ROOT_FILTER | first | .id) catch \"\"")
             [ -n "$URL" ] && echo "Using newest finished test build: $BID"
           fi
 
           if [ -z "$URL" ]; then
             echo "No finished EAS build found (commit or fallback)."
-            echo "Recent finished builds payload:"
-            echo "$JSON" | jq '[.[] | {id, createdAt, profile, platform, status, gitCommitHash, artifact: .artifacts.buildUrl}]'
+            echo "Recent finished builds payload (first 5):"
+            echo "$JSON" | jq "$ROOT_FILTER | .[:5] | map({id, createdAt, profile, platform, status, gitCommitHash, artifact: (.artifacts.buildUrl // null)})"
             exit 1
           fi
           echo "url=$URL" >> $GITHUB_OUTPUT

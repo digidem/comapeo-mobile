@@ -15,7 +15,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
+        await driver.execute('mobile:acceptAlert', {
           buttonLabel: 'SAVE',
         });
       }
@@ -62,7 +62,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {buttonLabel: 'SAVE'});
+        await driver.execute('mobile:acceptAlert', {buttonLabel: 'SAVE'});
       }
     } catch {
       console.log('No RN Alert dialog was found.');

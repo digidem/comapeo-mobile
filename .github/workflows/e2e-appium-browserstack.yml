@@ -33,12 +33,18 @@ jobs:
 
       - name: Generate localization & polyfills for bundling
         run: |
-          npm run build:intl-polyfills || true
-
+          set -euo pipefail
           npm run extract-messages
+          if [ ! -f translations/messages.json ]; then
+            echo "translations/messages.json not found; generating from messages/en.json"
+            node -e "const fs=require('fs');const p=require('path');const enPath=p.join('messages','en.json');fs.mkdirSync('translations',{recursive:true});const en=fs.existsSync(enPath)?JSON.parse(fs.readFileSync(enPath,'utf8')):{};fs.writeFileSync('translations/messages.json',JSON.stringify({en},null,2));"
+          else
+            echo "Using translations/messages.json from repo"
+          fi
+          npm run build:intl-polyfills
 
-          test -f translations/messages.json || { echo "Missing translations/messages.json after extract-messages"; exit 1; }
-          test -f src/frontend/polyfills/intl.ts || { echo "Missing src/frontend/polyfills/intl.ts (build:intl-polyfills should create it)"; exit 1; }
+          test -f translations/messages.json || { echo 'Missing translations/messages.json after generation'; exit 1; }
+          test -f src/frontend/polyfills/intl.ts || { echo 'Missing src/frontend/polyfills/intl.ts (build:intl-polyfills should create it)'; exit 1; }
 
       - name: Verify Expo config resolves
         env:

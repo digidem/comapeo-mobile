@@ -35,9 +35,15 @@ export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
 
           fs.mkdirSync(targetDir, {recursive: true});
 
+          /** TEMPORARY FIX: bare-make builds are tagged with `-bare-make` to
+           * avoid conflicts with our current releases built with node-gyp */
+          const releaseTag =
+            name === 'better-sqlite3' ? `${version}-bare-make` : version;
+
           const artifactInfo = getArtifactInfo({
             name,
             version,
+            releaseTag,
             target,
             nodeAbi: usesNapi ? undefined : NODE_ABI,
           });
@@ -56,10 +62,12 @@ export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
 
           fs.unlinkSync(path.join(targetDir, artifactInfo.name));
 
-          // better-sqlite3 includes an additional native module for testing purposes
-          // removing since it's not needed and also causes issues with nodejs-mobile-react-native
+          // better-sqlite3 bare-make builds are named better-sqlite3.node, but the module expects better_sqlite3.node
           if (name === 'better-sqlite3') {
-            fs.unlinkSync(path.join(targetDir, 'test_extension.node'));
+            fs.renameSync(
+              path.join(targetDir, 'better-sqlite3.node'),
+              path.join(targetDir, 'better_sqlite3.node'),
+            );
           }
 
           if (verbose) {
@@ -97,16 +105,16 @@ function getNodeJsMobileNodeVersions() {
 }
 
 /**
- * @param {{name: string, version: string, target: string, nodeAbi?: string}} opts
+ * @param {{name: string, version: string, releaseTag: string, target: string, nodeAbi?: string}} opts
  * @returns {{name: string, url: string}}
  */
-function getArtifactInfo({name, version, target, nodeAbi}) {
+function getArtifactInfo({name, version, releaseTag, target, nodeAbi}) {
   const assetName = nodeAbi
     ? `${name}-${version}-node-${nodeAbi}-${target}.tar.gz`
     : `${name}-${version}-${target}.tar.gz`;
 
   return {
     name,
-    url: `https://github.com/digidem/${name}-nodejs-mobile/releases/download/${version}/${assetName}`,
+    url: `https://github.com/digidem/${name}-nodejs-mobile/releases/download/${releaseTag}/${assetName}`,
   };
 }

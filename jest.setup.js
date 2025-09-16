@@ -14,6 +14,7 @@ import {setUpTests} from 'react-native-reanimated';
 
 setUpTests();
 
+// Module resolution error when using expo/winter. See: https://github.com/expo/expo/issues/36831#issuecomment-3107047371
 jest.mock('expo/src/winter/ImportMetaRegistry', () => ({
   ImportMetaRegistry: {
     get url() {

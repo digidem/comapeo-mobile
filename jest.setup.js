@@ -14,6 +14,14 @@ import {setUpTests} from 'react-native-reanimated';
 
 setUpTests();
 
+jest.mock('expo/src/winter/ImportMetaRegistry', () => ({
+  ImportMetaRegistry: {
+    get url() {
+      return null;
+    },
+  },
+}));
+
 jest.mock('@gorhom/bottom-sheet', () => mockBottomSheet);
 
 jest.mock('@react-native-community/netinfo', () => mockNetInfo);

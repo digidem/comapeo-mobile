@@ -156,18 +156,7 @@ export type OnboardingParamsList = {
   Success: {deviceName: string};
 };
 
-export type ProjectOnboardingParamsList = {
-  ProjectsIntro: undefined;
-  JoinProject: undefined;
-  OnboardingStartNewProject: undefined;
-  OnboardingCreateProject: undefined;
-  MapOnOwn: undefined;
-  ProjectCreatedOnboarding: {projectId: string; name: string};
-};
-
-export type AppStackParamsList = RootStackParamsList &
-  OnboardingParamsList &
-  ProjectOnboardingParamsList;
+export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;
 
 export type NativeRootNavigationProps<
   ScreenName extends keyof AppStackParamsList,

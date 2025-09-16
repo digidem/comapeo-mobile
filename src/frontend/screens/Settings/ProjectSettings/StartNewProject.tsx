@@ -1,21 +1,22 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
+
+import ProjectIcon from '../../../images/ObservationsProject.svg';
+import IndexPointingUp from '../../../images/IndexPointingUp.svg';
+import LockedWithKey from '../../../images/LockedWithKey.svg';
+import GreenCheck from '../../../images/GreenSquareCheckmark.svg';
+
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {
   PrimaryButton,
   SecondaryButton,
 } from '../../../sharedComponents/Buttons';
+import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {SvgProps} from 'react-native-svg';
 import {DARK_ORANGE, NEW_DARK_GREY} from '../../../lib/styles';
-import ProjectIcon from '../../../images/ObservationsProject.svg';
-import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
-
-import IndexPointingUp from '../../../images/IndexPointingUp.svg';
-import LockedWithKey from '../../../images/LockedWithKey.svg';
-import GreenCheck from '../../../images/GreenSquareCheckmark.svg';
 
 const m = defineMessages({
   screenTitle: {
@@ -48,36 +49,37 @@ const m = defineMessages({
   },
 });
 
-type Props = NativeRootNavigationProps<
-  'StartNewProject' | 'OnboardingStartNewProject'
->;
+type Props = NativeRootNavigationProps<'StartNewProject'>;
 
-export const StartNewProjectScreen: React.FC<Props> = ({navigation, route}) => {
+export const StartNewProjectScreen: React.FC<Props> = ({navigation}) => {
   const {formatMessage: t} = useIntl();
-  const isOnboarding = route.name === 'OnboardingStartNewProject';
 
   function handleGoBack() {
     navigation.goBack();
   }
 
   function handleStart() {
-    if (isOnboarding) {
-      navigation.navigate('OnboardingCreateProject');
-    } else {
-      navigation.replace('CreateProject');
-    }
+    navigation.replace('CreateProject');
   }
 
   return (
     <ScreenContentWithDock
       dockContent={
         <View style={styles.buttonsContainer}>
-          <SecondaryButton fullSize text={t(m.goBack)} onPress={handleGoBack} />
-          <PrimaryButton fullSize text={t(m.start)} onPress={handleStart} />
+          <SecondaryButton
+            fullSize={true}
+            text={t(m.goBack)}
+            onPress={handleGoBack}
+          />
+          <PrimaryButton
+            fullSize={true}
+            text={t(m.start)}
+            onPress={handleStart}
+          />
         </View>
       }>
       <View style={styles.headerArea}>
-        <ProjectIcon width={90} height={90} color={DARK_ORANGE} />
+        <ProjectIcon color={DARK_ORANGE} width={90} height={90} />
         <HeaderText variant="header1" style={styles.title} numberOfLines={2}>
           {t(m.screenTitle)}
         </HeaderText>
@@ -113,17 +115,37 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     flexWrap: 'wrap',
   },
-  title: {textAlign: 'center', paddingHorizontal: 20},
+  title: {
+    textAlign: 'center',
+    paddingHorizontal: 20,
+  },
   bodyContainer: {
     gap: 20,
     alignSelf: 'center',
     paddingTop: 20,
     paddingHorizontal: 45,
   },
-  introText: {paddingHorizontal: 30, lineHeight: 21},
-  bulletList: {gap: 12},
-  bulletItem: {flexDirection: 'row', alignItems: 'center', gap: 12},
-  bulletIcon: {marginTop: 0},
-  bulletText: {lineHeight: 18, flexShrink: 1, color: NEW_DARK_GREY},
-  buttonsContainer: {gap: 15},
+  introText: {
+    paddingHorizontal: 30,
+    lineHeight: 21,
+  },
+  bulletList: {
+    gap: 12,
+  },
+  bulletItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  bulletIcon: {
+    marginTop: 0,
+  },
+  bulletText: {
+    lineHeight: 18,
+    flexShrink: 1,
+    color: NEW_DARK_GREY,
+  },
+  buttonsContainer: {
+    gap: 15,
+  },
 });

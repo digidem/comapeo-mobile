@@ -36,6 +36,12 @@ jobs:
           test -f translations/messages.json
           test -f src/frontend/polyfills/intl.ts
 
+      - name: Debug generated artifacts
+        run: |
+          ls -la translations
+          ls -la src/frontend/polyfills
+          head -n 5 src/frontend/polyfills/intl.ts || true
+
       - name: Verify Expo config resolves
         env:
           APP_VARIANT: releaseCandidate
@@ -48,8 +54,6 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
           packager: npm
-          expo-cache: true
-          eas-cache: true
 
       - name: Ensure jq (for parsing EAS JSON)
         run: |

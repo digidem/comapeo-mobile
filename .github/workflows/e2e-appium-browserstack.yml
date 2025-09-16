@@ -62,7 +62,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq
 
-      - name: Run EAS Workflow (Fingerprint → Repack → Fallback)
+      - name: Relax requireCommit for this run (local edit only)
+        run: |
+          cp eas.json eas.json.bak
+          jq '.cli.requireCommit=false' eas.json > eas.tmp.json
+          mv eas.tmp.json eas.json
+          echo "Patched eas.json:"
+          cat eas.json
+
+      - name: Run EAS Workflow (Fingerprint - Repack - Fallback)
         id: eas-wf
         env:
           EAS_ACCESS_TOKEN: ${{ secrets.EXPO_TOKEN }}
@@ -76,7 +84,7 @@ jobs:
 
           URL=$(echo "$OUT" | jq -r '(.artifacts.applicationArchiveUrl? // .artifacts.buildUrl? // empty)')
 
-          if [ -z "${URL}" ]; then
+          if [ -z "$URL" ]; then
             URL=$(
               echo "$OUT" | jq -r '
                 [
@@ -92,7 +100,7 @@ jobs:
             )
           fi
 
-          if [ -z "${URL}" ]; then
+          if [ -z "$URL" ]; then
             echo "No direct artifact URL in workflow JSON; falling back to latest finished Android 'test' build."
             LIST=$(eas build:list --platform android --status finished --buildProfile test --limit 10 --json)
             URL=$(echo "$LIST" | jq -r '
@@ -101,9 +109,9 @@ jobs:
             ')
           fi
 
-          if [ -z "${URL}" ]; then
+          if [ -z "$URL" ]; then
             echo "Could not determine APK URL from workflow or fallback."
-            echo "Workflow JSON keys (for debugging):"; echo "$OUT" | jq 'keys' || true
+            echo "Workflow JSON keys:"; echo "$OUT" | jq 'keys' || true
             exit 1
           fi
 

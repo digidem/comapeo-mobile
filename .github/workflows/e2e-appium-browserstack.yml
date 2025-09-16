@@ -40,7 +40,7 @@ jobs:
         run: |
           ls -la translations
           ls -la src/frontend/polyfills
-          head -n 5 src/frontend/polyfills/intl.ts || true
+          head -n 10 src/frontend/polyfills/intl.ts || true
 
       - name: Verify Expo config resolves
         env:
@@ -54,6 +54,8 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
           packager: npm
+          expo-cache: true
+          eas-cache: true
 
       - name: Ensure jq (for parsing EAS JSON)
         run: |
@@ -64,6 +66,7 @@ jobs:
         id: eas-wf
         env:
           EAS_ACCESS_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EAS_NO_VCS: '1'
           APP_VARIANT: releaseCandidate
           EXPO_PUBLIC_E2E_TEST: 'true'
         run: |
@@ -77,9 +80,9 @@ jobs:
             URL=$(
               echo "$OUT" | jq -r '
                 [
-                  (.jobs // [] | .[] | select((.id=="repack" or .name|test("Repack")) and (.status=="FINISHED"))
+                  (.jobs // [] | .[] | select((.id=="repack" or (.name // "") | test("Repack")) and (.status=="FINISHED"))
                     | (.artifacts.applicationArchiveUrl? // .artifacts.buildUrl?)),
-                  (.jobs // [] | .[] | select((.id=="build" or .name|test("Build")) and (.status=="FINISHED"))
+                  (.jobs // [] | .[] | select((.id=="build" or (.name // "") | test("Build")) and (.status=="FINISHED"))
                     | (.artifacts.applicationArchiveUrl? // .artifacts.buildUrl?))
                 ]
                 | flatten
@@ -100,7 +103,7 @@ jobs:
 
           if [ -z "${URL}" ]; then
             echo "Could not determine APK URL from workflow or fallback."
-            echo "Workflow JSON (truncated keys):"; echo "$OUT" | jq 'keys' || true
+            echo "Workflow JSON keys (for debugging):"; echo "$OUT" | jq 'keys' || true
             exit 1
           fi
 

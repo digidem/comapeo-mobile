@@ -339,6 +339,21 @@
     "description": "Button to share an observation",
     "message": "Compartir"
   },
+  "Storage.MapBanner.title": {
+    "message": "Tu dispositivo tiene poco almacenamiento."
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "Libera espacio"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "Solo quedan {free}mb en tu dispositivo"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "Algunas características pueden dejar de funcionar."
+  },
+  "Storage.MenuAlert.title": {
+    "message": "Tu dispositivo tiene poco almacenamiento."
+  },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "Salir de pistas"
   },

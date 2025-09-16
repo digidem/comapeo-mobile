@@ -1,0 +1,61 @@
+# VCS + package cache
+.git/
+.gitignore
+npm-debug.log
+yarn-error.log
+.pnpm-store/
+
+# Node modules (EAS will install on the server)
+node_modules/
+
+# Platform builds & IDE clutter
+android/
+ios/
+web-build/
+dist/
+build/
+.cxx/
+.gradle/
+.idea/
+.vscode/
+*.iml
+
+# Expo/Metro caches & artifacts
+.expo/
+*.jsbundle
+.metro-health-check*
+
+# Tests & local-only configs
+tests/**
+**/__tests__/**
+**/*.test.* 
+**/*.spec.*
+wdio.local.config.js
+wdio.*.config.js
+
+# Logs & CI outputs
+logs/
+test-results/
+*.log
+
+# Fastlane & vendor stuff
+**/fastlane/**
+vendor/bundle/
+
+# Secrets/env (these should live in EAS Project env)
+.env
+.env*.local
+ios/*.env*.local
+.env.sentry-build-plugin
+
+# TypeScript/cache
+*.tsbuildinfo
+.eslintcache
+
+# Certificates & keys (never upload)
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+*.mobileprovision

@@ -31,6 +31,21 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Generate localization & polyfills for bundling
+        run: |
+          npm run build:intl-polyfills || true
+
+          npm run extract-messages
+
+          test -f translations/messages.json || { echo "Missing translations/messages.json after extract-messages"; exit 1; }
+          test -f src/frontend/polyfills/intl.ts || { echo "Missing src/frontend/polyfills/intl.ts (build:intl-polyfills should create it)"; exit 1; }
+
+      - name: Verify Expo config resolves
+        env:
+          APP_VARIANT: releaseCandidate
+          EXPO_PUBLIC_E2E_TEST: 'true'
+        run: npx expo config --json > /dev/null
+
       - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:

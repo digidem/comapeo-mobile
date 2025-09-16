@@ -2,10 +2,7 @@ name: Appium E2E Tests on BrowserStack
 
 on:
   pull_request:
-    branches:
-      - main
-      - develop
-      - 'release/**'
+    branches: [main, develop, 'release/**']
     types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
@@ -34,7 +31,6 @@ jobs:
       - name: Generate localization & polyfills for bundling
         run: |
           set -euo pipefail
-          npm run extract-messages || true    # only needed if messages/en.json might be missing
           npm run build:translations
           npm run build:intl-polyfills
           test -f translations/messages.json
@@ -55,78 +51,28 @@ jobs:
           expo-cache: true
           eas-cache: true
 
-      - name: Run EAS Workflow (E2E With Repack)
-        env:
-          APP_VARIANT: releaseCandidate
-          EXPO_PUBLIC_E2E_TEST: 'true'
-        run: |
-          eas workflow:run .eas/workflows/e2e-with-repack.yml --non-interactive --wait
-
-      - name: Ensure jq
+      - name: Ensure jq (for parsing EAS JSON)
         run: |
           sudo apt-get update
           sudo apt-get install -y jq
 
-      - name: Get APK URL from EAS
-        id: get-apk-url
+      - name: Build test APK on EAS (blocking)
+        id: eas-build
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-          EAS_PROJECT_ID: 2d5b8137-12ec-45aa-9c23-56b6a1c522b7
+          EAS_ACCESS_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           set -euo pipefail
-          COMMIT=${{ github.event.pull_request.head.sha || github.sha }}
-
-          ATTEMPTS=6
-          SLEEP=5
-          URL=""
-          BID=""
-          JSON=""
-
-          ROOT_FILTER='(if type=="array" then . else (.items // .builds // .data // []) end)'
-
-          fetch_json() {
-            eas build:list \
-              --project-id "$EAS_PROJECT_ID" \
-              --platform android \
-              --status finished \
-              --buildProfile test \
-              --limit 50 \
-              --json
-          }
-
-          for i in $(seq 1 $ATTEMPTS); do
-            JSON="$(fetch_json)"
-            echo "$JSON" | jq -e . >/dev/null || { echo "Non-JSON output from eas build:list"; echo "$JSON"; exit 1; }
-            URL=$(echo "$JSON" | jq -r --arg COMMIT "$COMMIT" \
-              "try ($ROOT_FILTER | map(select(.gitCommitHash == \$COMMIT)) | first | .artifacts.buildUrl) catch \"\"")
-            BID=$(echo "$JSON" | jq -r --arg COMMIT "$COMMIT" \
-              "try ($ROOT_FILTER | map(select(.gitCommitHash == \$COMMIT)) | first | .id) catch \"\"")
-
-            if [ -n "$URL" ]; then
-              echo "Matched build for commit: $BID"
-              break
-            fi
-
-            echo "No finished build for commit yet; retrying in ${SLEEP}s... ($i/$ATTEMPTS)"
-            sleep $SLEEP
-          done
-
+          OUT=$(eas build --platform android --profile test --non-interactive --json --wait)
+          echo "$OUT" | jq -e .
+          URL=$(echo "$OUT" | jq -r '.[0].artifacts.buildUrl // empty')
           if [ -z "$URL" ]; then
-            URL=$(echo "$JSON" | jq -r "try ($ROOT_FILTER | first | .artifacts.buildUrl) catch \"\"")
-            BID=$(echo "$JSON" | jq -r "try ($ROOT_FILTER | first | .id) catch \"\"")
-            [ -n "$URL" ] && echo "Using newest finished test build: $BID"
-          fi
-
-          if [ -z "$URL" ]; then
-            echo "No finished EAS build found (commit or fallback)."
-            echo "Recent finished builds payload (first 5):"
-            echo "$JSON" | jq "$ROOT_FILTER | .[:5] | map({id, createdAt, profile, platform, status, gitCommitHash, artifact: (.artifacts.buildUrl // null)})"
+            echo "No artifacts.buildUrl found in EAS output"
             exit 1
           fi
-          echo "url=$URL" >> $GITHUB_OUTPUT
+          echo "app_url=$URL" >> $GITHUB_OUTPUT
+
       - name: Download APK
-        run: |
-          curl -L "${{ steps.get-apk-url.outputs.url }}" -o app-under-test.apk
+        run: curl -L "${{ steps.eas-build.outputs.app_url }}" -o app-under-test.apk
 
       - name: Upload APK to BrowserStack
         id: upload

@@ -51,6 +51,8 @@ jobs:
 
       - name: Get APK URL from EAS
         id: get-apk-url
+        env:
+          EAS_PROJECT_ID: 2d5b8137-12ec-45aa-9c23-56b6a1c522b7
         run: |
           set -euo pipefail
           COMMIT=${{ github.event.pull_request.head.sha || github.sha }}
@@ -61,16 +63,24 @@ jobs:
           BID=""
           JSON=""
 
+          fetch_json() {
+            if ! OUT=$(eas build:list \
+                --project-id "$EAS_PROJECT_ID" \
+                --platform android \
+                --status finished \
+                --buildProfile test \
+                --limit 50 \
+                --json 2>eas_err.log); then
+              echo "eas build:list failed. STDERR:"
+              cat eas_err.log || true
+              exit 1
+            fi
+            echo "$OUT"
+          }
+
           for i in $(seq 1 $ATTEMPTS); do
-            JSON=$(eas build:list \
-              --platform android \
-              --status finished \
-              --buildProfile test \
-              --limit 50 \
-              --json)
-
+            JSON="$(fetch_json)"
             echo "$JSON" | jq -e . >/dev/null || { echo "Non-JSON output from eas build:list"; echo "$JSON"; exit 1; }
-
             URL=$(echo "$JSON" | jq -r --arg COMMIT "$COMMIT" '
               map(select(.gitCommitHash == $COMMIT)) | first | .artifacts.buildUrl // empty')
             BID=$(echo "$JSON" | jq -r --arg COMMIT "$COMMIT" '
@@ -93,11 +103,11 @@ jobs:
 
           if [ -z "$URL" ]; then
             echo "No finished EAS build found (commit or fallback)."
+            echo "Recent finished builds payload:"
+            echo "$JSON" | jq '[.[] | {id, createdAt, profile, platform, status, gitCommitHash, artifact: .artifacts.buildUrl}]'
             exit 1
           fi
-
           echo "url=$URL" >> $GITHUB_OUTPUT
-
       - name: Download APK
         run: |
           curl -L "${{ steps.get-apk-url.outputs.url }}" -o app-under-test.apk

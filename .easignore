@@ -60,5 +60,11 @@ ios/*.env*.local
 *.key
 *.mobileprovision
 
-!src/frontend/polyfills/intl.ts
+# Ensure i18n artifacts are included even if parents are ignored somewhere
+!translations/
 !translations/messages.json
+
+!src/
+!src/frontend/
+!src/frontend/polyfills/
+!src/frontend/polyfills/intl.ts

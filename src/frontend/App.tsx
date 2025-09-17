@@ -32,7 +32,6 @@ import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
-import {createAppUsageStatsPromptStore} from './contexts/AppUsageStatsPromptContext.tsx';
 import {createMapeoApi} from './lib/createMapeoApi.ts';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 
@@ -135,10 +134,6 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 const savedLocationStore = createSavedLocationStore({persist: true});
 const lowStorageBannerStore = createLowStorageBannerStore();
 
-const appUsageStatsPromptStore = createAppUsageStatsPromptStore({
-  persist: true,
-});
-
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
   persistedMetricsDiagnosticsStore.instance.getState().isEnabled;
@@ -207,7 +202,6 @@ const App = () => {
             savedLocationStore={savedLocationStore}
             activeProjectIdStore={persistedActiveProjectIdStore}
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-            appUsageStatsPromptStore={appUsageStatsPromptStore}
             lowStorageBannerStore={lowStorageBannerStore}>
             <AppNavigator
               permissionAsked={permissionsAsked}

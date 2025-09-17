@@ -56,7 +56,6 @@ type AppProvidersProps = {
   metricsDiagnosticsStore: MetricsDiagnosticsStore;
   savedLocationStore: SavedLocationStore;
   queryClient: QueryClient;
-  appUsageStatsPromptStore: AppUsageStatsPromptStore;
   lowStorageBannerStore: LowStorageBannerStore;
 };
 

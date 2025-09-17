@@ -25,7 +25,6 @@ import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagn
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
 import {QueryClient} from '@tanstack/react-query';
 import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
-import {createAppUsageStatsPromptStore} from '../../../src/frontend/contexts/AppUsageStatsPromptContext';
 import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowStorageBannerContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
@@ -157,7 +156,6 @@ export function createAppProvidersWrapper({
     persist: false,
   });
 
-  const appUsageStatsPromptStore = createAppUsageStatsPromptStore();
   const lowStorageBannerStore = createLowStorageBannerStore();
 
   const OuterWrapper = createMinimalWrapper();
@@ -178,7 +176,6 @@ export function createAppProvidersWrapper({
           coordinateFormatStore={persistedCoordinateFormatStore}
           savedLocationStore={persistedSavedLocationStore}
           trackStore={persistedTrackStore}
-          appUsageStatsPromptStore={appUsageStatsPromptStore}
           lowStorageBannerStore={lowStorageBannerStore}>
           {children}
         </AppProviders>

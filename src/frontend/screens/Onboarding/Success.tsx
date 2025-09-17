@@ -13,7 +13,6 @@ import {WHITE} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {deviceType} from 'expo-device';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
-import {useAppUsageStatsPromptActions} from '../../contexts/AppUsageStatsPromptContext';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 
@@ -46,7 +45,6 @@ export const Success = ({
   route,
 }: NativeStackScreenProps<OnboardingParamsList, 'Success'>) => {
   const {mutate, status} = useSetOwnDeviceInfo();
-  const {recordCompleteOnboarding} = useAppUsageStatsPromptActions();
   const deviceName = route.params.deviceName;
   const {formatMessage: t} = useIntl();
 
@@ -74,7 +72,6 @@ export const Success = ({
           fullWidth
           style={{marginTop: 20}}
           onPress={() => {
-            recordCompleteOnboarding();
             mutate({
               name: deviceName,
               deviceType: expoToCoreDeviceType(deviceType),

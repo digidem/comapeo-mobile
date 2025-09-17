@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "¿Quieres descartar la observación?"
   },
+  "ExportSuccess.done": {
+    "message": "Listo"
+  },
+  "ExportSuccess.obs": {
+    "message": "<bold>All observations</bold> have been downloaded to your device."
+  },
+  "ExportSuccess.obsMedia": {
+    "message": "<bold>All observations with media</bold> have been downloaded to your device."
+  },
+  "ExportSuccess.title": {
+    "message": "¡Éxito!"
+  },
+  "ExportSuccess.tracks": {
+    "message": "<bold>Pistas</bold> han sido descargadas a tu dispositivo."
+  },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Regresar"
   },

@@ -3,17 +3,15 @@ import {renderHook, act} from '@testing-library/react-native';
 import {
   createAppUsageStatsStore,
   type AppUsageStatsStore,
-  AppUsageStatsPromptProvider,
+  AppUsageStatsProvider,
   useAppUsageStatsState,
-  useAppUsageStatsPromptActions,
+  useAppUsageStatsActions,
   AppUsageStatsState,
 } from './AppUsageStatsContext';
 
 function createWrapper(store: AppUsageStatsStore) {
   return ({children}: {children: ReactNode}) => (
-    <AppUsageStatsPromptProvider value={store}>
-      {children}
-    </AppUsageStatsPromptProvider>
+    <AppUsageStatsProvider value={store}>{children}</AppUsageStatsProvider>
   );
 }
 
@@ -56,7 +54,7 @@ describe('AppUsageStatsPromptContext', () => {
       appUsageMetricsOptOut: () => {},
     });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
+    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
     const stateHook = renderHook(
@@ -82,7 +80,7 @@ describe('AppUsageStatsPromptContext', () => {
       appUsageMetricsOptOut: () => {},
     });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
+    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
     const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
@@ -107,7 +105,7 @@ describe('AppUsageStatsPromptContext', () => {
       appUsageMetricsOptOut: () => {},
     });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
+    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
     const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
@@ -138,7 +136,7 @@ describe('AppUsageStatsPromptContext', () => {
       appUsageMetricsOptOut: () => {},
     });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
+    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
     const stateHook = renderHook(() => useAppUsageStatsState(s => s), {

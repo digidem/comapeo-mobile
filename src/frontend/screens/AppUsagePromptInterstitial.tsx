@@ -14,7 +14,7 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
 import {NEW_DARK_GREY} from '../lib/styles';
 
-import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsContext';
+import {useAppUsageStatsActions} from '../contexts/AppUsageStatsContext';
 const m = defineMessages({
   screenTitle: {
     id: 'screens.AppUsagePrompt.screenTitle',
@@ -49,7 +49,7 @@ const m = defineMessages({
 
 export const AppUsagePromptInterstitial = () => {
   const {formatMessage: t} = useIntl();
-  const {setOptedIn} = useAppUsageStatsPromptActions();
+  const {setOptedIn} = useAppUsageStatsActions();
 
   return (
     <ScreenContentWithDock

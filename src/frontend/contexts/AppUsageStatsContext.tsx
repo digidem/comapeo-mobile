@@ -8,7 +8,7 @@ import {
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 
 // Do not change!
-export const STORAGE_KEY = 'AppUsageStatsPrompt';
+export const STORAGE_KEY = 'AppUsageStats';
 
 export const AppUsageStatsSchemaV0 = v.object({
   optedIn: v.union([v.boolean(), v.null()]),
@@ -99,16 +99,14 @@ export function createAppUsageStatsStore({
 
 export type AppUsageStatsStore = ReturnType<typeof createAppUsageStatsStore>;
 
-const AppUsageStatsPromptContext = createContext<AppUsageStatsStore | null>(
-  null,
-);
+const AppUsageStatsContext = createContext<AppUsageStatsStore | null>(null);
 
-export const AppUsageStatsPromptProvider = AppUsageStatsPromptContext.Provider;
+export const AppUsageStatsProvider = AppUsageStatsContext.Provider;
 
 function useAppUsageStatsStore() {
-  const value = useContext(AppUsageStatsPromptContext);
+  const value = useContext(AppUsageStatsContext);
   if (!value) {
-    throw new Error('AppUsageStatsPromptProvider missing');
+    throw new Error('AppUsageStatsProvider missing');
   }
   return value;
 }
@@ -120,7 +118,7 @@ export function useAppUsageStatsState<T>(
   return useStore(instance, selector);
 }
 
-export function useAppUsageStatsPromptActions() {
+export function useAppUsageStatsActions() {
   const {actions} = useAppUsageStatsStore();
   return actions;
 }

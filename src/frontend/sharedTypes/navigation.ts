@@ -147,6 +147,8 @@ export type RootStackParamsList = {
   };
   ExportObservations: undefined;
   DidNotMoveBottomSheet: undefined;
+  AppUsagePromptInterstitial: undefined;
+  AppUsageSharingSuccess: undefined;
   ExportSuccess: {exportType: Exports};
 };
 

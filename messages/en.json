@@ -597,6 +597,39 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Use App Passcode"
   },
+  "screens.AppUsagePrompt.countIn": {
+    "message": "Yes, count me in"
+  },
+  "screens.AppUsagePrompt.idsScrambled": {
+    "message": "IDs are scrambled randomly and changed every month."
+  },
+  "screens.AppUsagePrompt.introText": {
+    "message": "Share how you use CoMapeo—any data shared cannot be used to track you."
+  },
+  "screens.AppUsagePrompt.neverStores": {
+    "message": "CoMapeo never stores IP addresses."
+  },
+  "screens.AppUsagePrompt.notNow": {
+    "message": "No, not now"
+  },
+  "screens.AppUsagePrompt.screenTitle": {
+    "message": "Help improve your experience."
+  },
+  "screens.AppUsagePrompt.turnOffAnytime": {
+    "message": "Turn off at any time."
+  },
+  "screens.AppUsageSharingSuccess.done": {
+    "message": "Done"
+  },
+  "screens.AppUsageSharingSuccess.nowSharing": {
+    "message": "is now sharing how you use CoMapeo with Awana Digital."
+  },
+  "screens.AppUsageSharingSuccess.removeAnytime": {
+    "message": "Change this anytime by navigating to Data & Privacy in the Menu."
+  },
+  "screens.AppUsageSharingSuccess.success": {
+    "message": "Success!"
+  },
   "screens.AudioAttachmentPlayback.navTitle": {
     "message": "Audio Recording"
   },

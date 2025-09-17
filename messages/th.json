@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "ยืนยันการยกเลิก?"
   },
+  "ExportSuccess.done": {
+    "message": "เสร็จสิ้น"
+  },
+  "ExportSuccess.obs": {
+    "message": "<bold>All observations</bold> have been downloaded to your device."
+  },
+  "ExportSuccess.obsMedia": {
+    "message": "<bold>All observations with media</bold> have been downloaded to your device."
+  },
+  "ExportSuccess.title": {
+    "message": "เสร็จสมบูรณ์!"
+  },
+  "ExportSuccess.tracks": {
+    "message": "<bold>Tracks</bold> have been downloaded to your device."
+  },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "ย้อนกลับ"
   },

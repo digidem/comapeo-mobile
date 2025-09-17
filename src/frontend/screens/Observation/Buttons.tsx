@@ -205,16 +205,14 @@ export const ButtonFields = ({
         ` - _*${preset ? preset.name : t(m.fallbackCategoryName)}*_` +
         ` - ${date}`;
 
-      const coordsText =
+      const location =
         observation.lat !== undefined && observation.lon !== undefined
-          ? formatCoords({
+          ? `${t(m.location)} ${formatCoords({
               lon: observation.lon,
               lat: observation.lat,
               format: coordinateFormat,
-            })
-          : undefined;
-
-      const location = coordsText ? `${t(m.location)} ${coordsText}` : '';
+            })}`
+          : '';
 
       const precision = observation.metadata?.position?.coords?.accuracy
         ? `${t(m.precision)} ${observation.metadata.position.coords.accuracy}m`

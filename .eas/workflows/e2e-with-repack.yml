@@ -1,4 +1,4 @@
-name: E2E (Fingerprint - Repack - Fallback Build)
+name: E2E (Fingerprint - Repack)
 
 on:
   pull_request:
@@ -34,20 +34,6 @@ jobs:
     if: ${{ needs.get_build.outputs.build_id }}
     params:
       build_id: ${{ needs.get_build.outputs.build_id }}
-      profile: test
-    env:
-      APP_VARIANT: releaseCandidate
-      EXPO_PUBLIC_E2E_TEST: 'true'
-      SENTRY_DISABLE_AUTO_UPLOAD: 'true'
-
-  build:
-    id: build
-    name: Build (fallback)
-    type: build
-    needs: [get_build]
-    if: ${{ !needs.get_build.outputs.build_id }}
-    params:
-      platform: android
       profile: test
     env:
       APP_VARIANT: releaseCandidate

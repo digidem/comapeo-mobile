@@ -57,20 +57,12 @@ jobs:
           expo-cache: true
           eas-cache: true
 
-      - name: Ensure jq (for parsing EAS JSON)
+      - name: Ensure jq (for parsing JSON)
         run: |
           sudo apt-get update
           sudo apt-get install -y jq
 
-      - name: Relax requireCommit for this run (local edit only)
-        run: |
-          cp eas.json eas.json.bak
-          jq '.cli.requireCommit=false' eas.json > eas.tmp.json
-          mv eas.tmp.json eas.json
-          echo "Patched eas.json:"
-          cat eas.json
-
-      - name: Run EAS Workflow (Fingerprint - Repack - Fallback)
+      - name: Run EAS Workflow (Fingerprint → Repack only)
         id: eas-wf
         env:
           EAS_ACCESS_TOKEN: ${{ secrets.EXPO_TOKEN }}
@@ -83,14 +75,11 @@ jobs:
           echo "$OUT" | jq -e . >/dev/null
 
           URL=$(echo "$OUT" | jq -r '(.artifacts.applicationArchiveUrl? // .artifacts.buildUrl? // empty)')
-
           if [ -z "$URL" ]; then
             URL=$(
               echo "$OUT" | jq -r '
                 [
                   (.jobs // [] | .[] | select((.id=="repack" or (.name // "") | test("Repack")) and (.status=="FINISHED"))
-                    | (.artifacts.applicationArchiveUrl? // .artifacts.buildUrl?)),
-                  (.jobs // [] | .[] | select((.id=="build" or (.name // "") | test("Build")) and (.status=="FINISHED"))
                     | (.artifacts.applicationArchiveUrl? // .artifacts.buildUrl?))
                 ]
                 | flatten
@@ -101,17 +90,14 @@ jobs:
           fi
 
           if [ -z "$URL" ]; then
-            echo "No direct artifact URL in workflow JSON; falling back to latest finished Android 'test' build."
-            LIST=$(eas build:list --platform android --status finished --buildProfile test --limit 10 --json)
-            URL=$(echo "$LIST" | jq -r '
-              (if type=="array" then . else (.items // .builds // .data // []) end)
-              | first | .artifacts.buildUrl // empty
-            ')
+            echo "::notice::No artifact from repack; running fallback EAS build (profile=test)."
+            OUT2=$(eas build --platform android --profile test --non-interactive --json --wait)
+            echo "$OUT2" | jq -e .
+            URL=$(echo "$OUT2" | jq -r '.[0].artifacts.buildUrl // empty')
           fi
 
           if [ -z "$URL" ]; then
-            echo "Could not determine APK URL from workflow or fallback."
-            echo "Workflow JSON keys:"; echo "$OUT" | jq 'keys' || true
+            echo "Could not determine APK URL from repack or fallback build."
             exit 1
           fi
 

@@ -12,7 +12,6 @@ import type {MapeoClientApi} from '@comapeo/ipc';
 
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
-import {ActiveProjectProvider} from '../contexts/ActiveProjectContext';
 
 import {HomeHeader} from './HomeHeader';
 
@@ -64,7 +63,6 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
   let manager: MapeoManager;
   let client: MapeoClientApi;
   let onTeardown: Array<() => unknown> = [];
-  let projectId: string;
 
   beforeEach(async () => {
     onTeardown = [];
@@ -78,8 +76,6 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
     client = ipc.client;
     onTeardown.push(ipc.stop);
 
-    projectId = await client.createProject({name: undefined});
-
     mockTotalBytes = 64 * 1024 * 1024 * 1024;
     mockFreeBytes = null;
   });
@@ -90,26 +86,19 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
 
   const renderHeader = ({
     isOnline = true,
-    activeProjectId = projectId,
   }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
     const appProviders = createAppProvidersWrapper({
       mapeoApi: client,
       isOnline,
-      activeProjectId,
     });
     onTeardown.push(appProviders.teardown);
 
     const utils = render(
       <NavigationContainer>
         <React.Suspense fallback={null}>
-          <ActiveProjectProvider activeProjectId={activeProjectId}>
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-              <Stack.Screen
-                name="HomeHeaderRoute"
-                component={HomeHeaderScreen}
-              />
-            </Stack.Navigator>
-          </ActiveProjectProvider>
+          <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="HomeHeaderRoute" component={HomeHeaderScreen} />
+          </Stack.Navigator>
         </React.Suspense>
       </NavigationContainer>,
       {wrapper: appProviders.wrapper},

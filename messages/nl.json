@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Waarneming annuleren?"
   },
+  "ExportSuccess.done": {
+    "message": "Voltooid"
+  },
+  "ExportSuccess.obs": {
+    "message": "<bold>Alle waarnemingen</bold> zijn gedownload naar je apparaat."
+  },
+  "ExportSuccess.obsMedia": {
+    "message": "<bold>Alle waarnemingen met media</bold> zijn gedownload naar je apparaat."
+  },
+  "ExportSuccess.title": {
+    "message": "Voltooid!"
+  },
+  "ExportSuccess.tracks": {
+    "message": "<bold>Tracks</bold> zijn gedownload naar uw apparaat."
+  },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Ga terug"
   },

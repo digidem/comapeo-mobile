@@ -172,12 +172,8 @@ export const MapScreen = ({
           {isFinishedLoadingStyle && authState !== 'obscured' && (
             <>
               <RemoteDetectionAlertsMapLayer />
-              {isTracking && (
-                <>
-                  <CurrentTrackMapLayer />
-                  <UserTooltipMarker />
-                </>
-              )}
+              <CurrentTrackMapLayer />
+              {isTracking && <UserTooltipMarker />}
               <TracksMapLayer />
               <ObservationMapLayer />
             </>

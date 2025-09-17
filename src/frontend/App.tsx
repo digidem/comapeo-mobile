@@ -34,6 +34,7 @@ import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
 import {createMapeoApi} from './lib/createMapeoApi.ts';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
+import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -171,6 +172,12 @@ TaskManager.defineTask(
   },
 );
 
+const appUsagePromptStore = createAppUsageStatsStore({
+  persist: true,
+  appUsageMetricsOptIn: () => {},
+  appUsageMetricsOptOut: () => {},
+});
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -202,6 +209,7 @@ const App = () => {
             savedLocationStore={savedLocationStore}
             activeProjectIdStore={persistedActiveProjectIdStore}
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+            appUsageStatsStore={appUsagePromptStore}
             lowStorageBannerStore={lowStorageBannerStore}>
             <AppNavigator
               permissionAsked={permissionsAsked}

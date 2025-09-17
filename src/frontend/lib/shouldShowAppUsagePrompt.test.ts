@@ -1,5 +1,5 @@
 import {shouldShowAppUsagePrompt} from './shouldShowAppUsagePrompt';
-import type {AppUsageStatsPromptState} from '../contexts/AppUsageStatsPromptContext';
+import type {AppUsageStatsPromptState} from '../contexts/AppUsageStatsContext';
 
 describe('shouldShowAppUsagePrompt', () => {
   const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;

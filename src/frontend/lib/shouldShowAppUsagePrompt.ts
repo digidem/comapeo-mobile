@@ -1,4 +1,4 @@
-import type {AppUsageStatsPromptState} from '../contexts/AppUsageStatsPromptContext';
+import type {AppUsageStatsPromptState} from '../contexts/AppUsageStatsContext';
 
 export function shouldShowAppUsagePrompt(
   state: AppUsageStatsPromptState,

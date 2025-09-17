@@ -14,7 +14,7 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
 import {NEW_DARK_GREY} from '../lib/styles';
 
-import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsPromptContext';
+import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsContext';
 const m = defineMessages({
   screenTitle: {
     id: 'screens.AppUsagePrompt.screenTitle',

@@ -9,7 +9,7 @@ import {SecondaryButton} from '../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
-import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsPromptContext';
+import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsContext';
 
 const m = defineMessages({
   success: {

@@ -7,7 +7,7 @@ import {
   useAppUsageStatsPromptState,
   useAppUsageStatsPromptActions,
   AppUsageStatsPromptState,
-} from './AppUsageStatsPromptContext';
+} from './AppUsageStatsContext';
 
 function createWrapper(store: AppUsageStatsPromptStore) {
   return ({children}: {children: ReactNode}) => (

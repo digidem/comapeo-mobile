@@ -1,4 +1,4 @@
-import {createContext, useContext} from 'react';
+import {createContext, use} from 'react';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
@@ -16,7 +16,6 @@ export const AppUsageStatsPromptSchemaV0 = v.object({
   lastPromptAt: v.union([v.number(), v.null()]),
   promptCount: v.number(),
   optInStartedAt: v.optional(v.union([v.number(), v.null()])),
-  optInExpiresAt: v.optional(v.union([v.number(), v.null()])),
 });
 
 export type AppUsageStatsPromptState = v.InferOutput<
@@ -29,7 +28,6 @@ const initialState: AppUsageStatsPromptState = {
   lastPromptAt: null,
   promptCount: 0,
   optInStartedAt: null,
-  optInExpiresAt: null,
 };
 
 function createInitialState(): AppUsageStatsPromptState {
@@ -39,11 +37,20 @@ function createInitialState(): AppUsageStatsPromptState {
     lastPromptAt: null,
     promptCount: 0,
     optInStartedAt: null,
-    optInExpiresAt: null,
   };
 }
 
-export function createAppUsageStatsPromptStore({persist} = {persist: false}) {
+type createAppUsageStatsPromptStoreProps = {
+  persist?: boolean;
+  appUsageMetricsOptIn: () => void;
+  appUsageMetricsOptOut: () => void;
+};
+
+export function createAppUsageStatsPromptStore({
+  persist = false,
+  appUsageMetricsOptIn,
+  appUsageMetricsOptOut,
+}: createAppUsageStatsPromptStoreProps) {
   let store: StoreApi<AppUsageStatsPromptState>;
 
   if (persist) {
@@ -68,23 +75,22 @@ export function createAppUsageStatsPromptStore({persist} = {persist: false}) {
     setOptedIn: (optedIn: boolean) => {
       const now = Date.now();
       const state = store.getState();
-      const TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
 
+      appUsageMetricsOptIn();
       if (optedIn) {
         store.setState({
           optedIn: true,
           lastPromptAt: now,
           promptCount: state.promptCount,
           optInStartedAt: now,
-          optInExpiresAt: now + TWELVE_MONTHS_MS,
         });
       } else {
+        appUsageMetricsOptOut();
         store.setState({
           optedIn: false,
           lastPromptAt: now,
           promptCount: state.promptCount + 1,
           optInStartedAt: null,
-          optInExpiresAt: null,
         });
       }
     },
@@ -103,7 +109,7 @@ const AppUsageStatsPromptContext =
 export const AppUsageStatsPromptProvider = AppUsageStatsPromptContext.Provider;
 
 function useAppUsageStatsPromptStore() {
-  const value = useContext(AppUsageStatsPromptContext);
+  const value = use(AppUsageStatsPromptContext);
   if (!value) {
     throw new Error('AppUsageStatsPromptProvider missing');
   }

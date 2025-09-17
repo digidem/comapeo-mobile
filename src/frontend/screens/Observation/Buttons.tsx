@@ -200,13 +200,6 @@ export const ButtonFields = ({
 
       const date = formatDate(observation.createdAt, {format: 'long'});
 
-      // Insert a zero-width space after every 5 digits inside long numbers (>=6 digits) so it doesn't autolink
-      function breakLongNumbersForWhatsApp(s: string): string {
-        return s.replace(/\d{6,}/g, m =>
-          m.replace(/(\d{5})(?=\d)/g, '$1\u200B'),
-        );
-      }
-
       const subject =
         `${t(m.comapeoData, {projectName: name || t(m.defaultProjectName)})}` +
         ` - _*${preset ? preset.name : t(m.fallbackCategoryName)}*_` +
@@ -221,9 +214,7 @@ export const ButtonFields = ({
             })
           : undefined;
 
-      const location = coordsText
-        ? `${t(m.location)} ${breakLongNumbersForWhatsApp(coordsText)}`
-        : '';
+      const location = coordsText ? `${t(m.location)} ${coordsText}` : '';
 
       const precision = observation.metadata?.position?.coords?.accuracy
         ? `${t(m.precision)} ${observation.metadata.position.coords.accuracy}m`

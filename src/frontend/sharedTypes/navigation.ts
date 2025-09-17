@@ -11,6 +11,7 @@ import {
   SavedPhoto,
 } from '../contexts/PhotoPromiseContext/types';
 import {Audio} from 'expo-av';
+import {Exports} from '../screens/ExportObservations';
 
 export interface TabBarIconProps {
   size: number;
@@ -146,6 +147,7 @@ export type RootStackParamsList = {
   };
   ExportObservations: undefined;
   DidNotMoveBottomSheet: undefined;
+  ExportSuccess: {exportType: Exports};
 };
 
 export type OnboardingParamsList = {

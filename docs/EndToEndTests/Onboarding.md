@@ -2,8 +2,12 @@
 
 - [Onboarding](#onboarding)
   - [Overview](#overview)
-- [Creating a Device Name](#creating-a-device-name)
+- [Data \& Privacy](#data--privacy)
   - [Test Objectives](#test-objectives)
+- [Privacy Policy](#privacy-policy)
+  - [Test Objectives](#test-objectives-1)
+- [Creating a Device Name](#creating-a-device-name)
+  - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations)
 
 ## Onboarding

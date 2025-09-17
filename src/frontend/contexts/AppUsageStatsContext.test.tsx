@@ -1,15 +1,15 @@
 import React, {ReactNode} from 'react';
 import {renderHook, act} from '@testing-library/react-native';
 import {
-  createAppUsageStatsPromptStore,
-  type AppUsageStatsPromptStore,
+  createAppUsageStatsStore,
+  type AppUsageStatsStore,
   AppUsageStatsPromptProvider,
-  useAppUsageStatsPromptState,
+  useAppUsageStatsState,
   useAppUsageStatsPromptActions,
-  AppUsageStatsPromptState,
+  AppUsageStatsState,
 } from './AppUsageStatsContext';
 
-function createWrapper(store: AppUsageStatsPromptStore) {
+function createWrapper(store: AppUsageStatsStore) {
   return ({children}: {children: ReactNode}) => (
     <AppUsageStatsPromptProvider value={store}>
       {children}
@@ -33,12 +33,12 @@ describe('AppUsageStatsPromptContext', () => {
   });
 
   it('initial state is correct', () => {
-    const store = createAppUsageStatsPromptStore({
+    const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
     });
     const wrapper = createWrapper(store);
-    const {result} = renderHook(() => useAppUsageStatsPromptState(s => s), {
+    const {result} = renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
     expect(result.current).toStrictEqual({
@@ -47,11 +47,11 @@ describe('AppUsageStatsPromptContext', () => {
       lastPromptAt: null,
       promptCount: 0,
       optInStartedAt: null,
-    } as AppUsageStatsPromptState);
+    } as AppUsageStatsState);
   });
 
   it('records the completion of onboarding exactly once', () => {
-    const store = createAppUsageStatsPromptStore({
+    const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
     });
@@ -60,7 +60,7 @@ describe('AppUsageStatsPromptContext', () => {
       wrapper,
     });
     const stateHook = renderHook(
-      () => useAppUsageStatsPromptState(s => s.completedOnboardingAt),
+      () => useAppUsageStatsState(s => s.completedOnboardingAt),
       {wrapper},
     );
 
@@ -77,7 +77,7 @@ describe('AppUsageStatsPromptContext', () => {
   });
 
   it('setOptedIn(true) sets 12-month window fields, updates lastPromptAt, and does not bump promptCount', () => {
-    const store = createAppUsageStatsPromptStore({
+    const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
     });
@@ -85,7 +85,7 @@ describe('AppUsageStatsPromptContext', () => {
     const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useAppUsageStatsPromptState(s => s), {
+    const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
 
@@ -102,7 +102,7 @@ describe('AppUsageStatsPromptContext', () => {
   });
 
   it('setOptedIn(false) clears 12-month window fields, updates lastPromptAt, and bumps promptCount each time', () => {
-    const store = createAppUsageStatsPromptStore({
+    const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
     });
@@ -110,7 +110,7 @@ describe('AppUsageStatsPromptContext', () => {
     const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useAppUsageStatsPromptState(s => s), {
+    const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
 
@@ -133,7 +133,7 @@ describe('AppUsageStatsPromptContext', () => {
   });
 
   it('accepting after a decline keeps promptCount unchanged on accept but sets the 12-month window', () => {
-    const store = createAppUsageStatsPromptStore({
+    const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
     });
@@ -141,7 +141,7 @@ describe('AppUsageStatsPromptContext', () => {
     const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useAppUsageStatsPromptState(s => s), {
+    const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
 

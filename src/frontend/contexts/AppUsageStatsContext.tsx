@@ -10,7 +10,7 @@ import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 // Do not change!
 export const STORAGE_KEY = 'AppUsageStatsPrompt';
 
-export const AppUsageStatsPromptSchemaV0 = v.object({
+export const AppUsageStatsSchemaV0 = v.object({
   optedIn: v.union([v.boolean(), v.null()]),
   completedOnboardingAt: v.union([v.number(), v.null()]),
   lastPromptAt: v.union([v.number(), v.null()]),
@@ -18,11 +18,9 @@ export const AppUsageStatsPromptSchemaV0 = v.object({
   optInStartedAt: v.optional(v.union([v.number(), v.null()])),
 });
 
-export type AppUsageStatsPromptState = v.InferOutput<
-  typeof AppUsageStatsPromptSchemaV0
->;
+export type AppUsageStatsState = v.InferOutput<typeof AppUsageStatsSchemaV0>;
 
-const initialState: AppUsageStatsPromptState = {
+const initialState: AppUsageStatsState = {
   optedIn: null,
   completedOnboardingAt: null,
   lastPromptAt: null,
@@ -30,7 +28,7 @@ const initialState: AppUsageStatsPromptState = {
   optInStartedAt: null,
 };
 
-function createInitialState(): AppUsageStatsPromptState {
+function createInitialState(): AppUsageStatsState {
   return {
     optedIn: null,
     completedOnboardingAt: null,
@@ -40,22 +38,22 @@ function createInitialState(): AppUsageStatsPromptState {
   };
 }
 
-type createAppUsageStatsPromptStoreProps = {
+type createAppUsageStatsStoreProps = {
   persist?: boolean;
   appUsageMetricsOptIn: () => void;
   appUsageMetricsOptOut: () => void;
 };
 
-export function createAppUsageStatsPromptStore({
+export function createAppUsageStatsStore({
   persist = false,
   appUsageMetricsOptIn,
   appUsageMetricsOptOut,
-}: createAppUsageStatsPromptStoreProps) {
-  let store: StoreApi<AppUsageStatsPromptState>;
+}: createAppUsageStatsStoreProps) {
+  let store: StoreApi<AppUsageStatsState>;
 
   if (persist) {
     store = createStore(
-      createPersistedState<AppUsageStatsPromptState>(() => initialState, {
+      createPersistedState<AppUsageStatsState>(() => initialState, {
         name: STORAGE_KEY,
         version: 0,
         storage: createJSONStorage(() => MMKVZustandStorage),
@@ -99,16 +97,15 @@ export function createAppUsageStatsPromptStore({
   return {instance: store, actions};
 }
 
-export type AppUsageStatsPromptStore = ReturnType<
-  typeof createAppUsageStatsPromptStore
->;
+export type AppUsageStatsStore = ReturnType<typeof createAppUsageStatsStore>;
 
-const AppUsageStatsPromptContext =
-  createContext<AppUsageStatsPromptStore | null>(null);
+const AppUsageStatsPromptContext = createContext<AppUsageStatsStore | null>(
+  null,
+);
 
 export const AppUsageStatsPromptProvider = AppUsageStatsPromptContext.Provider;
 
-function useAppUsageStatsPromptStore() {
+function useAppUsageStatsStore() {
   const value = use(AppUsageStatsPromptContext);
   if (!value) {
     throw new Error('AppUsageStatsPromptProvider missing');
@@ -116,14 +113,14 @@ function useAppUsageStatsPromptStore() {
   return value;
 }
 
-export function useAppUsageStatsPromptState<T>(
-  selector: (state: AppUsageStatsPromptState) => T,
+export function useAppUsageStatsState<T>(
+  selector: (state: AppUsageStatsState) => T,
 ): T {
-  const {instance} = useAppUsageStatsPromptStore();
+  const {instance} = useAppUsageStatsStore();
   return useStore(instance, selector);
 }
 
 export function useAppUsageStatsPromptActions() {
-  const {actions} = useAppUsageStatsPromptStore();
+  const {actions} = useAppUsageStatsStore();
   return actions;
 }

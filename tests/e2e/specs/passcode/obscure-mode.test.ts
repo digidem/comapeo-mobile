@@ -7,11 +7,11 @@ import {checkForElementGone} from '../../utils/checkForGone';
 describe('Passcode - Obscure Passcode Mode', () => {
   it('should show an observations before going into obscure mode', async () => {
     await $('~Add Observation').click();
-    await $(byTextMatches('Airstrip')).click();
+    const airstripCategory = await $(byTextMatches('Airstrip'));
+    await airstripCategory.click();
+    await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-    await driver.pause(1000);
-
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
@@ -57,6 +57,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     const animalCategory = await $(byTextMatches('Animal'));
     await animalCategory.click();
 
+    await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     try {

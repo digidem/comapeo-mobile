@@ -5,7 +5,7 @@ import {
   persist as createPersistedState,
 } from 'zustand/middleware';
 
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
 
 type ActiveProjectIdState = {
   projectId?: string;
@@ -28,7 +28,7 @@ export function createActiveProjectIdStore({persist} = {persist: false}) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => MMKVStoreInitializer),
         version: 0,
       }),
     );

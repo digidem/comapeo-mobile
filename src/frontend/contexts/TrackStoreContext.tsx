@@ -6,7 +6,7 @@ import {
 } from 'zustand/middleware';
 import * as v from 'valibot';
 
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
 import {LocationHistoryPoint} from '../sharedTypes/location';
 import {calculateTotalDistance} from '../utils/distance';
 import {Preset} from '@comapeo/schema';
@@ -82,7 +82,7 @@ export function createTrackStore({persist} = {persist: false}) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => MMKVStoreInitializer),
         version: 1,
         migrate: (persistedState, version): TrackState => {
           const newState = createInitialState();

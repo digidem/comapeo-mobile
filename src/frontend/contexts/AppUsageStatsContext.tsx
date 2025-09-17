@@ -5,7 +5,7 @@ import {
   createJSONStorage,
   persist as createPersistedState,
 } from 'zustand/middleware';
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
 
 // Do not change!
 export const STORAGE_KEY = 'AppUsageStats';
@@ -56,7 +56,7 @@ export function createAppUsageStatsStore({
       createPersistedState<AppUsageStatsState>(() => initialState, {
         name: STORAGE_KEY,
         version: 0,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => MMKVStoreInitializer),
       }),
     );
   } else {

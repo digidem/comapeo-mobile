@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "観察記録を破棄しますか？"
   },
+  "ExportSuccess.done": {
+    "message": "完了"
+  },
+  "ExportSuccess.obs": {
+    "message": "<bold>すべての観察記録</bold> がお使いのデバイスにダウンロードされました。"
+  },
+  "ExportSuccess.obsMedia": {
+    "message": "<bold>メディア</bold> のすべての観察記録がお使いのデバイスにダウンロードされました。"
+  },
+  "ExportSuccess.title": {
+    "message": "成功！"
+  },
+  "ExportSuccess.tracks": {
+    "message": "<bold>トラック</bold> がお使いのデバイスにダウンロードされました。"
+  },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "戻る"
   },

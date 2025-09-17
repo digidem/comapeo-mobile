@@ -339,6 +339,21 @@
     "description": "Button to share an observation",
     "message": "แบ่งปัน"
   },
+  "Storage.MapBanner.title": {
+    "message": "Your device has low storage."
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "Free up space"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "Only {free}mb left on your device"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "Some features may stop working."
+  },
+  "Storage.MenuAlert.title": {
+    "message": "Your device has low storage."
+  },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "Exit Tracks"
   },

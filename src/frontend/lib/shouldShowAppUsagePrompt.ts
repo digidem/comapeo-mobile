@@ -1,7 +1,7 @@
-import type {AppUsageStatsPromptState} from '../contexts/AppUsageStatsContext';
+import type {AppUsageStatsState} from '../contexts/AppUsageStatsContext';
 
 export function shouldShowAppUsagePrompt(
-  state: AppUsageStatsPromptState,
+  state: AppUsageStatsState,
   now: number = Date.now(),
 ) {
   if (state.optedIn === true) {

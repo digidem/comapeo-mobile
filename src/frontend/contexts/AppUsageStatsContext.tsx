@@ -1,4 +1,4 @@
-import {createContext, use} from 'react';
+import {createContext, useContext} from 'react';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
@@ -106,7 +106,7 @@ const AppUsageStatsPromptContext = createContext<AppUsageStatsStore | null>(
 export const AppUsageStatsPromptProvider = AppUsageStatsPromptContext.Provider;
 
 function useAppUsageStatsStore() {
-  const value = use(AppUsageStatsPromptContext);
+  const value = useContext(AppUsageStatsPromptContext);
   if (!value) {
     throw new Error('AppUsageStatsPromptProvider missing');
   }

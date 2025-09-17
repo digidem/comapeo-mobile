@@ -1,5 +1,5 @@
 import {shouldShowAppUsagePrompt} from './shouldShowAppUsagePrompt';
-import type {AppUsageStatsPromptState} from '../contexts/AppUsageStatsContext';
+import type {AppUsageStatsState} from '../contexts/AppUsageStatsContext';
 
 describe('shouldShowAppUsagePrompt', () => {
   const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
@@ -7,7 +7,7 @@ describe('shouldShowAppUsagePrompt', () => {
   const NOW = 1_000_000;
 
   it('never shows if optedIn === true', () => {
-    const state: AppUsageStatsPromptState = {
+    const state: AppUsageStatsState = {
       optedIn: true,
       completedOnboardingAt: NOW - ONE_WEEK - 1,
       lastPromptAt: NOW - THREE_MO - 1,
@@ -17,7 +17,7 @@ describe('shouldShowAppUsagePrompt', () => {
   });
 
   it('shows initial prompt once a week after onboarding, when promptCount===0', () => {
-    const state: AppUsageStatsPromptState = {
+    const state: AppUsageStatsState = {
       optedIn: null,
       completedOnboardingAt: NOW - ONE_WEEK,
       lastPromptAt: null,
@@ -27,7 +27,7 @@ describe('shouldShowAppUsagePrompt', () => {
   });
 
   it('does not show initial prompt if not enough time passed', () => {
-    const state: AppUsageStatsPromptState = {
+    const state: AppUsageStatsState = {
       optedIn: null,
       completedOnboardingAt: NOW - (ONE_WEEK - 1),
       lastPromptAt: null,
@@ -38,7 +38,7 @@ describe('shouldShowAppUsagePrompt', () => {
 
   it('shows re-prompt up to 3 times, every 3 months', () => {
     for (let count = 1; count <= 3; count++) {
-      const state: AppUsageStatsPromptState = {
+      const state: AppUsageStatsState = {
         optedIn: false,
         completedOnboardingAt: NOW - ONE_WEEK - 1,
         lastPromptAt: NOW - THREE_MO,
@@ -49,7 +49,7 @@ describe('shouldShowAppUsagePrompt', () => {
   });
 
   it('does not show re-prompt if promptCount > 3', () => {
-    const state: AppUsageStatsPromptState = {
+    const state: AppUsageStatsState = {
       optedIn: false,
       completedOnboardingAt: NOW - ONE_WEEK - 1,
       lastPromptAt: NOW - THREE_MO,
@@ -59,7 +59,7 @@ describe('shouldShowAppUsagePrompt', () => {
   });
 
   it('does not show re-prompt if 3mo not passed yet', () => {
-    const state: AppUsageStatsPromptState = {
+    const state: AppUsageStatsState = {
       optedIn: false,
       completedOnboardingAt: NOW - ONE_WEEK - 1,
       lastPromptAt: NOW - (THREE_MO - 1),

@@ -32,8 +32,27 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
     await expect(header).toHaveText(output.names.secondProject);
   });
 
+  it('should display the project name in the side drawer', async () => {
+    const drawerIcon = await $('~Open Menu');
+    await drawerIcon.click();
+
+    await expect($(byText(`${output.names.secondProject}`))).toBeDisplayed();
+    await expect(
+      $(byText('You are a coordinator on this project.')),
+    ).toBeDisplayed();
+
+    const inviteButton = await $(byText('Invite'));
+    await expect(inviteButton).toBeDisplayed();
+    const viewButton = await $(byText('View'));
+    await expect(viewButton).toBeDisplayed();
+
+    await inviteButton.click();
+    await expect($(byTextMatches('Select Device to Invite'))).toBeDisplayed();
+    const backButton = $(byResourceId('MAIN.header-back-btn'));
+    await backButton.click();
+  });
+
   it('should switch back to the Solo project and update headers accordingly', async () => {
-    await $('~Open Menu').click();
     await $(byText('All Projects')).click();
     await $(byTextMatches('My Solo Project')).click();
     await $('~Close Menu').click();

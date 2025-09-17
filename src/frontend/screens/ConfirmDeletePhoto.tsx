@@ -52,6 +52,7 @@ export function ConfirmDeletePhoto({
         <View style={{gap: 20}}>
           <DestructiveButton
             fullSize
+            testID="PHOTO.deletePhoto"
             text={t(m.deletePhoto)}
             renderIcon={({color, size}) => (
               <MaterialIcons name="delete" size={size} color={color} />

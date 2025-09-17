@@ -1,42 +1,31 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import SuccessIcon from '../../images/Success.svg';
-import NewDeviceLogo from '../../images/NewDeviceLogo.svg';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Text} from '../../sharedComponents/Text';
-import {Button} from '../../sharedComponents/Button';
 import {defineMessages, useIntl} from 'react-intl';
 import {useSetOwnDeviceInfo} from '@comapeo/core-react';
-import {Loading} from '../../sharedComponents/Loading';
-import {WHITE} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {deviceType} from 'expo-device';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {Loading} from '../../sharedComponents/Loading';
+import {BLACK} from '../../lib/styles';
 
 const m = defineMessages({
   success: {
     id: 'screens.DeviceNaming.Success.success',
     defaultMessage: 'Success!',
   },
-  description: {
-    id: 'screens.DeviceNaming.Success.description',
-    defaultMessage: 'You named your device',
+  ready: {
+    id: 'screens.DeviceNaming.Success.ready',
+    defaultMessage: 'is now ready.',
   },
-  startUsing: {
-    id: 'screens.DeviceNaming.Success.startUsihng',
-    defaultMessage: 'Start Using CoMapeo',
-  },
-  startMappingInstructions: {
-    id: 'screens.DeviceNaming.Success.startMappingInstructions',
-    defaultMessage:
-      'On the next screen, tap the orange button to record your first observation.',
-  },
-  findSettings: {
-    id: 'screens.DeviceNaming.Success.findSettings',
-    defaultMessage:
-      'To find your project settings go to the main menu found on the map screen.',
+  next: {
+    id: 'screens.DeviceNaming.Success.next',
+    defaultMessage: 'Next',
   },
 });
 
@@ -49,58 +38,51 @@ export const Success = ({
 
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
+      <View style={styles.header}>
         <SuccessIcon />
-        <Text style={styles.text}>{t(m.success)}</Text>
-        <Text style={{marginTop: 20}}>{t(m.description)} </Text>
-        <View style={styles.deviceText}>
-          <NewDeviceLogo />
-          <Text style={{marginLeft: 10}}>{deviceName}</Text>
-        </View>
-        <View>
-          <Text style={{marginTop: 20}}>{t(m.startMappingInstructions)}</Text>
-          <Text></Text>
-          <Text>{t(m.findSettings)}</Text>
-        </View>
+        <HeaderText style={{color: BLACK}}>{t(m.success)}</HeaderText>
       </View>
-      <Button
-        testID="ONBOARDING.go-to-map-btn"
-        fullWidth
-        onPress={() => {
-          mutate({
-            name: deviceName,
-            deviceType: expoToCoreDeviceType(deviceType),
-          });
-        }}>
+      <View style={styles.textContainer}>
+        <HeaderText variant="header5">{deviceName}</HeaderText>
+        <BodyText>{t(m.ready)}</BodyText>
+      </View>
+      <View style={styles.buttonContainer}>
         {status === 'pending' ? (
-          <Loading style={{padding: 15}} size={15} color={WHITE} />
-        ) : status === 'success' ? (
-          <MaterialIcons name="check" size={30} color={WHITE} />
+          <Loading />
         ) : (
-          t(m.startUsing)
+          <PrimaryButton
+            testID="ONBOARDING.go-to-project-btn"
+            fullSize
+            onPress={() => {
+              mutate({
+                name: deviceName,
+                deviceType: expoToCoreDeviceType(deviceType),
+              });
+            }}
+            text={t(m.next)}
+          />
         )}
-      </Button>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    padding: 20,
     paddingTop: 80,
     justifyContent: 'space-between',
-    width: '100%',
-    height: '100%',
+    flex: 1,
   },
-  text: {
-    fontSize: 32,
-    marginTop: 20,
-  },
-  deviceText: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'center',
+  header: {
     alignItems: 'center',
+    gap: 20,
+  },
+  textContainer: {
+    alignItems: 'center',
+    paddingBottom: 60,
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    paddingBottom: 30,
   },
 });

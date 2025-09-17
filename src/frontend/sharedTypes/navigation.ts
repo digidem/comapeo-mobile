@@ -11,6 +11,7 @@ import {
   SavedPhoto,
 } from '../contexts/PhotoPromiseContext/types';
 import {Audio} from 'expo-av';
+import {Exports} from '../screens/ExportObservations';
 
 export interface TabBarIconProps {
   size: number;
@@ -42,9 +43,12 @@ export type RootStackParamsList = {
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
   Experiments: undefined;
-  PhotoPreviewModal: {
-    observationDocId?: string;
-    photo: SavedPhoto | ProcessedDraftPhoto;
+  DraftPhotoPreviewModal: {
+    photo: ProcessedDraftPhoto;
+  };
+  AttachedPhotoPreviewModal: {
+    photo: SavedPhoto;
+    observationDocId: string;
   };
   ConfirmDeletePhoto: {
     onSuccess?: () => void;
@@ -144,6 +148,7 @@ export type RootStackParamsList = {
   ExportObservations: undefined;
   DidNotMoveBottomSheet: undefined;
   ShareProjectStats: {projectType: 'solo' | 'newProject'; projectName: string};
+  ExportSuccess: {exportType: Exports};
 };
 
 export type OnboardingParamsList = {
@@ -154,7 +159,18 @@ export type OnboardingParamsList = {
   Success: {deviceName: string};
 };
 
-export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;
+export type ProjectOnboardingParamsList = {
+  ProjectsIntro: undefined;
+  JoinProject: undefined;
+  OnboardingStartNewProject: undefined;
+  OnboardingCreateProject: undefined;
+  MapOnOwn: undefined;
+  ProjectCreatedOnboarding: {projectId: string; name: string};
+};
+
+export type AppStackParamsList = RootStackParamsList &
+  OnboardingParamsList &
+  ProjectOnboardingParamsList;
 
 export type NativeRootNavigationProps<
   ScreenName extends keyof AppStackParamsList,

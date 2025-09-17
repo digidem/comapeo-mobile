@@ -43,6 +43,7 @@ import {Button} from '../../sharedComponents/Button';
 import {ExchangeSettingsCard} from './ExchangeSettingsCard';
 import {WifiCard} from './WifiCard';
 import {DevicesAvailableHeader} from './DevicesAvailableHeader';
+import {STORAGE_QUERY_KEY} from '../../hooks/useStorageReadingQuery';
 
 const m = defineMessages({
   devicesFound: {
@@ -191,6 +192,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
         queryClient.invalidateQueries({
           queryKey: [ROOT_QUERY_KEY, 'projects', projectId],
         });
+        queryClient.invalidateQueries({queryKey: STORAGE_QUERY_KEY});
       });
 
       return () => {

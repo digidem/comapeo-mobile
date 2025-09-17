@@ -339,6 +339,21 @@
     "description": "Button to share an observation",
     "message": "Partager"
   },
+  "Storage.MapBanner.title": {
+    "message": "Le stockage de votre appareil est faible."
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "Libérer de l'espace"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "Only {free}mb left on your device"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "Certaines fonctionnalités peuvent ne plus fonctionner."
+  },
+  "Storage.MenuAlert.title": {
+    "message": "Le stockage de votre appareil est faible."
+  },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "Sortir des pistes"
   },

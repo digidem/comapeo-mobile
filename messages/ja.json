@@ -339,6 +339,21 @@
     "description": "Button to share an observation",
     "message": "共有"
   },
+  "Storage.MapBanner.title": {
+    "message": "デバイスのストレージ容量が少なくなっています。"
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "空き容量を増やす。"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "お使いのデバイスに残り {free}mbのみ"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "一部の機能が動作を停止する可能性があります。"
+  },
+  "Storage.MenuAlert.title": {
+    "message": "デバイスのストレージ容量が少なくなっています。"
+  },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "トラックを終了"
   },

@@ -27,6 +27,8 @@ import {
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
 import * as Sentry from '@sentry/react-native';
+import {useQueryClient} from '@tanstack/react-query';
+import {STORAGE_QUERY_KEY} from '../../hooks/useStorageReadingQuery.ts';
 
 const m = defineMessages({
   observation: {
@@ -72,6 +74,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const {mutateAsync: createAudioAttachmentAsync} = useCreateAudioAttachment({
     projectId,
   });
+  const queryClient = useQueryClient();
 
   const notes = value?.tags.notes;
   const presetName = preset
@@ -199,6 +202,8 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
               ? {docId: preset.docId, versionId: preset.versionId}
               : undefined,
           },
+        }).then(() => {
+          queryClient.invalidateQueries({queryKey: STORAGE_QUERY_KEY});
         });
       } catch (err) {
         Sentry.captureException(err);
@@ -217,6 +222,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     attachments,
     handleNavigationSuccess,
     navigation,
+    queryClient,
   ]);
 
   React.useLayoutEffect(() => {

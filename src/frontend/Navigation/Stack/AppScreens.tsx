@@ -11,6 +11,7 @@ import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
 import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
 import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
 import {Security} from '../../screens/Security';
+import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {ObservationCategoryChooser} from '../../screens/PresetChooser/ObservationCategoryChooser.tsx';
 import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
@@ -19,6 +20,10 @@ import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
+import {
+  CreateOrNameSoloProject,
+  createNavigationOptions as createNameProjectNavOptions,
+} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/ProjectCreated';
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
@@ -78,6 +83,7 @@ import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
 import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
@@ -109,8 +115,7 @@ import {
 import {AttachedPhotoPreviewModal} from '../../screens/PhotoPreviewModal/AttachedPhotoPreviewModal.tsx';
 import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/sharedNavOptions.tsx';
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
-import {CreateProjectScreen} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/CreateProject.tsx';
-import {NameSoloProjectScreen} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/NameSoloProject.tsx';
+import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -127,6 +132,14 @@ export const createDefaultScreenGroup = ({
         name="Home"
         options={{headerShown: false}}
         component={HomeTabs}
+      />
+      <RootStack.Screen
+        name="AuthScreen"
+        component={AuthScreen}
+        options={{
+          headerShown: false,
+          animation: 'fade',
+        }}
       />
       <RootStack.Screen
         name="ObservationEdit"
@@ -215,13 +228,13 @@ export const createDefaultScreenGroup = ({
       />
       <RootStack.Screen
         name="CreateProject"
-        component={CreateProjectScreen}
-        options={{headerTitle: intl(CreateProjectScreen.navTitle)}}
+        component={CreateOrNameSoloProject}
+        options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen
         name="NameSoloProject"
-        component={NameSoloProjectScreen}
-        options={{headerTitle: intl(NameSoloProjectScreen.navTitle)}}
+        component={CreateOrNameSoloProject}
+        options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen
         name="ProjectCreatedNewProject"
@@ -468,6 +481,7 @@ export const createDefaultScreenGroup = ({
         component={InviteSuccessfullyAccepted}
       />
       <RootStack.Screen name="InviteCanceled" component={InviteCanceled} />
+      <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
       <RootStack.Screen
         name="BackgroundMapErrorBottomSheet"
         component={BackgroundMapErrorBottomSheet}
@@ -487,6 +501,13 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="ConfirmPasscodeSheet"
         component={ConfirmPasscodeBottomSheet}
+      />
+      <RootStack.Screen
+        name="ExportSuccess"
+        component={ExportSuccess}
+        options={{
+          contentStyle: {backgroundColor: 'white'},
+        }}
       />
     </RootStack.Group>
   </>

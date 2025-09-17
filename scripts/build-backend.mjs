@@ -93,6 +93,17 @@ console.log(
   'Moving relevant files to nodejs-assets/nodejs-project directory...',
 );
 
+// TODO: Figure out how to know if module uses N-API at runtime
+const NATIVE_MODULES = [
+  {name: 'better-sqlite3', usesNapi: false},
+  // Native module seems to cause issues so do not need for now: https://github.com/digidem/comapeo-mobile/issues/1096
+  // {name: 'crc-native', usesNapi: true},
+  {name: 'fs-native-extensions', usesNapi: true},
+  {name: 'quickbit-native', usesNapi: true},
+  {name: 'simdle-native', usesNapi: true},
+  {name: 'sodium-native', usesNapi: true},
+];
+
 const KEEP_THESE = [
   'package.json',
   // Packaged backend code
@@ -103,6 +114,23 @@ const KEEP_THESE = [
   'node_modules/@mapeo/default-config/dist/mapeo-default-config.comapeocat',
   // Offline fallback map
   'node_modules/@comapeo/fallback-smp',
+  // Bare's require.addon() needs the package.json present for native modules
+  // At build time we use the presence of binding.gyp to determine whether
+  // native addons use node-gyp-build for addon resolution
+  ...NATIVE_MODULES.flatMap(m => {
+    const pkgPathAbs = require.resolve(`${m.name}/package.json`, {
+      paths: [nodejsAssetsBackendDirectory],
+    });
+    const pkgPathRel = path.relative(nodejsAssetsBackendDirectory, pkgPathAbs);
+    const bindingGypPath = path.join(path.dirname(pkgPathRel), 'binding.gyp');
+    if (
+      fs.existsSync(path.join(nodejsAssetsBackendDirectory, bindingGypPath))
+    ) {
+      return [pkgPathRel, bindingGypPath];
+    } else {
+      return pkgPathRel;
+    }
+  }),
 ];
 
 for (const name of KEEP_THESE) {
@@ -115,17 +143,6 @@ for (const name of KEEP_THESE) {
 }
 
 console.log('Downloading native prebuilds...');
-
-// TODO: Figure out how to know if module uses N-API at runtime
-const NATIVE_MODULES = [
-  {name: 'better-sqlite3', usesNapi: false},
-  // Native module seems to cause issues so do not need for now: https://github.com/digidem/comapeo-mobile/issues/1096
-  // {name: 'crc-native', usesNapi: true},
-  {name: 'fs-native-extensions', usesNapi: true},
-  {name: 'quickbit-native', usesNapi: true},
-  {name: 'simdle-native', usesNapi: true},
-  {name: 'sodium-native', usesNapi: true},
-];
 
 await downloadPrebuilds(
   NATIVE_MODULES.map(m => {

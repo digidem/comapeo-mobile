@@ -59,11 +59,9 @@ export function createMinimalWrapper() {
 export function createAppProvidersWrapper({
   mapeoApi,
   isOnline = true,
-  activeProjectId,
 }: {
   mapeoApi: MapeoClientApi;
   isOnline?: boolean;
-  activeProjectId?: string;
 }) {
   const queryClient = new QueryClient({
     // Disable garbage collection, so that no "collect garbage" timers are
@@ -160,12 +158,6 @@ export function createAppProvidersWrapper({
   });
 
   const appUsageStatsPromptStore = createAppUsageStatsPromptStore();
-  if (activeProjectId) {
-    persistedActiveProjectIdStore.instance.setState({
-      projectId: activeProjectId,
-    });
-  }
-
   const lowStorageBannerStore = createLowStorageBannerStore();
 
   const OuterWrapper = createMinimalWrapper();

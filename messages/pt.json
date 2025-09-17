@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Excluir observação?"
   },
+  "ExportSuccess.done": {
+    "message": "Concluído"
+  },
+  "ExportSuccess.obs": {
+    "message": "<bold>Todas as observações</bold> foram baixadas para o dispositivo."
+  },
+  "ExportSuccess.obsMedia": {
+    "message": "<bold>Todas as observações da mídia</bold> foram baixadas para o dispositivo."
+  },
+  "ExportSuccess.title": {
+    "message": "Sucesso!"
+  },
+  "ExportSuccess.tracks": {
+    "message": "<bold>Tracks</bold> have been downloaded to your device."
+  },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Voltar"
   },

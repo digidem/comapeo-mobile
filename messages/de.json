@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Beobachtung verwerfen?"
   },
+  "ExportSuccess.done": {
+    "message": "Fertig"
+  },
+  "ExportSuccess.obs": {
+    "message": "<bold>Alle Beobachtungen</bold> wurden auf Ihr Gerät heruntergeladen."
+  },
+  "ExportSuccess.obsMedia": {
+    "message": "<bold>Alle Beobachtungen mit den Medien</bold> wurden auf Ihr Gerät heruntergeladen."
+  },
+  "ExportSuccess.title": {
+    "message": "Erfolg!"
+  },
+  "ExportSuccess.tracks": {
+    "message": "<bold>Tracks</bold> wurden auf Ihr Gerät heruntergeladen."
+  },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Gehe zurück"
   },

@@ -5,6 +5,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {PhotoPromiseProvider} from './PhotoPromiseContext';
+import {ActiveProjectProvider} from './ActiveProjectContext';
 import {AuthProvider} from './AuthContext';
 import {
   LocalDiscoveryProvider,
@@ -37,6 +38,10 @@ import {
   SavedLocationStoreProvider,
   SavedLocationStore,
 } from './SavedLocationContext';
+import {
+  LowStorageBannerStoreProvider,
+  type LowStorageBannerStore,
+} from './LowStorageBannerContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -51,6 +56,7 @@ type AppProvidersProps = {
   metricsDiagnosticsStore: MetricsDiagnosticsStore;
   savedLocationStore: SavedLocationStore;
   queryClient: QueryClient;
+  lowStorageBannerStore: LowStorageBannerStore;
 };
 
 export const AppProviders = ({
@@ -66,6 +72,7 @@ export const AppProviders = ({
   metricsDiagnosticsStore,
   savedLocationStore,
   queryClient,
+  lowStorageBannerStore,
 }: AppProvidersProps) => {
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
@@ -76,29 +83,33 @@ export const AppProviders = ({
               value={manualEntryCoordinateFormatStore}>
               <TrackStoreProvider value={trackStore}>
                 <QueryClientProvider client={queryClient}>
-                  <SafeAreaProvider>
-                    <GestureHandlerRootView style={styles.flex}>
-                      <SavedLocationStoreProvider value={savedLocationStore}>
-                        <LocationProvider>
-                          <LocalDiscoveryProvider
-                            value={localDiscoveryController}>
-                            <ClientApiProvider clientApi={mapeoApi}>
-                              <BottomSheetModalProvider>
-                                <PhotoPromiseProvider>
-                                  <DraftObservationProvider
-                                    draftObservationStore={
-                                      persistedDrafObservationStore
-                                    }>
-                                    <AuthProvider>{children}</AuthProvider>
-                                  </DraftObservationProvider>
-                                </PhotoPromiseProvider>
-                              </BottomSheetModalProvider>
-                            </ClientApiProvider>
-                          </LocalDiscoveryProvider>
-                        </LocationProvider>
-                      </SavedLocationStoreProvider>
-                    </GestureHandlerRootView>
-                  </SafeAreaProvider>
+                  <LowStorageBannerStoreProvider value={lowStorageBannerStore}>
+                    <SafeAreaProvider>
+                      <GestureHandlerRootView style={styles.flex}>
+                        <SavedLocationStoreProvider value={savedLocationStore}>
+                          <LocationProvider>
+                            <LocalDiscoveryProvider
+                              value={localDiscoveryController}>
+                              <ClientApiProvider clientApi={mapeoApi}>
+                                <ActiveProjectProvider>
+                                  <BottomSheetModalProvider>
+                                    <PhotoPromiseProvider>
+                                      <DraftObservationProvider
+                                        draftObservationStore={
+                                          persistedDrafObservationStore
+                                        }>
+                                        <AuthProvider>{children}</AuthProvider>
+                                      </DraftObservationProvider>
+                                    </PhotoPromiseProvider>
+                                  </BottomSheetModalProvider>
+                                </ActiveProjectProvider>
+                              </ClientApiProvider>
+                            </LocalDiscoveryProvider>
+                          </LocationProvider>
+                        </SavedLocationStoreProvider>
+                      </GestureHandlerRootView>
+                    </SafeAreaProvider>
+                  </LowStorageBannerStoreProvider>
                 </QueryClientProvider>
               </TrackStoreProvider>
             </ManualEntryCoordinateFormatStoreProvider>

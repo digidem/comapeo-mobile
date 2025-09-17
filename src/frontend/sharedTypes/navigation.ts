@@ -11,6 +11,7 @@ import {
   SavedPhoto,
 } from '../contexts/PhotoPromiseContext/types';
 import {Audio} from 'expo-av';
+import {Exports} from '../screens/ExportObservations';
 
 export interface TabBarIconProps {
   size: number;
@@ -146,6 +147,7 @@ export type RootStackParamsList = {
   };
   ExportObservations: undefined;
   DidNotMoveBottomSheet: undefined;
+  ExportSuccess: {exportType: Exports};
 };
 
 export type OnboardingParamsList = {
@@ -156,18 +158,7 @@ export type OnboardingParamsList = {
   Success: {deviceName: string};
 };
 
-export type ProjectOnboardingParamsList = {
-  ProjectsIntro: undefined;
-  JoinProject: undefined;
-  OnboardingStartNewProject: undefined;
-  OnboardingCreateProject: undefined;
-  MapOnOwn: undefined;
-  ProjectCreatedOnboarding: {projectId: string; name: string};
-};
-
-export type AppStackParamsList = RootStackParamsList &
-  OnboardingParamsList &
-  ProjectOnboardingParamsList;
+export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;
 
 export type NativeRootNavigationProps<
   ScreenName extends keyof AppStackParamsList,

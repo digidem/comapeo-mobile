@@ -339,6 +339,21 @@
     "description": "Button to share an observation",
     "message": "Partager"
   },
+  "Storage.MapBanner.title": {
+    "message": "Le stockage de votre appareil est faible."
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "Libérer de l'espace"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "Only {free}mb left on your device"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "Certaines fonctionnalités peuvent ne plus fonctionner."
+  },
+  "Storage.MenuAlert.title": {
+    "message": "Le stockage de votre appareil est faible."
+  },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "Sortir des pistes"
   },
@@ -1355,6 +1370,17 @@
   "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Partager les informations de diagnostic"
   },
+  "screens.PhotoPreviewModal.attachedAtTime": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "Attaché à l'heure de l'observation"
+  },
+  "screens.PhotoPreviewModal.attachedBy": {
+    "description": "Label for the person who attached the photo to the observation",
+    "message": "Attaché par {name}"
+  },
+  "screens.PhotoPreviewModal.distanceFromObs": {
+    "message": "Attached {distance} from observation"
+  },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Supprimer la photo"
   },
@@ -1373,8 +1399,16 @@
     "description": "Describes image layout when taking photo vertically",
     "message": "Portrait"
   },
+  "screens.PhotoPreviewModal.timeAttached": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "Attaché {formattedNum} après observation"
+  },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "Validé par CoMapeo"
+  },
+  "screens.PhotoPreviewModal.verifiedOriginal": {
+    "description": "Text indicating that the photo is a verified original",
+    "message": "Ceci est un original vérifié non modifié."
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "À propos d'Awana Digital"

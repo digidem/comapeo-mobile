@@ -339,6 +339,21 @@
     "description": "Button to share an observation",
     "message": "共有"
   },
+  "Storage.MapBanner.title": {
+    "message": "デバイスのストレージ容量が少なくなっています。"
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "空き容量を増やす。"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "お使いのデバイスに残り {free}mbのみ"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "一部の機能が動作を停止する可能性があります。"
+  },
+  "Storage.MenuAlert.title": {
+    "message": "デバイスのストレージ容量が少なくなっています。"
+  },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "トラックを終了"
   },
@@ -1355,6 +1370,17 @@
   "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "診断情報を共有"
   },
+  "screens.PhotoPreviewModal.attachedAtTime": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "観察時に添付されます"
+  },
+  "screens.PhotoPreviewModal.attachedBy": {
+    "description": "Label for the person who attached the photo to the observation",
+    "message": "{name} が添付しました"
+  },
+  "screens.PhotoPreviewModal.distanceFromObs": {
+    "message": "観察記録から添付された {distance}"
+  },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "写真を削除"
   },
@@ -1373,8 +1399,16 @@
     "description": "Describes image layout when taking photo vertically",
     "message": "縦向き"
   },
+  "screens.PhotoPreviewModal.timeAttached": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "観察記録の後に {formattedNum} を添付しました"
+  },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "CoMapeoによって検証されました"
+  },
+  "screens.PhotoPreviewModal.verifiedOriginal": {
+    "description": "Text indicating that the photo is a verified original",
+    "message": "これは確認されていないオリジナルです。"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Awana Digitalについて"

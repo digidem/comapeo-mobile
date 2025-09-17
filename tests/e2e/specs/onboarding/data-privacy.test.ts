@@ -9,7 +9,9 @@ describe('Onboarding - Data & Privacy Screen', () => {
     );
     await getStartedButton.click();
 
-    const privacyText = await $(byTextMatches('mappers securely collaborate'));
+    const privacyText = await $(
+      byTextMatches('map offline without needing servers'),
+    );
     await expect(privacyText).toBeDisplayed();
   });
 

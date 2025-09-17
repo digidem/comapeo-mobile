@@ -16,6 +16,9 @@ import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
 import {NEW_DARK_GREY, BLACK, WHITE} from '../lib/styles';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
 import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard.tsx';
+import {MenuLowStorageAlert} from '../sharedComponents/Storage/MenuLowStorageAlert.tsx';
+import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery.ts';
+import {isLowStorage, calcUsedPercentage} from '../lib/storage';
 
 const m = defineMessages({
   aboutCoMapeo: {
@@ -63,9 +66,20 @@ export function MenuScreen() {
   const displayTitle =
     role === 'solo' ? projectInfo.projectHeader : projectInfo.projectName;
 
+  const {data} = useStorageReadingQuery();
+  const {freeBytes, totalBytes} = data;
+  const isLow = isLowStorage(freeBytes);
+  const percentUsed = calcUsedPercentage(freeBytes, totalBytes);
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {isLow && (
+          <MenuLowStorageAlert
+            freeBytes={freeBytes}
+            percentUsed={percentUsed}
+          />
+        )}
         <View>
           <BodyText variant="tinyMeta" style={styles.currentProjectLabel}>
             {formatMessage(m.currentProject)}

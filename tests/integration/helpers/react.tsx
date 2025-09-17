@@ -25,6 +25,7 @@ import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagn
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
 import {QueryClient} from '@tanstack/react-query';
 import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
+import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowStorageBannerContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
@@ -57,11 +58,9 @@ export function createMinimalWrapper() {
 export function createAppProvidersWrapper({
   mapeoApi,
   isOnline = true,
-  activeProjectId,
 }: {
   mapeoApi: MapeoClientApi;
   isOnline?: boolean;
-  activeProjectId?: string;
 }) {
   const queryClient = new QueryClient({
     // Disable garbage collection, so that no "collect garbage" timers are
@@ -157,11 +156,7 @@ export function createAppProvidersWrapper({
     persist: false,
   });
 
-  if (activeProjectId) {
-    persistedActiveProjectIdStore.instance.setState({
-      projectId: activeProjectId,
-    });
-  }
+  const lowStorageBannerStore = createLowStorageBannerStore();
 
   const OuterWrapper = createMinimalWrapper();
   const wrapper = ({children}: {children: ReactNode}) => {
@@ -180,7 +175,8 @@ export function createAppProvidersWrapper({
           }
           coordinateFormatStore={persistedCoordinateFormatStore}
           savedLocationStore={persistedSavedLocationStore}
-          trackStore={persistedTrackStore}>
+          trackStore={persistedTrackStore}
+          lowStorageBannerStore={lowStorageBannerStore}>
           {children}
         </AppProviders>
       </OuterWrapper>

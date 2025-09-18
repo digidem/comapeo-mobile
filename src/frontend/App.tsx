@@ -42,8 +42,11 @@ import PostHog from 'posthog-react-native';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
+const devMode = applicationId?.endsWith('.dev');
+const testMode = applicationId?.endsWith('.pre');
+
 let sentryEnvironment: SentryEnvironment = 'production';
-if (applicationId?.endsWith('.dev') || applicationId?.endsWith('.pre')) {
+if (devMode || testMode) {
   sentryEnvironment = 'development';
 } else if (applicationId?.endsWith('.rc')) {
   sentryEnvironment = 'qa';
@@ -180,6 +183,9 @@ export const postHog = new PostHog('aPi-KeY', {
   host: 'https://us.i.posthog.com',
   //@ts-expect-error - this is the zustand typing, which is he same as posthog's customStorage typing. But zustand typing is less strict, but its quite a ts workaround to make it work, this is the simplest solution.
   customStorage: MMKVStoreInitializer,
+  defaultOptIn: false,
+  // disable for dev mode and e2e tests
+  disabled: process.env.EXPO_PUBLIC_E2E_TEST === 'true' || devMode || testMode,
 });
 
 const appUsagePromptStore = createAppUsageStatsStore({
@@ -224,7 +230,8 @@ const App = () => {
             activeProjectIdStore={persistedActiveProjectIdStore}
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
             appUsageStatsStore={appUsagePromptStore}
-            lowStorageBannerStore={lowStorageBannerStore}>
+            lowStorageBannerStore={lowStorageBannerStore}
+            postHogInstance={postHog}>
             <AppNavigator
               permissionAsked={permissionsAsked}
               navigationIntegration={navigationIntegration}

@@ -46,6 +46,7 @@ import {
   AppUsageStatsProvider,
   type AppUsageStatsStore,
 } from './AppUsageStatsContext';
+import PostHog, {PostHogProvider} from 'posthog-react-native';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -62,6 +63,7 @@ type AppProvidersProps = {
   queryClient: QueryClient;
   lowStorageBannerStore: LowStorageBannerStore;
   appUsageStatsStore: AppUsageStatsStore;
+  postHogInstance?: PostHog;
 };
 
 export const AppProviders = ({
@@ -79,6 +81,7 @@ export const AppProviders = ({
   queryClient,
   lowStorageBannerStore,
   appUsageStatsStore,
+  postHogInstance,
 }: AppProvidersProps) => {
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
@@ -108,7 +111,14 @@ export const AppProviders = ({
                                             persistedDrafObservationStore
                                           }>
                                           <AuthProvider>
-                                            {children}
+                                            {postHogInstance ? (
+                                              <PostHogProvider
+                                                client={postHogInstance}>
+                                                {children}
+                                              </PostHogProvider>
+                                            ) : (
+                                              children
+                                            )}
                                           </AuthProvider>
                                         </DraftObservationProvider>
                                       </PhotoPromiseProvider>

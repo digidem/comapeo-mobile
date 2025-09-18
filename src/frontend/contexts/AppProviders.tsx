@@ -111,6 +111,7 @@ export const AppProviders = ({
                                             persistedDrafObservationStore
                                           }>
                                           <AuthProvider>
+                                            {/* Post Hog not initialized in integration tests */}
                                             {postHogInstance ? (
                                               <PostHogProvider
                                                 client={postHogInstance}>

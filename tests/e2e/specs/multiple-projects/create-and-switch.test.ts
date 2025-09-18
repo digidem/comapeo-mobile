@@ -15,9 +15,12 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
     await $(byResourceId('PROJECT.create-btn')).click();
   });
 
-  require('../project/project-usage-stats.test');
-
-  require('./project-usage-stats.test');
+  it('should take user to project stats screen', async () => {
+    const statsScreen = await $(byTextMatches('Share Project Statistics'));
+    await expect(statsScreen).toBeDisplayed();
+    const skip = await $(byTextMatches('No, Skip for Now'));
+    await skip.click();
+  });
 
   it('should take user to success screen', async () => {
     await expect($(byText(output.names.project))).toBeDisplayed();

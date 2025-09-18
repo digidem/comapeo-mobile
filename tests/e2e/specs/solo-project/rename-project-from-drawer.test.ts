@@ -73,6 +73,13 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.project);
     await createBtn.click();
+  });
+
+  it('should take user to project stats screen and then success screen', async () => {
+    const statsScreen = await $(byTextMatches('Share Project Statistics'));
+    await expect(statsScreen).toBeDisplayed();
+    const skip = await $(byTextMatches('No, Skip for Now'));
+    await skip.click();
 
     await expect($(byText('Invite a Device'))).toBeDisplayed();
     const categoriesButton = await $(byText('Update Categories Set'));

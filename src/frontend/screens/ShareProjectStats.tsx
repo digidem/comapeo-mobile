@@ -1,13 +1,18 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {defineMessages, useIntl} from 'react-intl';
+import * as Sentry from '@sentry/react-native';
 
 import GraphIcon from '../images/Graph.svg';
-import {defineMessages, useIntl} from 'react-intl';
+import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NEW_DARK_GREY} from '../lib/styles';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
+import {Loading} from '../sharedComponents/Loading';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
+import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 
 const m = defineMessages({
@@ -30,7 +35,7 @@ const m = defineMessages({
   },
   skip: {
     id: 'screens.ShareProjectStats.skip',
-    defaultMessage: 'No, Skip for now',
+    defaultMessage: 'No, Skip for Now',
   },
   yesShare: {
     id: 'screens.ShareProjectStats.yesShare',
@@ -44,94 +49,149 @@ export const ShareProjectStats = ({
 }: NativeRootNavigationProps<'ShareProjectStats'>) => {
   const {formatMessage} = useIntl();
   const {projectName, projectType} = route.params;
+
+  const {projectId} = useActiveProject();
+  const updateSettings = useUpdateProjectSettings({projectId});
+
+  const goToSuccess = React.useCallback(() => {
+    navigation.replace(
+      projectType === 'newProject'
+        ? 'ProjectCreatedNewProject'
+        : 'ProjectCreatedNewSolo',
+      {name: projectName},
+    );
+  }, [navigation, projectType, projectName]);
+
+  function handleSkip() {
+    goToSuccess();
+  }
+
+  function handleShare() {
+    try {
+      if (!projectId) return goToSuccess();
+
+      updateSettings.mutate(
+        {sendStats: true},
+        {
+          onSuccess: goToSuccess,
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
+        },
+      );
+    } catch (err) {
+      Sentry.captureException(err);
+      navigation.navigate('ErrorBottomSheet');
+    }
+  }
+
+  const isSubmitting = updateSettings.status === 'pending';
+
   return (
-    <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
+    <ScreenContentWithDock
+      testID="STATS.screen"
+      contentContainerStyle={styles.content}
+      dockContainerStyle={styles.dock}
+      dockContent={
+        isSubmitting ? (
+          <View style={styles.loadingWrap} testID="STATS.loading">
+            <Loading />
+          </View>
+        ) : (
+          <View style={styles.buttons}>
+            <SecondaryButton
+              fullSize
+              onPress={handleSkip}
+              text={formatMessage(m.skip)}
+            />
+            <PrimaryButton
+              fullSize
+              onPress={handleShare}
+              text={formatMessage(m.yesShare)}
+            />
+          </View>
+        )
+      }>
+      <View style={styles.headerBlock}>
         <GraphIcon />
-        <HeaderText variant="header1" style={styles.text}>
+        <HeaderText variant="header1" style={styles.headerTitle}>
           {formatMessage(m.shareProjectStats)}
         </HeaderText>
-        <View style={{marginTop: 20, padding: 20}}>
-          <BodyText>{formatMessage(m.description)} </BodyText>
-          <View style={styles.itemContainter}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bullet}
-            />
-            <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
-              {formatMessage(m.infoAnonymized)}
-            </BodyText>
-          </View>
-          <View style={styles.itemContainter}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bullet}
-            />
-            <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
-              {formatMessage(m.fullyEncrypted)}
-            </BodyText>
-          </View>
+      </View>
+
+      <View style={styles.infoBox}>
+        <BodyText>{formatMessage(m.description)}</BodyText>
+
+        <View style={styles.bulletRow}>
+          <MaterialIcons
+            name="circle"
+            size={4}
+            color={NEW_DARK_GREY}
+            style={styles.bulletDot}
+          />
+          <BodyText variant="smallMeta" style={styles.bulletText}>
+            {formatMessage(m.infoAnonymized)}
+          </BodyText>
+        </View>
+
+        <View style={styles.bulletRow}>
+          <MaterialIcons
+            name="circle"
+            size={4}
+            color={NEW_DARK_GREY}
+            style={styles.bulletDot}
+          />
+          <BodyText variant="smallMeta" style={styles.bulletText}>
+            {formatMessage(m.fullyEncrypted)}
+          </BodyText>
         </View>
       </View>
-      <View>
-        <SecondaryButton
-          fullSize
-          onPress={() => {
-            navigation.replace(
-              projectType === 'newProject'
-                ? 'ProjectCreatedNewProject'
-                : 'ProjectCreatedNewSolo',
-              {
-                name: projectName,
-              },
-            );
-          }}
-          text={formatMessage(m.skip)}
-        />
-        <PrimaryButton
-          style={{marginTop: 10}}
-          fullSize
-          onPress={() => {
-            // TO DO, API to share project stats
-            navigation.replace(
-              projectType === 'newProject'
-                ? 'ProjectCreatedNewProject'
-                : 'ProjectCreatedNewSolo',
-              {
-                name: projectName,
-              },
-            );
-          }}
-          text={formatMessage(m.yesShare)}
-        />
-      </View>
-    </View>
+    </ScreenContentWithDock>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  content: {
     alignItems: 'center',
-    padding: 20,
-    paddingTop: 80,
-    justifyContent: 'space-between',
-    width: '100%',
-    height: '100%',
+    paddingTop: 40,
+    gap: 30,
   },
-  text: {
-    marginTop: 20,
+  headerBlock: {
+    alignItems: 'center',
+    gap: 20,
+  },
+  headerTitle: {
     textAlign: 'center',
   },
-  bullet: {
-    marginTop: 10,
-    marginRight: 10,
+  infoBox: {
+    width: '100%',
+    padding: 20,
+    gap: 12,
   },
-  itemContainter: {
+  bulletRow: {
     flexDirection: 'row',
-    marginTop: 10,
+    alignItems: 'center',
+    gap: 10,
+    marginLeft: 10,
+  },
+  bulletDot: {
+    marginTop: 2,
+  },
+  bulletText: {
+    color: NEW_DARK_GREY,
+    flex: 1,
+  },
+  dock: {
+    alignItems: 'center',
+    paddingBottom: 20,
+  },
+  buttons: {
+    gap: 10,
+  },
+  loadingWrap: {
+    width: '100%',
+    alignItems: 'center',
+    paddingVertical: 4,
   },
 });

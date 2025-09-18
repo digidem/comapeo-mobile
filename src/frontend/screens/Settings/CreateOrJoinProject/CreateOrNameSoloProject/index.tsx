@@ -123,10 +123,13 @@ export const CreateOrNameSoloProject = ({
 
     if (isSolo) {
       updateSettingsMutation.mutate(
-        {name: projectName},
+        {name: projectName, sendStats: false},
         {
           onSuccess: () => {
-            navigation.replace('ProjectCreatedNewSolo', {name: projectName});
+            navigation.replace('ShareProjectStats', {
+              projectType: 'solo',
+              projectName,
+            });
           },
           onError,
         },
@@ -137,8 +140,9 @@ export const CreateOrNameSoloProject = ({
         {
           onSuccess: projectId => {
             setActiveProjectId(projectId);
-            navigation.replace('ProjectCreatedNewProject', {
-              name: projectName,
+            navigation.replace('ShareProjectStats', {
+              projectType: 'newProject',
+              projectName,
             });
           },
           onError,

@@ -11,6 +11,7 @@ import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
 import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
 import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
 import {Security} from '../../screens/Security';
+import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {ObservationCategoryChooser} from '../../screens/PresetChooser/ObservationCategoryChooser.tsx';
 import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
@@ -19,6 +20,10 @@ import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
+import {
+  CreateOrNameSoloProject,
+  createNavigationOptions as createNameProjectNavOptions,
+} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/ProjectCreated';
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
@@ -78,6 +83,7 @@ import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
 import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
@@ -127,6 +133,14 @@ export const createDefaultScreenGroup = ({
         name="Home"
         options={{headerShown: false}}
         component={HomeTabs}
+      />
+      <RootStack.Screen
+        name="AuthScreen"
+        component={AuthScreen}
+        options={{
+          headerShown: false,
+          animation: 'fade',
+        }}
       />
       <RootStack.Screen
         name="ObservationEdit"
@@ -212,6 +226,16 @@ export const createDefaultScreenGroup = ({
         name="CreateOrJoinProject"
         component={CreateOrJoinProject}
         options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
+      />
+      <RootStack.Screen
+        name="CreateProject"
+        component={CreateOrNameSoloProject}
+        options={createNameProjectNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="NameSoloProject"
+        component={CreateOrNameSoloProject}
+        options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen
         name="ProjectCreatedNewProject"
@@ -463,6 +487,7 @@ export const createDefaultScreenGroup = ({
         component={InviteSuccessfullyAccepted}
       />
       <RootStack.Screen name="InviteCanceled" component={InviteCanceled} />
+      <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
       <RootStack.Screen
         name="BackgroundMapErrorBottomSheet"
         component={BackgroundMapErrorBottomSheet}

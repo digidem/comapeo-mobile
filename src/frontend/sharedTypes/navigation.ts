@@ -148,6 +148,8 @@ export type RootStackParamsList = {
   ExportObservations: undefined;
   DidNotMoveBottomSheet: undefined;
   ShareProjectStats: {projectType: 'solo' | 'newProject'; projectName: string};
+  AppUsagePromptInterstitial: undefined;
+  AppUsageSharingSuccess: undefined;
   ExportSuccess: {exportType: Exports};
 };
 
@@ -159,18 +161,7 @@ export type OnboardingParamsList = {
   Success: {deviceName: string};
 };
 
-export type ProjectOnboardingParamsList = {
-  ProjectsIntro: undefined;
-  JoinProject: undefined;
-  OnboardingStartNewProject: undefined;
-  OnboardingCreateProject: undefined;
-  MapOnOwn: undefined;
-  ProjectCreatedOnboarding: {projectId: string; name: string};
-};
-
-export type AppStackParamsList = RootStackParamsList &
-  OnboardingParamsList &
-  ProjectOnboardingParamsList;
+export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;
 
 export type NativeRootNavigationProps<
   ScreenName extends keyof AppStackParamsList,

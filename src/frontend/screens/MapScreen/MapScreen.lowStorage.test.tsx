@@ -99,7 +99,6 @@ jest.mock('../../hooks/server/presets', () => ({
 process.env.MAPBOX_ACCESS_TOKEN = 'test-token';
 
 import {MapScreen} from '.';
-import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 
 const Stack = createNativeStackNavigator<{Map: undefined}>();
 
@@ -107,7 +106,6 @@ describe('MapScreen low-storage banner', () => {
   let manager: MapeoManager;
   let client: MapeoClientApi;
   let onTeardown: Array<() => unknown> = [];
-  let projectId: string;
 
   beforeEach(async () => {
     onTeardown = [];
@@ -125,7 +123,6 @@ describe('MapScreen low-storage banner', () => {
     client = ipc.client;
     onTeardown.push(ipc.stop);
 
-    projectId = await client.createProject({name: 'Test Project'});
     mockTotalBytes = 64 * 1024 * 1024 * 1024;
     mockFreeBytes = null;
   });
@@ -136,23 +133,19 @@ describe('MapScreen low-storage banner', () => {
 
   const renderMap = ({
     isOnline = true,
-    activeProjectId = projectId,
-  }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
+  }: Readonly<{isOnline?: boolean}> = {}) => {
     const app = createAppProvidersWrapper({
       mapeoApi: client,
       isOnline,
-      activeProjectId,
     });
     onTeardown.push(app.teardown);
 
     const tree = render(
       <NavigationContainer>
         <React.Suspense fallback={null}>
-          <ActiveProjectProvider activeProjectId={activeProjectId}>
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-              <Stack.Screen name="Map" component={MapScreen} />
-            </Stack.Navigator>
-          </ActiveProjectProvider>
+          <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Map" component={MapScreen} />
+          </Stack.Navigator>
         </React.Suspense>
       </NavigationContainer>,
       {wrapper: app.wrapper},

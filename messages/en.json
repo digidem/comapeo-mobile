@@ -1807,7 +1807,7 @@
     "message": "Share Project Statistics"
   },
   "screens.ShareProjectStats.skip": {
-    "message": "No, Skip for now"
+    "message": "No, Skip for Now"
   },
   "screens.ShareProjectStats.yesShare": {
     "message": "Yes, Share Stats"

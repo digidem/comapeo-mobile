@@ -178,6 +178,7 @@ TaskManager.defineTask(
 
 export const postHog = new PostHog('aPi-KeY', {
   host: 'https://us.i.posthog.com',
+  //@ts-expect-error - this is the zustand typing, which is he same as posthog's customStorage typing. But zustand typing is less strict, but its quite a ts workaround to make it work, this is the simplest solution.
   customStorage: MMKVStoreInitializer,
 });
 

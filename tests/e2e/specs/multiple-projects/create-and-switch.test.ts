@@ -23,7 +23,7 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
   });
 
   it('should take user to success screen', async () => {
-    await expect($(byText(output.names.secondProject))).toBeDisplayed();
+    await expect($(byTextMatches(output.names.secondProject))).toBeDisplayed();
     await expect($(byText('Invite a Device'))).toBeDisplayed();
   });
 

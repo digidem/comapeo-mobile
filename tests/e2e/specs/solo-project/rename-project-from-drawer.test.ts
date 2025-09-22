@@ -81,7 +81,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     const optIn = await $(byTextMatches('Yes, Share Stats'));
     await optIn.click();
 
-    await expect($(byText(output.names.project))).toBeDisplayed();
+    await expect($(byTextMatches(output.names.project))).toBeDisplayed();
     await expect(
       $(byTextMatches('Project statistics are being shared')),
     ).toBeDisplayed();

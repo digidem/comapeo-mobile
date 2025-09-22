@@ -85,8 +85,10 @@ export type RootStackParamsList = {
   AppSettings: undefined;
   ProjectSettings: undefined;
   CreateOrJoinProject: undefined;
-  ProjectCreatedNewProject: {name: string};
-  ProjectCreatedNewSolo: {name: string};
+  ProjectCreated: {
+    name: string;
+    statsShared: boolean;
+  };
   JoinExistingProject: undefined;
   YourTeam: undefined;
   SelectDevice: undefined;
@@ -147,7 +149,7 @@ export type RootStackParamsList = {
   };
   ExportObservations: undefined;
   DidNotMoveBottomSheet: undefined;
-  ShareProjectStats: {projectType: 'solo' | 'newProject'; projectName: string};
+  ShareProjectStats: {projectName: string};
   AppUsagePromptInterstitial: undefined;
   AppUsageSharingSuccess: undefined;
   ExportSuccess: {exportType: Exports};

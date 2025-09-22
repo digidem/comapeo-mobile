@@ -4,16 +4,19 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 
-import GraphIcon from '../images/Graph.svg';
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
-import {HeaderText} from '../sharedComponents/Text/HeaderText';
-import {BodyText} from '../sharedComponents/Text/BodyText';
-import {NEW_DARK_GREY} from '../lib/styles';
-import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
-import {Loading} from '../sharedComponents/Loading';
-import {useActiveProject} from '../contexts/ActiveProjectContext';
+import GraphIcon from '../../../images/Graph.svg';
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {DARK_ORANGE, NEW_DARK_GREY} from '../../../lib/styles';
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from '../../../sharedComponents/Buttons';
+import {Loading} from '../../../sharedComponents/Loading';
+import {useActiveProject} from '../../../contexts/ActiveProjectContext';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
-import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
   shareProjectStats: {
@@ -48,32 +51,31 @@ export const ShareProjectStats = ({
   navigation,
 }: NativeRootNavigationProps<'ShareProjectStats'>) => {
   const {formatMessage} = useIntl();
-  const {projectName, projectType} = route.params;
+  const {projectName} = route.params;
 
   const {projectId} = useActiveProject();
   const updateSettings = useUpdateProjectSettings({projectId});
 
-  const goToSuccess = React.useCallback(() => {
-    navigation.replace(
-      projectType === 'newProject'
-        ? 'ProjectCreatedNewProject'
-        : 'ProjectCreatedNewSolo',
-      {name: projectName},
-    );
-  }, [navigation, projectType, projectName]);
+  const goToSuccess = React.useCallback(
+    (statsShared: boolean) => {
+      navigation.replace('ProjectCreated', {
+        name: projectName,
+        statsShared,
+      });
+    },
+    [navigation, projectName],
+  );
 
   function handleSkip() {
-    goToSuccess();
+    goToSuccess(false);
   }
 
   function handleShare() {
     try {
-      if (!projectId) return goToSuccess();
-
       updateSettings.mutate(
         {sendStats: true},
         {
-          onSuccess: goToSuccess,
+          onSuccess: () => goToSuccess(true),
           onError: err => {
             Sentry.captureException(err);
             navigation.navigate('ErrorBottomSheet');
@@ -85,7 +87,6 @@ export const ShareProjectStats = ({
       navigation.navigate('ErrorBottomSheet');
     }
   }
-
   const isSubmitting = updateSettings.status === 'pending';
 
   return (
@@ -114,7 +115,7 @@ export const ShareProjectStats = ({
         )
       }>
       <View style={styles.headerBlock}>
-        <GraphIcon />
+        <GraphIcon color={DARK_ORANGE} />
         <HeaderText variant="header1" style={styles.headerTitle}>
           {formatMessage(m.shareProjectStats)}
         </HeaderText>

@@ -1650,26 +1650,20 @@
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
     "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Start Mapping"
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "Done"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
     "message": "Invite a Device"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
-    "message": "now added to All Projects"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
-    "message": "is now ready for you to invite devices."
+    "message": "{projectName} is now ready for you to invite devices."
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.sharedLine": {
+    "message": "Project statistics are being shared with Awana Digital"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Success!"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
-    "message": "Update Categories Set"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.viewProject": {
-    "message": "View Project"
   },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."

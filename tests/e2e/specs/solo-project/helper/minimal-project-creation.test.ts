@@ -18,8 +18,8 @@ describe('Create Project and land on map screen', () => {
   });
 
   it('should land in the new project and display it on the Map screen', async () => {
-    const mapBtn = await $(byTextMatches('Start Mapping'));
-    await mapBtn.click();
+    const doneBtn = await $(byTextMatches('Done'));
+    await doneBtn.click();
 
     const header = await $(byResourceId('HOME.header-title'));
     await expect(header).toHaveText(output.names.secondProject);

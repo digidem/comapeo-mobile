@@ -82,16 +82,8 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await skip.click();
 
     await expect($(byText('Invite a Device'))).toBeDisplayed();
-    const categoriesButton = await $(byText('Update Categories Set'));
-    await categoriesButton.click();
-  });
-
-  it('should take the user to the categories screen', async () => {
-    const screenTitle = await $(byText('Categories'));
-    await expect(screenTitle).toBeDisplayed();
-    await expect($(byText('Import Categories'))).toBeDisplayed();
-    await $(byResourceId('MAIN.header-back-btn')).click();
-    await $('~Close Menu').click();
+    const doneButton = await $(byText('Done'));
+    await doneButton.click();
   });
 
   it('should leave observations in place with a renamed project', async () => {

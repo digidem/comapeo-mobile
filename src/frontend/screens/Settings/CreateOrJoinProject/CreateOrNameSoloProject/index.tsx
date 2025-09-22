@@ -123,7 +123,7 @@ export const CreateOrNameSoloProject = ({
 
     if (isSolo) {
       updateSettingsMutation.mutate(
-        {name: projectName, sendStats: false},
+        {name: projectName},
         {
           onSuccess: () => {
             navigation.replace('ShareProjectStats', {

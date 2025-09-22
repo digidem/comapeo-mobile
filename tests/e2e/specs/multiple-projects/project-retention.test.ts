@@ -55,6 +55,7 @@ describe('Multiple Projects - Project Data Retention', () => {
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.thirdProject);
     await $(byResourceId('PROJECT.create-btn')).click();
+    await $(byTextMatches('No, Skip for Now')).click();
     await browser.waitUntil(
       async () => {
         const btn = await $(byText('Start Mapping'));

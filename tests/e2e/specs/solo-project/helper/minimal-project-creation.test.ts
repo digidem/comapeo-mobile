@@ -13,7 +13,7 @@ describe('Create Project and land on map screen', () => {
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.secondProject);
     await $(byResourceId('PROJECT.create-btn')).click();
-
+    await $(byTextMatches('No, Skip for Now')).click();
     await expect($(byTextMatches(output.names.secondProject))).toBeDisplayed();
   });
 

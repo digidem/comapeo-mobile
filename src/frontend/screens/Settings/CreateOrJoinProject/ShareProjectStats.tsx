@@ -91,12 +91,11 @@ export const ShareProjectStats = ({
 
   return (
     <ScreenContentWithDock
-      testID="STATS.screen"
       contentContainerStyle={styles.content}
       dockContainerStyle={styles.dock}
       dockContent={
         isSubmitting ? (
-          <View style={styles.loadingWrap} testID="STATS.loading">
+          <View style={styles.loading}>
             <Loading />
           </View>
         ) : (
@@ -190,7 +189,7 @@ const styles = StyleSheet.create({
   buttons: {
     gap: 10,
   },
-  loadingWrap: {
+  loading: {
     width: '100%',
     alignItems: 'center',
     paddingVertical: 4,

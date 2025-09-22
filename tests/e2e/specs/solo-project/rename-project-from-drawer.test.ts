@@ -75,12 +75,16 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await createBtn.click();
   });
 
-  it('should take user to project stats screen and then success screen', async () => {
+  it('should take user to project stats screen opt in, and then success screen showing successful sharing', async () => {
     const statsScreen = await $(byTextMatches('Share Project Statistics'));
     await expect(statsScreen).toBeDisplayed();
-    const skip = await $(byTextMatches('No, Skip for Now'));
-    await skip.click();
+    const optIn = await $(byTextMatches('Yes, Share Stats'));
+    await optIn.click();
 
+    await expect($(byText(output.names.project))).toBeDisplayed();
+    await expect(
+      $(byTextMatches('Project statistics are being shared')),
+    ).toBeDisplayed();
     await expect($(byText('Invite a Device'))).toBeDisplayed();
     const doneButton = await $(byText('Done'));
     await doneButton.click();

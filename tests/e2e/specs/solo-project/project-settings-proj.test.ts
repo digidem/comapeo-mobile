@@ -30,10 +30,8 @@ describe('Project - Project Settings Named Project', () => {
     await expect($(byTextMatches('@mapeo/'))).toBeDisplayed();
     await expect($(byText('Update Set'))).toBeDisplayed();
 
-    const projectStatsCard = await $(
-      byTextMatches('Project Statistics'),
-    ).scrollIntoView();
-    await expect(projectStatsCard).toBeDisplayed();
+    await $(byTextMatches('Project Statistics')).scrollIntoView();
+    await expect($(byTextMatches('ON'))).toBeDisplayed();
     await expect(
       $(byTextMatches('This project is sharing anonymous statistics')),
     ).toBeDisplayed();
@@ -50,6 +48,7 @@ describe('Project - Project Settings Named Project', () => {
     );
     await expect(statsContainer).toBeDisplayed();
   });
+
   it('should toggle off sharing project statistics and see bottom sheet warning', async () => {
     const toggleOn = await $(byResourceId('PROJECT_SETTINGS.stats-on'));
     await expect(toggleOn).toBeDisplayed();
@@ -62,10 +61,11 @@ describe('Project - Project Settings Named Project', () => {
     const toggleOff = await $(byResourceId('PROJECT_SETTINGS.stats-off'));
     await expect(toggleOff).toBeDisplayed();
   });
+
   it('should show that Project Statistics is off in project settings', async () => {
     const backButton = $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
-    const statsOffText = await $(byTextMatches('Project Statistics | OFF'));
+    const statsOffText = await $(byTextMatches('OFF'));
     await expect(statsOffText).toBeDisplayed();
     await expect(
       $(byTextMatches('Project statistics are not being shared')),

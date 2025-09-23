@@ -20,7 +20,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
+        await driver.execute('mobile:acceptAlert', {
           buttonLabel: 'SAVE',
         });
       }

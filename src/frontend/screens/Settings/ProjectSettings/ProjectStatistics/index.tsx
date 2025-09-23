@@ -96,7 +96,11 @@ export const ProjectStatistics = ({
                 {formatMessage(m.shareLabel)}
               </BodyText>
               <Checkbox
-                testID="PROJECT_STATS.toggle"
+                testID={
+                  settings.sendStats
+                    ? 'PROJECT_SETTINGS.stats-on'
+                    : 'PROJECT_SETTINGS.stats-off'
+                }
                 value={settings.sendStats}
                 error={false}
                 disabled={status === 'pending'}

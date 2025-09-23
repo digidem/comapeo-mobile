@@ -88,7 +88,7 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
   );
 };
 
-export const ProjectCardLoader = () => (
+const ProjectCardLoader = () => (
   <View
     style={{
       height: 112,

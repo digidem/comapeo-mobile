@@ -67,7 +67,7 @@ export const InviteReceived = ({
   const {isTracking} = useTracking();
 
   const projectColor = invite.projectColor;
-  const showSharedStats = invite.sendStats;
+  const statsShared = invite.sendStats;
 
   useListenToInviteCancel(inviteId);
 
@@ -129,7 +129,7 @@ export const InviteReceived = ({
           </BodyText>
         </View>
 
-        {showSharedStats ? (
+        {statsShared ? (
           <View style={styles.sharedRow}>
             <GraphIcon width={20} height={20} color={NEW_DARK_GREY} />
             <BodyText>{formatMessage(m.sharedStats)}</BodyText>

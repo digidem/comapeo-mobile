@@ -2,6 +2,7 @@ import * as React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
@@ -95,18 +96,22 @@ export const ProjectStatistics = ({
               <BodyText variant="smallMeta" style={{flex: 1}}>
                 {formatMessage(m.shareLabel)}
               </BodyText>
-              <Checkbox
-                testID={
-                  settings.sendStats
-                    ? 'PROJECT_SETTINGS.stats-on'
-                    : 'PROJECT_SETTINGS.stats-off'
-                }
-                value={settings.sendStats}
-                error={false}
-                disabled={status === 'pending'}
-                onPress={handleToggle}
-                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-              />
+              {status === 'pending' ? (
+                <UIActivityIndicator size={25} style={{flex: 0}} />
+              ) : (
+                <Checkbox
+                  testID={
+                    settings.sendStats
+                      ? 'PROJECT_SETTINGS.stats-on'
+                      : 'PROJECT_SETTINGS.stats-off'
+                  }
+                  value={settings.sendStats}
+                  error={false}
+                  disabled={false}
+                  onPress={handleToggle}
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                />
+              )}
             </View>
           </>
         ) : null}

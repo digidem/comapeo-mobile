@@ -153,6 +153,8 @@ export type RootStackParamsList = {
   AppUsagePromptInterstitial: undefined;
   AppUsageSharingSuccess: undefined;
   ExportSuccess: {exportType: Exports};
+  ProjectStatistics: undefined;
+  ProjectStatsTurnedOff: undefined;
 };
 
 export type OnboardingParamsList = {

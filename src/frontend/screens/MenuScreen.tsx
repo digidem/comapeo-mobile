@@ -5,16 +5,14 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import Exchange from '../images/Exchange.svg';
-
 import {MainMenuItemWrapper} from '../sharedComponents/MainMenuItemWrapper.tsx';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {Divider} from '../sharedComponents/Divider';
-
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
-
 import {NEW_DARK_GREY, BLACK, WHITE} from '../lib/styles';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
 import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard.tsx';

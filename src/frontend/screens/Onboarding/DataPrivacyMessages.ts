@@ -8,12 +8,15 @@ export const m = defineMessages({
   dataPrivacyDescription: {
     id: 'screens.DataPrivacy.description',
     defaultMessage:
-      'CoMapeo helps territory monitors & mappers securely collaborate—without needing the internet.',
+      'CoMapeo allows you and your collaborators to map offline without needing servers.',
   },
   dataPrivacyStays: {
     id: 'screens.DataPrivacy.stays',
-    defaultMessage:
-      'Your data stays on your devices—fully encrypted, in your control.',
+    defaultMessage: 'Your data stays on your devices.',
+  },
+  dataPrivacyEncrypted: {
+    id: 'screens.DataPrivacy.encrypted',
+    defaultMessage: 'All data stays fully encrypted',
   },
   dataPrivacyManageAndControl: {
     id: 'screens.DataPrivacy.manageAndControl',
@@ -22,7 +25,7 @@ export const m = defineMessages({
   dataPrivacyDiagnostic: {
     id: 'screens.DataPrivacy.diagnostic',
     defaultMessage:
-      'Private by default—diagnostic information is fully anonymized and you can opt-out any time.',
+      'Private by default — diagnostic information is fully anonymized and you can opt-out any time.',
   },
   learnMore: {
     id: 'screens.DataPrivacy.learnMore',

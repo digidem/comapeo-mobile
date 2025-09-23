@@ -6,136 +6,55 @@ import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useIntl} from 'react-intl';
 import {useAuthContext} from '../../contexts/AuthContext';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {Loading} from '../../sharedComponents/Loading';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
-import {useOwnDeviceInfo, useManyProjects} from '@comapeo/core-react';
-import {createProjectOnboardingScreens} from './ProjectOnboardingScreens';
-import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
-import {
-  useActiveProjectId,
-  useActiveProjectIdActions,
-} from '../../contexts/ActiveProjectIdStoreContext';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
-import {AuthScreen} from '../../screens/AuthScreen';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
-export type NavigatorLayout = NonNullable<
-  React.ComponentProps<typeof RootStack.Navigator>['layout']
->;
-export type NavigatorScreenLayout = NonNullable<
-  React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
->;
-
-const ErrorBottomSheetOptions: NativeStackNavigationOptions = {
-  presentation: 'transparentModal',
-  headerShown: false,
-  animation: 'none',
-  contentStyle: {backgroundColor: 'transparent'},
-};
 
 export const RootStackNavigator = () => {
   const {formatMessage} = useIntl();
-  const {authState} = useAuthContext();
+  const security = useAuthContext();
+  const {navigate} = useNavigationFromRoot();
 
   const {data: deviceInfo} = useOwnDeviceInfo();
-  const {data: projects} = useManyProjects();
-
-  const storedActiveProjectId = useActiveProjectId();
-  const {setActiveProjectId} = useActiveProjectIdActions();
-  const fallbackProjectId = projects?.[0]?.projectId;
-
-  const [hasInitialized, setHasInitialized] = React.useState(false);
 
   React.useEffect(() => {
-    if (hasInitialized) return;
-    if (!storedActiveProjectId && fallbackProjectId) {
-      setActiveProjectId(fallbackProjectId);
+    if (security.authState === 'unauthenticated') {
+      navigate('AuthScreen');
     }
-    setHasInitialized(true);
-  }, [
-    hasInitialized,
-    storedActiveProjectId,
-    fallbackProjectId,
-    setActiveProjectId,
-  ]);
-
-  const layout: NavigatorLayout = ({children, state, navigation}) => (
-    <React.Suspense fallback={<Loading />}>
-      <PendingInvitesListener
-        currentRouteName={state.routes[state.index]?.name}
-        navigateToInviteScreen={inviteId =>
-          navigation.navigate('InviteReceived', {inviteId})
-        }
-      />
-      {children}
-    </React.Suspense>
-  );
-
-  const screenLayout: NavigatorScreenLayout = ({children}) => (
-    <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
-  );
-
-  const commonNavigatorProps = {
-    layout,
-    screenLayout,
-    screenOptions: NavigatorScreenOptions,
-  } as const;
-
-  if (authState === 'unauthenticated') {
-    return (
-      <RootStack.Navigator {...commonNavigatorProps}>
-        <RootStack.Screen
-          name="AuthScreen"
-          component={AuthScreen}
-          options={{
-            headerShown: false,
-            animation: 'fade',
-          }}
-        />
-      </RootStack.Navigator>
-    );
-  }
-
-  if (!hasInitialized) {
-    return <Loading />;
-  }
-
-  if (!deviceInfo?.name) {
-    return (
-      <RootStack.Navigator {...commonNavigatorProps}>
-        {createOnboardingScreens({intl: formatMessage})}
-      </RootStack.Navigator>
-    );
-  }
-
-  if (!storedActiveProjectId) {
-    return (
-      <RootStack.Navigator {...commonNavigatorProps}>
-        {createProjectOnboardingScreens({intl: formatMessage})}
-        <RootStack.Screen
-          name="ErrorBottomSheet"
-          options={ErrorBottomSheetOptions}
-          component={ErrorBottomSheet}
-        />
-      </RootStack.Navigator>
-    );
-  }
+  }, [security.authState, navigate]);
 
   return (
-    <React.Suspense fallback={<Loading />}>
-      <ActiveProjectProvider activeProjectId={storedActiveProjectId}>
-        <RootStack.Navigator {...commonNavigatorProps}>
-          {createDefaultScreenGroup({intl: formatMessage})}
-          <RootStack.Screen
-            name="ErrorBottomSheet"
-            component={ErrorBottomSheet}
-            options={ErrorBottomSheetOptions}
-          />
-        </RootStack.Navigator>
-      </ActiveProjectProvider>
-    </React.Suspense>
+    <RootStack.Navigator
+      layout={({children, state, navigation}) => {
+        return (
+          <React.Suspense fallback={<Loading />}>
+            <PendingInvitesListener
+              currentRouteName={state.routes[state.index]?.name}
+              navigateToInviteScreen={inviteId =>
+                navigation.navigate('InviteReceived', {inviteId})
+              }
+            />
+            {children}
+          </React.Suspense>
+        );
+      }}
+      screenLayout={({children}) => {
+        return (
+          <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+        );
+      }}
+      screenOptions={NavigatorScreenOptions}>
+      {deviceInfo.name
+        ? createDefaultScreenGroup({
+            intl: formatMessage,
+          })
+        : createOnboardingScreens({intl: formatMessage})}
+    </RootStack.Navigator>
   );
 };
 

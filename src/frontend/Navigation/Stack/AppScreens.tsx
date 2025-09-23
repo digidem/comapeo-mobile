@@ -117,6 +117,8 @@ import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/shar
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
 import {ShareProjectStats} from '../../screens/Settings/CreateOrJoinProject/ShareProjectStats.tsx';
 import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
+import {ProjectStatistics} from '../../screens/Settings/ProjectSettings/ProjectStatistics/index.tsx';
+import {ProjectStatsTurnedOffBottomSheet} from '../../screens/Settings/ProjectSettings/ProjectStatistics/ProjectStatsTurnedOffBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -460,6 +462,11 @@ export const createDefaultScreenGroup = ({
         component={DraftPhotoPreviewModal}
         options={DraftPhotoPreviewModalNavOptions({intl})}
       />
+      <RootStack.Screen
+        name="ProjectStatistics"
+        component={ProjectStatistics}
+        options={{headerTitle: intl(ProjectStatistics.navTitle)}}
+      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -509,6 +516,10 @@ export const createDefaultScreenGroup = ({
         options={{
           contentStyle: {backgroundColor: 'white'},
         }}
+      />
+      <RootStack.Screen
+        name="ProjectStatsTurnedOff"
+        component={ProjectStatsTurnedOffBottomSheet}
       />
     </RootStack.Group>
   </>

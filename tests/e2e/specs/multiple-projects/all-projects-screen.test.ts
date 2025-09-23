@@ -2,7 +2,6 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
-import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Multiple Projects - All Projects Screen', () => {
   it('should show all projects and correct role labels', async () => {

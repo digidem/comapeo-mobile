@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {BackHandler, StyleSheet, View} from 'react-native';
 import GreenCheck from '../../../../images/Success.svg';
+import GraphIcon from '../../../../images/Graph.svg';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {
@@ -19,38 +20,28 @@ const m = defineMessages({
   },
   projectReady: {
     id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady',
-    defaultMessage: 'is now ready for you to invite devices.',
-  },
-  nowAdded: {
-    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded',
-    defaultMessage: 'now added to All Projects',
+    defaultMessage: '{projectName} is now ready for you to invite devices.',
   },
   inviteDevice: {
-    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice',
+    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice',
     defaultMessage: 'Invite a Device',
   },
-  goToMap: {
-    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap',
-    defaultMessage: 'Start Mapping',
+  done: {
+    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.done',
+    defaultMessage: 'Done',
   },
-  viewProject: {
-    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.viewProject',
-    defaultMessage: 'View Project',
-  },
-  updateCategories: {
-    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories',
-    defaultMessage: 'Update Categories Set',
+  sharedLine: {
+    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.sharedLine',
+    defaultMessage: 'Project statistics are being shared with Awana Digital',
   },
 });
 
 export const ProjectCreated = ({
   route,
   navigation,
-}: NativeRootNavigationProps<
-  'ProjectCreatedNewProject' | 'ProjectCreatedNewSolo'
->) => {
-  const isSolo = route.name === 'ProjectCreatedNewSolo';
+}: NativeRootNavigationProps<'ProjectCreated'>) => {
   const {formatMessage: t} = useIntl();
+  const {name, statsShared} = route.params;
 
   // disables back button
   useFocusEffect(
@@ -64,37 +55,12 @@ export const ProjectCreated = ({
     }, []),
   );
 
-  function handleGoToConfig() {
-    navigation.replace('Config');
-  }
-
   function handleGoToMap() {
     navigation.popToTop();
   }
-
   function handleGoToInviteScreen() {
     navigation.replace('SelectDevice');
   }
-
-  function handleViewProject() {
-    navigation.replace('ProjectSettings');
-  }
-
-  const screenActionsAndLabels = isSolo
-    ? {
-        message: m.projectReady,
-        secondaryLabel: m.updateCategories,
-        secondaryAction: () => handleGoToConfig(),
-        primaryLabel: m.inviteDevice,
-        primaryAction: () => handleGoToInviteScreen(),
-      }
-    : {
-        message: m.nowAdded,
-        secondaryLabel: m.goToMap,
-        secondaryAction: () => handleGoToMap(),
-        primaryLabel: m.viewProject,
-        primaryAction: () => handleViewProject(),
-      };
 
   return (
     <View style={styles.container}>
@@ -102,40 +68,40 @@ export const ProjectCreated = ({
         <GreenCheck />
         <HeaderText
           variant="header1"
-          style={{
-            textAlign: 'center',
-            color: BLACK,
-          }}>
+          style={{textAlign: 'center', color: BLACK}}>
           {t(m.success)}
         </HeaderText>
-        <View style={{gap: 10}}>
-          <HeaderText
-            variant="header5"
-            style={{
-              textAlign: 'center',
-            }}>
-            {route.params.name}
-          </HeaderText>
-          <BodyText
-            style={{
-              textAlign: 'center',
-              color: NEW_DARK_GREY,
-            }}>
-            {t(screenActionsAndLabels.message)}
+        <View style={{gap: 30}}>
+          <BodyText style={{color: NEW_DARK_GREY, paddingHorizontal: 20}}>
+            <FormattedMessage
+              {...m.projectReady}
+              values={{
+                projectName: <HeaderText variant="header5">{name}</HeaderText>,
+              }}
+            />
           </BodyText>
+
+          {statsShared ? (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 10,
+                paddingHorizontal: 30,
+              }}>
+              <GraphIcon width={20} height={20} color={NEW_DARK_GREY} />
+              <BodyText>{t(m.sharedLine)}</BodyText>
+            </View>
+          ) : null}
         </View>
       </View>
-      <View style={{width: '100%', alignItems: 'center'}}>
-        <SecondaryButton
-          fullSize
-          text={t(screenActionsAndLabels.secondaryLabel)}
-          onPress={screenActionsAndLabels.secondaryAction}
-        />
+
+      <View style={{gap: 12}}>
+        <SecondaryButton fullSize text={t(m.done)} onPress={handleGoToMap} />
         <PrimaryButton
-          style={{marginTop: 20}}
           fullSize
-          onPress={screenActionsAndLabels.primaryAction}
-          text={t(screenActionsAndLabels.primaryLabel)}
+          onPress={handleGoToInviteScreen}
+          text={t(m.inviteDevice)}
         />
       </View>
     </View>

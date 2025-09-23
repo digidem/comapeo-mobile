@@ -115,6 +115,7 @@ import {
 import {AttachedPhotoPreviewModal} from '../../screens/PhotoPreviewModal/AttachedPhotoPreviewModal.tsx';
 import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/sharedNavOptions.tsx';
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
+import {ShareProjectStats} from '../../screens/Settings/CreateOrJoinProject/ShareProjectStats.tsx';
 import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -237,12 +238,7 @@ export const createDefaultScreenGroup = ({
         options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen
-        name="ProjectCreatedNewProject"
-        component={ProjectCreated}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="ProjectCreatedNewSolo"
+        name="ProjectCreated"
         component={ProjectCreated}
         options={{headerShown: false}}
       />
@@ -453,6 +449,11 @@ export const createDefaultScreenGroup = ({
             <SaveButton onPress={() => {}} isLoading={false} />
           ),
         }}
+      />
+      <RootStack.Screen
+        name="ShareProjectStats"
+        component={ShareProjectStats}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="DraftPhotoPreviewModal"

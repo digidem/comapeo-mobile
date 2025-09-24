@@ -1,0 +1,80 @@
+import {createContext, useContext} from 'react';
+import {createStore, useStore, type StoreApi} from 'zustand';
+import {
+  createJSONStorage,
+  persist as createPersistedState,
+} from 'zustand/middleware';
+import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+
+// NOTE: Do not change!
+export const STORAGE_KEY = 'EarlyAccessStore' as const;
+
+type EarlyAccessState = {
+  /** True when user has opted into Early Access (device-wide). */
+  isEarlyAccessEnabled: boolean;
+};
+
+type EarlyAccessActions = {
+  setEarlyAccessEnabled: (enabled: boolean) => void;
+};
+
+function createInitialState(): EarlyAccessState {
+  return {isEarlyAccessEnabled: false};
+}
+
+export function createEarlyAccessStore({persist} = {persist: false}) {
+  let store: StoreApi<EarlyAccessState>;
+
+  if (persist) {
+    store = createStore(
+      createPersistedState(createInitialState, {
+        name: STORAGE_KEY,
+        storage: createJSONStorage(() => MMKVZustandStorage),
+        version: 0,
+      }),
+    );
+  } else {
+    store = createStore(createInitialState);
+  }
+
+  const actions: EarlyAccessActions = {
+    setEarlyAccessEnabled: (enabled: boolean) => {
+      store.setState({isEarlyAccessEnabled: enabled});
+    },
+  };
+
+  return {instance: store, actions};
+}
+
+export type EarlyAccessStore = ReturnType<typeof createEarlyAccessStore>;
+
+const EarlyAccessStoreContext = createContext<EarlyAccessStore | null>(null);
+
+// Match other contexts by exporting the Provider alias
+export const EarlyAccessStoreProvider = EarlyAccessStoreContext.Provider;
+
+function useEarlyAccessStoreContext() {
+  const value = useContext(EarlyAccessStoreContext);
+  if (!value) throw new Error('EarlyAccessStoreProvider missing');
+  return value;
+}
+
+// Generic selector hook (matches AppUsageStatsPrompt pattern)
+export function useEarlyAccessState<T>(
+  selector: (s: EarlyAccessState) => T,
+): T {
+  const {instance} = useEarlyAccessStoreContext();
+  return useStore(instance, selector);
+}
+
+// Convenience hook (matches ActiveProjectId’s direct-value style)
+export function useIsEarlyAccessEnabled(): boolean {
+  const {instance} = useEarlyAccessStoreContext();
+  return useStore(instance).isEarlyAccessEnabled;
+}
+
+// Actions hook
+export function useEarlyAccessActions(): EarlyAccessActions {
+  const {actions} = useEarlyAccessStoreContext();
+  return actions;
+}

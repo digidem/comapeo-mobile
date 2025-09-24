@@ -26,6 +26,7 @@ import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
 import {QueryClient} from '@tanstack/react-query';
 import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
 import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowStorageBannerContext';
+import {createEarlyAccessStore} from '../../../src/frontend/contexts/EarlyAccessContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
@@ -156,6 +157,8 @@ export function createAppProvidersWrapper({
     persist: false,
   });
 
+  const persistedEarlyAccessStore = createEarlyAccessStore({persist: false});
+
   const lowStorageBannerStore = createLowStorageBannerStore();
 
   const OuterWrapper = createMinimalWrapper();
@@ -176,7 +179,8 @@ export function createAppProvidersWrapper({
           coordinateFormatStore={persistedCoordinateFormatStore}
           savedLocationStore={persistedSavedLocationStore}
           trackStore={persistedTrackStore}
-          lowStorageBannerStore={lowStorageBannerStore}>
+          lowStorageBannerStore={lowStorageBannerStore}
+          earlyAccessStore={persistedEarlyAccessStore}>
           {children}
         </AppProviders>
       </OuterWrapper>

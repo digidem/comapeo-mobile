@@ -43,7 +43,7 @@ const config = {
     {
       platformName: 'android',
       'appium:platformVersion': '13.0',
-      'appium:deviceName': 'Google Pixel 7',
+      'appium:deviceName': 'Samsung Galaxy A34',
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,
@@ -51,7 +51,7 @@ const config = {
         projectName: 'CoMapeo',
         buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
         sessionName: `E2E: ${shortSha}`,
-        appiumVersion: '2.12.1',
+        appiumVersion: '2.19.0',
         debug: true,
         networkLogs: true,
         gpsLocation: '0.198214, 78.472225',

@@ -13,7 +13,7 @@
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@comapeo/core": "4.3.0",
+    "@comapeo/core": "github:digidem/comapeo-core#feat/worker-indexing",
     "@comapeo/ipc": "5.0.0",
     "@mapeo/default-config": "5.0.0",
     "@sentry/node": "9.28.0",

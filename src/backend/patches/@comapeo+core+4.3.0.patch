@@ -1,0 +1,13 @@
+diff --git a/node_modules/@comapeo/core/src/index-writer/index-worker.js b/node_modules/@comapeo/core/src/index-writer/index-worker.js
+index 77c57ce..b9b071b 100644
+--- a/node_modules/@comapeo/core/src/index-writer/index-worker.js
++++ b/node_modules/@comapeo/core/src/index-writer/index-worker.js
+@@ -6,6 +6,8 @@ import Database from 'better-sqlite3'
+ 
+ /** @import {WorkerRequest, BatchRequestData, DeleteSchemaRequestData, BatchResponseData, DeleteSchemaResponseData, WorkerData, WorkerResponse} from './index-writer-proxy.js' */
+ 
++console.log("IN WORKER")
++
+ const { schemas, dbPath, parentLoggerNamespace, deviceId } =
+   /** @type {WorkerData} */ (workerData)
+ 

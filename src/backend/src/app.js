@@ -88,6 +88,7 @@ export async function init({
     defaultIsArchiveDevice: false,
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
     customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
+    useIndexWorkers: true,
   })
 
   // Don't await, methods that use the server will await this internally

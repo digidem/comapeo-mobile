@@ -56,6 +56,9 @@ const config = {
   input: {
     index: path.join(__dirname, 'index.js'),
     loader: path.join(__dirname, 'loader.js'),
+    'index-worker': require.resolve(
+      '@comapeo/core/src/index-writer/index-worker.js',
+    ),
     // This is a [module loading hook]
     // (https://nodejs.org/api/module.html#customization-hooks) used by
     // OpenTelemetry (which is used by Sentry) to install instrumentation. It is

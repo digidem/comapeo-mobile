@@ -10,7 +10,6 @@ import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 export const STORAGE_KEY = 'EarlyAccessStore' as const;
 
 type EarlyAccessState = {
-  /** True when user has opted into Early Access (device-wide). */
   isEarlyAccessEnabled: boolean;
 };
 
@@ -50,7 +49,6 @@ export type EarlyAccessStore = ReturnType<typeof createEarlyAccessStore>;
 
 const EarlyAccessStoreContext = createContext<EarlyAccessStore | null>(null);
 
-// Match other contexts by exporting the Provider alias
 export const EarlyAccessStoreProvider = EarlyAccessStoreContext.Provider;
 
 function useEarlyAccessStoreContext() {
@@ -59,7 +57,6 @@ function useEarlyAccessStoreContext() {
   return value;
 }
 
-// Generic selector hook (matches AppUsageStatsPrompt pattern)
 export function useEarlyAccessState<T>(
   selector: (s: EarlyAccessState) => T,
 ): T {
@@ -67,13 +64,11 @@ export function useEarlyAccessState<T>(
   return useStore(instance, selector);
 }
 
-// Convenience hook (matches ActiveProjectId’s direct-value style)
 export function useIsEarlyAccessEnabled(): boolean {
   const {instance} = useEarlyAccessStoreContext();
   return useStore(instance).isEarlyAccessEnabled;
 }
 
-// Actions hook
 export function useEarlyAccessActions(): EarlyAccessActions {
   const {actions} = useEarlyAccessStoreContext();
   return actions;

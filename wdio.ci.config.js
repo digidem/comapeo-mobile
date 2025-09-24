@@ -43,7 +43,7 @@ const config = {
     {
       platformName: 'android',
       'appium:platformVersion': '13.0',
-      'appium:deviceName': 'Samsung Galaxy A34',
+      'appium:deviceName': 'Samsung Galaxy S23',
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,

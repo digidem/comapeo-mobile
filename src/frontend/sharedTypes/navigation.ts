@@ -155,6 +155,8 @@ export type RootStackParamsList = {
   ExportSuccess: {exportType: Exports};
   ProjectStatistics: undefined;
   ProjectStatsTurnedOff: undefined;
+  EarlyAccess: undefined;
+  EarlyAccessOff: undefined;
 };
 
 export type OnboardingParamsList = {

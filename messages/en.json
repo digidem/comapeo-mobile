@@ -801,6 +801,36 @@
   "screens.DeviceNaming.header": {
     "message": "Name your device"
   },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "Share it here"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "Have feedback?"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "Data from Early Access won't be visible to collaborators who haven't opted in."
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "Switch to Early Access to test upcoming features. You can switch back anytime. Some data may be hidden when turned off but is always safe."
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "Early Access Mode"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "See CoMapeo Updates"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "Use Early Access Features"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Close"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "Data from Early Access will be hidden after switching off, but is still saved. Switch back anytime to see it."
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "Early Access Data"
+  },
   "screens.EnterPassword.enterPass": {
     "message": "Enter your passcode"
   },

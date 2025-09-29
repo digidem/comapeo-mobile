@@ -40,6 +40,24 @@ describe('Settings - Early Access Mode', () => {
     await expect($(byResourceId('EA.checkbox-on'))).toBeDisplayed();
   });
 
+  it('should show banner and label on other screens', async () => {
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
+    await backBtn.click();
+    await expect(
+      $(byTextMatches('You are in Early Access Mode')),
+    ).toBeDisplayed();
+    const aboutComapeoOption = await $('~Go to about CoMapeo screen.');
+    await aboutComapeoOption.click();
+    await expect(
+      $(byTextMatches('You are in Early Access Mode.')),
+    ).toBeDisplayed();
+    await backBtn.click();
+    const appSettingsOption = await $('~Go to app settings screen.');
+    await appSettingsOption.click();
+    await $(byResourceId('earlyAccessFlag')).click();
+  });
+
   it('should toggle OFF, show bottom sheet, close it, and show OFF in App Settings', async () => {
     const onCheckbox = await $(byResourceId('EA.checkbox-on'));
     await onCheckbox.click();

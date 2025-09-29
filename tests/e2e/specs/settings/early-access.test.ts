@@ -43,7 +43,8 @@ describe('Settings - Early Access Mode', () => {
   it('should show banner and label on other screens', async () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await backBtn.click();
+    const backBtnAgain = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtnAgain.click();
     await expect(
       $(byTextMatches('You are in Early Access Mode')),
     ).toBeDisplayed();
@@ -52,6 +53,9 @@ describe('Settings - Early Access Mode', () => {
     await expect(
       $(byTextMatches('You are in Early Access Mode.')),
     ).toBeDisplayed();
+    const seeUpdates = await $(byTextMatches('See CoMapeo Updates'));
+    await seeUpdates.scrollIntoView();
+    await expect(seeUpdates).toBeDisplayed();
     await backBtn.click();
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();

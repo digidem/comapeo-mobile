@@ -9,6 +9,9 @@ import {WHITE} from '../../lib/styles';
 import {HeaderLeft} from '../SaveTrack/HeaderLeft';
 import {Preset} from '@comapeo/schema';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useProjectSettings} from '@comapeo/core-react';
+import {orderPresets} from '../../lib/orderPresets';
 
 const m = defineMessages({
   title: {
@@ -22,9 +25,13 @@ export const TrackCategoryChooser: NativeNavigationComponent<
 > = ({navigation}) => {
   const {data: presets} = usePresetsQuery();
   const {setTrackPreset} = useTrackActions();
-  const trackPresets = Array.from(presets)
-    .filter(p => p.geometry.includes('line'))
-    .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+  const {projectId} = useActiveProject();
+  const {data: settings} = useProjectSettings({projectId});
+  const trackPresets = orderPresets({
+    allPresets: Array.from(presets),
+    settings,
+    geometry: 'line',
+  });
   const existingPreset = useTrackState(state => state.preset);
   const trackId = useTrackState(state => state.docId);
 

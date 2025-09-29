@@ -10,6 +10,9 @@ import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 import {Preset} from '@comapeo/schema';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useProjectSettings} from '@comapeo/core-react';
+import {orderPresets} from '../../lib/orderPresets';
 
 const m = defineMessages({
   title: {
@@ -21,16 +24,20 @@ const m = defineMessages({
 export const ObservationCategoryChooser: NativeNavigationComponent<
   'ObservationCategoryChooser'
 > = ({navigation}) => {
+  const {projectId} = useActiveProject();
   const {data: presets} = usePresetsQuery();
   const {updatePreset, usePreset} = useDraftObservation();
+  const {data: settings} = useProjectSettings({projectId});
   const observationId = usePersistedDraftObservation(
     state => state.observationId,
   );
   const currentPreset = usePreset();
 
-  const filteredPresets = Array.from(presets)
-    .filter(p => p.geometry.includes('point'))
-    .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+  const filteredPresets = orderPresets({
+    allPresets: Array.from(presets),
+    settings,
+    geometry: 'point',
+  });
 
   const handleSelect = (preset: Preset) => {
     updatePreset(preset);

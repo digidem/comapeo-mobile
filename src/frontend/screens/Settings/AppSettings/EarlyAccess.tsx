@@ -155,8 +155,8 @@ const styles = StyleSheet.create({
   },
   feedbackRow: {
     flexDirection: 'row',
-    alignItems: 'center',
     flexWrap: 'wrap',
+    gap: 10,
   },
   feedbackLinkText: {
     color: COMAPEO_BLUE,

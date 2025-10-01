@@ -52,7 +52,7 @@ export type LocalDiscoveryProviderProps = {
 export const LocalDiscoveryProvider = ({
   value,
   children,
-}: LocalDiscoveryProviderProps): JSX.Element => {
+}: LocalDiscoveryProviderProps) => {
   return (
     <LocalDiscoveryContext.Provider value={value}>
       {children}

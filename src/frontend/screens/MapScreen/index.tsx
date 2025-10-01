@@ -68,10 +68,13 @@ export const MapScreen = ({
 
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const location = useLocationState(store => store.throttledMapLocation);
+  const {isTracking} = useTracking();
+  const location = useLocationState(store =>
+    isTracking ? store.location : store.throttledMapLocation,
+  );
   const coords = location && getCoords(location);
   const [following, setFollowing] = React.useState(true);
-  const {isTracking} = useTracking();
+
   const {data: styleUrl} = useMapStyleJsonUrl();
 
   const {authState} = useAuthContext();
@@ -172,12 +175,8 @@ export const MapScreen = ({
           {isFinishedLoadingStyle && authState !== 'obscured' && (
             <>
               <RemoteDetectionAlertsMapLayer />
-              {isTracking && (
-                <>
-                  <CurrentTrackMapLayer />
-                  <UserTooltipMarker />
-                </>
-              )}
+              <CurrentTrackMapLayer location={location} />
+              {isTracking && <UserTooltipMarker />}
               <TracksMapLayer />
               <ObservationMapLayer />
             </>

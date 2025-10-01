@@ -70,7 +70,7 @@ jobs:
           SENTRY_DISABLE_AUTO_UPLOAD: 'true'
           EXPO_PUBLIC_E2E_TEST: 'true'
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-          COMAPEO_METRICS_URL: ${{ secrets.COMAPEO_METRICS_URL }}
+          COMAPEO_METRICS_URL: ${{ vars.COMAPEO_METRICS_URL }}
           COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
         run: |
           npm run extract-messages

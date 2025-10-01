@@ -13,7 +13,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {useObservations} from '../hooks/server/observations';
 import {useTracks} from '../hooks/server/track';
 import * as Sentry from '@sentry/react-native';
-import {useExportObservations} from '../hooks/server/projects';
+import {isUserCancelled, useExportObservations} from '../hooks/server/projects';
 
 const m = defineMessages({
   close: {
@@ -75,7 +75,13 @@ export const ExportObservations = ({
     exportAndShare.mutate(
       {exportType: typeToExport},
       {
+        onSuccess: () => {
+          navigation.replace('ExportSuccess', {exportType: typeToExport});
+        },
         onError: err => {
+          if (isUserCancelled(err)) {
+            return;
+          }
           Sentry.captureException(err);
           navigation.navigate('ErrorBottomSheet');
         },

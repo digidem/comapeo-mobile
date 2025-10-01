@@ -47,6 +47,22 @@ export const AuthScreen = ({
     return () => unsubscribe();
   }, [authState, navigation]);
 
+  React.useEffect(() => {
+    if (authState === 'unauthenticated') return;
+
+    if (authState === 'authenticated') {
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      } else {
+        navigation.popTo('Home', {screen: 'Map'});
+      }
+    }
+
+    if (authState === 'obscured') {
+      navigation.popTo('Home', {screen: 'Map'});
+    }
+  }, [authState, navigation]);
+
   if (error) {
     if (inputtedPass.length === 5) setInputtedPass('');
   }

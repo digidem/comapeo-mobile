@@ -10,6 +10,7 @@ import NoProjectIcon from '../../../images/NoProjectIcon.svg';
 import ProjectParticipantIcon from '../../../images/ProjectParticipant.svg';
 import ProjectCategoriesIcon from '../../../images/ProjectCategories.svg';
 import ExchangeIcon from '../../../images/Exchange.svg';
+import GraphIcon from '../../../images/Graph.svg';
 import {
   COMAPEO_BLUE,
   NEW_DARK_GREY,
@@ -81,6 +82,25 @@ const m = defineMessages({
     id: 'Screens.ProjectSettings.viewDetails',
     defaultMessage: 'View Details',
   },
+  projectStatsOn: {
+    id: 'Screens.ProjectSettings.projectStatsOn',
+    defaultMessage: 'Project Statistics  |  ON',
+  },
+  projectStatsOff: {
+    id: 'Screens.ProjectSettings.projectStatsOff',
+    defaultMessage: 'Project Statistics  |  OFF',
+  },
+  projectStatsOnDesc: {
+    id: 'Screens.ProjectSettings.projectStatsOnDesc',
+    defaultMessage: 'This project is sharing anonymous statistics.',
+  },
+  // this is not in the figma or the issue but needed for when stats are off
+  projectStatsOffDesc: {
+    id: 'Screens.ProjectSettings.projectStatsOffDesc',
+    defaultMessage: 'Project statistics are not being shared.',
+  },
+  update: {id: 'Screens.ProjectSettings.update', defaultMessage: 'Update'},
+  view: {id: 'Screens.ProjectSettings.view', defaultMessage: 'View'},
 });
 
 export const ProjectSettings = () => {
@@ -98,6 +118,8 @@ export const ProjectSettings = () => {
   const displayTitle = isSolo
     ? projectInfo.projectHeader
     : projectInfo.projectName;
+
+  const sendStatsOn = configData.sendStats;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -155,6 +177,19 @@ export const ProjectSettings = () => {
           subtitle={configData?.configMetadata?.name}
           buttonText={formatMessage(m.updateCategories)}
           onPress={() => navigate('Config')}
+        />
+      )}
+      {!isSolo && (
+        <SettingsCardRow
+          icon={<GraphIcon width={24} height={24} color={NEW_DARK_GREY} />}
+          title={formatMessage(
+            sendStatsOn ? m.projectStatsOn : m.projectStatsOff,
+          )}
+          subtitle={formatMessage(
+            sendStatsOn ? m.projectStatsOnDesc : m.projectStatsOffDesc,
+          )}
+          buttonText={formatMessage(isCoordinator ? m.update : m.view)}
+          onPress={() => navigate('ProjectStatistics')}
         />
       )}
     </ScrollView>

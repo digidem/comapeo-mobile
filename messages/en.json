@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
+  "ExportSuccess.done": {
+    "message": "Done"
+  },
+  "ExportSuccess.obs": {
+    "message": "<bold>All observations</bold> have been downloaded to your device."
+  },
+  "ExportSuccess.obsMedia": {
+    "message": "<bold>All observations with media</bold> have been downloaded to your device."
+  },
+  "ExportSuccess.title": {
+    "message": "Success!"
+  },
+  "ExportSuccess.tracks": {
+    "message": "<bold>Tracks</bold> have been downloaded to your device."
+  },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Go Back"
   },
@@ -84,36 +99,6 @@
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes?"
-  },
-  "ProjectOnboarding.JoinProject.bodyText": {
-    "message": "Ask a Project Coordinator for an invitation to their Project."
-  },
-  "ProjectOnboarding.JoinProject.goBackButton": {
-    "message": "Go Back"
-  },
-  "ProjectOnboarding.JoinProject.title": {
-    "message": "Join a Project"
-  },
-  "ProjectOnboarding.MapOnOwn.bodyText": {
-    "message": "Explore everything CoMapeo offers without inviting others to participate."
-  },
-  "ProjectOnboarding.MapOnOwn.goBackButton": {
-    "message": "Go Back"
-  },
-  "ProjectOnboarding.MapOnOwn.startMappingButton": {
-    "message": "Start Mapping"
-  },
-  "ProjectOnboarding.MapOnOwn.title": {
-    "message": "Map on Your Own"
-  },
-  "ProjectOnboarding.Success.body": {
-    "message": "is ready for collaboration."
-  },
-  "ProjectOnboarding.Success.done": {
-    "message": "Done"
-  },
-  "ProjectOnboarding.Success.title": {
-    "message": "Success!"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
@@ -259,6 +244,18 @@
   "Screens.ProjectSettings.projectCollaborators": {
     "message": "Project Collaborators"
   },
+  "Screens.ProjectSettings.projectStatsOff": {
+    "message": "Project Statistics | OFF"
+  },
+  "Screens.ProjectSettings.projectStatsOffDesc": {
+    "message": "Project statistics are not being shared."
+  },
+  "Screens.ProjectSettings.projectStatsOn": {
+    "message": "Project Statistics | ON"
+  },
+  "Screens.ProjectSettings.projectStatsOnDesc": {
+    "message": "This project is sharing anonymous statistics."
+  },
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Share with a secure, encypted server. URL required to access."
   },
@@ -274,8 +271,14 @@
   "Screens.ProjectSettings.title": {
     "message": "Project Settings"
   },
+  "Screens.ProjectSettings.update": {
+    "message": "Update"
+  },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Update Set"
+  },
+  "Screens.ProjectSettings.view": {
+    "message": "View"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "View Details"
@@ -612,6 +615,39 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Use App Passcode"
   },
+  "screens.AppUsagePrompt.countIn": {
+    "message": "Yes, count me in"
+  },
+  "screens.AppUsagePrompt.idsScrambled": {
+    "message": "IDs are scrambled randomly and changed every month."
+  },
+  "screens.AppUsagePrompt.introText": {
+    "message": "Share how you use CoMapeo—any data shared cannot be used to track you."
+  },
+  "screens.AppUsagePrompt.neverStores": {
+    "message": "CoMapeo never stores IP addresses."
+  },
+  "screens.AppUsagePrompt.notNow": {
+    "message": "No, not now"
+  },
+  "screens.AppUsagePrompt.screenTitle": {
+    "message": "Help improve your experience."
+  },
+  "screens.AppUsagePrompt.turnOffAnytime": {
+    "message": "Turn off at any time."
+  },
+  "screens.AppUsageSharingSuccess.done": {
+    "message": "Done"
+  },
+  "screens.AppUsageSharingSuccess.nowSharing": {
+    "message": "is now sharing how you use CoMapeo with Awana Digital."
+  },
+  "screens.AppUsageSharingSuccess.removeAnytime": {
+    "message": "Change this anytime by navigating to Data & Privacy in the Menu."
+  },
+  "screens.AppUsageSharingSuccess.success": {
+    "message": "Success!"
+  },
   "screens.AudioAttachmentPlayback.navTitle": {
     "message": "Audio Recording"
   },
@@ -687,27 +723,6 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Universal Transverse Mercator (UTM)"
   },
-  "screens.CreateProject.createProjectButton": {
-    "message": "Create"
-  },
-  "screens.CreateProject.enterName": {
-    "message": "Project Name"
-  },
-  "screens.CreateProject.existingProjectName": {
-    "message": "Using an existing project name does not make them the same project."
-  },
-  "screens.CreateProject.keepInMind": {
-    "message": "Keep in mind"
-  },
-  "screens.CreateProject.navTitle": {
-    "message": "Start New Project"
-  },
-  "screens.CreateProject.projectUnique": {
-    "message": "Each project is unique and cannot exchange with another project."
-  },
-  "screens.CreateProject.requestInvites": {
-    "message": "Request invites to join existing projects."
-  },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
   },
@@ -730,10 +745,13 @@
     "message": "CoMapeo Respects Your Privacy & Autonomy"
   },
   "screens.DataPrivacy.description": {
-    "message": "CoMapeo helps territory monitors & mappers securely collaborate—without needing the internet."
+    "message": "CoMapeo allows you and your collaborators to map offline without needing servers."
   },
   "screens.DataPrivacy.diagnostic": {
-    "message": "Private by default—diagnostic information is fully anonymized and you can opt-out any time."
+    "message": "Private by default — diagnostic information is fully anonymized and you can opt-out any time."
+  },
+  "screens.DataPrivacy.encrypted": {
+    "message": "All data stays fully encrypted"
   },
   "screens.DataPrivacy.learnMore": {
     "message": "Learn More"
@@ -745,31 +763,34 @@
     "message": "Next"
   },
   "screens.DataPrivacy.stays": {
-    "message": "Your data stays on your devices—fully encrypted, in your control."
+    "message": "Your data stays on your devices."
   },
   "screens.DataPrivacy.title": {
     "message": "Data & Privacy"
   },
-  "screens.DeviceNaming.Success.next": {
-    "message": "Next"
+  "screens.DeviceNaming.Success.description": {
+    "message": "You named your device"
   },
-  "screens.DeviceNaming.Success.ready": {
-    "message": "is now ready."
+  "screens.DeviceNaming.Success.findSettings": {
+    "message": "To find your project settings go to the main menu found on the map screen."
+  },
+  "screens.DeviceNaming.Success.startMappingInstructions": {
+    "message": "On the next screen, tap the orange button to record your first observation."
+  },
+  "screens.DeviceNaming.Success.startUsihng": {
+    "message": "Start Using CoMapeo"
   },
   "screens.DeviceNaming.Success.success": {
     "message": "Success!"
   },
   "screens.DeviceNaming.addName": {
-    "message": "Save"
+    "message": "Add Name"
   },
   "screens.DeviceNaming.description": {
-    "message": "Distinct, memorable names help collaborators using CoMapeo to recognize you."
+    "message": "Distinct, memorable names help collaborators recognize you."
   },
   "screens.DeviceNaming.header": {
-    "message": "Name Your Device"
-  },
-  "screens.DeviceNaming.placeholder": {
-    "message": "Device Name"
+    "message": "Name your device"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Enter your passcode"
@@ -856,10 +877,10 @@
     "message": "Something Went Wrong"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Join or create project teams"
+    "message": "Collaborate on projects"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "Designed with and for Indigenous territory monitors & mappers"
+    "message": "Designed with and for Indigenous peoples & frontline communities"
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "Get Started"
@@ -899,6 +920,9 @@
   },
   "screens.InviteReceived.participantRole": {
     "message": "participant"
+  },
+  "screens.InviteReceived.sharedStats": {
+    "message": "Project statistics are being shared"
   },
   "screens.InviteSuccess.goToMap": {
     "message": "Go To Map"
@@ -1079,27 +1103,6 @@
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
     "message": "Use Location?"
-  },
-  "screens.NameSoloProject.enterName": {
-    "message": "Project Name"
-  },
-  "screens.NameSoloProject.existingProjectName": {
-    "message": "Using an existing project name does not make them the same project."
-  },
-  "screens.NameSoloProject.keepInMind": {
-    "message": "Keep in mind"
-  },
-  "screens.NameSoloProject.navTitle": {
-    "message": "Name My Project"
-  },
-  "screens.NameSoloProject.projectUnique": {
-    "message": "Each project is unique and cannot exchange with another project."
-  },
-  "screens.NameSoloProject.requestInvites": {
-    "message": "Request invites to join existing projects."
-  },
-  "screens.NameSoloProject.saveProjectButton": {
-    "message": "Save"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
@@ -1515,23 +1518,26 @@
   "screens.PrivacyPolicy.whyCollectedDescription": {
     "message": "Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app. The performance data helps us improve the responsiveness of the app and identify errors. User counts, including total users, users per country, and users per project, help justify ongoing investment in the development of CoMapeo."
   },
-  "screens.ProjectsIntro.intro": {
-    "message": "CoMapeo helps teams securely store territory mapping observations."
+  "screens.ProjectStatistics.navTitle": {
+    "message": "Project Statistics"
   },
-  "screens.ProjectsIntro.joinExisting": {
-    "message": "Join an Existing Project"
+  "screens.ProjectStatistics.shareLabel": {
+    "message": "Share Project Statistics"
   },
-  "screens.ProjectsIntro.mapSolo": {
-    "message": "Go to Map"
+  "screens.ProjectStatistics.statisticsDescription": {
+    "message": "Anonymized information about your project including number of observations, areas covered, stats about track distance and time, stats about attachments, and number of participants."
   },
-  "screens.ProjectsIntro.sharingNote": {
-    "message": "Observations can only be shared with other devices on the same project."
+  "screens.ProjectStatistics.statsShared": {
+    "message": "Project stats are shared with Awana Digital"
   },
-  "screens.ProjectsIntro.startNew": {
-    "message": "Start a New Project"
+  "screens.ProjectStatisticsTurnedOff.close": {
+    "message": "Close"
   },
-  "screens.ProjectsIntro.title": {
-    "message": "Secure & Private Collaborations"
+  "screens.ProjectStatisticsTurnedOff.desc": {
+    "message": "This change will take effect next time you Exchange with team members."
+  },
+  "screens.ProjectStatisticsTurnedOff.title": {
+    "message": "Project Statistics | OFF"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1671,6 +1677,12 @@
   "screens.Settings.Config.projectName": {
     "message": "Project Name:"
   },
+  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Start New Project"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
+    "message": "Name My Project"
+  },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Go Back"
   },
@@ -1680,26 +1692,20 @@
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
     "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Start Mapping"
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "Done"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
     "message": "Invite a Device"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
-    "message": "now added to All Projects"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
-    "message": "is now ready for you to invite devices."
+    "message": "{projectName} is now ready for you to invite devices."
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.sharedLine": {
+    "message": "Project statistics are being shared with Awana Digital"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Success!"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
-    "message": "Update Categories Set"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.viewProject": {
-    "message": "View Project"
   },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
@@ -1707,14 +1713,35 @@
   "screens.Settings.CreateOrJoinProject.createProject": {
     "message": "Create a Project"
   },
+  "screens.Settings.CreateOrJoinProject.createProjectButton": {
+    "message": "Create"
+  },
+  "screens.Settings.CreateOrJoinProject.enterName": {
+    "message": "Project Name"
+  },
+  "screens.Settings.CreateOrJoinProject.existingProjectName": {
+    "message": "Using an existing project name does not make them the same project."
+  },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Join a Project"
   },
+  "screens.Settings.CreateOrJoinProject.keepInMind": {
+    "message": "Keep in mind"
+  },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
+  },
+  "screens.Settings.CreateOrJoinProject.projectUnique": {
+    "message": "Each project is unique and cannot exchange with another project."
+  },
+  "screens.Settings.CreateOrJoinProject.requestInvites": {
+    "message": "Request invites to join existing projects."
+  },
+  "screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "Save"
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Start a CoMapeo Project"
@@ -1802,6 +1829,24 @@
   },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
+  },
+  "screens.ShareProjectStats.description": {
+    "message": "This will help us gather data about how CoMapeo is being used and what additional features are needed."
+  },
+  "screens.ShareProjectStats.fullyEncrypted": {
+    "message": "Your project will stay fully encrypted"
+  },
+  "screens.ShareProjectStats.infoAnonymized": {
+    "message": "Shared information will be completely anonymized"
+  },
+  "screens.ShareProjectStats.shareProjectStats": {
+    "message": "Share Project Statistics"
+  },
+  "screens.ShareProjectStats.skip": {
+    "message": "No, Skip for Now"
+  },
+  "screens.ShareProjectStats.yesShare": {
+    "message": "Yes, Share Stats"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Close"

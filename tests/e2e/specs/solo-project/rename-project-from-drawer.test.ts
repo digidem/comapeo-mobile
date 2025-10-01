@@ -14,15 +14,13 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();
     await expect($(byResourceId('OBS.House-icon'))).toBeDisplayed();
     await expect(houseCategory).toBeDisplayed();
+    await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-    await driver.pause(1000);
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile:acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
+        await driver.execute('mobile:acceptAlert', {buttonLabel: 'SAVE'});
       }
     } catch (err) {
       console.log('No RN Alert dialog was found.');

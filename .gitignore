@@ -1,6 +1,9 @@
 # Environment variables and secrets
 .env
 
+# Claude Code configuration (local only)
+CLAUDE.md
+
 # macOS
 .DS_Store
 *.pem

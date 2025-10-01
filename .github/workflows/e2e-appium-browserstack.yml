@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       app_url: ${{ steps.upload.outputs.app_url }}
+      fingerprint: ${{ steps.fingerprint.outputs.hash }}
+      cache_hit: ${{ steps.check-cache.outputs.cache-hit }}
 
     steps:
       - name: Checkout Repository
@@ -28,7 +30,71 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Generate localization & polyfills for bundling
+      - name: Generate Fingerprint
+        id: fingerprint
+        run: |
+          npx @expo/fingerprint@latest . \
+            --platform android \
+            > fingerprint.json
+          HASH=$(jq -r '.hash' fingerprint.json)
+          echo "hash=$HASH" >> $GITHUB_OUTPUT
+          echo "Native fingerprint: $HASH"
+        env:
+          APP_VARIANT: releaseCandidate
+          EXPO_PUBLIC_E2E_TEST: 'true'
+
+      - name: Check for cached native build
+        id: check-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            android-build-cache/app-release.apk
+            android-build-cache/fingerprint.txt
+          key: native-build-android-${{ steps.fingerprint.outputs.hash }}
+
+      - name: Set up JDK 17
+        if: steps.check-cache.outputs.cache-hit != 'true'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        if: steps.check-cache.outputs.cache-hit != 'true'
+        uses: android-actions/setup-android@v3
+
+      - name: Build native APK (cache miss)
+        if: steps.check-cache.outputs.cache-hit != 'true'
+        env:
+          APP_VARIANT: releaseCandidate
+          EXPO_PUBLIC_E2E_TEST: 'true'
+          MAPBOX_DOWNLOAD_TOKEN: ${{ secrets.MAPBOX_DOWNLOAD_TOKEN }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          # Build translations and polyfills
+          npm run build:translations
+          npm run build:intl-polyfills
+
+          # Build backend
+          npm run build:backend
+
+          # Generate native code
+          npx expo prebuild --platform android --clean
+
+          # Build APK
+          cd android
+          ./gradlew assembleRelease
+          cd ..
+
+          # Cache the native build
+          mkdir -p android-build-cache
+          cp android/app/build/outputs/apk/release/app-release.apk android-build-cache/
+          echo "${{ steps.fingerprint.outputs.hash }}" > android-build-cache/fingerprint.txt
+
+      - name: Generate localization & polyfills for JS bundle update
+        if: steps.check-cache.outputs.cache-hit == 'true'
         run: |
           set -euo pipefail
           npm run build:translations
@@ -36,75 +102,48 @@ jobs:
           test -f translations/messages.json
           test -f src/frontend/polyfills/intl.ts
 
-      - name: Debug generated artifacts
-        run: |
-          ls -la translations
-          ls -la src/frontend/polyfills
-          head -n 10 src/frontend/polyfills/intl.ts || true
-
-      - name: Verify Expo config resolves
+      - name: Update JS bundle in cached APK
+        if: steps.check-cache.outputs.cache-hit == 'true'
         env:
-          APP_VARIANT: releaseCandidate
-          EXPO_PUBLIC_E2E_TEST: 'true'
-        run: npx expo config --json > /dev/null
-
-      - name: Setup EAS
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-          packager: npm
-          expo-cache: true
-          eas-cache: true
-
-      - name: Ensure jq (for parsing JSON)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-
-      - name: Run EAS Workflow (Fingerprint → Repack only)
-        id: eas-wf
-        env:
-          EAS_ACCESS_TOKEN: ${{ secrets.EXPO_TOKEN }}
-          EAS_NO_VCS: '1'
           APP_VARIANT: releaseCandidate
           EXPO_PUBLIC_E2E_TEST: 'true'
         run: |
           set -euo pipefail
-          OUT=$(eas workflow:run .eas/workflows/e2e-with-repack.yml --non-interactive --wait --json)
-          echo "$OUT" | jq -e . >/dev/null
 
-          URL=$(echo "$OUT" | jq -r '(.artifacts.applicationArchiveUrl? // .artifacts.buildUrl? // empty)')
-          if [ -z "$URL" ]; then
-            URL=$(
-              echo "$OUT" | jq -r '
-                [
-                  (.jobs // [] | .[] | select((.id=="repack" or (.name // "") | test("Repack")) and (.status=="FINISHED"))
-                    | (.artifacts.applicationArchiveUrl? // .artifacts.buildUrl?))
-                ]
-                | flatten
-                | map(select(. != null and . != ""))
-                | first // empty
-              '
-            )
+          # Install apktool if not present
+          if ! command -v apktool &> /dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y apktool
           fi
 
-          if [ -z "$URL" ]; then
-            echo "::notice::No artifact from repack; running fallback EAS build (profile=test)."
-            OUT2=$(eas build --platform android --profile test --non-interactive --json --wait)
-            echo "$OUT2" | jq -e .
-            URL=$(echo "$OUT2" | jq -r '.[0].artifacts.buildUrl // empty')
-          fi
+          # Export JS bundle
+          npx expo export --platform android --output-dir ./bundle-output
 
-          if [ -z "$URL" ]; then
-            echo "Could not determine APK URL from repack or fallback build."
-            exit 1
-          fi
+          # Unpack the cached APK
+          apktool d android-build-cache/app-release.apk -o apk-unpacked
 
-          echo "app_url=${URL}" >> $GITHUB_OUTPUT
+          # Replace the JS bundle
+          cp -r bundle-output/* apk-unpacked/assets/
 
-      - name: Download APK
-        run: curl -L "${{ steps.eas-wf.outputs.app_url }}" -o app-under-test.apk
+          # Repack the APK
+          apktool b apk-unpacked -o app-repacked-unsigned.apk
+
+          # Sign the APK (debug keystore for testing)
+          keytool -genkey -v -keystore debug.keystore -alias androiddebugkey \
+            -keyalg RSA -keysize 2048 -validity 10000 -storepass android \
+            -keypass android -dname "CN=Android Debug,O=Android,C=US"
+
+          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore debug.keystore -storepass android -keypass android \
+            app-repacked-unsigned.apk androiddebugkey
+
+          # Zipalign the APK
+          ${ANDROID_HOME}/build-tools/*/zipalign -v 4 app-repacked-unsigned.apk app-under-test.apk
+
+      - name: Copy APK from cache
+        if: steps.check-cache.outputs.cache-hit != 'true'
+        run: |
+          cp android-build-cache/app-release.apk app-under-test.apk
 
       - name: Upload APK to BrowserStack
         id: upload

@@ -35,6 +35,7 @@ export type HomeTabsParamsList = {
 export type TabName = keyof HomeTabsParamsList;
 
 export type RootStackParamsList = {
+  Drawer: undefined;
   Home: NavigatorScreenParams<HomeTabsParamsList>;
   GpsModal: undefined;
   Settings: undefined;
@@ -163,6 +164,8 @@ export type OnboardingParamsList = {
   DeviceNaming: undefined;
   OnboardingPrivacyPolicy: undefined;
   Success: {deviceName: string};
+  JoinProjectIntro: undefined;
+  MapOnYourOwnIntro: undefined;
 };
 
 export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;

@@ -298,6 +298,15 @@
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Tên thiết bị"
   },
+  "Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Early Access Mode"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.off": {
+    "message": "Early Access is OFF"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.on": {
+    "message": "Early Access is ON"
+  },
   "Screens.Settings.AppSettings.language": {
     "message": "Language"
   },

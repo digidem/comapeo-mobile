@@ -1368,7 +1368,7 @@
     "message": "Close"
   },
   "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Join an existing project team."
+    "message": "Coordinate with your team to receive a project invitation."
   },
   "screens.Onboarding.JoinProjectIntro.title": {
     "message": "Join a Project"

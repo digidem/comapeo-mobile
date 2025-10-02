@@ -1,11 +1,15 @@
 import * as React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Button} from '../../sharedComponents/Button';
 import {defineMessages, useIntl} from 'react-intl';
+import {Ionicons} from '@expo/vector-icons';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import ProjectParticipantIcon from '../../images/ProjectParticipant.svg';
+import {DARK_ORANGE, COMAPEO_BLUE} from '../../lib/styles';
 
 const m = defineMessages({
   title: {
@@ -14,7 +18,8 @@ const m = defineMessages({
   },
   description: {
     id: 'screens.Onboarding.JoinProjectIntro.description',
-    defaultMessage: 'Join an existing project team.',
+    defaultMessage:
+      'Coordinate with your team to receive a project invitation.',
   },
   close: {
     id: 'screens.Onboarding.JoinProjectIntro.close',
@@ -28,36 +33,51 @@ export const JoinProjectIntro = ({
   const {formatMessage: t} = useIntl();
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={{alignItems: 'center'}}>
-          <HeaderText style={styles.text}>{t(m.title)}</HeaderText>
-          <BodyText style={{marginTop: 20}}>{t(m.description)}</BodyText>
-        </View>
-        <Button
-          fullWidth
-          variant="outlined"
-          style={{marginTop: 20}}
+    <ScreenContentWithDock
+      dockContent={
+        <SecondaryButton
+          testID="ONBOARDING.join-project-close-btn"
+          fullSize
+          text={t(m.close)}
+          iconPosition="left"
+          renderIcon={({size}) => (
+            <Ionicons
+              name="close-circle-outline"
+              color={COMAPEO_BLUE}
+              size={size}
+            />
+          )}
           onPress={() => {
             navigation.navigate('Success');
-          }}>
-          {t(m.close)}
-        </Button>
+          }}
+        />
+      }>
+      <View style={styles.contentContainer}>
+        <ProjectParticipantIcon
+          width={80}
+          height={60}
+          color={DARK_ORANGE}
+          fill={DARK_ORANGE}
+        />
+        <HeaderText variant="header2" style={styles.title}>
+          {t(m.title)}
+        </HeaderText>
+        <BodyText style={styles.description}>{t(m.description)}</BodyText>
       </View>
-    </ScrollView>
+    </ScreenContentWithDock>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  contentContainer: {
     alignItems: 'center',
-    padding: 20,
-    paddingTop: 80,
-    justifyContent: 'space-between',
-    width: '100%',
-    height: '100%',
+    gap: 20,
+    paddingTop: 65,
   },
-  text: {
-    marginTop: 20,
+  title: {
+    textAlign: 'center',
+  },
+  description: {
+    textAlign: 'center',
   },
 });

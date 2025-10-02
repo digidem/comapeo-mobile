@@ -42,6 +42,10 @@ import {
   LowStorageBannerStoreProvider,
   type LowStorageBannerStore,
 } from './LowStorageBannerContext';
+import {
+  AppUsageStatsPromptProvider,
+  type AppUsageStatsPromptStore,
+} from './AppUsageStatsPromptContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -57,6 +61,7 @@ type AppProvidersProps = {
   savedLocationStore: SavedLocationStore;
   queryClient: QueryClient;
   lowStorageBannerStore: LowStorageBannerStore;
+  appUsageStatsPromptStore: AppUsageStatsPromptStore;
 };
 
 export const AppProviders = ({
@@ -73,6 +78,7 @@ export const AppProviders = ({
   savedLocationStore,
   queryClient,
   lowStorageBannerStore,
+  appUsageStatsPromptStore,
 }: AppProvidersProps) => {
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
@@ -91,18 +97,23 @@ export const AppProviders = ({
                             <LocalDiscoveryProvider
                               value={localDiscoveryController}>
                               <ClientApiProvider clientApi={mapeoApi}>
-                                <ActiveProjectProvider>
-                                  <BottomSheetModalProvider>
-                                    <PhotoPromiseProvider>
-                                      <DraftObservationProvider
-                                        draftObservationStore={
-                                          persistedDrafObservationStore
-                                        }>
-                                        <AuthProvider>{children}</AuthProvider>
-                                      </DraftObservationProvider>
-                                    </PhotoPromiseProvider>
-                                  </BottomSheetModalProvider>
-                                </ActiveProjectProvider>
+                                <AppUsageStatsPromptProvider
+                                  value={appUsageStatsPromptStore}>
+                                  <ActiveProjectProvider>
+                                    <BottomSheetModalProvider>
+                                      <PhotoPromiseProvider>
+                                        <DraftObservationProvider
+                                          draftObservationStore={
+                                            persistedDrafObservationStore
+                                          }>
+                                          <AuthProvider>
+                                            {children}
+                                          </AuthProvider>
+                                        </DraftObservationProvider>
+                                      </PhotoPromiseProvider>
+                                    </BottomSheetModalProvider>
+                                  </ActiveProjectProvider>
+                                </AppUsageStatsPromptProvider>
                               </ClientApiProvider>
                             </LocalDiscoveryProvider>
                           </LocationProvider>

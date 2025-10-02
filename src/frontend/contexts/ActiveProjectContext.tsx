@@ -9,6 +9,7 @@ import {
   useActiveProjectIdActions,
   useActiveProjectId,
 } from './ActiveProjectIdStoreContext';
+import {useAppUsageStatsPromptState} from './AppUsageStatsPromptContext';
 
 const ActiveProjectContext = React.createContext<
   {projectId: string; projectApi: MapeoProjectApi} | undefined
@@ -25,6 +26,9 @@ export const ActiveProjectProvider = ({
   const {setActiveProjectId} = useActiveProjectIdActions();
 
   const {mutate: createProject} = useCreateProject();
+  const completedOnboardingAt = useAppUsageStatsPromptState(
+    state => state.completedOnboardingAt,
+  );
 
   // The persisted active project ID may be missing in the following scenarios:
   //
@@ -37,6 +41,7 @@ export const ActiveProjectProvider = ({
   // How this is currently done is naive for now, but is sufficient until a UI to choose from a list of existing projects is implemented.
   React.useEffect(() => {
     if (activeProjectId) return;
+    if (!completedOnboardingAt) return;
 
     mapeoApi
       .listProjects()
@@ -62,8 +67,23 @@ export const ActiveProjectProvider = ({
         // TODO: Surface error in UI
         console.error(err);
       });
-  }, [activeProjectId, setActiveProjectId, createProject, mapeoApi]);
+  }, [
+    activeProjectId,
+    setActiveProjectId,
+    createProject,
+    mapeoApi,
+    completedOnboardingAt,
+  ]);
 
+  if (!activeProjectId && !completedOnboardingAt) {
+    return <>{children}</>;
+  }
+
+  if (!activeProjectId && completedOnboardingAt) {
+    return <Loading />;
+  }
+
+  // this needed for type safety, but should never happen because of the checks above
   if (!activeProjectId) {
     return <Loading />;
   }

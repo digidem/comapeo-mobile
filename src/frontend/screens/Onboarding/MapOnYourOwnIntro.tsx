@@ -6,6 +6,10 @@ import {defineMessages, useIntl} from 'react-intl';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {useCreateProject} from '@comapeo/core-react';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
+import {useAppUsageStatsPromptActions} from '../../contexts/AppUsageStatsPromptContext';
+import {Loading} from '../../sharedComponents/Loading';
 
 const m = defineMessages({
   title: {
@@ -30,6 +34,25 @@ export const MapOnYourOwnIntro = ({
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'MapOnYourOwnIntro'>) => {
   const {formatMessage: t} = useIntl();
+  const {mutate: createProject, status} = useCreateProject();
+  const {setActiveProjectId} = useActiveProjectIdActions();
+  const {recordCompleteOnboarding} = useAppUsageStatsPromptActions();
+
+  function handleGoToMap() {
+    createProject(undefined, {
+      onError: err => {
+        console.error(err);
+      },
+      onSuccess: projectId => {
+        setActiveProjectId(projectId);
+        recordCompleteOnboarding();
+      },
+    });
+  }
+
+  if (status === 'pending') {
+    return <Loading />;
+  }
 
   return (
     <ScrollView>
@@ -39,21 +62,14 @@ export const MapOnYourOwnIntro = ({
           <BodyText style={{marginTop: 20}}>{t(m.description)}</BodyText>
         </View>
         <View style={{width: '100%', gap: 10}}>
-          <Button
-            fullWidth
-            style={{marginTop: 20}}
-            onPress={() => {
-              // TODO: Navigate to map
-            }}>
+          <Button fullWidth style={{marginTop: 20}} onPress={handleGoToMap}>
             {t(m.goToMap)}
           </Button>
           <Button
             fullWidth
             variant="outlined"
             onPress={() => {
-              navigation.navigate('Success', {
-                deviceName: 'TODO: Get device name',
-              });
+              navigation.navigate('Success');
             }}>
             {t(m.close)}
           </Button>

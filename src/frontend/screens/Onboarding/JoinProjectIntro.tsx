@@ -39,9 +39,7 @@ export const JoinProjectIntro = ({
           variant="outlined"
           style={{marginTop: 20}}
           onPress={() => {
-            navigation.navigate('Success', {
-              deviceName: 'TODO: Get device name',
-            });
+            navigation.navigate('Success');
           }}>
           {t(m.close)}
         </Button>

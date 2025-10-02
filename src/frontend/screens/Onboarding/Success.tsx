@@ -1,13 +1,18 @@
 import * as React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
 
-import SuccessIcon from '../../images/Success.svg';
+import DeviceIcon from '../../images/Device.svg';
+import ProjectParticipantIcon from '../../images/ProjectParticipant.svg';
+import ProjectCoordinatorIcon from '../../images/ProjectCoordinator.svg';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {WHITE, DARK_GREEN, COMAPEO_BLUE} from '../../lib/styles';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 const m = defineMessages({
   success: {
@@ -33,56 +38,116 @@ const m = defineMessages({
 });
 
 export const Success = ({
-  route,
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'Success'>) => {
-  const deviceName = route.params.deviceName;
   const {formatMessage: t} = useIntl();
+  const {data: deviceInfo} = useOwnDeviceInfo();
+  const deviceName = deviceInfo.name || '';
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={{alignItems: 'center'}}>
-          <SuccessIcon />
-          <HeaderText style={styles.text}>
-            {t(m.deviceReady, {deviceName})}
-          </HeaderText>
-          <BodyText style={{marginTop: 20}}>{t(m.chooseProject)}</BodyText>
-        </View>
-        <View style={{width: '100%', gap: 10}}>
-          <PrimaryButton
-            testID="ONBOARDING.join-project-btn"
-            fullSize
-            style={{marginTop: 20}}
-            text={t(m.joinProject)}
-            onPress={() => {
-              navigation.navigate('JoinProjectIntro');
-            }}
-          />
-          <SecondaryButton
-            testID="ONBOARDING.map-on-your-own-btn"
-            fullSize
-            text={t(m.mapOnYourOwn)}
-            onPress={() => {
-              navigation.navigate('MapOnYourOwnIntro');
-            }}
-          />
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <View style={styles.mainCard}>
+          <View style={styles.titleSection}>
+            <View style={styles.iconContainer}>
+              <DeviceIcon width={40} height={60} />
+              <View style={styles.checkmarkCircle}>
+                <Ionicons name="checkmark" color={WHITE} size={18} />
+              </View>
+            </View>
+            <HeaderText variant="header2" style={styles.headerText}>
+              {t(m.deviceReady, {deviceName})}
+            </HeaderText>
+          </View>
+          <BodyText style={styles.bodyText}>{t(m.chooseProject)}</BodyText>
         </View>
       </View>
-    </ScrollView>
+
+      <View style={styles.actions}>
+        <PrimaryButton
+          testID="ONBOARDING.join-project-btn"
+          fullSize
+          text={t(m.joinProject)}
+          iconPosition="left"
+          renderIcon={({size}) => (
+            <ProjectParticipantIcon
+              width={size}
+              height={size}
+              color={WHITE}
+              fill={WHITE}
+            />
+          )}
+          onPress={() => {
+            navigation.navigate('JoinProjectIntro');
+          }}
+        />
+        <SecondaryButton
+          testID="ONBOARDING.map-on-your-own-btn"
+          fullSize
+          text={t(m.mapOnYourOwn)}
+          iconPosition="left"
+          renderIcon={({size}) => (
+            <ProjectCoordinatorIcon
+              width={size}
+              height={size}
+              color={COMAPEO_BLUE}
+              fill={COMAPEO_BLUE}
+            />
+          )}
+          onPress={() => {
+            navigation.navigate('MapOnYourOwnIntro');
+          }}
+        />
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    padding: 20,
-    paddingTop: 80,
+    flex: 1,
+    flexDirection: 'column',
     justifyContent: 'space-between',
-    width: '100%',
-    height: '100%',
   },
-  text: {
-    marginTop: 20,
+  content: {
+    paddingHorizontal: 20,
+  },
+  mainCard: {
+    paddingVertical: 65,
+    paddingHorizontal: 20,
+    gap: 20,
+  },
+  titleSection: {
+    alignItems: 'center',
+    gap: 10,
+  },
+  iconContainer: {
+    width: 60,
+    height: 70,
+    alignItems: 'center',
+  },
+  checkmarkCircle: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: DARK_GREEN,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerText: {
+    marginTop: 10,
+    textAlign: 'center',
+  },
+  bodyText: {
+    textAlign: 'center',
+    paddingHorizontal: 20,
+  },
+  actions: {
+    alignItems: 'center',
+    paddingVertical: 20,
+    gap: 10,
   },
 });

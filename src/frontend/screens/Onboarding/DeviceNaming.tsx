@@ -80,7 +80,7 @@ export const DeviceNaming = ({
       },
       {
         onSuccess: () => {
-          navigation.navigate('Success', {deviceName: trimmedName});
+          navigation.navigate('Success');
         },
       },
     );

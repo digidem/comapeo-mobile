@@ -163,7 +163,7 @@ export type OnboardingParamsList = {
   DataPrivacy: undefined;
   DeviceNaming: undefined;
   OnboardingPrivacyPolicy: undefined;
-  Success: {deviceName: string};
+  Success: undefined;
   JoinProjectIntro: undefined;
   MapOnYourOwnIntro: undefined;
 };

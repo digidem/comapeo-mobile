@@ -1373,14 +1373,8 @@
   "screens.Onboarding.JoinProjectIntro.title": {
     "message": "Join a Project"
   },
-  "screens.Onboarding.MapOnYourOwnIntro.benefit1": {
-    "message": "Snap photos on-the-go."
-  },
-  "screens.Onboarding.MapOnYourOwnIntro.benefit2": {
+  "screens.Onboarding.MapOnYourOwnIntro.addAudio": {
     "message": "Add audio recordings."
-  },
-  "screens.Onboarding.MapOnYourOwnIntro.benefit3": {
-    "message": "Track paths walked."
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
     "message": "Close"
@@ -1391,8 +1385,14 @@
   "screens.Onboarding.MapOnYourOwnIntro.goToMap": {
     "message": "Go to Map"
   },
+  "screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
+    "message": "Snap photos on-the-go."
+  },
   "screens.Onboarding.MapOnYourOwnIntro.title": {
     "message": "Map On Your Own"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
+    "message": "Track paths walked."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"

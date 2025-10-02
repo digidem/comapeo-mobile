@@ -7,48 +7,59 @@ import {DeviceNaming} from '../../screens/Onboarding/DeviceNaming';
 import {Success} from '../../screens/Onboarding/Success';
 import {JoinProjectIntro} from '../../screens/Onboarding/JoinProjectIntro';
 import {MapOnYourOwnIntro} from '../../screens/Onboarding/MapOnYourOwnIntro';
-import {useIntl} from 'react-intl';
+import {MessageDescriptor} from 'react-intl';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 
-export const OnboardingScreens = () => {
-  const {formatMessage} = useIntl();
-
-  return (
-    <RootStack.Group key="onboarding">
-      <RootStack.Screen
-        name="IntroToCoMapeo"
-        component={IntroToCoMapeo}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="DataPrivacy"
-        component={DataPrivacy}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="OnboardingPrivacyPolicy"
-        component={OnboardingPrivacyPolicy}
-        options={{headerTitle: formatMessage(OnboardingPrivacyPolicy.navTitle)}}
-      />
-      <RootStack.Screen
-        name="DeviceNaming"
-        component={DeviceNaming}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="Success"
-        component={Success}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="JoinProjectIntro"
-        component={JoinProjectIntro}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="MapOnYourOwnIntro"
-        component={MapOnYourOwnIntro}
-        options={{headerShown: false}}
-      />
-    </RootStack.Group>
-  );
-};
+export const createOnboardingScreens = ({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}) => (
+  <RootStack.Group key="onboarding">
+    <RootStack.Screen
+      name="IntroToCoMapeo"
+      component={IntroToCoMapeo}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="DataPrivacy"
+      component={DataPrivacy}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="OnboardingPrivacyPolicy"
+      component={OnboardingPrivacyPolicy}
+      options={{headerTitle: intl(OnboardingPrivacyPolicy.navTitle)}}
+    />
+    <RootStack.Screen
+      name="DeviceNaming"
+      component={DeviceNaming}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="Success"
+      component={Success}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="JoinProjectIntro"
+      component={JoinProjectIntro}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="MapOnYourOwnIntro"
+      component={MapOnYourOwnIntro}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="ErrorBottomSheet"
+      options={{
+        presentation: 'transparentModal',
+        headerShown: false,
+        animation: 'none',
+        contentStyle: {backgroundColor: 'transparent'},
+      }}
+      component={ErrorBottomSheet}
+    />
+  </RootStack.Group>
+);

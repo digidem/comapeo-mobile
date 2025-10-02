@@ -6,14 +6,23 @@ import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {Loading} from '../../sharedComponents/Loading';
-import {OnboardingScreens} from './OnboardingScreens';
+import {createOnboardingScreens} from './OnboardingScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {DrawerNavigator} from '../Drawer';
+import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
+import {useIntl} from 'react-intl';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
+
+export type NavigatorLayout = NonNullable<
+  React.ComponentProps<typeof RootStack.Navigator>['layout']
+>;
+export type NavigatorScreenLayout = NonNullable<
+  React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
+>;
 
 const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
@@ -41,14 +50,45 @@ export const RootStackNavigator = () => {
   const security = useAuthContext();
   const {data: deviceInfo} = useOwnDeviceInfo();
   const activeProjectId = useActiveProjectId();
+  const {formatMessage} = useIntl();
+
+  const layout: NavigatorLayout = ({children, state, navigation}) => (
+    <React.Suspense fallback={<Loading />}>
+      <PendingInvitesListener
+        currentRouteName={state.routes[state.index]?.name}
+        navigateToInviteScreen={inviteId =>
+          navigation.navigate('InviteReceived', {inviteId})
+        }
+      />
+      {children}
+    </React.Suspense>
+  );
+
+  const screenLayout: NavigatorScreenLayout = ({children}) => (
+    <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+  );
+
+  const commonNavigatorProps = {
+    layout,
+    screenLayout,
+    screenOptions: NavigatorScreenOptions,
+  } as const;
 
   if (security.authState === 'unauthenticated') {
     return (
-      <RootStack.Navigator screenOptions={{headerShown: false}}>
-        <RootStack.Screen name="AuthScreen" component={AuthScreen} />
+      <RootStack.Navigator>
+        <RootStack.Screen
+          name="AuthScreen"
+          component={AuthScreen}
+          options={{
+            headerShown: false,
+            animation: 'fade',
+          }}
+        />
       </RootStack.Navigator>
     );
   }
+
   if (!deviceInfo.name || !activeProjectId) {
     const initialRouteName = getOnboardingInitialRoute(
       deviceInfo.name,
@@ -57,44 +97,20 @@ export const RootStackNavigator = () => {
 
     return (
       <RootStack.Navigator
-        initialRouteName={initialRouteName}
-        screenOptions={NavigatorScreenOptions}
-        layout={({children, state, navigation}) => {
-          return (
-            <React.Suspense fallback={<Loading />}>
-              <PendingInvitesListener
-                currentRouteName={state.routes[state.index]?.name}
-                navigateToInviteScreen={inviteId =>
-                  navigation.navigate('InviteReceived', {inviteId})
-                }
-              />
-              {children}
-            </React.Suspense>
-          );
-        }}>
-        {OnboardingScreens()}
+        {...commonNavigatorProps}
+        initialRouteName={initialRouteName}>
+        {createOnboardingScreens({intl: formatMessage})}
       </RootStack.Navigator>
     );
   }
 
   return (
-    <RootStack.Navigator
-      screenOptions={{headerShown: false}}
-      layout={({children, state, navigation}) => {
-        return (
-          <React.Suspense fallback={<Loading />}>
-            <PendingInvitesListener
-              currentRouteName={state.routes[state.index]?.name}
-              navigateToInviteScreen={inviteId =>
-                navigation.navigate('InviteReceived', {inviteId})
-              }
-            />
-            {children}
-          </React.Suspense>
-        );
-      }}>
-      {/* TODO: Add Modal screen here when needed */}
-      <RootStack.Screen name="Drawer" component={DrawerNavigator} />
-    </RootStack.Navigator>
+    <ActiveProjectProvider activeProjectId={activeProjectId}>
+      <RootStack.Navigator
+        {...commonNavigatorProps}
+        screenOptions={{headerShown: false}}>
+        <RootStack.Screen name="Drawer" component={DrawerNavigator} />
+      </RootStack.Navigator>
+    </ActiveProjectProvider>
   );
 };

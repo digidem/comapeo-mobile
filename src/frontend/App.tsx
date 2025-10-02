@@ -34,7 +34,8 @@ import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
 import {createMapeoApi} from './lib/createMapeoApi.ts';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
-import {createAppUsageStatsPromptStore} from './contexts/AppUsageStatsPromptContext';
+import {Suspense} from 'react';
+import {Loading} from './sharedComponents/Loading.tsx';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -134,9 +135,6 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 
 const savedLocationStore = createSavedLocationStore({persist: true});
 const lowStorageBannerStore = createLowStorageBannerStore();
-const persistedAppUsageStatsPromptStore = createAppUsageStatsPromptStore({
-  persist: true,
-});
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
@@ -192,27 +190,28 @@ const App = () => {
       <IntlProvider>
         {/* ServerLoading requires internationalization to be set up */}
         <ServerLoading serverStateStore={serverStateStore}>
-          <AppProviders
-            queryClient={queryClient}
-            localDiscoveryController={localDiscoveryController}
-            mapeoApi={mapeoApi}
-            persistedDrafObservationStore={persistedDraftObservationStore}
-            trackStore={persistedTrackStore}
-            securityStore={persistedSecurityStore}
-            coordinateFormatStore={persistedCoordinateFormatStore}
-            manualEntryCoordinateFormatStore={
-              persistedManualEntryCoordinateFormatStore
-            }
-            savedLocationStore={savedLocationStore}
-            activeProjectIdStore={persistedActiveProjectIdStore}
-            metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-            lowStorageBannerStore={lowStorageBannerStore}
-            appUsageStatsPromptStore={persistedAppUsageStatsPromptStore}>
-            <AppNavigator
-              permissionAsked={permissionsAsked}
-              navigationIntegration={navigationIntegration}
-            />
-          </AppProviders>
+          <Suspense fallback={<Loading />}>
+            <AppProviders
+              queryClient={queryClient}
+              localDiscoveryController={localDiscoveryController}
+              mapeoApi={mapeoApi}
+              persistedDrafObservationStore={persistedDraftObservationStore}
+              trackStore={persistedTrackStore}
+              securityStore={persistedSecurityStore}
+              coordinateFormatStore={persistedCoordinateFormatStore}
+              manualEntryCoordinateFormatStore={
+                persistedManualEntryCoordinateFormatStore
+              }
+              savedLocationStore={savedLocationStore}
+              activeProjectIdStore={persistedActiveProjectIdStore}
+              metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+              lowStorageBannerStore={lowStorageBannerStore}>
+              <AppNavigator
+                permissionAsked={permissionsAsked}
+                navigationIntegration={navigationIntegration}
+              />
+            </AppProviders>
+          </Suspense>
         </ServerLoading>
       </IntlProvider>
     </LocaleStoreProvider>

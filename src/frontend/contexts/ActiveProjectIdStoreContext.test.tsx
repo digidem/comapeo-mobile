@@ -12,7 +12,7 @@ import {
 function createWrapper(store: ActiveProjectIdStore) {
   return ({children}: {children: ReactNode}) => {
     return (
-      <ActiveProjectIdStoreProvider value={store}>
+      <ActiveProjectIdStoreProvider store={store}>
         {children}
       </ActiveProjectIdStoreProvider>
     );

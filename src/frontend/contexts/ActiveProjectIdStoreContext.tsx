@@ -1,4 +1,4 @@
-import {createContext, useContext} from 'react';
+import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
   createJSONStorage,
@@ -6,6 +6,8 @@ import {
 } from 'zustand/middleware';
 
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {useManyProjects} from '@comapeo/core-react';
+import {Loading} from '../sharedComponents/Loading';
 
 type ActiveProjectIdState = {
   projectId?: string;
@@ -56,8 +58,40 @@ const ActiveProjectIdStoreContext = createContext<ActiveProjectIdStore | null>(
   null,
 );
 
-export const ActiveProjectIdStoreProvider =
-  ActiveProjectIdStoreContext.Provider;
+export const ActiveProjectIdStoreProvider = ({
+  children,
+  store,
+}: {
+  children: ReactNode;
+  store: ActiveProjectIdStore;
+}) => {
+  const {data: projects} = useManyProjects();
+  const fallbackProjectId = projects?.[0]?.projectId;
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    if (isInitialized) return;
+    if (store.instance.getState().projectId) {
+      setIsInitialized(true);
+      return;
+    }
+    if (
+      store.instance.getState().projectId === undefined &&
+      fallbackProjectId
+    ) {
+      store.actions.setActiveProjectId(fallbackProjectId);
+    }
+    setIsInitialized(true);
+  }, [fallbackProjectId, store, isInitialized]);
+
+  return !isInitialized ? (
+    <Loading />
+  ) : (
+    <ActiveProjectIdStoreContext value={store}>
+      {children}
+    </ActiveProjectIdStoreContext>
+  );
+};
 
 function useActiveProjectIdStoreContext() {
   const value = useContext(ActiveProjectIdStoreContext);

@@ -13,13 +13,23 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.secondProject);
     await $(byResourceId('PROJECT.create-btn')).click();
+  });
 
+  it('should take user to project stats screen', async () => {
+    const statsScreen = await $(byTextMatches('Share Project Statistics'));
+    await expect(statsScreen).toBeDisplayed();
+    const skip = await $(byTextMatches('No, Skip for Now'));
+    await skip.click();
+  });
+
+  it('should take user to success screen', async () => {
     await expect($(byTextMatches(output.names.secondProject))).toBeDisplayed();
+    await expect($(byText('Invite a Device'))).toBeDisplayed();
   });
 
   it('should land in the new project and display it on the Map screen', async () => {
-    const mapBtn = await $(byTextMatches('Start Mapping'));
-    await mapBtn.click();
+    const doneBtn = await $(byTextMatches('Done'));
+    await doneBtn.click();
 
     const header = await $(byResourceId('HOME.header-title'));
     await expect(header).toHaveText(output.names.secondProject);

@@ -39,6 +39,7 @@ import {createMapeoApi} from './lib/createMapeoApi.ts';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
 import PostHog from 'posthog-react-native';
+import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -141,6 +142,7 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 
 const savedLocationStore = createSavedLocationStore({persist: true});
 const lowStorageBannerStore = createLowStorageBannerStore();
+const earlyAccessStore = createEarlyAccessStore({persist: true});
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
@@ -231,6 +233,7 @@ const App = () => {
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
             appUsageStatsStore={appUsagePromptStore}
             lowStorageBannerStore={lowStorageBannerStore}
+            earlyAccessStore={earlyAccessStore}
             postHogInstance={postHog}>
             <AppNavigator
               permissionAsked={permissionsAsked}

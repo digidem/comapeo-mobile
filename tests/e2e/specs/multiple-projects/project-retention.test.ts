@@ -55,17 +55,18 @@ describe('Multiple Projects - Project Data Retention', () => {
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.thirdProject);
     await $(byResourceId('PROJECT.create-btn')).click();
+    await $(byTextMatches('No, Skip for Now')).click();
     await browser.waitUntil(
       async () => {
-        const btn = await $(byText('Start Mapping'));
+        const btn = await $(byText('Done'));
         return !!btn;
       },
       {
         timeout: 10000,
       },
     );
-    const mapBtn = await $(byText('Start Mapping'));
-    await mapBtn.click();
+    const doneBtn = await $(byText('Done'));
+    await doneBtn.click();
 
     const header = await $(byResourceId('HOME.header-title'));
     await expect(header).toHaveText(output.names.thirdProject);

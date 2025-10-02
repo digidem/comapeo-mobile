@@ -14,15 +14,13 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();
     await expect($(byResourceId('OBS.House-icon'))).toBeDisplayed();
     await expect(houseCategory).toBeDisplayed();
+    await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-    await driver.pause(1000);
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
+        await driver.execute('mobile:acceptAlert', {buttonLabel: 'SAVE'});
       }
     } catch (err) {
       console.log('No RN Alert dialog was found.');
@@ -73,18 +71,21 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.project);
     await createBtn.click();
-
-    await expect($(byText('Invite a Device'))).toBeDisplayed();
-    const categoriesButton = await $(byText('Update Categories Set'));
-    await categoriesButton.click();
   });
 
-  it('should take the user to the categories screen', async () => {
-    const screenTitle = await $(byText('Categories'));
-    await expect(screenTitle).toBeDisplayed();
-    await expect($(byText('Import Categories'))).toBeDisplayed();
-    await $(byResourceId('MAIN.header-back-btn')).click();
-    await $('~Close Menu').click();
+  it('should take user to project stats screen opt in, and then success screen showing successful sharing', async () => {
+    const statsScreen = await $(byTextMatches('Share Project Statistics'));
+    await expect(statsScreen).toBeDisplayed();
+    const optIn = await $(byTextMatches('Yes, Share Stats'));
+    await optIn.click();
+
+    await expect($(byTextMatches(output.names.project))).toBeDisplayed();
+    await expect(
+      $(byTextMatches('Project statistics are being shared')),
+    ).toBeDisplayed();
+    await expect($(byText('Invite a Device'))).toBeDisplayed();
+    const doneButton = await $(byText('Done'));
+    await doneButton.click();
   });
 
   it('should leave observations in place with a renamed project', async () => {

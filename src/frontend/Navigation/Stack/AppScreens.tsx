@@ -115,9 +115,12 @@ import {
 import {AttachedPhotoPreviewModal} from '../../screens/PhotoPreviewModal/AttachedPhotoPreviewModal.tsx';
 import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/sharedNavOptions.tsx';
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
+import {ShareProjectStats} from '../../screens/Settings/CreateOrJoinProject/ShareProjectStats.tsx';
 import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
 import {AppUsagePromptInterstitial} from '../../screens/AppUsagePromptInterstitial.tsx';
 import {AppUsageSharingSuccess} from '../../screens/AppUsageSharingSuccess.tsx';
+import {ProjectStatistics} from '../../screens/Settings/ProjectSettings/ProjectStatistics/index.tsx';
+import {ProjectStatsTurnedOffBottomSheet} from '../../screens/Settings/ProjectSettings/ProjectStatistics/ProjectStatsTurnedOffBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -239,12 +242,7 @@ export const createDefaultScreenGroup = ({
         options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen
-        name="ProjectCreatedNewProject"
-        component={ProjectCreated}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="ProjectCreatedNewSolo"
+        name="ProjectCreated"
         component={ProjectCreated}
         options={{headerShown: false}}
       />
@@ -457,6 +455,11 @@ export const createDefaultScreenGroup = ({
         }}
       />
       <RootStack.Screen
+        name="ShareProjectStats"
+        component={ShareProjectStats}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
         name="DraftPhotoPreviewModal"
         component={DraftPhotoPreviewModal}
         options={DraftPhotoPreviewModalNavOptions({intl})}
@@ -470,6 +473,11 @@ export const createDefaultScreenGroup = ({
         name="AppUsageSharingSuccess"
         component={AppUsageSharingSuccess}
         options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="ProjectStatistics"
+        component={ProjectStatistics}
+        options={{headerTitle: intl(ProjectStatistics.navTitle)}}
       />
     </RootStack.Group>
     <RootStack.Group
@@ -520,6 +528,10 @@ export const createDefaultScreenGroup = ({
         options={{
           contentStyle: {backgroundColor: 'white'},
         }}
+      />
+      <RootStack.Screen
+        name="ProjectStatsTurnedOff"
+        component={ProjectStatsTurnedOffBottomSheet}
       />
     </RootStack.Group>
   </>

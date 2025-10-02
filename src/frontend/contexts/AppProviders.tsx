@@ -47,6 +47,10 @@ import {
   type AppUsageStatsStore,
 } from './AppUsageStatsContext';
 import PostHog, {PostHogProvider} from 'posthog-react-native';
+import {
+  EarlyAccessStoreProvider,
+  type EarlyAccessStore,
+} from './EarlyAccessContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -64,6 +68,7 @@ type AppProvidersProps = {
   lowStorageBannerStore: LowStorageBannerStore;
   appUsageStatsStore: AppUsageStatsStore;
   postHogInstance?: PostHog;
+  earlyAccessStore: EarlyAccessStore;
 };
 
 export const AppProviders = ({
@@ -80,6 +85,7 @@ export const AppProviders = ({
   savedLocationStore,
   queryClient,
   lowStorageBannerStore,
+  earlyAccessStore,
   appUsageStatsStore,
   postHogInstance,
 }: AppProvidersProps) => {
@@ -110,17 +116,20 @@ export const AppProviders = ({
                                           draftObservationStore={
                                             persistedDrafObservationStore
                                           }>
-                                          <AuthProvider>
-                                            {/* Post Hog not initialized in integration tests */}
-                                            {postHogInstance ? (
-                                              <PostHogProvider
-                                                client={postHogInstance}>
-                                                {children}
-                                              </PostHogProvider>
-                                            ) : (
-                                              children
-                                            )}
-                                          </AuthProvider>
+                                          <EarlyAccessStoreProvider
+                                            value={earlyAccessStore}>
+                                            <AuthProvider>
+                                              {/* Post Hog not initialized in integration tests */}
+                                              {postHogInstance ? (
+                                                <PostHogProvider
+                                                  client={postHogInstance}>
+                                                  {children}
+                                                </PostHogProvider>
+                                              ) : (
+                                                children
+                                              )}
+                                            </AuthProvider>
+                                          </EarlyAccessStoreProvider>
                                         </DraftObservationProvider>
                                       </PhotoPromiseProvider>
                                     </BottomSheetModalProvider>

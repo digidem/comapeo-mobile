@@ -42,6 +42,10 @@ import {
   LowStorageBannerStoreProvider,
   type LowStorageBannerStore,
 } from './LowStorageBannerContext';
+import {
+  EarlyAccessStoreProvider,
+  type EarlyAccessStore,
+} from './EarlyAccessContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -57,6 +61,7 @@ type AppProvidersProps = {
   savedLocationStore: SavedLocationStore;
   queryClient: QueryClient;
   lowStorageBannerStore: LowStorageBannerStore;
+  earlyAccessStore: EarlyAccessStore;
 };
 
 export const AppProviders = ({
@@ -73,6 +78,7 @@ export const AppProviders = ({
   savedLocationStore,
   queryClient,
   lowStorageBannerStore,
+  earlyAccessStore,
 }: AppProvidersProps) => {
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
@@ -98,7 +104,12 @@ export const AppProviders = ({
                                         draftObservationStore={
                                           persistedDrafObservationStore
                                         }>
-                                        <AuthProvider>{children}</AuthProvider>
+                                        <EarlyAccessStoreProvider
+                                          value={earlyAccessStore}>
+                                          <AuthProvider>
+                                            {children}
+                                          </AuthProvider>
+                                        </EarlyAccessStoreProvider>
                                       </DraftObservationProvider>
                                     </PhotoPromiseProvider>
                                   </BottomSheetModalProvider>

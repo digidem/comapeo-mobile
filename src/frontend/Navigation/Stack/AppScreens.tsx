@@ -116,6 +116,8 @@ import {AttachedPhotoPreviewModal} from '../../screens/PhotoPreviewModal/Attache
 import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/sharedNavOptions.tsx';
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
 import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
+import {AppUsagePromptInterstitial} from '../../screens/AppUsagePromptInterstitial.tsx';
+import {AppUsageSharingSuccess} from '../../screens/AppUsageSharingSuccess.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -458,6 +460,16 @@ export const createDefaultScreenGroup = ({
         name="DraftPhotoPreviewModal"
         component={DraftPhotoPreviewModal}
         options={DraftPhotoPreviewModalNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="AppUsagePromptInterstitial"
+        component={AppUsagePromptInterstitial}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="AppUsageSharingSuccess"
+        component={AppUsageSharingSuccess}
+        options={{headerShown: false}}
       />
     </RootStack.Group>
     <RootStack.Group

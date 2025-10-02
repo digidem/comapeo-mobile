@@ -11,7 +11,6 @@ import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState
 export const STORAGE_KEY = 'AppUsageStats';
 
 export const AppUsageStatsSchemaV0 = v.object({
-  optedIn: v.union([v.boolean(), v.null()]),
   completedOnboardingAt: v.union([v.number(), v.null()]),
   lastPromptAt: v.union([v.number(), v.null()]),
   promptCount: v.number(),
@@ -21,7 +20,6 @@ export const AppUsageStatsSchemaV0 = v.object({
 export type AppUsageStatsState = v.InferOutput<typeof AppUsageStatsSchemaV0>;
 
 const initialState: AppUsageStatsState = {
-  optedIn: null,
   completedOnboardingAt: null,
   lastPromptAt: null,
   promptCount: 0,
@@ -30,7 +28,6 @@ const initialState: AppUsageStatsState = {
 
 function createInitialState(): AppUsageStatsState {
   return {
-    optedIn: null,
     completedOnboardingAt: null,
     lastPromptAt: null,
     promptCount: 0,
@@ -77,7 +74,6 @@ export function createAppUsageStatsStore({
       appUsageMetricsOptIn();
       if (optedIn) {
         store.setState({
-          optedIn: true,
           lastPromptAt: now,
           promptCount: state.promptCount,
           optInStartedAt: now,
@@ -85,7 +81,6 @@ export function createAppUsageStatsStore({
       } else {
         appUsageMetricsOptOut();
         store.setState({
-          optedIn: false,
           lastPromptAt: now,
           promptCount: state.promptCount + 1,
           optInStartedAt: null,

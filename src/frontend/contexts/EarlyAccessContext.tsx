@@ -4,14 +4,17 @@ import {
   createJSONStorage,
   persist as createPersistedState,
 } from 'zustand/middleware';
+import * as v from 'valibot';
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 
 // NOTE: Do not change!
 export const STORAGE_KEY = 'EarlyAccessStore' as const;
 
-type EarlyAccessState = {
-  isEarlyAccessEnabled: boolean;
-};
+export const EarlyAccessStateSchema = v.object({
+  isEarlyAccessEnabled: v.boolean(),
+});
+
+export type EarlyAccessState = v.InferOutput<typeof EarlyAccessStateSchema>;
 
 type EarlyAccessActions = {
   setEarlyAccessEnabled: (enabled: boolean) => void;
@@ -62,11 +65,6 @@ export function useEarlyAccessState<T>(
 ): T {
   const {instance} = useEarlyAccessStoreContext();
   return useStore(instance, selector);
-}
-
-export function useIsEarlyAccessEnabled(): boolean {
-  const {instance} = useEarlyAccessStoreContext();
-  return useStore(instance).isEarlyAccessEnabled;
 }
 
 export function useEarlyAccessActions(): EarlyAccessActions {

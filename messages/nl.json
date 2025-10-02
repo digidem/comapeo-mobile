@@ -298,6 +298,15 @@
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Apparaat Naam"
   },
+  "Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Vroegtijdige toegangsmodus"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.off": {
+    "message": "Vroegtijdige toegang is UIT"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.on": {
+    "message": "Vroegtijdige toegang is AAN"
+  },
   "Screens.Settings.AppSettings.language": {
     "message": "Taal"
   },

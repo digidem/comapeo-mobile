@@ -1,24 +1,29 @@
 import type {AppUsageStatsState} from '../contexts/AppUsageStatsContext';
 
-export function shouldShowAppUsagePrompt(
-  state: AppUsageStatsState,
-  now: number = Date.now(),
-) {
-  if (state.optedIn === true) {
-    return false;
-  }
+type ShouldShowAppUsagePromptProps = {
+  completedOnboardingAt: number | null;
+  lastPromptAt: number | null;
+  promptCount: number;
+};
+
+export function shouldShowAppUsagePrompt({
+  completedOnboardingAt,
+  lastPromptAt,
+  promptCount,
+}: ShouldShowAppUsagePromptProps) {
+  const now = Date.now();
   const oneWeek = 7 * 24 * 60 * 60 * 1000;
   const threeMonths = 90 * 24 * 60 * 60 * 1000;
 
   const shouldShowInitialPrompt =
-    !!state.completedOnboardingAt &&
-    now - state.completedOnboardingAt >= oneWeek &&
-    state.promptCount === 0;
+    !!completedOnboardingAt &&
+    now - completedOnboardingAt >= oneWeek &&
+    promptCount === 0;
 
   const shouldRePrompt =
-    state.promptCount > 0 &&
-    state.promptCount <= 3 &&
-    now - (state.lastPromptAt || 0) >= threeMonths;
+    promptCount > 0 &&
+    promptCount <= 3 &&
+    now - (lastPromptAt || 0) >= threeMonths;
 
   return shouldShowInitialPrompt || shouldRePrompt;
 }

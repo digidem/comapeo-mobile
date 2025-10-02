@@ -2,13 +2,17 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
-import {Ionicons} from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import ProjectCoordinatorIcon from '../../images/ProjectCoordinator.svg';
+import CameraIcon from '../../images/camera.svg';
+import TracksIcon from '../../images/Tracks.svg';
+import MapIcon from '../../images/Map.svg';
 import {useCreateProject} from '@comapeo/core-react';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {Loading} from '../../sharedComponents/Loading';
@@ -23,16 +27,16 @@ const m = defineMessages({
     id: 'screens.Onboarding.MapOnYourOwnIntro.description',
     defaultMessage: 'Explore CoMapeo—invite collaborators anytime.',
   },
-  benefit1: {
-    id: 'screens.Onboarding.MapOnYourOwnIntro.benefit1',
+  snapPhotos: {
+    id: 'screens.Onboarding.MapOnYourOwnIntro.snapPhotos',
     defaultMessage: 'Snap photos on-the-go.',
   },
-  benefit2: {
-    id: 'screens.Onboarding.MapOnYourOwnIntro.benefit2',
+  addAudio: {
+    id: 'screens.Onboarding.MapOnYourOwnIntro.addAudio',
     defaultMessage: 'Add audio recordings.',
   },
-  benefit3: {
-    id: 'screens.Onboarding.MapOnYourOwnIntro.benefit3',
+  trackPaths: {
+    id: 'screens.Onboarding.MapOnYourOwnIntro.trackPaths',
     defaultMessage: 'Track paths walked.',
   },
   goToMap: {
@@ -70,14 +74,14 @@ export const MapOnYourOwnIntro = ({
   return (
     <ScreenContentWithDock
       dockContent={
-        <>
+        <View style={{gap: 12, paddingBottom: 20}}>
           <PrimaryButton
             testID="ONBOARDING.go-to-map-btn"
             fullSize
             text={t(m.goToMap)}
             iconPosition="left"
             renderIcon={({size}) => (
-              <Ionicons name="map-outline" color={WHITE} size={size} />
+              <MapIcon width={size} height={size} color={WHITE} />
             )}
             onPress={handleGoToMap}
           />
@@ -97,7 +101,7 @@ export const MapOnYourOwnIntro = ({
               navigation.navigate('Success');
             }}
           />
-        </>
+        </View>
       }>
       <View style={styles.contentContainer}>
         <ProjectCoordinatorIcon
@@ -111,25 +115,51 @@ export const MapOnYourOwnIntro = ({
         </HeaderText>
         <BodyText style={styles.description}>{t(m.description)}</BodyText>
         <View style={styles.benefitsList}>
-          <InfoListItem icon="camera-outline" text={t(m.benefit1)} />
-          <InfoListItem icon="mic-outline" text={t(m.benefit2)} />
-          <InfoListItem icon="navigate-outline" text={t(m.benefit3)} />
+          <InfoListItem
+            icon={{type: 'svg', component: CameraIcon}}
+            text={t(m.snapPhotos)}
+          />
+          <InfoListItem
+            icon={{type: 'materialIcon', name: 'mic-none'}}
+            text={t(m.addAudio)}
+          />
+          <InfoListItem
+            icon={{type: 'svg', component: TracksIcon}}
+            text={t(m.trackPaths)}
+          />
         </View>
       </View>
     </ScreenContentWithDock>
   );
 };
 
-function InfoListItem({
-  icon,
-  text,
-}: {
-  icon: keyof typeof Ionicons.glyphMap;
-  text: string;
-}) {
+type IconConfig =
+  | {
+      type: 'svg';
+      component: React.ComponentType<{
+        width: number;
+        height: number;
+        color: string;
+        fill: string;
+      }>;
+    }
+  | {type: 'materialIcon'; name: string};
+
+function InfoListItem({icon, text}: {icon: IconConfig; text: string}) {
+  const iconSize = 26;
+
   return (
     <View style={styles.benefitItem}>
-      <Ionicons name={icon} size={26} color={DARK_GREY} />
+      {icon.type === 'svg' ? (
+        <icon.component
+          width={iconSize}
+          height={iconSize}
+          color={DARK_GREY}
+          fill={DARK_GREY}
+        />
+      ) : (
+        <MaterialIcons name={icon.name} size={iconSize} color={DARK_GREY} />
+      )}
       <BodyText variant="smallMeta" style={styles.benefitText}>
         {text}
       </BodyText>
@@ -150,17 +180,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   benefitsList: {
+    paddingTop: 40,
     gap: 12,
-    alignSelf: 'flex-start',
-    paddingHorizontal: 20,
+    alignSelf: 'center',
+    paddingHorizontal: 40,
   },
   benefitItem: {
     flexDirection: 'row',
     gap: 10,
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   benefitText: {
-    flex: 1,
     color: DARK_GREY,
   },
 });

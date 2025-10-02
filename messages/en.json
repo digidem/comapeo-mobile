@@ -1373,11 +1373,20 @@
   "screens.Onboarding.JoinProjectIntro.title": {
     "message": "Join a Project"
   },
+  "screens.Onboarding.MapOnYourOwnIntro.benefit1": {
+    "message": "Snap photos on-the-go."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.benefit2": {
+    "message": "Add audio recordings."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.benefit3": {
+    "message": "Track paths walked."
+  },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
     "message": "Close"
   },
   "screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "Map on your own to start—invite collaborators anytime."
+    "message": "Explore CoMapeo—invite collaborators anytime."
   },
   "screens.Onboarding.MapOnYourOwnIntro.goToMap": {
     "message": "Go to Map"

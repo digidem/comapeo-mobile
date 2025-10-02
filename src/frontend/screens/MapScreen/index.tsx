@@ -40,6 +40,10 @@ import {
 import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
 import {isLowStorage} from '../../lib/storage';
 import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
+import {
+  useAppUsageStatsState,
+  useAppUsageStatsActions,
+} from '../../contexts/AppUsageStatsContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -74,6 +78,10 @@ export const MapScreen = ({
   );
   const coords = location && getCoords(location);
   const [following, setFollowing] = React.useState(true);
+  const completedOnboardingAt = useAppUsageStatsState(
+    state => state.completedOnboardingAt,
+  );
+  const {recordCompleteOnboarding} = useAppUsageStatsActions();
 
   const {data: styleUrl} = useMapStyleJsonUrl();
 
@@ -95,6 +103,13 @@ export const MapScreen = ({
     newDraft();
     navigate('ObservationCategoryChooser');
   };
+
+  // if the user is on the map screen onboarding is not completed, record that they have completed it (this is because the app usage stats was added after the user already onboarded)
+  React.useEffect(() => {
+    if (!completedOnboardingAt) {
+      recordCompleteOnboarding();
+    }
+  }, [completedOnboardingAt, recordCompleteOnboarding]);
 
   // This closes the track bottom sheet whenever the user is navigated away.
   // This prevents the closing animation from happening when the map screen is being reopened

@@ -244,6 +244,18 @@
   "Screens.ProjectSettings.projectCollaborators": {
     "message": "プロジェクトの共同作業"
   },
+  "Screens.ProjectSettings.projectStatsOff": {
+    "message": "プロジェクト統計情報|OFF"
+  },
+  "Screens.ProjectSettings.projectStatsOffDesc": {
+    "message": "プロジェクトの統計情報は共有されていません。"
+  },
+  "Screens.ProjectSettings.projectStatsOn": {
+    "message": "プロジェクトの統計情報 | ON"
+  },
+  "Screens.ProjectSettings.projectStatsOnDesc": {
+    "message": "このプロジェクトは匿名の統計情報を共有しています。"
+  },
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "セキュアでエンプティされたサーバーと共有します。アクセスに必要な URL です。"
   },
@@ -259,8 +271,14 @@
   "Screens.ProjectSettings.title": {
     "message": "プロジェクトの設定"
   },
+  "Screens.ProjectSettings.update": {
+    "message": "更新"
+  },
   "Screens.ProjectSettings.updateCategories": {
     "message": "セットを更新"
+  },
+  "Screens.ProjectSettings.view": {
+    "message": "表示"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "詳細を表示"
@@ -903,6 +921,9 @@
   "screens.InviteReceived.participantRole": {
     "message": "参加者"
   },
+  "screens.InviteReceived.sharedStats": {
+    "message": "プロジェクトの統計情報が共有されています"
+  },
   "screens.InviteSuccess.goToMap": {
     "message": "マップに移動"
   },
@@ -1497,6 +1518,27 @@
   "screens.PrivacyPolicy.whyCollectedDescription": {
     "message": "デバイスとアプリ情報と共にクラッシュデータとアプリエラーが発生すると、Awana Digitalはアプリのエラーやバグを修正するために必要な情報を提供します。 パフォーマンスデータは、アプリの応答性を向上させ、エラーを特定するのに役立ちます。 ユーザー数は、国ごとのユーザー、プロジェクトごとのユーザーを含み、CoMapeoの開発における継続的な投資を正当化するのに役立ちます。"
   },
+  "screens.ProjectStatistics.navTitle": {
+    "message": "プロジェクトの統計"
+  },
+  "screens.ProjectStatistics.shareLabel": {
+    "message": "プロジェクトの統計情報を共有"
+  },
+  "screens.ProjectStatistics.statisticsDescription": {
+    "message": "プロジェクトに関する匿名化された情報 (観察数、対象エリア、追跡距離と時間、添付ファイルに関する統計情報、参加者数など)"
+  },
+  "screens.ProjectStatistics.statsShared": {
+    "message": "プロジェクト統計はAwana Digital と共有されます"
+  },
+  "screens.ProjectStatisticsTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.ProjectStatisticsTurnedOff.desc": {
+    "message": "この変更は、次回チームメンバーと交換する際に有効になります。"
+  },
+  "screens.ProjectStatisticsTurnedOff.title": {
+    "message": "プロジェクト統計情報|OFF"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "何がここで起こっているか?"
@@ -1650,26 +1692,20 @@
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
     "message": "プロジェクトに参加するには、参加したいプロジェクトのコーディネーターを見つけます。 デバイス名を知らせると、コーディネーターが招待状を送信します。"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Go to Map"
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "完了"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
     "message": "Invite Device"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
-    "message": "All Projectsに追加"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
-    "message": "デバイスを招待する準備ができました。"
+    "message": "{projectName} がデバイスを招待する準備ができました。"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.sharedLine": {
+    "message": "プロジェクト統計はAwana Digitalと共有されています"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "成功！"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
-    "message": "カテゴリセットを更新"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.viewProject": {
-    "message": "プロジェクトを表示"
   },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "既にプロジェクトに参加しています。新しいプロジェクトを作成するには、CoMapeoをアンインストールして再インストールする必要があります。"
@@ -1793,6 +1829,24 @@
   },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "プライバシーポリシー"
+  },
+  "screens.ShareProjectStats.description": {
+    "message": "これにより、CoMapeoがどのように使用されているか、どのような追加機能が必要かに関するデータを収集するのに役立ちます。"
+  },
+  "screens.ShareProjectStats.fullyEncrypted": {
+    "message": "プロジェクトは完全に暗号化されたままになります"
+  },
+  "screens.ShareProjectStats.infoAnonymized": {
+    "message": "共有情報は完全に匿名化されます"
+  },
+  "screens.ShareProjectStats.shareProjectStats": {
+    "message": "プロジェクトの統計情報を共有"
+  },
+  "screens.ShareProjectStats.skip": {
+    "message": "いいえ、スキップしてください"
+  },
+  "screens.ShareProjectStats.yesShare": {
+    "message": "はい、統計情報を共有"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Open Settings"

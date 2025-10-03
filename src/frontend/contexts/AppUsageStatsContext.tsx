@@ -62,10 +62,7 @@ export function createAppUsageStatsStore({
 
   const actions = {
     recordCompleteOnboarding: () => {
-      const state = store.getState();
-      if (!state.completedOnboardingAt) {
-        store.setState({completedOnboardingAt: Date.now()});
-      }
+      store.setState({completedOnboardingAt: Date.now()});
     },
     setOptedIn: (optedIn: boolean) => {
       const now = Date.now();

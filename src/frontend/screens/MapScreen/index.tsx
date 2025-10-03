@@ -40,10 +40,7 @@ import {
 import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
 import {isLowStorage} from '../../lib/storage';
 import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
-import {
-  useAppUsageStatsState,
-  useAppUsageStatsActions,
-} from '../../contexts/AppUsageStatsContext';
+import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
 import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
 
 // This is the default zoom used when the map first loads, and also the zoom
@@ -79,10 +76,7 @@ export const MapScreen = ({
   );
   const coords = location && getCoords(location);
   const [following, setFollowing] = React.useState(true);
-  const completedOnboardingAt = useAppUsageStatsState(
-    state => state.completedOnboardingAt,
-  );
-  const {recordCompleteOnboarding} = useAppUsageStatsActions();
+  const appUsageStore = useAppUsageStatsStore();
 
   const {data: styleUrl} = useMapStyleJsonUrl();
 
@@ -103,11 +97,10 @@ export const MapScreen = ({
   useShouldShowAppUsagePrompt();
 
   // if the user is on the map screen onboarding is not completed, record that they have completed it (this is because the app usage stats was added after the user already onboarded)
-  React.useEffect(() => {
-    if (!completedOnboardingAt) {
-      recordCompleteOnboarding();
-    }
-  }, [completedOnboardingAt, recordCompleteOnboarding]);
+  //using the store as this value does not need to be reactive
+  if (!appUsageStore.instance.getState().completedOnboardingAt) {
+    appUsageStore.actions.recordCompleteOnboarding();
+  }
 
   // This closes the track bottom sheet whenever the user is navigated away.
   // This prevents the closing animation from happening when the map screen is being reopened

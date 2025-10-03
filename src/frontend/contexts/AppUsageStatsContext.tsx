@@ -95,7 +95,7 @@ export const AppUsageStatsContext = createContext<AppUsageStatsStore | null>(
   null,
 );
 
-function useAppUsageStatsStore() {
+export function useAppUsageStatsStore() {
   const value = use(AppUsageStatsContext);
   if (!value) {
     throw new Error('AppUsageStatsProvider missing');

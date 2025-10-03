@@ -3,7 +3,7 @@ import {renderHook, act} from '@testing-library/react-native';
 import {
   createAppUsageStatsStore,
   type AppUsageStatsStore,
-  AppUsageStatsContext,
+  AppUsageStatsProvider,
   useAppUsageStatsState,
   useAppUsageStatsActions,
   AppUsageStatsState,
@@ -11,7 +11,7 @@ import {
 
 function createWrapper(store: AppUsageStatsStore) {
   return ({children}: {children: ReactNode}) => (
-    <AppUsageStatsContext value={store}>{children}</AppUsageStatsContext>
+    <AppUsageStatsProvider value={store}>{children}</AppUsageStatsProvider>
   );
 }
 

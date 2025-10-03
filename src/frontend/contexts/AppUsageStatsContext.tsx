@@ -84,6 +84,16 @@ export function createAppUsageStatsStore({
         });
       }
     },
+    resetOptInAndTimer: () => {
+      const completedOnboardingAt = store.getState().completedOnboardingAt;
+      appUsageMetricsOptOut();
+      store.setState({
+        completedOnboardingAt,
+        lastPromptAt: null,
+        promptCount: 0,
+        optInStartedAt: null,
+      });
+    },
   };
 
   return {instance: store, actions};
@@ -91,9 +101,23 @@ export function createAppUsageStatsStore({
 
 export type AppUsageStatsStore = ReturnType<typeof createAppUsageStatsStore>;
 
-export const AppUsageStatsContext = createContext<AppUsageStatsStore | null>(
-  null,
-);
+const AppUsageStatsContext = createContext<AppUsageStatsStore | null>(null);
+
+const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
+
+export const AppUsageStatsProvider = ({
+  value,
+  children,
+}: {
+  children: React.ReactNode;
+  value: AppUsageStatsStore;
+}) => {
+  const optInStartedAt = value.instance.getState().optInStartedAt;
+  if (optInStartedAt && Date.now() - optInStartedAt > ONE_YEAR_MS) {
+    value.actions.resetOptInAndTimer();
+  }
+  return <AppUsageStatsContext value={value}>{children}</AppUsageStatsContext>;
+};
 
 export function useAppUsageStatsStore() {
   const value = use(AppUsageStatsContext);

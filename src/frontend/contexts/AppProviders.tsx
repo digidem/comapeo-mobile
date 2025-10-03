@@ -43,7 +43,7 @@ import {
   type LowStorageBannerStore,
 } from './LowStorageBannerContext';
 import {
-  AppUsageStatsContext,
+  AppUsageStatsProvider,
   type AppUsageStatsStore,
 } from './AppUsageStatsContext';
 import {
@@ -88,7 +88,7 @@ export const AppProviders = ({
 }: AppProvidersProps) => {
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
-      <AppUsageStatsContext value={appUsageStatsStore}>
+      <AppUsageStatsProvider value={appUsageStatsStore}>
         <ActiveProjectIdStoreProvider value={activeProjectIdStore}>
           <SecurityStoreProvider value={securityStore}>
             <CoordinateFormatStoreProvider value={coordinateFormatStore}>
@@ -136,7 +136,7 @@ export const AppProviders = ({
             </CoordinateFormatStoreProvider>
           </SecurityStoreProvider>
         </ActiveProjectIdStoreProvider>
-      </AppUsageStatsContext>
+      </AppUsageStatsProvider>
     </MetricsDiagnosticsStoreProvider>
   );
 };

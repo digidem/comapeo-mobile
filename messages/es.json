@@ -801,6 +801,36 @@
   "screens.DeviceNaming.header": {
     "message": "Agrega un nombre para tu dispositivo"
   },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "Compartirlo aquí"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "¿Tienes comentarios?"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "Los datos de acceso anticipado no serán visibles para los colaboradores que no hayan optado."
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "Cambiar a Acceso Temprano para probar las características futuras. Puede volver en cualquier momento. Algunos datos pueden ocultarse cuando se apaga pero siempre son seguros."
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "Modo de acceso anticipado"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "Ver actualizaciones de CoMapeo"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "Usar características de acceso anticipado"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Abrir ajustes"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "Los datos de acceso anticipado se ocultarán después de apagar, pero todavía se guardan. Vuelve en cualquier momento para verlos."
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "Datos de acceso anticipado"
+  },
   "screens.EnterPassword.enterPass": {
     "message": "Introduzca su contraseña"
   },

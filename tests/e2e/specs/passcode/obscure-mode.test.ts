@@ -7,15 +7,15 @@ import {checkForElementGone} from '../../utils/checkForGone';
 describe('Passcode - Obscure Passcode Mode', () => {
   it('should show an observations before going into obscure mode', async () => {
     await $('~Add Observation').click();
-    await $(byTextMatches('Airstrip')).click();
+    const airstripCategory = await $(byTextMatches('Airstrip'));
+    await airstripCategory.click();
+    await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-    await driver.pause(1000);
-
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
+        await driver.execute('mobile:acceptAlert', {
           buttonLabel: 'SAVE',
         });
       }
@@ -57,12 +57,13 @@ describe('Passcode - Obscure Passcode Mode', () => {
     const animalCategory = await $(byTextMatches('Animal'));
     await animalCategory.click();
 
+    await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {buttonLabel: 'SAVE'});
+        await driver.execute('mobile:acceptAlert', {buttonLabel: 'SAVE'});
       }
     } catch {
       console.log('No RN Alert dialog was found.');

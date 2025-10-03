@@ -46,7 +46,6 @@ import {
   AppUsageStatsContext,
   type AppUsageStatsStore,
 } from './AppUsageStatsContext';
-import PostHog, {PostHogProvider} from 'posthog-react-native';
 import {
   EarlyAccessStoreProvider,
   type EarlyAccessStore,
@@ -67,7 +66,6 @@ type AppProvidersProps = {
   queryClient: QueryClient;
   lowStorageBannerStore: LowStorageBannerStore;
   appUsageStatsStore: AppUsageStatsStore;
-  postHogInstance?: PostHog;
   earlyAccessStore: EarlyAccessStore;
 };
 
@@ -87,7 +85,6 @@ export const AppProviders = ({
   lowStorageBannerStore,
   earlyAccessStore,
   appUsageStatsStore,
-  postHogInstance,
 }: AppProvidersProps) => {
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
@@ -119,15 +116,7 @@ export const AppProviders = ({
                                           <EarlyAccessStoreProvider
                                             value={earlyAccessStore}>
                                             <AuthProvider>
-                                              {/* Post Hog not initialized in integration tests */}
-                                              {postHogInstance ? (
-                                                <PostHogProvider
-                                                  client={postHogInstance}>
-                                                  {children}
-                                                </PostHogProvider>
-                                              ) : (
-                                                children
-                                              )}
+                                              {children}
                                             </AuthProvider>
                                           </EarlyAccessStoreProvider>
                                         </DraftObservationProvider>

@@ -9,7 +9,8 @@ import {type AppStackParamsList} from './sharedTypes/navigation';
 import {useSetUpInvitesListeners} from '@comapeo/core-react';
 import {RootStackNavigator} from './Navigation/Stack';
 import type Sentry from '@sentry/react-native';
-import {usePostHog} from 'posthog-react-native';
+import {PostHogProvider} from 'posthog-react-native';
+import {postHog} from './App';
 
 export const AppNavigator = ({
   permissionAsked,
@@ -23,8 +24,6 @@ export const AppNavigator = ({
   const containerRef =
     React.useRef<NavigationContainerRef<AppStackParamsList>>(null);
   useSetUpInvitesListeners();
-
-  const postHog = usePostHog();
 
   if (permissionAsked) {
     SplashScreen.hide();
@@ -46,9 +45,13 @@ export const AppNavigator = ({
           postHog.screen(currentRouteName, {params: JSON.stringify(params)});
         }
       }}>
-      <React.Suspense fallback={null}>
-        <RootStackNavigator />
-      </React.Suspense>
+      <PostHogProvider
+        client={postHog}
+        autocapture={{captureScreens: false, captureTouches: true}}>
+        <React.Suspense fallback={null}>
+          <RootStackNavigator />
+        </React.Suspense>
+      </PostHogProvider>
     </NavigationContainer>
   );
 };

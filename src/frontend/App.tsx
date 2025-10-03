@@ -233,8 +233,7 @@ const App = () => {
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
             appUsageStatsStore={appUsagePromptStore}
             lowStorageBannerStore={lowStorageBannerStore}
-            earlyAccessStore={earlyAccessStore}
-            postHogInstance={postHog}>
+            earlyAccessStore={earlyAccessStore}>
             <AppNavigator
               permissionAsked={permissionsAsked}
               navigationIntegration={navigationIntegration}

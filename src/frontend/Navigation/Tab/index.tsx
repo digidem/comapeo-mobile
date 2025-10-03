@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 export const HomeTabs = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
-  // enables android back button to close drawer if open
+  // enables android back button to close drawer
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {

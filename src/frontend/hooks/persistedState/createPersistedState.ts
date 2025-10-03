@@ -6,7 +6,6 @@ import {
   PersistOptions,
 } from 'zustand/middleware';
 import {MMKV} from 'react-native-mmkv';
-import {PostHogCustomStorage} from 'posthog-react-native';
 
 export const storage = new MMKV();
 

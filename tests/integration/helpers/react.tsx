@@ -27,6 +27,7 @@ import {QueryClient} from '@tanstack/react-query';
 import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
 import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowStorageBannerContext';
 import {createEarlyAccessStore} from '../../../src/frontend/contexts/EarlyAccessContext';
+import {createAppUsageStatsStore} from '../../../src/frontend/contexts/AppUsageStatsContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
@@ -161,6 +162,12 @@ export function createAppProvidersWrapper({
 
   const lowStorageBannerStore = createLowStorageBannerStore();
 
+  const appUsagePromptStore = createAppUsageStatsStore({
+    persist: false,
+    appUsageMetricsOptIn: () => {},
+    appUsageMetricsOptOut: () => {},
+  });
+
   const OuterWrapper = createMinimalWrapper();
   const wrapper = ({children}: {children: ReactNode}) => {
     return (
@@ -180,6 +187,7 @@ export function createAppProvidersWrapper({
           savedLocationStore={persistedSavedLocationStore}
           trackStore={persistedTrackStore}
           lowStorageBannerStore={lowStorageBannerStore}
+          appUsageStatsStore={appUsagePromptStore}
           earlyAccessStore={persistedEarlyAccessStore}>
           {children}
         </AppProviders>

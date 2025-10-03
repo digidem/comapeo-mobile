@@ -801,6 +801,36 @@
   "screens.DeviceNaming.header": {
     "message": "Add a name for your device"
   },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "Teilen Sie es hier"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "Haben Sie Feedback?"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "Daten von Early Access sind für Mitarbeiter, die sich nicht für diesen Zugang entschieden haben, nicht sichtbar."
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "Wechseln Sie zu Early Access, um zukünftige Funktionen zu testen. Sie können jederzeit wieder einschalten. Einige Daten können ausgeblendet werden, wenn sie ausgeschaltet sind, aber immer sicher sind."
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "Frühzeitiger Zugriffsmodus"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "Siehe CoMapeo Updates"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "Frühe Zugriffsfunktionen verwenden"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "Daten aus Early Access werden nach dem Ausschalten ausgeblendet, aber immer noch gespeichert. Schalten Sie sie jederzeit wieder ein, um sie zu sehen."
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "Frühe Zugangsdaten"
+  },
   "screens.EnterPassword.enterPass": {
     "message": "Geben Sie Ihr Passwort ein"
   },

@@ -102,7 +102,7 @@ export function MenuScreen() {
                   accessibilityLabel="Go to Project Settings">
                   <SecondaryButton
                     text={formatMessage(m.viewProject)}
-                    onPress={() => navigation.navigate('ProjectSettings')}
+                    onPress={() => navigation.navigate('DidNotMoveBottomSheet')}
                     fullSize={false}
                   />
                 </View>

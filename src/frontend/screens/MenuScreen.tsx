@@ -137,6 +137,18 @@ export function MenuScreen() {
 
         <View style={styles.bottomItemsContainer}>
           <MainMenuItemWrapper
+            onPress={() => navigation.navigate('TrackRecordingActive')}
+            accessibilityLabel="Go to Track Recording Active Screen">
+            <MaterialCommunityIcons
+              name="dots-grid"
+              size={20}
+              color={NEW_DARK_GREY}
+            />
+            <View style={{paddingLeft: 12}}>
+              <BodyText variant="medium">Test for seeing bottom sheet</BodyText>
+            </View>
+          </MainMenuItemWrapper>
+          <MainMenuItemWrapper
             onPress={() => navigation.navigate('AllProjects')}
             accessibilityLabel="Go to All Projects Screen">
             <MaterialCommunityIcons

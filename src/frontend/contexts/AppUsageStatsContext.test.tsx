@@ -40,7 +40,6 @@ describe('AppUsageStatsPromptContext', () => {
       wrapper,
     });
     expect(result.current).toStrictEqual({
-      optedIn: null,
       completedOnboardingAt: null,
       lastPromptAt: null,
       promptCount: 0,
@@ -48,7 +47,7 @@ describe('AppUsageStatsPromptContext', () => {
     } as AppUsageStatsState);
   });
 
-  it('records the completion of onboarding exactly once', () => {
+  it('records the completion of onboarding to current "now"', () => {
     const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
@@ -63,12 +62,6 @@ describe('AppUsageStatsPromptContext', () => {
     );
 
     act(() => {
-      actionsHook.result.current.recordCompleteOnboarding();
-    });
-    expect(stateHook.result.current).toBe(FAKE_NOW);
-
-    act(() => {
-      jest.setSystemTime(FAKE_NOW + 500);
       actionsHook.result.current.recordCompleteOnboarding();
     });
     expect(stateHook.result.current).toBe(FAKE_NOW);
@@ -92,7 +85,6 @@ describe('AppUsageStatsPromptContext', () => {
     });
 
     expect(stateHook.result.current).toMatchObject({
-      optedIn: true,
       lastPromptAt: FAKE_NOW,
       promptCount: 0,
       optInStartedAt: FAKE_NOW,
@@ -116,7 +108,6 @@ describe('AppUsageStatsPromptContext', () => {
       actionsHook.result.current.setOptedIn(false);
     });
     expect(stateHook.result.current).toMatchObject({
-      optedIn: false,
       lastPromptAt: FAKE_NOW,
       promptCount: 1,
       optInStartedAt: null,

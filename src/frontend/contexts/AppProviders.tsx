@@ -43,7 +43,7 @@ import {
   type LowStorageBannerStore,
 } from './LowStorageBannerContext';
 import {
-  AppUsageStatsProvider,
+  AppUsageStatsContext,
   type AppUsageStatsStore,
 } from './AppUsageStatsContext';
 import PostHog, {PostHogProvider} from 'posthog-react-native';
@@ -91,7 +91,7 @@ export const AppProviders = ({
 }: AppProvidersProps) => {
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
-      <AppUsageStatsProvider value={appUsageStatsStore}>
+      <AppUsageStatsContext value={appUsageStatsStore}>
         <ActiveProjectIdStoreProvider value={activeProjectIdStore}>
           <SecurityStoreProvider value={securityStore}>
             <CoordinateFormatStoreProvider value={coordinateFormatStore}>
@@ -147,7 +147,7 @@ export const AppProviders = ({
             </CoordinateFormatStoreProvider>
           </SecurityStoreProvider>
         </ActiveProjectIdStoreProvider>
-      </AppUsageStatsProvider>
+      </AppUsageStatsContext>
     </MetricsDiagnosticsStoreProvider>
   );
 };

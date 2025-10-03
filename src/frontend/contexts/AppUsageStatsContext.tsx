@@ -1,4 +1,4 @@
-import {createContext, useContext} from 'react';
+import {createContext, use} from 'react';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
@@ -94,12 +94,12 @@ export function createAppUsageStatsStore({
 
 export type AppUsageStatsStore = ReturnType<typeof createAppUsageStatsStore>;
 
-const AppUsageStatsContext = createContext<AppUsageStatsStore | null>(null);
-
-export const AppUsageStatsProvider = AppUsageStatsContext.Provider;
+export const AppUsageStatsContext = createContext<AppUsageStatsStore | null>(
+  null,
+);
 
 function useAppUsageStatsStore() {
-  const value = useContext(AppUsageStatsContext);
+  const value = use(AppUsageStatsContext);
   if (!value) {
     throw new Error('AppUsageStatsProvider missing');
   }

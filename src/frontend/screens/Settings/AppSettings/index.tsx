@@ -95,7 +95,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
     },
     {
       onPress: () => {
-        console.log('This will navigate to early access settings');
+        navigation.navigate('EarlyAccess');
       },
       testID: 'earlyAccessFlag',
       primaryText: formatMessage(m.earlyAccessTitle),

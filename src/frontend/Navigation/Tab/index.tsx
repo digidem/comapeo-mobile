@@ -10,43 +10,14 @@ import {Loading} from '../../sharedComponents/Loading';
 import {WHITE} from '../../lib/styles';
 import {Drawer} from 'react-native-drawer-layout';
 import {MenuScreen} from '../../screens/MenuScreen';
-import {useFocusEffect} from '@react-navigation/native';
-import {BackHandler} from 'react-native';
+import {useOpenDrawer} from '../../hooks/useOpenDrawer';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
 export const HomeTabs = () => {
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
-
-  // enables android back button to close drawer
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        if (drawerOpen) {
-          setDrawerOpen(false);
-          return true;
-        } else {
-          return false;
-        }
-      };
-
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-
-      return () => subscription.remove();
-    }, [drawerOpen]),
-  );
-
-  //closes drawer when navigating away
-  useFocusEffect(
-    React.useCallback(() => {
-      return () => {
-        setDrawerOpen(false);
-      };
-    }, []),
-  );
+  const [drawerOpen, setDrawerOpen] = useOpenDrawer({
+    screensToLeaveDrawerOpen: ['TrackRecordingActive'],
+  });
 
   return (
     <Drawer

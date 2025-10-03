@@ -801,6 +801,36 @@
   "screens.DeviceNaming.header": {
     "message": "Add a name for your device"
   },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "ここで共有"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "フィードバックがありますか？"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "アーリーアクセスからのデータは、未登録のコラボレーターには表示されません。"
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "早期アクセスに切り替えて、今後の機能をテストします。いつでも戻すことができます。一部のデータはオフにすると非表示になるかもしれませんが、常に安全です。"
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "アーリーアクセスモード"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "CoMapeoのアップデートを参照してください"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "早期アクセス機能を使用する"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "アーリーアクセスのデータは、オフにすると非表示になりますが、保存されています。いつでも戻って確認できます。"
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "アーリーアクセスデータ"
+  },
   "screens.EnterPassword.enterPass": {
     "message": "パスコードを入力してください"
   },

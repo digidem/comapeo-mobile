@@ -6,7 +6,7 @@ import {useNavigationFromRoot} from './useNavigationWithTypes';
 export const useShouldShowAppUsagePrompt = () => {
   const {completedOnboardingAt, lastPromptAt, promptCount, optInStartedAt} =
     useAppUsageStatsState(store => store);
-  const {popTo} = useNavigationFromRoot();
+  const {navigate} = useNavigationFromRoot();
 
   useEffect(() => {
     if (optInStartedAt) return;
@@ -17,7 +17,13 @@ export const useShouldShowAppUsagePrompt = () => {
         promptCount,
       })
     ) {
-      popTo('AppUsagePromptInterstitial');
+      navigate('AppUsagePromptInterstitial');
     }
-  }, [optInStartedAt, completedOnboardingAt, lastPromptAt, promptCount, popTo]);
+  }, [
+    optInStartedAt,
+    completedOnboardingAt,
+    lastPromptAt,
+    promptCount,
+    navigate,
+  ]);
 };

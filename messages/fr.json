@@ -801,6 +801,36 @@
   "screens.DeviceNaming.header": {
     "message": "Add a name for your device"
   },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "Partagez-le ici"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "Vous avez des commentaires ?"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "Les données de l'accès anticipé ne seront pas visibles pour les collaborateurs qui ne s'y sont pas engagés."
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "Passez à l'accès anticipé pour tester les fonctionnalités à venir. Vous pouvez revenir en arrière à tout moment. Certaines données peuvent être masquées lorsque désactivées mais sont toujours sûres."
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "Mode d'accès anticipé"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "Voir les mises à jour de CoMapeo"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "Utiliser les fonctionnalités d'accès anticipé"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "Les données de l'accès anticipé seront masquées après désactivation, mais elles sont toujours enregistrées. Rebasculez à tout moment pour les voir."
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "Données d'accès anticipé"
+  },
   "screens.EnterPassword.enterPass": {
     "message": "Entrez votre code d'accès"
   },

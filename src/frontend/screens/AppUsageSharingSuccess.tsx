@@ -45,7 +45,7 @@ export const AppUsageSharingSuccess = ({
           fullSize
           text={formatMessage(m.done)}
           onPress={() => {
-            navigation.pop();
+            navigation.goBack();
           }}
         />
       }

@@ -244,6 +244,18 @@
   "Screens.ProjectSettings.projectCollaborators": {
     "message": "Colaboradores do projeto"
   },
+  "Screens.ProjectSettings.projectStatsOff": {
+    "message": "Estatísticas do Projeto OFF"
+  },
+  "Screens.ProjectSettings.projectStatsOffDesc": {
+    "message": "As estatísticas do projeto não estão sendo compartilhadas."
+  },
+  "Screens.ProjectSettings.projectStatsOn": {
+    "message": "Estatísticas do Projeto On"
+  },
+  "Screens.ProjectSettings.projectStatsOnDesc": {
+    "message": "Este projeto está compartilhando estatísticas anônimas."
+  },
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Compartilhe com um servidor seguro e encriptado. URL é necessária para acesso."
   },
@@ -259,8 +271,14 @@
   "Screens.ProjectSettings.title": {
     "message": "Configurações do Projeto"
   },
+  "Screens.ProjectSettings.update": {
+    "message": "Atualização"
+  },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Atualizar Configuração"
+  },
+  "Screens.ProjectSettings.view": {
+    "message": "Visualizar"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "Ver Detalhes"
@@ -903,6 +921,9 @@
   "screens.InviteReceived.participantRole": {
     "message": "participante"
   },
+  "screens.InviteReceived.sharedStats": {
+    "message": "Estatísticas do projeto estão sendo compartilhadas"
+  },
   "screens.InviteSuccess.goToMap": {
     "message": "Ir para o Mapa"
   },
@@ -1497,6 +1518,27 @@
   "screens.PrivacyPolicy.whyCollectedDescription": {
     "message": "Dados sobre erros do aplicativo, juntamente com as informações do dispositivo, fornecem à Awana Digital as informações necessárias para corrigir bugs no aplicativo. Os dados de desempenho nos ajudam a melhorar a capacidade de resposta do aplicativo e a identificar erros. A contagem de usuários, incluindo o total de usuários, usuários por país e usuários por projeto, ajuda a justificar o investimento contínuo no desenvolvimento do CoMapeo."
   },
+  "screens.ProjectStatistics.navTitle": {
+    "message": "Estatísticas do Projeto"
+  },
+  "screens.ProjectStatistics.shareLabel": {
+    "message": "Compartilhar Estatísticas do Projeto"
+  },
+  "screens.ProjectStatistics.statisticsDescription": {
+    "message": "Informações anônimas sobre o seu projeto, incluindo o número de observações, áreas cobertas, estatísticas sobre a distância da faixa e o tempo, estatísticas sobre anexos e o número de participantes."
+  },
+  "screens.ProjectStatistics.statsShared": {
+    "message": "Estatísticas do projeto são compartilhadas com Awana Digital"
+  },
+  "screens.ProjectStatisticsTurnedOff.close": {
+    "message": "Abrir Configurações"
+  },
+  "screens.ProjectStatisticsTurnedOff.desc": {
+    "message": "Esta alteração entrará em vigor na próxima vez que você trocar com os membros da equipe."
+  },
+  "screens.ProjectStatisticsTurnedOff.title": {
+    "message": "Estatísticas do Projeto OFF"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "O que está acontecendo aqui?"
@@ -1650,26 +1692,20 @@
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
     "message": "Para participar de um projeto, encontre o Coordenador do projeto que você deseja participar. Diga a eles o nome do seu dispositivo e o Coordenador lhe enviará um convite."
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Ir para Mapas"
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "Concluído"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
     "message": "Convidar dispositivo"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
-    "message": "agora adicionado a Todos os Projetos"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
-    "message": "agora está tudo pronto para convidar dispositivos."
+    "message": "{projectName} está pronto para você convidar dispositivos."
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.sharedLine": {
+    "message": "Estatísticas do projeto estão sendo compartilhadas com o Awana Digital"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Sucesso!"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
-    "message": "Atualizar conjunto de categorias"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.viewProject": {
-    "message": "Ver Projeto"
   },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "Você já está em um projeto. Para criar um novo projeto, você deve desinstalar e reinstalar o CoMapeo."
@@ -1793,6 +1829,24 @@
   },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Política de Privacidade"
+  },
+  "screens.ShareProjectStats.description": {
+    "message": "Isso nos ajudará a coletar dados sobre como o CoMapeo está sendo usado e quais recursos adicionais são necessários."
+  },
+  "screens.ShareProjectStats.fullyEncrypted": {
+    "message": "Seu projeto permanecerá totalmente criptografado"
+  },
+  "screens.ShareProjectStats.infoAnonymized": {
+    "message": "Informações compartilhadas ficarão completamente anônimas"
+  },
+  "screens.ShareProjectStats.shareProjectStats": {
+    "message": "Compartilhar Estatísticas do Projeto"
+  },
+  "screens.ShareProjectStats.skip": {
+    "message": "Não, pular por enquanto"
+  },
+  "screens.ShareProjectStats.yesShare": {
+    "message": "Sim, compartilhar estatísticas"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Abrir Configurações"

@@ -801,6 +801,36 @@
   "screens.DeviceNaming.header": {
     "message": "Add a name for your device"
   },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "Deel het hier"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "Heeft u feedback?"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "Gegevens uit Vroegtijdige Toegang zullen niet zichtbaar zijn voor medewerkers die niet hebben gekozen."
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "Schakel over naar Vroegtijdige Toegang om aankomende functies te testen. U kunt op elk moment terugschakelen. Sommige gegevens kunnen worden verborgen wanneer ze zijn uitgeschakeld, maar zijn altijd veilig."
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "Vroegtijdige toegangsmodus"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "Zie CoMapeo updates"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "Gebruik Vroegtijdige Toegang Functies"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "Gegevens van Vroegtijdige Toegang worden verborgen na het uitschakelen van de toegang, maar zijn nog steeds opgeslagen. Schakel op elk moment terug om het te zien."
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "Gegevens voor vroegtijdige toegang"
+  },
   "screens.EnterPassword.enterPass": {
     "message": "Voer uw toegangscode in"
   },

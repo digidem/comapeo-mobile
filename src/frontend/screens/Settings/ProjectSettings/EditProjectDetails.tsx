@@ -77,7 +77,7 @@ export const EditProjectDetails: NativeNavigationComponent<
               },
               {
                 onSuccess: () => {
-                  navigation.popTo('Menu');
+                  navigation.goBack();
                 },
                 onError: err => {
                   Sentry.captureException(err);

@@ -44,6 +44,7 @@ import {
   useAppUsageStatsState,
   useAppUsageStatsActions,
 } from '../../contexts/AppUsageStatsContext';
+import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -99,10 +100,7 @@ export const MapScreen = ({
 
   useCheckDraftObservationAndNavigate({authState});
 
-  const handleAddPress = () => {
-    newDraft();
-    navigate('ObservationCategoryChooser');
-  };
+  useShouldShowAppUsagePrompt();
 
   // if the user is on the map screen onboarding is not completed, record that they have completed it (this is because the app usage stats was added after the user already onboarded)
   React.useEffect(() => {
@@ -120,6 +118,11 @@ export const MapScreen = ({
       };
     }, [navigation]),
   );
+
+  const handleAddPress = () => {
+    newDraft();
+    navigate('ObservationCategoryChooser');
+  };
 
   function handleLocationPress() {
     setZoom(DEFAULT_ZOOM);

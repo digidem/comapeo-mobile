@@ -1,5 +1,3 @@
-import type {AppUsageStatsState} from '../contexts/AppUsageStatsContext';
-
 type ShouldShowAppUsagePromptProps = {
   completedOnboardingAt: number | null;
   lastPromptAt: number | null;

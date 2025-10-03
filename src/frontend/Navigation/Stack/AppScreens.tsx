@@ -119,6 +119,8 @@ import {ShareProjectStats} from '../../screens/Settings/CreateOrJoinProject/Shar
 import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
 import {ProjectStatistics} from '../../screens/Settings/ProjectSettings/ProjectStatistics/index.tsx';
 import {ProjectStatsTurnedOffBottomSheet} from '../../screens/Settings/ProjectSettings/ProjectStatistics/ProjectStatsTurnedOffBottomSheet.tsx';
+import {EarlyAccessOffBottomSheet} from '../../screens/Settings/AppSettings/EarlyAccessOffBottomSheet.tsx';
+import {EarlyAccess} from '../../screens/Settings/AppSettings/EarlyAccess.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -467,6 +469,11 @@ export const createDefaultScreenGroup = ({
         component={ProjectStatistics}
         options={{headerTitle: intl(ProjectStatistics.navTitle)}}
       />
+      <RootStack.Screen
+        name="EarlyAccess"
+        component={EarlyAccess}
+        options={{headerTitle: intl(EarlyAccess.navTitle)}}
+      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -520,6 +527,10 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="ProjectStatsTurnedOff"
         component={ProjectStatsTurnedOffBottomSheet}
+      />
+      <RootStack.Screen
+        name="EarlyAccessOff"
+        component={EarlyAccessOffBottomSheet}
       />
     </RootStack.Group>
   </>

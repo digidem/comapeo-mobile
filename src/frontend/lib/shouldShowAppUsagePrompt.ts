@@ -19,15 +19,9 @@ export function shouldShowAppUsagePrompt({
     promptCount === 0;
 
   const shouldRePrompt =
-    promptCount < 3 && now - (lastPromptAt || 0) >= threeMonths;
-
-  console.log({
-    shouldShowInitialPrompt,
-    shouldRePrompt,
-    lastPromptAt,
-    promptCount,
-    now,
-  });
+    completedOnboardingAt !== null &&
+    promptCount < 3 &&
+    now - (lastPromptAt || 0) >= threeMonths;
 
   return shouldShowInitialPrompt || shouldRePrompt;
 }

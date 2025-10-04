@@ -9,15 +9,17 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import Exchange from '../images/Exchange.svg';
 import {BodyText} from './Text/BodyText.tsx';
-import {PrimaryButton, SecondaryButton} from './Buttons.tsx';
-import {Divider} from './Divider.tsx';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
-import {NEW_DARK_GREY, BLACK, WHITE} from '../lib/styles.ts';
+import {BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY, WHITE} from '../lib/styles.ts';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
-import {ProjectInfoCard} from './ProjectInfoCard.tsx';
 import {MenuLowStorageAlert} from './Storage/MenuLowStorageAlert.tsx';
 import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery.ts';
 import {isLowStorage, calcUsedPercentage} from '../lib/storage.ts';
+import {ColorCard} from './ColorCard.tsx';
+import {HeaderText} from './Text/HeaderText.tsx';
+import {useManyProjects} from '@comapeo/core-react';
+import {buttonStyles} from './Buttons.tsx';
+import DownArrow from '../images/DownArrow.svg';
 
 const m = defineMessages({
   aboutCoMapeo: {
@@ -52,19 +54,36 @@ const m = defineMessages({
     id: 'Navigation.Menu.allProjects',
     defaultMessage: 'All Projects',
   },
+  mappingOnOwn: {
+    id: 'Navigation.Menu.mappingOnOwn',
+    defaultMessage: 'You are mapping on your own.',
+  },
+  coordinator: {
+    id: 'Navigation.Menu.coordinator',
+    defaultMessage: 'Coordinator',
+  },
+  participant: {
+    id: 'Navigation.Menu.participant',
+    defaultMessage: 'Participant',
+  },
+  justYou: {
+    id: 'Navigation.Menu.justYou',
+    defaultMessage: 'Just you',
+  },
+  switchProjects: {
+    id: 'Navigation.Menu.switchProjects',
+    defaultMessage: 'Switch Projects',
+  },
 });
 
 export function DrawerMenu() {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
+  const {data: allProjects} = useManyProjects();
 
   const {projectId} = useActiveProject();
-  const projectInfo = useProjectRoleAndDetails(projectId);
-  const role = projectInfo.role;
-
-  const displayTitle =
-    role === 'solo' ? projectInfo.projectHeader : projectInfo.projectName;
-
+  const projectDetails = useProjectRoleAndDetails(projectId);
+  const {role, projectColor, projectDescription} = projectDetails;
   const {data} = useStorageReadingQuery();
   const {freeBytes, totalBytes} = data;
   const isLow = isLowStorage(freeBytes);
@@ -80,58 +99,69 @@ export function DrawerMenu() {
           />
         )}
         <View>
-          <BodyText variant="tinyMeta" style={styles.currentProjectLabel}>
-            {formatMessage(m.currentProject)}
-          </BodyText>
-          <ProjectInfoCard
-            backgroundColor={projectInfo.projectColor}
-            role={role}
-            headerText={displayTitle}
-            testID="MENU.project-name"
-            projectDescription={
-              'projectDescription' in projectInfo &&
-              projectInfo.projectDescription
-                ? projectInfo.projectDescription
-                : undefined
-            }
-            ButtonsRow={
-              <View style={styles.buttonsRow}>
-                <View
-                  style={styles.buttonWrapper}
-                  accessibilityLabel="Go to Project Settings">
-                  <SecondaryButton
-                    text={formatMessage(m.viewProject)}
-                    onPress={() => navigation.navigate('ProjectSettings')}
-                    fullSize={false}
-                  />
-                </View>
-                {role === 'coordinator' || role === 'solo' ? (
-                  <View style={styles.buttonWrapper}>
-                    <PrimaryButton
-                      text={formatMessage(m.invite)}
-                      onPress={() => {
-                        if (role === 'solo') {
-                          navigation.navigate('InviteCollaborators');
-                          return;
-                        }
-
-                        navigation.navigate('SelectDevice');
-                      }}
-                      fullSize={false}
-                      renderIcon={({size, color}) => (
-                        <IonIcon name="person-add" size={size} color={color} />
-                      )}
-                    />
-                  </View>
-                ) : (
-                  <View style={styles.buttonWrapper} />
-                )}
+          <ColorCard backgroundColor={projectColor}>
+            <View style={{padding: 20, gap: 12}}>
+              <HeaderText variant="header2">
+                {role === 'solo'
+                  ? projectDetails.projectHeader
+                  : projectDetails.projectName}
+              </HeaderText>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 6,
+                }}>
+                <MaterialIcon
+                  color={NEW_DARK_GREY}
+                  size={20}
+                  name={
+                    role === 'solo'
+                      ? 'person'
+                      : role === 'coordinator'
+                        ? 'manage-accounts'
+                        : 'people'
+                  }
+                />
+                <BodyText style={{flex: 1, color: NEW_DARK_GREY}}>
+                  {role === 'solo'
+                    ? formatMessage(m.justYou)
+                    : role === 'coordinator'
+                      ? formatMessage(m.coordinator)
+                      : formatMessage(m.participant)}
+                </BodyText>
               </View>
-            }
-          />
-          <View style={{marginTop: 20}}>
-            <Divider />
-          </View>
+              <BodyText style={{color: NEW_DARK_GREY}}>
+                {role === 'solo'
+                  ? formatMessage(m.mappingOnOwn)
+                  : projectDescription}
+              </BodyText>
+              {allProjects.length > 1 && (
+                // This button deviates from the standard SecondaryButton (the icon is aligned flex-end) and so instead of changing that component, I just copied the styles here, and created a custom button for this use case.
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('EditProjectDetails');
+                  }}
+                  style={[
+                    buttonStyles.base,
+                    {
+                      backgroundColor: WHITE,
+                      borderWidth: 1.5,
+                      borderColor: BLUE_GREY,
+                      alignSelf: 'center',
+                      paddingHorizontal: 20,
+                    },
+                  ]}>
+                  <HeaderText
+                    variant="header5"
+                    style={{color: COMAPEO_BLUE, flex: 1, textAlign: 'center'}}>
+                    {formatMessage(m.switchProjects)}
+                  </HeaderText>
+                  <DownArrow />
+                </TouchableOpacity>
+              )}
+            </View>
+          </ColorCard>
         </View>
 
         <View style={styles.bottomItemsContainer}>
@@ -208,19 +238,6 @@ const styles = StyleSheet.create({
     padding: 20,
     flexDirection: 'column',
     justifyContent: 'space-between',
-  },
-  currentProjectLabel: {
-    textTransform: 'uppercase',
-    fontWeight: '500',
-    marginBottom: 12,
-    color: BLACK,
-  },
-  buttonsRow: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  buttonWrapper: {
-    flex: 1,
   },
   bottomItemsContainer: {
     gap: 20,

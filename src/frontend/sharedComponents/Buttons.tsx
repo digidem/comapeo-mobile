@@ -26,13 +26,13 @@ export const PrimaryButton = ({
       testID={testID}
       style={[
         style,
-        styles.base,
+        buttonStyles.base,
         {backgroundColor: COMAPEO_BLUE},
         fullSize && {width: 280},
       ]}
       onPress={onPress}>
       {renderIcon && (
-        <View style={styles.iconSpacing}>
+        <View style={buttonStyles.iconSpacing}>
           {renderIcon({color: WHITE, size: 25})}
         </View>
       )}
@@ -56,7 +56,7 @@ export const SecondaryButton = ({
       testID={testID}
       style={[
         style,
-        styles.base,
+        buttonStyles.base,
         {
           backgroundColor: WHITE,
           borderWidth: 1.5,
@@ -66,7 +66,7 @@ export const SecondaryButton = ({
       ]}
       onPress={onPress}>
       {renderIcon && (
-        <View style={styles.iconSpacing}>
+        <View style={buttonStyles.iconSpacing}>
           {renderIcon({color: COMAPEO_BLUE, size: 25})}
         </View>
       )}
@@ -90,13 +90,13 @@ export const DestructiveButton = ({
       testID={testID}
       style={[
         style,
-        styles.base,
+        buttonStyles.base,
         {backgroundColor: WARNING_RED},
         fullSize && {width: 280},
       ]}
       onPress={onPress}>
       {renderIcon && (
-        <View style={styles.iconSpacing}>
+        <View style={buttonStyles.iconSpacing}>
           {renderIcon({color: WHITE, size: 25})}
         </View>
       )}
@@ -107,7 +107,7 @@ export const DestructiveButton = ({
   );
 };
 
-const styles = StyleSheet.create({
+export const buttonStyles = StyleSheet.create({
   base: {
     height: 50,
     display: 'flex',

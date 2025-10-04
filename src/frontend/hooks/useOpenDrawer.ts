@@ -1,7 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {useState, useCallback} from 'react';
 import {BackHandler} from 'react-native';
-import {RootStackParamsList} from '../sharedTypes/navigation';
 
 export const useOpenDrawer = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);

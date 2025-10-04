@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import CoMapeoShield from '../../../images/CoMapeoShield.svg';
 import {
   BLUE_GREY,
@@ -19,6 +13,8 @@ import {AppStackParamsList} from '../../../sharedTypes/navigation';
 import {useIntl, defineMessages} from 'react-intl';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {MetricsDiagnosticsPermissionToggle} from '../../../sharedComponents/MetricsDiagnosticsPermissionToggle';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 const m = defineMessages({
   navTitle: {
     id: 'screens.DataAndPrivacy.navTitle',
@@ -63,23 +59,25 @@ export const DataAndPrivacy = ({
       <View style={styles.shieldContainer}>
         <CoMapeoShield width={24} height={30} />
         <View style={styles.shieldTextContainer}>
-          <Text style={styles.respectsPrivacy}>
+          <HeaderText variant="header5" style={styles.respectsPrivacy}>
             {formatMessage(m.respectsPrivacy)}
-          </Text>
+          </HeaderText>
           <TouchableOpacity
             onPress={() => navigation.popTo('SettingsPrivacyPolicy')}>
-            <Text style={styles.learnMore}>{formatMessage(m.learnMore)}</Text>
+            <HeaderText variant="header5" style={styles.learnMore}>
+              {formatMessage(m.learnMore)}
+            </HeaderText>
           </TouchableOpacity>
         </View>
       </View>
 
-      <View style={styles.diagnosticContainer}>
-        <Text style={styles.diagnosticTitle}>
+      <View style={styles.itemContainer}>
+        <HeaderText variant="header5">
           {formatMessage(m.diagnosticInfoTitle)}
-        </Text>
-        <Text style={styles.diagnosticText}>
+        </HeaderText>
+        <BodyText variant="smallMeta" style={styles.diagnosticText}>
           {formatMessage(m.diagnosticInfoText)}
-        </Text>
+        </BodyText>
         <View style={styles.bulletContainer}>
           <MaterialIcons
             name="circle"
@@ -87,7 +85,9 @@ export const DataAndPrivacy = ({
             color={NEW_DARK_GREY}
             style={styles.bulletIcon}
           />
-          <Text style={styles.bulletText}>{formatMessage(m.noPII)}</Text>
+          <BodyText variant="smallMeta" style={styles.bulletText}>
+            {formatMessage(m.noPII)}
+          </BodyText>
         </View>
         <View style={styles.bulletContainer}>
           <MaterialIcons
@@ -96,7 +96,9 @@ export const DataAndPrivacy = ({
             color={NEW_DARK_GREY}
             style={styles.bulletIcon}
           />
-          <Text style={styles.bulletText}>{formatMessage(m.optOut)}</Text>
+          <BodyText variant="smallMeta" style={styles.bulletText}>
+            {formatMessage(m.optOut)}
+          </BodyText>
         </View>
         <View style={styles.horizontalLine} />
         <MetricsDiagnosticsPermissionToggle />
@@ -126,15 +128,12 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   respectsPrivacy: {
-    fontSize: 16,
-    fontWeight: 'bold',
     color: BLACK,
   },
   learnMore: {
-    fontSize: 16,
     color: COMAPEO_BLUE,
   },
-  diagnosticContainer: {
+  itemContainer: {
     padding: 20,
     borderWidth: 1,
     borderColor: BLUE_GREY,
@@ -142,12 +141,7 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     gap: 10,
   },
-  diagnosticTitle: {
-    fontSize: 16,
-    color: BLACK,
-  },
   diagnosticText: {
-    fontSize: 14,
     color: NEW_DARK_GREY,
   },
   bulletContainer: {
@@ -160,7 +154,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   bulletText: {
-    fontSize: 14,
     color: NEW_DARK_GREY,
     flex: 1,
   },

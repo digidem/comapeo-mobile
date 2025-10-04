@@ -9,7 +9,7 @@ import {TabBar} from './TabBar';
 import {Loading} from '../../sharedComponents/Loading';
 import {WHITE} from '../../lib/styles';
 import {Drawer} from 'react-native-drawer-layout';
-import {MenuScreen} from '../../screens/MenuScreen';
+import {DrawerMenu} from '../../sharedComponents/DrawerMenu';
 import {useOpenDrawer} from '../../hooks/useOpenDrawer';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
@@ -28,7 +28,7 @@ export const HomeTabs = () => {
       }}
       drawerType="slide"
       swipeEnabled={false}
-      renderDrawerContent={() => <MenuScreen />}>
+      renderDrawerContent={() => <DrawerMenu />}>
       <Tab.Navigator
         tabBar={TabBar}
         screenOptions={{

@@ -15,9 +15,7 @@ import {useOpenDrawer} from '../../hooks/useOpenDrawer';
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
 export const HomeTabs = () => {
-  const [drawerOpen, setDrawerOpen] = useOpenDrawer({
-    screensToLeaveDrawerOpen: ['TrackRecordingActive'],
-  });
+  const [drawerOpen, setDrawerOpen] = useOpenDrawer();
 
   return (
     <Drawer

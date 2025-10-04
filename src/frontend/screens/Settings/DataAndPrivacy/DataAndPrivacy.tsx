@@ -15,6 +15,11 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {MetricsDiagnosticsPermissionToggle} from '../../../sharedComponents/MetricsDiagnosticsPermissionToggle';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {Checkbox} from '../../../sharedComponents/Checkbox';
+import {
+  useAppUsageStatsActions,
+  useAppUsageStatsState,
+} from '../../../contexts/AppUsageStatsContext';
 const m = defineMessages({
   navTitle: {
     id: 'screens.DataAndPrivacy.navTitle',
@@ -47,12 +52,38 @@ const m = defineMessages({
     defaultMessage:
       'You can opt-out of sharing diagnostic information at any time.',
   },
+  appUsageTitle: {
+    id: 'screens.DataAndPrivacy.appUsageTitle',
+    defaultMessage: 'App Usage',
+  },
+  appUsageText: {
+    id: 'screens.DataAndPrivacy.appUsageText',
+    defaultMessage:
+      'Share how you use CoMapeo with Awana Digital—no information you share can be used to track you.',
+  },
+  appUsageId: {
+    id: 'screens.DataAndPrivacy.appUsageId',
+    defaultMessage:
+      'ID numbers are scrambled randomly and changed every month.',
+  },
+  ipAddress: {
+    id: 'screens.DataAndPrivacy.ipAddress',
+    defaultMessage: 'CoMapeo never stores IP addresses.',
+  },
+  shareAppUsage: {
+    id: 'screens.DataAndPrivacy.shareAppUsage',
+    defaultMessage: 'Share App Usage',
+  },
 });
 
 export const DataAndPrivacy = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'DataAndPrivacy'>) => {
   const {formatMessage} = useIntl();
+  const optInStartedAt = useAppUsageStatsState(store => store.optInStartedAt);
+  const {setOptedIn} = useAppUsageStatsActions();
+
+  const appUsageOptedIn = !!optInStartedAt;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -75,7 +106,7 @@ export const DataAndPrivacy = ({
         <HeaderText variant="header5">
           {formatMessage(m.diagnosticInfoTitle)}
         </HeaderText>
-        <BodyText variant="smallMeta" style={styles.diagnosticText}>
+        <BodyText variant="smallMeta" style={styles.infoText}>
           {formatMessage(m.diagnosticInfoText)}
         </BodyText>
         <View style={styles.bulletContainer}>
@@ -102,6 +133,48 @@ export const DataAndPrivacy = ({
         </View>
         <View style={styles.horizontalLine} />
         <MetricsDiagnosticsPermissionToggle />
+      </View>
+
+      <View style={styles.itemContainer}>
+        <HeaderText variant="header5">
+          {formatMessage(m.appUsageTitle)}
+        </HeaderText>
+        <BodyText variant="smallMeta" style={styles.infoText}>
+          {formatMessage(m.appUsageText)}
+        </BodyText>
+        <View style={styles.bulletContainer}>
+          <MaterialIcons
+            name="circle"
+            size={4}
+            color={NEW_DARK_GREY}
+            style={styles.bulletIcon}
+          />
+          <BodyText variant="smallMeta" style={styles.bulletText}>
+            {formatMessage(m.appUsageId)}
+          </BodyText>
+        </View>
+        <View style={styles.bulletContainer}>
+          <MaterialIcons
+            name="circle"
+            size={4}
+            color={NEW_DARK_GREY}
+            style={styles.bulletIcon}
+          />
+          <BodyText variant="smallMeta" style={styles.bulletText}>
+            {formatMessage(m.ipAddress)}
+          </BodyText>
+        </View>
+        <View style={styles.horizontalLine} />
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <HeaderText style={{flex: 1}} variant="header5">
+            {formatMessage(m.shareAppUsage)}
+          </HeaderText>
+          <Checkbox
+            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+            value={appUsageOptedIn}
+            onPress={() => setOptedIn(!appUsageOptedIn)}
+          />
+        </View>
       </View>
     </ScrollView>
   );
@@ -141,7 +214,7 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     gap: 10,
   },
-  diagnosticText: {
+  infoText: {
     color: NEW_DARK_GREY,
   },
   bulletContainer: {

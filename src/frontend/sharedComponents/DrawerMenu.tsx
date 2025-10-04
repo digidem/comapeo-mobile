@@ -101,7 +101,7 @@ export function DrawerMenu() {
                   accessibilityLabel="Go to Project Settings">
                   <SecondaryButton
                     text={formatMessage(m.viewProject)}
-                    onPress={() => navigation.navigate('DidNotMoveBottomSheet')}
+                    onPress={() => navigation.navigate('ProjectSettings')}
                     fullSize={false}
                   />
                 </View>

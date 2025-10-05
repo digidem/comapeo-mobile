@@ -131,11 +131,13 @@ export function DrawerMenu() {
                       : formatMessage(m.participant)}
                 </BodyText>
               </View>
-              <BodyText style={{color: NEW_DARK_GREY}}>
-                {role === 'solo'
-                  ? formatMessage(m.mappingOnOwn)
-                  : projectDescription}
-              </BodyText>
+              {(role === 'solo' || projectDescription) && (
+                <BodyText style={{color: NEW_DARK_GREY}}>
+                  {role === 'solo'
+                    ? formatMessage(m.mappingOnOwn)
+                    : projectDescription}
+                </BodyText>
+              )}
               {allProjects.length > 1 && (
                 // This button deviates from the standard SecondaryButton (the icon is aligned flex-end) and so instead of changing that component, I just copied the styles here, and created a custom button for this use case.
                 <TouchableOpacity

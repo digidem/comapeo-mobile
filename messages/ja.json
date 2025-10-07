@@ -73,6 +73,9 @@
   "Navigation.Menu.currentProject": {
     "message": "現在のプロジェクト"
   },
+  "Navigation.Menu.earlyAccessLabel": {
+    "message": "アーリーアクセスモードに入っています。"
+  },
   "Navigation.Menu.exchange": {
     "message": "交換"
   },
@@ -503,6 +506,9 @@
     "description": "Label for Android version",
     "message": "Androidバージョン"
   },
+  "screens.AboutSettings.earlyAccessBanner": {
+    "message": "アーリーアクセスモードに入っています。"
+  },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
     "message": "絵文字のソース"
@@ -518,6 +524,9 @@
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "リリース名"
+  },
+  "screens.AboutSettings.seeUpdates": {
+    "message": "CoMapeoのアップデートを参照してください"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",

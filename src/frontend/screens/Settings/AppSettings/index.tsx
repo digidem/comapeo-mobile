@@ -4,6 +4,7 @@ import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {useAuthContext} from '../../../contexts/AuthContext';
 import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
 import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
+import {useEarlyAccessState} from '../../../contexts/EarlyAccessContext';
 
 const m = defineMessages({
   title: {
@@ -38,6 +39,18 @@ const m = defineMessages({
     id: 'Screens.Settings.AppSettings.deviceName',
     defaultMessage: 'Device Name',
   },
+  earlyAccessTitle: {
+    id: 'Screens.Settings.AppSettings.earlyAccess',
+    defaultMessage: 'Early Access Mode',
+  },
+  earlyAccessOn: {
+    id: 'Screens.Settings.AppSettings.earlyAccess.on',
+    defaultMessage: 'Early Access is ON',
+  },
+  earlyAccessOff: {
+    id: 'Screens.Settings.AppSettings.earlyAccess.off',
+    defaultMessage: 'Early Access is OFF',
+  },
 });
 
 export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
@@ -45,6 +58,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
 }) => {
   const {authState} = useAuthContext();
   const {formatMessage} = useIntl();
+  const isEarlyAccess = useEarlyAccessState(s => s.isEarlyAccessEnabled);
   const MenuItems: MenuListItemType[] = [
     {
       onPress: () => {
@@ -79,6 +93,18 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
       primaryText: formatMessage(m.mapManagement),
       materialIconName: 'map',
     },
+    {
+      onPress: () => {
+        navigation.navigate('EarlyAccess');
+      },
+      testID: 'earlyAccessFlag',
+      primaryText: formatMessage(m.earlyAccessTitle),
+      secondaryText: isEarlyAccess
+        ? formatMessage(m.earlyAccessOn)
+        : formatMessage(m.earlyAccessOff),
+      materialIconName: 'flag',
+    },
+
     ...(authState !== 'obscured'
       ? [
           {

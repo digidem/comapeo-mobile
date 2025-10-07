@@ -34,6 +34,23 @@ export type HomeTabsParamsList = {
 
 export type TabName = keyof HomeTabsParamsList;
 
+// --- Early Access routing pattern -----------------------------------------
+// Require { isEarlyAdopter: true } (literal true, not boolean) for any *early-access-only* screen.
+//
+// Example usage when you add the first early-only screen:
+//
+// type RootStackParamList = {
+//   ProjectInviteDefault: { projectId: string };
+//   // Early-access-only route (uncomment when needed):
+//   // ProjectInviteQRCodeEarly: { projectId: string } & EarlyOnlyParam;
+// };
+//
+// When the feature is fully adopted to the app, remove EarlyOnlyParam from the route to let TS
+// surface all call sites for cleanup.
+// ---------------------------------------------------------------------------
+
+export type EarlyOnlyParam = {readonly isEarlyAdopter: true};
+
 export type RootStackParamsList = {
   Drawer: undefined;
   Home: NavigatorScreenParams<HomeTabsParamsList>;
@@ -156,6 +173,8 @@ export type RootStackParamsList = {
   ExportSuccess: {exportType: Exports};
   ProjectStatistics: undefined;
   ProjectStatsTurnedOff: undefined;
+  EarlyAccess: undefined;
+  EarlyAccessOff: undefined;
 };
 
 export type OnboardingParamsList = {

@@ -38,11 +38,19 @@ describe('Onboarding - Device Naming Test', () => {
 
     await expect(successMessage).toBeDisplayed();
 
-    const addedDeviceName = await $(byText(output.names.device));
-    await expect(addedDeviceName).toBeDisplayed();
+    const deviceReadyMessage = await $(
+      byTextMatches(`${output.names.device} is ready`),
+    );
+    await expect(deviceReadyMessage).toBeDisplayed();
 
-    const goToMapButton = await $(byResourceId('ONBOARDING.go-to-map-btn'));
-    await expect(goToMapButton).toBeDisplayed();
-    await goToMapButton.click();
+    const joinProjectButton = await $(
+      byResourceId('ONBOARDING.join-project-btn'),
+    );
+    await expect(joinProjectButton).toBeDisplayed();
+
+    const mapOnYourOwnButton = await $(
+      byResourceId('ONBOARDING.map-on-your-own-btn'),
+    );
+    await expect(mapOnYourOwnButton).toBeDisplayed();
   });
 });

@@ -73,6 +73,9 @@
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
   },
+  "Navigation.Menu.earlyAccessLabel": {
+    "message": "You are in Early Access Mode."
+  },
   "Navigation.Menu.exchange": {
     "message": "Exchange"
   },
@@ -503,6 +506,9 @@
     "description": "Label for Android version",
     "message": "Android хувилбар"
   },
+  "screens.AboutSettings.earlyAccessBanner": {
+    "message": "You are in Early Access Mode."
+  },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
     "message": "Emojis source"
@@ -518,6 +524,9 @@
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Release name"
+  },
+  "screens.AboutSettings.seeUpdates": {
+    "message": "See CoMapeo Updates"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",

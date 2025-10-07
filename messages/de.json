@@ -73,6 +73,9 @@
   "Navigation.Menu.currentProject": {
     "message": "Aktuelles Projekt"
   },
+  "Navigation.Menu.earlyAccessLabel": {
+    "message": "Sie befinden sich im Frühzugriffsmodus."
+  },
   "Navigation.Menu.exchange": {
     "message": "Umtausch"
   },
@@ -503,6 +506,9 @@
     "description": "Label for Android version",
     "message": "Android Version"
   },
+  "screens.AboutSettings.earlyAccessBanner": {
+    "message": "Sie befinden sich im Frühzugriffsmodus."
+  },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
     "message": "Emojis Quelle"
@@ -518,6 +524,9 @@
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Release-Name"
+  },
+  "screens.AboutSettings.seeUpdates": {
+    "message": "Siehe CoMapeo Updates"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",

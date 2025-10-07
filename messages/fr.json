@@ -73,6 +73,9 @@
   "Navigation.Menu.currentProject": {
     "message": "Projet actuel"
   },
+  "Navigation.Menu.earlyAccessLabel": {
+    "message": "Vous êtes en mode accès anticipé."
+  },
   "Navigation.Menu.exchange": {
     "message": "Échanger"
   },
@@ -503,6 +506,9 @@
     "description": "Label for Android version",
     "message": "Version d'Android"
   },
+  "screens.AboutSettings.earlyAccessBanner": {
+    "message": "Vous êtes en mode accès anticipé."
+  },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
     "message": "Source d'émojis"
@@ -518,6 +524,9 @@
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Nom de la version"
+  },
+  "screens.AboutSettings.seeUpdates": {
+    "message": "Voir les mises à jour de CoMapeo"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",

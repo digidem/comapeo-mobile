@@ -73,6 +73,9 @@
   "Navigation.Menu.currentProject": {
     "message": "Huidig project"
   },
+  "Navigation.Menu.earlyAccessLabel": {
+    "message": "U bent in de Vroegtijdige toegangsmodus."
+  },
   "Navigation.Menu.exchange": {
     "message": "Ruil"
   },
@@ -503,6 +506,9 @@
     "description": "Label for Android version",
     "message": "Android versie"
   },
+  "screens.AboutSettings.earlyAccessBanner": {
+    "message": "U bent in de Vroegtijdige toegangsmodus."
+  },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
     "message": "Emojis bron"
@@ -518,6 +524,9 @@
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Release naam"
+  },
+  "screens.AboutSettings.seeUpdates": {
+    "message": "Zie CoMapeo updates"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",

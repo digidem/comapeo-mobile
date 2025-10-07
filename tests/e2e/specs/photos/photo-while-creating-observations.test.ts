@@ -1,6 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Photos - Save and Delete Photo', () => {
   it('should create a new observation', async () => {
@@ -105,16 +106,7 @@ describe('Photos - Save and Delete Photo', () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     await driver.pause(1000);
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch (err) {
-      console.log('No RN Alert dialog was found.');
-    }
+    await handleGPSAlert();
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     const houseObservation = await $(byTextMatches('House'));

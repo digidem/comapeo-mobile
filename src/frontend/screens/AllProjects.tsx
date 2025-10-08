@@ -1,44 +1,42 @@
 import {useManyProjects} from '@comapeo/core-react';
 import * as React from 'react';
 import {ListRenderItem, View} from 'react-native';
-import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../sharedTypes/navigation';
-import {ViewStyleProp} from '../sharedTypes';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
-import {SecondaryButton} from '../sharedComponents/Buttons';
+import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import AddProjectIcon from '../images/AddProject.svg';
 import {FlatList} from 'react-native';
 import {useTracking} from '../hooks/useTracking';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
+import {ColorCard} from '../sharedComponents/ColorCard';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
-  navTitle: {
-    id: 'allProjects.navTitle',
-    defaultMessage: 'All Projects',
+  newCollab: {
+    id: 'allProjects.newCollab',
+    defaultMessage: 'New Collaboration',
   },
-  createNewProject: {
-    id: 'allProjects.createNewProject',
-    defaultMessage: 'Start new project',
+  close: {
+    id: 'allProjects.close',
+    defaultMessage: 'Close',
   },
 });
 
 type ProjectListItem = ReturnType<typeof useManyProjects>['data'][number];
 
-export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
+export const AllProjects = () => {
   const {data} = useManyProjects();
   const {projectId: currentProjectId} = useActiveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const {navigate, goBack} = useNavigationFromRoot();
+  const {goBack, navigate} = useNavigationFromRoot();
   const {formatMessage} = useIntl();
   const {isTracking} = useTracking();
 
   const handlePressId = React.useCallback(
     (targetProjectId: string) => {
       if (currentProjectId === targetProjectId) {
-        //this is temporary until the all project bottom sheet is added
         goBack();
         return;
       }
@@ -55,8 +53,7 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
   const renderItem = React.useCallback<ListRenderItem<ProjectListItem>>(
     ({item}) => (
       <React.Suspense fallback={<ProjectCardLoader />}>
-        <ProjectInfoCardMinimal
-          style={{marginBottom: 20}}
+        <ProjectListItem
           projectId={item.projectId}
           onPress={() => handlePressId(item.projectId)}
         />
@@ -66,24 +63,32 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
   );
 
   return (
-    <View style={{flex: 1, paddingTop: 40}}>
-      <SecondaryButton
-        fullSize={true}
-        style={{alignSelf: 'center', marginBottom: 20}}
-        text={formatMessage(m.createNewProject)}
-        onPress={() => {
-          navigate('StartNewProject');
-        }}
-        renderIcon={() => <AddProjectIcon />}
-      />
+    <View style={{justifyContent: 'space-between'}}>
       <FlatList<ProjectListItem>
-        contentContainerStyle={{padding: 20}}
+        contentContainerStyle={{padding: 20, gap: 20}}
         data={data}
         keyExtractor={p => p.projectId}
         initialNumToRender={6}
         windowSize={5}
         removeClippedSubviews
         renderItem={renderItem}
+      />
+      <PrimaryButton
+        fullSize={true}
+        onPress={() => {
+          console.log('TODO: new collab flow');
+        }}
+        style={{alignSelf: 'center', marginBottom: 10}}
+        text={formatMessage(m.newCollab)}
+      />
+      <SecondaryButton
+        fullSize={true}
+        style={{alignSelf: 'center', marginBottom: 20}}
+        text={formatMessage(m.close)}
+        onPress={() => {
+          goBack();
+        }}
+        renderIcon={() => <AddProjectIcon />}
       />
     </View>
   );
@@ -92,7 +97,7 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
 const ProjectCardLoader = () => (
   <View
     style={{
-      height: 112,
+      height: 20,
       borderRadius: 12,
       backgroundColor: '#eee',
       marginBottom: 20,
@@ -100,34 +105,25 @@ const ProjectCardLoader = () => (
   />
 );
 
-AllProjects.navTitle = m.navTitle;
+const ProjectListItem = ({
+  projectId,
+  onPress,
+}: {
+  projectId: string;
+  onPress: () => void;
+}) => {
+  const projectInfo = useProjectRoleAndDetails(projectId);
 
-const ProjectInfoCardMinimal = React.memo(
-  ({
-    projectId,
-    style,
-    onPress,
-  }: {
-    projectId: string;
-    style?: ViewStyleProp;
-    onPress: () => void;
-  }) => {
-    const projectInfo = useProjectRoleAndDetails(projectId);
+  const header =
+    'projectHeader' in projectInfo
+      ? projectInfo.projectHeader
+      : projectInfo.projectName;
 
-    const header =
-      'projectHeader' in projectInfo
-        ? projectInfo.projectHeader
-        : projectInfo.projectName;
-
-    return (
-      <ProjectInfoCard
-        onPress={onPress}
-        role={projectInfo.role}
-        headerText={header}
-        backgroundColor={projectInfo.projectColor}
-        style={style}
-        testID={`project_card_${header?.toLowerCase().replace(/\s+/g, '_')}`}
-      />
-    );
-  },
-);
+  return (
+    <ColorCard onPress={onPress} backgroundColor={projectInfo.projectColor}>
+      <View style={{padding: 20}}>
+        <HeaderText variant="header4">{header}</HeaderText>
+      </View>
+    </ColorCard>
+  );
+};

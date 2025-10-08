@@ -80,7 +80,7 @@ export const ObservationCreate = ({
   return (
     <ScreenContentWithDock
       dockContainerStyle={{padding: 0}}
-      dockContent={<ActionsRow />}>
+      dockContent={<ActionsRow fieldRefs={preset?.fieldRefs} />}>
       <View style={styles.container}>
         <View
           style={{
@@ -98,6 +98,9 @@ export const ObservationCreate = ({
           </HeaderText>
         </View>
         <PresetView
+          onPressPreset={() =>
+            navigation.navigate('ObservationCategoryChooser')
+          }
           PresetIcon={
             <PresetCircleIcon
               size="medium"

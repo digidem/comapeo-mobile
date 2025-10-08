@@ -1,6 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import mapObject, {mapObjectSkip} from 'map-obj';
-import {useCallback} from 'react';
+import {useCallback, useEffect} from 'react';
 import {
   watchPositionAsync,
   useForegroundPermissions,
@@ -33,44 +33,40 @@ export function useMostAccurateLocationForObservation() {
     updateObservationPosition({position: undefined, manualLocation: false});
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      if (!permissions || !permissions.granted || isLocationManuallySet) return;
+  useEffect(() => {
+    if (!permissions || !permissions.granted || isLocationManuallySet) return;
 
-      let ignore = false;
-      const locationSubscriptionProm = watchPositionAsync(
-        {
-          accuracy: Accuracy.BestForNavigation,
-        },
-        debounceLocation()(location => {
-          if (ignore) return;
-          updateObservationPosition({
-            position: {
-              mocked: location.mocked,
-              coords: mapObject(location.coords, (key, val) =>
-                val == null ? mapObjectSkip : [key, val],
-              ),
-              timestamp: new Date(location.timestamp).toISOString(),
-            },
-            manualLocation: false,
-          });
-        }),
-      );
-
-      // Should not happen because we are checking permissions above, but just in case
-      locationSubscriptionProm.catch(() => {
+    let ignore = false;
+    const locationSubscriptionProm = watchPositionAsync(
+      {
+        accuracy: Accuracy.BestForNavigation,
+      },
+      debounceLocation()(location => {
         if (ignore) return;
-        // TODO: We should probably set up an error boundary and throw
-      });
+        updateObservationPosition({
+          position: {
+            mocked: location.mocked,
+            coords: mapObject(location.coords, (key, val) =>
+              val == null ? mapObjectSkip : [key, val],
+            ),
+            timestamp: new Date(location.timestamp).toISOString(),
+          },
+          manualLocation: false,
+        });
+      }),
+    );
 
-      return () => {
-        ignore = true;
-        locationSubscriptionProm.then(sub => sub.remove());
-      };
-    }, [permissions, updateObservationPosition, isLocationManuallySet]),
-  );
+    // Should not happen because we are checking permissions above, but just in case
+    locationSubscriptionProm.catch(() => {
+      if (ignore) return;
+      // TODO: We should probably set up an error boundary and throw
+    });
 
-  return value?.metadata?.position;
+    return () => {
+      ignore = true;
+      locationSubscriptionProm.then(sub => sub.remove());
+    };
+  }, [permissions, updateObservationPosition, isLocationManuallySet]);
 }
 
 function debounceLocation() {

@@ -30,7 +30,7 @@ const config = {
       {
         app: process.env.BROWSERSTACK_APP_URL,
         buildIdentifier: '#${DATE_TIME}',
-        browserstackLocal: true,
+        browserstackLocal: false,
         testObservability: true,
         testObservabilityOptions: {
           projectName: 'CoMapeo',
@@ -43,7 +43,7 @@ const config = {
     {
       platformName: 'android',
       'appium:platformVersion': '13.0',
-      'appium:deviceName': 'Google Pixel 7',
+      'appium:deviceName': 'Samsung Galaxy S23',
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,

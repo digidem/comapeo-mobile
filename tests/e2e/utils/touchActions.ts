@@ -4,6 +4,11 @@ export async function tapAboveElement(
   chainableElem: ChainablePromiseElement,
   offset = 50,
 ) {
+  try {
+    await driver.hideKeyboard();
+    return;
+  } catch {}
+
   const el = await chainableElem;
   const elementId = await el.elementId;
   const rect = await driver.getElementRect(elementId);
@@ -29,4 +34,5 @@ export async function tapAboveElement(
     },
   ]);
   await driver.releaseActions();
+  await driver.pause(300);
 }

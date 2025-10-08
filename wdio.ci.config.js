@@ -30,7 +30,7 @@ const config = {
       {
         app: process.env.BROWSERSTACK_APP_URL,
         buildIdentifier: '#${DATE_TIME}',
-        browserstackLocal: true,
+        browserstackLocal: false,
         testObservability: true,
         testObservabilityOptions: {
           projectName: 'CoMapeo',

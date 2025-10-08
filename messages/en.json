@@ -417,11 +417,11 @@
   "TrackStats.kilometers": {
     "message": "km"
   },
-  "allProjects.createNewProject": {
-    "message": "Start new project"
+  "allProjects.close": {
+    "message": "Close"
   },
-  "allProjects.navTitle": {
-    "message": "All Projects"
+  "allProjects.newCollab": {
+    "message": "New Collaboration"
   },
   "constants.blue": {
     "message": "Blue"

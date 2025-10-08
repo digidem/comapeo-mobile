@@ -19,6 +19,7 @@ import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard.tsx';
 import {MenuLowStorageAlert} from '../sharedComponents/Storage/MenuLowStorageAlert.tsx';
 import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery.ts';
 import {isLowStorage, calcUsedPercentage} from '../lib/storage';
+import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
 
 const m = defineMessages({
   aboutCoMapeo: {
@@ -53,6 +54,10 @@ const m = defineMessages({
     id: 'Navigation.Menu.allProjects',
     defaultMessage: 'All Projects',
   },
+  earlyAccessLabel: {
+    id: 'Navigation.Menu.earlyAccessLabel',
+    defaultMessage: 'You are in Early Access Mode.',
+  },
 });
 
 export function MenuScreen() {
@@ -70,6 +75,8 @@ export function MenuScreen() {
   const {freeBytes, totalBytes} = data;
   const isLow = isLowStorage(freeBytes);
   const percentUsed = calcUsedPercentage(freeBytes, totalBytes);
+
+  const isEarly = useEarlyAccessState(s => s.isEarlyAccessEnabled);
 
   return (
     <View style={styles.container}>
@@ -134,6 +141,13 @@ export function MenuScreen() {
             <Divider />
           </View>
         </View>
+
+        {isEarly ? (
+          <View style={styles.label}>
+            <MaterialIcon name="flag" size={20} />
+            <BodyText>{formatMessage(m.earlyAccessLabel)}</BodyText>
+          </View>
+        ) : null}
 
         <View style={styles.bottomItemsContainer}>
           <MainMenuItemWrapper
@@ -221,5 +235,11 @@ const styles = StyleSheet.create({
   bottomItemsContainer: {
     gap: 20,
     paddingBottom: 20,
+  },
+  label: {
+    gap: 10,
+    alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });

@@ -75,6 +75,7 @@ describe('Passcode - setPasscode', () => {
 
     await passcodeInp.setValue('54321');
     await nextBtn.click();
+    await driver.hideKeyboard();
     await expect($(byTextMatches('Password does not match'))).toBeDisplayed();
   });
 
@@ -128,8 +129,9 @@ describe('Passcode - setPasscode', () => {
     if (await backBtn.isDisplayed()) {
       await backBtn.click();
     }
-    if (await backBtn.isDisplayed()) {
-      await backBtn.click();
+    const backButtonAgain = await $(byResourceId('MAIN.header-back-btn'));
+    if (await backButtonAgain.isDisplayed()) {
+      await backButtonAgain.click();
     }
     const drawerIcon = await $('~Close Menu');
     if (await drawerIcon.isDisplayed()) {

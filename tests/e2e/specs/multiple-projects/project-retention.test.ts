@@ -3,6 +3,7 @@ import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 import {checkForElementGone} from '../../utils/checkForGone';
+import {handleGPSAlert} from '../../utils/alerts';
 
 const UNIQUE_DESCRIPTION = 'Airstrip test obs for second project';
 
@@ -23,17 +24,7 @@ describe('Multiple Projects - Project Data Retention', () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     await driver.pause(1000);
-
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch {
-      console.log('No alert found');
-    }
+    await handleGPSAlert();
 
     await $('~Go to observations list.').click();
     const airstrip = await $(byText('Airstrip'));

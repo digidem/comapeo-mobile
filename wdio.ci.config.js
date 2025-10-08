@@ -30,7 +30,7 @@ const config = {
       {
         app: process.env.BROWSERSTACK_APP_URL,
         buildIdentifier: '#${DATE_TIME}',
-        browserstackLocal: false,
+        browserstackLocal: true,
         testObservability: true,
         testObservabilityOptions: {
           projectName: 'CoMapeo',
@@ -51,7 +51,7 @@ const config = {
         projectName: 'CoMapeo',
         buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
         sessionName: `E2E: ${shortSha}`,
-        appiumVersion: '2.19.0',
+        appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,
         gpsLocation: '0.198214, 78.472225',

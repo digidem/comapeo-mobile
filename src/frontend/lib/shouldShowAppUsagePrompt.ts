@@ -20,8 +20,10 @@ export function shouldShowAppUsagePrompt({
 
   const shouldRePrompt =
     completedOnboardingAt !== null &&
+    promptCount > 0 && // Only re-prompt if we've prompted before
     promptCount < 3 &&
-    now - (lastPromptAt || 0) >= threeMonths;
+    lastPromptAt !== null && // Only re-prompt if we have a last prompt time
+    now - lastPromptAt >= threeMonths;
 
   return shouldShowInitialPrompt || shouldRePrompt;
 }

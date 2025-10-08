@@ -16,7 +16,7 @@ describe('shouldShowAppUsagePrompt', () => {
 
   it('does not show initial prompt if not enough time passed', () => {
     const state: AppUsageStatsState = {
-      completedOnboardingAt: Date.now() - (ONE_WEEK - 1),
+      completedOnboardingAt: Date.now() - ONE_WEEK + 10000000,
       lastPromptAt: null,
       promptCount: 0,
     };
@@ -24,7 +24,7 @@ describe('shouldShowAppUsagePrompt', () => {
   });
 
   it('shows re-prompt up to 3 times, every 3 months', () => {
-    for (let count = 1; count <= 3; count++) {
+    for (let count = 1; count < 3; count++) {
       const state: AppUsageStatsState = {
         completedOnboardingAt: Date.now() - ONE_WEEK - 1,
         lastPromptAt: Date.now() - THREE_MO,

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {DrawerContentComponentProps} from '@react-navigation/drawer';
 
-export const DrawerContent = () => {
+export const DrawerContent = (props: DrawerContentComponentProps) => {
+  void props;
   return (
     <View style={styles.container}>
       <Text>Drawer Content Placeholder</Text>

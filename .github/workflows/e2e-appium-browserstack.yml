@@ -9,8 +9,8 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
-  group: e2e-tests-${{ github.ref }}
-  cancel-in-progress: true
+  group: e2e-tests-browserstack
+  cancel-in-progress: false
 
 jobs:
   build-apk:

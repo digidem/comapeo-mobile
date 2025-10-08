@@ -3,6 +3,7 @@ import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 import {tapAboveElement} from '../../utils/touchActions';
 import {checkForElementGone} from '../../utils/checkForGone';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Observations - Edit Observation Flow', () => {
   it('should open editable observation and navigate to edit screen', async () => {
@@ -42,17 +43,7 @@ describe('Observations - Edit Observation Flow', () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     await driver.pause(1000);
-
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch (e) {
-      console.log('No alert found');
-    }
+    await handleGPSAlert();
 
     await expect($(byTextMatches('Lake'))).toBeDisplayed();
     await expect($(byTextMatches('Updated description'))).toBeDisplayed();

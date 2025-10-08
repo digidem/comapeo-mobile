@@ -58,9 +58,12 @@ describe('ActiveProjectIdStore', () => {
   });
 
   test('usage of state and actions hooks', async () => {
+    const projectId = await client.createProject({name: 'test project'});
+
     const activeProjectStore = createActiveProjectIdStore();
     const appProviders = createAppProvidersWrapper({
       mapeoApi: client,
+      activeProjectId: projectId,
     });
     onTeardown.push(appProviders.teardown);
 
@@ -77,7 +80,7 @@ describe('ActiveProjectIdStore', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
     });
 
-    expect(stateHook.result.current).toStrictEqual(undefined);
+    expect(stateHook.result.current).toStrictEqual(projectId);
 
     act(() => {
       actionsHook.result.current.setActiveProjectId('project_1');

@@ -129,8 +129,9 @@ describe('Passcode - setPasscode', () => {
     if (await backBtn.isDisplayed()) {
       await backBtn.click();
     }
-    if (await backBtn.isDisplayed()) {
-      await backBtn.click();
+    const backButtonAgain = await $(byResourceId('MAIN.header-back-btn'));
+    if (await backButtonAgain.isDisplayed()) {
+      await backButtonAgain.click();
     }
     const drawerIcon = await $('~Close Menu');
     if (await drawerIcon.isDisplayed()) {

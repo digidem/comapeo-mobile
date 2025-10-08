@@ -1,6 +1,5 @@
-import {useFocusEffect} from '@react-navigation/native';
 import mapObject, {mapObjectSkip} from 'map-obj';
-import {useCallback, useEffect} from 'react';
+import {useEffect} from 'react';
 import {
   watchPositionAsync,
   useForegroundPermissions,

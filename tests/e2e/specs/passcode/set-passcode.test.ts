@@ -75,6 +75,7 @@ describe('Passcode - setPasscode', () => {
 
     await passcodeInp.setValue('54321');
     await nextBtn.click();
+    await driver.hideKeyboard();
     await expect($(byTextMatches('Password does not match'))).toBeDisplayed();
   });
 

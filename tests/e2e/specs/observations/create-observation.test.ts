@@ -3,6 +3,7 @@ import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 import {tapAboveElement} from '../../utils/touchActions';
 import {checkForElementGone} from '../../utils/checkForGone';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Observations - Create Observation Flow', () => {
   it('should set location and open create observation screen', async () => {
@@ -87,16 +88,7 @@ describe('Observations - Create Observation Flow', () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     await driver.pause(1000);
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch (err) {
-      console.log('No RN Alert dialog was found.');
-    }
+    await handleGPSAlert();
     const mapBtn = await $('~Go to map.');
     await mapBtn.click();
   });

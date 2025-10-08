@@ -1,6 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Observations - should show download options', () => {
   it('should open an empty Observations list with no download button', async () => {
@@ -30,16 +31,7 @@ describe('Observations - should show download options', () => {
 
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch (err) {
-      console.log('No RN Alert dialog was found.');
-    }
+    await handleGPSAlert();
   });
 
   it('should create observation with "Clay" category', async () => {
@@ -58,17 +50,7 @@ describe('Observations - should show download options', () => {
     }
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch (err) {
-      console.log('No RN Alert dialog was found.');
-    }
+    await handleGPSAlert();
   });
 
   it('should open Observations list and download button', async () => {

@@ -417,7 +417,11 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="AllProjects"
         component={AllProjects}
-        options={{headerTitle: intl(AllProjects.navTitle)}}
+        options={{
+          presentation: 'formSheet',
+          headerShown: false,
+          sheetAllowedDetents: 'fitToContents',
+        }}
       />
       <RootStack.Screen
         name="InviteCollaborators"

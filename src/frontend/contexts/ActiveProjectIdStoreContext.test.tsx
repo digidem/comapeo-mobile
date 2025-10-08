@@ -1,4 +1,4 @@
-import {act, renderHook} from '@testing-library/react-native';
+import {act, renderHook, waitFor} from '@testing-library/react-native';
 import {type ReactNode} from 'react';
 import type {MapeoManager} from '@comapeo/core';
 import type {MapeoClientApi} from '@comapeo/ipc';
@@ -76,11 +76,9 @@ describe('ActiveProjectIdStore', () => {
       wrapper,
     });
 
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 0));
+    await waitFor(() => {
+      expect(stateHook.result.current).toStrictEqual(projectId);
     });
-
-    expect(stateHook.result.current).toStrictEqual(projectId);
 
     act(() => {
       actionsHook.result.current.setActiveProjectId('project_1');

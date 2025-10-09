@@ -762,14 +762,11 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respects Your Privacy & Autonomy"
   },
-  "screens.DataPrivacy.description": {
-    "message": "CoMapeo allows you and your collaborators to map offline without needing servers."
-  },
   "screens.DataPrivacy.diagnostic": {
-    "message": "Private by default — diagnostic information is fully anonymized and you can opt-out any time."
+    "message": "Diagnostic information is fully anonymized—opt-out any time."
   },
-  "screens.DataPrivacy.encrypted": {
-    "message": "All data stays fully encrypted"
+  "screens.DataPrivacy.intro": {
+    "message": "A few important things to keep in mind:"
   },
   "screens.DataPrivacy.learnMore": {
     "message": "Learn More"
@@ -781,34 +778,37 @@
     "message": "Next"
   },
   "screens.DataPrivacy.stays": {
-    "message": "Your data stays on your devices."
+    "message": "Your data stays on your devices—fully encrypted and in your control."
   },
   "screens.DataPrivacy.title": {
-    "message": "Data & Privacy"
+    "message": "CoMapeo is private by default."
   },
-  "screens.DeviceNaming.Success.description": {
-    "message": "You named your device"
+  "screens.DeviceNaming.Success.chooseProject": {
+    "message": "Choose from below to start your first project."
   },
-  "screens.DeviceNaming.Success.findSettings": {
-    "message": "To find your project settings go to the main menu found on the map screen."
+  "screens.DeviceNaming.Success.deviceReady": {
+    "message": "{deviceName} is ready!"
   },
-  "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "On the next screen, tap the orange button to record your first observation."
+  "screens.DeviceNaming.Success.joinProject": {
+    "message": "Join a Project"
   },
-  "screens.DeviceNaming.Success.startUsihng": {
-    "message": "Start Using CoMapeo"
+  "screens.DeviceNaming.Success.mapOnYourOwn": {
+    "message": "Map On Your Own"
   },
   "screens.DeviceNaming.Success.success": {
     "message": "Success!"
   },
-  "screens.DeviceNaming.addName": {
-    "message": "Add Name"
-  },
   "screens.DeviceNaming.description": {
-    "message": "Distinct, memorable names help collaborators recognize you."
+    "message": "Distinct names help collaborators using CoMapeo to recognize you."
   },
   "screens.DeviceNaming.header": {
-    "message": "Name your device"
+    "message": "Name Your Device"
+  },
+  "screens.DeviceNaming.placeholder": {
+    "message": "Device Name"
+  },
+  "screens.DeviceNaming.save": {
+    "message": "Save"
   },
   "screens.EarlyAccess.feedbackLink": {
     "message": "Share it here"
@@ -925,10 +925,10 @@
     "message": "Something Went Wrong"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate on projects"
+    "message": "Securely share with collaborators"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "Designed with and for Indigenous peoples & frontline communities"
+    "message": "Co-designed with and for Indigenous territory mappers & monitors."
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "Get Started"
@@ -937,10 +937,10 @@
     "message": "Map anywhere and everywhere"
   },
   "screens.IntroToCoMapeo.mapWorldTogether": {
-    "message": "Map your world, together"
+    "message": "Map your world, together."
   },
   "screens.IntroToCoMapeo.ownData": {
-    "message": "Own and control your data"
+    "message": "Always own and control your data"
   },
   "screens.InviteCancelled.canceled": {
     "message": "Invite Canceled"
@@ -1411,6 +1411,36 @@
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Loading… this can take a while after synchronizing with a new device"
+  },
+  "screens.Onboarding.JoinProjectIntro.close": {
+    "message": "Close"
+  },
+  "screens.Onboarding.JoinProjectIntro.description": {
+    "message": "Coordinate with your team to receive a project invitation."
+  },
+  "screens.Onboarding.JoinProjectIntro.title": {
+    "message": "Join a Project"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.addAudio": {
+    "message": "Add audio recordings."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Close"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.description": {
+    "message": "Explore CoMapeo—invite collaborators anytime."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
+    "message": "Snap photos on-the-go."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.title": {
+    "message": "Map On Your Own"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
+    "message": "Track paths walked."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"

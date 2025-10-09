@@ -18,31 +18,35 @@ describe('Onboarding - Device Naming Test', () => {
 
     await addNameButton.click();
 
-    const successMessage = await $(byTextMatches('Success'));
-    await driver.waitUntil(async () => !(await successMessage.isExisting()), {
+    const readyMessage = await $(byTextMatches('is ready'));
+    await driver.waitUntil(async () => !(await readyMessage.isExisting()), {
       timeout: 2000,
-      timeoutMsg: 'The success message did not appear within timeout',
+      timeoutMsg: 'The ready message should not appear when input is empty',
     });
 
     await deviceNameInput.setValue('    ');
     await addNameButton.click();
 
-    await driver.waitUntil(async () => !(await successMessage.isExisting()), {
+    await driver.waitUntil(async () => !(await readyMessage.isExisting()), {
       timeout: 2000,
-      timeoutMsg:
-        'Success message should not appear when input is only spaces.',
+      timeoutMsg: 'Ready message should not appear when input is only spaces.',
     });
 
     await deviceNameInput.setValue(output.names.device);
     await addNameButton.click();
+    const deviceReadyMessage = await $(
+      byTextMatches(`${output.names.device} is ready`),
+    );
+    await expect(deviceReadyMessage).toBeDisplayed();
 
-    await expect(successMessage).toBeDisplayed();
+    const joinProjectButton = await $(
+      byResourceId('ONBOARDING.join-project-btn'),
+    );
+    await expect(joinProjectButton).toBeDisplayed();
 
-    const addedDeviceName = await $(byText(output.names.device));
-    await expect(addedDeviceName).toBeDisplayed();
-
-    const goToMapButton = await $(byResourceId('ONBOARDING.go-to-map-btn'));
-    await expect(goToMapButton).toBeDisplayed();
-    await goToMapButton.click();
+    const mapOnYourOwnButton = await $(
+      byResourceId('ONBOARDING.map-on-your-own-btn'),
+    );
+    await expect(mapOnYourOwnButton).toBeDisplayed();
   });
 });

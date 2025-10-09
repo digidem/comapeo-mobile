@@ -124,13 +124,13 @@ export const DeviceNaming = ({
           </View>
           <View style={styles.buttonContainer}>
             {status === 'pending' ? (
-              <UIActivityIndicator />
+              <UIActivityIndicator size={30} style={{flex: 0}} />
             ) : (
               <PrimaryButton
                 testID="ONBOARDING.add-name-btn"
                 fullSize
                 onPress={handleSavePress}
-                text={status === 'success' ? '' : t(m.save)}
+                text={t(m.save)}
                 iconPosition="right"
                 renderIcon={({color, size}) => (
                   <Ionicons

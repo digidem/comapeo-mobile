@@ -72,35 +72,39 @@ export const MapOnYourOwnIntro = ({
       dockContent={
         <View style={{gap: 12, paddingBottom: 20}}>
           {status === 'pending' ? (
-            <UIActivityIndicator />
+            <View style={{alignItems: 'center', paddingVertical: 12}}>
+              <UIActivityIndicator size={30} style={{flex: 0}} />
+            </View>
           ) : (
-            <PrimaryButton
-              testID="ONBOARDING.go-to-map-btn"
-              fullSize
-              text={t(m.goToMap)}
-              iconPosition="left"
-              renderIcon={({size}) => (
-                <MapIcon width={size} height={size} color={WHITE} />
-              )}
-              onPress={handleGoToMap}
-            />
-          )}
-          <SecondaryButton
-            testID="ONBOARDING.map-on-your-own-close-btn"
-            fullSize
-            text={t(m.close)}
-            iconPosition="left"
-            renderIcon={({size}) => (
-              <Ionicons
-                name="close-circle-outline"
-                color={COMAPEO_BLUE}
-                size={size}
+            <>
+              <PrimaryButton
+                testID="ONBOARDING.go-to-map-btn"
+                fullSize
+                text={t(m.goToMap)}
+                iconPosition="left"
+                renderIcon={({size}) => (
+                  <MapIcon width={size} height={size} color={WHITE} />
+                )}
+                onPress={handleGoToMap}
               />
-            )}
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
+              <SecondaryButton
+                testID="ONBOARDING.map-on-your-own-close-btn"
+                fullSize
+                text={t(m.close)}
+                iconPosition="left"
+                renderIcon={({size}) => (
+                  <Ionicons
+                    name="close-circle-outline"
+                    color={COMAPEO_BLUE}
+                    size={size}
+                  />
+                )}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              />
+            </>
+          )}
         </View>
       }>
       <View style={styles.contentContainer}>

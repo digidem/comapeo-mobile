@@ -5,18 +5,16 @@ import {useMostAccurateLocationForObservation} from './useMostAccurateLocationFo
 
 export const LiveLocationView = () => {
   useMostAccurateLocationForObservation();
-  const position = usePersistedDraftObservation(
-    store => store.value?.metadata?.position,
+  const lat = usePersistedDraftObservation(store => store.value?.lat);
+  const lon = usePersistedDraftObservation(store => store.value?.lon);
+  const accuracy = usePersistedDraftObservation(
+    store => store.value?.metadata?.position?.coords.accuracy,
   );
 
-  return position ? (
+  return lat && lon ? (
     <>
       <Divider />
-      <LocationView
-        lat={position?.coords?.latitude}
-        lon={position?.coords?.longitude}
-        accuracy={position?.coords?.accuracy}
-      />
+      <LocationView lat={lat} lon={lon} accuracy={accuracy} />
     </>
   ) : null;
 };

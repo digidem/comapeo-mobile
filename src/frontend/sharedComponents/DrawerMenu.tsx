@@ -143,7 +143,7 @@ export function DrawerMenu() {
                 <TouchableOpacity
                   onPress={() => {
                     // This is temporary until we create the AllProjects bottom sheer. Navigating to this screen so we can update the project description and see that project description shows up on the menu
-                    navigation.navigate('EditProjectDetails');
+                    navigation.navigate('AllProjects');
                   }}
                   style={[
                     buttonStyles.base,

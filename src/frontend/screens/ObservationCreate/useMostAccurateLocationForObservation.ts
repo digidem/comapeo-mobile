@@ -1,4 +1,3 @@
-import {useFocusEffect} from '@react-navigation/native';
 import mapObject, {mapObjectSkip} from 'map-obj';
 import {useCallback} from 'react';
 import {
@@ -9,7 +8,7 @@ import {
 } from 'expo-location';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {useLocationState} from '../../contexts/LocationContext';
+import {useFocusEffect} from '@react-navigation/native';
 
 export function useMostAccurateLocationForObservation() {
   const value = usePersistedDraftObservation(store => store.value);
@@ -17,21 +16,7 @@ export function useMostAccurateLocationForObservation() {
 
   const [permissions] = useForegroundPermissions();
 
-  const providerStatus = useLocationState(store => store.providerStatus);
-  const locationServicesTurnedOff =
-    providerStatus && !providerStatus.locationServicesEnabled;
-
   const isLocationManuallySet = !!value?.metadata?.manualLocation;
-
-  // If location services are turned off (and the observation location is not manually set),
-  // we want to immediately update the draft so that this hook does not return a stale position
-  if (
-    locationServicesTurnedOff &&
-    value?.metadata?.position &&
-    !isLocationManuallySet
-  ) {
-    updateObservationPosition({position: undefined, manualLocation: false});
-  }
 
   useFocusEffect(
     useCallback(() => {
@@ -69,8 +54,6 @@ export function useMostAccurateLocationForObservation() {
       };
     }, [permissions, updateObservationPosition, isLocationManuallySet]),
   );
-
-  return value?.metadata?.position;
 }
 
 function debounceLocation() {

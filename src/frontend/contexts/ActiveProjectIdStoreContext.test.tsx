@@ -53,16 +53,28 @@ describe('ActiveProjectIdStore', () => {
     for (const fn of onTeardown) await fn();
   });
 
-  test('usage of state and actions hooks', async () => {
-    const projectId = await client.createProject({name: 'test project'});
-
+  test('if no project is available, store will be empty', async () => {
     const activeProjectStore = createActiveProjectIdStore();
 
     const wrapper = createWrapper(activeProjectStore, client);
 
-    const actionsHook = renderHook(() => useActiveProjectIdActions(), {
+    const stateHook = renderHook(() => useActiveProjectId(), {
       wrapper,
     });
+
+    await waitFor(() => {
+      expect(stateHook.result.current).toBeUndefined();
+    });
+  });
+
+  test('if project is available, store will populate with project', async () => {
+    const projectId = await client.createProject({name: 'test project'});
+
+    //empty store
+    const activeProjectStore = createActiveProjectIdStore();
+
+    const wrapper = createWrapper(activeProjectStore, client);
+
     const stateHook = renderHook(() => useActiveProjectId(), {
       wrapper,
     });
@@ -70,11 +82,28 @@ describe('ActiveProjectIdStore', () => {
     await waitFor(() => {
       expect(stateHook.result.current).toStrictEqual(projectId);
     });
+  });
 
-    act(() => {
-      actionsHook.result.current.setActiveProjectId('project_1');
+  test('setActiveProjectId action sets the active project ID', async () => {
+    //empty store
+    const activeProjectStore = createActiveProjectIdStore();
+
+    const wrapper = createWrapper(activeProjectStore, client);
+
+    const stateHook = renderHook(() => useActiveProjectId(), {
+      wrapper,
     });
 
-    expect(stateHook.result.current).toStrictEqual('project_1');
+    const actionsHook = renderHook(() => useActiveProjectIdActions(), {
+      wrapper,
+    });
+
+    await waitFor(() => {
+      expect(stateHook.result.current).toBeUndefined();
+    });
+
+    act(() => actionsHook.result.current.setActiveProjectId('12345'));
+
+    expect(stateHook.result.current).toBe('12345');
   });
 });

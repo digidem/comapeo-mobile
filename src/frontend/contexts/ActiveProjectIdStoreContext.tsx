@@ -6,7 +6,7 @@ import {
 } from 'zustand/middleware';
 
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
-import {useManyProjects} from '@comapeo/core-react';
+import {useClientApi} from '@comapeo/core-react';
 import {Loading} from '../sharedComponents/Loading';
 
 type ActiveProjectIdState = {
@@ -65,8 +65,7 @@ export const ActiveProjectIdStoreProvider = ({
   children: ReactNode;
   store: ActiveProjectIdStore;
 }) => {
-  const {data: projects} = useManyProjects();
-  const fallbackProjectId = projects?.[0]?.projectId;
+  const {listProjects} = useClientApi();
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
@@ -75,14 +74,25 @@ export const ActiveProjectIdStoreProvider = ({
       setIsInitialized(true);
       return;
     }
-    if (
-      store.instance.getState().projectId === undefined &&
-      fallbackProjectId
-    ) {
-      store.actions.setActiveProjectId(fallbackProjectId);
-    }
-    setIsInitialized(true);
-  }, [fallbackProjectId, store, isInitialized]);
+    listProjects()
+      .then(projects => {
+        if (!projects || projects.length === 0) {
+          setIsInitialized(true);
+          return;
+        }
+
+        const fallbackProjectId = projects[0]?.projectId;
+
+        if (fallbackProjectId) {
+          store.actions.setActiveProjectId(fallbackProjectId);
+          setIsInitialized(true);
+          return;
+        }
+      })
+      .finally(() => {
+        setIsInitialized(true);
+      });
+  }, [store, isInitialized, listProjects]);
 
   return !isInitialized ? (
     <Loading />

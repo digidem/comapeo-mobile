@@ -184,6 +184,7 @@ export type OnboardingParamsList = {
   Success: undefined;
   JoinProjectIntro: undefined;
   MapOnYourOwnIntro: undefined;
+  ErrorBottomSheet: undefined;
 };
 
 export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;

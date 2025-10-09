@@ -15,8 +15,8 @@ import TracksIcon from '../../images/Tracks.svg';
 import MapIcon from '../../images/Map.svg';
 import {useCreateProject} from '@comapeo/core-react';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
-import {Loading} from '../../sharedComponents/Loading';
 import {DARK_ORANGE, COMAPEO_BLUE, WHITE, DARK_GREY} from '../../lib/styles';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   title: {
@@ -58,8 +58,8 @@ export const MapOnYourOwnIntro = ({
 
   function handleGoToMap() {
     createProject(undefined, {
-      onError: err => {
-        console.error(err);
+      onError: () => {
+        navigation.navigate('ErrorBottomSheet');
       },
       onSuccess: projectId => {
         setActiveProjectId(projectId);
@@ -67,24 +67,24 @@ export const MapOnYourOwnIntro = ({
     });
   }
 
-  if (status === 'pending') {
-    return <Loading />;
-  }
-
   return (
     <ScreenContentWithDock
       dockContent={
         <View style={{gap: 12, paddingBottom: 20}}>
-          <PrimaryButton
-            testID="ONBOARDING.go-to-map-btn"
-            fullSize
-            text={t(m.goToMap)}
-            iconPosition="left"
-            renderIcon={({size}) => (
-              <MapIcon width={size} height={size} color={WHITE} />
-            )}
-            onPress={handleGoToMap}
-          />
+          {status === 'pending' ? (
+            <UIActivityIndicator />
+          ) : (
+            <PrimaryButton
+              testID="ONBOARDING.go-to-map-btn"
+              fullSize
+              text={t(m.goToMap)}
+              iconPosition="left"
+              renderIcon={({size}) => (
+                <MapIcon width={size} height={size} color={WHITE} />
+              )}
+              onPress={handleGoToMap}
+            />
+          )}
           <SecondaryButton
             testID="ONBOARDING.map-on-your-own-close-btn"
             fullSize
@@ -98,7 +98,7 @@ export const MapOnYourOwnIntro = ({
               />
             )}
             onPress={() => {
-              navigation.navigate('Success');
+              navigation.goBack();
             }}
           />
         </View>

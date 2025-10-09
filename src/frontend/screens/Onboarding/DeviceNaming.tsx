@@ -28,7 +28,7 @@ import {
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
-import {Loading} from '../../sharedComponents/Loading';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   header: {
@@ -124,7 +124,7 @@ export const DeviceNaming = ({
           </View>
           <View style={styles.buttonContainer}>
             {status === 'pending' ? (
-              <Loading />
+              <UIActivityIndicator />
             ) : (
               <PrimaryButton
                 testID="ONBOARDING.add-name-btn"

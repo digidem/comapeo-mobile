@@ -48,7 +48,7 @@ export const JoinProjectIntro = ({
             />
           )}
           onPress={() => {
-            navigation.navigate('Success');
+            navigation.goBack();
           }}
         />
       }>

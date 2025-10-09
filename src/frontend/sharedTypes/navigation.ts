@@ -52,7 +52,6 @@ export type TabName = keyof HomeTabsParamsList;
 export type EarlyOnlyParam = {readonly isEarlyAdopter: true};
 
 export type RootStackParamsList = {
-  Drawer: undefined;
   Home: NavigatorScreenParams<HomeTabsParamsList>;
   GpsModal: undefined;
   Settings: undefined;

@@ -7,11 +7,11 @@ import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {Loading} from '../../sharedComponents/Loading';
 import {createOnboardingScreens} from './OnboardingScreens';
+import {createAppScreens} from './AppScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {AuthScreen} from '../../screens/AuthScreen';
-import {DrawerNavigator} from '../Drawer';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 import {useIntl} from 'react-intl';
 
@@ -33,10 +33,14 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   headerBackVisible: false,
 };
 
-function getOnboardingInitialRoute(
+function getInitialRoute(
+  authState: 'authenticated' | 'unauthenticated' | 'obscured',
   deviceName: string | undefined,
   projectId: string | undefined,
 ): keyof AppStackParamsList {
+  if (authState === 'unauthenticated') {
+    return 'AuthScreen';
+  }
   if (!deviceName) {
     return 'IntroToCoMapeo';
   }
@@ -74,23 +78,13 @@ export const RootStackNavigator = () => {
     screenOptions: NavigatorScreenOptions,
   } as const;
 
-  if (security.authState === 'unauthenticated') {
-    return (
-      <RootStack.Navigator>
-        <RootStack.Screen
-          name="AuthScreen"
-          component={AuthScreen}
-          options={{
-            headerShown: false,
-            animation: 'fade',
-          }}
-        />
-      </RootStack.Navigator>
-    );
-  }
-
-  if (!deviceInfo.name || !activeProjectId) {
-    const initialRouteName = getOnboardingInitialRoute(
+  if (
+    security.authState === 'unauthenticated' ||
+    !deviceInfo.name ||
+    !activeProjectId
+  ) {
+    const initialRouteName = getInitialRoute(
+      security.authState,
       deviceInfo.name,
       activeProjectId,
     );
@@ -99,17 +93,26 @@ export const RootStackNavigator = () => {
       <RootStack.Navigator
         {...commonNavigatorProps}
         initialRouteName={initialRouteName}>
-        {createOnboardingScreens({intl: formatMessage})}
+        {security.authState === 'unauthenticated' ? (
+          <RootStack.Screen
+            name="AuthScreen"
+            component={AuthScreen}
+            options={{
+              headerShown: false,
+              animation: 'fade',
+            }}
+          />
+        ) : (
+          createOnboardingScreens({intl: formatMessage})
+        )}
       </RootStack.Navigator>
     );
   }
 
   return (
     <ActiveProjectProvider activeProjectId={activeProjectId}>
-      <RootStack.Navigator
-        {...commonNavigatorProps}
-        screenOptions={{headerShown: false}}>
-        <RootStack.Screen name="Drawer" component={DrawerNavigator} />
+      <RootStack.Navigator {...commonNavigatorProps}>
+        {createAppScreens({intl: formatMessage})}
       </RootStack.Navigator>
     </ActiveProjectProvider>
   );

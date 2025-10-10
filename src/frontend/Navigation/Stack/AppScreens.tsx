@@ -128,7 +128,8 @@ export const TAB_BAR_HEIGHT = 70;
 
 // **NOTE**: No hooks allowed here (this is not a component, it is a function
 // that returns a react element)
-export const createDefaultScreenGroup = ({
+
+export const createAppScreens = ({
   intl,
 }: {
   intl: (title: MessageDescriptor) => string;

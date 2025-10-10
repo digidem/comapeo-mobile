@@ -1,5 +1,7 @@
-import {act, renderHook} from '@testing-library/react-native';
-import {type ReactNode} from 'react';
+import {act, renderHook, waitFor} from '@testing-library/react-native';
+import React, {type ReactNode} from 'react';
+import type {MapeoManager} from '@comapeo/core';
+import type {MapeoClientApi} from '@comapeo/ipc';
 
 import {
   ActiveProjectIdStoreProvider,
@@ -8,33 +10,100 @@ import {
   useActiveProjectId,
   type ActiveProjectIdStore,
 } from './ActiveProjectIdStoreContext';
+import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
+import {MapeoApiWrapper} from '../../../tests/integration/helpers/MapeoApiWrapper';
 
-function createWrapper(store: ActiveProjectIdStore) {
+function createWrapper(store: ActiveProjectIdStore, client: MapeoClientApi) {
   return ({children}: {children: ReactNode}) => {
     return (
-      <ActiveProjectIdStoreProvider value={store}>
-        {children}
-      </ActiveProjectIdStoreProvider>
+      <MapeoApiWrapper mapeoApi={client}>
+        <ActiveProjectIdStoreProvider store={store}>
+          {children}
+        </ActiveProjectIdStoreProvider>
+      </MapeoApiWrapper>
     );
   };
 }
 
-test('usage of state and actions hooks', () => {
-  const activeProjectStore = createActiveProjectIdStore();
-  const wrapper = createWrapper(activeProjectStore);
+describe('ActiveProjectIdStore', () => {
+  let manager: MapeoManager;
+  let client: MapeoClientApi;
+  let onTeardown: Array<() => unknown> = [];
 
-  const actionsHook = renderHook(() => useActiveProjectIdActions(), {
-    wrapper,
+  beforeEach(async () => {
+    onTeardown = [];
+
+    const managerSetup = await createManager({
+      name: 'test',
+      deviceType: 'mobile',
+    });
+    ({manager} = managerSetup);
+    const {fastifyController} = managerSetup;
+
+    const ipcSetup = setUpIPC({manager});
+    ({client} = ipcSetup);
+    const {stop} = ipcSetup;
+    onTeardown.push(stop);
+
+    await fastifyController.start();
+    onTeardown.push(() => fastifyController.stop());
   });
-  const stateHook = renderHook(() => useActiveProjectId(), {
-    wrapper,
+
+  afterEach(async () => {
+    for (const fn of onTeardown) await fn();
   });
 
-  expect(stateHook.result.current).toStrictEqual(undefined);
+  test('if no project is available, store will be empty', async () => {
+    const activeProjectStore = createActiveProjectIdStore();
 
-  act(() => {
-    actionsHook.result.current.setActiveProjectId('project_1');
+    const wrapper = createWrapper(activeProjectStore, client);
+
+    const stateHook = renderHook(() => useActiveProjectId(), {
+      wrapper,
+    });
+
+    await waitFor(() => {
+      expect(stateHook.result.current).toBeUndefined();
+    });
   });
 
-  expect(stateHook.result.current).toStrictEqual('project_1');
+  test('if project is available, store will populate with project', async () => {
+    const projectId = await client.createProject({name: 'test project'});
+
+    //empty store
+    const activeProjectStore = createActiveProjectIdStore();
+
+    const wrapper = createWrapper(activeProjectStore, client);
+
+    const stateHook = renderHook(() => useActiveProjectId(), {
+      wrapper,
+    });
+
+    await waitFor(() => {
+      expect(stateHook.result.current).toStrictEqual(projectId);
+    });
+  });
+
+  test('setActiveProjectId action sets the active project ID', async () => {
+    //empty store
+    const activeProjectStore = createActiveProjectIdStore();
+
+    const wrapper = createWrapper(activeProjectStore, client);
+
+    const stateHook = renderHook(() => useActiveProjectId(), {
+      wrapper,
+    });
+
+    const actionsHook = renderHook(() => useActiveProjectIdActions(), {
+      wrapper,
+    });
+
+    await waitFor(() => {
+      expect(stateHook.result.current).toBeUndefined();
+    });
+
+    act(() => actionsHook.result.current.setActiveProjectId('12345'));
+
+    expect(stateHook.result.current).toBe('12345');
+  });
 });

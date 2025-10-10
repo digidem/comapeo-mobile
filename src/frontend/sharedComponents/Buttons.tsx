@@ -6,6 +6,7 @@ import {ViewStyleProp} from '../sharedTypes';
 
 type ButtonProps = {
   renderIcon?: (props: {color: string; size: number}) => React.ReactNode;
+  iconPosition?: 'left' | 'right';
   fullSize: boolean;
   text: string;
   onPress: () => void;
@@ -16,6 +17,7 @@ type ButtonProps = {
 export const PrimaryButton = ({
   onPress,
   renderIcon,
+  iconPosition = 'left',
   text,
   fullSize,
   testID,
@@ -31,14 +33,19 @@ export const PrimaryButton = ({
         fullSize && {width: 280},
       ]}
       onPress={onPress}>
-      {renderIcon && (
-        <View style={styles.iconSpacing}>
+      {renderIcon && iconPosition === 'left' && (
+        <View style={styles.iconSpacingLeft}>
           {renderIcon({color: WHITE, size: 25})}
         </View>
       )}
       <HeaderText variant="header5" style={{color: WHITE}}>
         {text}
       </HeaderText>
+      {renderIcon && iconPosition === 'right' && (
+        <View style={styles.iconSpacingRight}>
+          {renderIcon({color: WHITE, size: 25})}
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
@@ -46,6 +53,7 @@ export const PrimaryButton = ({
 export const SecondaryButton = ({
   onPress,
   renderIcon,
+  iconPosition = 'left',
   text,
   fullSize,
   testID,
@@ -65,14 +73,19 @@ export const SecondaryButton = ({
         fullSize && {width: 280},
       ]}
       onPress={onPress}>
-      {renderIcon && (
-        <View style={styles.iconSpacing}>
+      {renderIcon && iconPosition === 'left' && (
+        <View style={styles.iconSpacingLeft}>
           {renderIcon({color: COMAPEO_BLUE, size: 25})}
         </View>
       )}
       <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
         {text}
       </HeaderText>
+      {renderIcon && iconPosition === 'right' && (
+        <View style={styles.iconSpacingRight}>
+          {renderIcon({color: COMAPEO_BLUE, size: 25})}
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
@@ -80,6 +93,7 @@ export const SecondaryButton = ({
 export const DestructiveButton = ({
   onPress,
   renderIcon,
+  iconPosition = 'left',
   text,
   fullSize,
   testID,
@@ -95,14 +109,19 @@ export const DestructiveButton = ({
         fullSize && {width: 280},
       ]}
       onPress={onPress}>
-      {renderIcon && (
-        <View style={styles.iconSpacing}>
+      {renderIcon && iconPosition === 'left' && (
+        <View style={styles.iconSpacingLeft}>
           {renderIcon({color: WHITE, size: 25})}
         </View>
       )}
       <HeaderText variant="header5" style={{color: WHITE}}>
         {text}
       </HeaderText>
+      {renderIcon && iconPosition === 'right' && (
+        <View style={styles.iconSpacingRight}>
+          {renderIcon({color: WHITE, size: 25})}
+        </View>
+      )}
     </TouchableOpacity>
   );
 };
@@ -117,7 +136,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     overflow: 'hidden',
   },
-  iconSpacing: {
+  iconSpacingLeft: {
     marginRight: 10,
+  },
+  iconSpacingRight: {
+    marginLeft: 10,
   },
 });

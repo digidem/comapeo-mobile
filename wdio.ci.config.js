@@ -20,7 +20,8 @@ const config = {
     path.resolve(__dirname, 'tests/e2e/specs/settings/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/solo-project/index.tsx'),
     path.resolve(__dirname, 'tests/e2e/specs/tracks/index.test.ts'),
-    path.resolve(__dirname, 'tests/e2e/specs/remote-archive/index.test.ts'),
+    //temporarily removing as remote archive seems to be down
+    //path.resolve(__dirname, 'tests/e2e/specs/remote-archive/index.test.ts'),
     // path.resolve(__dirname, 'tests/e2e/specs/photos/index.test.ts'),
   ],
   maxInstances: 5,
@@ -30,7 +31,7 @@ const config = {
       {
         app: process.env.BROWSERSTACK_APP_URL,
         buildIdentifier: '#${DATE_TIME}',
-        browserstackLocal: false,
+        browserstackLocal: true,
         testObservability: true,
         testObservabilityOptions: {
           projectName: 'CoMapeo',
@@ -51,7 +52,7 @@ const config = {
         projectName: 'CoMapeo',
         buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
         sessionName: `E2E: ${shortSha}`,
-        appiumVersion: '2.19.0',
+        appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,
         gpsLocation: '0.198214, 78.472225',

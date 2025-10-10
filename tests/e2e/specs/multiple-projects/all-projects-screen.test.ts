@@ -8,7 +8,7 @@ describe('Multiple Projects - All Projects Screen', () => {
     await $('~Open Menu').click();
     await $(byText('All Projects')).click();
 
-    const originalCard = await $(byTextMatches('My Solo Project'));
+    const originalCard = await $(byTextMatches(output.names.device));
     await expect(originalCard).toBeDisplayed();
 
     const newProject = await $(byText(output.names.secondProject));
@@ -37,7 +37,7 @@ describe('Multiple Projects - All Projects Screen', () => {
       const id = await card.getAttribute('resource-id');
       testIds.push(id);
     }
-    expect(testIds[0]).toMatch(/project_card_my_solo_project$/);
+    expect(testIds[0]).toMatch(/project_card_test_phone$/);
     expect(testIds[1]).toMatch(/project_card_second_project$/);
     expect(testIds[2]).toMatch(/project_card_third_project$/);
   });

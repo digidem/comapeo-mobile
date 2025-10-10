@@ -1,17 +1,13 @@
-import {useOwnRoleInProject, useProjectSettings} from '@comapeo/core-react';
-import {useIntl, defineMessages} from 'react-intl';
+import {
+  useOwnDeviceInfo,
+  useOwnRoleInProject,
+  useProjectSettings,
+} from '@comapeo/core-react';
 import {
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
-
-const m = defineMessages({
-  soloProjectHeader: {
-    id: 'Screens.Project.soloProjectHeader',
-    defaultMessage: 'My Solo Project',
-  },
-});
 
 /**
  * Represents the role of a user within a project, as used in the frontend.
@@ -39,12 +35,14 @@ export type ProjectDetails = {
 
 export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
   const {data: projectData} = useProjectSettings({projectId});
+  const {
+    data: {name},
+  } = useOwnDeviceInfo();
   const {data: roleData} = useOwnRoleInProject({projectId});
-  const {formatMessage} = useIntl();
 
   const soloProject: ProjectDetails = {
     role: 'solo',
-    projectHeader: formatMessage(m.soloProjectHeader),
+    projectHeader: name || '',
     projectName: undefined,
     projectColor: '#E5F0FF',
   };

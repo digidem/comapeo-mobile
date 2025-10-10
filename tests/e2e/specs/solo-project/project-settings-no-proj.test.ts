@@ -1,6 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {output} from '../../utils/naming';
 
 describe('Project - Project Settings Solo Project', () => {
   it('should navigate to project settings screen and verify content for solo project', async () => {
@@ -13,7 +14,7 @@ describe('Project - Project Settings Solo Project', () => {
     const screenHeader = await $(byText('Project Settings'));
     await expect(screenHeader).toBeDisplayed();
 
-    await expect($(byTextMatches('My Solo Project'))).toBeDisplayed();
+    await expect($(byTextMatches(output.names.device))).toBeDisplayed();
     await expect($(byTextMatches('mapping on your own'))).toBeDisplayed();
     await expect($(byTextMatches('Invite Collaborators'))).toBeDisplayed();
 

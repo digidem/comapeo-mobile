@@ -8,7 +8,7 @@ describe('Multiple Projects - All Projects Screen', () => {
     await $('~Open Menu').click();
     await $(byText('All Projects')).click();
 
-    const originalCard = await $(byTextMatches('My Solo Project'));
+    const originalCard = await $(byTextMatches(output.names.device));
     await expect(originalCard).toBeDisplayed();
 
     const newProject = await $(byText(output.names.secondProject));

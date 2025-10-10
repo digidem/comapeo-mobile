@@ -4,29 +4,29 @@
 
 - [Projects and Project Settings](#projects-and-project-settings)
   - [Overview](#overview)
-- [Side Drawer Menu](#side-drawer-menu-no-project)
+- [Side Drawer Menu No Project](#side-drawer-menu-no-project)
   - [Test Objectives](#test-objectives)
   - [Special Considerations](#special-considerations)
 - [Solo Project Headers](#solo-project-headers)
-  - [Test Objectives](#test-objectives)
-  - [Special Considerations](#special-considerations)
+    - [Test Objectives](#test-objectives-1)
+    - [Special Considerations](#special-considerations-1)
 - [Inviting Collaborators While Solo](#inviting-collaborators-while-solo)
-  - [Test Objectives](#test-objectives-1)
-  - [Special Considerations](#special-considerations-1)
-- [Naming the default project from the side drawer menu](#naming-the-default-project-from-the-side-drawer-menu)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
-- [Unjoining a project](#unjoining-a-project)
+- [Naming the default project from the side drawer menu](#naming-the-default-project-from-the-side-drawer-menu)
   - [Test Objectives](#test-objectives-3)
   - [Special Considerations](#special-considerations-3)
-- [Editing a Device Name](#editing-a-device-name)
+- [Unjoining a project](#unjoining-a-project)
   - [Test Objectives](#test-objectives-4)
-- [Project Settings - Solo Project](#project-settings---solo-project)
-  - [Test Objectives](#test-objectives-5)
   - [Special Considerations](#special-considerations-4)
-- [Project Settings - Named Project (Coordinator)](#project-settings---named-project-coordinator)
+- [Editing a Device Name](#editing-a-device-name)
+  - [Test Objectives](#test-objectives-5)
+- [Project Settings - Solo Project](#project-settings---solo-project)
   - [Test Objectives](#test-objectives-6)
   - [Special Considerations](#special-considerations-5)
+- [Project Settings - Named Project (Coordinator)](#project-settings---named-project-coordinator)
+  - [Test Objectives](#test-objectives-7)
+  - [Special Considerations](#special-considerations-6)
 
 ## Projects and Project Settings
 
@@ -43,7 +43,7 @@ These tests deal with projects, such as creating a project from the side drawer,
 - Opens the side drawer from the home screen
 - Confirms current device name is shown
 - Checks header label says “Current Project”
-- Verifies project name is “My Solo Project”
+- Verifies project name is Device Name
 - Verifies project role text says “You are mapping on your own.”
 - Asserts presence of Exchange, App Settings, Data & Privacy, and About screens
 
@@ -53,12 +53,12 @@ These tests deal with projects, such as creating a project from the side drawer,
 
 ## Solo Project Headers
 
-This test checks the visibility and text of the headers and associated UI elements for a user who has not yet created a project (i.e., “My Solo Project”) and is on the default project.
+This test checks the visibility and text of the headers and associated UI elements for a user who has not yet created a project (i.e., Device Name) and is on the default project.
 
 #### Test Objectives
 
-- Verifies that the **Map screen** header displays “My Solo Project” when no project is named.
-- Verifies that the **ObservationsList** header also displays “My Solo Project,” along with a device icon (drawer button).
+- Verifies that the **Map screen** header displays Device Name when no project is named.
+- Verifies that the **ObservationsList** header also displays Device Name along with a device icon (drawer button).
 - Ensures that the “You’re mapping on your own.” card text is visible in the ObservationsList.
 
 #### Special Considerations
@@ -72,7 +72,7 @@ This test validates that a user on the default “solo” project can open the s
 
 ### Test Objectives
 
-- Confirms that **My Solo Project** is shown in the side drawer when no named project exists.
+- Confirms that **The Default Project** is shown in the side drawer when no named project exists.
 - Ensures an **Invite** button is visible to solo users.
 - Verifies the **Invite Collaborators** screen appears with the correct heading and bullet points when Invite is pressed.
 - Checks that tapping **Name My Project** navigates to the **Name (Create) Project** flow.

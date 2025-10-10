@@ -25,7 +25,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
 
   it('should open side drawer, navigate to Invite Collaborators screen, and verify content', async () => {
     await $('~Open Menu').click();
-    await expect($(byTextMatches('My Solo Project'))).toBeDisplayed();
+    await expect($(byTextMatches(output.names.device))).toBeDisplayed();
 
     const inviteButton = await $(byText('Invite'));
     await expect(inviteButton).toBeDisplayed();

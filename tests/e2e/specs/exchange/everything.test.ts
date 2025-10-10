@@ -30,6 +30,6 @@ describe('Exchange - Exchange Settings for Everything', () => {
     ).toBeDisplayed();
     await expect($(byTextMatches('Uses more storage'))).toBeDisplayed();
     await $(byResourceId('MAIN.header-back-btn')).click();
-    await $('~Close Menu').click();
+    await $(byResourceId('MAIN.map-screen')).click();
   });
 });

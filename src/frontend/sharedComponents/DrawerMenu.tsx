@@ -14,12 +14,13 @@ import {BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY, WHITE} from '../lib/styles.ts';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
 import {MenuLowStorageAlert} from './Storage/MenuLowStorageAlert.tsx';
 import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery.ts';
-import {isLowStorage, calcUsedPercentage} from '../lib/storage.ts';
 import {ColorCard} from './ColorCard.tsx';
 import {HeaderText} from './Text/HeaderText.tsx';
 import {useManyProjects} from '@comapeo/core-react';
 import {buttonStyles} from './Buttons.tsx';
 import DownArrow from '../images/DownArrow.svg';
+import {isLowStorage, calcUsedPercentage} from '../lib/storage';
+import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
 
 const m = defineMessages({
   aboutCoMapeo: {
@@ -74,6 +75,10 @@ const m = defineMessages({
     id: 'Navigation.Menu.switchProjects',
     defaultMessage: 'Switch Projects',
   },
+  earlyAccessLabel: {
+    id: 'Navigation.Menu.earlyAccessLabel',
+    defaultMessage: 'You are in Early Access Mode.',
+  },
 });
 
 export function DrawerMenu() {
@@ -88,6 +93,8 @@ export function DrawerMenu() {
   const {freeBytes, totalBytes} = data;
   const isLow = isLowStorage(freeBytes);
   const percentUsed = calcUsedPercentage(freeBytes, totalBytes);
+
+  const isEarly = useEarlyAccessState(s => s.isEarlyAccessEnabled);
 
   return (
     <View style={styles.container}>
@@ -166,6 +173,13 @@ export function DrawerMenu() {
             </View>
           </ColorCard>
         </View>
+
+        {isEarly ? (
+          <View style={styles.label}>
+            <MaterialIcon name="flag" size={20} />
+            <BodyText>{formatMessage(m.earlyAccessLabel)}</BodyText>
+          </View>
+        ) : null}
 
         <View style={styles.bottomItemsContainer}>
           <TouchableOpacity
@@ -252,5 +266,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  label: {
+    gap: 10,
+    alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });

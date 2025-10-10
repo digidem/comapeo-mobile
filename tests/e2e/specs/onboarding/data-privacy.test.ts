@@ -9,9 +9,7 @@ describe('Onboarding - Data & Privacy Screen', () => {
     );
     await getStartedButton.click();
 
-    const privacyText = await $(
-      byTextMatches('map offline without needing servers'),
-    );
+    const privacyText = await $(byTextMatches('CoMapeo is private by default'));
     await expect(privacyText).toBeDisplayed();
   });
 

@@ -1,6 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byTextMatches, byText} from '../../utils/selectors';
+import {byTextMatches, byText, byResourceId} from '../../utils/selectors';
+import {output} from '../../utils/naming';
 
 describe('Main - Side Drawer Menu - No Project', () => {
   it('should open the side drawer and verify menu options', async () => {
@@ -9,7 +10,7 @@ describe('Main - Side Drawer Menu - No Project', () => {
 
     await expect($(byTextMatches('CURRENT PROJECT'))).toBeDisplayed();
 
-    await expect($(byTextMatches('My Solo Project'))).toBeDisplayed();
+    await expect($(byTextMatches(output.names.device))).toBeDisplayed();
 
     await expect(
       $(byTextMatches('You are mapping on your own.')),
@@ -27,7 +28,7 @@ describe('Main - Side Drawer Menu - No Project', () => {
     await expect($('~Go to app settings screen.')).toBeDisplayed();
     await expect($('~Go to about CoMapeo screen.')).toBeDisplayed();
 
-    await $('~Close Menu').click();
+    await $(byResourceId('observationsEmptyView')).click();
     const mapTab = await $('~Go to map.');
     await mapTab.click();
   });

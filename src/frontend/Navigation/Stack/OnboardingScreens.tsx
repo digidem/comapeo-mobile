@@ -5,7 +5,10 @@ import {DataPrivacy} from '../../screens/Onboarding/DataPrivacy';
 import {OnboardingPrivacyPolicy} from '../../screens/Onboarding/OnboardingPrivacyPolicy';
 import {DeviceNaming} from '../../screens/Onboarding/DeviceNaming';
 import {Success} from '../../screens/Onboarding/Success';
+import {JoinProjectIntro} from '../../screens/Onboarding/JoinProjectIntro';
+import {MapOnYourOwnIntro} from '../../screens/Onboarding/MapOnYourOwnIntro';
 import {MessageDescriptor} from 'react-intl';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 
 export const createOnboardingScreens = ({
   intl,
@@ -37,6 +40,26 @@ export const createOnboardingScreens = ({
       name="Success"
       component={Success}
       options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="JoinProjectIntro"
+      component={JoinProjectIntro}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="MapOnYourOwnIntro"
+      component={MapOnYourOwnIntro}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="ErrorBottomSheet"
+      options={{
+        presentation: 'transparentModal',
+        headerShown: false,
+        animation: 'none',
+        contentStyle: {backgroundColor: 'transparent'},
+      }}
+      component={ErrorBottomSheet}
     />
   </RootStack.Group>
 );

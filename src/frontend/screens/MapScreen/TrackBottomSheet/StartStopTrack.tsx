@@ -48,6 +48,11 @@ export const StartStopTrack = () => {
     [presets],
   );
 
+  function handleStartTracking() {
+    startTracking();
+    navigation.navigate('Map', {trackingOpen: false});
+  }
+
   async function finishTracking() {
     const hasMovedEnough = distance > 0.001;
 
@@ -75,7 +80,7 @@ export const StartStopTrack = () => {
           <PrimaryButton
             fullSize={true}
             text={formatMessage(m.defaultButtonText)}
-            onPress={startTracking}
+            onPress={handleStartTracking}
             renderIcon={() => <StartTrackingIcon />}
           />
         </>

@@ -226,9 +226,6 @@
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "トラックは保存されません。元に戻すことはできません。"
   },
-  "Screens.Project.soloProjectHeader": {
-    "message": "マイソロプロジェクト"
-  },
   "Screens.ProjectSettings.configTitle": {
     "message": "プロジェクトのカテゴリ"
   },
@@ -762,14 +759,11 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeoはあなたのプライバシーと自律性を尊重します"
   },
-  "screens.DataPrivacy.description": {
-    "message": "CoMapeoを使用すると、あなたとコラボレーターはサーバーを必要とせずにオフラインでマップできます。"
-  },
   "screens.DataPrivacy.diagnostic": {
-    "message": "非公開:診断情報は完全に匿名化され、いつでもオプトアウトできます。"
+    "message": "診断情報は完全に匿名化されます — いつでもオプトアウトできます。"
   },
-  "screens.DataPrivacy.encrypted": {
-    "message": "すべてのデータは完全に暗号化されたままです"
+  "screens.DataPrivacy.intro": {
+    "message": "心に留めておくべきいくつかの重要なこと"
   },
   "screens.DataPrivacy.learnMore": {
     "message": "もっと詳しく"
@@ -781,34 +775,37 @@
     "message": "次へ"
   },
   "screens.DataPrivacy.stays": {
-    "message": "データは端末に保存されます。"
+    "message": "お客様のデータは、完全に暗号化され、お客様の管理下に置かれます。"
   },
   "screens.DataPrivacy.title": {
-    "message": "データ & プライバシー"
+    "message": "CoMapeoはデフォルトで非公開です。"
   },
-  "screens.DeviceNaming.Success.description": {
-    "message": "デバイスに名前を付けました"
+  "screens.DeviceNaming.Success.chooseProject": {
+    "message": "最初のプロジェクトを開始するには、以下から選択してください。"
   },
-  "screens.DeviceNaming.Success.findSettings": {
-    "message": "プロジェクトの設定を確認するには、マップ画面にあるメインメニューに移動します。"
+  "screens.DeviceNaming.Success.deviceReady": {
+    "message": "{deviceName} の準備ができました！"
   },
-  "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
+  "screens.DeviceNaming.Success.joinProject": {
+    "message": "プロジェクトに参加"
   },
-  "screens.DeviceNaming.Success.startUsihng": {
-    "message": "CoMapeoの使用を開始"
+  "screens.DeviceNaming.Success.mapOnYourOwn": {
+    "message": "自分自身の地図を作成"
   },
   "screens.DeviceNaming.Success.success": {
     "message": "成功！"
   },
-  "screens.DeviceNaming.addName": {
-    "message": "名前を追加"
-  },
   "screens.DeviceNaming.description": {
-    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
+    "message": "固有の名前は、CoMapeoを使用してコラボレーターがあなたを認識するのに役立ちます。"
   },
   "screens.DeviceNaming.header": {
-    "message": "Add a name for your device"
+    "message": "デバイスに名前を付ける"
+  },
+  "screens.DeviceNaming.placeholder": {
+    "message": "端末名"
+  },
+  "screens.DeviceNaming.save": {
+    "message": "保存"
   },
   "screens.EarlyAccess.feedbackLink": {
     "message": "ここで共有"
@@ -925,10 +922,10 @@
     "message": "問題が発生しました"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate with others"
+    "message": "コラボレーターと安全に共有"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "先住民族と最前線コミュニティのために設計されました"
+    "message": "先住民の領土マップパー&モニターとの共同設計。"
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "はじめよう"
@@ -937,10 +934,10 @@
     "message": "どこでもどこでもマップ"
   },
   "screens.IntroToCoMapeo.mapWorldTogether": {
-    "message": "ワールドを一緒にマップする"
+    "message": "あなたの世界を一緒にマップします。"
   },
   "screens.IntroToCoMapeo.ownData": {
-    "message": "データを所有し、制御する"
+    "message": "データを常に所有し、制御する"
   },
   "screens.InviteCancelled.canceled": {
     "message": "招待はキャンセルされました"
@@ -1245,6 +1242,34 @@
   "screens.ObservationCategoryChooser.title": {
     "message": "カテゴリを選択"
   },
+  "screens.ObservationCreate.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "待機を続ける"
+  },
+  "screens.ObservationCreate.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "手動の座標"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "この観察記録には位置情報がありません。GPS信号の待機を続けるか、位置情報なしで観察記録を保存するか、手動で座標を入力することができます。"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "GPS信号がありません"
+  },
+  "screens.ObservationCreate.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "保存"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPSの精度が低くなっています。精度改善を待つか、低い精度で観察を保存するか、手動で座標を入力することができます。"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "GPS信号が弱い"
+  },
   "screens.ObservationCreate.changePreset": {
     "message": "変更"
   },
@@ -1252,41 +1277,13 @@
     "description": "Placeholder for description/notes field",
     "message": "何がここで起こっているか?"
   },
-  "screens.ObservationCreate.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "待機を続ける"
-  },
-  "screens.ObservationCreate.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "手動の座標"
-  },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
     "message": "新しい観察記録"
   },
-  "screens.ObservationCreate.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "この観察記録には位置情報がありません。GPS信号の待機を続けるか、位置情報なしで観察記録を保存するか、手動で座標を入力することができます。"
-  },
-  "screens.ObservationCreate.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "GPS信号がありません"
-  },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "観察記録"
-  },
-  "screens.ObservationCreate.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "保存"
-  },
-  "screens.ObservationCreate.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPSの精度が低くなっています。精度改善を待つか、低い精度で観察を保存するか、手動で座標を入力することができます。"
-  },
-  "screens.ObservationCreate.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "GPS信号が弱い"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -1411,6 +1408,36 @@
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Loading… this can take a while after synchronizing with a new device"
+  },
+  "screens.Onboarding.JoinProjectIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.JoinProjectIntro.description": {
+    "message": "プロジェクトの招待状を受け取るには、チームと調整してください。"
+  },
+  "screens.Onboarding.JoinProjectIntro.title": {
+    "message": "プロジェクトに参加"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.addAudio": {
+    "message": "音声録音を追加します。"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.description": {
+    "message": "CoMapeoを探索する — いつでもコラボレーターを招待できます。"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.goToMap": {
+    "message": "地図に移動"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
+    "message": "外出先で写真を撮影してください。"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.title": {
+    "message": "自分自身の地図を作成"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
+    "message": "トラックパスを歩いた。"
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "プライバシーポリシー"

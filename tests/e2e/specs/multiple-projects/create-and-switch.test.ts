@@ -36,9 +36,6 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
   });
 
   it('should display the project name in the side drawer', async () => {
-    const drawerIcon = await $('~Open Menu');
-    await drawerIcon.click();
-
     await expect($(byText(`${output.names.secondProject}`))).toBeDisplayed();
     await expect(
       $(byText('You are a coordinator on this project.')),
@@ -58,7 +55,7 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
   it('should switch back to the Solo project and update headers accordingly', async () => {
     await $(byText('All Projects')).click();
     await $(byTextMatches(output.names.device)).click();
-    await $('~Close Menu').click();
+    await $(byResourceId('MAIN.map-screen')).click();
 
     const soloHeader = await $(byResourceId('HOME.header-title'));
     await expect(soloHeader).toHaveText(output.names.device);

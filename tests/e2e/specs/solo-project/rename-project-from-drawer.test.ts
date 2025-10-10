@@ -80,6 +80,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await expect($(byText('Invite a Device'))).toBeDisplayed();
     const doneButton = await $(byText('Done'));
     await doneButton.click();
+    await $(byResourceId('MAIN.map-screen')).click();
   });
 
   it('should leave observations in place with a renamed project', async () => {

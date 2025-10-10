@@ -24,8 +24,6 @@ describe('Project - Project Settings Solo Project', () => {
 
     const backButton = $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
-    await $('~Close Menu').click();
-    const mapTab = await $('~Go to map.');
-    await mapTab.click();
+    await $(byResourceId('MAIN.map-screen')).click();
   });
 });

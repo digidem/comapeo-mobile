@@ -40,7 +40,7 @@ let enableLogs = false
 
 if (sentryEnvironment !== 'production') {
   logLevels.push('log', 'warn')
-  enableLogs = true
+  enableLogs = false
 }
 
 const sentryDB = new Database(dbDir)

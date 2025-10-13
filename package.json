@@ -68,7 +68,7 @@
     "expo-document-picker": "13.1.6",
     "expo-file-system": "18.1.11",
     "expo-font": "13.3.2",
-    "expo-image": "2.4.0",
+    "expo-image": "~2.4.1",
     "expo-image-manipulator": "13.1.7",
     "expo-localization": "16.1.6",
     "expo-location": "18.1.6",

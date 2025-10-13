@@ -68,8 +68,8 @@ export function createAppUsageStatsStore({
       const now = Date.now();
       const state = store.getState();
 
-      appUsageMetricsOptIn();
       if (optedIn) {
+        appUsageMetricsOptIn();
         store.setState({
           lastPromptAt: now,
           promptCount: state.promptCount,

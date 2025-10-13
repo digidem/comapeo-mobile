@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byTextMatches, byText} from '../../utils/selectors';
+import {byTextMatches, byText, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
 describe('Main - Side Drawer Menu - No Project', () => {
@@ -28,7 +28,7 @@ describe('Main - Side Drawer Menu - No Project', () => {
     await expect($('~Go to app settings screen.')).toBeDisplayed();
     await expect($('~Go to about CoMapeo screen.')).toBeDisplayed();
 
-    await $('~Close Menu').click();
+    await $(byResourceId('observationsEmptyView')).click();
     const mapTab = await $('~Go to map.');
     await mapTab.click();
   });

@@ -12,7 +12,7 @@ describe('Multiple Projects - Project Data Retention', () => {
     await $('~Open Menu').click();
     await $(byText('All Projects')).click();
     await $(byText(output.names.secondProject)).click();
-    await $('~Close Menu').click();
+    await $(byResourceId('MAIN.map-screen')).click();
 
     await $('~Go to map.').click();
     await $('~Add Observation').click();
@@ -58,11 +58,10 @@ describe('Multiple Projects - Project Data Retention', () => {
     );
     const doneBtn = await $(byText('Done'));
     await doneBtn.click();
+    await $(byResourceId('observationsEmptyView')).click();
 
     const header = await $(byResourceId('HOME.header-title'));
     await expect(header).toHaveText(output.names.thirdProject);
-
-    await $('~Go to observations list.').click();
     checkForElementGone(byText('Airstrip'));
   });
 
@@ -70,7 +69,7 @@ describe('Multiple Projects - Project Data Retention', () => {
     await $('~Open Menu').click();
     await $(byText('All Projects')).click();
     await $(byTextMatches(output.names.secondProject)).click();
-    await $('~Close Menu').click();
+    await $(byResourceId('OBS.list-scrn')).click();
 
     const airstrip = await $(byText('Airstrip'));
     await expect(airstrip).toBeDisplayed();

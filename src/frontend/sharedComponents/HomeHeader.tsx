@@ -19,12 +19,13 @@ import {ExclamationBadge} from './Storage/ExclamationBadge';
 type HomeHeaderProps = BottomTabHeaderProps & {
   backgroundColor: string;
   showBottomBorder: boolean;
+  toggleDrawer: () => void;
 };
 
 export function HomeHeader({
   backgroundColor,
   showBottomBorder,
-  navigation,
+  toggleDrawer,
 }: HomeHeaderProps) {
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
@@ -81,11 +82,7 @@ export function HomeHeader({
           </HeaderText>
         </View>
 
-        <IconButton
-          style={styles.iconButton}
-          onPress={() => {
-            navigation.navigate('Menu');
-          }}>
+        <IconButton style={styles.iconButton} onPress={toggleDrawer}>
           <View style={styles.deviceWrap} pointerEvents="box-none">
             <DeviceIcon
               width={32}

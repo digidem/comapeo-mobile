@@ -151,7 +151,6 @@ export type RootStackParamsList = {
   ObservationMetadata: {observationId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
-  Menu: undefined;
   AllProjects: undefined;
   InviteCollaborators: undefined;
   StartNewProject: undefined;
@@ -181,7 +180,10 @@ export type OnboardingParamsList = {
   DataPrivacy: undefined;
   DeviceNaming: undefined;
   OnboardingPrivacyPolicy: undefined;
-  Success: {deviceName: string};
+  Success: undefined;
+  JoinProjectIntro: undefined;
+  MapOnYourOwnIntro: undefined;
+  ErrorBottomSheet: undefined;
 };
 
 export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;

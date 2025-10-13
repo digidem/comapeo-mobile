@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
@@ -8,17 +8,17 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import Exchange from '../images/Exchange.svg';
-import {MainMenuItemWrapper} from '../sharedComponents/MainMenuItemWrapper.tsx';
-import {BodyText} from '../sharedComponents/Text/BodyText';
-import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
-import {Divider} from '../sharedComponents/Divider';
+import {BodyText} from './Text/BodyText.tsx';
+import {PrimaryButton, SecondaryButton} from './Buttons.tsx';
+import {Divider} from './Divider.tsx';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
-import {NEW_DARK_GREY, BLACK, WHITE} from '../lib/styles';
+import {NEW_DARK_GREY, BLACK, WHITE} from '../lib/styles.ts';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
-import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard.tsx';
-import {MenuLowStorageAlert} from '../sharedComponents/Storage/MenuLowStorageAlert.tsx';
+import {ProjectInfoCard} from './ProjectInfoCard.tsx';
+import {MenuLowStorageAlert} from './Storage/MenuLowStorageAlert.tsx';
 import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery.ts';
 import {isLowStorage, calcUsedPercentage} from '../lib/storage';
+import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
 
 const m = defineMessages({
   aboutCoMapeo: {
@@ -53,9 +53,13 @@ const m = defineMessages({
     id: 'Navigation.Menu.allProjects',
     defaultMessage: 'All Projects',
   },
+  earlyAccessLabel: {
+    id: 'Navigation.Menu.earlyAccessLabel',
+    defaultMessage: 'You are in Early Access Mode.',
+  },
 });
 
-export function MenuScreen() {
+export function DrawerMenu() {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
 
@@ -70,6 +74,8 @@ export function MenuScreen() {
   const {freeBytes, totalBytes} = data;
   const isLow = isLowStorage(freeBytes);
   const percentUsed = calcUsedPercentage(freeBytes, totalBytes);
+
+  const isEarly = useEarlyAccessState(s => s.isEarlyAccessEnabled);
 
   return (
     <View style={styles.container}>
@@ -135,8 +141,16 @@ export function MenuScreen() {
           </View>
         </View>
 
+        {isEarly ? (
+          <View style={styles.label}>
+            <MaterialIcon name="flag" size={20} />
+            <BodyText>{formatMessage(m.earlyAccessLabel)}</BodyText>
+          </View>
+        ) : null}
+
         <View style={styles.bottomItemsContainer}>
-          <MainMenuItemWrapper
+          <TouchableOpacity
+            style={styles.menuItem}
             onPress={() => navigation.navigate('AllProjects')}
             accessibilityLabel="Go to All Projects Screen">
             <MaterialCommunityIcons
@@ -149,16 +163,18 @@ export function MenuScreen() {
                 {formatMessage(m.allProjects)}
               </BodyText>
             </View>
-          </MainMenuItemWrapper>
-          <MainMenuItemWrapper
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.menuItem}
             onPress={() => navigation.navigate('Sync')}
             accessibilityLabel="Go to exchange screen.">
             <Exchange width={20} height={20} color={NEW_DARK_GREY} />
             <View style={{paddingLeft: 12}}>
               <BodyText variant="medium">{formatMessage(m.exchange)}</BodyText>
             </View>
-          </MainMenuItemWrapper>
-          <MainMenuItemWrapper
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.menuItem}
             onPress={() => navigation.navigate('AppSettings')}
             accessibilityLabel="Go to app settings screen.">
             <IonIcon name="settings-outline" size={20} color={NEW_DARK_GREY} />
@@ -167,8 +183,9 @@ export function MenuScreen() {
                 {formatMessage(m.appSettings)}
               </BodyText>
             </View>
-          </MainMenuItemWrapper>
-          <MainMenuItemWrapper
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.menuItem}
             onPress={() => navigation.navigate('DataAndPrivacy')}
             accessibilityLabel="Go to data and privacy screen.">
             <Octicons name="shield-lock" size={20} color={NEW_DARK_GREY} />
@@ -177,8 +194,9 @@ export function MenuScreen() {
                 {formatMessage(m.privacyPolicy)}
               </BodyText>
             </View>
-          </MainMenuItemWrapper>
-          <MainMenuItemWrapper
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.menuItem}
             onPress={() => navigation.navigate('AboutSettings')}
             accessibilityLabel="Go to about CoMapeo screen.">
             <MaterialIcon name="info-outline" size={20} color={NEW_DARK_GREY} />
@@ -187,7 +205,7 @@ export function MenuScreen() {
                 {formatMessage(m.aboutCoMapeo)}
               </BodyText>
             </View>
-          </MainMenuItemWrapper>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
@@ -221,5 +239,18 @@ const styles = StyleSheet.create({
   bottomItemsContainer: {
     gap: 20,
     paddingBottom: 20,
+  },
+  menuItem: {
+    minHeight: 48,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  label: {
+    gap: 10,
+    alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });

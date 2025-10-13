@@ -3,6 +3,7 @@ import {describe, it} from 'mocha';
 import {byText, byTextMatches, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 import {checkForElementGone} from '../../utils/checkForGone';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Passcode - Obscure Passcode Mode', () => {
   it('should show an observations before going into obscure mode', async () => {
@@ -12,16 +13,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile:acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch {
-      console.log('No alert found');
-    }
+    await handleGPSAlert();
 
     await $('~Go to observations list.').click();
     const airstrip = await $(byText('Airstrip'));
@@ -60,14 +52,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile:acceptAlert', {buttonLabel: 'SAVE'});
-      }
-    } catch {
-      console.log('No RN Alert dialog was found.');
-    }
+    await handleGPSAlert();
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     const emptyStateText = await $(

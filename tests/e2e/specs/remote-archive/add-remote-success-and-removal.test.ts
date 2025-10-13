@@ -124,7 +124,7 @@ describe('Remote Archive - Add Success Flow', () => {
     if (cleanupNeeded) {
       const backButton = await $(byResourceId('MAIN.header-back-btn'));
       await backButton.click();
-      await $('~Close Menu').click();
+      await $(byResourceId('MAIN.map-screen')).click();
     }
   });
 });

@@ -2,6 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Project - Rename Project from Drawer while perserving observations', () => {
   it('should create initial observation while in solo project', async () => {
@@ -17,21 +18,14 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile:acceptAlert', {buttonLabel: 'SAVE'});
-      }
-    } catch (err) {
-      console.log('No RN Alert dialog was found.');
-    }
+    await handleGPSAlert();
     const mapButton = await $('~Go to map.');
     await mapButton.click();
   });
 
   it('should open side drawer, navigate to Invite Collaborators screen, and verify content', async () => {
     await $('~Open Menu').click();
-    await expect($(byTextMatches('My Solo Project'))).toBeDisplayed();
+    await expect($(byTextMatches(output.names.device))).toBeDisplayed();
 
     const inviteButton = await $(byText('Invite'));
     await expect(inviteButton).toBeDisplayed();
@@ -86,6 +80,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await expect($(byText('Invite a Device'))).toBeDisplayed();
     const doneButton = await $(byText('Done'));
     await doneButton.click();
+    await $(byResourceId('MAIN.map-screen')).click();
   });
 
   it('should leave observations in place with a renamed project', async () => {

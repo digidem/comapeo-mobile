@@ -12,6 +12,7 @@ import type {MapeoClientApi} from '@comapeo/ipc';
 
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
+import {ActiveProjectProvider} from '../contexts/ActiveProjectContext';
 
 import {HomeHeader} from './HomeHeader';
 
@@ -54,6 +55,7 @@ function HomeHeaderScreen() {
       {...baseHeader}
       backgroundColor="#fff"
       showBottomBorder
+      toggleDrawer={() => {}}
       navigation={{} as BottomTabHeaderProps['navigation']}
     />
   );
@@ -63,6 +65,7 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
   let manager: MapeoManager;
   let client: MapeoClientApi;
   let onTeardown: Array<() => unknown> = [];
+  let projectId: string;
 
   beforeEach(async () => {
     onTeardown = [];
@@ -78,6 +81,7 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
 
     mockTotalBytes = 64 * 1024 * 1024 * 1024;
     mockFreeBytes = null;
+    projectId = await client.createProject({name: undefined});
   });
 
   afterEach(async () => {
@@ -86,21 +90,28 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
 
   const renderHeader = ({
     isOnline = true,
+    activeProjectId = projectId,
   }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
     const appProviders = createAppProvidersWrapper({
       mapeoApi: client,
       isOnline,
+      activeProjectId,
     });
     onTeardown.push(appProviders.teardown);
 
     const utils = render(
-      <NavigationContainer>
-        <React.Suspense fallback={null}>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="HomeHeaderRoute" component={HomeHeaderScreen} />
-          </Stack.Navigator>
-        </React.Suspense>
-      </NavigationContainer>,
+      <React.Suspense fallback={null}>
+        <ActiveProjectProvider activeProjectId={activeProjectId}>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              <Stack.Screen
+                name="HomeHeaderRoute"
+                component={HomeHeaderScreen}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ActiveProjectProvider>
+      </React.Suspense>,
       {wrapper: appProviders.wrapper},
     );
 

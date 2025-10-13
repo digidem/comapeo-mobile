@@ -57,7 +57,7 @@ const m = defineMessages({
   },
   mappingOnOwn: {
     id: 'Navigation.Menu.mappingOnOwn',
-    defaultMessage: 'You are mapping on your own.',
+    defaultMessage: "You're mapping on your own.",
   },
   coordinator: {
     id: 'Navigation.Menu.coordinator',
@@ -69,7 +69,7 @@ const m = defineMessages({
   },
   justYou: {
     id: 'Navigation.Menu.justYou',
-    defaultMessage: 'Just you',
+    defaultMessage: 'Just You',
   },
   switchProjects: {
     id: 'Navigation.Menu.switchProjects',

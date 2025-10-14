@@ -13,6 +13,7 @@ import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {ColorCard} from '../sharedComponents/ColorCard';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {COMAPEO_BLUE} from '../lib/styles';
+import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
 
 const m = defineMessages({
   newCollab: {
@@ -73,35 +74,40 @@ export const AllProjects = () => {
   );
 
   return (
-    <View style={{justifyContent: 'space-between'}}>
-      <FlatList<ProjectListItem>
-        contentContainerStyle={{padding: 20, gap: 20}}
-        data={dataWithCurrentProjOnTop}
-        keyExtractor={p => p.projectId}
-        initialNumToRender={6}
-        windowSize={5}
-        removeClippedSubviews
-        renderItem={renderItem}
-      />
-      <PrimaryButton
-        fullSize={true}
-        onPress={() => {
-          //TODO: replace with actual navigation (the collab screens)
-          navigate('CreateProject');
-        }}
-        style={{alignSelf: 'center', marginBottom: 10}}
-        text={formatMessage(m.newCollab)}
-      />
-      <SecondaryButton
-        fullSize={true}
-        style={{alignSelf: 'center', marginBottom: 20}}
-        text={formatMessage(m.close)}
-        onPress={() => {
-          goBack();
-        }}
-        renderIcon={() => <AddProjectIcon />}
-      />
-    </View>
+    <BottomSheetWrapper>
+      <View>
+        <FlatList<ProjectListItem>
+          contentContainerStyle={{gap: 20}}
+          data={dataWithCurrentProjOnTop}
+          keyExtractor={p => p.projectId}
+          initialNumToRender={6}
+          windowSize={5}
+          removeClippedSubviews
+          renderItem={renderItem}
+        />
+
+        <View style={{flex: 1}}>
+          <PrimaryButton
+            fullSize={true}
+            onPress={() => {
+              //TODO: replace with actual navigation (the collab screens)
+              navigate('CreateProject');
+            }}
+            style={{alignSelf: 'center', marginBottom: 10}}
+            text={formatMessage(m.newCollab)}
+          />
+          <SecondaryButton
+            fullSize={true}
+            style={{alignSelf: 'center', marginBottom: 20}}
+            text={formatMessage(m.close)}
+            onPress={() => {
+              goBack();
+            }}
+            renderIcon={() => <AddProjectIcon />}
+          />
+        </View>
+      </View>
+    </BottomSheetWrapper>
   );
 };
 

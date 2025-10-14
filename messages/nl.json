@@ -70,6 +70,9 @@
   "Navigation.Menu.allProjects": {
     "message": "Alle projecten"
   },
+  "Navigation.Menu.coordinator": {
+    "message": "Coördinator"
+  },
   "Navigation.Menu.currentProject": {
     "message": "Huidig project"
   },
@@ -82,8 +85,20 @@
   "Navigation.Menu.invite": {
     "message": "Uitnodigen"
   },
+  "Navigation.Menu.justYou": {
+    "message": "U alleen"
+  },
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "Je maakt zelf mapping uit."
+  },
+  "Navigation.Menu.participant": {
+    "message": "Deelnemer"
+  },
   "Navigation.Menu.privacyPolicy": {
     "message": "Gegevens & Privacy"
+  },
+  "Navigation.Menu.switchProjects": {
+    "message": "Wissel van projecten"
   },
   "Navigation.Menu.viewProject": {
     "message": "Toon"

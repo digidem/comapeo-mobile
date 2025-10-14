@@ -12,6 +12,7 @@ import {useTracking} from '../hooks/useTracking';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {ColorCard} from '../sharedComponents/ColorCard';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
+import {COMAPEO_BLUE} from '../lib/styles';
 
 const m = defineMessages({
   newCollab: {
@@ -51,15 +52,19 @@ export const AllProjects = () => {
   );
 
   const renderItem = React.useCallback<ListRenderItem<ProjectListItem>>(
-    ({item}) => (
-      <React.Suspense fallback={<ProjectCardLoader />}>
-        <ProjectListItem
-          projectId={item.projectId}
-          onPress={() => handlePressId(item.projectId)}
-        />
-      </React.Suspense>
-    ),
-    [handlePressId],
+    ({item}) => {
+      const isSelected = item.projectId === currentProjectId;
+      return (
+        <React.Suspense fallback={<ProjectCardLoader />}>
+          <ProjectListItem
+            isSelected={isSelected}
+            projectId={item.projectId}
+            onPress={() => handlePressId(item.projectId)}
+          />
+        </React.Suspense>
+      );
+    },
+    [handlePressId, currentProjectId],
   );
 
   return (
@@ -108,10 +113,12 @@ const ProjectCardLoader = () => (
 
 const ProjectListItem = ({
   projectId,
+  isSelected,
   onPress,
 }: {
   projectId: string;
   onPress: () => void;
+  isSelected: boolean;
 }) => {
   const projectInfo = useProjectRoleAndDetails(projectId);
 
@@ -121,7 +128,10 @@ const ProjectListItem = ({
       : projectInfo.projectName;
 
   return (
-    <ColorCard onPress={onPress} backgroundColor={projectInfo.projectColor}>
+    <ColorCard
+      onPress={onPress}
+      borderColor={isSelected ? COMAPEO_BLUE : undefined}
+      backgroundColor={projectInfo.projectColor}>
       <View style={{padding: 20}}>
         <HeaderText variant="header4">{header}</HeaderText>
       </View>

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {BackHandler, StyleSheet, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useFocusEffect} from '@react-navigation/native';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -55,6 +56,21 @@ export const MapOnYourOwnIntro = ({
   const {formatMessage: t} = useIntl();
   const {mutate: createProject, status} = useCreateProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
+
+  // Prevent Android back button during loading
+  useFocusEffect(
+    React.useCallback(() => {
+      if (status !== 'pending') return;
+
+      const onBackPress = () => true;
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => subscription.remove();
+    }, [status]),
+  );
 
   function handleGoToMap() {
     createProject(undefined, {

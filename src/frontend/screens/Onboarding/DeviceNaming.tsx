@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
+  BackHandler,
   Keyboard,
   KeyboardAvoidingView,
   StyleSheet,
@@ -12,6 +13,7 @@ import {
 import {defineMessages, useIntl} from 'react-intl';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {deviceType} from 'expo-device';
+import {useFocusEffect} from '@react-navigation/native';
 
 import DeviceIcon from '../../images/Device.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -57,6 +59,21 @@ export const DeviceNaming = ({
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const {formatMessage: t} = useIntl();
   const {mutate, status} = useSetOwnDeviceInfo();
+
+  // Prevent Android back button during loading
+  useFocusEffect(
+    React.useCallback(() => {
+      if (status !== 'pending') return;
+
+      const onBackPress = () => true;
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => subscription.remove();
+    }, [status]),
+  );
 
   function setNameWithValidation(nameValue: string) {
     if (nameValue.length > 60) {

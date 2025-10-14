@@ -13,6 +13,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {WHITE, DARK_GREEN, COMAPEO_BLUE} from '../../lib/styles';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
+import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 
 const m = defineMessages({
   success: {
@@ -43,6 +44,8 @@ export const Success = ({
   const {formatMessage: t} = useIntl();
   const {data: deviceInfo} = useOwnDeviceInfo();
   const deviceName = deviceInfo.name || '';
+
+  usePreventAndroidBackButton();
 
   return (
     <View style={styles.container}>

@@ -35,6 +35,11 @@ export const AllProjects = () => {
   const {formatMessage} = useIntl();
   const {isTracking} = useTracking();
 
+  const dataWithCurrentProjOnTop = data.sort((a, b) => {
+    if (a.projectId === currentProjectId) return -1;
+    if (b.projectId === currentProjectId) return 1;
+    return 0; // Keep original order for other elements
+  });
   const handlePressId = React.useCallback(
     (targetProjectId: string) => {
       if (currentProjectId === targetProjectId) {
@@ -71,7 +76,7 @@ export const AllProjects = () => {
     <View style={{justifyContent: 'space-between'}}>
       <FlatList<ProjectListItem>
         contentContainerStyle={{padding: 20, gap: 20}}
-        data={data}
+        data={dataWithCurrentProjOnTop}
         keyExtractor={p => p.projectId}
         initialNumToRender={6}
         windowSize={5}
@@ -103,7 +108,7 @@ export const AllProjects = () => {
 const ProjectCardLoader = () => (
   <View
     style={{
-      height: 20,
+      height: 40,
       borderRadius: 12,
       backgroundColor: '#eee',
       marginBottom: 20,

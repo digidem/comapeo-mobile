@@ -75,6 +75,6 @@ describe('Settings - Early Access Mode', () => {
     await backBtn.click();
     await expect($(byTextMatches('Early Access is OFF'))).toBeDisplayed();
     await backBtn.click();
-    await $('~Close Menu').click();
+    await $(byResourceId('MAIN.map-screen')).click();
   });
 });

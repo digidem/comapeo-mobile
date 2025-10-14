@@ -73,6 +73,9 @@
   "Navigation.Menu.currentProject": {
     "message": "Huidig project"
   },
+  "Navigation.Menu.earlyAccessLabel": {
+    "message": "U bent in de Vroegtijdige toegangsmodus."
+  },
   "Navigation.Menu.exchange": {
     "message": "Ruil"
   },
@@ -223,9 +226,6 @@
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Uw track wordt niet opgeslagen. Dit kan niet ongedaan worden gemaakt."
   },
-  "Screens.Project.soloProjectHeader": {
-    "message": "Mijn Solo Project"
-  },
   "Screens.ProjectSettings.configTitle": {
     "message": "Project Categorieën"
   },
@@ -297,6 +297,15 @@
   },
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Apparaat Naam"
+  },
+  "Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Vroegtijdige toegangsmodus"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.off": {
+    "message": "Vroegtijdige toegang is UIT"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.on": {
+    "message": "Vroegtijdige toegang is AAN"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "Taal"
@@ -494,6 +503,9 @@
     "description": "Label for Android version",
     "message": "Android versie"
   },
+  "screens.AboutSettings.earlyAccessBanner": {
+    "message": "U bent in de Vroegtijdige toegangsmodus."
+  },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
     "message": "Emojis bron"
@@ -509,6 +521,9 @@
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Release naam"
+  },
+  "screens.AboutSettings.seeUpdates": {
+    "message": "Zie CoMapeo updates"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
@@ -744,14 +759,11 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respecteert uw Privacy & Autonomie"
   },
-  "screens.DataPrivacy.description": {
-    "message": "Met CoMapeo kunnen u en uw medewerkers offline kaarten zonder servers nodig te hebben."
-  },
   "screens.DataPrivacy.diagnostic": {
-    "message": "Standaard Privé - diagnostische informatie is volledig geanonimiseerd en je kunt er altijd gebruik van maken."
+    "message": "Diagnostische informatie is volledig geanonimiseerd—opt-out op elk moment."
   },
-  "screens.DataPrivacy.encrypted": {
-    "message": "Alle gegevens blijven volledig versleuteld"
+  "screens.DataPrivacy.intro": {
+    "message": "Een paar belangrijke dingen die we in gedachten moeten houden:"
   },
   "screens.DataPrivacy.learnMore": {
     "message": "Meer informatie"
@@ -763,34 +775,67 @@
     "message": "Volgende"
   },
   "screens.DataPrivacy.stays": {
-    "message": "Uw gegevens blijven op uw apparaten."
+    "message": "Je gegevens blijven op je toestellen — volledig versleuteld en in je besturing."
   },
   "screens.DataPrivacy.title": {
-    "message": "Gegevens & Privacy"
+    "message": "CoMapeo is standaard privé."
   },
-  "screens.DeviceNaming.Success.description": {
-    "message": "Je hebt je apparaat genoemd"
+  "screens.DeviceNaming.Success.chooseProject": {
+    "message": "Kies uit de onderkant om je eerste project te starten."
   },
-  "screens.DeviceNaming.Success.findSettings": {
-    "message": "Om je projectinstellingen te vinden ga je naar het hoofdmenu op het kaart scherm."
+  "screens.DeviceNaming.Success.deviceReady": {
+    "message": "{deviceName} is klaar!"
   },
-  "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
+  "screens.DeviceNaming.Success.joinProject": {
+    "message": "Deelnemen aan een project"
   },
-  "screens.DeviceNaming.Success.startUsihng": {
-    "message": "Start met behulp van CoMapeo"
+  "screens.DeviceNaming.Success.mapOnYourOwn": {
+    "message": "Kaart op uw eigen"
   },
   "screens.DeviceNaming.Success.success": {
     "message": "Voltooid!"
   },
-  "screens.DeviceNaming.addName": {
-    "message": "Naam toevoegen"
-  },
   "screens.DeviceNaming.description": {
-    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
+    "message": "Verschillende namen helpen medewerkers om CoMapeo te herkennen."
   },
   "screens.DeviceNaming.header": {
-    "message": "Add a name for your device"
+    "message": "Benoem uw apparaat"
+  },
+  "screens.DeviceNaming.placeholder": {
+    "message": "Apparaat Naam"
+  },
+  "screens.DeviceNaming.save": {
+    "message": "Opslaan"
+  },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "Deel het hier"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "Heeft u feedback?"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "Gegevens uit Vroegtijdige Toegang zullen niet zichtbaar zijn voor medewerkers die niet hebben gekozen."
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "Schakel over naar Vroegtijdige Toegang om aankomende functies te testen. U kunt op elk moment terugschakelen. Sommige gegevens kunnen worden verborgen wanneer ze zijn uitgeschakeld, maar zijn altijd veilig."
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "Vroegtijdige toegangsmodus"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "Zie CoMapeo updates"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "Gebruik Vroegtijdige Toegang Functies"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "Gegevens van Vroegtijdige Toegang worden verborgen na het uitschakelen van de toegang, maar zijn nog steeds opgeslagen. Schakel op elk moment terug om het te zien."
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "Gegevens voor vroegtijdige toegang"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Voer uw toegangscode in"
@@ -877,10 +922,10 @@
     "message": "Er is iets misgegaan"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate with others"
+    "message": "Deel veilig met medewerkers"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "Ontworpen met en voor inheemse volkeren & frontlinie gemeenschappen"
+    "message": "Co-ontworpen met en voor inheemse grondstoffenmappers & -monitors."
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "Nu inschrijven"
@@ -889,10 +934,10 @@
     "message": "Kaart overal en overal"
   },
   "screens.IntroToCoMapeo.mapWorldTogether": {
-    "message": "Verwijs je wereld samen"
+    "message": "Verbind je wereld samen."
   },
   "screens.IntroToCoMapeo.ownData": {
-    "message": "Eigen en besturen van uw gegevens"
+    "message": "Altijd de eigenaar en controle van je gegevens"
   },
   "screens.InviteCancelled.canceled": {
     "message": "Uitnodiging geannuleerd"
@@ -1197,6 +1242,34 @@
   "screens.ObservationCategoryChooser.title": {
     "message": "Kies een categorie"
   },
+  "screens.ObservationCreate.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Blijven wachten"
+  },
+  "screens.ObservationCreate.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Handmatige Coördinaten"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Deze waarneming heeft geen locatie. U kunt doorgaan met wachten op een GPS signaal, de waarneming opslaan zonder een locatie, of de coördinaten handmatig invoeren"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "Geen GPS signaal"
+  },
+  "screens.ObservationCreate.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Opslaan"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPS nauwkeurigheid is laag. U kunt blijven wachten op betere nauwkeurigheid, de waarneming opslaan met lage nauwkeurigheid, of handmatig de coördinaten invoeren"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "Zwak GPS signaal"
+  },
   "screens.ObservationCreate.changePreset": {
     "message": "Wijzigen"
   },
@@ -1204,41 +1277,13 @@
     "description": "Placeholder for description/notes field",
     "message": "Wat gebeurt er hier?"
   },
-  "screens.ObservationCreate.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Blijven wachten"
-  },
-  "screens.ObservationCreate.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "Handmatige Coördinaten"
-  },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
     "message": "Nieuwe waarneming"
   },
-  "screens.ObservationCreate.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "Deze waarneming heeft geen locatie. U kunt doorgaan met wachten op een GPS signaal, de waarneming opslaan zonder een locatie, of de coördinaten handmatig invoeren"
-  },
-  "screens.ObservationCreate.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "Geen GPS signaal"
-  },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Waarneming"
-  },
-  "screens.ObservationCreate.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "Opslaan"
-  },
-  "screens.ObservationCreate.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS nauwkeurigheid is laag. U kunt blijven wachten op betere nauwkeurigheid, de waarneming opslaan met lage nauwkeurigheid, of handmatig de coördinaten invoeren"
-  },
-  "screens.ObservationCreate.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Zwak GPS signaal"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -1363,6 +1408,36 @@
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Bezig te laden… dit kan even duren na het synchroniseren met een nieuw apparaat"
+  },
+  "screens.Onboarding.JoinProjectIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.JoinProjectIntro.description": {
+    "message": "Coördineer met je team om een projectuitnodiging te ontvangen."
+  },
+  "screens.Onboarding.JoinProjectIntro.title": {
+    "message": "Deelnemen aan een project"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.addAudio": {
+    "message": "Audio-opnamen toevoegen."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.description": {
+    "message": "Verken CoMapeo—nodig medewerkers op elk gewenst moment uit."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.goToMap": {
+    "message": "Ga naar Kaart"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
+    "message": "Houd foto's onderweg."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.title": {
+    "message": "Kaart op uw eigen"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
+    "message": "Track paden lopen."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Beleid"

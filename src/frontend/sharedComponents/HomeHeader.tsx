@@ -53,11 +53,6 @@ export function HomeHeader({
           testID="HOME.header-button">
           <View style={styles.menuIconContainer}>
             <IonIcon name="menu" size={20} color={DARK_GREY} />
-            {isLow && (
-              <View style={{position: 'absolute', top: -2, right: -2}}>
-                <ExclamationBadge testID="low-storage-badge" />
-              </View>
-            )}
           </View>
           <HeaderText
             testID="HOME.header-title"
@@ -67,6 +62,11 @@ export function HomeHeader({
             ellipsizeMode="tail">
             {projectName}
           </HeaderText>
+          {isLow && (
+            <View style={{position: 'absolute', top: -2, right: -2}}>
+              <ExclamationBadge testID="low-storage-badge" />
+            </View>
+          )}
         </TouchableOpacity>
       </View>
     </View>

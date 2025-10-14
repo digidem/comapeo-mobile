@@ -70,6 +70,9 @@
   "Navigation.Menu.allProjects": {
     "message": "All Projects"
   },
+  "Navigation.Menu.coordinator": {
+    "message": "Coordinator"
+  },
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
   },
@@ -82,8 +85,20 @@
   "Navigation.Menu.invite": {
     "message": "เชิญชวน"
   },
+  "Navigation.Menu.justYou": {
+    "message": "Just You"
+  },
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "You're mapping on your own."
+  },
+  "Navigation.Menu.participant": {
+    "message": "Participant"
+  },
   "Navigation.Menu.privacyPolicy": {
     "message": "Data & Privacy"
+  },
+  "Navigation.Menu.switchProjects": {
+    "message": "Switch Projects"
   },
   "Navigation.Menu.viewProject": {
     "message": "มุมมอง"

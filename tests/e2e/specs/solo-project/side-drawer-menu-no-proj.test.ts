@@ -10,9 +10,9 @@ describe('Main - Side Drawer Menu - No Project', () => {
 
     await expect($(byTextMatches(output.names.device))).toBeDisplayed();
     await expect($(byText('Just You'))).toBeDisplayed();
-    // Changed from 'You're mapping on your own.' to 'You are mapping on your own' to match the actual which doesn't have the correct contraction
+
     await expect(
-      $(byTextMatches('You are mapping on your own.')),
+      $(byTextMatches("You're mapping on your own")),
     ).toBeDisplayed();
 
     await expect($('~Go to All Projects Screen')).toBeDisplayed();

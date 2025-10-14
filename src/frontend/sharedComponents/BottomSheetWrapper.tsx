@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View} from 'react-native';
+import {View, useWindowDimensions} from 'react-native';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
 import {WHITE} from '../lib/styles';
 import {useNavigation} from '@react-navigation/native';
@@ -15,6 +15,8 @@ export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
   const navigation = useNavigation();
 
   const [displayContent, setDisplayContent] = React.useState(true);
+
+  const {height} = useWindowDimensions();
 
   usePreventAndroidBackButton();
 
@@ -48,6 +50,7 @@ export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
             paddingTop: 40,
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
+            maxHeight: height,
           }}
           entering={SlideInDown.duration(150)}
           exiting={SlideOutDown.duration(150)}>

@@ -5,7 +5,7 @@ import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
-import {PrimaryButton} from '../sharedComponents/Buttons';
+import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import AddProjectIcon from '../images/AddProject.svg';
 import {FlatList} from 'react-native';
 import {useTracking} from '../hooks/useTracking';

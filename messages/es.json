@@ -73,6 +73,9 @@
   "Navigation.Menu.currentProject": {
     "message": "Proyecto actual"
   },
+  "Navigation.Menu.earlyAccessLabel": {
+    "message": "Está en modo de acceso anticipado."
+  },
   "Navigation.Menu.exchange": {
     "message": "Intercambiar"
   },
@@ -223,9 +226,6 @@
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Tu Trayecto no se guardará. Esto no se puede deshacer."
   },
-  "Screens.Project.soloProjectHeader": {
-    "message": "Mi Proyecto Individual"
-  },
   "Screens.ProjectSettings.configTitle": {
     "message": "Categorías del proyecto"
   },
@@ -297,6 +297,15 @@
   },
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Nombre del dispositivo"
+  },
+  "Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Modo de acceso anticipado"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.off": {
+    "message": "Acceso anticipado está APAGADO"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.on": {
+    "message": "Acceso anticipado activado"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "Idioma"
@@ -494,6 +503,9 @@
     "description": "Label for Android version",
     "message": "Versión de Android"
   },
+  "screens.AboutSettings.earlyAccessBanner": {
+    "message": "Está en modo de acceso anticipado."
+  },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
     "message": "Fuente de Emojis"
@@ -509,6 +521,9 @@
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Nombre de versión"
+  },
+  "screens.AboutSettings.seeUpdates": {
+    "message": "Ver actualizaciones de CoMapeo"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
@@ -744,14 +759,11 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo respeta tu privacidad y autonomía"
   },
-  "screens.DataPrivacy.description": {
-    "message": "CoMapeo te permite a ti y a tus colaboradores mapear sin conexión y sin necesitar servidores."
-  },
   "screens.DataPrivacy.diagnostic": {
-    "message": "Privado de forma predeterminada — la información de diagnóstico es completamente anónima y puedes optar por no compartirla en cualquier momento."
+    "message": "La información de diagnóstico se anonimiza completamente—opt-out en cualquier momento."
   },
-  "screens.DataPrivacy.encrypted": {
-    "message": "Toda la información permanece completamente cifrada"
+  "screens.DataPrivacy.intro": {
+    "message": "Algunas cosas importantes a tener en cuenta:"
   },
   "screens.DataPrivacy.learnMore": {
     "message": "Aprende más"
@@ -763,34 +775,67 @@
     "message": "Siguiente"
   },
   "screens.DataPrivacy.stays": {
-    "message": "Tu información permanece en tus dispositivos."
+    "message": "Sus datos permanecen en sus dispositivos, completamente cifrados y bajo su control."
   },
   "screens.DataPrivacy.title": {
-    "message": "Datos y privacidad"
+    "message": "CoMapeo es privado por defecto."
   },
-  "screens.DeviceNaming.Success.description": {
-    "message": "Nombraste tu dispositivo"
+  "screens.DeviceNaming.Success.chooseProject": {
+    "message": "Elija de abajo para iniciar su primer proyecto."
   },
-  "screens.DeviceNaming.Success.findSettings": {
-    "message": "Para encontrar la Configuración del Proyecto ve al menú principal que puedes encontrar en la pantalla del mapa."
+  "screens.DeviceNaming.Success.deviceReady": {
+    "message": "¡{deviceName} está listo!"
   },
-  "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "Ya puedes empezar a mapear de manera individual o empezar a mapear en equipo. Crea o colabora en un Proyecto para compartir información entre dispositivos que son parte del mismo Proyecto."
+  "screens.DeviceNaming.Success.joinProject": {
+    "message": "Unirse a un proyecto"
   },
-  "screens.DeviceNaming.Success.startUsihng": {
-    "message": "Empezar a usar CoMapeo"
+  "screens.DeviceNaming.Success.mapOnYourOwn": {
+    "message": "Mapear el tuyo"
   },
   "screens.DeviceNaming.Success.success": {
     "message": "¡Éxito!"
   },
-  "screens.DeviceNaming.addName": {
-    "message": "Agregar nombre"
-  },
   "screens.DeviceNaming.description": {
-    "message": "Ya puedes empezar a mapear de manera individual o empezar a mapear en equipo. Crea o colabora en un proyecto para compartir información entre dispositivos que son parte del mismo proyecto."
+    "message": "Los nombres discretos ayudan a los colaboradores que utilizan CoMapeo a reconocerte."
   },
   "screens.DeviceNaming.header": {
-    "message": "Agrega un nombre para tu dispositivo"
+    "message": "Nombra su dispositivo"
+  },
+  "screens.DeviceNaming.placeholder": {
+    "message": "Nombre del dispositivo"
+  },
+  "screens.DeviceNaming.save": {
+    "message": "Guardar"
+  },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "Compartirlo aquí"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "¿Tienes comentarios?"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "Los datos de acceso anticipado no serán visibles para los colaboradores que no hayan optado."
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "Cambiar a Acceso Temprano para probar las características futuras. Puede volver en cualquier momento. Algunos datos pueden ocultarse cuando se apaga pero siempre son seguros."
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "Modo de acceso anticipado"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "Ver actualizaciones de CoMapeo"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "Usar características de acceso anticipado"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Abrir ajustes"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "Los datos de acceso anticipado se ocultarán después de apagar, pero todavía se guardan. Vuelve en cualquier momento para verlos."
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "Datos de acceso anticipado"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Introduzca su contraseña"
@@ -877,10 +922,10 @@
     "message": "Algo salió mal"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Colabora con otras personas"
+    "message": "Compartir de forma segura con los colaboradores"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "Diseñado con y para pueblos indígenas y comunidades de primera línea"
+    "message": "Co-diseñado con y para mapeadores y monitores de territorio indígena."
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "¡Comienza ya!"
@@ -889,10 +934,10 @@
     "message": "Mapea en cualquier lugar y en todas partes"
   },
   "screens.IntroToCoMapeo.mapWorldTogether": {
-    "message": "Mapea tu mundo, en colectivo"
+    "message": "Mapea tu mundo, en colectivo."
   },
   "screens.IntroToCoMapeo.ownData": {
-    "message": "Controla tu información y hazla tuya"
+    "message": "Siempre posea y controle sus datos"
   },
   "screens.InviteCancelled.canceled": {
     "message": "Invitación cancelada"
@@ -1197,6 +1242,34 @@
   "screens.ObservationCategoryChooser.title": {
     "message": "Elija una categoría"
   },
+  "screens.ObservationCreate.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Seguir esperando"
+  },
+  "screens.ObservationCreate.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Ingresar manualmente"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Esta observación no tiene ubicación. Puedes seguir esperando el GPS, o guardarlo sin ubicación o ingresar las coordenadas manualmente"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "Sin señal del GPS"
+  },
+  "screens.ObservationCreate.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Guardar"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "La precisión del GPS está baja. Puedes seguir esperando que la precisión mejore, o guardar como está o ingresar las coordenadas manualmente"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "Señal débil del GPS"
+  },
   "screens.ObservationCreate.changePreset": {
     "message": "Cambiar"
   },
@@ -1204,41 +1277,13 @@
     "description": "Placeholder for description/notes field",
     "message": "¿Qué está pasando aquí?"
   },
-  "screens.ObservationCreate.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Seguir esperando"
-  },
-  "screens.ObservationCreate.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "Ingresar manualmente"
-  },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
     "message": "Observación nueva"
   },
-  "screens.ObservationCreate.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "Esta observación no tiene ubicación. Puedes seguir esperando el GPS, o guardarlo sin ubicación o ingresar las coordenadas manualmente"
-  },
-  "screens.ObservationCreate.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "Sin señal del GPS"
-  },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Observación"
-  },
-  "screens.ObservationCreate.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "Guardar"
-  },
-  "screens.ObservationCreate.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "La precisión del GPS está baja. Puedes seguir esperando que la precisión mejore, o guardar como está o ingresar las coordenadas manualmente"
-  },
-  "screens.ObservationCreate.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Señal débil del GPS"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -1363,6 +1408,36 @@
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Cargando… esto puede tomar un tiempo después de sincronizar con un nuevo dispositivo"
+  },
+  "screens.Onboarding.JoinProjectIntro.close": {
+    "message": "Abrir ajustes"
+  },
+  "screens.Onboarding.JoinProjectIntro.description": {
+    "message": "Coordine con su equipo para recibir una invitación al proyecto."
+  },
+  "screens.Onboarding.JoinProjectIntro.title": {
+    "message": "Unirse a un proyecto"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.addAudio": {
+    "message": "Añadir grabaciones de audio."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Abrir ajustes"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.description": {
+    "message": "Explora CoMapeople—invita a colaboradores en cualquier momento."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.goToMap": {
+    "message": "Ir al mapa"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
+    "message": "Adherir fotos en movimiento."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.title": {
+    "message": "Mapear el tuyo"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
+    "message": "Senderos caminados."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Política de privacidad"

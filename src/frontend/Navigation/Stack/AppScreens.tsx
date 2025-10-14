@@ -115,6 +115,8 @@ import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/shar
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
 import {ShareProjectStats} from '../../screens/Settings/CreateOrJoinProject/ShareProjectStats.tsx';
 import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
+import {AppUsagePromptInterstitial} from '../../screens/AppUsagePromptInterstitial.tsx';
+import {AppUsageSharingSuccess} from '../../screens/AppUsageSharingSuccess.tsx';
 import {ProjectStatistics} from '../../screens/Settings/ProjectSettings/ProjectStatistics/index.tsx';
 import {ProjectStatsTurnedOffBottomSheet} from '../../screens/Settings/ProjectSettings/ProjectStatistics/ProjectStatsTurnedOffBottomSheet.tsx';
 import {EarlyAccessOffBottomSheet} from '../../screens/Settings/AppSettings/EarlyAccessOffBottomSheet.tsx';
@@ -453,6 +455,16 @@ export const createAppScreens = ({
         name="DraftPhotoPreviewModal"
         component={DraftPhotoPreviewModal}
         options={DraftPhotoPreviewModalNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="AppUsagePromptInterstitial"
+        component={AppUsagePromptInterstitial}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="AppUsageSharingSuccess"
+        component={AppUsageSharingSuccess}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="ProjectStatistics"

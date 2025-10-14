@@ -1,25 +1,22 @@
 import React, {ReactNode} from 'react';
 import {renderHook, act} from '@testing-library/react-native';
 import {
-  createAppUsageStatsPromptStore,
-  type AppUsageStatsPromptStore,
-  AppUsageStatsPromptProvider,
-  useAppUsageStatsPromptState,
-  useAppUsageStatsPromptActions,
-  AppUsageStatsPromptState,
-} from './AppUsageStatsPromptContext';
+  createAppUsageStatsStore,
+  type AppUsageStatsStore,
+  AppUsageStatsProvider,
+  useAppUsageStatsState,
+  useAppUsageStatsActions,
+  AppUsageStatsState,
+} from './AppUsageStatsContext';
 
-function createWrapper(store: AppUsageStatsPromptStore) {
+function createWrapper(store: AppUsageStatsStore) {
   return ({children}: {children: ReactNode}) => (
-    <AppUsageStatsPromptProvider value={store}>
-      {children}
-    </AppUsageStatsPromptProvider>
+    <AppUsageStatsProvider value={store}>{children}</AppUsageStatsProvider>
   );
 }
 
 describe('AppUsageStatsPromptContext', () => {
   const FAKE_NOW = 1_000_000;
-  const TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
 
   beforeAll(() => {
     jest.useFakeTimers({legacyFakeTimers: false});
@@ -34,29 +31,33 @@ describe('AppUsageStatsPromptContext', () => {
   });
 
   it('initial state is correct', () => {
-    const store = createAppUsageStatsPromptStore();
+    const store = createAppUsageStatsStore({
+      appUsageMetricsOptIn: () => {},
+      appUsageMetricsOptOut: () => {},
+    });
     const wrapper = createWrapper(store);
-    const {result} = renderHook(() => useAppUsageStatsPromptState(s => s), {
+    const {result} = renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
     expect(result.current).toStrictEqual({
-      optedIn: null,
       completedOnboardingAt: null,
       lastPromptAt: null,
       promptCount: 0,
       optInStartedAt: null,
-      optInExpiresAt: null,
-    } as AppUsageStatsPromptState);
+    } as AppUsageStatsState);
   });
 
-  it('records the completion of onboarding exactly once', () => {
-    const store = createAppUsageStatsPromptStore();
+  it('records the completion of onboarding to current "now"', () => {
+    const store = createAppUsageStatsStore({
+      appUsageMetricsOptIn: () => {},
+      appUsageMetricsOptOut: () => {},
+    });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
+    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
     const stateHook = renderHook(
-      () => useAppUsageStatsPromptState(s => s.completedOnboardingAt),
+      () => useAppUsageStatsState(s => s.completedOnboardingAt),
       {wrapper},
     );
 
@@ -64,21 +65,18 @@ describe('AppUsageStatsPromptContext', () => {
       actionsHook.result.current.recordCompleteOnboarding();
     });
     expect(stateHook.result.current).toBe(FAKE_NOW);
-
-    act(() => {
-      jest.setSystemTime(FAKE_NOW + 500);
-      actionsHook.result.current.recordCompleteOnboarding();
-    });
-    expect(stateHook.result.current).toBe(FAKE_NOW);
   });
 
   it('setOptedIn(true) sets 12-month window fields, updates lastPromptAt, and does not bump promptCount', () => {
-    const store = createAppUsageStatsPromptStore();
+    const store = createAppUsageStatsStore({
+      appUsageMetricsOptIn: () => {},
+      appUsageMetricsOptOut: () => {},
+    });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
+    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useAppUsageStatsPromptState(s => s), {
+    const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
 
@@ -87,21 +85,22 @@ describe('AppUsageStatsPromptContext', () => {
     });
 
     expect(stateHook.result.current).toMatchObject({
-      optedIn: true,
       lastPromptAt: FAKE_NOW,
       promptCount: 0,
       optInStartedAt: FAKE_NOW,
-      optInExpiresAt: FAKE_NOW + TWELVE_MONTHS_MS,
     });
   });
 
   it('setOptedIn(false) clears 12-month window fields, updates lastPromptAt, and bumps promptCount each time', () => {
-    const store = createAppUsageStatsPromptStore();
+    const store = createAppUsageStatsStore({
+      appUsageMetricsOptIn: () => {},
+      appUsageMetricsOptOut: () => {},
+    });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
+    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useAppUsageStatsPromptState(s => s), {
+    const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
 
@@ -109,11 +108,9 @@ describe('AppUsageStatsPromptContext', () => {
       actionsHook.result.current.setOptedIn(false);
     });
     expect(stateHook.result.current).toMatchObject({
-      optedIn: false,
       lastPromptAt: FAKE_NOW,
       promptCount: 1,
       optInStartedAt: null,
-      optInExpiresAt: null,
     });
 
     act(() => {
@@ -122,16 +119,18 @@ describe('AppUsageStatsPromptContext', () => {
     });
     expect(stateHook.result.current.promptCount).toBe(2);
     expect(stateHook.result.current.optInStartedAt).toBeNull();
-    expect(stateHook.result.current.optInExpiresAt).toBeNull();
   });
 
   it('accepting after a decline keeps promptCount unchanged on accept but sets the 12-month window', () => {
-    const store = createAppUsageStatsPromptStore();
+    const store = createAppUsageStatsStore({
+      appUsageMetricsOptIn: () => {},
+      appUsageMetricsOptOut: () => {},
+    });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
+    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useAppUsageStatsPromptState(s => s), {
+    const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
 
@@ -147,9 +146,6 @@ describe('AppUsageStatsPromptContext', () => {
 
     expect(stateHook.result.current.promptCount).toBe(1);
     expect(stateHook.result.current.optInStartedAt).toBe(FAKE_NOW + 2000);
-    expect(stateHook.result.current.optInExpiresAt).toBe(
-      FAKE_NOW + 2000 + TWELVE_MONTHS_MS,
-    );
     expect(stateHook.result.current.lastPromptAt).toBe(FAKE_NOW + 2000);
   });
 });

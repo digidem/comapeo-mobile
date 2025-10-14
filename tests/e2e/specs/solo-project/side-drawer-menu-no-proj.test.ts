@@ -9,8 +9,7 @@ describe('Main - Side Drawer Menu - No Project', () => {
     await drawerIcon.click();
 
     await expect($(byTextMatches(output.names.device))).toBeDisplayed();
-    // Changed from 'Just You' to 'Just you' to match the actual text without correct capitalization
-    await expect($(byText('Just you'))).toBeDisplayed();
+    await expect($(byText('Just You'))).toBeDisplayed();
     // Changed from 'You're mapping on your own.' to 'You are mapping on your own' to match the actual which doesn't have the correct contraction
     await expect(
       $(byTextMatches('You are mapping on your own.')),

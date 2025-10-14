@@ -149,8 +149,7 @@ export function DrawerMenu() {
                 // This button deviates from the standard SecondaryButton (the icon is aligned flex-end) and so instead of changing that component, I just copied the styles here, and created a custom button for this use case.
                 <TouchableOpacity
                   onPress={() => {
-                    // This is temporary until we create the AllProjects bottom sheer. Navigating to this screen so we can update the project description and see that project description shows up on the menu
-                    navigation.navigate('EditProjectDetails');
+                    navigation.navigate('AllProjects');
                   }}
                   style={[
                     buttonStyles.base,

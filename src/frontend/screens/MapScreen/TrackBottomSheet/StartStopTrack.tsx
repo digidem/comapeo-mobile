@@ -50,7 +50,7 @@ export const StartStopTrack = () => {
 
   function handleStartTracking() {
     startTracking();
-    navigation.navigate('Map', {trackingOpen: false});
+    navigation.setParams({trackingOpen: false});
   }
 
   async function finishTracking() {

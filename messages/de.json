@@ -70,6 +70,9 @@
   "Navigation.Menu.allProjects": {
     "message": "Alle Projekte"
   },
+  "Navigation.Menu.coordinator": {
+    "message": "Koordinator"
+  },
   "Navigation.Menu.currentProject": {
     "message": "Aktuelles Projekt"
   },
@@ -82,8 +85,20 @@
   "Navigation.Menu.invite": {
     "message": "Einladen"
   },
+  "Navigation.Menu.justYou": {
+    "message": "Nur Sie"
+  },
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "Du mappst auf eigene Faust."
+  },
+  "Navigation.Menu.participant": {
+    "message": "Teilnehmer"
+  },
   "Navigation.Menu.privacyPolicy": {
     "message": "Daten & Privatsphäre"
+  },
+  "Navigation.Menu.switchProjects": {
+    "message": "Projekte wechseln"
   },
   "Navigation.Menu.viewProject": {
     "message": "Ansicht"

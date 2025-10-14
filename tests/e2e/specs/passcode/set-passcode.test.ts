@@ -133,7 +133,7 @@ describe('Passcode - setPasscode', () => {
     if (await backButtonAgain.isDisplayed()) {
       await backButtonAgain.click();
     }
-    const drawerIcon = await $('~Close Menu');
+    const drawerIcon = await $(byResourceId('MAIN.map-screen'));
     if (await drawerIcon.isDisplayed()) {
       await drawerIcon.click();
     }

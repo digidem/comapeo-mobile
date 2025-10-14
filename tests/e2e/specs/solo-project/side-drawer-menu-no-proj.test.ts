@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byTextMatches, byText} from '../../utils/selectors';
+import {byTextMatches, byText, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
 describe('Main - Side Drawer Menu - No Project', () => {
@@ -8,27 +8,21 @@ describe('Main - Side Drawer Menu - No Project', () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
-    await expect($(byTextMatches('CURRENT PROJECT'))).toBeDisplayed();
-
     await expect($(byTextMatches(output.names.device))).toBeDisplayed();
+    await expect($(byText('Just You'))).toBeDisplayed();
 
     await expect(
-      $(byTextMatches('You are mapping on your own.')),
+      $(byTextMatches("You're mapping on your own")),
     ).toBeDisplayed();
 
     await expect($('~Go to All Projects Screen')).toBeDisplayed();
-
-    const inviteButton = await $(byText('Invite'));
-    await expect(inviteButton).toBeDisplayed();
-    const viewButton = await $(byText('View'));
-    await expect(viewButton).toBeDisplayed();
 
     await expect($('~Go to data and privacy screen.')).toBeDisplayed();
     await expect($('~Go to exchange screen.')).toBeDisplayed();
     await expect($('~Go to app settings screen.')).toBeDisplayed();
     await expect($('~Go to about CoMapeo screen.')).toBeDisplayed();
 
-    await $('~Close Menu').click();
+    await $(byResourceId('observationsEmptyView')).click();
     const mapTab = await $('~Go to map.');
     await mapTab.click();
   });

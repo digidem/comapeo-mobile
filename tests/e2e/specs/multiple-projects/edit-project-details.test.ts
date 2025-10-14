@@ -11,12 +11,10 @@ const UPDATED_PROJECT_DESCRIPTION =
 describe('Multiple Projects - Edit Project Details', () => {
   it('should allow editing a named project’s name and description', async () => {
     const thirdProject = await $(byText(output.names.thirdProject));
+    await expect(thirdProject).toBeDisplayed();
     await thirdProject.click();
-
-    await $(byText('View')).click();
-
-    const editInfoBtn = await $('~Edit Info');
-    await editInfoBtn.click();
+    const switchButton = await $(byText('Switch Projects'));
+    await switchButton.click();
 
     const nameInput = await $(byResourceId('edit-project-name'));
     await nameInput.clearValue();
@@ -33,7 +31,7 @@ describe('Multiple Projects - Edit Project Details', () => {
     await expect($(byTextMatches(UPDATED_PROJECT_NAME))).toBeDisplayed();
     await expect($(byTextMatches(UPDATED_PROJECT_DESCRIPTION))).toBeDisplayed();
     await checkForElementGone(byText(output.names.thirdProject));
-    await $('~Close Menu').click();
+    await $(byResourceId('observationsEmptyView')).click();
     const mapTab = await $('~Go to map.');
     await mapTab.click();
     await expect($(byTextMatches(UPDATED_PROJECT_NAME))).toBeDisplayed();

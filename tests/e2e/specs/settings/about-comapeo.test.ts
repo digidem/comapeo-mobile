@@ -29,7 +29,7 @@ describe('Settings - About CoMapeo Flow', () => {
   it('should navigate back to map screen', async () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await $('~Close Menu').click();
+    await $(byResourceId('MAIN.map-screen')).click();
 
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });

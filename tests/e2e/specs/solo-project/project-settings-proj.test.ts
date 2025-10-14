@@ -74,6 +74,6 @@ describe('Project - Project Settings Named Project', () => {
   it('should navigate back to map', async () => {
     const backButton = $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
-    await $('~Close Menu').click();
+    await $(byResourceId('MAIN.map-screen')).click();
   });
 });

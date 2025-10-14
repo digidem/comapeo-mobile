@@ -70,6 +70,9 @@
   "Navigation.Menu.allProjects": {
     "message": "すべてのプロジェクト"
   },
+  "Navigation.Menu.coordinator": {
+    "message": "Coordinator"
+  },
   "Navigation.Menu.currentProject": {
     "message": "現在のプロジェクト"
   },
@@ -82,8 +85,20 @@
   "Navigation.Menu.invite": {
     "message": "招待"
   },
+  "Navigation.Menu.justYou": {
+    "message": "あなただけ"
+  },
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "あなたは自分でマッピングしています。"
+  },
+  "Navigation.Menu.participant": {
+    "message": "参加者"
+  },
   "Navigation.Menu.privacyPolicy": {
     "message": "データ & プライバシー"
+  },
+  "Navigation.Menu.switchProjects": {
+    "message": "プロジェクトを切り替える"
   },
   "Navigation.Menu.viewProject": {
     "message": "表示"

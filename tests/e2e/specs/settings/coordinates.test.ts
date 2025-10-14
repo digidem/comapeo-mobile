@@ -32,7 +32,7 @@ describe('Settings - Coordinates Settings Flow', () => {
     await expect($(byTextMatches('App Settings'))).toBeDisplayed();
 
     await backBtn.click();
-    await $('~Close Menu').click();
+    await $(byResourceId('MAIN.map-screen')).click();
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

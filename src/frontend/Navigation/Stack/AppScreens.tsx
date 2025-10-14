@@ -85,10 +85,8 @@ import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
-import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 import {StartNewProjectScreen} from '../../screens/Settings/ProjectSettings/StartNewProject.tsx';
-import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
 import {EditProjectDetails} from '../../screens/Settings/ProjectSettings/EditProjectDetails.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
 import {TrackRecordingActive} from '../../screens/TrackRecordingActive.tsx';
@@ -421,15 +419,6 @@ export const createAppScreens = ({
         name="AllProjects"
         component={AllProjects}
         options={{headerTitle: intl(AllProjects.navTitle)}}
-      />
-      <RootStack.Screen
-        name="Menu"
-        component={MenuScreen}
-        options={{
-          headerShown: true,
-          animation: 'slide_from_right',
-          header: () => <MenuHeader />,
-        }}
       />
       <RootStack.Screen
         name="InviteCollaborators"

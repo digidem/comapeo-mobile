@@ -31,14 +31,15 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
   const {data} = useManyProjects();
   const {projectId: currentProjectId} = useActiveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const {popTo, navigate} = useNavigationFromRoot();
+  const {navigate, goBack} = useNavigationFromRoot();
   const {formatMessage} = useIntl();
   const {isTracking} = useTracking();
 
   const handlePressId = React.useCallback(
     (targetProjectId: string) => {
       if (currentProjectId === targetProjectId) {
-        popTo('Menu');
+        //this is temporary until the all project bottom sheet is added
+        goBack();
         return;
       }
       if (isTracking && currentProjectId !== targetProjectId) {
@@ -46,9 +47,9 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
         return;
       }
       setActiveProjectId(targetProjectId);
-      popTo('Menu');
+      goBack();
     },
-    [currentProjectId, isTracking, popTo, navigate, setActiveProjectId],
+    [currentProjectId, isTracking, goBack, navigate, setActiveProjectId],
   );
 
   const renderItem = React.useCallback<ListRenderItem<ProjectListItem>>(

@@ -28,13 +28,13 @@ export const PrimaryButton = ({
       testID={testID}
       style={[
         style,
-        styles.base,
+        buttonStyles.base,
         {backgroundColor: COMAPEO_BLUE},
         fullSize && {width: 280},
       ]}
       onPress={onPress}>
       {renderIcon && iconPosition === 'left' && (
-        <View style={styles.iconSpacingLeft}>
+        <View style={buttonStyles.iconSpacingLeft}>
           {renderIcon({color: WHITE, size: 25})}
         </View>
       )}
@@ -42,7 +42,7 @@ export const PrimaryButton = ({
         {text}
       </HeaderText>
       {renderIcon && iconPosition === 'right' && (
-        <View style={styles.iconSpacingRight}>
+        <View style={buttonStyles.iconSpacingRight}>
           {renderIcon({color: WHITE, size: 25})}
         </View>
       )}
@@ -64,7 +64,7 @@ export const SecondaryButton = ({
       testID={testID}
       style={[
         style,
-        styles.base,
+        buttonStyles.base,
         {
           backgroundColor: WHITE,
           borderWidth: 1.5,
@@ -74,7 +74,7 @@ export const SecondaryButton = ({
       ]}
       onPress={onPress}>
       {renderIcon && iconPosition === 'left' && (
-        <View style={styles.iconSpacingLeft}>
+        <View style={buttonStyles.iconSpacingLeft}>
           {renderIcon({color: COMAPEO_BLUE, size: 25})}
         </View>
       )}
@@ -82,7 +82,7 @@ export const SecondaryButton = ({
         {text}
       </HeaderText>
       {renderIcon && iconPosition === 'right' && (
-        <View style={styles.iconSpacingRight}>
+        <View style={buttonStyles.iconSpacingRight}>
           {renderIcon({color: COMAPEO_BLUE, size: 25})}
         </View>
       )}
@@ -104,13 +104,13 @@ export const DestructiveButton = ({
       testID={testID}
       style={[
         style,
-        styles.base,
+        buttonStyles.base,
         {backgroundColor: WARNING_RED},
         fullSize && {width: 280},
       ]}
       onPress={onPress}>
       {renderIcon && iconPosition === 'left' && (
-        <View style={styles.iconSpacingLeft}>
+        <View style={buttonStyles.iconSpacingLeft}>
           {renderIcon({color: WHITE, size: 25})}
         </View>
       )}
@@ -118,7 +118,7 @@ export const DestructiveButton = ({
         {text}
       </HeaderText>
       {renderIcon && iconPosition === 'right' && (
-        <View style={styles.iconSpacingRight}>
+        <View style={buttonStyles.iconSpacingRight}>
           {renderIcon({color: WHITE, size: 25})}
         </View>
       )}
@@ -126,7 +126,7 @@ export const DestructiveButton = ({
   );
 };
 
-const styles = StyleSheet.create({
+export const buttonStyles = StyleSheet.create({
   base: {
     height: 50,
     display: 'flex',

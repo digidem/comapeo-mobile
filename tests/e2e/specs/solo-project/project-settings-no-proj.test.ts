@@ -7,23 +7,20 @@ describe('Project - Project Settings Solo Project', () => {
   it('should navigate to project settings screen and verify content for solo project', async () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
+    // removing the test of viewing the project until the menu is updated to include ability to view the project
+    // const screenHeader = await $(byText('Project Settings'));
+    // await expect(screenHeader).toBeDisplayed();
 
-    const viewButton = await $(byText('View'));
-    await viewButton.click();
+    // await expect($(byTextMatches(output.names.device))).toBeDisplayed();
+    // await expect($(byTextMatches('mapping on your own'))).toBeDisplayed();
+    // await expect($(byTextMatches('Invite Collaborators'))).toBeDisplayed();
 
-    const screenHeader = await $(byText('Project Settings'));
-    await expect(screenHeader).toBeDisplayed();
+    // await expect($(byTextMatches('Project Categories'))).toBeDisplayed();
+    // await expect($(byTextMatches('@mapeo/default-config'))).toBeDisplayed();
+    // await expect($(byTextMatches('Update Set'))).toBeDisplayed();
 
-    await expect($(byTextMatches(output.names.device))).toBeDisplayed();
-    await expect($(byTextMatches('mapping on your own'))).toBeDisplayed();
-    await expect($(byTextMatches('Invite Collaborators'))).toBeDisplayed();
-
-    await expect($(byTextMatches('Project Categories'))).toBeDisplayed();
-    await expect($(byTextMatches('@mapeo/default-config'))).toBeDisplayed();
-    await expect($(byTextMatches('Update Set'))).toBeDisplayed();
-
-    const backButton = $(byResourceId('MAIN.header-back-btn'));
-    await backButton.click();
+    // const backButton = $(byResourceId('MAIN.header-back-btn'));
+    // await backButton.click();
     await $(byResourceId('MAIN.map-screen')).click();
   });
 });

@@ -62,13 +62,10 @@
     "message": "Stop Tracks"
   },
   "Navigation.Menu.Settings": {
-    "message": "App Settings"
+    "message": "CoMapeo Settings"
   },
-  "Navigation.Menu.aboutCoMapeo": {
-    "message": "About CoMapeo"
-  },
-  "Navigation.Menu.allProjects": {
-    "message": "All Projects"
+  "Navigation.Menu.bgMaps": {
+    "message": "Background Maps"
   },
   "Navigation.Menu.coordinator": {
     "message": "Coordinator"
@@ -82,8 +79,8 @@
   "Navigation.Menu.exchange": {
     "message": "Exchange"
   },
-  "Navigation.Menu.invite": {
-    "message": "Invite"
+  "Navigation.Menu.gatherObservations": {
+    "message": "Gather Observations"
   },
   "Navigation.Menu.justYou": {
     "message": "Just You"
@@ -94,14 +91,8 @@
   "Navigation.Menu.participant": {
     "message": "Participant"
   },
-  "Navigation.Menu.privacyPolicy": {
-    "message": "Data & Privacy"
-  },
   "Navigation.Menu.switchProjects": {
     "message": "Switch Projects"
-  },
-  "Navigation.Menu.viewProject": {
-    "message": "View"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",

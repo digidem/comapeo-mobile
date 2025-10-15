@@ -51,7 +51,7 @@ export const DataPrivacy = ({
               />
             )}
             onPress={() => {
-              navigation.navigate('DeviceNaming');
+              navigation.replace('DeviceNaming');
             }}
           />
         </View>

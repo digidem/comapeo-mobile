@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useFocusEffect} from '@react-navigation/native';
+import {usePreventRemove} from '@react-navigation/native';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -56,28 +56,19 @@ export const MapOnYourOwnIntro = ({
   const {formatMessage: t} = useIntl();
   const {mutate: createProject, status} = useCreateProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
+  const [allowNavigation, setAllowNavigation] = React.useState(false);
 
-  // Prevent Android back button during loading
-  useFocusEffect(
-    React.useCallback(() => {
-      if (status !== 'pending') return;
-
-      const onBackPress = () => true;
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-
-      return () => subscription.remove();
-    }, [status]),
-  );
+  // Prevent navigating away during loading, but allow programmatic navigation
+  usePreventRemove(status === 'pending' && !allowNavigation, () => {});
 
   function handleGoToMap() {
     createProject(undefined, {
       onError: () => {
+        setAllowNavigation(true);
         navigation.navigate('ErrorBottomSheet');
       },
       onSuccess: projectId => {
+        setAllowNavigation(true);
         setActiveProjectId(projectId);
       },
     });

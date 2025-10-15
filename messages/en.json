@@ -67,8 +67,14 @@
   "Navigation.Menu.bgMaps": {
     "message": "Background Maps"
   },
+  "Navigation.Menu.collaborate": {
+    "message": "Collaborate"
+  },
   "Navigation.Menu.coordinator": {
     "message": "Coordinator"
+  },
+  "Navigation.Menu.coordinatorTools": {
+    "message": "Coordinator Tools"
   },
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
@@ -93,6 +99,9 @@
   },
   "Navigation.Menu.switchProjects": {
     "message": "Switch Projects"
+  },
+  "Navigation.Menu.team": {
+    "message": "Team"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",

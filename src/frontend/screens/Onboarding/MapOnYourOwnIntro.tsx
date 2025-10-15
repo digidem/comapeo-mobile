@@ -56,19 +56,16 @@ export const MapOnYourOwnIntro = ({
   const {formatMessage: t} = useIntl();
   const {mutate: createProject, status} = useCreateProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const [allowNavigation, setAllowNavigation] = React.useState(false);
 
   // Prevent navigating away during loading, but allow programmatic navigation
-  usePreventRemove(status === 'pending' && !allowNavigation, () => {});
+  usePreventRemove(status === 'pending', () => {});
 
   function handleGoToMap() {
     createProject(undefined, {
       onError: () => {
-        setAllowNavigation(true);
         navigation.navigate('ErrorBottomSheet');
       },
       onSuccess: projectId => {
-        setAllowNavigation(true);
         setActiveProjectId(projectId);
       },
     });

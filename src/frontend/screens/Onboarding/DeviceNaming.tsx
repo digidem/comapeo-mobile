@@ -12,8 +12,6 @@ import {
 import {defineMessages, useIntl} from 'react-intl';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {deviceType} from 'expo-device';
-import {usePreventRemove} from '@react-navigation/native';
-
 import DeviceIcon from '../../images/Device.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -58,10 +56,6 @@ export const DeviceNaming = ({
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const {formatMessage: t} = useIntl();
   const {mutate, status} = useSetOwnDeviceInfo();
-  const [allowNavigation, setAllowNavigation] = React.useState(false);
-
-  // Prevent navigating away during loading, but allow programmatic navigation
-  usePreventRemove(status === 'pending' && !allowNavigation, () => {});
 
   function setNameWithValidation(nameValue: string) {
     if (nameValue.length > 60) {
@@ -85,7 +79,6 @@ export const DeviceNaming = ({
       },
       {
         onSuccess: () => {
-          setAllowNavigation(true);
           navigation.replace('Success');
         },
       },

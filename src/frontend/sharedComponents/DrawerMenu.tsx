@@ -16,7 +16,7 @@ import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery.ts';
 import {ColorCard} from './ColorCard.tsx';
 import {HeaderText} from './Text/HeaderText.tsx';
 import {useManyProjects} from '@comapeo/core-react';
-import {buttonStyles} from './Buttons.tsx';
+import {buttonStyles, PrimaryButton} from './Buttons.tsx';
 import DownArrow from '../images/DownArrow.svg';
 import {isLowStorage, calcUsedPercentage} from '../lib/storage';
 import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
@@ -65,6 +65,18 @@ const m = defineMessages({
   earlyAccessLabel: {
     id: 'Navigation.Menu.earlyAccessLabel',
     defaultMessage: 'You are in Early Access Mode.',
+  },
+  team: {
+    id: 'Navigation.Menu.team',
+    defaultMessage: 'Team',
+  },
+  coordinatorTools: {
+    id: 'Navigation.Menu.coordinatorTools',
+    defaultMessage: 'Coordinator Tools',
+  },
+  collaborate: {
+    id: 'Navigation.Menu.collaborate',
+    defaultMessage: 'Collaborate',
   },
 });
 
@@ -136,8 +148,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
                 // This button deviates from the standard SecondaryButton (the icon is aligned flex-end) and so instead of changing that component, I just copied the styles here, and created a custom button for this use case.
                 <TouchableOpacity
                   onPress={() => {
-                    // This is temporary until we create the AllProjects bottom sheer. Navigating to this screen so we can update the project description and see that project description shows up on the menu
-                    navigation.navigate('EditProjectDetails');
+                    navigation.navigate('AllProjects');
                   }}
                   style={[
                     buttonStyles.base,
@@ -169,6 +180,44 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
         ) : null}
 
         <View style={styles.bottomItemsContainer}>
+          {role !== 'solo' && (
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => {
+                navigation.navigate('YourTeam');
+              }}>
+              <MaterialIcon color={NEW_DARK_GREY} size={20} name={'people'} />
+              <BodyText variant="medium" style={{paddingLeft: 12}}>
+                {formatMessage(m.team)}
+              </BodyText>
+            </TouchableOpacity>
+          )}
+          {role === 'coordinator' && (
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => {
+                navigation.navigate('ProjectSettings');
+              }}>
+              <MaterialIcon
+                color={NEW_DARK_GREY}
+                size={20}
+                name={'manage-accounts'}
+              />
+              <BodyText variant="medium" style={{paddingLeft: 12}}>
+                {formatMessage(m.coordinatorTools)}
+              </BodyText>
+            </TouchableOpacity>
+          )}
+          {/* TODO: remove when collaborate screens ahve  */}
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => {
+              navigation.navigate('AllProjects');
+            }}>
+            <BodyText variant="medium" style={{paddingLeft: 12}}>
+              All Projects
+            </BodyText>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => {
@@ -199,6 +248,18 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <PrimaryButton
+        style={{alignSelf: 'center', marginBottom: 20}}
+        onPress={() => {
+          if (role === 'solo') {
+            console.log('TODO: go to collaborate page');
+            return;
+          }
+          navigation.navigate('Sync');
+        }}
+        fullSize
+        text={formatMessage(role === 'solo' ? m.collaborate : m.exchange)}
+      />
     </View>
   );
 }

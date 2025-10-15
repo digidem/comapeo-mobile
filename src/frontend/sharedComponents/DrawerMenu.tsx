@@ -4,10 +4,9 @@ import {useIntl, defineMessages} from 'react-intl';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
-import Exchange from '../images/Exchange.svg';
+// import Exchange from '../images/Exchange.svg';
 import {BodyText} from './Text/BodyText.tsx';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
 import {BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY, WHITE} from '../lib/styles.ts';
@@ -23,17 +22,17 @@ import {isLowStorage, calcUsedPercentage} from '../lib/storage';
 import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
 
 const m = defineMessages({
-  aboutCoMapeo: {
-    id: 'Navigation.Menu.aboutCoMapeo',
-    defaultMessage: 'About CoMapeo',
-  },
   appSettings: {
     id: 'Navigation.Menu.Settings',
-    defaultMessage: 'App Settings',
+    defaultMessage: 'CoMapeo Settings',
   },
-  privacyPolicy: {
-    id: 'Navigation.Menu.privacyPolicy',
-    defaultMessage: 'Data & Privacy',
+  bgMap: {
+    id: 'Navigation.Menu.bgMaps',
+    defaultMessage: 'Background Maps',
+  },
+  gatherObservations: {
+    id: 'Navigation.Menu.gatherObservations',
+    defaultMessage: 'Gather Observations',
   },
   currentProject: {
     id: 'Navigation.Menu.currentProject',
@@ -42,18 +41,6 @@ const m = defineMessages({
   exchange: {
     id: 'Navigation.Menu.exchange',
     defaultMessage: 'Exchange',
-  },
-  invite: {
-    id: 'Navigation.Menu.invite',
-    defaultMessage: 'Invite',
-  },
-  viewProject: {
-    id: 'Navigation.Menu.viewProject',
-    defaultMessage: 'View',
-  },
-  allProjects: {
-    id: 'Navigation.Menu.allProjects',
-    defaultMessage: 'All Projects',
   },
   mappingOnOwn: {
     id: 'Navigation.Menu.mappingOnOwn',
@@ -81,7 +68,7 @@ const m = defineMessages({
   },
 });
 
-export function DrawerMenu() {
+export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
   const {data: allProjects} = useManyProjects();
@@ -184,60 +171,31 @@ export function DrawerMenu() {
         <View style={styles.bottomItemsContainer}>
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => navigation.navigate('AllProjects')}
-            accessibilityLabel="Go to All Projects Screen">
-            <MaterialCommunityIcons
-              name="dots-grid"
-              size={20}
-              color={NEW_DARK_GREY}
-            />
-            <View style={{paddingLeft: 12}}>
-              <BodyText variant="medium">
-                {formatMessage(m.allProjects)}
-              </BodyText>
-            </View>
+            onPress={() => {
+              navigation.popTo('Home', {screen: 'Map'});
+              closeMenu();
+            }}>
+            <Octicons name="plus-circle" size={20} color={NEW_DARK_GREY} />
+            <BodyText variant="medium" style={{paddingLeft: 12}}>
+              {formatMessage(m.gatherObservations)}
+            </BodyText>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => navigation.navigate('Sync')}
-            accessibilityLabel="Go to exchange screen.">
-            <Exchange width={20} height={20} color={NEW_DARK_GREY} />
-            <View style={{paddingLeft: 12}}>
-              <BodyText variant="medium">{formatMessage(m.exchange)}</BodyText>
-            </View>
+            onPress={() => navigation.navigate('BackgroundMaps')}>
+            <MaterialIcon name="layers" size={20} color={NEW_DARK_GREY} />
+            <BodyText variant="medium" style={{paddingLeft: 12}}>
+              {formatMessage(m.bgMap)}
+            </BodyText>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => navigation.navigate('AppSettings')}
             accessibilityLabel="Go to app settings screen.">
             <IonIcon name="settings-outline" size={20} color={NEW_DARK_GREY} />
-            <View style={{paddingLeft: 12}}>
-              <BodyText variant="medium">
-                {formatMessage(m.appSettings)}
-              </BodyText>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => navigation.navigate('DataAndPrivacy')}
-            accessibilityLabel="Go to data and privacy screen.">
-            <Octicons name="shield-lock" size={20} color={NEW_DARK_GREY} />
-            <View style={{paddingLeft: 12}}>
-              <BodyText variant="medium">
-                {formatMessage(m.privacyPolicy)}
-              </BodyText>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => navigation.navigate('AboutSettings')}
-            accessibilityLabel="Go to about CoMapeo screen.">
-            <MaterialIcon name="info-outline" size={20} color={NEW_DARK_GREY} />
-            <View style={{paddingLeft: 12}}>
-              <BodyText variant="medium">
-                {formatMessage(m.aboutCoMapeo)}
-              </BodyText>
-            </View>
+            <BodyText variant="medium" style={{paddingLeft: 12}}>
+              {formatMessage(m.appSettings)}
+            </BodyText>
           </TouchableOpacity>
         </View>
       </ScrollView>

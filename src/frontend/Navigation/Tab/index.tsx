@@ -28,7 +28,13 @@ export const HomeTabs = () => {
       }}
       drawerType="slide"
       swipeEnabled={false}
-      renderDrawerContent={() => <DrawerMenu />}>
+      renderDrawerContent={() => (
+        <DrawerMenu
+          closeMenu={() => {
+            setDrawerOpen(false);
+          }}
+        />
+      )}>
       <Tab.Navigator
         tabBar={TabBar}
         screenOptions={{

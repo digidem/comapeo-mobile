@@ -136,6 +136,7 @@ const ProjectListItem = ({
 
   return (
     <ColorCard
+      testID={`project_card_${header}`}
       onPress={onPress}
       borderColor={isSelected ? COMAPEO_BLUE : undefined}
       backgroundColor={projectInfo.projectColor}>

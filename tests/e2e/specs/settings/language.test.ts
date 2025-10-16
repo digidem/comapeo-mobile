@@ -30,7 +30,7 @@ describe('Settings - Language Settings Flow', () => {
   });
 
   it('should switch back to English and confirm language revert', async () => {
-    const drawerIcon = await $(byResourceId('drawer-icon-home'));
+    const drawerIcon = await $(byResourceId('HOME.header-button'));
     if (await drawerIcon.isDisplayed()) {
       await drawerIcon.click();
     }

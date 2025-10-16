@@ -46,8 +46,8 @@ describe('Passcode - Obscure Passcode Mode', () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
 
-    const animalCategory = await $(byTextMatches('Animal'));
-    await animalCategory.click();
+    await $(byTextMatches('Animal')).scrollIntoView();
+    await $(byTextMatches('Animal')).click();
 
     await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));

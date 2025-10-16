@@ -89,5 +89,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingBottom: 20,
+    alignItems: 'center',
   },
 });

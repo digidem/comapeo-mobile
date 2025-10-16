@@ -9,7 +9,7 @@ import {SecondaryButton} from '../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
-import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsPromptContext';
+import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 
 const m = defineMessages({
   success: {
@@ -31,11 +31,12 @@ const m = defineMessages({
   },
 });
 
-export const AppUsageSharingSuccess = () => {
+export const AppUsageSharingSuccess = ({
+  navigation,
+}: NativeRootNavigationProps<'AppUsageSharingSuccess'>) => {
   const {formatMessage} = useIntl();
   const {data} = useOwnDeviceInfo();
   const deviceName = data?.name;
-  const {setOptedIn} = useAppUsageStatsPromptActions();
 
   return (
     <ScreenContentWithDock
@@ -44,7 +45,7 @@ export const AppUsageSharingSuccess = () => {
           fullSize
           text={formatMessage(m.done)}
           onPress={() => {
-            setOptedIn(true);
+            navigation.goBack();
           }}
         />
       }

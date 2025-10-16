@@ -42,6 +42,10 @@ import {
   type LowStorageBannerStore,
 } from './LowStorageBannerContext';
 import {
+  AppUsageStatsProvider,
+  type AppUsageStatsStore,
+} from './AppUsageStatsContext';
+import {
   EarlyAccessStoreProvider,
   type EarlyAccessStore,
 } from './EarlyAccessContext';
@@ -60,6 +64,7 @@ type AppProvidersProps = {
   savedLocationStore: SavedLocationStore;
   queryClient: QueryClient;
   lowStorageBannerStore: LowStorageBannerStore;
+  appUsageStatsStore: AppUsageStatsStore;
   earlyAccessStore: EarlyAccessStore;
 };
 
@@ -78,51 +83,56 @@ export const AppProviders = ({
   queryClient,
   lowStorageBannerStore,
   earlyAccessStore,
+  appUsageStatsStore,
 }: AppProvidersProps) => {
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
-      <SecurityStoreProvider value={securityStore}>
-        <CoordinateFormatStoreProvider value={coordinateFormatStore}>
-          <ManualEntryCoordinateFormatStoreProvider
-            value={manualEntryCoordinateFormatStore}>
-            <TrackStoreProvider value={trackStore}>
-              <QueryClientProvider client={queryClient}>
-                <LowStorageBannerStoreProvider value={lowStorageBannerStore}>
-                  <SafeAreaProvider>
-                    <GestureHandlerRootView style={styles.flex}>
-                      <SavedLocationStoreProvider value={savedLocationStore}>
-                        <LocationProvider>
-                          <LocalDiscoveryProvider
-                            value={localDiscoveryController}>
-                            <ClientApiProvider clientApi={mapeoApi}>
-                              <ActiveProjectIdStoreProvider
-                                store={activeProjectIdStore}>
-                                <BottomSheetModalProvider>
-                                  <PhotoPromiseProvider>
-                                    <DraftObservationProvider
-                                      draftObservationStore={
-                                        persistedDrafObservationStore
-                                      }>
-                                      <EarlyAccessStoreProvider
-                                        value={earlyAccessStore}>
-                                        <AuthProvider>{children}</AuthProvider>
-                                      </EarlyAccessStoreProvider>
-                                    </DraftObservationProvider>
-                                  </PhotoPromiseProvider>
-                                </BottomSheetModalProvider>
-                              </ActiveProjectIdStoreProvider>
-                            </ClientApiProvider>
-                          </LocalDiscoveryProvider>
-                        </LocationProvider>
-                      </SavedLocationStoreProvider>
-                    </GestureHandlerRootView>
-                  </SafeAreaProvider>
-                </LowStorageBannerStoreProvider>
-              </QueryClientProvider>
-            </TrackStoreProvider>
-          </ManualEntryCoordinateFormatStoreProvider>
-        </CoordinateFormatStoreProvider>
-      </SecurityStoreProvider>
+      <AppUsageStatsProvider value={appUsageStatsStore}>
+        <SecurityStoreProvider value={securityStore}>
+          <CoordinateFormatStoreProvider value={coordinateFormatStore}>
+            <ManualEntryCoordinateFormatStoreProvider
+              value={manualEntryCoordinateFormatStore}>
+              <TrackStoreProvider value={trackStore}>
+                <QueryClientProvider client={queryClient}>
+                  <LowStorageBannerStoreProvider value={lowStorageBannerStore}>
+                    <SafeAreaProvider>
+                      <GestureHandlerRootView style={styles.flex}>
+                        <SavedLocationStoreProvider value={savedLocationStore}>
+                          <LocationProvider>
+                            <LocalDiscoveryProvider
+                              value={localDiscoveryController}>
+                              <ClientApiProvider clientApi={mapeoApi}>
+                                <ActiveProjectIdStoreProvider
+                                  store={activeProjectIdStore}>
+                                  <BottomSheetModalProvider>
+                                    <PhotoPromiseProvider>
+                                      <DraftObservationProvider
+                                        draftObservationStore={
+                                          persistedDrafObservationStore
+                                        }>
+                                        <EarlyAccessStoreProvider
+                                          value={earlyAccessStore}>
+                                          <AuthProvider>
+                                            {children}
+                                          </AuthProvider>
+                                        </EarlyAccessStoreProvider>
+                                      </DraftObservationProvider>
+                                    </PhotoPromiseProvider>
+                                  </BottomSheetModalProvider>
+                                </ActiveProjectIdStoreProvider>
+                              </ClientApiProvider>
+                            </LocalDiscoveryProvider>
+                          </LocationProvider>
+                        </SavedLocationStoreProvider>
+                      </GestureHandlerRootView>
+                    </SafeAreaProvider>
+                  </LowStorageBannerStoreProvider>
+                </QueryClientProvider>
+              </TrackStoreProvider>
+            </ManualEntryCoordinateFormatStoreProvider>
+          </CoordinateFormatStoreProvider>
+        </SecurityStoreProvider>
+      </AppUsageStatsProvider>
     </MetricsDiagnosticsStoreProvider>
   );
 };

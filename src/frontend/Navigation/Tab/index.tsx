@@ -38,7 +38,7 @@ export const HomeTabs = () => {
             <React.Suspense fallback={null}>
               <HomeHeader
                 {...props}
-                toggleDrawer={() => setDrawerOpen(val => !val)}
+                onPress={() => setDrawerOpen(val => !val)}
                 backgroundColor="transparent"
                 showBottomBorder={false}
               />
@@ -61,7 +61,7 @@ export const HomeTabs = () => {
                   {...props}
                   backgroundColor={WHITE}
                   showBottomBorder
-                  toggleDrawer={() => setDrawerOpen(val => !val)}
+                  onPress={() => setDrawerOpen(val => !val)}
                 />
               </React.Suspense>
             ),

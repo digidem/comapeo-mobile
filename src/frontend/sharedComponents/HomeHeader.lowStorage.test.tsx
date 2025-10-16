@@ -55,7 +55,7 @@ function HomeHeaderScreen() {
       {...baseHeader}
       backgroundColor="#fff"
       showBottomBorder
-      toggleDrawer={() => {}}
+      onPress={() => {}}
       navigation={{} as BottomTabHeaderProps['navigation']}
     />
   );

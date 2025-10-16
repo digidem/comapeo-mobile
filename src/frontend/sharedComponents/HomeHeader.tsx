@@ -14,13 +14,13 @@ import {ExclamationBadge} from './Storage/ExclamationBadge';
 type HomeHeaderProps = BottomTabHeaderProps & {
   backgroundColor: string;
   showBottomBorder: boolean;
-  toggleDrawer: () => void;
+  onPress: () => void;
 };
 
 export function HomeHeader({
   backgroundColor,
   showBottomBorder,
-  toggleDrawer,
+  onPress,
 }: HomeHeaderProps) {
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
@@ -48,7 +48,7 @@ export function HomeHeader({
             styles.titleBox,
             {backgroundColor: projectDetails.projectColor},
           ]}
-          onPress={toggleDrawer}
+          onPress={onPress}
           accessibilityLabel="Open Menu"
           testID="HOME.header-button">
           <View style={styles.menuIconContainer}>

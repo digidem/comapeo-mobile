@@ -4,6 +4,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {usePreventRemove} from '@react-navigation/native';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -56,6 +57,9 @@ export const MapOnYourOwnIntro = ({
   const {mutate: createProject, status} = useCreateProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
 
+  // Prevent navigating away during loading, but allow programmatic navigation
+  usePreventRemove(status === 'pending', () => {});
+
   function handleGoToMap() {
     createProject(undefined, {
       onError: () => {
@@ -72,35 +76,39 @@ export const MapOnYourOwnIntro = ({
       dockContent={
         <View style={{gap: 12, paddingBottom: 20}}>
           {status === 'pending' ? (
-            <UIActivityIndicator />
+            <View style={{alignItems: 'center', paddingVertical: 12}}>
+              <UIActivityIndicator size={30} style={{flex: 0}} />
+            </View>
           ) : (
-            <PrimaryButton
-              testID="ONBOARDING.go-to-map-btn"
-              fullSize
-              text={t(m.goToMap)}
-              iconPosition="left"
-              renderIcon={({size}) => (
-                <MapIcon width={size} height={size} color={WHITE} />
-              )}
-              onPress={handleGoToMap}
-            />
-          )}
-          <SecondaryButton
-            testID="ONBOARDING.map-on-your-own-close-btn"
-            fullSize
-            text={t(m.close)}
-            iconPosition="left"
-            renderIcon={({size}) => (
-              <Ionicons
-                name="close-circle-outline"
-                color={COMAPEO_BLUE}
-                size={size}
+            <>
+              <PrimaryButton
+                testID="ONBOARDING.go-to-map-btn"
+                fullSize
+                text={t(m.goToMap)}
+                iconPosition="left"
+                renderIcon={({size}) => (
+                  <MapIcon width={size} height={size} color={WHITE} />
+                )}
+                onPress={handleGoToMap}
               />
-            )}
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
+              <SecondaryButton
+                testID="ONBOARDING.map-on-your-own-close-btn"
+                fullSize
+                text={t(m.close)}
+                iconPosition="left"
+                renderIcon={({size}) => (
+                  <Ionicons
+                    name="close-circle-outline"
+                    color={COMAPEO_BLUE}
+                    size={size}
+                  />
+                )}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              />
+            </>
+          )}
         </View>
       }>
       <View style={styles.contentContainer}>

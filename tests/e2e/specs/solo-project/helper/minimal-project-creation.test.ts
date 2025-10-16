@@ -8,8 +8,7 @@ describe('Create Project and land on map screen', () => {
     await $('~Open Menu').click();
     await $(byText('All Projects')).click();
 
-    await $(byText('Start new project')).click();
-    await $(byText('Start')).click();
+    await $(byText('New Collaboration')).click();
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.secondProject);
     await $(byResourceId('PROJECT.create-btn')).click();

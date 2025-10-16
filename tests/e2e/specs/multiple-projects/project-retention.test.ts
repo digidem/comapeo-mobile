@@ -11,7 +11,8 @@ describe('Multiple Projects - Project Data Retention', () => {
   it('should create an observation in the second project', async () => {
     await $('~Open Menu').click();
     await $(byText('All Projects')).click();
-    await $(byText(output.names.secondProject)).click();
+    await driver.pause(1000);
+    await $(byResourceId('project_card_second_project')).click();
     await $(byResourceId('MAIN.map-screen')).click();
 
     await $('~Go to map.').click();
@@ -70,7 +71,7 @@ describe('Multiple Projects - Project Data Retention', () => {
   it('should confirm the observation still exists in the second project', async () => {
     await $('~Open Menu').click();
     await $(byText('All Projects')).click();
-    await $(byTextMatches(output.names.secondProject)).click();
+    await $(byResourceId('project_card_second_project')).click();
     await driver.back();
     await $('~Go to observations list.').click();
     await $(byResourceId('OBS.list-scrn')).click();

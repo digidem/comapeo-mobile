@@ -136,7 +136,7 @@ const ProjectListItem = ({
 
   return (
     <ColorCard
-      testID={`project_card_${header}`}
+      testID={`project_card_${header?.toLowerCase().replace(/\s+/g, '_')}`}
       onPress={onPress}
       borderColor={isSelected ? COMAPEO_BLUE : undefined}
       backgroundColor={projectInfo.projectColor}>

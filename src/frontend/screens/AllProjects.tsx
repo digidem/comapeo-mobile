@@ -36,11 +36,16 @@ export const AllProjects = () => {
   const {formatMessage} = useIntl();
   const {isTracking} = useTracking();
 
-  const dataWithCurrentProjOnTop = data.sort((a, b) => {
-    if (a.projectId === currentProjectId) return -1;
-    if (b.projectId === currentProjectId) return 1;
-    return 0; // Keep original order for other elements
-  });
+  const dataWithCurrentProjOnTop = React.useMemo(
+    () =>
+      [...data].sort((a, b) => {
+        if (a.projectId === currentProjectId) return -1;
+        if (b.projectId === currentProjectId) return 1;
+        return 0; // Keep original order for other elements
+      }),
+    [currentProjectId, data],
+  );
+
   const handlePressId = React.useCallback(
     (targetProjectId: string) => {
       if (currentProjectId === targetProjectId) {

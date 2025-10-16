@@ -57,12 +57,32 @@ describe('Menu - basic functionality of the menu', () => {
       byResourceId('MAIN.add-observation-btn'),
     );
     //should not be visible as the menu pushes it off screen
-    expect(addObservationButton).not.toBeDisplayed();
+    await expect(addObservationButton).not.toBeDisplayed();
 
     const gatherObservations = await $(byText('Gather Observations'));
     await gatherObservations.click();
 
-    expect(await $(byResourceId('MAIN.map-screen'))).toBeDisplayed();
-    expect(addObservationButton).toBeDisplayed();
+    const mapScreen = await $(byResourceId('MAIN.map-screen'));
+
+    await expect(mapScreen).toBeDisplayed();
+    await expect(addObservationButton).toBeDisplayed();
+
+    const obsListTab = await $('~Go to observations list.');
+
+    await obsListTab.click();
+    const observationView = await $(byResourceId('observationsEmptyView'));
+
+    await expect(observationView).toBeDisplayed();
+
+    const header = await $('~Open Menu');
+
+    await header.click();
+
+    await gatherObservations.click();
+
+    await expect(observationView).not.toBeDisplayed();
+
+    await expect(mapScreen).toBeDisplayed();
+    await expect(addObservationButton).toBeDisplayed();
   });
 });

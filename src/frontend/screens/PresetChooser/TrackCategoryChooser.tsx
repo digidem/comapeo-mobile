@@ -10,6 +10,7 @@ import {Preset} from '@comapeo/schema';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {usePresetsSelection} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
 
 const m = defineMessages({
   title: {
@@ -22,9 +23,11 @@ export const TrackCategoryChooser: NativeNavigationComponent<
   'TrackCategoryChooser'
 > = ({navigation}) => {
   const {projectId} = useActiveProject();
+  const languageTag = useAppLanguageTag();
   const presets = usePresetsSelection({
     projectId: projectId,
     dataType: 'observation',
+    lang: languageTag,
   });
   const {setTrackPreset} = useTrackActions();
   const trackPresets = Array.from(presets).filter(p =>

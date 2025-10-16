@@ -1,7 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText} from '../../utils/selectors';
-import {output} from '../../utils/naming';
 
 describe('Menu - basic functionality of the menu', () => {
   it('should open on press of header', async () => {
@@ -36,8 +35,8 @@ describe('Menu - basic functionality of the menu', () => {
     const backgroundMaps = await $(byText('Background Maps'));
     await backgroundMaps.click();
 
-    expect(await $(byText('Background Map'))).toBeDisplayed();
-    expect(await $(byText('Choose File'))).toBeDisplayed();
+    await expect(await $(byText('Background Map'))).toBeDisplayed();
+    await expect(await $(byText('Choose File'))).toBeDisplayed();
     await driver.back();
   });
 
@@ -45,9 +44,9 @@ describe('Menu - basic functionality of the menu', () => {
     const coMapeoSettings = await $(byText('CoMapeo Settings'));
     await coMapeoSettings.click();
 
-    expect(await $(byText('App Settings'))).toBeDisplayed();
-    expect(await $(byText('Device Name'))).toBeDisplayed();
-    expect(await $(byText('Language'))).toBeDisplayed();
+    await expect(await $(byText('App Settings'))).toBeDisplayed();
+    await expect(await $(byText('Device Name'))).toBeDisplayed();
+    await expect(await $(byText('Language'))).toBeDisplayed();
 
     await driver.back();
   });

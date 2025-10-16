@@ -6,7 +6,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
-import AddProjectIcon from '../images/AddProject.svg';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {FlatList} from 'react-native';
 import {useTracking} from '../hooks/useTracking';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
@@ -106,7 +106,9 @@ export const AllProjects = () => {
         onPress={() => {
           goBack();
         }}
-        renderIcon={() => <AddProjectIcon />}
+        renderIcon={({color, size}) => (
+          <Ionicons color={color} size={size} name="close-circle-outline" />
+        )}
       />
     </BottomSheetWrapper>
   );

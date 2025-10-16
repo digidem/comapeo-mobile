@@ -20,14 +20,14 @@ export const BottomSheetWrapper = ({
 }) => {
   if (!closeOnBackButtonPress) {
     return (
-      <BottomSheetWrappePreventBack>{children}</BottomSheetWrappePreventBack>
+      <BottomSheetWrapperPreventBack>{children}</BottomSheetWrapperPreventBack>
     );
   }
 
   return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
 };
 
-const BottomSheetWrappePreventBack = ({
+const BottomSheetWrapperPreventBack = ({
   children,
 }: {
   children: React.ReactNode;

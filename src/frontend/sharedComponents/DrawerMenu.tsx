@@ -249,6 +249,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
         </View>
       </ScrollView>
       <PrimaryButton
+        testID="MENU.main-action-button"
         style={{alignSelf: 'center', marginBottom: 20}}
         onPress={() => {
           if (role === 'solo') {

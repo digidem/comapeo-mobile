@@ -26,7 +26,9 @@ describe('Project - Project Settings Named Project', () => {
     ).toBeDisplayed();
     await expect($(byText('View Team'))).toBeDisplayed();
 
-    await expect($(byText('Project Categories'))).toBeDisplayed();
+    const projectCategories = await $(byText('Project Categories'));
+    await projectCategories.scrollIntoView();
+    await expect(projectCategories).toBeDisplayed();
     await expect($(byTextMatches('@mapeo/'))).toBeDisplayed();
     await expect($(byText('Update Set'))).toBeDisplayed();
 

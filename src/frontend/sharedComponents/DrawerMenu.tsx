@@ -79,6 +79,10 @@ const m = defineMessages({
     id: 'Navigation.Menu.earlyAccessLabel',
     defaultMessage: 'You are in Early Access Mode.',
   },
+  collaborate: {
+    id: 'Navigation.Menu.collaborate',
+    defaultMessage: 'Collaborate',
+  },
 });
 
 export function DrawerMenu() {
@@ -182,6 +186,17 @@ export function DrawerMenu() {
         ) : null}
 
         <View style={styles.bottomItemsContainer}>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => navigation.navigate('Collaborate')}
+            accessibilityLabel="Go to Collaborate Screen">
+            <MaterialIcon name="group-add" size={20} color={NEW_DARK_GREY} />
+            <View style={{paddingLeft: 12}}>
+              <BodyText variant="medium">
+                {formatMessage(m.collaborate)}
+              </BodyText>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => navigation.navigate('AllProjects')}

@@ -753,11 +753,23 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Universal Transverse Mercator (UTM)"
   },
+  "screens.DataAndPrivacy.appUsageId": {
+    "message": "ID-nummers worden willekeurig gecodeerd en elke maand veranderd."
+  },
+  "screens.DataAndPrivacy.appUsageText": {
+    "message": "Deel hoe u CoMapeo gebruikt met Awana Digital—er kan geen informatie gebruikt worden om u te volgen."
+  },
+  "screens.DataAndPrivacy.appUsageTitle": {
+    "message": "App gebruik"
+  },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Geanonimiseerde informatie over uw apparaat, app crasht, fouten en prestaties helpt Awana Digital om de app te verbeteren en fouten op te lossen."
   },
   "screens.DataAndPrivacy.diagnosticInfoTitle": {
     "message": "Diagnostische informatie"
+  },
+  "screens.DataAndPrivacy.ipAddress": {
+    "message": "CoMapeo slaat nooit IP-adressen op."
   },
   "screens.DataAndPrivacy.learnMore": {
     "message": "Meer informatie"
@@ -773,6 +785,9 @@
   },
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respecteert uw Privacy & Autonomie"
+  },
+  "screens.DataAndPrivacy.shareAppUsage": {
+    "message": "Deel App Gebruik"
   },
   "screens.DataPrivacy.diagnostic": {
     "message": "Diagnostische informatie is volledig geanonimiseerd—opt-out op elk moment."

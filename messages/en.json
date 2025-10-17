@@ -97,8 +97,8 @@
   "Navigation.Menu.participant": {
     "message": "Participant"
   },
-  "Navigation.Menu.switchProjects": {
-    "message": "Switch Projects"
+  "Navigation.Menu.switchProject": {
+    "message": "Switch Project"
   },
   "Navigation.Menu.team": {
     "message": "Team"
@@ -304,6 +304,9 @@
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Security"
   },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "About CoMapeo"
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
   },
@@ -330,6 +333,9 @@
   },
   "Screens.Settings.AppSettings.mapManagement": {
     "message": "Background Map"
+  },
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Data & Privacy"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App Settings"

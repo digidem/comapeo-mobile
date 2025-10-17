@@ -102,6 +102,10 @@ export type RootStackParamsList = {
   AppSettings: undefined;
   ProjectSettings: undefined;
   CreateOrJoinProject: undefined;
+  Collaborate: undefined;
+  JoinAProject: undefined;
+  StartNewProjectIntro: undefined;
+  NameDefaultProjectIntro: undefined;
   ProjectCreated: {
     name: string;
     statsShared: boolean;

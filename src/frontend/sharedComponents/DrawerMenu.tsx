@@ -208,7 +208,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
               </BodyText>
             </TouchableOpacity>
           )}
-          {/* TODO: remove when collaborate screens ahve  */}
+          {/* TODO: remove when all projects has been implemented */}
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => {
@@ -253,7 +253,8 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
         style={{alignSelf: 'center', marginBottom: 20}}
         onPress={() => {
           if (role === 'solo') {
-            console.log('TODO: go to collaborate page');
+            console.log('Navigating to Collaborate screen from DrawerMenu');
+            navigation.navigate('Collaborate');
             return;
           }
           navigation.navigate('Sync');

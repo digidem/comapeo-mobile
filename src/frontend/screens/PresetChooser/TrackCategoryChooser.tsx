@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {usePresetsQuery} from '../../hooks/server/presets';
 import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {CategoryGrid} from './CategoryGrid';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -9,6 +8,9 @@ import {WHITE} from '../../lib/styles';
 import {HeaderLeft} from '../SaveTrack/HeaderLeft';
 import {Preset} from '@comapeo/schema';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {usePresetsSelection} from '@comapeo/core-react';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
 
 const m = defineMessages({
   title: {
@@ -20,11 +22,17 @@ const m = defineMessages({
 export const TrackCategoryChooser: NativeNavigationComponent<
   'TrackCategoryChooser'
 > = ({navigation}) => {
-  const {data: presets} = usePresetsQuery();
+  const {projectId} = useActiveProject();
+  const languageTag = useAppLanguageTag();
+  const presets = usePresetsSelection({
+    projectId: projectId,
+    dataType: 'observation',
+    lang: languageTag,
+  });
   const {setTrackPreset} = useTrackActions();
-  const trackPresets = Array.from(presets)
-    .filter(p => p.geometry.includes('line'))
-    .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+  const trackPresets = Array.from(presets).filter(p =>
+    p.geometry.includes('line'),
+  );
   const existingPreset = useTrackState(state => state.preset);
   const trackId = useTrackState(state => state.docId);
 

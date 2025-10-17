@@ -89,7 +89,7 @@ export const IntroToCoMapeo = ({
           fullSize
           text={formatMessage(m.getStarted)}
           onPress={() => {
-            navigation.navigate('DataPrivacy');
+            navigation.replace('DataPrivacy');
           }}
           iconPosition="right"
           renderIcon={({color, size}) => (

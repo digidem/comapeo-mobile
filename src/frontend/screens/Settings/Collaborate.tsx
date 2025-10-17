@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScrollView} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
@@ -40,9 +39,7 @@ export const Collaborate: NativeNavigationComponent<'Collaborate'> = ({
   const {role} = projectDetails;
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}>
+    <View style={styles.content}>
       <OptionCard
         icon={
           <JoinProjectIcon
@@ -74,7 +71,7 @@ export const Collaborate: NativeNavigationComponent<'Collaborate'> = ({
           onPress={() => navigation.navigate('NameDefaultProjectIntro')}
         />
       )}
-    </ScrollView>
+    </View>
   );
 };
 

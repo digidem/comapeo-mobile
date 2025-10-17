@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   buttonContainer: {
-    paddingBottom: 20,
     alignItems: 'center',
   },
 });

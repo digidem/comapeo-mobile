@@ -753,11 +753,23 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Transverse Universelle de Mercator (UTM)"
   },
+  "screens.DataAndPrivacy.appUsageId": {
+    "message": "Les numéros d’identification sont mélangés aléatoirement et changés chaque mois."
+  },
+  "screens.DataAndPrivacy.appUsageText": {
+    "message": "Partagez la façon dont vous utilisez CoMapeo avec Awana Digital. Aucune information que vous partagez ne peut être utilisée pour vous suivre."
+  },
+  "screens.DataAndPrivacy.appUsageTitle": {
+    "message": "Utilisation de l'application"
+  },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Des informations anonymes sur votre appareil, des plantages d'applications, des erreurs et des performances aident Awana Digital à améliorer l'application et à corriger les erreurs."
   },
   "screens.DataAndPrivacy.diagnosticInfoTitle": {
     "message": "Informations sur le diagnostic"
+  },
+  "screens.DataAndPrivacy.ipAddress": {
+    "message": "CoMapeo ne stocke jamais les adresses IP."
   },
   "screens.DataAndPrivacy.learnMore": {
     "message": "En savoir plus"
@@ -773,6 +785,9 @@
   },
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo respecte votre vie privée et votre autonomie"
+  },
+  "screens.DataAndPrivacy.shareAppUsage": {
+    "message": "Partager l'utilisation de l'application"
   },
   "screens.DataPrivacy.diagnostic": {
     "message": "Les informations diagnostiques sont entièrement anonymisées — opt-out à tout moment."

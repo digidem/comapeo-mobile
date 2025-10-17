@@ -8,8 +8,8 @@ describe('Project - Project Settings Named Project', () => {
   it('should navigate to project settings screen and verify content for named project', async () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
-    const viewButton = await $(byText('View'));
-    await viewButton.click();
+    const viewSettings = await $('~Go to project settings screen.');
+    await viewSettings.click();
 
     const screenHeader = await $(byText('Project Settings'));
     await expect(screenHeader).toBeDisplayed();

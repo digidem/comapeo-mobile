@@ -21,7 +21,7 @@ describe('Menu - should show different UI when on default (solo) project', () =>
 
     await expect(await $(byText('Collaborate'))).toBeDisplayed();
 
-    await expect(await $(byText('Exchane'))).not.toBeDisplayed();
+    await expect(await $(byText('Exchange'))).not.toBeDisplayed();
   });
 
   it('should not show "team" button nor "coordinator tools" button ', async () => {

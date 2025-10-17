@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byText} from '../../utils/selectors';
+import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 
 describe('Menu - basic functionality of the menu', () => {
   it('should open on press of header', async () => {
@@ -26,6 +26,7 @@ describe('Menu - basic functionality of the menu', () => {
     await expect(gatherObservations).not.toBeDisplayed();
     await expect(backgroundMaps).not.toBeDisplayed();
     await expect(coMapeoSettings).not.toBeDisplayed();
+    await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
   });
 
   it('should navigate to background map screen on background map press', async () => {
@@ -36,12 +37,13 @@ describe('Menu - basic functionality of the menu', () => {
     await backgroundMaps.click();
 
     await expect(await $(byText('Background Map'))).toBeDisplayed();
-    await expect(await $(byText('Choose File'))).toBeDisplayed();
+    await driver.pause(2000);
+    await expect(await $(byTextMatches('Choose File'))).toBeDisplayed();
     await driver.back();
   });
 
   it('should navigate to app settings', async () => {
-    const coMapeoSettings = await $(byText('CoMapeo Settings'));
+    const coMapeoSettings = await $(byTextMatches('CoMapeo Settings'));
     await coMapeoSettings.click();
 
     await expect(await $(byText('App Settings'))).toBeDisplayed();

@@ -59,9 +59,9 @@ const m = defineMessages({
     id: 'Navigation.Menu.justYou',
     defaultMessage: 'Just You',
   },
-  switchProjects: {
-    id: 'Navigation.Menu.switchProjects',
-    defaultMessage: 'Switch Projects',
+  switchProject: {
+    id: 'Navigation.Menu.switchProject',
+    defaultMessage: 'Switch Project',
   },
   earlyAccessLabel: {
     id: 'Navigation.Menu.earlyAccessLabel',
@@ -164,7 +164,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
                   <HeaderText
                     variant="header5"
                     style={{color: COMAPEO_BLUE, flex: 1, textAlign: 'center'}}>
-                    {formatMessage(m.switchProjects)}
+                    {formatMessage(m.switchProject)}
                   </HeaderText>
                   <DownArrow />
                 </TouchableOpacity>
@@ -186,7 +186,8 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
               style={styles.menuItem}
               onPress={() => {
                 navigation.navigate('YourTeam');
-              }}>
+              }}
+              accessibilityLabel="Go to your team screen.">
               <MaterialIcon color={NEW_DARK_GREY} size={20} name={'people'} />
               <BodyText variant="medium" style={{paddingLeft: 12}}>
                 {formatMessage(m.team)}
@@ -198,7 +199,8 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
               style={styles.menuItem}
               onPress={() => {
                 navigation.navigate('ProjectSettings');
-              }}>
+              }}
+              accessibilityLabel="Go to project settings screen.">
               <MaterialIcon
                 color={NEW_DARK_GREY}
                 size={20}
@@ -214,7 +216,8 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
             onPress={() => {
               navigation.popTo('Home', {screen: 'Map'});
               closeMenu();
-            }}>
+            }}
+            accessibilityLabel="Go to map screen.">
             <Octicons name="plus-circle" size={20} color={NEW_DARK_GREY} />
             <BodyText variant="medium" style={{paddingLeft: 12}}>
               {formatMessage(m.gatherObservations)}
@@ -222,7 +225,8 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => navigation.navigate('BackgroundMaps')}>
+            onPress={() => navigation.navigate('BackgroundMaps')}
+            accessibilityLabel="Go to background maps screen.">
             <MaterialIcon name="layers" size={20} color={NEW_DARK_GREY} />
             <BodyText variant="medium" style={{paddingLeft: 12}}>
               {formatMessage(m.bgMap)}

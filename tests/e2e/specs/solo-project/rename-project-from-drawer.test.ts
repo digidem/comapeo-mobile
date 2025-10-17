@@ -27,30 +27,29 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await $('~Open Menu').click();
     await expect($(byTextMatches(output.names.device))).toBeDisplayed();
 
-    const inviteButton = await $(byText('Invite'));
+    const collaborateButton = await $(byText('Collaborate'));
+    await expect(collaborateButton).toBeDisplayed();
+    await collaborateButton.click();
+
+    const screenHeader = await $(byText('Collaborate'));
+    await expect(screenHeader).toBeDisplayed();
+
+    await expect($(byTextMatches('Join a Project'))).toBeDisplayed();
+    await expect($(byTextMatches('Start New Project'))).toBeDisplayed();
+    const inviteButton = await $(byTextMatches('Invite Devices'));
     await expect(inviteButton).toBeDisplayed();
     await inviteButton.click();
 
-    const screenHeader = await $(byText('Invite Collaborators'));
-    await expect(screenHeader).toBeDisplayed();
-
     await expect(
-      $(byTextMatches('Share observations with others')),
+      $(byTextMatches('Start a new project using my observations')),
+    ).toBeDisplayed();
+    await expect(
+      $(byTextMatches('Invite devices to a new project')),
     ).toBeDisplayed();
 
-    await expect(
-      $(byTextMatches('Name your project to start collaborating')),
-    ).toBeDisplayed();
-    await expect(
-      $(byTextMatches('Only devices invited to this project')),
-    ).toBeDisplayed();
-    await expect(
-      $(byTextMatches('Easily manage project contributors')),
-    ).toBeDisplayed();
-
-    const nameProjectBtn = await $(byText('Name My Project'));
-    await expect(nameProjectBtn).toBeDisplayed();
-    await nameProjectBtn.click();
+    const nextBtn = await $(byText('Next'));
+    await expect(nextBtn).toBeDisplayed();
+    await nextBtn.click();
 
     const projectTitle = await $(byTextMatches('Project Name'));
     await expect(projectTitle).toBeDisplayed();

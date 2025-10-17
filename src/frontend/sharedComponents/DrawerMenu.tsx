@@ -6,7 +6,8 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
-// import Exchange from '../images/Exchange.svg';
+import Exchange from '../images/Exchange.svg';
+import CollaborateIcon from '../images/ProjectParticipant.svg';
 import {BodyText} from './Text/BodyText.tsx';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
 import {BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY, WHITE} from '../lib/styles.ts';
@@ -208,16 +209,6 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
               </BodyText>
             </TouchableOpacity>
           )}
-          {/* TODO: remove when all projects has been implemented */}
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => {
-              navigation.navigate('AllProjects');
-            }}>
-            <BodyText variant="medium" style={{paddingLeft: 12}}>
-              All Projects
-            </BodyText>
-          </TouchableOpacity>
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => {
@@ -253,7 +244,6 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
         style={{alignSelf: 'center', marginBottom: 20}}
         onPress={() => {
           if (role === 'solo') {
-            console.log('Navigating to Collaborate screen from DrawerMenu');
             navigation.navigate('Collaborate');
             return;
           }
@@ -261,6 +251,11 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
         }}
         fullSize
         text={formatMessage(role === 'solo' ? m.collaborate : m.exchange)}
+        renderIcon={
+          role === 'solo'
+            ? () => <CollaborateIcon color={WHITE} />
+            : () => <Exchange color={WHITE} />
+        }
       />
     </View>
   );

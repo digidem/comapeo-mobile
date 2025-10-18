@@ -70,6 +70,9 @@
   "Navigation.Menu.allProjects": {
     "message": "すべてのプロジェクト"
   },
+  "Navigation.Menu.collaborate": {
+    "message": "共同作業"
+  },
   "Navigation.Menu.coordinator": {
     "message": "Coordinator"
   },
@@ -1761,6 +1764,18 @@
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "あなたのチーム"
   },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "デバイスを招待する"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "プロジェクトに参加"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "共同作業"
+  },
   "screens.Settings.Config.created": {
     "message": "{date} を {time} で作成しました"
   },
@@ -1857,6 +1872,15 @@
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "プロジェクトとは"
   },
+  "screens.Settings.JoinAProject.description": {
+    "message": "プロジェクトコーディネーターにプロジェクトの招待を受け取るよう依頼します。"
+  },
+  "screens.Settings.JoinAProject.heading": {
+    "message": "あなたのチームとコーディネートします。"
+  },
+  "screens.Settings.JoinAProject.title": {
+    "message": "プロジェクトに参加"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "受け入れられるファイルの種類は .smp です"
   },
@@ -1916,6 +1940,30 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "すべての観察記録を持つ新しいプロジェクトにデバイスを招待します。"
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "私の観察記録を使用して新しいプロジェクトを開始します。"
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "次へ"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "デバイスを招待する"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "デバイスを別の空のプロジェクトに招待します。"
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "観察記録のない新しいプロジェクトを開始します。"
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "次へ"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "招待が拒否されました"

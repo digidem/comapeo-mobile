@@ -70,6 +70,9 @@
   "Navigation.Menu.allProjects": {
     "message": "Alle projecten"
   },
+  "Navigation.Menu.collaborate": {
+    "message": "Samenwerken"
+  },
   "Navigation.Menu.coordinator": {
     "message": "Coördinator"
   },
@@ -1761,6 +1764,18 @@
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Jouw team"
   },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "Apparaten uitnodigen"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "Deelnemen aan een project"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "Samenwerken"
+  },
   "screens.Settings.Config.created": {
     "message": "{date} aangemaakt op {time}"
   },
@@ -1857,6 +1872,15 @@
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "Wat is een project"
   },
+  "screens.Settings.JoinAProject.description": {
+    "message": "Vraag een projectcoördinator om een projectuitnodiging te ontvangen."
+  },
+  "screens.Settings.JoinAProject.heading": {
+    "message": "Coördineren met uw team."
+  },
+  "screens.Settings.JoinAProject.title": {
+    "message": "Deelnemen aan een project"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "Geaccepteerde bestandstypen zijn .smp"
   },
@@ -1916,6 +1940,30 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "Nodig apparaten uit voor een nieuw project met al je waarnemingen."
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "Start een nieuw project met mijn waarnemingen."
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "Volgende"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "Apparaten uitnodigen"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "Nodig apparaten uit voor een apart en leeg project."
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "Start een nieuw project zonder waarnemingen."
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Volgende"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Uitnodiging geweigerd"

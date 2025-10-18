@@ -70,6 +70,9 @@
   "Navigation.Menu.allProjects": {
     "message": "All Projects"
   },
+  "Navigation.Menu.collaborate": {
+    "message": "Collaborate"
+  },
   "Navigation.Menu.coordinator": {
     "message": "Coordinator"
   },
@@ -1761,6 +1764,18 @@
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Your Team"
   },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "Invite Devices"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "เข้าร่วมโครงการ"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "Collaborate"
+  },
   "screens.Settings.Config.created": {
     "message": "Created {date} at {time}"
   },
@@ -1857,6 +1872,15 @@
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "What is a Project"
   },
+  "screens.Settings.JoinAProject.description": {
+    "message": "Ask a project coordinator to receive a project invitation."
+  },
+  "screens.Settings.JoinAProject.heading": {
+    "message": "Coordinate with your team."
+  },
+  "screens.Settings.JoinAProject.title": {
+    "message": "เข้าร่วมโครงการ"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "Accepted file types are .smp"
   },
@@ -1916,6 +1940,30 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "Invite devices to a new project with all your observations."
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "Start a new project using my observations."
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "ถัดไป"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "Invite Devices"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "Invite devices to a separate and empty project."
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "Start a new project with no observations."
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "ถัดไป"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitation Declined"

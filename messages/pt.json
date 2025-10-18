@@ -70,6 +70,9 @@
   "Navigation.Menu.allProjects": {
     "message": "Todos Os Projetos"
   },
+  "Navigation.Menu.collaborate": {
+    "message": "Colaborar"
+  },
   "Navigation.Menu.coordinator": {
     "message": "Coordenador"
   },
@@ -1761,6 +1764,18 @@
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Sua equipe"
   },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "Convidar dispositivos"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "Participe de um projeto"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Criar um Projeto"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "Colaborar"
+  },
   "screens.Settings.Config.created": {
     "message": "Criado em {date} {time}"
   },
@@ -1857,6 +1872,15 @@
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "O que é um Projeto"
   },
+  "screens.Settings.JoinAProject.description": {
+    "message": "Peça a um coordenador do projeto para receber um convite de projeto."
+  },
+  "screens.Settings.JoinAProject.heading": {
+    "message": "Coordene com sua equipe."
+  },
+  "screens.Settings.JoinAProject.title": {
+    "message": "Participe de um projeto"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "Tipos de arquivos aceitos são .smp"
   },
@@ -1916,6 +1940,30 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "Convide dispositivos para um novo projeto com todas as suas observações."
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "Começar um novo projeto usando minhas observações."
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "Próximo"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "Convidar dispositivos"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "Convide dispositivos para um projeto separado e vazio."
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "Inicie um novo projeto sem observações."
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Próximo"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Criar um Projeto"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Convite recusado"

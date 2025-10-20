@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 
 import {useActiveProject} from '../../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../../hooks/useProjectRoleAndDetails';
@@ -8,7 +9,6 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import NoProjectIcon from '../../../images/NoProjectIcon.svg';
 import ProjectParticipantIcon from '../../../images/ProjectParticipant.svg';
-import ProjectCategoriesIcon from '../../../images/ProjectCategories.svg';
 import ExchangeIcon from '../../../images/Exchange.svg';
 import GraphIcon from '../../../images/Graph.svg';
 import {
@@ -172,7 +172,7 @@ export const ProjectSettings = () => {
       )}
       {projectInfo.role !== 'participant' && (
         <SettingsCardRow
-          icon={<ProjectCategoriesIcon width={24} height={24} />}
+          icon={<Fontisto name="nav-icon-grid-a" size={24} />}
           title={formatMessage(m.configTitle)}
           subtitle={configData?.configMetadata?.name}
           buttonText={formatMessage(m.updateCategories)}

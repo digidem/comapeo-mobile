@@ -49,6 +49,7 @@ const config = {
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,
+      'appium:newCommandTimeout': 150,
       'bstack:options': {
         projectName: 'CoMapeo',
         buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,

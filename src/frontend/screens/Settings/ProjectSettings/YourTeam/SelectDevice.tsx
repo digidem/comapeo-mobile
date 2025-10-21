@@ -12,7 +12,6 @@ import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
-import type {DeviceType} from '../../../../sharedTypes';
 
 const m = defineMessages({
   title: {
@@ -32,19 +31,6 @@ const m = defineMessages({
     defaultMessage: 'Make sure both devices are on the same version of CoMapeo',
   },
 });
-
-function normalizeDeviceType(
-  deviceType: DeviceType | undefined,
-): NonNullable<DeviceType> {
-  if (
-    !deviceType ||
-    deviceType === 'UNRECOGNIZED' ||
-    deviceType === 'device_type_unspecified'
-  ) {
-    return 'mobile';
-  }
-  return deviceType;
-}
 
 export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = () => {
   const ssid = useLocalDiscoveryState(state => state.ssid);
@@ -91,8 +77,7 @@ function InvitableDevicesList() {
   return (
     <View style={styles.deviceListContainer}>
       {invitableDevices.map(device => {
-        const {deviceId, status, name, deviceType: rawDeviceType} = device;
-        const deviceType = normalizeDeviceType(rawDeviceType);
+        const {deviceId, status, name, deviceType} = device;
 
         return (
           <DeviceCard

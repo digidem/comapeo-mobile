@@ -3,13 +3,14 @@ import {View, StyleSheet} from 'react-native';
 import DeviceMobile from '../images/DeviceMobile.svg';
 import DeviceDesktop from '../images/DeviceDesktop.svg';
 import ShieldIcon from '../images/BlackShield.svg';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import type {
   ViewStyleProp,
   DeviceConnectionStatus,
   DeviceType,
 } from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
-import {LIGHT_GREY, MEDIUM_GREY} from '../lib/styles';
+import {DARK_GREY, LIGHT_GREY, MEDIUM_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import Caution from '../images/caution.svg';
 import {HeaderText} from './Text/HeaderText';
@@ -27,7 +28,7 @@ const m = defineMessages({
 });
 
 type DeviceNameWithIconProps = {
-  deviceType: DeviceType;
+  deviceType: DeviceType | undefined;
   name: string;
   deviceId?: string;
   thisDevice?: boolean;
@@ -60,15 +61,11 @@ export const DeviceNameWithIcon = ({
       throw new ExhaustivenessError(deviceConnectionStatus);
   }
 
+  const size = iconSize || 35;
+
   return (
     <View style={[styles.flexRow, style]}>
-      {deviceType === 'mobile' || deviceType === 'tablet' ? (
-        <DeviceMobile width={iconSize || 35} height={iconSize || 35} />
-      ) : deviceType === 'selfHostedServer' ? (
-        <DeviceArchive />
-      ) : (
-        <DeviceDesktop width={iconSize || 35} height={iconSize || 35} />
-      )}
+      <DeviceIcon deviceType={deviceType} size={size} />
       <View style={{marginLeft: 10, flex: 1}}>
         <HeaderText variant="header6">{name}</HeaderText>
         {deviceId && (
@@ -98,6 +95,35 @@ export const DeviceNameWithIcon = ({
       </View>
     </View>
   );
+};
+
+const DeviceIcon = ({
+  deviceType,
+  size,
+}: {
+  deviceType: DeviceType | undefined;
+  size: number;
+}) => {
+  switch (deviceType) {
+    case 'mobile':
+      return <DeviceMobile width={size} height={size} />;
+    case 'tablet':
+      return (
+        <MaterialIcons name="tablet-android" size={size} color={DARK_GREY} />
+      );
+    case 'desktop':
+      return <DeviceDesktop width={size} height={size} />;
+    case 'selfHostedServer':
+      return <DeviceArchive />;
+    case undefined:
+    case 'UNRECOGNIZED':
+    case 'device_type_unspecified':
+    default: {
+      return (
+        <MaterialIcons name="help-outline" size={size} color={DARK_GREY} />
+      );
+    }
+  }
 };
 
 const DeviceArchive = () => {

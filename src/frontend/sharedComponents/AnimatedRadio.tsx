@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Animated} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {MAGENTA, MEDIUM_BLUE, MEDIUM_GREY} from '../lib/styles';
 

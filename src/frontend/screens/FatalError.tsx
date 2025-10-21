@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import RNRestart from 'react-native-restart';
 import {Text} from '../sharedComponents/Text';
 import {Button} from '../sharedComponents/Button';

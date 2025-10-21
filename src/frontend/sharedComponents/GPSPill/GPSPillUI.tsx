@@ -1,7 +1,7 @@
 import {type ReactNode} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcon from '@react-native-vector-icons/material-design-icons';
 
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {

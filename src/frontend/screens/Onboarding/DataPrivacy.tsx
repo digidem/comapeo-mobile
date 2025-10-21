@@ -2,8 +2,8 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useIntl} from 'react-intl';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from '@react-native-vector-icons/ionicons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 import CoMapeoShield from '../../images/CoMapeoShield.svg';
 import LockedWithKeyIcon from '../../images/LockedWithKey.svg';

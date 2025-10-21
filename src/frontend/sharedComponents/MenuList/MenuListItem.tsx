@@ -8,8 +8,9 @@ import {
   ViewStyle,
 } from 'react-native';
 import {NEW_DARK_GREY, VERY_LIGHT_BLUE} from '../../lib/styles';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {BodyText} from '../Text/BodyText';
+import type {MaterialIconsIconName} from '@react-native-vector-icons/material-icons';
 
 export type MenuListItemType = {
   primaryText: string;
@@ -19,7 +20,7 @@ export type MenuListItemType = {
   disabled?: boolean;
   accessibilityLabel?: string;
 } & (
-  | {materialIconName: string; icon?: never} // Has materialIconName but no icon
+  | {materialIconName: MaterialIconsIconName; icon?: never} // Has materialIconName but no icon
   | {icon: React.ReactNode; materialIconName?: never} // Has icon but no materialIconName
   | {materialIconName?: never; icon?: never} // Has neither
 );

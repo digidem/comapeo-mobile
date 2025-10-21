@@ -6,7 +6,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {List, ListItem, ListItemText} from '../../sharedComponents/List';
 import {MethodName, useDeviceInfo} from '../../hooks/useDeviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {BLUE_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
 import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';

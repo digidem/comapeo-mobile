@@ -5,7 +5,7 @@ import {MEDIUM_GREY} from '../../../../lib/styles';
 import {SecondaryButton} from '../../../../sharedComponents/Buttons';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
-import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from '@react-native-vector-icons/material-design-icons';
 
 const m = defineMessages({
   remoteArchiveOff: {

@@ -4,7 +4,7 @@ import {Circle} from './Circle';
 import {type IconSize} from '../../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useProjectIconUrl} from '../../hooks/server/icons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 interface PresetIconProps {
   iconId?: string;
   size: IconSize;

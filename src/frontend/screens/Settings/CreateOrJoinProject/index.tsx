@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {useManyProjects} from '@comapeo/core-react';
 
 import {Text} from '../../../sharedComponents/Text';

@@ -41,7 +41,7 @@ describe('Multiple Projects - Project Data Retention', () => {
     await $('~Open Menu').click();
     await $(byText('Switch Project')).click();
     await $(byText('New Collaboration')).click();
-    await $(byText('Start new project')).click();
+    await $(byText('Start New Project')).click();
     await $(byText('Next')).click();
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));

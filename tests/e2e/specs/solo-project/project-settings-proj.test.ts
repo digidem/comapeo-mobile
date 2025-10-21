@@ -8,8 +8,8 @@ describe('Project - Project Settings Named Project', () => {
   it('should navigate to project settings screen and verify content for named project', async () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
-    const viewButton = await $(byText('View'));
-    await viewButton.click();
+    const viewSettings = await $('~Go to project settings screen.');
+    await viewSettings.click();
 
     const screenHeader = await $(byText('Project Settings'));
     await expect(screenHeader).toBeDisplayed();
@@ -26,7 +26,9 @@ describe('Project - Project Settings Named Project', () => {
     ).toBeDisplayed();
     await expect($(byText('View Team'))).toBeDisplayed();
 
-    await expect($(byText('Project Categories'))).toBeDisplayed();
+    const projectCategories = await $(byText('Project Categories'));
+    await projectCategories.scrollIntoView();
+    await expect(projectCategories).toBeDisplayed();
     await expect($(byTextMatches('@mapeo/'))).toBeDisplayed();
     await expect($(byText('Update Set'))).toBeDisplayed();
 

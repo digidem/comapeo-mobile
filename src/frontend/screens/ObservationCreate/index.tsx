@@ -70,12 +70,7 @@ export const ObservationCreate = ({
   const projectDetails = useProjectRoleAndDetails(projectId);
   const {updateTags} = useDraftObservation();
 
-  const presetName = preset
-    ? formatMessage({
-        id: `presets.${preset.docId}.name`,
-        defaultMessage: preset.name,
-      })
-    : formatMessage(m.observation);
+  const presetName = preset ? preset.name : formatMessage(m.observation);
 
   return (
     <ScreenContentWithDock

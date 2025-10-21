@@ -1380,8 +1380,8 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Altitude Accuracy"
   },
-  "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "CoMapeo Data"
+  "screens.ObservationMetadataVerified.coMapeoMetadata": {
+    "message": "CoMapeo Metadata"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "This data was manually entered."
@@ -1414,7 +1414,7 @@
     "message": "Sent by CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "CoMapeo Data sent from"
+    "message": "CoMapeo Metadata sent from"
   },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Speed"

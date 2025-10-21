@@ -93,8 +93,7 @@ export const AllProjects = () => {
       <PrimaryButton
         fullSize={true}
         onPress={() => {
-          //TODO: replace with actual navigation (the collab screens)
-          navigate('CreateProject');
+          navigate('Collaborate');
         }}
         style={{alignSelf: 'center', marginBottom: 10, marginTop: 20}}
         text={formatMessage(m.newCollab)}

@@ -1,7 +1,6 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Pressable} from 'react-native';
 
-import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 import {VERY_LIGHT_BLUE} from '../../lib/styles';
 import {ViewStyleProp} from '../../sharedTypes';
 
@@ -36,15 +35,14 @@ export const ListItem = ({
   ];
 
   return (
-    <TouchableNativeFeedback
+    <Pressable
       testID={testID}
       onPress={onPress}
       disabled={disabled}
-      background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
-      <View testID={testID} style={componentStyle}>
-        {children}
-      </View>
-    </TouchableNativeFeedback>
+      android_ripple={{color: VERY_LIGHT_BLUE, borderless: false}}
+      style={componentStyle}>
+      {children}
+    </Pressable>
   );
 };
 

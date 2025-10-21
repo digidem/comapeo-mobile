@@ -14,13 +14,26 @@ describe('Settings - Language Settings Flow', () => {
     await languageOption.click();
   });
 
+  it('should have "Follow system preferences" option initially selected', async () => {
+    const followSystemPreferences = await $(
+      byTextMatches('Follow system preferences'),
+    );
+    await expect(followSystemPreferences).toBeDisplayed();
+    await expect($(byResourceId('nullButton-selected'))).toBeDisplayed();
+  });
+
   it('should scroll to Spanish, select it, and confirm language change', async () => {
     await $(byTextMatches('Spanish')).scrollIntoView();
     await $(byTextMatches('Spanish')).click();
 
-    await expect($(byTextMatches('Idioma'))).toBeDisplayed();
+    const idiomaOption = await $(byTextMatches('Idioma'));
+    await expect(idiomaOption).toBeDisplayed();
+    await idiomaOption.click();
+    await $(byTextMatches('Español')).scrollIntoView();
+    await expect($(byResourceId('esButton-selected'))).toBeDisplayed();
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
     await backBtn.click();
     await $(byResourceId('MAIN.map-screen')).click();
     const obsListTab = await $('~Go to observations list.');
@@ -40,7 +53,6 @@ describe('Settings - Language Settings Flow', () => {
 
     const idiomaOption = await $(byTextMatches('Idioma'));
     await idiomaOption.click();
-
     const englishElem = await $(byTextMatches('English'));
     await englishElem.click();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));

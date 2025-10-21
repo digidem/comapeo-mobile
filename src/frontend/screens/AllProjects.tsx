@@ -10,7 +10,7 @@ import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
 import {SecondaryButton} from '../sharedComponents/Buttons';
 import AddProjectIcon from '../images/AddProject.svg';
-import {FlatList, Button} from 'react-native';
+import {FlatList} from 'react-native';
 import {useTracking} from '../hooks/useTracking';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 
@@ -75,13 +75,6 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
           navigate('StartNewProject');
         }}
         renderIcon={() => <AddProjectIcon />}
-      />
-      {/* TEMPORARY DEBUG BUTTON - Remove before merging */}
-      <Button
-        title="DEBUG: View Project Settings"
-        onPress={() => {
-          navigate('ProjectSettings');
-        }}
       />
       <FlatList<ProjectListItem>
         contentContainerStyle={{padding: 20}}

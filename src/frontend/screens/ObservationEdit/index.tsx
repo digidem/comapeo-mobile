@@ -77,12 +77,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const queryClient = useQueryClient();
 
   const notes = value?.tags.notes;
-  const presetName = preset
-    ? formatMessage({
-        id: `presets.${preset.docId}.name`,
-        defaultMessage: preset.name,
-      })
-    : formatMessage(m.observation);
+  const presetName = preset ? preset.name : formatMessage(m.observation);
 
   // TODO: This shouldn't be an effect, the logic should happen when the user
   // presses the edit button.

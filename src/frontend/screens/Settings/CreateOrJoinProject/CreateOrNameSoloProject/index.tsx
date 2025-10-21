@@ -126,6 +126,12 @@ export const CreateOrNameSoloProject = ({
         {name: projectName},
         {
           onSuccess: () => {
+            createProjectMutation.mutate(undefined, {
+              onError: err => {
+                Sentry.captureException(err);
+              },
+            });
+
             navigation.replace('ShareProjectStats', {
               projectName,
             });

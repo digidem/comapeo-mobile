@@ -6,7 +6,7 @@ import {output} from '../../utils/naming';
 describe('Multiple Projects - All Projects Screen', () => {
   it('should show all projects and correct role labels', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
+    await $(byText('Switch Project')).click();
 
     const originalCard = await $(byTextMatches(output.names.device));
     await expect(originalCard).toBeDisplayed();

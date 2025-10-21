@@ -81,12 +81,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   }, [trackId, setTrackId]);
 
   const presetName = useMemo(() => {
-    return preset
-      ? formatMessage({
-          id: `presets.${preset.docId}.name`,
-          defaultMessage: preset.name,
-        })
-      : formatMessage(m.presetTitle);
+    return preset ? preset.name : formatMessage(m.presetTitle);
   }, [preset, formatMessage]);
 
   const saveTrack = useCallback(() => {

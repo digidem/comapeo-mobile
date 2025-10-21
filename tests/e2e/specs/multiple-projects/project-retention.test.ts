@@ -10,11 +10,11 @@ const UNIQUE_DESCRIPTION = 'Airstrip test obs for second project';
 describe('Multiple Projects - Project Data Retention', () => {
   it('should create an observation in the second project', async () => {
     await $('~Open Menu').click();
+    await driver.pause(1000);
     await $(byText('Switch Project')).click();
     await $(byText(output.names.secondProject)).click();
     await $(byResourceId('MAIN.map-screen')).click();
 
-    await $('~Go to map.').click();
     await $('~Add Observation').click();
     await $(byTextMatches('Airstrip')).click();
     const descriptionInput = await $(byResourceId('OBS.description-inp'));

@@ -77,6 +77,10 @@ const m = defineMessages({
     id: 'screens.AboutSettings.earlyAccessBanner',
     defaultMessage: 'You are in Early Access Mode.',
   },
+  comapeoWebsiteLabel: {
+    id: 'screens.AboutSettings.comapeoWebsiteLabel',
+    defaultMessage: 'CoMapeo Website',
+  },
 });
 
 const DeviceInfoListItem = ({
@@ -144,7 +148,9 @@ export const AboutSettings = () => {
           label={t(m.phoneModel)}
           deviceInfoMethod="getModel"
         />
-        <ListItem disableGutters>
+        <ListItem
+          disableGutters
+          onPress={() => Linking.openURL('https://openmoji.org/')}>
           <ListItemText
             primary={t(m.emojiSource)}
             secondary="https://openmoji.org/"
@@ -154,6 +160,14 @@ export const AboutSettings = () => {
           <ListItemText
             primary={t(m.releaseNameLabel)}
             secondary={t(m.releaseName)}
+          />
+        </ListItem>
+        <ListItem
+          disableGutters
+          onPress={() => Linking.openURL('https://comapeo.app')}>
+          <ListItemText
+            primary={t(m.comapeoWebsiteLabel)}
+            secondary="comapeo.app"
           />
         </ListItem>
       </List>

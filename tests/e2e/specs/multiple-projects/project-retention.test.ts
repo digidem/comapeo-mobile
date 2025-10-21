@@ -40,8 +40,9 @@ describe('Multiple Projects - Project Data Retention', () => {
   it('should create a third project and not carry over the observation', async () => {
     await $('~Open Menu').click();
     await $(byText('Switch Project')).click();
+    await $(byText('New Collaboration')).click();
     await $(byText('Start new project')).click();
-    await $(byText('Start')).click();
+    await $(byText('Next')).click();
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.thirdProject);
@@ -71,7 +72,8 @@ describe('Multiple Projects - Project Data Retention', () => {
     await $('~Open Menu').click();
     await $(byText('Switch Project')).click();
     await $(byTextMatches(output.names.secondProject)).click();
-    await $(byResourceId('OBS.list-scrn')).click();
+    await driver.back();
+    await $('~Go to observations list.').click();
 
     const airstrip = await $(byText('Airstrip'));
     await expect(airstrip).toBeDisplayed();

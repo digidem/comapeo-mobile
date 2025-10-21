@@ -91,4 +91,14 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     const mapButton = await $('~Go to map.');
     await mapButton.click();
   });
+
+  it('should verify that a new unnamed project was created in the background', async () => {
+    await $('~Open Menu').click();
+    await $('~Go to All Projects Screen').click();
+    await expect($(byTextMatches(output.names.project))).toBeDisplayed();
+    await expect($(byText(output.names.device))).toBeDisplayed();
+    const backButton = $(byResourceId('MAIN.header-back-btn'));
+    await backButton.click();
+    await $(byResourceId('MAIN.map-screen')).click();
+  });
 });

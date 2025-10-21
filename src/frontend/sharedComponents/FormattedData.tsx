@@ -124,13 +124,12 @@ export const FormattedObservationDate = React.memo(
   },
 );
 
-// Format the translated preset name, with a fallback to "Observation" if no
-// preset is defined
+// Format the preset name, with a fallback to "Observation" if no preset is
+// defined. Core is responsible for translation, so we just use the plain
+// string value.
 export const FormattedPresetName = ({preset}: {preset?: Preset}) => {
   const {formatMessage: t} = useIntl();
-  const name = preset
-    ? t({id: `presets.${preset.docId}.name`, defaultMessage: preset.name})
-    : t(m.observation);
+  const name = preset ? preset.name : t(m.observation);
 
   return <React.Fragment>{name}</React.Fragment>;
 };

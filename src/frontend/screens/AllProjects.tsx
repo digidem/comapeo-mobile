@@ -14,7 +14,6 @@ import {ColorCard} from '../sharedComponents/ColorCard';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {COMAPEO_BLUE} from '../lib/styles';
 import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   newCollab: {
@@ -36,7 +35,6 @@ export const AllProjects = () => {
   const {goBack, navigate} = useNavigationFromRoot();
   const {formatMessage} = useIntl();
   const {isTracking} = useTracking();
-  const {top} = useSafeAreaInsets();
 
   const dataWithCurrentProjOnTop = React.useMemo(
     () =>
@@ -83,7 +81,7 @@ export const AllProjects = () => {
   return (
     <BottomSheetWrapper closeOnBackButtonPress>
       <FlatList<ProjectListItem>
-        contentContainerStyle={{gap: 20, padding: top}}
+        contentContainerStyle={{gap: 20, paddingBottom: 2}}
         data={dataWithCurrentProjOnTop}
         keyExtractor={p => p.projectId}
         initialNumToRender={6}

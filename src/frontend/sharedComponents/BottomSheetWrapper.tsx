@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, useWindowDimensions} from 'react-native';
+import {View} from 'react-native';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
 import {WHITE} from '../lib/styles';
 import {useNavigation} from '@react-navigation/native';
@@ -45,8 +45,6 @@ const AnimateBottomSheetContainer = ({
 
   const [displayContent, setDisplayContent] = React.useState(true);
 
-  const {height} = useWindowDimensions();
-
   // This effect is used to prevent the bottom sheet from being removed before the animation is complete
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
@@ -77,7 +75,7 @@ const AnimateBottomSheetContainer = ({
             paddingTop: 40,
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
-            maxHeight: height,
+            flexShrink: 1,
           }}
           entering={SlideInDown.duration(150)}
           exiting={SlideOutDown.duration(150)}>

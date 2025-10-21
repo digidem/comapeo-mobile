@@ -8,9 +8,11 @@ import {useLocalPeers} from '../../../../hooks/useLocalPeers';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import WifiIcon from '../../../../images/WifiIcon.svg';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
-import {Text} from '../../../../sharedComponents/Text';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
+import type {DeviceType} from '../../../../sharedTypes';
 
 const m = defineMessages({
   title: {
@@ -31,6 +33,19 @@ const m = defineMessages({
   },
 });
 
+function normalizeDeviceType(
+  deviceType: DeviceType | undefined,
+): NonNullable<DeviceType> {
+  if (
+    !deviceType ||
+    deviceType === 'UNRECOGNIZED' ||
+    deviceType === 'device_type_unspecified'
+  ) {
+    return 'mobile';
+  }
+  return deviceType;
+}
+
 export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = () => {
   const ssid = useLocalDiscoveryState(state => state.ssid);
   const {formatMessage: t} = useIntl();
@@ -39,11 +54,14 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = () => {
     <ScrollView style={styles.container} testID="PROJECT.invite-device-scrn">
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <WifiIcon style={{marginRight: 10}} width={30} height={30} />
-        <Text>{ssid}</Text>
+        <BodyText>{ssid}</BodyText>
       </View>
-      <Text style={{marginTop: 10}}>{t(m.notSeeingDevice)}</Text>
-      <Text style={{marginLeft: 10}}>{`\u2022 ${t(m.sameWifi)}`}</Text>
-      <Text style={{marginLeft: 10}}>{`\u2022 ${t(m.sameVersion)}`}</Text>
+      <HeaderText variant="header6" style={{marginTop: 10}}>
+        {t(m.notSeeingDevice)}
+      </HeaderText>
+      <BodyText style={{marginLeft: 10}}>{`\u2022 ${t(m.sameWifi)}`}</BodyText>
+      <BodyText
+        style={{marginLeft: 10}}>{`\u2022 ${t(m.sameVersion)}`}</BodyText>
       {/* Divider */}
       <View style={{marginTop: 20}} />
 
@@ -73,12 +91,9 @@ function InvitableDevicesList() {
   return (
     <View style={styles.deviceListContainer}>
       {invitableDevices.map(device => {
-        const {deviceId, status, name} = device;
+        const {deviceId, status, name, deviceType: rawDeviceType} = device;
+        const deviceType = normalizeDeviceType(rawDeviceType);
 
-        // TODO: Use `device.deviceType`
-        const deviceType = 'mobile';
-
-        // TODO: Update DeviceCard component to better handle potentially undefined fields, deviceType enum
         return (
           <DeviceCard
             key={deviceId}

@@ -62,7 +62,7 @@ export const DeviceNameWithIcon = ({
 
   return (
     <View style={[styles.flexRow, style]}>
-      {deviceType === 'mobile' ? (
+      {deviceType === 'mobile' || deviceType === 'tablet' ? (
         <DeviceMobile width={iconSize || 35} height={iconSize || 35} />
       ) : deviceType === 'selfHostedServer' ? (
         <DeviceArchive />

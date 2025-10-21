@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
-import DeviceMobile from '../images/DeviceMobile.svg';
-import DeviceDesktop from '../images/DeviceDesktop.svg';
-import ShieldIcon from '../images/BlackShield.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Octicons from 'react-native-vector-icons/Octicons';
 import type {
   ViewStyleProp,
   DeviceConnectionStatus,
@@ -106,43 +104,50 @@ const DeviceIcon = ({
 }) => {
   switch (deviceType) {
     case 'mobile':
-      return <DeviceMobile width={size} height={size} />;
+      return <DeviceIconWithBackground icon="phone-android" size={size} />;
     case 'tablet':
-      return (
-        <MaterialIcons name="tablet-android" size={size} color={DARK_GREY} />
-      );
+      return <DeviceIconWithBackground icon="tablet-android" size={size} />;
     case 'desktop':
-      return <DeviceDesktop width={size} height={size} />;
+      return <DeviceIconWithBackground icon="computer" size={size} />;
     case 'selfHostedServer':
-      return <DeviceArchive />;
+      return (
+        <DeviceIconWithBackground
+          icon="shield-lock"
+          size={size}
+          iconLibrary="octicons"
+        />
+      );
     case undefined:
     case 'UNRECOGNIZED':
     case 'device_type_unspecified':
     default: {
-      return (
-        <MaterialIcons name="help-outline" size={size} color={DARK_GREY} />
-      );
+      return <DeviceIconWithBackground icon="help-outline" size={size} />;
     }
   }
 };
 
-const DeviceArchive = () => {
+const DeviceIconWithBackground = ({
+  icon,
+  size,
+  iconLibrary = 'material',
+}: {
+  icon: string;
+  size: number;
+  iconLibrary?: 'material' | 'octicons';
+}) => {
+  const IconComponent = iconLibrary === 'octicons' ? Octicons : MaterialIcons;
+
   return (
     <View
       style={{
         alignItems: 'center',
-        position: 'relative',
+        justifyContent: 'center',
         backgroundColor: LIGHT_GREY,
-        borderRadius: 100,
-        padding: 40,
-        width: 35,
-        height: 35,
+        borderRadius: size / 2,
+        width: size,
+        height: size,
       }}>
-      <ShieldIcon
-        width={50}
-        height={50}
-        style={{position: 'absolute', top: 15, left: 15}}
-      />
+      <IconComponent name={icon} size={size * 0.5} color={DARK_GREY} />
     </View>
   );
 };

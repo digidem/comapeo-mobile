@@ -27,10 +27,10 @@ describe('Multiple Projects - All Projects Screen', () => {
 
   it('should show the selected project on top', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
+    await $(byText('Switch Project')).click();
     await $(byResourceId('project_card_second_project')).click();
-    // have to test the test ids because the test id is not on the header text element
-    await $(byText('All Projects')).click();
+
+    await $(byText('Switch Project')).click();
 
     const firstCard = await $(byResourceId('project_card_second_project'));
     const secondCard = await $(byResourceId('project_card_test_phone'));

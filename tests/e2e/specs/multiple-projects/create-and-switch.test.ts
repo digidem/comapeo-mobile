@@ -47,16 +47,4 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
     const soloHeader = await $(byResourceId('HOME.header-title'));
     await expect(soloHeader).toHaveText(output.names.device);
   });
-
-  // This is going to change soon
-  // it('should switch back to the Solo project and update headers accordingly', async () => {
-  //   await $('~Open Menu').click();
-  //   await $(byText('All Projects')).click();
-  //   await $(byTextMatches('Erik')).click();
-  //   // await $(byTextMatches(output.names.device)).click();
-  //   // await $(byResourceId('MAIN.map-screen')).click();
-  //   await driver.back();
-  //   const soloHeader = await $(byResourceId('HOME.header-title'));
-  //   await expect(soloHeader).toHaveText(output.names.device);
-  // });
 });

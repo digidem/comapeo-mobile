@@ -161,7 +161,7 @@ export const ProjectSettings = () => {
       )}
       {(isCoordinator || participantWithRemote) && (
         <SettingsCardRow
-          icon={<ExchangeIcon width={24} height={24} />}
+          icon={<ExchangeIcon width={24} height={24} color={NEW_DARK_GREY} />}
           title={formatMessage(
             remoteArchiveOn ? m.remoteArchiveOn : m.remoteArchiveOff,
           )}

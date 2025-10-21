@@ -4,10 +4,10 @@ import {useIntl, defineMessages} from 'react-intl';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import Exchange from '../images/Exchange.svg';
+import CollaborateIcon from '../images/ProjectParticipant.svg';
 import {BodyText} from './Text/BodyText.tsx';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
 import {BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY, WHITE} from '../lib/styles.ts';
@@ -17,23 +17,23 @@ import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery.ts';
 import {ColorCard} from './ColorCard.tsx';
 import {HeaderText} from './Text/HeaderText.tsx';
 import {useManyProjects} from '@comapeo/core-react';
-import {buttonStyles} from './Buttons.tsx';
+import {buttonStyles, PrimaryButton} from './Buttons.tsx';
 import DownArrow from '../images/DownArrow.svg';
 import {isLowStorage, calcUsedPercentage} from '../lib/storage';
 import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
 
 const m = defineMessages({
-  aboutCoMapeo: {
-    id: 'Navigation.Menu.aboutCoMapeo',
-    defaultMessage: 'About CoMapeo',
-  },
   appSettings: {
     id: 'Navigation.Menu.Settings',
-    defaultMessage: 'App Settings',
+    defaultMessage: 'CoMapeo Settings',
   },
-  privacyPolicy: {
-    id: 'Navigation.Menu.privacyPolicy',
-    defaultMessage: 'Data & Privacy',
+  bgMap: {
+    id: 'Navigation.Menu.bgMaps',
+    defaultMessage: 'Background Maps',
+  },
+  gatherObservations: {
+    id: 'Navigation.Menu.gatherObservations',
+    defaultMessage: 'Gather Observations',
   },
   currentProject: {
     id: 'Navigation.Menu.currentProject',
@@ -42,18 +42,6 @@ const m = defineMessages({
   exchange: {
     id: 'Navigation.Menu.exchange',
     defaultMessage: 'Exchange',
-  },
-  invite: {
-    id: 'Navigation.Menu.invite',
-    defaultMessage: 'Invite',
-  },
-  viewProject: {
-    id: 'Navigation.Menu.viewProject',
-    defaultMessage: 'View',
-  },
-  allProjects: {
-    id: 'Navigation.Menu.allProjects',
-    defaultMessage: 'All Projects',
   },
   mappingOnOwn: {
     id: 'Navigation.Menu.mappingOnOwn',
@@ -71,17 +59,29 @@ const m = defineMessages({
     id: 'Navigation.Menu.justYou',
     defaultMessage: 'Just You',
   },
-  switchProjects: {
-    id: 'Navigation.Menu.switchProjects',
-    defaultMessage: 'Switch Projects',
+  switchProject: {
+    id: 'Navigation.Menu.switchProject',
+    defaultMessage: 'Switch Project',
   },
   earlyAccessLabel: {
     id: 'Navigation.Menu.earlyAccessLabel',
     defaultMessage: 'You are in Early Access Mode.',
   },
+  team: {
+    id: 'Navigation.Menu.team',
+    defaultMessage: 'Team',
+  },
+  coordinatorTools: {
+    id: 'Navigation.Menu.coordinatorTools',
+    defaultMessage: 'Coordinator Tools',
+  },
+  collaborate: {
+    id: 'Navigation.Menu.collaborate',
+    defaultMessage: 'Collaborate',
+  },
 });
 
-export function DrawerMenu() {
+export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
   const {data: allProjects} = useManyProjects();
@@ -164,7 +164,7 @@ export function DrawerMenu() {
                   <HeaderText
                     variant="header5"
                     style={{color: COMAPEO_BLUE, flex: 1, textAlign: 'center'}}>
-                    {formatMessage(m.switchProjects)}
+                    {formatMessage(m.switchProject)}
                   </HeaderText>
                   <DownArrow />
                 </TouchableOpacity>
@@ -181,65 +181,86 @@ export function DrawerMenu() {
         ) : null}
 
         <View style={styles.bottomItemsContainer}>
+          {role !== 'solo' && (
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => {
+                navigation.navigate('YourTeam');
+              }}
+              accessibilityLabel="Go to your team screen.">
+              <MaterialIcon color={NEW_DARK_GREY} size={20} name={'people'} />
+              <BodyText variant="medium" style={{paddingLeft: 12}}>
+                {formatMessage(m.team)}
+              </BodyText>
+            </TouchableOpacity>
+          )}
+          {role === 'coordinator' && (
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => {
+                navigation.navigate('ProjectSettings');
+              }}
+              accessibilityLabel="Go to project settings screen.">
+              <MaterialIcon
+                color={NEW_DARK_GREY}
+                size={20}
+                name={'manage-accounts'}
+              />
+              <BodyText variant="medium" style={{paddingLeft: 12}}>
+                {formatMessage(m.coordinatorTools)}
+              </BodyText>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => navigation.navigate('AllProjects')}
-            accessibilityLabel="Go to All Projects Screen">
-            <MaterialCommunityIcons
-              name="dots-grid"
-              size={20}
-              color={NEW_DARK_GREY}
-            />
-            <View style={{paddingLeft: 12}}>
-              <BodyText variant="medium">
-                {formatMessage(m.allProjects)}
-              </BodyText>
-            </View>
+            onPress={() => {
+              navigation.popTo('Home', {screen: 'Map'});
+              closeMenu();
+            }}
+            accessibilityLabel="Go to map screen.">
+            <Octicons name="plus-circle" size={20} color={NEW_DARK_GREY} />
+            <BodyText variant="medium" style={{paddingLeft: 12}}>
+              {formatMessage(m.gatherObservations)}
+            </BodyText>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => navigation.navigate('Sync')}
-            accessibilityLabel="Go to exchange screen.">
-            <Exchange width={20} height={20} color={NEW_DARK_GREY} />
-            <View style={{paddingLeft: 12}}>
-              <BodyText variant="medium">{formatMessage(m.exchange)}</BodyText>
-            </View>
+            onPress={() => navigation.navigate('BackgroundMaps')}
+            accessibilityLabel="Go to background maps screen.">
+            <MaterialIcon name="layers" size={20} color={NEW_DARK_GREY} />
+            <BodyText variant="medium" style={{paddingLeft: 12}}>
+              {formatMessage(m.bgMap)}
+            </BodyText>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.menuItem}
             onPress={() => navigation.navigate('AppSettings')}
             accessibilityLabel="Go to app settings screen.">
             <IonIcon name="settings-outline" size={20} color={NEW_DARK_GREY} />
-            <View style={{paddingLeft: 12}}>
-              <BodyText variant="medium">
-                {formatMessage(m.appSettings)}
-              </BodyText>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => navigation.navigate('DataAndPrivacy')}
-            accessibilityLabel="Go to data and privacy screen.">
-            <Octicons name="shield-lock" size={20} color={NEW_DARK_GREY} />
-            <View style={{paddingLeft: 12}}>
-              <BodyText variant="medium">
-                {formatMessage(m.privacyPolicy)}
-              </BodyText>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => navigation.navigate('AboutSettings')}
-            accessibilityLabel="Go to about CoMapeo screen.">
-            <MaterialIcon name="info-outline" size={20} color={NEW_DARK_GREY} />
-            <View style={{paddingLeft: 12}}>
-              <BodyText variant="medium">
-                {formatMessage(m.aboutCoMapeo)}
-              </BodyText>
-            </View>
+            <BodyText variant="medium" style={{paddingLeft: 12}}>
+              {formatMessage(m.appSettings)}
+            </BodyText>
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <PrimaryButton
+        testID="MENU.main-action-button"
+        style={{alignSelf: 'center', marginBottom: 20}}
+        onPress={() => {
+          if (role === 'solo') {
+            navigation.navigate('Collaborate');
+            return;
+          }
+          navigation.navigate('Sync');
+        }}
+        fullSize
+        text={formatMessage(role === 'solo' ? m.collaborate : m.exchange)}
+        renderIcon={
+          role === 'solo'
+            ? () => <CollaborateIcon color={WHITE} />
+            : () => <Exchange color={WHITE} />
+        }
+      />
     </View>
   );
 }

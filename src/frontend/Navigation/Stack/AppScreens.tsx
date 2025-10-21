@@ -121,6 +121,10 @@ import {ProjectStatistics} from '../../screens/Settings/ProjectSettings/ProjectS
 import {ProjectStatsTurnedOffBottomSheet} from '../../screens/Settings/ProjectSettings/ProjectStatistics/ProjectStatsTurnedOffBottomSheet.tsx';
 import {EarlyAccessOffBottomSheet} from '../../screens/Settings/AppSettings/EarlyAccessOffBottomSheet.tsx';
 import {EarlyAccess} from '../../screens/Settings/AppSettings/EarlyAccess.tsx';
+import {Collaborate} from '../../screens/Settings/Collaborate.tsx';
+import {JoinAProject} from '../../screens/Settings/JoinAProject.tsx';
+import {StartNewProjectIntro} from '../../screens/Settings/StartNewProjectIntro.tsx';
+import {NameDefaultProjectIntro} from '../../screens/Settings/NameDefaultProjectIntro.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -231,6 +235,16 @@ export const createAppScreens = ({
         name="CreateOrJoinProject"
         component={CreateOrJoinProject}
         options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
+      />
+      <RootStack.Screen
+        name="Collaborate"
+        component={Collaborate}
+        options={{headerTitle: intl(Collaborate.navTitle)}}
+      />
+      <RootStack.Screen
+        name="JoinAProject"
+        component={JoinAProject}
+        options={{headerTitle: intl(JoinAProject.navTitle)}}
       />
       <RootStack.Screen
         name="CreateProject"
@@ -470,6 +484,16 @@ export const createAppScreens = ({
         name="EarlyAccess"
         component={EarlyAccess}
         options={{headerTitle: intl(EarlyAccess.navTitle)}}
+      />
+      <RootStack.Screen
+        name="StartNewProjectIntro"
+        component={StartNewProjectIntro}
+        options={{headerTitle: intl(StartNewProjectIntro.navTitle)}}
+      />
+      <RootStack.Screen
+        name="NameDefaultProjectIntro"
+        component={NameDefaultProjectIntro}
+        options={{headerTitle: intl(NameDefaultProjectIntro.navTitle)}}
       />
     </RootStack.Group>
     <RootStack.Group

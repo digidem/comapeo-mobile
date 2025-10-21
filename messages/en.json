@@ -62,16 +62,19 @@
     "message": "Stop Tracks"
   },
   "Navigation.Menu.Settings": {
-    "message": "App Settings"
+    "message": "CoMapeo Settings"
   },
-  "Navigation.Menu.aboutCoMapeo": {
-    "message": "About CoMapeo"
+  "Navigation.Menu.bgMaps": {
+    "message": "Background Maps"
   },
-  "Navigation.Menu.allProjects": {
-    "message": "All Projects"
+  "Navigation.Menu.collaborate": {
+    "message": "Collaborate"
   },
   "Navigation.Menu.coordinator": {
     "message": "Coordinator"
+  },
+  "Navigation.Menu.coordinatorTools": {
+    "message": "Coordinator Tools"
   },
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
@@ -82,8 +85,8 @@
   "Navigation.Menu.exchange": {
     "message": "Exchange"
   },
-  "Navigation.Menu.invite": {
-    "message": "Invite"
+  "Navigation.Menu.gatherObservations": {
+    "message": "Gather Observations"
   },
   "Navigation.Menu.justYou": {
     "message": "Just You"
@@ -94,14 +97,11 @@
   "Navigation.Menu.participant": {
     "message": "Participant"
   },
-  "Navigation.Menu.privacyPolicy": {
-    "message": "Data & Privacy"
+  "Navigation.Menu.switchProject": {
+    "message": "Switch Project"
   },
-  "Navigation.Menu.switchProjects": {
-    "message": "Switch Projects"
-  },
-  "Navigation.Menu.viewProject": {
-    "message": "View"
+  "Navigation.Menu.team": {
+    "message": "Team"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -304,6 +304,9 @@
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Security"
   },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "About CoMapeo"
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
   },
@@ -330,6 +333,9 @@
   },
   "Screens.Settings.AppSettings.mapManagement": {
     "message": "Background Map"
+  },
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Data & Privacy"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App Settings"
@@ -1377,8 +1383,8 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Altitude Accuracy"
   },
-  "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "CoMapeo Data"
+  "screens.ObservationMetadataVerified.coMapeoMetadata": {
+    "message": "CoMapeo Metadata"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "This data was manually entered."
@@ -1411,7 +1417,7 @@
     "message": "Sent by CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "CoMapeo Data sent from"
+    "message": "CoMapeo Metadata sent from"
   },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Speed"
@@ -1761,6 +1767,18 @@
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Your Team"
   },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "Invite Devices"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "Join a Project"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Start New Project"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "Collaborate"
+  },
   "screens.Settings.Config.created": {
     "message": "Created {date} at {time}"
   },
@@ -1857,6 +1875,15 @@
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "What is a Project"
   },
+  "screens.Settings.JoinAProject.description": {
+    "message": "Ask a project coordinator to receive a project invitation."
+  },
+  "screens.Settings.JoinAProject.heading": {
+    "message": "Coordinate with your team."
+  },
+  "screens.Settings.JoinAProject.title": {
+    "message": "Join a Project"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "Accepted file types are .smp"
   },
@@ -1916,6 +1943,30 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "Invite devices to a new project with all your observations."
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "Start a new project using my observations."
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "Next"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "Invite Devices"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "Invite devices to a separate and empty project."
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "Start a new project with no observations."
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Next"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Start New Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitation Declined"

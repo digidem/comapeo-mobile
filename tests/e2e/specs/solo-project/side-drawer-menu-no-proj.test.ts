@@ -15,12 +15,9 @@ describe('Main - Side Drawer Menu - No Project', () => {
       $(byTextMatches("You're mapping on your own")),
     ).toBeDisplayed();
 
-    await expect($('~Go to All Projects Screen')).toBeDisplayed();
-
-    await expect($('~Go to data and privacy screen.')).toBeDisplayed();
-    await expect($('~Go to exchange screen.')).toBeDisplayed();
     await expect($('~Go to app settings screen.')).toBeDisplayed();
-    await expect($('~Go to about CoMapeo screen.')).toBeDisplayed();
+    await expect($('~Go to background maps screen.')).toBeDisplayed();
+    await expect($('~Go to map screen.')).toBeDisplayed();
 
     await $(byResourceId('observationsEmptyView')).click();
     const mapTab = await $('~Go to map.');

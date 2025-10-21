@@ -2,7 +2,7 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
-import AddPersonOrange from '../../../../images/AddPersonOrange.svg';
+import AddPerson from '../../../../images/AddPerson.svg';
 import LockedWithKey from '../../../../images/LockedWithKey.svg';
 import Handshake from '../../../../images/HandshakeMediumMediumDark.svg';
 import Checkmark from '../../../../images/GreenSquareCheckmark.svg';
@@ -15,7 +15,7 @@ import {
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
 import {SvgProps} from 'react-native-svg';
-import {NEW_DARK_GREY} from '../../../../lib/styles';
+import {NEW_DARK_GREY, DARK_ORANGE} from '../../../../lib/styles';
 
 const m = defineMessages({
   screenTitle: {
@@ -78,7 +78,7 @@ export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
         </View>
       }>
       <View style={styles.headerArea}>
-        <AddPersonOrange width={86} height={80} />
+        <AddPerson width={86} height={80} color={DARK_ORANGE} />
         <HeaderText variant="header1" style={styles.title} numberOfLines={2}>
           {t(m.screenTitle)}
         </HeaderText>

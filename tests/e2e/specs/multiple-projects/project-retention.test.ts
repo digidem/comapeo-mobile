@@ -10,9 +10,8 @@ const UNIQUE_DESCRIPTION = 'Airstrip test obs for second project';
 describe('Multiple Projects - Project Data Retention', () => {
   it('should create an observation in the second project', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
-    await driver.pause(1000);
-    await $(byResourceId('project_card_second_project')).click();
+    await $(byText('Switch Project')).click();
+    await $(byText(output.names.secondProject)).click();
     await $(byResourceId('MAIN.map-screen')).click();
 
     await $('~Go to map.').click();
@@ -40,9 +39,9 @@ describe('Multiple Projects - Project Data Retention', () => {
 
   it('should create a third project and not carry over the observation', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
-    await $(byText('New Collaboration')).click();
-    await $(byText('Create')).click();
+    await $(byText('Switch Project')).click();
+    await $(byText('Start new project')).click();
+    await $(byText('Start')).click();
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.thirdProject);
@@ -70,10 +69,8 @@ describe('Multiple Projects - Project Data Retention', () => {
 
   it('should confirm the observation still exists in the second project', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
-    await $(byResourceId('project_card_second_project')).click();
-    await driver.back();
-    await $('~Go to observations list.').click();
+    await $(byText('Switch Project')).click();
+    await $(byTextMatches(output.names.secondProject)).click();
     await $(byResourceId('OBS.list-scrn')).click();
 
     const airstrip = await $(byText('Airstrip'));

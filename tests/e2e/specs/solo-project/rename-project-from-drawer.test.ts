@@ -93,7 +93,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
 
   it('should verify that a new unnamed project was created in the background', async () => {
     await $('~Open Menu').click();
-    await $('~Go to All Projects Screen').click();
+    await $(byText('Switch Project')).click();
     await expect($(byTextMatches(output.names.project))).toBeDisplayed();
     await expect($(byText(output.names.device))).toBeDisplayed();
     const backButton = $(byResourceId('MAIN.header-back-btn'));

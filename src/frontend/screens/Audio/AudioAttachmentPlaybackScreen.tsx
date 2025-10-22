@@ -21,7 +21,7 @@ import Share from 'react-native-share';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {audioStyles, SIDE_ICON_BUTTON_WIDTH} from '../../screens/Audio/shared';
 import * as Sentry from '@sentry/react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {useAttachmentUrl} from '@comapeo/core-react';

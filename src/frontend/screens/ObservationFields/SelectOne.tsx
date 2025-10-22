@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {TouchableNativeFeedback} from '../../sharedComponents/Touchables';
 import {VERY_LIGHT_BLUE} from '../../lib/styles';

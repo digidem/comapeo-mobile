@@ -6,7 +6,7 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {DARK_GREY, LIGHT_GREY, WARNING_RED} from '../lib/styles';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {useState} from 'react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {UIActivityIndicator} from 'react-native-indicators';

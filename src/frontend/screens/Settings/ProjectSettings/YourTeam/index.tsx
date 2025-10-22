@@ -8,7 +8,8 @@ import {
 } from '../../../../sharedTypes';
 import type {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
+import type {MaterialIconsIconName} from '@react-native-vector-icons/material-icons';
 import {BLACK} from '../../../../lib/styles';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {
@@ -163,7 +164,7 @@ const IconHeader = ({
   messageDescriptor,
   style,
 }: {
-  iconName: string;
+  iconName: MaterialIconsIconName;
   messageDescriptor: MessageDescriptor;
   style?: ViewStyleProp;
 }) => {

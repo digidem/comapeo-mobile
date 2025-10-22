@@ -10,7 +10,7 @@ import {
   StyleSheet as RNStyleSheet,
 } from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import {deviceType} from 'expo-device';
 import DeviceIcon from '../../images/Device.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';

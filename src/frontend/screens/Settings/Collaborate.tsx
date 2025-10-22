@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';

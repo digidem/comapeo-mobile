@@ -95,7 +95,7 @@ export const DeviceNameWithIcon = ({
   );
 };
 
-const DeviceIcon = ({
+export const DeviceIcon = ({
   deviceType,
   size,
 }: {

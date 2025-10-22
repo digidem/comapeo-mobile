@@ -114,6 +114,13 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
 
       {coordinators.map(coordinator => (
         <DeviceCard
+          onPress={() =>
+            navigation.navigate('CollaboratorInfo', {
+              deviceId: coordinator.deviceId,
+              isOwnDevice: coordinator.deviceId === deviceInfo.deviceId,
+              deviceType: coordinator.deviceType,
+            })
+          }
           key={coordinator.deviceId}
           style={{marginTop: 10}}
           name={coordinator.name || ''}
@@ -133,6 +140,13 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
 
       {participants.map(participant => (
         <DeviceCard
+          onPress={() =>
+            navigation.navigate('CollaboratorInfo', {
+              deviceId: participant.deviceId,
+              isOwnDevice: participant.deviceId === deviceInfo.deviceId,
+              deviceType: participant.deviceType,
+            })
+          }
           key={participant.deviceId}
           style={{marginTop: 10}}
           name={participant.name || ''}

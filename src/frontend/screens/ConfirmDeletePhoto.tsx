@@ -2,7 +2,7 @@ import {type NativeStackNavigationOptions} from '@react-navigation/native-stack'
 import * as Sentry from '@sentry/react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {View} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 import {usePersistedDraftObservationActions} from '../hooks/persistedState/usePersistedDraftObservation';
 import Error from '../images/Error.svg';

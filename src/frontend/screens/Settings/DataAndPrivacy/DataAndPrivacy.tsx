@@ -11,7 +11,7 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AppStackParamsList} from '../../../sharedTypes/navigation';
 import {useIntl, defineMessages} from 'react-intl';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {MetricsDiagnosticsPermissionToggle} from '../../../sharedComponents/MetricsDiagnosticsPermissionToggle';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';

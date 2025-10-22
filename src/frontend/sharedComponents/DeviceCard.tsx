@@ -12,7 +12,7 @@ import {FormattedDate} from 'react-intl';
 import {BodyText} from './Text/BodyText';
 
 type DeviceCardProps = {
-  deviceType: DeviceType;
+  deviceType: DeviceType | undefined;
   name: string;
   deviceConnectionStatus?: DeviceConnectionStatus;
   thisDevice?: boolean;

@@ -137,7 +137,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
               navigation.navigate('Security');
             },
             primaryText: formatMessage(m.security),
-            materialIconName: 'security',
+            materialIconName: 'security' as const,
           },
         ]
       : []),
@@ -148,7 +148,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
               navigation.navigate('CreateTestData');
             },
             primaryText: 'Create Test Data',
-            materialIconName: 'auto-fix-high',
+            materialIconName: 'auto-fix-high' as const,
           },
         ]
       : []),

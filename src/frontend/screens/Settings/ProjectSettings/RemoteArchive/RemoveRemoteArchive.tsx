@@ -4,7 +4,7 @@ import * as Sentry from '@sentry/react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
 import Error from '../../../../images/Error.svg';

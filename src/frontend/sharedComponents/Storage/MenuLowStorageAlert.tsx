@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View, StyleSheet, Pressable, Linking} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 import {BodyText} from '../Text/BodyText';
 import {BLACK, DARK_ORANGE, BLUE_GREY, COMAPEO_BLUE} from '../../lib/styles';

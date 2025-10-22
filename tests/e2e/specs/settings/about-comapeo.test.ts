@@ -26,6 +26,7 @@ describe('Settings - About CoMapeo Flow', () => {
     await expect($(byTextMatches('Phone model'))).toBeDisplayed();
     await expect($(byTextMatches('Emojis source'))).toBeDisplayed();
     await expect($(byTextMatches('Release name'))).toBeDisplayed();
+    await expect($(byTextMatches('CoMapeo Website'))).toBeDisplayed();
   });
 
   it('should navigate back to map screen', async () => {

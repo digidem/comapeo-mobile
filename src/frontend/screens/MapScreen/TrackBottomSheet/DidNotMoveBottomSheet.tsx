@@ -8,7 +8,7 @@ import {
 } from '../../../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {useTracking} from '../../../hooks/useTracking';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import ErrorIcon from '../../../images/Error.svg';
 import {StyleSheet, View} from 'react-native';
 

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Field} from '@comapeo/schema';
 import {DARK_GREY} from '../../lib/styles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteDocument, useProjectSettings} from '@comapeo/core-react';

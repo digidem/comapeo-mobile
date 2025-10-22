@@ -62,19 +62,19 @@
     "message": "Stop Tracks"
   },
   "Navigation.Menu.Settings": {
-    "message": "App Settings"
+    "message": "CoMapeo Settings"
   },
-  "Navigation.Menu.aboutCoMapeo": {
-    "message": "About CoMapeo"
-  },
-  "Navigation.Menu.allProjects": {
-    "message": "All Projects"
+  "Navigation.Menu.bgMaps": {
+    "message": "Дэвсгэр газрын зургууд"
   },
   "Navigation.Menu.collaborate": {
     "message": "Collaborate"
   },
   "Navigation.Menu.coordinator": {
     "message": "Coordinator"
+  },
+  "Navigation.Menu.coordinatorTools": {
+    "message": "Coordinator Tools"
   },
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
@@ -85,8 +85,8 @@
   "Navigation.Menu.exchange": {
     "message": "Exchange"
   },
-  "Navigation.Menu.invite": {
-    "message": "Урих"
+  "Navigation.Menu.gatherObservations": {
+    "message": "Gather Observations"
   },
   "Navigation.Menu.justYou": {
     "message": "Just You"
@@ -97,14 +97,11 @@
   "Navigation.Menu.participant": {
     "message": "Participant"
   },
-  "Navigation.Menu.privacyPolicy": {
-    "message": "Data & Privacy"
+  "Navigation.Menu.switchProject": {
+    "message": "Switch Project"
   },
-  "Navigation.Menu.switchProjects": {
-    "message": "Switch Projects"
-  },
-  "Navigation.Menu.viewProject": {
-    "message": "Харах"
+  "Navigation.Menu.team": {
+    "message": "Team"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -307,6 +304,9 @@
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Аюулгүй байдал"
   },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "About CoMapeo"
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
   },
@@ -333,6 +333,9 @@
   },
   "Screens.Settings.AppSettings.mapManagement": {
     "message": "Map Management"
+  },
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Data & Privacy"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App Settings"
@@ -520,6 +523,9 @@
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
     "message": "Android хувилбар"
+  },
+  "screens.AboutSettings.comapeoWebsiteLabel": {
+    "message": "CoMapeo Website"
   },
   "screens.AboutSettings.earlyAccessBanner": {
     "message": "You are in Early Access Mode."
@@ -1380,8 +1386,8 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Altitude Accuracy"
   },
-  "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "CoMapeo Data"
+  "screens.ObservationMetadataVerified.coMapeoMetadata": {
+    "message": "CoMapeo Metadata"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "This data was manually entered."
@@ -1414,7 +1420,7 @@
     "message": "Sent by CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "CoMapeo Data sent from"
+    "message": "CoMapeo Metadata sent from"
   },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Speed"

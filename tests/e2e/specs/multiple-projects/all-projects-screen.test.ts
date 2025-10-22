@@ -1,44 +1,50 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byText, byTextMatches} from '../../utils/selectors';
-import {output} from '../../utils/naming';
+import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 
 describe('Multiple Projects - All Projects Screen', () => {
-  it('should show all projects and correct role labels', async () => {
+  it('should show projects in order of creation when solo project is the selected project', async () => {
     await $('~Open Menu').click();
     await $(byText('Switch Project')).click();
 
-    const originalCard = await $(byTextMatches(output.names.device));
-    await expect(originalCard).toBeDisplayed();
+    const firstCard = await $(byResourceId('project_card_test_phone'));
+    const secondCard = await $(byResourceId('project_card_second_project'));
+    const thirdCard = await $(byResourceId('project_card_third_project'));
 
-    const newProject = await $(byText(output.names.secondProject));
-    await expect(newProject).toBeDisplayed();
+    await firstCard.click();
 
-    const otherProject = await $(byText(output.names.thirdProject));
-    await expect(otherProject).toBeDisplayed();
+    await $(byText('Switch Project')).click();
 
-    const coordinatorEls = await $$(
-      byTextMatches('You are a coordinator on this project'),
-    );
-    expect(coordinatorEls.length).toBe(2);
+    await expect(firstCard).toBeDisplayed();
+    await expect(secondCard).toBeDisplayed();
+    await expect(thirdCard).toBeDisplayed();
 
-    await expect($(byText('Start new project'))).toBeDisplayed();
+    const firstLocation = await firstCard.getLocation();
+    const secondLocation = await secondCard.getLocation();
+    const thirdLocation = await thirdCard.getLocation();
+
+    expect(firstLocation.y).toBeLessThan(secondLocation.y);
+    expect(secondLocation.y).toBeLessThan(thirdLocation.y);
   });
 
-  it('should show projects in the correct order based on testID', async () => {
-    // have to test the test ids because the test id is not on the header text element
-    const rawCards = await $$(
-      'android=new UiSelector().resourceIdMatches(".*project_card_.*")',
-    );
-    const cards = rawCards as unknown as WebdriverIO.Element[];
+  it('should show the selected project on top', async () => {
+    await $(byResourceId('project_card_second_project')).click();
 
-    const testIds: string[] = [];
-    for (const card of cards) {
-      const id = await card.getAttribute('resource-id');
-      testIds.push(id);
-    }
-    expect(testIds[0]).toMatch(/project_card_test_phone$/);
-    expect(testIds[1]).toMatch(/project_card_second_project$/);
-    expect(testIds[2]).toMatch(/project_card_third_project$/);
+    await $(byText('Switch Project')).click();
+
+    const firstCard = await $(byResourceId('project_card_second_project'));
+    const secondCard = await $(byResourceId('project_card_test_phone'));
+    const thirdCard = await $(byResourceId('project_card_third_project'));
+
+    await expect(firstCard).toBeDisplayed();
+    await expect(secondCard).toBeDisplayed();
+    await expect(thirdCard).toBeDisplayed();
+
+    const firstLocation = await firstCard.getLocation();
+    const secondLocation = await secondCard.getLocation();
+    const thirdLocation = await thirdCard.getLocation();
+
+    expect(firstLocation.y).toBeLessThan(secondLocation.y);
+    expect(secondLocation.y).toBeLessThan(thirdLocation.y);
   });
 });

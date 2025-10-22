@@ -62,19 +62,19 @@
     "message": "Stop tracks"
   },
   "Navigation.Menu.Settings": {
-    "message": "App instellingen"
+    "message": "CoMapeo instellingen"
   },
-  "Navigation.Menu.aboutCoMapeo": {
-    "message": "Over CoMapeo"
-  },
-  "Navigation.Menu.allProjects": {
-    "message": "Alle projecten"
+  "Navigation.Menu.bgMaps": {
+    "message": "Achtergrond Kaarten"
   },
   "Navigation.Menu.collaborate": {
     "message": "Samenwerken"
   },
   "Navigation.Menu.coordinator": {
     "message": "Coördinator"
+  },
+  "Navigation.Menu.coordinatorTools": {
+    "message": "Coördinator Tools"
   },
   "Navigation.Menu.currentProject": {
     "message": "Huidig project"
@@ -85,8 +85,8 @@
   "Navigation.Menu.exchange": {
     "message": "Ruil"
   },
-  "Navigation.Menu.invite": {
-    "message": "Uitnodigen"
+  "Navigation.Menu.gatherObservations": {
+    "message": "Waarnemingen verzamelen"
   },
   "Navigation.Menu.justYou": {
     "message": "U alleen"
@@ -97,14 +97,11 @@
   "Navigation.Menu.participant": {
     "message": "Deelnemer"
   },
-  "Navigation.Menu.privacyPolicy": {
-    "message": "Gegevens & Privacy"
+  "Navigation.Menu.switchProject": {
+    "message": "Wissel project"
   },
-  "Navigation.Menu.switchProjects": {
-    "message": "Wissel van projecten"
-  },
-  "Navigation.Menu.viewProject": {
-    "message": "Toon"
+  "Navigation.Menu.team": {
+    "message": "Team"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -307,6 +304,9 @@
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Beveiliging"
   },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "Over CoMapeo"
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coördinaat systeem"
   },
@@ -333,6 +333,9 @@
   },
   "Screens.Settings.AppSettings.mapManagement": {
     "message": "Map Management"
+  },
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Gegevens & Privacy"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App instellingen"
@@ -520,6 +523,9 @@
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
     "message": "Android versie"
+  },
+  "screens.AboutSettings.comapeoWebsiteLabel": {
+    "message": "CoMapeo website"
   },
   "screens.AboutSettings.earlyAccessBanner": {
     "message": "U bent in de Vroegtijdige toegangsmodus."
@@ -1380,8 +1386,8 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Hoogte Nauwkeurigheid"
   },
-  "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "CoMapeo gegevens"
+  "screens.ObservationMetadataVerified.coMapeoMetadata": {
+    "message": "CoMapeo Metadata"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "Deze gegevens zijn handmatig ingevoerd."
@@ -1414,7 +1420,7 @@
     "message": "Verzonden door CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "CoMapeo gegevens verzonden vanuit"
+    "message": "CoMapeo metadata verzonden van"
   },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Snelheid"

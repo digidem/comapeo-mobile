@@ -524,6 +524,9 @@
     "description": "Label for Android version",
     "message": "Android version"
   },
+  "screens.AboutSettings.comapeoWebsiteLabel": {
+    "message": "CoMapeo Website"
+  },
   "screens.AboutSettings.earlyAccessBanner": {
     "message": "You are in Early Access Mode."
   },

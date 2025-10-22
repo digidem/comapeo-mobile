@@ -12,12 +12,7 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import type {MaterialIconsIconName} from '@react-native-vector-icons/material-icons';
 import {BLACK} from '../../../../lib/styles';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
-import {
-  useOwnDeviceInfo,
-  useManyMembers,
-  useProjectSettings,
-} from '@comapeo/core-react';
-import {NotOnProject} from './NotOnProject';
+import {useOwnDeviceInfo, useManyMembers} from '@comapeo/core-react';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
@@ -67,7 +62,6 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const {projectId} = useActiveProject();
   const membersQuery = useManyMembers({projectId});
   const {data: deviceInfo} = useOwnDeviceInfo();
-  const projectSettings = useProjectSettings({projectId});
 
   const coordinators = !membersQuery.data
     ? []
@@ -80,10 +74,6 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const participants = !membersQuery.data
     ? []
     : membersQuery.data.filter(member => member.role.roleId === MEMBER_ROLE_ID);
-
-  if (projectSettings.data && !projectSettings.data.name) {
-    return <NotOnProject />;
-  }
 
   return (
     <ScrollView style={styles.container}>

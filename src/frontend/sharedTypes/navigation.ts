@@ -59,7 +59,6 @@ export type RootStackParamsList = {
   AboutSettings: undefined;
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
-  Experiments: undefined;
   DraftPhotoPreviewModal: {
     photo: ProcessedDraftPhoto;
   };
@@ -80,18 +79,11 @@ export type RootStackParamsList = {
   ObservationEdit: {observationId: string};
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
-  AddToProjectScreen: undefined;
-  UnableToLinkScreen: undefined;
-  ConnectingToDeviceScreen: {task: () => Promise<void>};
-  ConfirmLeavePracticeModeScreen: {projectAction: 'join' | 'create'};
   CreateProject: undefined;
   NameSoloProject: undefined;
   Security: undefined;
-  DirectionalArrow: undefined;
-  P2pUpgrade: undefined;
   ObservationFields: {question: number};
   ObservationCreate: undefined;
-  BGMapsSettings: undefined;
   AuthScreen: undefined;
   AppPasscode: undefined;
   ObscurePasscode: undefined;
@@ -101,7 +93,6 @@ export type RootStackParamsList = {
   EnterPassToTurnOff: undefined;
   AppSettings: undefined;
   ProjectSettings: undefined;
-  CreateOrJoinProject: undefined;
   Collaborate: undefined;
   JoinAProject: undefined;
   StartNewProjectIntro: undefined;
@@ -110,8 +101,7 @@ export type RootStackParamsList = {
     name: string;
     statsShared: boolean;
   };
-  JoinExistingProject: undefined;
-  YourTeam: undefined;
+  YourTeam: {projectName: string};
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;
@@ -125,14 +115,10 @@ export type RootStackParamsList = {
   Track: {trackId: string};
   TrackEdit: {trackId: string};
   CreateTestData: undefined;
-  MediaSyncSettings: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
-  MapManagement: undefined;
   BackgroundMaps: undefined;
-  SyncPreviewsBottomSheet: undefined;
-  SyncEverythingBottomSheet: undefined;
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;

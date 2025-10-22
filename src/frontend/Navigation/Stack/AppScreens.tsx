@@ -19,13 +19,11 @@ import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
-import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {
   CreateOrNameSoloProject,
   createNavigationOptions as createNameProjectNavOptions,
 } from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/ProjectCreated';
-import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
 import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
@@ -232,11 +230,6 @@ export const createAppScreens = ({
         options={{headerTitle: intl(CoordinateFormat.navTitle)}}
       />
       <RootStack.Screen
-        name="CreateOrJoinProject"
-        component={CreateOrJoinProject}
-        options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
-      />
-      <RootStack.Screen
         name="Collaborate"
         component={Collaborate}
         options={{headerTitle: intl(Collaborate.navTitle)}}
@@ -259,11 +252,6 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ProjectCreated"
         component={ProjectCreated}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="JoinExistingProject"
-        component={JoinExistingProject}
         options={{headerShown: false}}
       />
       <RootStack.Screen

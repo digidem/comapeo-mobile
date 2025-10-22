@@ -27,11 +27,7 @@ export const SelectOne = <T,>({
       const isSelected = item.value === value;
       return (
         <ListItem
-          key={
-            typeof item.value === 'string' || typeof item.value === 'number'
-              ? item.value
-              : index
-          }
+          key={`${item.label}-${index}`}
           testID={
             isSelected ? `${item.value}Button-selected` : `${item.value}Button`
           }

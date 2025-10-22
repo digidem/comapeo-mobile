@@ -96,8 +96,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await $(byText('Switch Project')).click();
     await expect($(byTextMatches(output.names.project))).toBeDisplayed();
     await expect($(byText(output.names.device))).toBeDisplayed();
-    const backButton = $(byResourceId('MAIN.header-back-btn'));
-    await backButton.click();
+    await driver.back();
     await $(byResourceId('MAIN.map-screen')).click();
   });
 });

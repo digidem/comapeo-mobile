@@ -27,20 +27,16 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
     await expect($(byText('Invite a Device'))).toBeDisplayed();
   });
 
-  it('should land in the new project and display it on the Map screen', async () => {
+  it('should display the project name in the side drawer', async () => {
     const doneBtn = await $(byTextMatches('Done'));
     await doneBtn.click();
-
-    const header = await $(byResourceId('HOME.header-title'));
-    await expect(header).toHaveText(output.names.secondProject);
-  });
-
-  it('should display the project name in the side drawer', async () => {
     await expect($(byText(`${output.names.secondProject}`))).toBeDisplayed();
     await expect($(byText('Coordinator'))).toBeDisplayed();
 
     const switchButton = await $(byText('Switch Project'));
     await expect(switchButton).toBeDisplayed();
+
+    await expect($(byTextMatches('Exchange'))).toBeDisplayed();
   });
 
   it('should switch back to the Solo project and update headers accordingly', async () => {

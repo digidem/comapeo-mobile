@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
-import MaterialIcon from '@react-native-vector-icons/material-icons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import ShieldIcon from '../images/BlackShield.svg';
 import type {
   ViewStyleProp,
@@ -106,13 +106,17 @@ const DeviceIcon = ({
     case 'mobile':
       return (
         <DeviceIconBackground size={size}>
-          <MaterialIcon name="smartphone" size={size * 0.5} color={DARK_GREY} />
+          <MaterialIcons
+            name="smartphone"
+            size={size * 0.5}
+            color={DARK_GREY}
+          />
         </DeviceIconBackground>
       );
     case 'tablet':
       return (
         <DeviceIconBackground size={size}>
-          <MaterialIcon
+          <MaterialIcons
             name="tablet-android"
             size={size * 0.5}
             color={DARK_GREY}
@@ -122,7 +126,7 @@ const DeviceIcon = ({
     case 'desktop':
       return (
         <DeviceIconBackground size={size}>
-          <MaterialIcon name="computer" size={size * 0.5} color={DARK_GREY} />
+          <MaterialIcons name="computer" size={size * 0.5} color={DARK_GREY} />
         </DeviceIconBackground>
       );
     case 'selfHostedServer':
@@ -137,7 +141,7 @@ const DeviceIcon = ({
     default: {
       return (
         <DeviceIconBackground size={size}>
-          <MaterialIcon
+          <MaterialIcons
             name="help-outline"
             size={size * 0.5}
             color={DARK_GREY}

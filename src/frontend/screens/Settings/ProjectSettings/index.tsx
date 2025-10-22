@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-import Fontisto from 'react-native-vector-icons/Fontisto';
+import Fontisto from '@react-native-vector-icons/fontisto';
 
 import {useActiveProject} from '../../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../../hooks/useProjectRoleAndDetails';
@@ -148,7 +148,13 @@ export const ProjectSettings = () => {
       />
       {!isSolo && (
         <SettingsCardRow
-          icon={<ProjectParticipantIcon width={24} height={24} />}
+          icon={
+            <ProjectParticipantIcon
+              width={24}
+              height={24}
+              color={NEW_DARK_GREY}
+            />
+          }
           title={formatMessage(m.projectCollaborators)}
           subtitle={
             isCoordinator
@@ -172,7 +178,9 @@ export const ProjectSettings = () => {
       )}
       {projectInfo.role !== 'participant' && (
         <SettingsCardRow
-          icon={<Fontisto name="nav-icon-grid-a" size={24} />}
+          icon={
+            <Fontisto name="nav-icon-grid-a" size={24} color={NEW_DARK_GREY} />
+          }
           title={formatMessage(m.configTitle)}
           subtitle={configData?.configMetadata?.name}
           buttonText={formatMessage(m.updateCategories)}

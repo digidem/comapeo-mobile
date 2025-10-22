@@ -1,7 +1,7 @@
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {getDraftPhotoInfo} from '../../lib/photos.ts';
 import {WHITE} from '../../lib/styles.ts';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';

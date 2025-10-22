@@ -7,7 +7,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {DARK_ORANGE} from '../../lib/styles';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import AddPerson from '../../images/AddPerson.svg';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from '@react-native-vector-icons/ionicons';
 
 const m = defineMessages({
   title: {

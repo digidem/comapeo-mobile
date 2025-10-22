@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import IonIcon from '@react-native-vector-icons/ionicons';
 
 import {HeaderText} from './Text/HeaderText';
 import {BLUE_GREY, DARK_GREY} from '../lib/styles';

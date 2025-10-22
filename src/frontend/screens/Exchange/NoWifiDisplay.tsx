@@ -8,7 +8,7 @@ import {Circle} from '../../sharedComponents/icons/Circle';
 import {WifiIcon, WifiOffIcon} from '../../sharedComponents/icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 const m = defineMessages({
   title: {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import IonIcon from '@react-native-vector-icons/ionicons';
 import {TouchableOpacity} from 'react-native';
 import {ViewStyleProp} from '../../sharedTypes';
 

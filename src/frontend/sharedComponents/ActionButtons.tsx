@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {Text} from './Text';
 import {DARK_GREY, LIGHT_GREY} from '../lib/styles';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';

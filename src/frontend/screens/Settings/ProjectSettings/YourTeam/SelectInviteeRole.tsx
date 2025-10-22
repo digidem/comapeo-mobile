@@ -2,7 +2,7 @@ import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {LIGHT_GREY, MEDIUM_GREY} from '../../../../lib/styles';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';

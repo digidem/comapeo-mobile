@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import Octicons from 'react-native-vector-icons/Octicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import IonIcon from '@react-native-vector-icons/ionicons';
+import Octicons from '@react-native-vector-icons/octicons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import Exchange from '../images/Exchange.svg';

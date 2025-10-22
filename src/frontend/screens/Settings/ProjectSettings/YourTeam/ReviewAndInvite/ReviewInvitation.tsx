@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 import {Text} from '../../../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import React from 'react';
 import {WHITE} from '../../../../../lib/styles';
 import {Button} from '../../../../../sharedComponents/Button';

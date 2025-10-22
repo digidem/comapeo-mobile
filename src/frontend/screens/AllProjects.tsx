@@ -6,7 +6,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import {FlatList} from 'react-native';
 import {useTracking} from '../hooks/useTracking';
 import {useActiveProject} from '../contexts/ActiveProjectContext';

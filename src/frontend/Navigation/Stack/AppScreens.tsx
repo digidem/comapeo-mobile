@@ -420,11 +420,6 @@ export const createAppScreens = ({
         options={{headerTitle: intl(ObservationMetadata.navTitle)}}
       />
       <RootStack.Screen
-        name="AllProjects"
-        component={AllProjects}
-        options={{headerTitle: intl(AllProjects.navTitle)}}
-      />
-      <RootStack.Screen
         name="InviteCollaborators"
         component={InviteCollaboratorsScreen}
         options={{
@@ -545,6 +540,13 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="EarlyAccessOff"
         component={EarlyAccessOffBottomSheet}
+      />
+      <RootStack.Screen
+        name="AllProjects"
+        component={AllProjects}
+        options={{
+          headerShown: false,
+        }}
       />
     </RootStack.Group>
   </>

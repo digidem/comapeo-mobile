@@ -17,35 +17,33 @@ import {ObservationCategoryChooser} from '../../screens/PresetChooser/Observatio
 import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
-import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
+import {ProjectSettings} from '../../screens/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
-import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {
   CreateOrNameSoloProject,
   createNavigationOptions as createNameProjectNavOptions,
-} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject';
-import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/ProjectCreated';
-import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
-import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
-import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
-import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
-import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
-import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
-import {ReviewAndInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite';
+} from '../../screens/ProjectCreation/CreateOrNameSoloProject';
+import {ProjectCreated} from '../../screens/ProjectCreation/CreateOrNameSoloProject/ProjectCreated';
+import {YourTeam} from '../../screens/YourTeam';
+import {SelectDevice} from '../../screens/YourTeam/SelectDevice';
+import {SelectInviteeRole} from '../../screens/YourTeam/SelectInviteeRole';
+import {ReviewInvitation} from '../../screens/YourTeam/ReviewAndInvite/ReviewInvitation';
+import {InviteAccepted} from '../../screens/YourTeam/InviteAccepted';
+import {ReviewAndInvite} from '../../screens/YourTeam/ReviewAndInvite';
 import {
   DisplayScreen as DeviceNameDisplayScreen,
   createNavigationOptions as createDeviceNameDisplayNavOptions,
-} from '../../screens/Settings/ProjectSettings/DeviceName/DisplayScreen';
+} from '../../screens/DeviceName/DisplayScreen';
 import {
   EditScreen as DeviceNameEditScreen,
   createNavigationOptions as createDeviceNameEditNavOptions,
-} from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
+} from '../../screens/DeviceName/EditScreen';
 import {
   LocationInfoScreen,
   createNavigationOptions as createLocationInfoNavOptions,
 } from '../../screens/LocationInfoScreen';
-import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
-import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
+import {InviteDeclined} from '../../screens/YourTeam/InviteDeclined';
+import {UnableToCancelInvite} from '../../screens/YourTeam/ReviewAndInvite/UnableToCancelInvite';
 import {SyncScreen} from '../../screens/Exchange/index.tsx';
 import {
   ManualGpsScreen,
@@ -65,17 +63,17 @@ import {
   TrackScreen,
   createNavigationOptions as createTrackNavigationOptions,
 } from '../../screens/Track/index.tsx';
-import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
-import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
+import {DataAndPrivacy} from '../../screens/DataAndPrivacy/DataAndPrivacy';
+import {SettingsPrivacyPolicy} from '../../screens/DataAndPrivacy/SettingsPrivacyPolicy';
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 import {Config} from '../../screens/Settings/Config';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
-import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/AddRemoteArchive.tsx';
-import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
+import {AddRemoteArchive} from '../../screens/RemoteArchive/AddRemoteArchive.tsx';
+import {SuccessfullyAddedArchive} from '../../screens/RemoteArchive/SuccessfullyAddedArchive.tsx';
 import {
   createNavigationOptions as createBackgroundMapsNavigationOptions,
   BackgroundMapsScreen,
-} from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
+} from '../../screens/BackgroundMaps/BackgroundMaps.tsx';
 import {ExchangeSettingsBottomSheet} from '../../screens/Exchange/ExchangeSettingsBottomSheet.tsx';
 import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
 import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
@@ -84,20 +82,20 @@ import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessful
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
-import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
-import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
-import {StartNewProjectScreen} from '../../screens/Settings/ProjectSettings/StartNewProject.tsx';
-import {EditProjectDetails} from '../../screens/Settings/ProjectSettings/EditProjectDetails.tsx';
+import {BackgroundMapErrorBottomSheet} from '../../screens/BackgroundMaps/ErrorBottomSheet.tsx';
+import {InviteCollaboratorsScreen} from '../../screens/YourTeam/InviteCollaborators.tsx';
+import {StartNewProjectScreen} from '../../screens/ProjectSettings/StartNewProject.tsx';
+import {EditProjectDetails} from '../../screens/ProjectSettings/EditProjectDetails.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
 import {TrackRecordingActive} from '../../screens/TrackRecordingActive.tsx';
 import {
   RemoteArchiveScreen,
   createNavigationOptions as createRemoteArchiveNavigationOptions,
-} from '../../screens/Settings/ProjectSettings/RemoteArchive/index.tsx';
+} from '../../screens/RemoteArchive/index.tsx';
 import {
   RemoveRemoteArchive,
   navigationOptions as removeRemoteArchiveNavigationOptions,
-} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoveRemoteArchive.tsx';
+} from '../../screens/RemoteArchive/RemoveRemoteArchive.tsx';
 import {ExportObservations} from '../../screens/ExportObservations.tsx';
 import {
   ConfirmDeletePhoto,
@@ -113,18 +111,18 @@ import {
 import {AttachedPhotoPreviewModal} from '../../screens/PhotoPreviewModal/AttachedPhotoPreviewModal.tsx';
 import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/sharedNavOptions.tsx';
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
-import {ShareProjectStats} from '../../screens/Settings/CreateOrJoinProject/ShareProjectStats.tsx';
+import {ShareProjectStats} from '../../screens/ProjectCreation/ShareProjectStats.tsx';
 import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
 import {AppUsagePromptInterstitial} from '../../screens/AppUsagePromptInterstitial.tsx';
 import {AppUsageSharingSuccess} from '../../screens/AppUsageSharingSuccess.tsx';
-import {ProjectStatistics} from '../../screens/Settings/ProjectSettings/ProjectStatistics/index.tsx';
-import {ProjectStatsTurnedOffBottomSheet} from '../../screens/Settings/ProjectSettings/ProjectStatistics/ProjectStatsTurnedOffBottomSheet.tsx';
+import {ProjectStatistics} from '../../screens/ProjectStatistics/index.tsx';
+import {ProjectStatsTurnedOffBottomSheet} from '../../screens/ProjectStatistics/ProjectStatsTurnedOffBottomSheet.tsx';
 import {EarlyAccessOffBottomSheet} from '../../screens/Settings/AppSettings/EarlyAccessOffBottomSheet.tsx';
 import {EarlyAccess} from '../../screens/Settings/AppSettings/EarlyAccess.tsx';
-import {Collaborate} from '../../screens/Settings/Collaborate.tsx';
-import {JoinAProject} from '../../screens/Settings/JoinAProject.tsx';
-import {StartNewProjectIntro} from '../../screens/Settings/StartNewProjectIntro.tsx';
-import {NameDefaultProjectIntro} from '../../screens/Settings/NameDefaultProjectIntro.tsx';
+import {Collaborate} from '../../screens/ProjectCreation/Collaborate.tsx';
+import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject.tsx';
+import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjectIntro.tsx';
+import {NameDefaultProjectIntro} from '../../screens/ProjectCreation/NameDefaultProjectIntro.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -232,11 +230,6 @@ export const createAppScreens = ({
         options={{headerTitle: intl(CoordinateFormat.navTitle)}}
       />
       <RootStack.Screen
-        name="CreateOrJoinProject"
-        component={CreateOrJoinProject}
-        options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
-      />
-      <RootStack.Screen
         name="Collaborate"
         component={Collaborate}
         options={{headerTitle: intl(Collaborate.navTitle)}}
@@ -259,11 +252,6 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ProjectCreated"
         component={ProjectCreated}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="JoinExistingProject"
-        component={JoinExistingProject}
         options={{headerShown: false}}
       />
       <RootStack.Screen

@@ -737,6 +737,9 @@
   "screens.CameraScreen.noCameraAccess": {
     "message": "No access to camera. Please Allow access in setting"
   },
+  "screens.CollaboratorInfo.navTitle": {
+    "message": "Collaborator Info"
+  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Cancel"
   },

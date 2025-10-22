@@ -11,6 +11,8 @@ describe('Multiple Projects - All Projects Screen', () => {
     const secondCard = await $(byResourceId('project_card_second_project'));
     const thirdCard = await $(byResourceId('project_card_third_project'));
 
+    await firstCard.click();
+
     await expect(firstCard).toBeDisplayed();
     await expect(secondCard).toBeDisplayed();
     await expect(thirdCard).toBeDisplayed();

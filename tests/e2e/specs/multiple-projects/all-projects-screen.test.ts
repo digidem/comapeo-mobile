@@ -13,6 +13,8 @@ describe('Multiple Projects - All Projects Screen', () => {
 
     await firstCard.click();
 
+    await $(byText('Switch Project')).click();
+
     await expect(firstCard).toBeDisplayed();
     await expect(secondCard).toBeDisplayed();
     await expect(thirdCard).toBeDisplayed();
@@ -23,13 +25,9 @@ describe('Multiple Projects - All Projects Screen', () => {
 
     expect(firstLocation.y).toBeLessThan(secondLocation.y);
     expect(secondLocation.y).toBeLessThan(thirdLocation.y);
-    await $(byText('Close')).click();
-    await $(byResourceId('observationsEmptyView')).click();
   });
 
   it('should show the selected project on top', async () => {
-    await $('~Open Menu').click();
-    await $(byText('Switch Project')).click();
     await $(byResourceId('project_card_second_project')).click();
 
     await $(byText('Switch Project')).click();

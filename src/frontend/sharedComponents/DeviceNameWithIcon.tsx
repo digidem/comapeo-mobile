@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Octicons from 'react-native-vector-icons/Octicons';
+import ShieldIcon from '../images/BlackShield.svg';
 import type {
   ViewStyleProp,
   DeviceConnectionStatus,
@@ -104,39 +104,61 @@ const DeviceIcon = ({
 }) => {
   switch (deviceType) {
     case 'mobile':
-      return <DeviceIconWithBackground icon="phone-android" size={size} />;
+      return (
+        <DeviceIconBackground size={size}>
+          <MaterialIcons
+            name="smartphone"
+            size={size * 0.5}
+            color={DARK_GREY}
+          />
+        </DeviceIconBackground>
+      );
     case 'tablet':
-      return <DeviceIconWithBackground icon="tablet-android" size={size} />;
+      return (
+        <DeviceIconBackground size={size}>
+          <MaterialIcons
+            name="tablet-android"
+            size={size * 0.5}
+            color={DARK_GREY}
+          />
+        </DeviceIconBackground>
+      );
     case 'desktop':
-      return <DeviceIconWithBackground icon="computer" size={size} />;
+      return (
+        <DeviceIconBackground size={size}>
+          <MaterialIcons name="computer" size={size * 0.5} color={DARK_GREY} />
+        </DeviceIconBackground>
+      );
     case 'selfHostedServer':
       return (
-        <DeviceIconWithBackground
-          icon="shield-lock"
-          size={size}
-          iconLibrary="octicons"
-        />
+        <DeviceIconBackground size={size}>
+          <ShieldIcon width={size * 0.5} height={size * 0.7} />
+        </DeviceIconBackground>
       );
     case undefined:
     case 'UNRECOGNIZED':
     case 'device_type_unspecified':
     default: {
-      return <DeviceIconWithBackground icon="help-outline" size={size} />;
+      return (
+        <DeviceIconBackground size={size}>
+          <MaterialIcons
+            name="help-outline"
+            size={size * 0.5}
+            color={DARK_GREY}
+          />
+        </DeviceIconBackground>
+      );
     }
   }
 };
 
-const DeviceIconWithBackground = ({
-  icon,
+const DeviceIconBackground = ({
+  children,
   size,
-  iconLibrary = 'material',
 }: {
-  icon: string;
+  children: React.ReactNode;
   size: number;
-  iconLibrary?: 'material' | 'octicons';
 }) => {
-  const IconComponent = iconLibrary === 'octicons' ? Octicons : MaterialIcons;
-
   return (
     <View
       style={{
@@ -147,7 +169,7 @@ const DeviceIconWithBackground = ({
         width: size,
         height: size,
       }}>
-      <IconComponent name={icon} size={size * 0.5} color={DARK_GREY} />
+      {children}
     </View>
   );
 };

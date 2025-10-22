@@ -128,7 +128,7 @@ export const DestructiveButton = ({
 
 export const buttonStyles = StyleSheet.create({
   base: {
-    height: 50,
+    minHeight: 50,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

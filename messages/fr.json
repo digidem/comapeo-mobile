@@ -62,19 +62,19 @@
     "message": "Arrêter les pistes"
   },
   "Navigation.Menu.Settings": {
-    "message": "Paramètres de l'application"
+    "message": "Paramètres de CoMapeo"
   },
-  "Navigation.Menu.aboutCoMapeo": {
-    "message": "À propos de CoMapeo"
-  },
-  "Navigation.Menu.allProjects": {
-    "message": "Tous les projets"
+  "Navigation.Menu.bgMaps": {
+    "message": "Cartes d'arrière-plan"
   },
   "Navigation.Menu.collaborate": {
     "message": "Collaborer"
   },
   "Navigation.Menu.coordinator": {
     "message": "Coordonnateur"
+  },
+  "Navigation.Menu.coordinatorTools": {
+    "message": "Outils de coordinator"
   },
   "Navigation.Menu.currentProject": {
     "message": "Projet actuel"
@@ -85,8 +85,8 @@
   "Navigation.Menu.exchange": {
     "message": "Échanger"
   },
-  "Navigation.Menu.invite": {
-    "message": "Inviter"
+  "Navigation.Menu.gatherObservations": {
+    "message": "Collecter des observations"
   },
   "Navigation.Menu.justYou": {
     "message": "Juste vous"
@@ -97,14 +97,11 @@
   "Navigation.Menu.participant": {
     "message": "Participant"
   },
-  "Navigation.Menu.privacyPolicy": {
-    "message": "Données & Confidentialité"
-  },
-  "Navigation.Menu.switchProjects": {
+  "Navigation.Menu.switchProject": {
     "message": "Changer de projet"
   },
-  "Navigation.Menu.viewProject": {
-    "message": "Afficher"
+  "Navigation.Menu.team": {
+    "message": "Equipe"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -307,6 +304,9 @@
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Sécurité"
   },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "À propos de CoMapeo"
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Système de coordonnées"
   },
@@ -333,6 +333,9 @@
   },
   "Screens.Settings.AppSettings.mapManagement": {
     "message": "Map Management"
+  },
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Données & Confidentialité"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "Paramètres de l'application"
@@ -520,6 +523,9 @@
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
     "message": "Version d'Android"
+  },
+  "screens.AboutSettings.comapeoWebsiteLabel": {
+    "message": "Site Web de CoMapeo"
   },
   "screens.AboutSettings.earlyAccessBanner": {
     "message": "Vous êtes en mode accès anticipé."
@@ -1380,8 +1386,8 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Précision d'altitude"
   },
-  "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "Données CoMapeo"
+  "screens.ObservationMetadataVerified.coMapeoMetadata": {
+    "message": "Métadonnées de CoMapeo"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "Ces données ont été saisies manuellement."
@@ -1414,7 +1420,7 @@
     "message": "Envoyé par CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "Données CoMapeo envoyées depuis"
+    "message": "Métadonnées de CoMapeo envoyées depuis"
   },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Rapidité"

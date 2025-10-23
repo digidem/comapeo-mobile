@@ -62,7 +62,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
     <View style={styles.container}>
       <View style={styles.innerBox}>
         <DeviceIcon deviceType={route.params.deviceType} size={80} />
-        {name && <HeaderText>{name}</HeaderText>}
+        {name && <HeaderText style={{textAlign: 'center'}}>{name}</HeaderText>}
         <View
           style={{
             flexDirection: 'row',
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
   buttonStyle: {alignSelf: 'center', marginTop: 20},
 });

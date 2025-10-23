@@ -423,11 +423,11 @@
   "TrackStats.kilometers": {
     "message": "km"
   },
-  "allProjects.createNewProject": {
-    "message": "Nieuw project starten"
+  "allProjects.close": {
+    "message": "Open Settings"
   },
-  "allProjects.navTitle": {
-    "message": "Alle projecten"
+  "allProjects.newCollab": {
+    "message": "Nieuwe samenwerking"
   },
   "constants.blue": {
     "message": "Blauw"
@@ -1722,12 +1722,6 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
     "message": "Bekijk team"
   },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
-    "message": "Maak of neem deel aan project"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
-    "message": "Maak of neem deel aan een project om apparaten uit te nodigen"
-  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Uitnodiging bekijken"
   },
@@ -1809,15 +1803,6 @@
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Benoem mijn project"
   },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go back"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
-    "message": "Hoe deel te nemen aan een project"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
-    "message": "Om deel te nemen aan een project vind je een coördinator van het project waaraan je wilt deelnemen. Vertel ze je apparaatnaam en de coördinator zal je een uitnodiging sturen."
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "Voltooid"
   },
@@ -1833,12 +1818,6 @@
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Voltooid!"
   },
-  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
-    "message": "Je bent al in een project. Om een nieuw project aan te maken moet je CoMapeo verwijderen en opnieuw installeren."
-  },
-  "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "Maak een project aan"
-  },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create Project"
   },
@@ -1848,17 +1827,8 @@
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Het gebruik van een bestaande projectnaam maakt ze niet hetzelfde project."
   },
-  "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "Deelnemen aan een bestaand CoMapeo Project"
-  },
-  "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "Deelnemen aan een project"
-  },
   "screens.Settings.CreateOrJoinProject.keepInMind": {
     "message": "Onthoud houden"
-  },
-  "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "Een project is een beveiligde container voor uw gegevens. Alleen apparaten die u uitnodigt kunnen gegevens invoeren en met u delen. Maak of neem deel aan een project om gegevens te delen met andere apparaten. Deze actie verwijdert tot nu toe waarnemingen die je hebt verzameld. Overweeg om belangrijke {icon} waarnemingen te delen naar je e-mail, voordat je verder gaat."
   },
   "screens.Settings.CreateOrJoinProject.projectUnique": {
     "message": "Elk project is uniek en kan niet met een ander project uitwisselen."
@@ -1868,15 +1838,6 @@
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "Opslaan"
-  },
-  "screens.Settings.CreateOrJoinProject.startProject": {
-    "message": "Start een CoMapeo project"
-  },
-  "screens.Settings.CreateOrJoinProject.title": {
-    "message": "Maken of aansluiten"
-  },
-  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
-    "message": "Wat is een project"
   },
   "screens.Settings.JoinAProject.description": {
     "message": "Vraag een projectcoördinator om een projectuitnodiging te ontvangen."

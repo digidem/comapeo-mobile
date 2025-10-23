@@ -423,11 +423,11 @@
   "TrackStats.kilometers": {
     "message": "Km"
   },
-  "allProjects.createNewProject": {
-    "message": "Démarrer un nouveau projet"
+  "allProjects.close": {
+    "message": "Open Settings"
   },
-  "allProjects.navTitle": {
-    "message": "Tous les projets"
+  "allProjects.newCollab": {
+    "message": "Nouvelle collaboration"
   },
   "constants.blue": {
     "message": "Bleu"
@@ -1722,12 +1722,6 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
     "message": "Voir l'équipe"
   },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
-    "message": "Créer ou rejoindre un projet"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
-    "message": "Créez ou rejoignez un projet pour inviter des appareils"
-  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Revoir l'invitation"
   },
@@ -1809,15 +1803,6 @@
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Nommer mon projet"
   },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go back"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
-    "message": "Comment rejoindre un projet"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
-    "message": "Pour rejoindre un projet, trouvez un coordinateur du projet que vous souhaitez rejoindre. Dites-leur le nom de votre appareil et le coordinateur vous enverra une invitation."
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "Terminé"
   },
@@ -1833,12 +1818,6 @@
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Succès !"
   },
-  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
-    "message": "Vous êtes déjà sur un projet. Pour créer un nouveau projet, vous devez désinstaller et réinstaller CoMapeo."
-  },
-  "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "Créer un projet"
-  },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create Project"
   },
@@ -1848,17 +1827,8 @@
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "L'utilisation d'un nom de projet existant ne fait pas d'eux le même projet."
   },
-  "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "Rejoindre un projet CoMapeo existant"
-  },
-  "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "Rejoindre un projet"
-  },
   "screens.Settings.CreateOrJoinProject.keepInMind": {
     "message": "Gardez à l'esprit"
-  },
-  "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "Un projet est un conteneur sécurisé pour vos données. Seuls les appareils que vous invitez peuvent entrer et partager des données avec vous. Créez ou rejoignez un projet afin de partager des données avec d'autres appareils. Cette action supprimera les observations que vous avez collectées jusqu'à présent. Pensez à partager des observations importantes {icon} à votre e-mail avant de continuer."
   },
   "screens.Settings.CreateOrJoinProject.projectUnique": {
     "message": "Chaque projet est unique et ne peut pas échanger avec un autre projet."
@@ -1868,15 +1838,6 @@
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "Enregistrer"
-  },
-  "screens.Settings.CreateOrJoinProject.startProject": {
-    "message": "Lancer un projet CoMapeo"
-  },
-  "screens.Settings.CreateOrJoinProject.title": {
-    "message": "Créer ou rejoindre"
-  },
-  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
-    "message": "Qu'est-ce qu'un projet"
   },
   "screens.Settings.JoinAProject.description": {
     "message": "Demandez à un coordinateur de projet de recevoir une invitation de projet."

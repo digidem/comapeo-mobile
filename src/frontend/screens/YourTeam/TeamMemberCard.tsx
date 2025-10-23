@@ -1,18 +1,12 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {
-  BLUE_GREY,
-  BLACK,
-  LIGHT_GREY,
-  DARK_GREY,
-  MEDIUM_GREY,
-} from '../../lib/styles';
+import {BLUE_GREY, BLACK, MEDIUM_GREY} from '../../lib/styles';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type {DeviceType} from '../../sharedTypes';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {defineMessages, useIntl} from 'react-intl';
-import ShieldIcon from '../../images/BlackShield.svg';
+import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
 const m = defineMessages({
   thisDevice: {
@@ -41,7 +35,7 @@ export const TeamMemberCard = ({
       disabled={!onPress}
       onPress={onPress}
       style={styles.container}>
-      <DeviceIcon deviceType={deviceType} />
+      <DeviceIcon deviceType={deviceType} size={30} />
       <View style={styles.textContainer}>
         <View style={styles.nameRow}>
           <HeaderText
@@ -69,32 +63,6 @@ export const TeamMemberCard = ({
   );
 };
 
-const DeviceIcon = ({deviceType}: {deviceType: DeviceType}) => {
-  const getIconContent = () => {
-    switch (deviceType) {
-      case 'mobile':
-        return <MaterialIcons name="smartphone" size={15} color={DARK_GREY} />;
-      case 'tablet':
-        return (
-          <MaterialIcons name="tablet-android" size={15} color={DARK_GREY} />
-        );
-      case 'desktop':
-        return <MaterialIcons name="computer" size={15} color={DARK_GREY} />;
-      case 'selfHostedServer':
-        return <ShieldIcon width={15} height={21} />;
-      case 'UNRECOGNIZED':
-      case 'device_type_unspecified':
-      case undefined:
-      default:
-        return (
-          <MaterialIcons name="help-outline" size={15} color={DARK_GREY} />
-        );
-    }
-  };
-
-  return <View style={styles.iconContainer}>{getIconContent()}</View>;
-};
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -104,14 +72,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 6,
-  },
-  iconContainer: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: LIGHT_GREY,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   textContainer: {
     flex: 1,

@@ -423,11 +423,11 @@
   "TrackStats.kilometers": {
     "message": "km"
   },
-  "allProjects.createNewProject": {
-    "message": "新しいプロジェクトを開始"
+  "allProjects.close": {
+    "message": "Open Settings"
   },
-  "allProjects.navTitle": {
-    "message": "すべてのプロジェクト"
+  "allProjects.newCollab": {
+    "message": "新しいコラボレーション"
   },
   "constants.blue": {
     "message": "青"
@@ -1722,12 +1722,6 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
     "message": "チームを表示"
   },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
-    "message": "プロジェクトを作成または参加"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
-    "message": "プロジェクトを作成または参加してデバイスを招待する"
-  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "招待状を確認"
   },
@@ -1809,15 +1803,6 @@
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "プロジェクトの名前"
   },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go back"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
-    "message": "プロジェクトに参加する方法"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
-    "message": "プロジェクトに参加するには、参加したいプロジェクトのコーディネーターを見つけます。 デバイス名を知らせると、コーディネーターが招待状を送信します。"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "完了"
   },
@@ -1833,12 +1818,6 @@
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "成功！"
   },
-  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
-    "message": "既にプロジェクトに参加しています。新しいプロジェクトを作成するには、CoMapeoをアンインストールして再インストールする必要があります。"
-  },
-  "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "プロジェクトを作成"
-  },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create Project"
   },
@@ -1848,17 +1827,8 @@
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "既存のプロジェクト名を使用すると、同じプロジェクトにはなりません。"
   },
-  "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "既存のCoMapeoプロジェクトに参加する"
-  },
-  "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "プロジェクトに参加"
-  },
   "screens.Settings.CreateOrJoinProject.keepInMind": {
     "message": "覚えておいてください"
-  },
-  "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "プロジェクトはデータの安全なコンテナです。招待したデバイスのみがデータを入力して共有できます。 他のデバイスとデータを共有するために、プロジェクトを作成または参加します。 この操作は、これまでに収集した観察記録を削除します。続行する前に、 {icon} の重要な観察記録をメールに共有することを検討してください。"
   },
   "screens.Settings.CreateOrJoinProject.projectUnique": {
     "message": "各プロジェクトは一意であり、他のプロジェクトと交換することはできません。"
@@ -1868,15 +1838,6 @@
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "保存"
-  },
-  "screens.Settings.CreateOrJoinProject.startProject": {
-    "message": "CoMapeoプロジェクトを開始"
-  },
-  "screens.Settings.CreateOrJoinProject.title": {
-    "message": "作成または参加"
-  },
-  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
-    "message": "プロジェクトとは"
   },
   "screens.Settings.JoinAProject.description": {
     "message": "プロジェクトコーディネーターにプロジェクトの招待を受け取るよう依頼します。"

@@ -740,11 +740,17 @@
   "screens.CollaboratorInfo.addedOn": {
     "message": "Added on {date}"
   },
+  "screens.CollaboratorInfo.coordinator": {
+    "message": "Coordinator"
+  },
   "screens.CollaboratorInfo.leaveProject": {
     "message": "Leave Project"
   },
   "screens.CollaboratorInfo.navTitle": {
     "message": "Collaborator Info"
+  },
+  "screens.CollaboratorInfo.participant": {
+    "message": "Participant"
   },
   "screens.CollaboratorInfo.removeDevice": {
     "message": "Remove Device"

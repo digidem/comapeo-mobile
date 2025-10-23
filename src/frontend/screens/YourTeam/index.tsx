@@ -12,6 +12,7 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import type {MaterialIconsIconName} from '@react-native-vector-icons/material-icons';
 import {BLACK} from '../../lib/styles';
 import {DeviceCard} from '../../sharedComponents/DeviceCard';
+import {TeamMemberCard} from './TeamMemberCard';
 import {useOwnDeviceInfo, useManyMembers} from '@comapeo/core-react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -101,28 +102,19 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
       />
       <BodyText style={{marginTop: 10}}>{t(m.coordinatorDescription)}</BodyText>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: 20,
-        }}>
-        <BodyText style={{marginTop: 10}}>{t(m.deviceName)}</BodyText>
-        <BodyText style={{marginTop: 10}}>{t(m.dateAdded)}</BodyText>
+      <View style={{marginTop: 20, gap: 10}}>
+        {coordinators.map(coordinator => (
+          <TeamMemberCard
+            key={coordinator.deviceId}
+            name={coordinator.name || ''}
+            deviceType={coordinator.deviceType}
+            thisDevice={deviceInfo.deviceId === coordinator.deviceId}
+            onPress={() => {
+              console.log('Pressed coordinator:', coordinator.name);
+            }}
+          />
+        ))}
       </View>
-
-      {coordinators.map(coordinator => (
-        <DeviceCard
-          key={coordinator.deviceId}
-          style={{marginTop: 10}}
-          name={coordinator.name || ''}
-          deviceId={coordinator.deviceId}
-          dateAdded={coordinator.joinedAt}
-          deviceType={coordinator.deviceType}
-          thisDevice={deviceInfo.deviceId === coordinator.deviceId}
-        />
-      ))}
 
       <IconHeader
         iconName="people"

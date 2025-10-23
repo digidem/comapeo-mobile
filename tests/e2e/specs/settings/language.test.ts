@@ -32,9 +32,8 @@ describe('Settings - Language Settings Flow', () => {
     await $(byTextMatches('Español')).scrollIntoView();
     await expect($(byResourceId('esButton-selected'))).toBeDisplayed();
 
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await backBtn.click();
+    await driver.back();
+    await driver.back();
     await $(byResourceId('MAIN.map-screen')).click();
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
@@ -55,8 +54,8 @@ describe('Settings - Language Settings Flow', () => {
     await idiomaOption.click();
     const englishElem = await $(byTextMatches('English'));
     await englishElem.click();
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
+    await driver.back();
+    await driver.back();
     await $(byResourceId('observationsEmptyView')).click();
   });
 });

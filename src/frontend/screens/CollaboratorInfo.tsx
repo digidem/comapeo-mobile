@@ -8,9 +8,10 @@ import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../sharedTypes';
-import {DestructiveButton} from '../sharedComponents/Buttons';
+import {SecondaryDestructiveButton} from '../sharedComponents/Buttons';
 import {DeviceIcon} from '../sharedComponents/DeviceNameWithIcon';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
+import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 
 const m = defineMessages({
   navTitle: {
@@ -90,20 +91,26 @@ export const CollaboratorInfo: NativeNavigationComponent<
       {!isCoordinator &&
         (route.params.isOwnDevice ? (
           //this should be SecondaryDestructiveButton
-          <DestructiveButton
+          <SecondaryDestructiveButton
             text={formatMessage(m.leaveProject)}
             fullSize={true}
             style={styles.buttonStyle}
+            renderIcon={({size, color}) => (
+              <MaterialDesignIcons size={size} color={color} name="export" />
+            )}
             onPress={() => {
               // To Do: Navigate to Leave Project Screen
               console.log('Leave Project Screen pressed');
             }}
           />
         ) : ownRoleIsCoordinator ? (
-          <DestructiveButton
+          <SecondaryDestructiveButton
             text={formatMessage(m.removeDevice)}
             fullSize={true}
             style={styles.buttonStyle}
+            renderIcon={({size, color}) => (
+              <MaterialIcon size={size} color={color} name="person-remove" />
+            )}
             onPress={() => {
               // To Do: navigate to remove device success screen
               console.log('Remove Device pressed');

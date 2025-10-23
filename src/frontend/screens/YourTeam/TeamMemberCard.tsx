@@ -18,7 +18,7 @@ const m = defineMessages({
 type TeamMemberCardProps = {
   deviceType: DeviceType;
   name: string;
-  onPress?: () => void;
+  onPress: () => void;
   thisDevice: boolean;
 };
 
@@ -31,10 +31,7 @@ export const TeamMemberCard = ({
   const {formatMessage} = useIntl();
 
   return (
-    <TouchableOpacity
-      disabled={!onPress}
-      onPress={onPress}
-      style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <DeviceIcon deviceType={deviceType} size={30} />
       <View style={styles.textContainer}>
         <View style={styles.nameRow}>
@@ -56,9 +53,7 @@ export const TeamMemberCard = ({
           )}
         </View>
       </View>
-      {onPress && (
-        <MaterialIcons name="chevron-right" size={30} color={BLACK} />
-      )}
+      <MaterialIcons name="chevron-right" size={30} color={BLACK} />
     </TouchableOpacity>
   );
 };

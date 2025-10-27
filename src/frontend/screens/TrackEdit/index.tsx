@@ -64,12 +64,13 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
 
   useEffect(() => {
     if (
+      !preset &&
       track?.presetRef?.docId &&
       foundPreset?.docId === track.presetRef.docId
     ) {
       setTrackPreset(foundPreset);
     }
-  }, [track, foundPreset, setTrackPreset]);
+  }, [track, foundPreset, setTrackPreset, preset]);
 
   useEffect(() => {
     if (trackId) {

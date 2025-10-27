@@ -17,7 +17,6 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
-
 const m = defineMessages({
   title: {
     id: 'screens.Setting.ProjectSettings.YourTeam.title',
@@ -54,7 +53,6 @@ const m = defineMessages({
       'Participants can take and share observations. They cannot manage users or project details.',
   },
 });
-
 export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   navigation,
 }) => {
@@ -62,7 +60,6 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const {projectId} = useActiveProject();
   const membersQuery = useManyMembers({projectId});
   const {data: deviceInfo} = useOwnDeviceInfo();
-
   const coordinators = !membersQuery.data
     ? []
     : membersQuery.data.filter(
@@ -70,11 +67,9 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           member.role.roleId === COORDINATOR_ROLE_ID ||
           member.role.roleId === CREATOR_ROLE_ID,
       );
-
   const participants = !membersQuery.data
     ? []
     : membersQuery.data.filter(member => member.role.roleId === MEMBER_ROLE_ID);
-
   return (
     <ScrollView style={styles.container}>
       {!deviceInfo ||
@@ -130,7 +125,6 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
         style={{marginTop: 20}}
       />
       <BodyText style={{marginTop: 10}}>{t(m.participantDescription)}</BodyText>
-
       {participants.map(participant => (
         <DeviceCard
           key={participant.deviceId}

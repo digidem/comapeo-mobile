@@ -134,6 +134,11 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           deviceType={participant.deviceType}
           dateAdded={participant.joinedAt}
           thisDevice={deviceInfo.deviceId === participant.deviceId}
+          onPress={
+            deviceInfo.deviceId === participant.deviceId
+              ? () => navigation.navigate('LeaveProject')
+              : undefined
+          }
         />
       ))}
       <View style={{marginBottom: 40}} />

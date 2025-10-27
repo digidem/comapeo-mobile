@@ -142,6 +142,6 @@ const styles = StyleSheet.create({
   buttons: {
     alignItems: 'center',
     gap: 12,
-    padding: 20,
+    paddingBottom: 20,
   },
 });

@@ -43,7 +43,7 @@ export const TrackCategoryChooser: NativeNavigationComponent<
   const handleSelect = (preset: Preset) => {
     setTrackPreset(preset);
     if (trackId) {
-      navigation.navigate('TrackEdit', {trackId});
+      navigation.goBack();
     } else {
       navigation.navigate('SaveTrack');
     }

@@ -2086,6 +2086,9 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "Sie nehmen gerade einen Track auf. Um dem Projekt beizutreten, stoppen Sie die Aufnahme"
   },
+  "screens.YourTeam.TeamMemberCard.thisDevice": {
+    "message": "Dieses Gerät"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Optionen anzeigen"

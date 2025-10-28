@@ -2086,6 +2086,9 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "現在トラックを録音しています。プロジェクトに参加するには、録音を停止してください。"
   },
+  "screens.YourTeam.TeamMemberCard.thisDevice": {
+    "message": "このデバイス"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "オプションを表示"

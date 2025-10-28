@@ -2086,6 +2086,9 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "Je neemt momenteel een nummer op. Om deel te nemen aan het project stop je opname"
   },
+  "screens.YourTeam.TeamMemberCard.thisDevice": {
+    "message": "Dit apparaat"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Toon opties"

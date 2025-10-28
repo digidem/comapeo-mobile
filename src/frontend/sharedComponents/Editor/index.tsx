@@ -143,10 +143,7 @@ export const Editor = ({
                   );
                 }
                 // observationId must exist if there is a saved photo
-                if (isSavedPhoto(att)) {
-                  if (!observationId) {
-                    return <ThumbnailLoader size={size} key={att.hash} />;
-                  }
+                if (isSavedPhoto(att) && observationId) {
                   return (
                     <React.Suspense
                       key={att.driveDiscoveryId + att.hash + att.type}
@@ -165,10 +162,7 @@ export const Editor = ({
                   );
                 }
 
-                if (isAudioAttachment(att)) {
-                  if (!observationId) {
-                    return <ThumbnailLoader size={size} key={att.name} />;
-                  }
+                if (isAudioAttachment(att) && observationId) {
                   return (
                     <AudioSavedThumbnail
                       size={size}

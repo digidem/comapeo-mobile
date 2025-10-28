@@ -2086,6 +2086,9 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "Vous êtes actuellement en train d'enregistrer une piste. Pour rejoindre le projet, arrêtez l'enregistrement"
   },
+  "screens.YourTeam.TeamMemberCard.thisDevice": {
+    "message": "Cet appareil"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Afficher les options"

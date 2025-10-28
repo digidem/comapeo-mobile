@@ -38,9 +38,6 @@ export const TrackCategoryChooser: NativeNavigationComponent<
   const existingPreset = useTrackState(state => state.preset);
   const trackId = useTrackState(state => state.docId);
 
-  // const isNewTrack = !existingPreset && !trackId;
-  // usePreventRemove(isNewTrack, () => {});
-
   const handleGoBack = React.useCallback(() => {
     navigation.goBack();
   }, [navigation]);

@@ -11,6 +11,7 @@ import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {usePresetsSelection} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
+import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 
 const m = defineMessages({
   title: {
@@ -24,6 +25,7 @@ export const TrackCategoryChooser: NativeNavigationComponent<
 > = ({navigation}) => {
   const {projectId} = useActiveProject();
   const languageTag = useAppLanguageTag();
+  usePreventAndroidBackButton();
   const presets = usePresetsSelection({
     projectId: projectId,
     dataType: 'observation',
@@ -35,6 +37,9 @@ export const TrackCategoryChooser: NativeNavigationComponent<
   );
   const existingPreset = useTrackState(state => state.preset);
   const trackId = useTrackState(state => state.docId);
+
+  // const isNewTrack = !existingPreset && !trackId;
+  // usePreventRemove(isNewTrack, () => {});
 
   const handleGoBack = React.useCallback(() => {
     navigation.goBack();

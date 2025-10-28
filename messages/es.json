@@ -2086,6 +2086,9 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "Actualmente estás grabando un trayecto. Para unirte al proyecto, deja de grabar"
   },
+  "screens.YourTeam.TeamMemberCard.thisDevice": {
+    "message": "Este dispositivo"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Mostrar opciones"

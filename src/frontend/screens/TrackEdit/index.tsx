@@ -25,6 +25,7 @@ import {
 } from '../../utils/trackMetrics';
 import {Divider} from '../../sharedComponents/Divider';
 import {TrackStats} from '../../sharedComponents/Editor/TrackStats';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const m = defineMessages({
   trackEditScreenTitle: {
@@ -102,7 +103,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   }, [saveTrack, navigation, status]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.presetContainer}>
         <View
           style={{
@@ -152,7 +153,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
           <DescriptionField notes={field.value} updateNotes={field.onChange} />
         )}
       />
-    </View>
+    </ScrollView>
   );
 };
 
@@ -166,7 +167,8 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 20,
-    paddingTop: 40,
+    flex: 1,
+    marginBottom: 40,
   },
 
   icon: {width: 30, height: 30},

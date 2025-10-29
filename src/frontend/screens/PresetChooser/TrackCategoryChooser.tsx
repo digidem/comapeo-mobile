@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
+import {useTrackActions} from '../../contexts/TrackStoreContext';
 import {CategoryGrid} from './CategoryGrid';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {WHITE} from '../../lib/styles';
@@ -21,47 +21,46 @@ const m = defineMessages({
 
 export const TrackCategoryChooser: NativeNavigationComponent<
   'TrackCategoryChooser'
-> = ({navigation}) => {
+> = ({navigation, route}) => {
   const {projectId} = useActiveProject();
   const languageTag = useAppLanguageTag();
-  const presets = usePresetsSelection({
+  const unfilteredPresets = usePresetsSelection({
     projectId: projectId,
-    dataType: 'observation',
+    dataType: 'track',
     lang: languageTag,
   });
-  const {setTrackPreset} = useTrackActions();
-  const trackPresets = Array.from(presets).filter(p =>
+
+  const trackPresets = unfilteredPresets.filter(p =>
     p.geometry.includes('line'),
   );
-  const existingPreset = useTrackState(state => state.preset);
-  const trackId = useTrackState(state => state.docId);
-
-  const handleGoBack = React.useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
+  const {setTrackPreset} = useTrackActions();
 
   const handleSelect = (preset: Preset) => {
-    setTrackPreset(preset);
-    if (trackId) {
-      navigation.navigate('TrackEdit', {trackId});
-    } else {
+    if (route.params.trackAction === 'saveNew') {
+      setTrackPreset(preset);
       navigation.navigate('SaveTrack');
+      return;
     }
+
+    navigation.popTo('TrackEdit', {
+      newPresetId: preset.docId,
+      trackId: route.params.trackId,
+    });
   };
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: props =>
-        existingPreset || trackId ? (
+        route.params.trackAction === 'editExisting' ? (
           <CustomHeaderLeft
-            onPress={handleGoBack}
+            onPress={navigation.goBack}
             headerBackButtonProps={props}
           />
         ) : (
           <HeaderLeft headerBackButtonProps={props} />
         ),
     });
-  }, [navigation, existingPreset, handleGoBack, trackId]);
+  }, [navigation, route.params.trackAction]);
 
   return (
     <View style={styles.container}>

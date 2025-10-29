@@ -65,7 +65,8 @@ import {
 } from '../../screens/Track/index.tsx';
 import {DataAndPrivacy} from '../../screens/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/DataAndPrivacy/SettingsPrivacyPolicy';
-import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
+import {TrackEdit} from '../../screens/TrackEdit';
+import {HeaderLeft as HeaderLeftTrackEdit} from '../../screens/TrackEdit/HeaderLeft';
 import {Config} from '../../screens/Settings/Config';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/RemoteArchive/AddRemoteArchive.tsx';
@@ -354,7 +355,12 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="TrackEdit"
         component={TrackEdit}
-        options={{headerTitle: intl(TrackEdit.navTitle)}}
+        options={{
+          headerTitle: intl(TrackEdit.navTitle),
+          headerLeft: props => (
+            <HeaderLeftTrackEdit headerBackButtonProps={props} />
+          ),
+        }}
       />
       <RootStack.Screen
         name="Config"

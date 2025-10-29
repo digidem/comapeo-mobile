@@ -82,7 +82,20 @@ export function createTrackStore({persist} = {persist: false}) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVStoreInitializer),
+        storage: createJSONStorage(() => MMKVStoreInitializer, {
+          // When deserializing from JSON, convert trackingSince back to a Date object
+          // This handles app reloads, crashes, updates, and any scenario where persisted state is restored
+          reviver: (key, value) => {
+            if (
+              key === 'trackingSince' &&
+              value !== null &&
+              (typeof value === 'string' || typeof value === 'number')
+            ) {
+              return new Date(value);
+            }
+            return value;
+          },
+        }),
         version: 1,
         migrate: (persistedState, version): TrackState => {
           const newState = createInitialState();

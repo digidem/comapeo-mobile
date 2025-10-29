@@ -115,17 +115,13 @@ export const ProjectSettings = () => {
   const participantWithRemote =
     projectInfo.role === 'participant' && remoteArchiveOn;
 
-  const displayTitle = isSolo
-    ? projectInfo.projectHeader
-    : projectInfo.projectName;
-
   const sendStatsOn = configData.sendStats;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <SettingsCardRow
         icon={<NoProjectIcon width={24} height={24} />}
-        title={displayTitle}
+        title={projectInfo.projectHeader}
         subtitle={
           isSolo
             ? formatMessage(m.soloDescription)
@@ -163,7 +159,7 @@ export const ProjectSettings = () => {
           }
           buttonText={formatMessage(m.viewTeam)}
           onPress={() =>
-            navigate('YourTeam', {projectName: projectInfo.projectName})
+            navigate('YourTeam', {projectName: projectInfo.projectName!})
           }
         />
       )}

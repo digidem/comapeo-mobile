@@ -53,7 +53,7 @@ export const EditProjectDetails: NativeNavigationComponent<
   }>({
     defaultValues: {
       color: projectDetails.projectColor,
-      projectName: projectDetails.projectName,
+      projectName: projectDetails.projectName!,
       projectDescription: projectDetails.projectDescription,
     },
   });

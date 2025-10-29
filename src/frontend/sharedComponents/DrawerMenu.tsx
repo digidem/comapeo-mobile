@@ -88,7 +88,8 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
 
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
-  const {role, projectColor, projectDescription, projectName} = projectDetails;
+  const {role, projectColor, projectDescription, projectName, projectHeader} =
+    projectDetails;
   const {data} = useStorageReadingQuery();
   const {freeBytes, totalBytes} = data;
   const isLow = isLowStorage(freeBytes);
@@ -108,9 +109,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
         <View>
           <ColorCard backgroundColor={projectColor}>
             <View style={{padding: 20, gap: 12}}>
-              <HeaderText variant="header2">
-                {role === 'solo' ? projectDetails.projectHeader : projectName}
-              </HeaderText>
+              <HeaderText variant="header2">{projectHeader}</HeaderText>
               <View
                 style={{
                   flexDirection: 'row',
@@ -183,7 +182,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
             <TouchableOpacity
               style={styles.menuItem}
               onPress={() => {
-                navigation.navigate('YourTeam', {projectName});
+                navigation.navigate('YourTeam', {projectName: projectName!});
               }}
               accessibilityLabel="Go to your team screen.">
               <MaterialIcon color={NEW_DARK_GREY} size={20} name={'people'} />

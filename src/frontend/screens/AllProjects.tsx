@@ -135,19 +135,14 @@ const ProjectListItem = ({
 }) => {
   const projectInfo = useProjectRoleAndDetails(projectId);
 
-  const header =
-    'projectHeader' in projectInfo
-      ? projectInfo.projectHeader
-      : projectInfo.projectName;
-
   return (
     <ColorCard
-      testID={`project_card_${header?.toLowerCase().replace(/\s+/g, '_')}`}
+      testID={`project_card_${projectInfo.projectHeader?.toLowerCase().replace(/\s+/g, '_')}`}
       onPress={onPress}
       borderColor={isSelected ? COMAPEO_BLUE : undefined}
       backgroundColor={projectInfo.projectColor}>
       <View style={{padding: 20}}>
-        <HeaderText variant="header4">{header}</HeaderText>
+        <HeaderText variant="header4">{projectInfo.projectHeader}</HeaderText>
       </View>
     </ColorCard>
   );

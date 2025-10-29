@@ -57,7 +57,10 @@ export const SaveTrackScreen = () => {
       }
       onPressPreset={
         canChoosePreset
-          ? () => navigation.navigate('TrackCategoryChooser')
+          ? () =>
+              navigation.navigate('TrackCategoryChooser', {
+                trackAction: 'saveNew',
+              })
           : undefined
       }
       presetDisabled={!canChoosePreset}

@@ -51,9 +51,8 @@ const styles = StyleSheet.create({
   labelContainer: {
     position: 'absolute',
     backgroundColor: '#FFF',
-    top: -15,
+    top: -10,
     left: 35,
-    padding: 5,
     zIndex: 5,
   },
   labelText: {

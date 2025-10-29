@@ -19,6 +19,12 @@ import {LIGHT_GREY} from '../../lib/styles';
 import TrackIcon from '../../images/Track.svg';
 import {useForm, Controller} from 'react-hook-form';
 import {SaveButton} from '../../sharedComponents/SaveButton';
+import {
+  getLocationHistoryFromTrack,
+  getTrackDurationAndDistance,
+} from '../../utils/trackMetrics';
+import {Divider} from '../../sharedComponents/Divider';
+import {TrackStats} from '../../sharedComponents/Editor/TrackStats';
 
 const m = defineMessages({
   trackEditScreenTitle: {
@@ -51,6 +57,9 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
 
   const trackPresets = useTrackPresets();
   const trackPresetsAvailable = trackPresets.length > 0;
+
+  const locationHistory = getLocationHistoryFromTrack(track);
+  const {distance, durationMs} = getTrackDurationAndDistance(locationHistory);
 
   // using react hook form because the save button is in the header. In order to update the notes field and pass it to the save button, we need to use a useEffect (see https://reactnavigation.org/docs/header-buttons#header-interaction-with-its-screen-component). handleSubmit does not cause a re-render when the form values changes, but still has access to the updated values. In other words it does not cause the useEffect to re-run when the notes field changes, but the most updated notes value is still accessible to the header.
   const {control, handleSubmit} = useForm<{notes: string}>({
@@ -132,6 +141,8 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
           }
           presetName={preset ? preset.name : formatMessage(m.presetTitle)}
         />
+        <Divider />
+        <TrackStats distance={distance} durationMs={durationMs} />
       </View>
       <Controller
         control={control}

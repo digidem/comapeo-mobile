@@ -51,6 +51,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
 
+  // If there is a newPresetId, the user has navigated from the preset chooser page. In otherwords they have selected a new preset for the track (which has not yet been saved).
   const preset = useGetPresetById(
     route.params.newPresetId ?? track?.presetRef?.docId,
   );

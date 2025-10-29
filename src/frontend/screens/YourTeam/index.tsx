@@ -134,6 +134,19 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           deviceType={participant.deviceType}
           dateAdded={participant.joinedAt}
           thisDevice={deviceInfo.deviceId === participant.deviceId}
+          onPress={
+            deviceInfo?.deviceId !== participant.deviceId &&
+            deviceInfo &&
+            coordinators.some(
+              coordinator => coordinator.deviceId === deviceInfo.deviceId,
+            )
+              ? () =>
+                  navigation.navigate('RemoveDevice', {
+                    deviceId: participant.deviceId,
+                    deviceName: participant.name || 'Unknown Device',
+                  })
+              : undefined
+          }
         />
       ))}
       <View style={{marginBottom: 40}} />

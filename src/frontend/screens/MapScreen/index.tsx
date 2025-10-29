@@ -265,7 +265,7 @@ function useCheckUnsavedTrackAndNavigate({authState}: {authState: AuthState}) {
 
       // if no preset chosen, navigate to category chooser
       if (!trackPreset) {
-        navigate('TrackCategoryChooser');
+        navigate('TrackCategoryChooser', {trackAction: 'saveNew'});
       } else {
         // if preset chosen, navigate to save track screen
         navigate('SaveTrack');

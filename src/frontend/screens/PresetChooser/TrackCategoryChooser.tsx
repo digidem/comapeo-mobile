@@ -8,9 +8,7 @@ import {WHITE} from '../../lib/styles';
 import {HeaderLeft} from '../SaveTrack/HeaderLeft';
 import {Preset} from '@comapeo/schema';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
-import {usePresetsSelection} from '@comapeo/core-react';
-import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
+import {useTrackPresets} from '../../hooks/server/track';
 
 const m = defineMessages({
   title: {
@@ -22,17 +20,7 @@ const m = defineMessages({
 export const TrackCategoryChooser: NativeNavigationComponent<
   'TrackCategoryChooser'
 > = ({navigation, route}) => {
-  const {projectId} = useActiveProject();
-  const languageTag = useAppLanguageTag();
-  const unfilteredPresets = usePresetsSelection({
-    projectId: projectId,
-    dataType: 'track',
-    lang: languageTag,
-  });
-
-  const trackPresets = unfilteredPresets.filter(p =>
-    p.geometry.includes('line'),
-  );
+  const trackPresets = useTrackPresets();
   const {setTrackPreset} = useTrackActions();
 
   const handleSelect = (preset: Preset) => {

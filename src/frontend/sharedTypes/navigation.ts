@@ -165,6 +165,7 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
+  ConfirmTrackDiscardBottomSheet: {trackId: string};
 };
 
 export type OnboardingParamsList = {

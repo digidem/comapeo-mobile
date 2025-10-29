@@ -124,6 +124,7 @@ import {Collaborate} from '../../screens/ProjectCreation/Collaborate.tsx';
 import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject.tsx';
 import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjectIntro.tsx';
 import {NameDefaultProjectIntro} from '../../screens/ProjectCreation/NameDefaultProjectIntro.tsx';
+import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -355,12 +356,15 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="TrackEdit"
         component={TrackEdit}
-        options={{
+        options={({route}) => ({
           headerTitle: intl(TrackEdit.navTitle),
           headerLeft: props => (
-            <HeaderLeftTrackEdit headerBackButtonProps={props} />
+            <HeaderLeftTrackEdit
+              trackId={route.params.trackId}
+              headerBackButtonProps={props}
+            />
           ),
-        }}
+        })}
       />
       <RootStack.Screen
         name="Config"
@@ -553,6 +557,10 @@ export const createAppScreens = ({
         options={{
           headerShown: false,
         }}
+      />
+      <RootStack.Screen
+        name="ConfirmTrackDiscardBottomSheet"
+        component={ConfirmDiscardBottomSheet}
       />
     </RootStack.Group>
   </>

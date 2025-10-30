@@ -755,6 +755,9 @@
   "screens.CollaboratorInfo.removeDevice": {
     "message": "Remove Device"
   },
+  "screens.CollaboratorInfo.thisDevice": {
+    "message": "This Device"
+  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Cancel"
   },

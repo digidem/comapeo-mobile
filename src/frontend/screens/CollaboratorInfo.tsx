@@ -82,7 +82,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
           }}>
           <MaterialIcon
             color={BLACK}
-            size={32}
+            size={24}
             name={isCoordinator ? 'manage-accounts' : 'people'}
             style={{marginRight: 10}}
           />

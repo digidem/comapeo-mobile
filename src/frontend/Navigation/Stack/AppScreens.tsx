@@ -65,7 +65,8 @@ import {
 } from '../../screens/Track/index.tsx';
 import {DataAndPrivacy} from '../../screens/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/DataAndPrivacy/SettingsPrivacyPolicy';
-import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
+import {TrackEdit} from '../../screens/TrackEdit';
+import {HeaderLeft as HeaderLeftTrackEdit} from '../../screens/TrackEdit/HeaderLeft';
 import {Config} from '../../screens/Settings/Config';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/RemoteArchive/AddRemoteArchive.tsx';
@@ -125,6 +126,7 @@ import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjec
 import {NameDefaultProjectIntro} from '../../screens/ProjectCreation/NameDefaultProjectIntro.tsx';
 import {LeaveProject} from '../../screens/YourTeam/LeaveProject.tsx';
 import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
+import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -356,7 +358,15 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="TrackEdit"
         component={TrackEdit}
-        options={{headerTitle: intl(TrackEdit.navTitle)}}
+        options={({route}) => ({
+          headerTitle: intl(TrackEdit.navTitle),
+          headerLeft: props => (
+            <HeaderLeftTrackEdit
+              trackId={route.params.trackId}
+              headerBackButtonProps={props}
+            />
+          ),
+        })}
       />
       <RootStack.Screen
         name="Config"
@@ -559,6 +569,10 @@ export const createAppScreens = ({
         options={{
           headerShown: false,
         }}
+      />
+      <RootStack.Screen
+        name="ConfirmTrackDiscardBottomSheet"
+        component={ConfirmDiscardBottomSheet}
       />
     </RootStack.Group>
   </>

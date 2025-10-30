@@ -109,7 +109,7 @@ export const TrackScreen = ({
               <TrackIcon />
             )}
             <Text style={styles.trackTitle}>
-              <FormattedMessage {...m.tracks} />
+              {preset ? preset.name : <FormattedMessage {...m.tracks} />}
             </Text>
           </View>
           <View style={styles.divider} />

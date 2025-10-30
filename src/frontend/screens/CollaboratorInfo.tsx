@@ -106,7 +106,6 @@ export const CollaboratorInfo: NativeNavigationComponent<
       </View>
       {!isCoordinator &&
         (isOwnDevice ? (
-          //this should be SecondaryDestructiveButton
           <SecondaryDestructiveButton
             text={formatMessage(m.leaveProject)}
             fullSize={true}

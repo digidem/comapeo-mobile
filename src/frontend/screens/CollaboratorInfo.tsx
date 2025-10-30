@@ -74,7 +74,11 @@ export const CollaboratorInfo: NativeNavigationComponent<
     <View style={styles.container}>
       <View style={styles.innerBox}>
         <DeviceIcon deviceType={route.params.deviceType} size={80} />
-        {name && <HeaderText style={{textAlign: 'center'}}>{name}</HeaderText>}
+        {name && (
+          <HeaderText variant="header2" style={{textAlign: 'center'}}>
+            {name}
+          </HeaderText>
+        )}
         <View
           style={{
             flexDirection: 'row',

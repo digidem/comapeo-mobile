@@ -56,7 +56,9 @@ export type RootStackParamsList = {
     // but we will eventually support deleting saved photos as well.
     photo: ProcessedDraftPhoto;
   };
-  TrackCategoryChooser: undefined;
+  TrackCategoryChooser:
+    | {trackAction: 'saveNew'}
+    | {trackAction: 'editExisting'; trackId: string};
   ObservationCategoryChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
@@ -102,7 +104,7 @@ export type RootStackParamsList = {
   SaveTrack: undefined;
   Sync: undefined;
   Track: {trackId: string};
-  TrackEdit: {trackId: string};
+  TrackEdit: {trackId: string; newPresetId?: string};
   CreateTestData: undefined;
   MediaSyncSettings: undefined;
   DataAndPrivacy: undefined;
@@ -155,6 +157,7 @@ export type RootStackParamsList = {
   ExportSuccess: {exportType: Exports};
   ProjectStatistics: undefined;
   ProjectStatsTurnedOff: undefined;
+  ConfirmTrackDiscardBottomSheet: {trackId: string};
 };
 
 export type OnboardingParamsList = {

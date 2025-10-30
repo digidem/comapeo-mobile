@@ -61,7 +61,7 @@ export const StartStopTrack = () => {
     if (trackPresets.length === 0) {
       navigation.navigate('SaveTrack');
     } else {
-      navigation.navigate('TrackCategoryChooser');
+      navigation.navigate('TrackCategoryChooser', {trackAction: 'saveNew'});
     }
   }
 

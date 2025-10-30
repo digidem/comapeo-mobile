@@ -9,11 +9,12 @@ import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../sharedTypes';
 import {SecondaryDestructiveButton} from '../sharedComponents/Buttons';
-import {DeviceIcon} from '../sharedComponents/DeviceNameWithIcon';
+
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import {useLayoutEffect} from 'react';
 import {isActiveArchiveServerMember} from '../hooks/server/projects';
+import {DeviceIcon} from '../sharedComponents/DeviceIcon';
 
 const m = defineMessages({
   navTitle: {

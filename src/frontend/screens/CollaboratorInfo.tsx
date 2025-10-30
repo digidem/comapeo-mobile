@@ -13,6 +13,7 @@ import {DeviceIcon} from '../sharedComponents/DeviceNameWithIcon';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import {useLayoutEffect} from 'react';
+import {isActiveArchiveServerMember} from '../hooks/server/projects';
 
 const m = defineMessages({
   navTitle: {
@@ -51,9 +52,12 @@ export const CollaboratorInfo: NativeNavigationComponent<
   const {projectId} = useActiveProject();
   const isOwnDevice = route.params.isOwnDevice;
   const {formatDate, formatMessage} = useIntl();
-  const {
-    data: {name, role, joinedAt},
-  } = useSingleMember({projectId, deviceId: route.params.deviceId});
+  const {data: member} = useSingleMember({
+    projectId,
+    deviceId: route.params.deviceId,
+  });
+  const {name, role, joinedAt} = member;
+  const isArchiveServer = isActiveArchiveServerMember(member);
 
   const {data: ownRole} = useOwnRoleInProject({projectId});
 
@@ -105,6 +109,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
         </BodyText>
       </View>
       {!isCoordinator &&
+        !isArchiveServer &&
         (isOwnDevice ? (
           <SecondaryDestructiveButton
             text={formatMessage(m.leaveProject)}
@@ -151,6 +156,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    gap: 12,
   },
   buttonStyle: {alignSelf: 'center', marginTop: 20},
 });

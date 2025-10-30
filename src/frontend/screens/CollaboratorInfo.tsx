@@ -12,6 +12,7 @@ import {SecondaryDestructiveButton} from '../sharedComponents/Buttons';
 import {DeviceIcon} from '../sharedComponents/DeviceNameWithIcon';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
+import {useLayoutEffect} from 'react';
 
 const m = defineMessages({
   navTitle: {
@@ -38,18 +39,29 @@ const m = defineMessages({
     id: 'screens.CollaboratorInfo.coordinator',
     defaultMessage: 'Coordinator',
   },
+  thisDevice: {
+    id: 'screens.CollaboratorInfo.thisDevice',
+    defaultMessage: 'This Device',
+  },
 });
 
 export const CollaboratorInfo: NativeNavigationComponent<
   'CollaboratorInfo'
-> = ({route}) => {
+> = ({route, navigation}) => {
   const {projectId} = useActiveProject();
+  const isOwnDevice = route.params.isOwnDevice;
   const {formatDate, formatMessage} = useIntl();
   const {
     data: {name, role, joinedAt},
   } = useSingleMember({projectId, deviceId: route.params.deviceId});
 
   const {data: ownRole} = useOwnRoleInProject({projectId});
+
+  useLayoutEffect(() => {
+    if (isOwnDevice) {
+      navigation.setOptions({title: formatMessage(m.thisDevice)});
+    }
+  }, [navigation, isOwnDevice, formatMessage]);
 
   const isCoordinator =
     role.roleId === COORDINATOR_ROLE_ID || role.roleId === CREATOR_ROLE_ID;
@@ -89,7 +101,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
         </BodyText>
       </View>
       {!isCoordinator &&
-        (route.params.isOwnDevice ? (
+        (isOwnDevice ? (
           //this should be SecondaryDestructiveButton
           <SecondaryDestructiveButton
             text={formatMessage(m.leaveProject)}

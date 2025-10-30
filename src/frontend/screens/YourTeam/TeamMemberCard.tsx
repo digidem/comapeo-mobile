@@ -2,11 +2,9 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {BLUE_GREY, BLACK, MEDIUM_GREY} from '../../lib/styles';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import type {DeviceType} from '../../sharedTypes';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {defineMessages, useIntl} from 'react-intl';
-import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
 const m = defineMessages({
   thisDevice: {
@@ -16,14 +14,14 @@ const m = defineMessages({
 });
 
 type TeamMemberCardProps = {
-  deviceType: DeviceType;
+  Icon: React.ReactNode;
   name: string;
   onPress: () => void;
   thisDevice: boolean;
 };
 
 export const TeamMemberCard = ({
-  deviceType,
+  Icon,
   name,
   onPress,
   thisDevice,
@@ -32,7 +30,7 @@ export const TeamMemberCard = ({
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <DeviceIcon deviceType={deviceType} size={30} />
+      {Icon}
       <View style={styles.textContainer}>
         <View style={styles.nameRow}>
           <HeaderText
@@ -53,7 +51,7 @@ export const TeamMemberCard = ({
           )}
         </View>
       </View>
-      <MaterialIcons name="chevron-right" size={30} color={BLACK} />
+      <MaterialIcons name="chevron-right" size={20} color={BLACK} />
     </TouchableOpacity>
   );
 };

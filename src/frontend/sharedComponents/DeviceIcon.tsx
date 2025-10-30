@@ -7,13 +7,13 @@ import {DARK_GREY, BLUE_GREY} from '../lib/styles';
 
 type DeviceIconProps = {
   deviceType: DeviceType | undefined;
-  size?: number;
+  size: number;
   iconColor?: string;
 };
 
 export const DeviceIcon = ({
   deviceType,
-  size = 35,
+  size,
   iconColor = DARK_GREY,
 }: DeviceIconProps) => {
   const iconSize = size * 0.5;

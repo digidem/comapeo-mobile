@@ -1,18 +1,17 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
-import MaterialIcons from '@react-native-vector-icons/material-icons';
-import ShieldIcon from '../images/BlackShield.svg';
 import type {
   ViewStyleProp,
   DeviceConnectionStatus,
   DeviceType,
 } from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
-import {DARK_GREY, LIGHT_GREY, MEDIUM_GREY} from '../lib/styles';
+import {MEDIUM_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import Caution from '../images/caution.svg';
 import {HeaderText} from './Text/HeaderText';
 import {BodyText} from './Text/BodyText';
+import {DeviceIcon} from './DeviceIcon';
 
 const m = defineMessages({
   thisDevice: {
@@ -91,85 +90,6 @@ export const DeviceNameWithIcon = ({
           </View>
         )}
       </View>
-    </View>
-  );
-};
-
-const DeviceIcon = ({
-  deviceType,
-  size,
-}: {
-  deviceType: DeviceType | undefined;
-  size: number;
-}) => {
-  switch (deviceType) {
-    case 'mobile':
-      return (
-        <DeviceIconBackground size={size}>
-          <MaterialIcons
-            name="smartphone"
-            size={size * 0.5}
-            color={DARK_GREY}
-          />
-        </DeviceIconBackground>
-      );
-    case 'tablet':
-      return (
-        <DeviceIconBackground size={size}>
-          <MaterialIcons
-            name="tablet-android"
-            size={size * 0.5}
-            color={DARK_GREY}
-          />
-        </DeviceIconBackground>
-      );
-    case 'desktop':
-      return (
-        <DeviceIconBackground size={size}>
-          <MaterialIcons name="computer" size={size * 0.5} color={DARK_GREY} />
-        </DeviceIconBackground>
-      );
-    case 'selfHostedServer':
-      return (
-        <DeviceIconBackground size={size}>
-          <ShieldIcon width={size * 0.5} height={size * 0.7} />
-        </DeviceIconBackground>
-      );
-    case undefined:
-    case 'UNRECOGNIZED':
-    case 'device_type_unspecified':
-    default: {
-      return (
-        <DeviceIconBackground size={size}>
-          <MaterialIcons
-            name="help-outline"
-            size={size * 0.5}
-            color={DARK_GREY}
-          />
-        </DeviceIconBackground>
-      );
-    }
-  }
-};
-
-const DeviceIconBackground = ({
-  children,
-  size,
-}: {
-  children: React.ReactNode;
-  size: number;
-}) => {
-  return (
-    <View
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: LIGHT_GREY,
-        borderRadius: size / 2,
-        width: size,
-        height: size,
-      }}>
-      {children}
     </View>
   );
 };

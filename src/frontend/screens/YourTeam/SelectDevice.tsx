@@ -1,17 +1,19 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import {useManyMembers} from '@comapeo/core-react';
 import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
 import {useLocalPeers} from '../../hooks/useLocalPeers';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import WifiIcon from '../../images/WifiIcon.svg';
-import {DeviceCard} from '../../sharedComponents/DeviceCard';
+import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {LIGHT_GREY} from '../../lib/styles';
+import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 
 const m = defineMessages({
   title: {
@@ -79,21 +81,42 @@ function InvitableDevicesList() {
       {invitableDevices.map(device => {
         const {deviceId, status, name, deviceType} = device;
 
+        let isDisconnected: boolean;
+        switch (status) {
+          case undefined:
+          case 'connected':
+            isDisconnected = false;
+            break;
+          case 'disconnected':
+            isDisconnected = true;
+            break;
+          default:
+            throw new ExhaustivenessError(status);
+        }
+
+        const handlePress = () =>
+          navigation.navigate('SelectInviteeRole', {
+            name: name || '',
+            deviceId: deviceId,
+            deviceType: deviceType,
+          });
+
         return (
-          <DeviceCard
+          <TouchableOpacity
             key={deviceId}
-            name={name || ''}
-            deviceConnectionStatus={status}
-            deviceType={deviceType}
-            deviceId={deviceId}
-            onPress={() =>
-              navigation.navigate('SelectInviteeRole', {
-                name: name || '',
-                deviceId: deviceId,
-                deviceType: deviceType,
-              })
-            }
-          />
+            disabled={isDisconnected}
+            onPress={handlePress}>
+            <View style={styles.deviceCard}>
+              <DeviceNameWithIcon
+                style={{flexShrink: 1}}
+                name={name || ''}
+                deviceConnectionStatus={status}
+                deviceType={deviceType}
+                deviceId={deviceId}
+                iconSize={75}
+              />
+            </View>
+          </TouchableOpacity>
         );
       })}
     </View>
@@ -109,6 +132,16 @@ const styles = StyleSheet.create({
   },
   deviceListContainer: {
     gap: 10,
+  },
+  deviceCard: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20,
+    borderWidth: 1,
+    borderColor: LIGHT_GREY,
+    borderRadius: 3,
+    justifyContent: 'space-between',
   },
 });
 

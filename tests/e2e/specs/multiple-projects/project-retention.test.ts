@@ -12,7 +12,7 @@ describe('Multiple Projects - Project Data Retention', () => {
     await $('~Open Menu').click();
     await driver.pause(1000);
     await $(byText('Switch Project')).click();
-    await $(byText(output.names.secondProject)).click();
+    await $(byText(`${output.names.secondProject} - Coordinator`)).click();
     await $(byResourceId('MAIN.map-screen')).click();
 
     await $('~Add Observation').click();
@@ -64,14 +64,18 @@ describe('Multiple Projects - Project Data Retention', () => {
     await $(byResourceId('observationsEmptyView')).click();
 
     const header = await $(byResourceId('HOME.header-title'));
-    await expect(header).toHaveText(output.names.thirdProject);
+    await expect(header).toHaveText(
+      `${output.names.thirdProject} - Coordinator`,
+    );
     checkForElementGone(byText('Airstrip'));
   });
 
   it('should confirm the observation still exists in the second project', async () => {
     await $('~Open Menu').click();
     await $(byText('Switch Project')).click();
-    await $(byTextMatches(output.names.secondProject)).click();
+    await $(
+      byTextMatches(`${output.names.secondProject} - Coordinator`),
+    ).click();
     await driver.back();
     await $('~Go to observations list.').click();
 

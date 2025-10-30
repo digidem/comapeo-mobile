@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {byResourceId, byText} from '../../utils/selectors';
 
 describe('Multiple Projects - All Projects Screen', () => {
   it('should show projects in order of creation when solo project is the selected project', async () => {

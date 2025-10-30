@@ -19,10 +19,8 @@ import {DestructiveButton} from '../../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useProjectSettings} from '@comapeo/core-react';
+import {useProjectSettings, useRemoveMember} from '@comapeo/core-react';
 import Ionicons from '@react-native-vector-icons/ionicons';
-// TODO: when available
-// import {useRemoveMember} from '@comapeo/core-react';
 
 const m = defineMessages({
   title: {
@@ -51,8 +49,7 @@ export const RemoveDevice: NativeNavigationComponent<'RemoveDevice'> = ({
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const maxReasonLength = 200;
 
-  // TODO: Uncomment when useRemoveMember hook is available
-  // const removeMemberMutation = useRemoveMember({projectId});
+  const removeMemberMutation = useRemoveMember({projectId});
 
   function setReasonWithValidation(reasonValue: string) {
     if (reasonValue.length > maxReasonLength) {
@@ -62,29 +59,27 @@ export const RemoveDevice: NativeNavigationComponent<'RemoveDevice'> = ({
     setReason(reasonValue);
   }
 
-  const handleRemoveDevice = async () => {
-    try {
-      // TODO: Replace this mock call with the real API call when available
-      // await removeMemberMutation.mutateAsync({
-      //   deviceId: deviceId,
-      // });
+  const handleRemoveDevice = () => {
+    const trimmedReason = reason.trim();
 
-      // Mock API call for now - log what would be sent
-      console.log('Mock API call to remove device:', {
-        projectId,
-        deviceId,
-        reason: reason || undefined,
-      });
-
-      // Navigate to success screen
-      navigation.navigate('DeviceRemovedSuccess', {
-        deviceName,
-        projectName: projectSettings?.name || 'this project',
-      });
-    } catch (error) {
-      Sentry.captureException(error);
-      navigation.navigate('ErrorBottomSheet');
-    }
+    removeMemberMutation.mutate(
+      {
+        deviceId: deviceId,
+        ...(trimmedReason && {reason: trimmedReason}),
+      },
+      {
+        onSuccess: () => {
+          navigation.navigate('DeviceRemovedSuccess', {
+            deviceName,
+            projectName: projectSettings?.name || 'this project',
+          });
+        },
+        onError: error => {
+          Sentry.captureException(error);
+          navigation.navigate('ErrorBottomSheet');
+        },
+      },
+    );
   };
 
   return (

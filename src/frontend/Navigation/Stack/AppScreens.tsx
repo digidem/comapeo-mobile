@@ -124,6 +124,7 @@ import {Collaborate} from '../../screens/ProjectCreation/Collaborate.tsx';
 import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject.tsx';
 import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjectIntro.tsx';
 import {NameDefaultProjectIntro} from '../../screens/ProjectCreation/NameDefaultProjectIntro.tsx';
+import {CollaboratorInfo} from '../../screens/YourTeam/CollaboratorInfo.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -492,6 +493,11 @@ export const createAppScreens = ({
         name="NameDefaultProjectIntro"
         component={NameDefaultProjectIntro}
         options={{headerTitle: intl(NameDefaultProjectIntro.navTitle)}}
+      />
+      <RootStack.Screen
+        name="CollaboratorInfo"
+        component={CollaboratorInfo}
+        options={{headerTitle: intl(CollaboratorInfo.navTitle)}}
       />
     </RootStack.Group>
     <RootStack.Group

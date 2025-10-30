@@ -165,6 +165,11 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
+  CollaboratorInfo: {
+    deviceId: string;
+    isOwnDevice: boolean;
+    deviceType: DeviceType;
+  };
   ConfirmTrackDiscardBottomSheet: {trackId: string};
 };
 

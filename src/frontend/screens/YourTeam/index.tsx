@@ -113,7 +113,11 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
             name={coordinator.name || ''}
             thisDevice={deviceInfo.deviceId === coordinator.deviceId}
             onPress={() => {
-              console.log('Pressed coordinator:', coordinator.name);
+              navigation.navigate('CollaboratorInfo', {
+                deviceId: coordinator.deviceId,
+                isOwnDevice: deviceInfo.deviceId === coordinator.deviceId,
+                deviceType: coordinator.deviceType,
+              });
             }}
           />
         ))}
@@ -132,7 +136,11 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
             name={participant.name || ''}
             thisDevice={deviceInfo.deviceId === participant.deviceId}
             onPress={() => {
-              console.log('Pressed participant:', participant.name);
+              navigation.navigate('CollaboratorInfo', {
+                deviceId: participant.deviceId,
+                isOwnDevice: deviceInfo.deviceId === participant.deviceId,
+                deviceType: participant.deviceType,
+              });
             }}
           />
         ))}

@@ -12,6 +12,8 @@ import {useTrackActions} from '../../contexts/TrackStoreContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import DiscardIcon from '../../images/delete.svg';
 import ErrorIcon from '../../images/Error.svg';
+import {useFocusEffect} from '@react-navigation/native';
+import {BackHandler} from 'react-native';
 
 const m = defineMessages({
   discardTitle: {
@@ -47,6 +49,22 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   const {clearCurrentTrack} = useTrackActions();
   const navigation = useNavigationFromRoot();
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        openSheet();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => subscription.remove();
+    }, [openSheet]),
+  );
+
   function handleDiscard() {
     clearCurrentTrack();
     closeSheet();
@@ -59,7 +77,13 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
         onPress={openSheet}
         headerBackButtonProps={headerBackButtonProps}
       />
-      <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
+      <BottomSheetModal
+        onBack={() => {
+          openSheet();
+          return true;
+        }}
+        isOpen={isOpen}
+        ref={sheetRef}>
         <BottomSheetModalContent
           buttonConfigs={[
             {

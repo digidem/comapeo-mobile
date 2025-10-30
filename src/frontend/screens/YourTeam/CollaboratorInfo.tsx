@@ -124,7 +124,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
               console.log('Leave Project Screen pressed');
             }}
           />
-        ) : ownRoleIsCoordinator ? (
+        ) : ownRoleIsCoordinator && name ? (
           <SecondaryDestructiveButton
             text={formatMessage(m.removeDevice)}
             fullSize={true}
@@ -133,8 +133,10 @@ export const CollaboratorInfo: NativeNavigationComponent<
               <MaterialIcon size={size} color={color} name="person-remove" />
             )}
             onPress={() => {
-              // To Do: navigate to remove device success screen
-              console.log('Remove Device pressed');
+              navigation.replace('RemoveDevice', {
+                deviceId: route.params.deviceId,
+                deviceName: name,
+              });
             }}
           />
         ) : null)}

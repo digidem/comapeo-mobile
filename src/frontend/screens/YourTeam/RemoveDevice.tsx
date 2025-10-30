@@ -47,7 +47,7 @@ export const RemoveDevice: NativeNavigationComponent<'RemoveDevice'> = ({
   const {data: projectSettings} = useProjectSettings({projectId});
   const [reason, setReason] = React.useState('');
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
-  const maxReasonLength = 200;
+  const maxReasonLength = 100;
 
   const removeMemberMutation = useRemoveMember({projectId});
 
@@ -69,10 +69,12 @@ export const RemoveDevice: NativeNavigationComponent<'RemoveDevice'> = ({
       },
       {
         onSuccess: () => {
-          navigation.navigate('DeviceRemovedSuccess', {
-            deviceName,
-            projectName: projectSettings?.name || 'this project',
-          });
+          if (projectSettings.name) {
+            navigation.replace('DeviceRemovedSuccess', {
+              deviceName,
+              projectName: projectSettings.name,
+            });
+          }
         },
         onError: error => {
           Sentry.captureException(error);

@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {BackHandler, StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {useFocusEffect} from '@react-navigation/native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import SuccessIcon from '../../images/Success.svg';
@@ -34,8 +35,19 @@ export const DeviceRemovedSuccess = ({
   const {formatMessage: t} = useIntl();
   const {deviceName, projectName} = route.params;
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => true,
+      );
+
+      return () => subscription.remove();
+    }, []),
+  );
+
   const handleReturnToTeam = () => {
-    navigation.replace('YourTeam', {projectName});
+    navigation.popTo('YourTeam', {projectName});
   };
 
   return (

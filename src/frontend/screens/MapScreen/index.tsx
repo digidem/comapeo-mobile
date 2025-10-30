@@ -42,6 +42,7 @@ import {isLowStorage} from '../../lib/storage';
 import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
 import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
 import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
+import {useTrackState} from '../../contexts/TrackStoreContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -93,6 +94,7 @@ export const MapScreen = ({
   const BANNER_TOP = insets.top + 75;
 
   useCheckDraftObservationAndNavigate({authState});
+  useCheckUnsavedTrackAndNavigate({authState});
 
   useShouldShowAppUsagePrompt();
 
@@ -255,6 +257,31 @@ function useCheckDraftObservationAndNavigate({
         navigate('ObservationCreate');
       }
     }, [existingObservation, navigate, presets, authState]),
+  );
+}
+
+function useCheckUnsavedTrackAndNavigate({authState}: {authState: AuthState}) {
+  const {navigate} = useNavigationFromHomeTabs();
+  const hasUnsavedTrack = useTrackState(
+    state => !state.isTracking && state.locationHistory.length > 0,
+  );
+  const trackPreset = useTrackState(state => state.preset);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // if no unsaved track or auth is obscured, stay home
+      if (!hasUnsavedTrack || authState === 'obscured') {
+        return;
+      }
+
+      // if no preset chosen, navigate to category chooser
+      if (!trackPreset) {
+        navigate('TrackCategoryChooser', {trackAction: 'saveNew'});
+      } else {
+        // if preset chosen, navigate to save track screen
+        navigate('SaveTrack');
+      }
+    }, [hasUnsavedTrack, trackPreset, navigate, authState]),
   );
 }
 

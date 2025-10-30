@@ -1,20 +1,20 @@
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../sharedTypes/navigation';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {StyleSheet, View} from 'react-native';
-import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../lib/styles';
+import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
 import {useOwnRoleInProject, useSingleMember} from '@comapeo/core-react';
 
-import {HeaderText} from '../sharedComponents/Text/HeaderText';
-import {useActiveProject} from '../contexts/ActiveProjectContext';
-import {BodyText} from '../sharedComponents/Text/BodyText';
-import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../sharedTypes';
-import {SecondaryDestructiveButton} from '../sharedComponents/Buttons';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
+import {SecondaryDestructiveButton} from '../../sharedComponents/Buttons';
 
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import {useLayoutEffect} from 'react';
-import {isActiveArchiveServerMember} from '../hooks/server/projects';
-import {DeviceIcon} from '../sharedComponents/DeviceIcon';
+import {isActiveArchiveServerMember} from '../../hooks/server/projects';
+import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
 const m = defineMessages({
   navTitle: {
@@ -99,7 +99,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
             {formatMessage(isCoordinator ? m.coordinator : m.participant)}
           </HeaderText>
         </View>
-        <BodyText style={{marginTop: 40, color: NEW_DARK_GREY}}>
+        <BodyText style={{marginTop: 34, color: NEW_DARK_GREY}}>
           {formatMessage(m.addedOn, {
             date: formatDate(joinedAt, {
               year: 'numeric',

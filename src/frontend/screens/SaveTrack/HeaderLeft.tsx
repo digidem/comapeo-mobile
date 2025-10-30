@@ -77,13 +77,7 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
         onPress={openSheet}
         headerBackButtonProps={headerBackButtonProps}
       />
-      <BottomSheetModal
-        onBack={() => {
-          openSheet();
-          return true;
-        }}
-        isOpen={isOpen}
-        ref={sheetRef}>
+      <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
         <BottomSheetModalContent
           buttonConfigs={[
             {

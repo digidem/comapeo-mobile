@@ -51,7 +51,7 @@ export const TeamMemberCard = ({
           )}
         </View>
       </View>
-      <MaterialIcons name="chevron-right" size={20} color={BLACK} />
+      <MaterialIcons name="chevron-right" size={30} color={BLACK} />
     </TouchableOpacity>
   );
 };

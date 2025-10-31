@@ -737,6 +737,27 @@
   "screens.CameraScreen.noCameraAccess": {
     "message": "Kein Zugriff auf Kamera. Bitte erlauben Sie Zugriff in der Einstellung"
   },
+  "screens.CollaboratorInfo.addedOn": {
+    "message": "Hinzugefügt am {date}"
+  },
+  "screens.CollaboratorInfo.coordinator": {
+    "message": "Koordinator"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "Verlasse Projekt"
+  },
+  "screens.CollaboratorInfo.navTitle": {
+    "message": "Mitarbeiter-Info"
+  },
+  "screens.CollaboratorInfo.participant": {
+    "message": "Teilnehmer"
+  },
+  "screens.CollaboratorInfo.removeDevice": {
+    "message": "Gerät entfernen"
+  },
+  "screens.CollaboratorInfo.thisDevice": {
+    "message": "Dieses Gerät"
+  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Abbrechen"
   },
@@ -1741,25 +1762,25 @@
     "message": "Warte auf Einladung des Geräts"
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
-    "message": "Koordinatoren können Geräte einladen, Daten bearbeiten und löschen und Projektdetails verwalten."
+    "message": "Kann Geräte einladen, Daten bearbeiten und löschen und Projektdetails verwalten."
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinators": {
     "message": "Koordinatoren"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
-    "message": "Hinzugefügt am"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
-    "message": "Gerätename"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Gerät einladen"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
-    "message": "Teilnehmer können Beobachtungen einnehmen und austauschen. Sie können Nutzer oder Projektdetails nicht verwalten."
+    "message": "Kann Beobachtungen aufnehmen und teilen, aber Benutzer oder Projektdetails nicht verwalten."
   },
   "screens.Setting.ProjectSettings.YourTeam.participants": {
     "message": "Teilnehmer"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
+    "message": "Frühere Mitarbeiter"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
+    "message": "Geräte tragen nicht mehr zu diesem Projekt bei."
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Ihr Team"

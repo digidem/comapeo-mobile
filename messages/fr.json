@@ -737,6 +737,27 @@
   "screens.CameraScreen.noCameraAccess": {
     "message": "Aucun accès à la caméra. Veuillez autoriser l'accès dans les paramètres"
   },
+  "screens.CollaboratorInfo.addedOn": {
+    "message": "Ajouté le {date}"
+  },
+  "screens.CollaboratorInfo.coordinator": {
+    "message": "Coordonnateur"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "Quitter le projet"
+  },
+  "screens.CollaboratorInfo.navTitle": {
+    "message": "Informations sur le collaborateur"
+  },
+  "screens.CollaboratorInfo.participant": {
+    "message": "Participant"
+  },
+  "screens.CollaboratorInfo.removeDevice": {
+    "message": "Supprimer l'appareil"
+  },
+  "screens.CollaboratorInfo.thisDevice": {
+    "message": "Cet appareil"
+  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Annuler"
   },
@@ -1741,25 +1762,25 @@
     "message": "En attente d'acceptation de l'invitation de l'appareil"
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
-    "message": "Les coordinateurs peuvent inviter des appareils, modifier et supprimer des données et gérer les détails du projet."
+    "message": "Peut inviter des appareils, modifier et supprimer des données et gérer les détails du projet."
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinators": {
     "message": "Coordonnateurs"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
-    "message": "Date d'ajout"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
-    "message": "Nom de l'appareil"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Inviter un appareil"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
-    "message": "Les participants peuvent prendre et partager des observations. Ils ne peuvent pas gérer les utilisateurs ou les détails du projet."
+    "message": "Peut prendre et partager des observations mais ne gère pas les détails des utilisateurs ou du projet."
   },
   "screens.Setting.ProjectSettings.YourTeam.participants": {
     "message": "Participants"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
+    "message": "Collaborateurs passés"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
+    "message": "Les appareils ne contribuent plus à ce projet."
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Votre équipe"

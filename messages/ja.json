@@ -737,6 +737,27 @@
   "screens.CameraScreen.noCameraAccess": {
     "message": "カメラへのアクセスがありません。設定でアクセスを許可してください"
   },
+  "screens.CollaboratorInfo.addedOn": {
+    "message": "{date} に追加"
+  },
+  "screens.CollaboratorInfo.coordinator": {
+    "message": "Coordinator"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "プロジェクトを退出する"
+  },
+  "screens.CollaboratorInfo.navTitle": {
+    "message": "コラボレーター情報"
+  },
+  "screens.CollaboratorInfo.participant": {
+    "message": "参加者"
+  },
+  "screens.CollaboratorInfo.removeDevice": {
+    "message": "端末を削除"
+  },
+  "screens.CollaboratorInfo.thisDevice": {
+    "message": "このデバイス"
+  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "取消"
   },
@@ -1741,25 +1762,25 @@
     "message": "デバイスが招待を承認するのを待っています"
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
-    "message": "コーディネーターは、デバイスの招待、データの編集、削除、プロジェクトの詳細の管理ができます。"
+    "message": "デバイスの招待、データの編集、削除、プロジェクトの詳細の管理ができます。"
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinators": {
     "message": "Coordinators"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
-    "message": "追加日"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
-    "message": "端末名"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "デバイスを招待"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
-    "message": "参加者は観察記録を取ったり共有したりできます。ユーザやプロジェクトの詳細を管理することはできません。"
+    "message": "観察記録を取ったり共有したりできますが、ユーザーやプロジェクトの詳細を管理することはできません。"
   },
   "screens.Setting.ProjectSettings.YourTeam.participants": {
     "message": "参加者"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
+    "message": "過去のコラボレーション"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
+    "message": "デバイスはこのプロジェクトに貢献していません。"
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "あなたのチーム"

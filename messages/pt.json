@@ -737,6 +737,27 @@
   "screens.CameraScreen.noCameraAccess": {
     "message": "Sem acesso à câmera. Por favor, permita o acesso em Configurações"
   },
+  "screens.CollaboratorInfo.addedOn": {
+    "message": "Adicionado em {date}"
+  },
+  "screens.CollaboratorInfo.coordinator": {
+    "message": "Coordenador"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "Sair do Projeto"
+  },
+  "screens.CollaboratorInfo.navTitle": {
+    "message": "Informações do colaborador"
+  },
+  "screens.CollaboratorInfo.participant": {
+    "message": "Participante"
+  },
+  "screens.CollaboratorInfo.removeDevice": {
+    "message": "Remover o dispositivo"
+  },
+  "screens.CollaboratorInfo.thisDevice": {
+    "message": "Este Dispositivo"
+  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Cancelar"
   },
@@ -1741,25 +1762,25 @@
     "message": "Aguardando o dispositivo aceitar o convite"
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
-    "message": "Os coordenadores podem convidar dispositivos, editar e excluir dados e gerenciar detalhes do projeto."
+    "message": "Pode convidar dispositivos, editar e excluir dados e gerenciar os detalhes do projeto."
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinators": {
     "message": "Coordenadores"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
-    "message": "Data de inclusão"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
-    "message": "Nome do dispositivo"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Convidar dispositivo"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
-    "message": "Sendo um Participante, este dispositivo pode fazer e compartilhar observações, mas não pode gerenciar os usuários e os detalhes do projeto."
+    "message": "Pode capturar e compartilhar observações, mas não pode gerenciar detalhes dos usuários ou do projeto."
   },
   "screens.Setting.ProjectSettings.YourTeam.participants": {
     "message": "Participantes"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
+    "message": "Colaboradores anteriores"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
+    "message": "Dispositivos não contribuem mais para este projeto."
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Sua equipe"

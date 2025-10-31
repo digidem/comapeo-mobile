@@ -737,6 +737,27 @@
   "screens.CameraScreen.noCameraAccess": {
     "message": "Geen toegang tot camera. Geef toegang in instellingen"
   },
+  "screens.CollaboratorInfo.addedOn": {
+    "message": "Toegevoegd op {date}"
+  },
+  "screens.CollaboratorInfo.coordinator": {
+    "message": "Coördinator"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "Project verlaten"
+  },
+  "screens.CollaboratorInfo.navTitle": {
+    "message": "Medewerker Info"
+  },
+  "screens.CollaboratorInfo.participant": {
+    "message": "Deelnemer"
+  },
+  "screens.CollaboratorInfo.removeDevice": {
+    "message": "Apparaat verwijderen"
+  },
+  "screens.CollaboratorInfo.thisDevice": {
+    "message": "Dit apparaat"
+  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Annuleren"
   },
@@ -1741,25 +1762,25 @@
     "message": "Wachten op apparaat om uitnodiging te accepteren"
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
-    "message": "Coördinatoren kunnen apparaten, bewerken en verwijderen van gegevens, en projectdetails beheren."
+    "message": "Kan apparaten, bewerken en verwijderen van gegevens, en projectdetails beheren."
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinators": {
     "message": "Coördinatoren"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
-    "message": "Datum toegevoegd"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
-    "message": "Apparaat Naam"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Apparaat Uitnodigen"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
-    "message": "Deelnemers kunnen waarnemingen aannemen en delen. Ze kunnen gebruikers of projectdetails niet beheren."
+    "message": "Kan waarnemingen opnemen en delen, maar gebruikers of projectdetails niet beheren."
   },
   "screens.Setting.ProjectSettings.YourTeam.participants": {
     "message": "Deelnemers"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
+    "message": "Vorige samenwerkers"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
+    "message": "De toestellen dragen niet meer bij aan dit project."
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Jouw team"

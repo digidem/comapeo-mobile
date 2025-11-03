@@ -737,6 +737,27 @@
   "screens.CameraScreen.noCameraAccess": {
     "message": "No access to camera. Please Allow access in setting"
   },
+  "screens.CollaboratorInfo.addedOn": {
+    "message": "Added on {date}"
+  },
+  "screens.CollaboratorInfo.coordinator": {
+    "message": "Coordinator"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "Leave Project"
+  },
+  "screens.CollaboratorInfo.navTitle": {
+    "message": "Collaborator Info"
+  },
+  "screens.CollaboratorInfo.participant": {
+    "message": "Participant"
+  },
+  "screens.CollaboratorInfo.removeDevice": {
+    "message": "Remove Device"
+  },
+  "screens.CollaboratorInfo.thisDevice": {
+    "message": "This Device"
+  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Cancel"
   },
@@ -1759,25 +1780,25 @@
     "message": "Waiting for Device to Accept Invite"
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
-    "message": "Coordinators can invite devices, edit and delete data, and manage project details."
+    "message": "Can invite devices, edit and delete data, and manage project details."
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinators": {
     "message": "Coordinators"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
-    "message": "Date Added"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
-    "message": "Device Name"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Invite Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
-    "message": "Participants can take and share observations. They cannot manage users or project details."
+    "message": "Can take and share observations but not manage users or project details."
   },
   "screens.Setting.ProjectSettings.YourTeam.participants": {
     "message": "Participants"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
+    "message": "Past Collaborators"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
+    "message": "Devices no longer contributing to this project."
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Your Team"

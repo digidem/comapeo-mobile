@@ -43,7 +43,7 @@ export type ArchiveServerMemberInfo = MemberInfo & {
 };
 
 // TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
-function isActiveArchiveServerMember(
+export function isActiveArchiveServerMember(
   member: MemberInfo,
 ): member is ArchiveServerMemberInfo {
   if (member.deviceType !== 'selfHostedServer') return false;

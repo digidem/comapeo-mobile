@@ -14,7 +14,9 @@ describe('Project - Project Settings Named Project', () => {
     const screenHeader = await $(byText('Project Settings'));
     await expect(screenHeader).toBeDisplayed();
 
-    await expect($(byText(output.names.project))).toBeDisplayed();
+    await expect(
+      $(byText(`${output.names.project} - Coordinator`)),
+    ).toBeDisplayed();
     await expect(
       $(byTextMatches('This device is a coordinator on this project.')),
     ).toBeDisplayed();

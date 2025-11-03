@@ -87,9 +87,7 @@ export const ObservationCreate = ({
             paddingHorizontal: 20,
           }}>
           <HeaderText variant="header6">
-            {projectDetails.role === 'solo'
-              ? projectDetails.projectHeader
-              : projectDetails.projectName}
+            {projectDetails.projectHeader}
           </HeaderText>
         </View>
         <PresetView

@@ -9,6 +9,9 @@ import {JoinProjectIntro} from '../../screens/Onboarding/JoinProjectIntro';
 import {MapOnYourOwnIntro} from '../../screens/Onboarding/MapOnYourOwnIntro';
 import {MessageDescriptor} from 'react-intl';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {InviteReceived} from '../../screens/Invites/InviteReceived';
+import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted';
+import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 
 export const createOnboardingScreens = ({
   intl,
@@ -60,6 +63,36 @@ export const createOnboardingScreens = ({
         contentStyle: {backgroundColor: 'transparent'},
       }}
       component={ErrorBottomSheet}
+    />
+    <RootStack.Screen
+      name="InviteReceived"
+      options={{
+        presentation: 'transparentModal',
+        headerShown: false,
+        animation: 'none',
+        contentStyle: {backgroundColor: 'transparent'},
+      }}
+      component={InviteReceived}
+    />
+    <RootStack.Screen
+      name="InviteSuccessfullyAccepted"
+      options={{
+        presentation: 'transparentModal',
+        headerShown: false,
+        animation: 'none',
+        contentStyle: {backgroundColor: 'transparent'},
+      }}
+      component={InviteSuccessfullyAccepted}
+    />
+    <RootStack.Screen
+      name="InviteCanceled"
+      options={{
+        presentation: 'transparentModal',
+        headerShown: false,
+        animation: 'none',
+        contentStyle: {backgroundColor: 'transparent'},
+      }}
+      component={InviteCanceled}
     />
   </RootStack.Group>
 );

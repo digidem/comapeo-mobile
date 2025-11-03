@@ -21,6 +21,10 @@ export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
 
   return Promise.all(
     modules.map(async ({name, usesNapi, version}) => {
+      if (name === 'better-sqlite3') {
+        // We currently use this release suffix for better-sqlite3 prebuilds
+        version += '-bare-make';
+      }
       if (verbose) {
         console.log(`${name}: prebuilds start (${version})`);
       }
@@ -55,12 +59,6 @@ export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
           })`tar xzf ${artifactInfo.name} --directory .`;
 
           fs.unlinkSync(path.join(targetDir, artifactInfo.name));
-
-          // better-sqlite3 includes an additional native module for testing purposes
-          // removing since it's not needed and also causes issues with nodejs-mobile-react-native
-          if (name === 'better-sqlite3') {
-            fs.unlinkSync(path.join(targetDir, 'test_extension.node'));
-          }
 
           if (verbose) {
             console.log(`${name}: prebuild done (${target})`);

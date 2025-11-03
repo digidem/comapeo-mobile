@@ -54,6 +54,7 @@ export const LeaveProject = ({
       {
         onSuccess: async () => {
           try {
+            navigation.replace('LeftProjectConfirmation');
             const projects = await listProjects();
             if (projects && projects.length > 0) {
               const defaultProject = projects.find(
@@ -63,7 +64,6 @@ export const LeaveProject = ({
                 setActiveProjectId(defaultProject.projectId);
               }
             }
-            navigation.replace('LeftProjectConfirmation');
           } catch (err) {
             Sentry.captureException(err);
             navigation.replace('ErrorBottomSheet');

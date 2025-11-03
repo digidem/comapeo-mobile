@@ -88,7 +88,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
 
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
-  const {role, projectColor, projectDescription, projectName, projectHeader} =
+  const {role, projectColor, projectDescription, projectHeader} =
     projectDetails;
   const {data} = useStorageReadingQuery();
   const {freeBytes, totalBytes} = data;
@@ -182,7 +182,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
             <TouchableOpacity
               style={styles.menuItem}
               onPress={() => {
-                navigation.navigate('YourTeam', {projectName: projectName!});
+                navigation.navigate('YourTeam');
               }}
               accessibilityLabel="Go to your team screen.">
               <MaterialIcon color={NEW_DARK_GREY} size={20} name={'people'} />

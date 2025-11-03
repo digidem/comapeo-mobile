@@ -158,9 +158,7 @@ export const ProjectSettings = () => {
               : formatMessage(m.participant)
           }
           buttonText={formatMessage(m.viewTeam)}
-          onPress={() =>
-            navigate('YourTeam', {projectName: projectInfo.projectName!})
-          }
+          onPress={() => navigate('YourTeam')}
         />
       )}
       {(isCoordinator || participantWithRemote) && (

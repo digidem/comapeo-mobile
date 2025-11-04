@@ -1,8 +1,12 @@
-import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
+import {
+  NativeNavigationComponent,
+  NativeRootNavigationProps,
+} from '../../sharedTypes/navigation';
 import {StyleSheet, View} from 'react-native';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
 import {useOwnRoleInProject, useSingleMember} from '@comapeo/core-react';
+import type {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -12,7 +16,6 @@ import {SecondaryDestructiveButton} from '../../sharedComponents/Buttons';
 
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import {useLayoutEffect} from 'react';
 import {isActiveArchiveServerMember} from '../../hooks/server/projects';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
@@ -47,9 +50,25 @@ const m = defineMessages({
   },
 });
 
+export function createNavigationOptions({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}) {
+  return ({
+    route,
+  }: NativeRootNavigationProps<'CollaboratorInfo'>): NativeStackNavigationOptions => {
+    return {
+      headerTitle: route.params.isOwnDevice
+        ? intl(m.thisDevice)
+        : intl(m.navTitle),
+    };
+  };
+}
+
 export const CollaboratorInfo: NativeNavigationComponent<
   'CollaboratorInfo'
-> = ({route, navigation}) => {
+> = ({route}) => {
   const {projectId} = useActiveProject();
   const isOwnDevice = route.params.isOwnDevice;
   const {formatDate, formatMessage} = useIntl();
@@ -61,12 +80,6 @@ export const CollaboratorInfo: NativeNavigationComponent<
   const isArchiveServer = isActiveArchiveServerMember(member);
 
   const {data: ownRole} = useOwnRoleInProject({projectId});
-
-  useLayoutEffect(() => {
-    if (isOwnDevice) {
-      navigation.setOptions({title: formatMessage(m.thisDevice)});
-    }
-  }, [navigation, isOwnDevice, formatMessage]);
 
   const isCoordinator =
     role.roleId === COORDINATOR_ROLE_ID || role.roleId === CREATOR_ROLE_ID;

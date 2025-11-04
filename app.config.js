@@ -1,17 +1,17 @@
-import {type ExpoConfig} from '@expo/config-types';
 const {execSync} = require('child_process');
 const semverParse = require('semver/functions/parse');
 
-type AppVariant = (typeof VALID_APP_VARIANTS)[number];
+/** @import {ExpoConfig} from '@expo/config-types' */
+/** @typedef {typeof VALID_APP_VARIANTS[number]} AppVariant */
 
 const EAS_PROJECT_ID = '2d5b8137-12ec-45aa-9c23-56b6a1c522b7';
 const EAS_UPDATES_URL = 'https://u.expo.dev/' + EAS_PROJECT_ID;
-const VALID_APP_VARIANTS = [
+const VALID_APP_VARIANTS = /** @type (const) */ ([
   'development',
   'production',
   'releaseCandidate',
   'preRelease',
-] as const;
+]);
 
 const APP_VARIANT = process.env.APP_VARIANT || 'development';
 validateAppVariant(APP_VARIANT);
@@ -24,34 +24,41 @@ validateAppVersion(APP_VERSION);
 // identifier/package name), and the version pre-release suffix based on the
 // APP_VARIANT.
 const APP_ID_BASE = 'com.comapeo';
-const VARIANT_TO_APP_ID_SUFFIX = {
-  development: '.dev',
-  production: '',
-  releaseCandidate: '.rc',
-  preRelease: '.pre',
-} as const satisfies Record<AppVariant, string>;
+const VARIANT_TO_APP_ID_SUFFIX =
+  /** @satisfies {Record<AppVariant, string>} */ ({
+    development: '.dev',
+    production: '',
+    releaseCandidate: '.rc',
+    preRelease: '.pre',
+  });
 const APP_NAME_BASE = 'CoMapeo';
-const VARIANT_TO_APP_NAME_SUFFIX = {
-  development: ' Dev',
-  production: '',
-  releaseCandidate: ' RC',
-  preRelease: ' Pre',
-} as const satisfies Record<AppVariant, string>;
-const VARIANT_TO_VERSION_PRE_RELEASE = {
-  development: '-dev',
-  production: '',
-  releaseCandidate: '-rc',
-  preRelease: '-pre',
-} as const satisfies Record<AppVariant, string>;
-const APP_ID =
-  `${APP_ID_BASE}${VARIANT_TO_APP_ID_SUFFIX[APP_VARIANT]}` as const;
-const APP_NAME =
-  `${APP_NAME_BASE}${VARIANT_TO_APP_NAME_SUFFIX[APP_VARIANT]}` as const;
-const VERSION_PRE_RELEASE_SUFFIX =
-  `${VARIANT_TO_VERSION_PRE_RELEASE[APP_VARIANT]}` as const;
+const VARIANT_TO_APP_NAME_SUFFIX =
+  /** @satisfies {Record<AppVariant, string>} */ ({
+    development: ' Dev',
+    production: '',
+    releaseCandidate: ' RC',
+    preRelease: ' Pre',
+  });
+const VARIANT_TO_VERSION_PRE_RELEASE =
+  /** @satisfies {Record<AppVariant, string>} */ ({
+    development: '-dev',
+    production: '',
+    releaseCandidate: '-rc',
+    preRelease: '-pre',
+  });
+const APP_ID = /** @type {const} */ (
+  `${APP_ID_BASE}${VARIANT_TO_APP_ID_SUFFIX[APP_VARIANT]}`
+);
+const APP_NAME = /** @type {const} */ (
+  `${APP_NAME_BASE}${VARIANT_TO_APP_NAME_SUFFIX[APP_VARIANT]}`
+);
+const VERSION_PRE_RELEASE_SUFFIX = /** @type {const} */ (
+  `${VARIANT_TO_VERSION_PRE_RELEASE[APP_VARIANT]}`
+);
 // --- END: App name, ID, and versioning ---
 
-module.exports = ({config}: {config: ExpoConfig}): ExpoConfig => {
+/** @type {({config}: {config: ExpoConfig}): ExpoConfig} */
+module.exports = ({config}) => {
   const versionName = APP_VERSION || generateVersionName();
 
   return {
@@ -88,9 +95,15 @@ module.exports = ({config}: {config: ExpoConfig}): ExpoConfig => {
  * - production
  * - releaseCandidate
  * - preRelease
+ * @param {string} variant
+ * @throws {Error} if the variant is invalid
+ * @returns {asserts variant is AppVariant}
  */
-function validateAppVariant(variant: string): asserts variant is AppVariant {
-  if (!variant || !VALID_APP_VARIANTS.includes(variant as AppVariant)) {
+function validateAppVariant(variant) {
+  if (
+    !variant ||
+    !VALID_APP_VARIANTS.includes(/** @type {AppVariant} */ (variant))
+  ) {
     throw new Error(
       `Invalid APP_VARIANT: ${variant}. Must be one of: ${VALID_APP_VARIANTS.join(', ')}.`,
     );
@@ -105,9 +118,11 @@ function validateAppVariant(variant: string): asserts variant is AppVariant {
  * - <patch> is a non-negative integer
  * - <pre-release> is one of: dev, rc, pre
  * - <pre-release-patch> is a non-negative integer
- *
+ * @param {string | undefined} version
+ * @throws {Error} if the version is invalid
+ * @returns {void}
  */
-function validateAppVersion(version: string | undefined): void {
+function validateAppVersion(version) {
   if (!version) return;
   const regex = /^\d+\.\d+(-(?:dev|rc|pre)(\.\d+)?)?$/;
   if (!regex.test(version)) {
@@ -117,7 +132,7 @@ function validateAppVersion(version: string | undefined): void {
   }
 }
 
-function generateVersionName(): string {
+function generateVersionName() {
   const commitShaShort = getCommitShaShort();
   let versionName = `${getVersionNameBase()}${VERSION_PRE_RELEASE_SUFFIX}`;
 

@@ -148,7 +148,7 @@ const TEST_CASES = [
   },
 ] as const;
 
-describe('app.config.ts', () => {
+describe('app.config.js', () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
@@ -169,13 +169,13 @@ describe('app.config.ts', () => {
 
   // Helper function to get config with mocked package version
   const getConfigWithPackageVersion = (packageVersion: string) => {
-    // Mock the package.json module before requiring app.config.ts
+    // Mock the package.json module before requiring app.config.js
     jest.doMock('./package.json', () => ({
       version: packageVersion,
     }));
 
     // Import the config function
-    const configModule = require('./app.config.ts');
+    const configModule = require('./app.config.js');
     return configModule;
   };
 

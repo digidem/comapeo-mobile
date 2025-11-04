@@ -2,17 +2,17 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
+import {getDeviceTimezone, getFormattedDate} from '../../utils/date';
+
+let deviceTimezone: string;
 
 describe('Team - Collaborator Info as Coordinator', () => {
+  before(async () => {
+    deviceTimezone = await getDeviceTimezone();
+  });
   it('should navigate to collaborator info screen and display own device details', async () => {
-    const drawerIcon = await $('~Open Menu');
-    await drawerIcon.click();
-    const viewSettings = await $('~Go to project settings screen.');
-    await viewSettings.click();
-
     const viewTeamButton = await $(byText('View Team'));
     await viewTeamButton.click();
-
     const deviceName = await $(byTextMatches(output.names.device));
     await deviceName.click();
     const thisDeviceHeader = await $(byText('This Device'));
@@ -22,6 +22,9 @@ describe('Team - Collaborator Info as Coordinator', () => {
     await expect(coordinatorRole).toBeDisplayed();
     const addedOnText = await $(byTextMatches('Added on'));
     await expect(addedOnText).toBeDisplayed();
+
+    const today = getFormattedDate(deviceTimezone);
+    await expect($(byText(today))).toBeDisplayed();
   });
 
   it('should not display Leave Project or Remove Device buttons', async () => {

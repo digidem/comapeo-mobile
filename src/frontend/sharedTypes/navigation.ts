@@ -72,7 +72,9 @@ export type RootStackParamsList = {
     // but we will eventually support deleting saved photos as well.
     photo: ProcessedDraftPhoto;
   };
-  TrackCategoryChooser: undefined;
+  TrackCategoryChooser:
+    | {trackAction: 'saveNew'}
+    | {trackAction: 'editExisting'; trackId: string};
   ObservationCategoryChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
@@ -101,7 +103,7 @@ export type RootStackParamsList = {
     name: string;
     statsShared: boolean;
   };
-  YourTeam: {projectName: string};
+  YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;
@@ -113,7 +115,7 @@ export type RootStackParamsList = {
   SaveTrack: undefined;
   Sync: undefined;
   Track: {trackId: string};
-  TrackEdit: {trackId: string};
+  TrackEdit: {trackId: string; newPresetId?: string};
   CreateTestData: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
@@ -163,6 +165,12 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
+  CollaboratorInfo: {
+    deviceId: string;
+    isOwnDevice: boolean;
+    deviceType: DeviceType;
+  };
+  ConfirmTrackDiscardBottomSheet: {trackId: string};
 };
 
 export type OnboardingParamsList = {

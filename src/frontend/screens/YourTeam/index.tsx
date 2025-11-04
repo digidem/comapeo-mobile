@@ -1,22 +1,25 @@
 import * as React from 'react';
-import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {
   CREATOR_ROLE_ID,
   COORDINATOR_ROLE_ID,
-  ViewStyleProp,
   MEMBER_ROLE_ID,
+  BLOCKED_ROLE_ID,
+  LEFT_ROLE_ID,
 } from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
-import type {MaterialIconsIconName} from '@react-native-vector-icons/material-icons';
-import {BLACK} from '../../lib/styles';
-import {DeviceCard} from '../../sharedComponents/DeviceCard';
+import {BLACK, NEW_DARK_GREY} from '../../lib/styles';
+import {TeamMemberCard} from './TeamMemberCard';
 import {useOwnDeviceInfo, useManyMembers} from '@comapeo/core-react';
+import InactivePersonIcon from '../../images/NoPeople.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
+
 const m = defineMessages({
   title: {
     id: 'screens.Setting.ProjectSettings.YourTeam.title',
@@ -37,22 +40,26 @@ const m = defineMessages({
   coordinatorDescription: {
     id: 'screens.Setting.ProjectSettings.YourTeam.coordinatorDescription',
     defaultMessage:
-      'Coordinators can invite devices, edit and delete data, and manage project details.',
-  },
-  deviceName: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.deviceName',
-    defaultMessage: 'Device Name',
-  },
-  dateAdded: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.dateAdded',
-    defaultMessage: 'Date Added',
+      'Can invite devices, edit and delete data, and manage project details.',
   },
   participantDescription: {
     id: 'screens.Setting.ProjectSettings.YourTeam.participantDescription',
     defaultMessage:
-      'Participants can take and share observations. They cannot manage users or project details.',
+      'Can take and share observations but not manage users or project details.',
+  },
+  pastCollaborators: {
+    id: 'screens.Setting.ProjectSettings.YourTeam.pastCollaborators',
+    defaultMessage: 'Past Collaborators',
+  },
+  pastCollaboratorsDescription: {
+    id: 'screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription',
+    defaultMessage: 'Devices no longer contributing to this project.',
   },
 });
+
+const COORDINATOR_ROLES = new Set([COORDINATOR_ROLE_ID, CREATOR_ROLE_ID]);
+const PAST_COLLABORATOR_ROLES = new Set([BLOCKED_ROLE_ID, LEFT_ROLE_ID]);
+
 export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   navigation,
 }) => {
@@ -60,18 +67,21 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const {projectId} = useActiveProject();
   const membersQuery = useManyMembers({projectId});
   const {data: deviceInfo} = useOwnDeviceInfo();
-  const coordinators = !membersQuery.data
-    ? []
-    : membersQuery.data.filter(
-        member =>
-          member.role.roleId === COORDINATOR_ROLE_ID ||
-          member.role.roleId === CREATOR_ROLE_ID,
-      );
-  const participants = !membersQuery.data
-    ? []
-    : membersQuery.data.filter(member => member.role.roleId === MEMBER_ROLE_ID);
+
+  const coordinators = membersQuery.data.filter(member =>
+    COORDINATOR_ROLES.has(member.role.roleId),
+  );
+
+  const participants = membersQuery.data.filter(
+    member => member.role.roleId === MEMBER_ROLE_ID,
+  );
+
+  const pastCollaborators = membersQuery.data.filter(member =>
+    PAST_COLLABORATOR_ROLES.has(member.role.roleId),
+  );
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {!deviceInfo ||
       !coordinators.some(
         coordinator => coordinator.deviceId === deviceInfo.deviceId,
@@ -89,92 +99,114 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           text={t(m.inviteDevice)}
         />
       )}
-      <IconHeader
-        iconName="manage-accounts"
-        messageDescriptor={m.coordinators}
-        style={{marginTop: 20}}
-      />
-      <BodyText style={{marginTop: 10}}>{t(m.coordinatorDescription)}</BodyText>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: 20,
-        }}>
-        <BodyText style={{marginTop: 10}}>{t(m.deviceName)}</BodyText>
-        <BodyText style={{marginTop: 10}}>{t(m.dateAdded)}</BodyText>
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <MaterialIcon color={BLACK} size={32} name="manage-accounts" />
+          <HeaderText variant="header4">{t(m.coordinators)}</HeaderText>
+        </View>
+        <BodyText>{t(m.coordinatorDescription)}</BodyText>
+        {coordinators.map(coordinator => (
+          <TeamMemberCard
+            key={coordinator.deviceId}
+            Icon={<DeviceIcon deviceType={coordinator.deviceType} size={30} />}
+            name={coordinator.name || ''}
+            thisDevice={deviceInfo.deviceId === coordinator.deviceId}
+            onPress={() => {
+              navigation.navigate('CollaboratorInfo', {
+                deviceId: coordinator.deviceId,
+                isOwnDevice: deviceInfo.deviceId === coordinator.deviceId,
+                deviceType: coordinator.deviceType,
+              });
+            }}
+          />
+        ))}
       </View>
 
-      {coordinators.map(coordinator => (
-        <DeviceCard
-          key={coordinator.deviceId}
-          style={{marginTop: 10}}
-          name={coordinator.name || ''}
-          deviceId={coordinator.deviceId}
-          dateAdded={coordinator.joinedAt}
-          deviceType={coordinator.deviceType}
-          thisDevice={deviceInfo.deviceId === coordinator.deviceId}
-        />
-      ))}
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <MaterialIcon color={BLACK} size={32} name="people" />
+          <HeaderText variant="header4">{t(m.participants)}</HeaderText>
+        </View>
+        <BodyText>{t(m.participantDescription)}</BodyText>
+        {participants.map(participant => (
+          <TeamMemberCard
+            key={participant.deviceId}
+            Icon={<DeviceIcon deviceType={participant.deviceType} size={30} />}
+            name={participant.name || ''}
+            thisDevice={deviceInfo.deviceId === participant.deviceId}
+            onPress={() => {
+              navigation.navigate('CollaboratorInfo', {
+                deviceId: participant.deviceId,
+                isOwnDevice: deviceInfo.deviceId === participant.deviceId,
+                deviceType: participant.deviceType,
+              });
+            }}
+          />
+        ))}
+      </View>
 
-      <IconHeader
-        iconName="people"
-        messageDescriptor={m.participants}
-        style={{marginTop: 20}}
-      />
-      <BodyText style={{marginTop: 10}}>{t(m.participantDescription)}</BodyText>
-      {participants.map(participant => (
-        <DeviceCard
-          key={participant.deviceId}
-          style={{marginTop: 10}}
-          name={participant.name || ''}
-          deviceId={participant.deviceId}
-          deviceType={participant.deviceType}
-          dateAdded={participant.joinedAt}
-          thisDevice={deviceInfo.deviceId === participant.deviceId}
-        />
-      ))}
-      <View style={{marginBottom: 40}} />
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <InactivePersonIcon width={24} height={24} />
+          <HeaderText variant="header4">{t(m.pastCollaborators)}</HeaderText>
+        </View>
+        <BodyText variant="tinyMeta">
+          {t(m.pastCollaboratorsDescription)}
+        </BodyText>
+        {pastCollaborators.map(collaborator => (
+          <View key={collaborator.deviceId} style={styles.pastCollaboratorCard}>
+            <DeviceIcon
+              deviceType={collaborator.deviceType}
+              size={30}
+              iconColor={NEW_DARK_GREY}
+            />
+            <View style={styles.pastCollaboratorText}>
+              <HeaderText
+                variant="header6"
+                style={styles.pastCollaboratorName}
+                numberOfLines={1}
+                ellipsizeMode="tail">
+                {collaborator.name || ''}
+              </HeaderText>
+            </View>
+          </View>
+        ))}
+      </View>
     </ScrollView>
   );
 };
 
 YourTeam.navTitle = m.title;
 
-const IconHeader = ({
-  iconName,
-  messageDescriptor,
-  style,
-}: {
-  iconName: MaterialIconsIconName;
-  messageDescriptor: MessageDescriptor;
-  style?: ViewStyleProp;
-}) => {
-  const {formatMessage: t} = useIntl();
-  return (
-    <View
-      style={[
-        {
-          flexDirection: 'row',
-          alignItems: 'center',
-        },
-        style,
-      ]}>
-      <MaterialIcon
-        color={BLACK}
-        size={32}
-        name={iconName}
-        style={{marginRight: 10}}
-      />
-      <HeaderText variant="header4">{t(messageDescriptor)}</HeaderText>
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+  },
+  content: {
+    gap: 20,
+    paddingBottom: 40,
+  },
+  section: {
+    gap: 10,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 15,
+  },
+  pastCollaboratorCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 15,
+    gap: 15,
+    height: 60,
+  },
+  pastCollaboratorText: {
+    flex: 1,
+  },
+  pastCollaboratorName: {
+    lineHeight: 18,
+    includeFontPadding: false,
   },
 });

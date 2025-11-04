@@ -44,11 +44,11 @@ export const FormattedCoords = ({
   return <>{formatCoords({lon, lat, format})}</>;
 };
 
-// Render the translated value of a translatable Field property (one of
-// `label`, `placeholder` or `helperText`). `label` will always render
-// something: if it is undefined or an empty string, then it will use the field
-// key as the label. `placeholder` and `helperText` will render to null if they
-// are not defined.
+// Render the value of a Field property (one of `label`, `placeholder` or
+// `helperText`). Core is responsible for translation, so just uses the plain
+// string value. `label` will always render something: if it is undefined or an
+// empty string, then it will use the field key as the label. `placeholder` and
+// `helperText` will render to null if they are not defined.
 export const FormattedFieldProp = ({
   field,
   propName,
@@ -56,13 +56,9 @@ export const FormattedFieldProp = ({
   field: Field;
   propName: 'label' | 'placeholder' | 'helperText';
 }) => {
-  const {formatMessage: t} = useIntl();
   const fieldKey = field.tagKey;
   const value = field[propName]
-    ? t({
-        id: `fields.${field.docId}.${propName}`,
-        defaultMessage: field[propName],
-      })
+    ? field[propName]
     : // Never show a blank label, fall back to field.key, otherwise return null
       propName === 'label'
       ? fieldKey
@@ -74,7 +70,7 @@ export const FormattedFieldProp = ({
 // Render a field value as a string. If the value is an array, convert to string
 // and join with `, `. If the field is a select_one or select_multiple field,
 // then use `field.option.label` to display the value, if a label is defined.
-// Translate the field value if a translation is defined.
+// Core is responsible for translation, so just uses the plain string value.
 //
 // TODO: Consider an API like
 // https://formatjs.io/docs/react-intl/components#formatteddateparts to enable
@@ -95,12 +91,7 @@ export const FormattedFieldValue = ({
       formattedValue =>
         typeof formattedValue !== 'undefined' && formattedValue !== '',
     )
-    .map(formattedValue =>
-      t({
-        id: `fields.${field.docId}.options.${JSON.stringify(formattedValue)}`,
-        defaultMessage: getValueLabel(formattedValue, field),
-      }).trim(),
-    )
+    .map(formattedValue => getValueLabel(formattedValue, field).trim())
     .join(', ');
   // This will return a noAnswer string if formattedValue is undefined or an
   // empty string
@@ -133,13 +124,12 @@ export const FormattedObservationDate = React.memo(
   },
 );
 
-// Format the translated preset name, with a fallback to "Observation" if no
-// preset is defined
+// Format the preset name, with a fallback to "Observation" if no preset is
+// defined. Core is responsible for translation, so we just use the plain
+// string value.
 export const FormattedPresetName = ({preset}: {preset?: Preset}) => {
   const {formatMessage: t} = useIntl();
-  const name = preset
-    ? t({id: `presets.${preset.docId}.name`, defaultMessage: preset.name})
-    : t(m.observation);
+  const name = preset ? preset.name : t(m.observation);
 
   return <React.Fragment>{name}</React.Fragment>;
 };

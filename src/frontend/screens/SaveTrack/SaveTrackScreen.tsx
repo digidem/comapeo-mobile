@@ -29,12 +29,7 @@ export const SaveTrackScreen = () => {
 
   const canChoosePreset = trackPresets.length > 0;
 
-  const presetName = preset
-    ? t({
-        id: `presets.${preset.docId}.name`,
-        defaultMessage: preset.name,
-      })
-    : t(m.newTitle);
+  const presetName = preset ? preset.name : t(m.newTitle);
 
   useFocusEffect(
     useCallback(() => {
@@ -62,7 +57,10 @@ export const SaveTrackScreen = () => {
       }
       onPressPreset={
         canChoosePreset
-          ? () => navigation.navigate('TrackCategoryChooser')
+          ? () =>
+              navigation.navigate('TrackCategoryChooser', {
+                trackAction: 'saveNew',
+              })
           : undefined
       }
       presetDisabled={!canChoosePreset}

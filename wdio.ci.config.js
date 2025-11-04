@@ -11,16 +11,19 @@ const config = {
   key: process.env.BROWSERSTACK_ACCESS_KEY,
   hostname: 'hub.browserstack.com',
   specs: [
+    path.resolve(__dirname, 'tests/e2e/specs/passcode/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/audio/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/exchange/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/multiple-projects/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/observations/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/onboarding/index.test.ts'),
-    path.resolve(__dirname, 'tests/e2e/specs/passcode/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/settings/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/solo-project/index.tsx'),
     path.resolve(__dirname, 'tests/e2e/specs/tracks/index.test.ts'),
-    path.resolve(__dirname, 'tests/e2e/specs/remote-archive/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/menu/index.test.ts'),
+    //temporarily removing as remote archive seems to be down
+    //path.resolve(__dirname, 'tests/e2e/specs/remote-archive/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/photos/index.test.ts'),
   ],
   maxInstances: 5,
   services: [
@@ -42,10 +45,11 @@ const config = {
     {
       platformName: 'android',
       'appium:platformVersion': '13.0',
-      'appium:deviceName': 'Google Pixel 7',
+      'appium:deviceName': 'Samsung Galaxy S23',
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,
+      'appium:newCommandTimeout': 150,
       'bstack:options': {
         projectName: 'CoMapeo',
         buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,

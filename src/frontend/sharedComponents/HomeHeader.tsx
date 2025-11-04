@@ -1,53 +1,31 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
+import IonIcon from '@react-native-vector-icons/ionicons';
 
-import DeviceIcon from '../images/DeviceIcon.svg';
-import {IconButton} from './IconButton';
 import {HeaderText} from './Text/HeaderText';
 import {BLUE_GREY, DARK_GREY} from '../lib/styles';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
-import ProjectCoordinatorIcon from '../images/ProjectCoordinator.svg';
-import ProjectParticipantIcon from '../images/ProjectParticipant.svg';
-import NoProjectIcon from '../images/NoProjectIcon.svg';
-import {SvgProps} from 'react-native-svg';
+import {isLowStorage} from '../lib/storage';
+import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery';
+import {ExclamationBadge} from './Storage/ExclamationBadge';
 
 type HomeHeaderProps = BottomTabHeaderProps & {
   backgroundColor: string;
   showBottomBorder: boolean;
+  onPress: () => void;
 };
 
 export function HomeHeader({
   backgroundColor,
   showBottomBorder,
-  navigation,
+  onPress,
 }: HomeHeaderProps) {
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
-
-  const projectName =
-    'projectHeader' in projectDetails
-      ? projectDetails.projectHeader
-      : projectDetails.projectName;
-
-  let RoleIcon: React.FC<SvgProps>;
-  let testID: string;
-
-  switch (projectDetails.role) {
-    case 'coordinator':
-      RoleIcon = ProjectCoordinatorIcon;
-      testID = 'HOME.coordinator-icon';
-      break;
-    case 'participant':
-      RoleIcon = ProjectParticipantIcon;
-      testID = 'HOME.participant-icon';
-      break;
-    default:
-      RoleIcon = NoProjectIcon;
-      testID = 'HOME.no-project-icon';
-      break;
-  }
+  const {data} = useStorageReadingQuery();
+  const isLow = isLowStorage(data.freeBytes);
 
   return (
     <View
@@ -60,34 +38,31 @@ export function HomeHeader({
         },
       ]}>
       <View style={styles.headerRow}>
-        <View
+        <TouchableOpacity
           style={[
             styles.titleBox,
             {backgroundColor: projectDetails.projectColor},
-          ]}>
-          <RoleIcon testID={testID} style={{marginRight: 10}} />
+          ]}
+          onPress={onPress}
+          accessibilityLabel="Open Menu"
+          testID="HOME.header-button">
+          <View style={styles.menuIconContainer}>
+            <IonIcon name="menu" size={20} color={DARK_GREY} />
+          </View>
           <HeaderText
             testID="HOME.header-title"
             variant="header4"
             style={styles.text}
             numberOfLines={1}
             ellipsizeMode="tail">
-            {projectName}
+            {projectDetails.projectHeader}
           </HeaderText>
-        </View>
-
-        <IconButton
-          style={styles.iconButton}
-          onPress={() => {
-            navigation.navigate('Menu');
-          }}>
-          <DeviceIcon
-            width={32}
-            height={32}
-            testID="drawer-icon-home"
-            accessibilityLabel="Open Menu"
-          />
-        </IconButton>
+          {isLow && (
+            <View style={{position: 'absolute', top: -2, right: -2}}>
+              <ExclamationBadge testID="low-storage-badge" />
+            </View>
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -105,21 +80,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   titleBox: {
-    width: '85%',
-    minHeight: 32,
+    height: 40,
+    maxWidth: '100%',
     borderRadius: 6,
+    borderWidth: 0.5,
+    borderColor: BLUE_GREY,
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 5,
+    paddingRight: 10,
   },
-  text: {
-    paddingLeft: 5,
-    color: DARK_GREY,
-  },
-  iconButton: {
+  menuIconContainer: {
     width: 40,
     height: 40,
+    borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
+  },
+  text: {
+    flexShrink: 1,
   },
 });

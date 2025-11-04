@@ -6,14 +6,14 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {DARK_GREY, LIGHT_GREY, WARNING_RED} from '../lib/styles';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {useState} from 'react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useObservations} from '../hooks/server/observations';
 import {useTracks} from '../hooks/server/track';
 import * as Sentry from '@sentry/react-native';
-import {useExportObservationsAndShare} from '../hooks/server/projects';
+import {isUserCancelled, useExportObservations} from '../hooks/server/projects';
 
 const m = defineMessages({
   close: {
@@ -65,7 +65,7 @@ export const ExportObservations = ({
   const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
   const {projectId} = useActiveProject();
-  const exportAndShare = useExportObservationsAndShare({projectId});
+  const exportAndShare = useExportObservations({projectId});
 
   async function handlePressDownload() {
     if (!typeToExport) {
@@ -75,7 +75,13 @@ export const ExportObservations = ({
     exportAndShare.mutate(
       {exportType: typeToExport},
       {
+        onSuccess: () => {
+          navigation.replace('ExportSuccess', {exportType: typeToExport});
+        },
         onError: err => {
+          if (isUserCancelled(err)) {
+            return;
+          }
           Sentry.captureException(err);
           navigation.navigate('ErrorBottomSheet');
         },

@@ -10,7 +10,7 @@ import {BLACK, DARK_GREY, NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import * as Sentry from '@sentry/react-native';
 import {useIsArchiveDevice, useSetIsArchiveDevice} from '@comapeo/core-react';
 

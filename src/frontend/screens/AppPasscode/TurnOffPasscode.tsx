@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {BackHandler, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {
   List,

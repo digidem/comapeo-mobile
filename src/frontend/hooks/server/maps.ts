@@ -123,7 +123,7 @@ export function useGetCustomMapInfo() {
   const {data: styleUrl} = useMapStyleJsonUrl();
 
   return useQuery({
-    queryKey: [getMapsQueryKey, 'custom', 'info', {styleUrl}],
+    queryKey: [...getMapsQueryKey(), 'custom', 'info', {styleUrl}],
     queryFn: async () => {
       const response = await fetchCustomMapInfo(styleUrl);
 

@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "ยืนยันการยกเลิก?"
   },
+  "ExportSuccess.done": {
+    "message": "เสร็จสิ้น"
+  },
+  "ExportSuccess.obs": {
+    "message": "<bold>All observations</bold> have been downloaded to your device."
+  },
+  "ExportSuccess.obsMedia": {
+    "message": "<bold>All observations with media</bold> have been downloaded to your device."
+  },
+  "ExportSuccess.title": {
+    "message": "เสร็จสมบูรณ์!"
+  },
+  "ExportSuccess.tracks": {
+    "message": "<bold>Tracks</bold> have been downloaded to your device."
+  },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "ย้อนกลับ"
   },
@@ -57,6 +72,9 @@
   },
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
+  },
+  "Navigation.Menu.earlyAccessLabel": {
+    "message": "You are in Early Access Mode."
   },
   "Navigation.Menu.exchange": {
     "message": "Exchange"
@@ -208,9 +226,6 @@
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Your Track will not be saved. This cannot be undone."
   },
-  "Screens.Project.soloProjectHeader": {
-    "message": "My Solo Project"
-  },
   "Screens.ProjectSettings.configTitle": {
     "message": "Project Categories"
   },
@@ -229,6 +244,18 @@
   "Screens.ProjectSettings.projectCollaborators": {
     "message": "Project Collaborators"
   },
+  "Screens.ProjectSettings.projectStatsOff": {
+    "message": "Project Statistics | OFF"
+  },
+  "Screens.ProjectSettings.projectStatsOffDesc": {
+    "message": "Project statistics are not being shared."
+  },
+  "Screens.ProjectSettings.projectStatsOn": {
+    "message": "Project Statistics | ON"
+  },
+  "Screens.ProjectSettings.projectStatsOnDesc": {
+    "message": "This project is sharing anonymous statistics."
+  },
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Share with a secure, encypted server. URL required to access."
   },
@@ -244,8 +271,14 @@
   "Screens.ProjectSettings.title": {
     "message": "Project Settings"
   },
+  "Screens.ProjectSettings.update": {
+    "message": "อัปเดต"
+  },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Update Set"
+  },
+  "Screens.ProjectSettings.view": {
+    "message": "มุมมอง"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "View Details"
@@ -264,6 +297,15 @@
   },
   "Screens.Settings.AppSettings.deviceName": {
     "message": "ชื่ออุปกรณ์"
+  },
+  "Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Early Access Mode"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.off": {
+    "message": "Early Access is OFF"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.on": {
+    "message": "Early Access is ON"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "ภาษา"
@@ -308,6 +350,21 @@
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
     "message": "แบ่งปัน"
+  },
+  "Storage.MapBanner.title": {
+    "message": "Your device has low storage."
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "Free up space"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "Only {free}mb left on your device"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "Some features may stop working."
+  },
+  "Storage.MenuAlert.title": {
+    "message": "Your device has low storage."
   },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "Exit Tracks"
@@ -446,13 +503,27 @@
     "description": "Label for Android version",
     "message": "เวอร์ชันของแอนดรอยด์"
   },
+  "screens.AboutSettings.earlyAccessBanner": {
+    "message": "You are in Early Access Mode."
+  },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
-    "message": "Emojis source:"
+    "message": "Emojis source"
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "รุ่นของโทรศัพท์"
+  },
+  "screens.AboutSettings.releaseName": {
+    "description": "The CoMapeo chosen release name for the version of the app",
+    "message": "Preview"
+  },
+  "screens.AboutSettings.releaseNameLabel": {
+    "description": "Label for the release name",
+    "message": "Release name"
+  },
+  "screens.AboutSettings.seeUpdates": {
+    "message": "See CoMapeo Updates"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
@@ -559,6 +630,39 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Use App Passcode"
   },
+  "screens.AppUsagePrompt.countIn": {
+    "message": "Yes, count me in"
+  },
+  "screens.AppUsagePrompt.idsScrambled": {
+    "message": "IDs are scrambled randomly and changed every month."
+  },
+  "screens.AppUsagePrompt.introText": {
+    "message": "Share how you use CoMapeo—any data shared cannot be used to track you."
+  },
+  "screens.AppUsagePrompt.neverStores": {
+    "message": "CoMapeo never stores IP addresses."
+  },
+  "screens.AppUsagePrompt.notNow": {
+    "message": "No, not now"
+  },
+  "screens.AppUsagePrompt.screenTitle": {
+    "message": "Help improve your experience."
+  },
+  "screens.AppUsagePrompt.turnOffAnytime": {
+    "message": "Turn off at any time."
+  },
+  "screens.AppUsageSharingSuccess.done": {
+    "message": "เสร็จสิ้น"
+  },
+  "screens.AppUsageSharingSuccess.nowSharing": {
+    "message": "is now sharing how you use CoMapeo with Awana Digital."
+  },
+  "screens.AppUsageSharingSuccess.removeAnytime": {
+    "message": "Change this anytime by navigating to Data & Privacy in the Menu."
+  },
+  "screens.AppUsageSharingSuccess.success": {
+    "message": "เสร็จสมบูรณ์!"
+  },
   "screens.AudioAttachmentPlayback.navTitle": {
     "message": "Audio Recording"
   },
@@ -655,14 +759,11 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respects Your Privacy & Autonomy"
   },
-  "screens.DataPrivacy.description": {
-    "message": "CoMapeo allows you and your collaborators to map offline without needing servers."
-  },
   "screens.DataPrivacy.diagnostic": {
-    "message": "Private by default — diagnostic information is fully anonymized and you can opt-out any time."
+    "message": "Diagnostic information is fully anonymized—opt-out any time."
   },
-  "screens.DataPrivacy.encrypted": {
-    "message": "All data stays fully encrypted"
+  "screens.DataPrivacy.intro": {
+    "message": "A few important things to keep in mind:"
   },
   "screens.DataPrivacy.learnMore": {
     "message": "Learn More"
@@ -674,34 +775,67 @@
     "message": "ถัดไป"
   },
   "screens.DataPrivacy.stays": {
-    "message": "Your data stays on your devices."
+    "message": "Your data stays on your devices—fully encrypted and in your control."
   },
   "screens.DataPrivacy.title": {
-    "message": "Data & Privacy"
+    "message": "CoMapeo is private by default."
   },
-  "screens.DeviceNaming.Success.description": {
-    "message": "You named your device"
+  "screens.DeviceNaming.Success.chooseProject": {
+    "message": "Choose from below to start your first project."
   },
-  "screens.DeviceNaming.Success.findSettings": {
-    "message": "To find your project settings go to the main menu found on the map screen."
+  "screens.DeviceNaming.Success.deviceReady": {
+    "message": "{deviceName} is ready!"
   },
-  "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
+  "screens.DeviceNaming.Success.joinProject": {
+    "message": "เข้าร่วมโครงการ"
   },
-  "screens.DeviceNaming.Success.startUsihng": {
-    "message": "Start Using CoMapeo"
+  "screens.DeviceNaming.Success.mapOnYourOwn": {
+    "message": "Map On Your Own"
   },
   "screens.DeviceNaming.Success.success": {
     "message": "เสร็จสมบูรณ์!"
   },
-  "screens.DeviceNaming.addName": {
-    "message": "Add Name"
-  },
   "screens.DeviceNaming.description": {
-    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
+    "message": "Distinct names help collaborators using CoMapeo to recognize you."
   },
   "screens.DeviceNaming.header": {
-    "message": "Add a name for your device"
+    "message": "Name Your Device"
+  },
+  "screens.DeviceNaming.placeholder": {
+    "message": "ชื่ออุปกรณ์"
+  },
+  "screens.DeviceNaming.save": {
+    "message": "บันทึก"
+  },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "Share it here"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "Have feedback?"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "Data from Early Access won't be visible to collaborators who haven't opted in."
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "Switch to Early Access to test upcoming features. You can switch back anytime. Some data may be hidden when turned off but is always safe."
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "Early Access Mode"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "See CoMapeo Updates"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "Use Early Access Features"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "Data from Early Access will be hidden after switching off, but is still saved. Switch back anytime to see it."
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "Early Access Data"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Enter your passcode"
@@ -788,10 +922,10 @@
     "message": "Something Went Wrong"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate with others"
+    "message": "Securely share with collaborators"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "Designed with and for Indigenous peoples & frontline communities"
+    "message": "Co-designed with and for Indigenous territory mappers & monitors."
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "Get Started"
@@ -800,10 +934,10 @@
     "message": "Map anywhere and everywhere"
   },
   "screens.IntroToCoMapeo.mapWorldTogether": {
-    "message": "Map your world, together"
+    "message": "Map your world, together."
   },
   "screens.IntroToCoMapeo.ownData": {
-    "message": "Own and control your data"
+    "message": "Always own and control your data"
   },
   "screens.InviteCancelled.canceled": {
     "message": "Invite Canceled"
@@ -831,6 +965,9 @@
   },
   "screens.InviteReceived.participantRole": {
     "message": "participant"
+  },
+  "screens.InviteReceived.sharedStats": {
+    "message": "Project statistics are being shared"
   },
   "screens.InviteSuccess.goToMap": {
     "message": "เปิดแผนที่"
@@ -1105,6 +1242,34 @@
   "screens.ObservationCategoryChooser.title": {
     "message": "Choose a category"
   },
+  "screens.ObservationCreate.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "กำลังรอ"
+  },
+  "screens.ObservationCreate.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "ป้อนพิกัดด้วยตัวเอง"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "ข้อสังเกตนี้ไม่ปรากฎสถานที่ กรุณารอสัญญาณ GPS สักครู่ บันทึกข้อสังเกต โดยป้อนพิกัดด้วยตัวเอง "
+  },
+  "screens.ObservationCreate.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "ไม่มีสัญญาณ GPS"
+  },
+  "screens.ObservationCreate.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "บันทึก"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "ความแม่นยำของ GPS ต่ำ กรุณารอสักพักเพื่อความแม่นยำของสัญญาณ กรุณาบันทึกข้อสังเกต หรือป้อนพิกัดด้วยตัวเอง"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "สัญญาณ GPS อ่อน"
+  },
   "screens.ObservationCreate.changePreset": {
     "message": "แก้ไข"
   },
@@ -1112,41 +1277,13 @@
     "description": "Placeholder for description/notes field",
     "message": "เกิดอะไรขึ้นที่นี่?"
   },
-  "screens.ObservationCreate.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "กำลังรอ"
-  },
-  "screens.ObservationCreate.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "ป้อนพิกัดด้วยตัวเอง"
-  },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
     "message": "การสังเกตใหม่"
   },
-  "screens.ObservationCreate.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "ข้อสังเกตนี้ไม่ปรากฎสถานที่ กรุณารอสัญญาณ GPS สักครู่ บันทึกข้อสังเกต โดยป้อนพิกัดด้วยตัวเอง "
-  },
-  "screens.ObservationCreate.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "ไม่มีสัญญาณ GPS"
-  },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "การสังเกต"
-  },
-  "screens.ObservationCreate.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "บันทึก"
-  },
-  "screens.ObservationCreate.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "ความแม่นยำของ GPS ต่ำ กรุณารอสักพักเพื่อความแม่นยำของสัญญาณ กรุณาบันทึกข้อสังเกต หรือป้อนพิกัดด้วยตัวเอง"
-  },
-  "screens.ObservationCreate.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "สัญญาณ GPS อ่อน"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -1272,6 +1409,36 @@
     "description": "message shown whilst observations are loading",
     "message": "กำลังโหลดข้อมูล... การเชื่อมต่อกับอุปกรณ์ใหม่จะใช้เวลาสักครู่"
   },
+  "screens.Onboarding.JoinProjectIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.JoinProjectIntro.description": {
+    "message": "Coordinate with your team to receive a project invitation."
+  },
+  "screens.Onboarding.JoinProjectIntro.title": {
+    "message": "เข้าร่วมโครงการ"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.addAudio": {
+    "message": "Add audio recordings."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.description": {
+    "message": "Explore CoMapeo—invite collaborators anytime."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
+    "message": "Snap photos on-the-go."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.title": {
+    "message": "Map On Your Own"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
+    "message": "Track paths walked."
+  },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
   },
@@ -1280,6 +1447,17 @@
   },
   "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Share Diagnostic Information"
+  },
+  "screens.PhotoPreviewModal.attachedAtTime": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "Attached at the time of the observation"
+  },
+  "screens.PhotoPreviewModal.attachedBy": {
+    "description": "Label for the person who attached the photo to the observation",
+    "message": "Attached by {name}"
+  },
+  "screens.PhotoPreviewModal.distanceFromObs": {
+    "message": "Attached {distance} from observation"
   },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Delete Photo"
@@ -1299,8 +1477,16 @@
     "description": "Describes image layout when taking photo vertically",
     "message": "Portrait"
   },
+  "screens.PhotoPreviewModal.timeAttached": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "Attached {formattedNum} after observation"
+  },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "Validated by CoMapeo"
+  },
+  "screens.PhotoPreviewModal.verifiedOriginal": {
+    "description": "Text indicating that the photo is a verified original",
+    "message": "This is a verified unaltered original."
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "About Awana Digital"
@@ -1406,6 +1592,27 @@
   },
   "screens.PrivacyPolicy.whyCollectedDescription": {
     "message": "Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app. The performance data helps us improve the responsiveness of the app and identify errors. User counts, including total users, users per country, and users per project, help justify ongoing investment in the development of CoMapeo."
+  },
+  "screens.ProjectStatistics.navTitle": {
+    "message": "Project Statistics"
+  },
+  "screens.ProjectStatistics.shareLabel": {
+    "message": "Share Project Statistics"
+  },
+  "screens.ProjectStatistics.statisticsDescription": {
+    "message": "Anonymized information about your project including number of observations, areas covered, stats about track distance and time, stats about attachments, and number of participants."
+  },
+  "screens.ProjectStatistics.statsShared": {
+    "message": "Project stats are shared with Awana Digital"
+  },
+  "screens.ProjectStatisticsTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.ProjectStatisticsTurnedOff.desc": {
+    "message": "This change will take effect next time you Exchange with team members."
+  },
+  "screens.ProjectStatisticsTurnedOff.title": {
+    "message": "Project Statistics | OFF"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1560,26 +1767,20 @@
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
     "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Go to Map"
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "เสร็จสิ้น"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
     "message": "Invite Device"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
-    "message": "now added to All Projects"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
-    "message": "is now ready for you to invite devices."
+    "message": "{projectName} is now ready for you to invite devices."
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.sharedLine": {
+    "message": "Project statistics are being shared with Awana Digital"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "เสร็จสมบูรณ์!"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
-    "message": "Update Categories Set"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.viewProject": {
-    "message": "View Project"
   },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
@@ -1703,6 +1904,24 @@
   },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
+  },
+  "screens.ShareProjectStats.description": {
+    "message": "This will help us gather data about how CoMapeo is being used and what additional features are needed."
+  },
+  "screens.ShareProjectStats.fullyEncrypted": {
+    "message": "Your project will stay fully encrypted"
+  },
+  "screens.ShareProjectStats.infoAnonymized": {
+    "message": "Shared information will be completely anonymized"
+  },
+  "screens.ShareProjectStats.shareProjectStats": {
+    "message": "Share Project Statistics"
+  },
+  "screens.ShareProjectStats.skip": {
+    "message": "No, Skip for Now"
+  },
+  "screens.ShareProjectStats.yesShare": {
+    "message": "Yes, Share Stats"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Open Settings"

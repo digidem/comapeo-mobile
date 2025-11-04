@@ -2,7 +2,7 @@ import debug from 'debug'
 import { join } from 'path'
 import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
-import { MapeoManager, FastifyController } from '@comapeo/core'
+import { MapeoManager } from '@comapeo/core'
 import { createMapeoServer } from '@comapeo/ipc/server.js'
 import Fastify from 'fastify'
 import * as Sentry from '@sentry/node'
@@ -76,7 +76,6 @@ export async function init({
   mkdirSync(customMapsDir, { recursive: true })
 
   const fastify = Fastify()
-  const fastifyController = new FastifyController({ fastify })
 
   const manager = new MapeoManager({
     rootKey,
@@ -86,24 +85,26 @@ export async function init({
     projectMigrationsFolder: join(migrationsFolderPath, 'project'),
     fastify,
     defaultConfigPath,
+    defaultIsArchiveDevice: false,
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
     customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
   })
 
   // Don't await, methods that use the server will await this internally
-  fastifyController.start()
+  // Server is listening on loopback only, so will not be accessible from other devices on the network
+  fastify.listen({ host: '127.0.0.1', port: 0 }).catch((error) => {
+    Sentry.captureException(error)
+  })
 
   rnBridge.app.on('pause', async (pauseLock) => {
     log('App went into background')
     manager.onBackgrounded()
-    await fastifyController.stop()
     pauseLock.release()
   })
 
   rnBridge.app.on('resume', () => {
     log('App went into foreground')
     manager.onForegrounded()
-    fastifyController.start()
   })
 
   const messagePort = new MessagePortLike()

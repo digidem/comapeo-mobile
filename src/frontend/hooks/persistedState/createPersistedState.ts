@@ -11,7 +11,7 @@ export const storage = new MMKV();
 
 type PersistedStoreKey = '@MapeoDraft';
 
-export const MMKVZustandStorage: StateStorage = {
+export const MMKVStoreInitializer: StateStorage = {
   setItem: (name, value) => {
     return storage.set(name, value);
   },
@@ -51,7 +51,7 @@ function createPersistMiddleware<State>(
 ) {
   return persist(slice, {
     name: persistedStoreKey,
-    storage: createJSONStorage(() => MMKVZustandStorage),
+    storage: createJSONStorage(() => MMKVStoreInitializer),
     version: migrationOpt?.version,
     partialize: state => {
       if (typeof state === 'object' && state && 'actions' in state) {

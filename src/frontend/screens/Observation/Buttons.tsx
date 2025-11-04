@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Field} from '@comapeo/schema';
 import {DARK_GREY} from '../../lib/styles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteDocument, useProjectSettings} from '@comapeo/core-react';
@@ -198,9 +198,12 @@ export const ButtonFields = ({
         completedFields.push({label: field.label, value: displayedValue});
       }
 
-      const subject = `${t(m.comapeoData, {projectName: name || t(m.defaultProjectName)})} - _*${preset ? preset.name : t(m.fallbackCategoryName)}*_`;
-
       const date = formatDate(observation.createdAt, {format: 'long'});
+
+      const subject =
+        `${t(m.comapeoData, {projectName: name || t(m.defaultProjectName)})}` +
+        ` - _*${preset ? preset.name : t(m.fallbackCategoryName)}*_` +
+        ` - ${date}`;
 
       const location =
         observation.lat !== undefined && observation.lon !== undefined
@@ -225,7 +228,6 @@ export const ButtonFields = ({
 
       const body = [
         subject,
-        date,
         location,
         precision,
         displayedFields && `[${displayedFields}]`,
@@ -235,7 +237,7 @@ export const ButtonFields = ({
       const footer = `— ${t(m.shareMessageFooter)} —`;
 
       await openShare.mutateAsync({
-        subject: subject,
+        subject,
         title:
           base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
         urls: !base64Urls.length ? undefined : base64Urls,

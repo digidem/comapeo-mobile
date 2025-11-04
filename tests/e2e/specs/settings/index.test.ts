@@ -6,4 +6,5 @@ describe('Settings', function () {
   require('./coordinates.test');
   require('./language.test');
   require('./about-comapeo.test');
+  require('./early-access.test');
 });

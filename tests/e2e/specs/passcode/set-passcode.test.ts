@@ -3,32 +3,18 @@ import {describe, it} from 'mocha';
 import {byTextMatches, byResourceId, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Passcode - show passcode not set', () => {
+describe('Passcode - setPasscode', () => {
   it('should show passcode not set', async () => {
     await expect($(byText('Security'))).toBeDisplayed();
     await expect($(byText('App Passcode'))).toBeDisplayed();
     await expect($(byText('Passcode not set'))).toBeDisplayed();
   });
 
-  it('should open and back out of "What is App Passcode?" screen', async () => {
-    const appPasscodeText = await $(byText('App Passcode'));
-    await appPasscodeText.click();
-
-    await expect($(byTextMatches('What is App Passcode?'))).toBeDisplayed();
-
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-
-    await expect($(byTextMatches('Security'))).toBeDisplayed();
-  });
-
   it('should open passcode descriptor, back out of Set Passcode screen, then open it again', async () => {
     const appPasscodeItem = await $(byText('App Passcode'));
     await appPasscodeItem.click();
 
-    await expect(
-      $(byTextMatches('additional layer of security')),
-    ).toBeDisplayed();
+    await expect($(byTextMatches('What is App Passcode?'))).toBeDisplayed();
     const continueBtn = await $(byTextMatches('Continue'));
     await expect(continueBtn).toBeDisplayed();
 
@@ -86,47 +72,16 @@ describe('Passcode - show passcode not set', () => {
     await passcodeInp.setValue(output.passcode);
     await nextBtn.click();
     await expect($(byTextMatches('Re-enter Passcode'))).toBeDisplayed();
+
+    await passcodeInp.setValue('54321');
+    await nextBtn.click();
+    await driver.hideKeyboard();
+    await expect($(byTextMatches('Password does not match'))).toBeDisplayed();
   });
 
-  it('should handle going back from re-enter, open it again, mismatch passcode, then see bottom sheet', async () => {
-    let backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await expect($(byTextMatches('What is App Passcode?'))).toBeDisplayed();
-
-    const continueBtn = await $(byText('Continue'));
-    await continueBtn.click();
-
-    const passcodeInput = await $(byResourceId('SETTINGS.passcode-inp'));
-    await passcodeInput.setValue(output.passcode);
-    const nextBtn = await $(byText('Next'));
-    await nextBtn.click();
-
+  it('cancel should take user back to security screen', async () => {
     const cancelBtn = await $(byText('Cancel'));
     await cancelBtn.click();
-    await expect($(byText('Security'))).toBeDisplayed();
-
-    const appPasscodeItem = await $(byText('App Passcode'));
-    await appPasscodeItem.click();
-    await continueBtn.click();
-
-    await passcodeInput.setValue(output.passcode);
-    await nextBtn.click();
-
-    await expect(driver.isKeyboardShown());
-
-    await passcodeInput.setValue('54321');
-    await nextBtn.click();
-    await expect($(byTextMatches('Password does not match'))).toBeDisplayed();
-
-    await passcodeInput.setValue(output.passcode);
-    await nextBtn.click();
-    await expect(
-      $(byTextMatches('App Passcodes can never be recovered')),
-    ).toBeDisplayed();
-    await expect($(byTextMatches(output.passcode))).toBeDisplayed();
-
-    const otherCancelBtn = await $(byResourceId('PASSCODE:cancel-btn'));
-    await otherCancelBtn.click();
     await expect($(byText('Security'))).toBeDisplayed();
   });
 
@@ -174,10 +129,11 @@ describe('Passcode - show passcode not set', () => {
     if (await backBtn.isDisplayed()) {
       await backBtn.click();
     }
-    if (await backBtn.isDisplayed()) {
-      await backBtn.click();
+    const backButtonAgain = await $(byResourceId('MAIN.header-back-btn'));
+    if (await backButtonAgain.isDisplayed()) {
+      await backButtonAgain.click();
     }
-    const drawerIcon = await $('~Close Menu');
+    const drawerIcon = await $(byResourceId('MAIN.map-screen'));
     if (await drawerIcon.isDisplayed()) {
       await drawerIcon.click();
     }

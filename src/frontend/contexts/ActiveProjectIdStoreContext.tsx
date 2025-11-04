@@ -1,11 +1,13 @@
-import {createContext, useContext} from 'react';
+import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
   createJSONStorage,
   persist as createPersistedState,
 } from 'zustand/middleware';
 
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
+import {useClientApi} from '@comapeo/core-react';
+import {Loading} from '../sharedComponents/Loading';
 
 type ActiveProjectIdState = {
   projectId?: string;
@@ -28,7 +30,7 @@ export function createActiveProjectIdStore({persist} = {persist: false}) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => MMKVStoreInitializer),
         version: 0,
       }),
     );
@@ -56,8 +58,50 @@ const ActiveProjectIdStoreContext = createContext<ActiveProjectIdStore | null>(
   null,
 );
 
-export const ActiveProjectIdStoreProvider =
-  ActiveProjectIdStoreContext.Provider;
+export const ActiveProjectIdStoreProvider = ({
+  children,
+  store,
+}: {
+  children: ReactNode;
+  store: ActiveProjectIdStore;
+}) => {
+  const {listProjects} = useClientApi();
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    if (isInitialized) return;
+    if (store.instance.getState().projectId) {
+      setIsInitialized(true);
+      return;
+    }
+    listProjects()
+      .then(projects => {
+        if (!projects || projects.length === 0) {
+          setIsInitialized(true);
+          return;
+        }
+
+        const fallbackProjectId = projects[0]?.projectId;
+
+        if (fallbackProjectId) {
+          store.actions.setActiveProjectId(fallbackProjectId);
+          setIsInitialized(true);
+          return;
+        }
+      })
+      .finally(() => {
+        setIsInitialized(true);
+      });
+  }, [store, isInitialized, listProjects]);
+
+  return !isInitialized ? (
+    <Loading />
+  ) : (
+    <ActiveProjectIdStoreContext value={store}>
+      {children}
+    </ActiveProjectIdStoreContext>
+  );
+};
 
 function useActiveProjectIdStoreContext() {
   const value = useContext(ActiveProjectIdStoreContext);

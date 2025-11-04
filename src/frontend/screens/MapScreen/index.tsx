@@ -13,6 +13,7 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
@@ -32,6 +33,16 @@ import {useTracking} from '../../hooks/useTracking';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
 import {useResetMapLayout} from '../../hooks/useResetMapLayout';
+import {
+  useLowStorageBannerActions,
+  useLowStorageBannerState,
+} from '../../contexts/LowStorageBannerContext';
+import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
+import {isLowStorage} from '../../lib/storage';
+import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
+import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
+import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
+import {useTrackState} from '../../contexts/TrackStoreContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -60,22 +71,38 @@ export const MapScreen = ({
 
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const location = useLocationState(store => store.throttledMapLocation);
+  const {isTracking} = useTracking();
+  const location = useLocationState(store =>
+    isTracking ? store.location : store.throttledMapLocation,
+  );
   const coords = location && getCoords(location);
   const [following, setFollowing] = React.useState(true);
-  const {isTracking} = useTracking();
+  const appUsageStore = useAppUsageStatsStore();
+
   const {data: styleUrl} = useMapStyleJsonUrl();
 
   const {authState} = useAuthContext();
   const {savedLocation} = useNonReactiveSavedLocation();
   const initialPositionSet = React.useRef(false);
+  const dismissedMapBannerSession = useLowStorageBannerState(
+    s => s.dismissedMapBannerSession,
+  );
+  const {setDismissedMapBannerSession} = useLowStorageBannerActions();
+  const {data} = useStorageReadingQuery();
+  const isLow = isLowStorage(data.freeBytes);
+  const insets = useSafeAreaInsets();
+  const BANNER_TOP = insets.top + 75;
 
   useCheckDraftObservationAndNavigate({authState});
+  useCheckUnsavedTrackAndNavigate({authState});
 
-  const handleAddPress = () => {
-    newDraft();
-    navigate('ObservationCategoryChooser');
-  };
+  useShouldShowAppUsagePrompt();
+
+  // if the user is on the map screen onboarding is not completed, record that they have completed it (this is because the app usage stats was added after the user already onboarded)
+  //using the store as this value does not need to be reactive
+  if (!appUsageStore.instance.getState().completedOnboardingAt) {
+    appUsageStore.actions.recordCompleteOnboarding();
+  }
 
   // This closes the track bottom sheet whenever the user is navigated away.
   // This prevents the closing animation from happening when the map screen is being reopened
@@ -87,6 +114,11 @@ export const MapScreen = ({
     }, [navigation]),
   );
 
+  const handleAddPress = () => {
+    newDraft();
+    navigate('ObservationCategoryChooser');
+  };
+
   function handleLocationPress() {
     setZoom(DEFAULT_ZOOM);
     setFollowing(prev => !prev);
@@ -97,7 +129,17 @@ export const MapScreen = ({
   }
 
   return (
-    <View style={{flex: 1}} onLayout={onLayout}>
+    <View style={{flex: 1}} onLayout={onLayout} testID="MAIN.map-screen">
+      <View
+        pointerEvents="box-none"
+        style={[styles.lowStorageBanner, {top: BANNER_TOP}]}>
+        {isLow && !dismissedMapBannerSession && (
+          <LowStorageBanner
+            onDismiss={() => setDismissedMapBannerSession(true)}
+            testID="MAP:low-storage-banner"
+          />
+        )}
+      </View>
       {dimensions && (
         <Mapbox.MapView
           key={mapKey}
@@ -146,12 +188,8 @@ export const MapScreen = ({
           {isFinishedLoadingStyle && authState !== 'obscured' && (
             <>
               <RemoteDetectionAlertsMapLayer />
-              {isTracking && (
-                <>
-                  <CurrentTrackMapLayer />
-                  <UserTooltipMarker />
-                </>
-              )}
+              <CurrentTrackMapLayer location={location} />
+              {isTracking && <UserTooltipMarker />}
               <TracksMapLayer />
               <ObservationMapLayer />
             </>
@@ -222,6 +260,31 @@ function useCheckDraftObservationAndNavigate({
   );
 }
 
+function useCheckUnsavedTrackAndNavigate({authState}: {authState: AuthState}) {
+  const {navigate} = useNavigationFromHomeTabs();
+  const hasUnsavedTrack = useTrackState(
+    state => !state.isTracking && state.locationHistory.length > 0,
+  );
+  const trackPreset = useTrackState(state => state.preset);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // if no unsaved track or auth is obscured, stay home
+      if (!hasUnsavedTrack || authState === 'obscured') {
+        return;
+      }
+
+      // if no preset chosen, navigate to category chooser
+      if (!trackPreset) {
+        navigate('TrackCategoryChooser', {trackAction: 'saveNew'});
+      } else {
+        // if preset chosen, navigate to save track screen
+        navigate('SaveTrack');
+      }
+    }, [hasUnsavedTrack, trackPreset, navigate, authState]),
+  );
+}
+
 const styles = StyleSheet.create({
   bottomContainer: {
     flexDirection: 'row',
@@ -230,5 +293,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 25,
     width: '100%',
+  },
+  lowStorageBanner: {
+    position: 'absolute',
+    left: 20,
+    right: 20,
+    zIndex: 2,
+    elevation: 2,
   },
 });

@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "観察記録を破棄しますか？"
   },
+  "ExportSuccess.done": {
+    "message": "完了"
+  },
+  "ExportSuccess.obs": {
+    "message": "<bold>すべての観察記録</bold> がお使いのデバイスにダウンロードされました。"
+  },
+  "ExportSuccess.obsMedia": {
+    "message": "<bold>メディア</bold> のすべての観察記録がお使いのデバイスにダウンロードされました。"
+  },
+  "ExportSuccess.title": {
+    "message": "成功！"
+  },
+  "ExportSuccess.tracks": {
+    "message": "<bold>トラック</bold> がお使いのデバイスにダウンロードされました。"
+  },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "戻る"
   },
@@ -57,6 +72,9 @@
   },
   "Navigation.Menu.currentProject": {
     "message": "現在のプロジェクト"
+  },
+  "Navigation.Menu.earlyAccessLabel": {
+    "message": "アーリーアクセスモードに入っています。"
   },
   "Navigation.Menu.exchange": {
     "message": "交換"
@@ -208,9 +226,6 @@
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "トラックは保存されません。元に戻すことはできません。"
   },
-  "Screens.Project.soloProjectHeader": {
-    "message": "マイソロプロジェクト"
-  },
   "Screens.ProjectSettings.configTitle": {
     "message": "プロジェクトのカテゴリ"
   },
@@ -229,6 +244,18 @@
   "Screens.ProjectSettings.projectCollaborators": {
     "message": "プロジェクトの共同作業"
   },
+  "Screens.ProjectSettings.projectStatsOff": {
+    "message": "プロジェクト統計情報|OFF"
+  },
+  "Screens.ProjectSettings.projectStatsOffDesc": {
+    "message": "プロジェクトの統計情報は共有されていません。"
+  },
+  "Screens.ProjectSettings.projectStatsOn": {
+    "message": "プロジェクトの統計情報 | ON"
+  },
+  "Screens.ProjectSettings.projectStatsOnDesc": {
+    "message": "このプロジェクトは匿名の統計情報を共有しています。"
+  },
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "セキュアでエンプティされたサーバーと共有します。アクセスに必要な URL です。"
   },
@@ -244,8 +271,14 @@
   "Screens.ProjectSettings.title": {
     "message": "プロジェクトの設定"
   },
+  "Screens.ProjectSettings.update": {
+    "message": "更新"
+  },
   "Screens.ProjectSettings.updateCategories": {
     "message": "セットを更新"
+  },
+  "Screens.ProjectSettings.view": {
+    "message": "表示"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "詳細を表示"
@@ -264,6 +297,15 @@
   },
   "Screens.Settings.AppSettings.deviceName": {
     "message": "端末名"
+  },
+  "Screens.Settings.AppSettings.earlyAccess": {
+    "message": "アーリーアクセスモード"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.off": {
+    "message": "アーリーアクセスはOFFです"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.on": {
+    "message": "アーリーアクセスはオンです"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "言語"
@@ -308,6 +350,21 @@
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
     "message": "共有"
+  },
+  "Storage.MapBanner.title": {
+    "message": "デバイスのストレージ容量が少なくなっています。"
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "空き容量を増やす。"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "お使いのデバイスに残り {free}mbのみ"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "一部の機能が動作を停止する可能性があります。"
+  },
+  "Storage.MenuAlert.title": {
+    "message": "デバイスのストレージ容量が少なくなっています。"
   },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "トラックを終了"
@@ -446,13 +503,27 @@
     "description": "Label for Android version",
     "message": "Androidバージョン"
   },
+  "screens.AboutSettings.earlyAccessBanner": {
+    "message": "アーリーアクセスモードに入っています。"
+  },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
-    "message": "絵文字のソース:"
+    "message": "絵文字のソース"
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "携帯電話の機種"
+  },
+  "screens.AboutSettings.releaseName": {
+    "description": "The CoMapeo chosen release name for the version of the app",
+    "message": "プレビュー"
+  },
+  "screens.AboutSettings.releaseNameLabel": {
+    "description": "Label for the release name",
+    "message": "リリース名"
+  },
+  "screens.AboutSettings.seeUpdates": {
+    "message": "CoMapeoのアップデートを参照してください"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
@@ -559,6 +630,39 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "アプリパスコードを使用する"
   },
+  "screens.AppUsagePrompt.countIn": {
+    "message": "はい、私を数えてください"
+  },
+  "screens.AppUsagePrompt.idsScrambled": {
+    "message": "IDはランダムにスクランブルされ、毎月変更されます。"
+  },
+  "screens.AppUsagePrompt.introText": {
+    "message": "CoMapeoの使用方法を共有することで、共有されたデータをトラッキングすることはできません。"
+  },
+  "screens.AppUsagePrompt.neverStores": {
+    "message": "CoMapeoはIPアドレスを決して保存しません。"
+  },
+  "screens.AppUsagePrompt.notNow": {
+    "message": "いいえ、今は違います"
+  },
+  "screens.AppUsagePrompt.screenTitle": {
+    "message": "あなたの経験を向上させるのに役立ちます。"
+  },
+  "screens.AppUsagePrompt.turnOffAnytime": {
+    "message": "いつでもオフにします。"
+  },
+  "screens.AppUsageSharingSuccess.done": {
+    "message": "完了"
+  },
+  "screens.AppUsageSharingSuccess.nowSharing": {
+    "message": "CoMapeoとAwana Digitalの使い方を共有しています。"
+  },
+  "screens.AppUsageSharingSuccess.removeAnytime": {
+    "message": "メニューの「データとプライバシー」に移動して、いつでも変更できます。"
+  },
+  "screens.AppUsageSharingSuccess.success": {
+    "message": "成功！"
+  },
   "screens.AudioAttachmentPlayback.navTitle": {
     "message": "音声録音"
   },
@@ -655,14 +759,11 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeoはあなたのプライバシーと自律性を尊重します"
   },
-  "screens.DataPrivacy.description": {
-    "message": "CoMapeoを使用すると、あなたとコラボレーターはサーバーを必要とせずにオフラインでマップできます。"
-  },
   "screens.DataPrivacy.diagnostic": {
-    "message": "非公開:診断情報は完全に匿名化され、いつでもオプトアウトできます。"
+    "message": "診断情報は完全に匿名化されます — いつでもオプトアウトできます。"
   },
-  "screens.DataPrivacy.encrypted": {
-    "message": "すべてのデータは完全に暗号化されたままです"
+  "screens.DataPrivacy.intro": {
+    "message": "心に留めておくべきいくつかの重要なこと"
   },
   "screens.DataPrivacy.learnMore": {
     "message": "もっと詳しく"
@@ -674,34 +775,67 @@
     "message": "次へ"
   },
   "screens.DataPrivacy.stays": {
-    "message": "データは端末に保存されます。"
+    "message": "お客様のデータは、完全に暗号化され、お客様の管理下に置かれます。"
   },
   "screens.DataPrivacy.title": {
-    "message": "データ & プライバシー"
+    "message": "CoMapeoはデフォルトで非公開です。"
   },
-  "screens.DeviceNaming.Success.description": {
-    "message": "デバイスに名前を付けました"
+  "screens.DeviceNaming.Success.chooseProject": {
+    "message": "最初のプロジェクトを開始するには、以下から選択してください。"
   },
-  "screens.DeviceNaming.Success.findSettings": {
-    "message": "プロジェクトの設定を確認するには、マップ画面にあるメインメニューに移動します。"
+  "screens.DeviceNaming.Success.deviceReady": {
+    "message": "{deviceName} の準備ができました！"
   },
-  "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
+  "screens.DeviceNaming.Success.joinProject": {
+    "message": "プロジェクトに参加"
   },
-  "screens.DeviceNaming.Success.startUsihng": {
-    "message": "CoMapeoの使用を開始"
+  "screens.DeviceNaming.Success.mapOnYourOwn": {
+    "message": "自分自身の地図を作成"
   },
   "screens.DeviceNaming.Success.success": {
     "message": "成功！"
   },
-  "screens.DeviceNaming.addName": {
-    "message": "名前を追加"
-  },
   "screens.DeviceNaming.description": {
-    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
+    "message": "固有の名前は、CoMapeoを使用してコラボレーターがあなたを認識するのに役立ちます。"
   },
   "screens.DeviceNaming.header": {
-    "message": "Add a name for your device"
+    "message": "デバイスに名前を付ける"
+  },
+  "screens.DeviceNaming.placeholder": {
+    "message": "端末名"
+  },
+  "screens.DeviceNaming.save": {
+    "message": "保存"
+  },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "ここで共有"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "フィードバックがありますか？"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "アーリーアクセスからのデータは、未登録のコラボレーターには表示されません。"
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "早期アクセスに切り替えて、今後の機能をテストします。いつでも戻すことができます。一部のデータはオフにすると非表示になるかもしれませんが、常に安全です。"
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "アーリーアクセスモード"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "CoMapeoのアップデートを参照してください"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "早期アクセス機能を使用する"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "アーリーアクセスのデータは、オフにすると非表示になりますが、保存されています。いつでも戻って確認できます。"
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "アーリーアクセスデータ"
   },
   "screens.EnterPassword.enterPass": {
     "message": "パスコードを入力してください"
@@ -788,10 +922,10 @@
     "message": "問題が発生しました"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate with others"
+    "message": "コラボレーターと安全に共有"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "先住民族と最前線コミュニティのために設計されました"
+    "message": "先住民の領土マップパー&モニターとの共同設計。"
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "はじめよう"
@@ -800,10 +934,10 @@
     "message": "どこでもどこでもマップ"
   },
   "screens.IntroToCoMapeo.mapWorldTogether": {
-    "message": "ワールドを一緒にマップする"
+    "message": "あなたの世界を一緒にマップします。"
   },
   "screens.IntroToCoMapeo.ownData": {
-    "message": "データを所有し、制御する"
+    "message": "データを常に所有し、制御する"
   },
   "screens.InviteCancelled.canceled": {
     "message": "招待はキャンセルされました"
@@ -831,6 +965,9 @@
   },
   "screens.InviteReceived.participantRole": {
     "message": "参加者"
+  },
+  "screens.InviteReceived.sharedStats": {
+    "message": "プロジェクトの統計情報が共有されています"
   },
   "screens.InviteSuccess.goToMap": {
     "message": "マップに移動"
@@ -1105,6 +1242,34 @@
   "screens.ObservationCategoryChooser.title": {
     "message": "カテゴリを選択"
   },
+  "screens.ObservationCreate.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "待機を続ける"
+  },
+  "screens.ObservationCreate.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "手動の座標"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "この観察記録には位置情報がありません。GPS信号の待機を続けるか、位置情報なしで観察記録を保存するか、手動で座標を入力することができます。"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "GPS信号がありません"
+  },
+  "screens.ObservationCreate.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "保存"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPSの精度が低くなっています。精度改善を待つか、低い精度で観察を保存するか、手動で座標を入力することができます。"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "GPS信号が弱い"
+  },
   "screens.ObservationCreate.changePreset": {
     "message": "変更"
   },
@@ -1112,41 +1277,13 @@
     "description": "Placeholder for description/notes field",
     "message": "何がここで起こっているか?"
   },
-  "screens.ObservationCreate.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "待機を続ける"
-  },
-  "screens.ObservationCreate.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "手動の座標"
-  },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
     "message": "新しい観察記録"
   },
-  "screens.ObservationCreate.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "この観察記録には位置情報がありません。GPS信号の待機を続けるか、位置情報なしで観察記録を保存するか、手動で座標を入力することができます。"
-  },
-  "screens.ObservationCreate.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "GPS信号がありません"
-  },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "観察記録"
-  },
-  "screens.ObservationCreate.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "保存"
-  },
-  "screens.ObservationCreate.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPSの精度が低くなっています。精度改善を待つか、低い精度で観察を保存するか、手動で座標を入力することができます。"
-  },
-  "screens.ObservationCreate.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "GPS信号が弱い"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -1272,6 +1409,36 @@
     "description": "message shown whilst observations are loading",
     "message": "Loading… this can take a while after synchronizing with a new device"
   },
+  "screens.Onboarding.JoinProjectIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.JoinProjectIntro.description": {
+    "message": "プロジェクトの招待状を受け取るには、チームと調整してください。"
+  },
+  "screens.Onboarding.JoinProjectIntro.title": {
+    "message": "プロジェクトに参加"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.addAudio": {
+    "message": "音声録音を追加します。"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.description": {
+    "message": "CoMapeoを探索する — いつでもコラボレーターを招待できます。"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.goToMap": {
+    "message": "地図に移動"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
+    "message": "外出先で写真を撮影してください。"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.title": {
+    "message": "自分自身の地図を作成"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
+    "message": "トラックパスを歩いた。"
+  },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "プライバシーポリシー"
   },
@@ -1280,6 +1447,17 @@
   },
   "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "診断情報を共有"
+  },
+  "screens.PhotoPreviewModal.attachedAtTime": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "観察時に添付されます"
+  },
+  "screens.PhotoPreviewModal.attachedBy": {
+    "description": "Label for the person who attached the photo to the observation",
+    "message": "{name} が添付しました"
+  },
+  "screens.PhotoPreviewModal.distanceFromObs": {
+    "message": "観察記録から添付された {distance}"
   },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "写真を削除"
@@ -1299,8 +1477,16 @@
     "description": "Describes image layout when taking photo vertically",
     "message": "縦向き"
   },
+  "screens.PhotoPreviewModal.timeAttached": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "観察記録の後に {formattedNum} を添付しました"
+  },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "CoMapeoによって検証されました"
+  },
+  "screens.PhotoPreviewModal.verifiedOriginal": {
+    "description": "Text indicating that the photo is a verified original",
+    "message": "これは確認されていないオリジナルです。"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Awana Digitalについて"
@@ -1406,6 +1592,27 @@
   },
   "screens.PrivacyPolicy.whyCollectedDescription": {
     "message": "デバイスとアプリ情報と共にクラッシュデータとアプリエラーが発生すると、Awana Digitalはアプリのエラーやバグを修正するために必要な情報を提供します。 パフォーマンスデータは、アプリの応答性を向上させ、エラーを特定するのに役立ちます。 ユーザー数は、国ごとのユーザー、プロジェクトごとのユーザーを含み、CoMapeoの開発における継続的な投資を正当化するのに役立ちます。"
+  },
+  "screens.ProjectStatistics.navTitle": {
+    "message": "プロジェクトの統計"
+  },
+  "screens.ProjectStatistics.shareLabel": {
+    "message": "プロジェクトの統計情報を共有"
+  },
+  "screens.ProjectStatistics.statisticsDescription": {
+    "message": "プロジェクトに関する匿名化された情報 (観察数、対象エリア、追跡距離と時間、添付ファイルに関する統計情報、参加者数など)"
+  },
+  "screens.ProjectStatistics.statsShared": {
+    "message": "プロジェクト統計はAwana Digital と共有されます"
+  },
+  "screens.ProjectStatisticsTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.ProjectStatisticsTurnedOff.desc": {
+    "message": "この変更は、次回チームメンバーと交換する際に有効になります。"
+  },
+  "screens.ProjectStatisticsTurnedOff.title": {
+    "message": "プロジェクト統計情報|OFF"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1560,26 +1767,20 @@
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
     "message": "プロジェクトに参加するには、参加したいプロジェクトのコーディネーターを見つけます。 デバイス名を知らせると、コーディネーターが招待状を送信します。"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Go to Map"
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "完了"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
     "message": "Invite Device"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
-    "message": "All Projectsに追加"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
-    "message": "デバイスを招待する準備ができました。"
+    "message": "{projectName} がデバイスを招待する準備ができました。"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.sharedLine": {
+    "message": "プロジェクト統計はAwana Digitalと共有されています"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "成功！"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
-    "message": "カテゴリセットを更新"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.viewProject": {
-    "message": "プロジェクトを表示"
   },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "既にプロジェクトに参加しています。新しいプロジェクトを作成するには、CoMapeoをアンインストールして再インストールする必要があります。"
@@ -1703,6 +1904,24 @@
   },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "プライバシーポリシー"
+  },
+  "screens.ShareProjectStats.description": {
+    "message": "これにより、CoMapeoがどのように使用されているか、どのような追加機能が必要かに関するデータを収集するのに役立ちます。"
+  },
+  "screens.ShareProjectStats.fullyEncrypted": {
+    "message": "プロジェクトは完全に暗号化されたままになります"
+  },
+  "screens.ShareProjectStats.infoAnonymized": {
+    "message": "共有情報は完全に匿名化されます"
+  },
+  "screens.ShareProjectStats.shareProjectStats": {
+    "message": "プロジェクトの統計情報を共有"
+  },
+  "screens.ShareProjectStats.skip": {
+    "message": "いいえ、スキップしてください"
+  },
+  "screens.ShareProjectStats.yesShare": {
+    "message": "はい、統計情報を共有"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Open Settings"

@@ -1,31 +1,39 @@
 import * as React from 'react';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
-import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {useCreateDocument} from '@comapeo/core-react';
-import {SaveButton} from '../../sharedComponents/SaveButton';
-import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
-import {Alert, type AlertButton} from 'react-native';
-import {Observation} from '@comapeo/schema';
+import {ObservationCreateSaveButton} from './ObservationCreateSaveButton';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {StyleSheet, View} from 'react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {PresetView} from '../../sharedComponents/Editor/PresetView';
+import {DescriptionField} from '../../sharedComponents/Editor/DescriptionField';
+import {HorizontalScrollView} from '../../sharedComponents/HorizontalScrollView';
 import {
-  useCreateAudioAttachment,
-  useCreatePhotoAttachment,
-} from '../../hooks/server/media';
-import * as Sentry from '@sentry/react-native';
-
-import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
+  GAP,
+  MIN_WIDTH,
+  ThumbnailContainer,
+  ThumbnailLoader,
+} from '../../sharedComponents/Thumbnails/ThumbnailContainer';
 import {
-  isProcessedDraftPhoto,
+  isDraftPhoto,
+  isUnprocessedDraftPhoto,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
-import {useAuthContext} from '../../contexts/AuthContext';
+import {ThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail';
+import {COMAPEO_BLUE, DARK_GREY, LIGHT_GREY, WHITE} from '../../lib/styles';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
+import {DateDistance} from '../../sharedComponents/DateDistance';
+import PlayArrow from '../../images/PlayArrow.svg';
+import {LiveLocationView} from './LiveLocationView';
 
 const m = defineMessages({
   observation: {
@@ -47,311 +55,141 @@ const m = defineMessages({
     defaultMessage: 'What is happening here?',
     description: 'Placeholder for description/notes field',
   },
-  noGpsTitle: {
-    id: 'screens.ObservationCreate.noGpsTitle',
-    defaultMessage: 'No GPS signal',
-    description: 'Title of dialog when trying to save with no GPS coords',
-  },
-  noGpsDesc: {
-    id: 'screens.ObservationCreate.noGpsDesc',
-    defaultMessage:
-      'This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually',
-    description: 'Description in dialog when trying to save with no GPS coords',
-  },
-  weakGpsTitle: {
-    id: 'screens.ObservationCreate.weakGpsTitle',
-    defaultMessage: 'Weak GPS signal',
-    description: 'Title of dialog when trying to save with low GPS accuracy.',
-  },
-  weakGpsDesc: {
-    id: 'screens.ObservationCreate.weakGpsDesc',
-    defaultMessage:
-      'GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually',
-    description:
-      'Description in dialog when trying to save with low GPS accuracy.',
-  },
-  saveAnyway: {
-    id: 'screens.ObservationCreate.saveAnyway',
-    defaultMessage: 'Save',
-    description: 'Button to save regardless of GPS state',
-  },
-  manualEntry: {
-    id: 'screens.ObservationCreate.manualEntry',
-    defaultMessage: 'Manual Coords',
-    description: 'Button to manually enter GPS coordinates',
-  },
-  keepWaiting: {
-    id: 'screens.ObservationCreate.keepWaiting',
-    defaultMessage: 'Continue waiting',
-    description: 'Button to cancel save and continue waiting for GPS',
-  },
 });
-
-const MAXIMUM_ACCURACY = 10;
 
 export const ObservationCreate = ({
   navigation,
 }: NativeRootNavigationProps<'ObservationCreate'>) => {
   const {formatMessage} = useIntl();
-  const {projectId} = useActiveProject();
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
-  const value = usePersistedDraftObservation(store => store.value);
+
   const attachments = usePersistedDraftObservation(store => store.attachments);
-  const {updateTags, clearDraft} = useDraftObservation();
+  const notes = usePersistedDraftObservation(store => store.value?.tags.notes);
+  const {projectId} = useActiveProject();
+  const projectDetails = useProjectRoleAndDetails(projectId);
+  const {updateTags} = useDraftObservation();
 
-  const {
-    mutateAsync: createPhotoAttachmentAsync,
-    status: photoAttachmentStatus,
-  } = useCreatePhotoAttachment({projectId});
-
-  const {
-    mutateAsync: createAudioAttachmentAsync,
-    status: audioAttachmentStatus,
-  } = useCreateAudioAttachment({projectId});
-
-  const {mutateAsync: createObservationAsync, status: observationStatus} =
-    useCreateDocument({
-      docType: 'observation',
-      projectId,
-    });
-
-  const isTracking = useTrackState(state => state.isTracking);
-  const {
-    addNewLocations: addNewTrackLocations,
-    addNewObservation: addNewTrackObservation,
-  } = useTrackActions();
-  const liveLocation = useMostAccurateLocationForObservation();
-  const {authState} = useAuthContext();
-
-  const coordinateInfo = value?.metadata?.manualLocation
-    ? {
-        lat: value.lat,
-        lon: value.lon,
-        accuracy: liveLocation?.coords?.accuracy,
-      }
-    : {
-        lat: liveLocation?.coords?.latitude,
-        lon: liveLocation?.coords?.longitude,
-        accuracy: liveLocation?.coords?.accuracy,
-      };
-
-  const notes = value?.tags.notes;
-  const presetName = preset
-    ? formatMessage({
-        id: `presets.${preset.docId}.name`,
-        defaultMessage: preset.name,
-      })
-    : formatMessage(m.observation);
-
-  const addObservationRefToTrack = React.useCallback(
-    (obs: Observation) => {
-      if (value?.lat && value?.lon) {
-        addNewTrackLocations([
-          {
-            timestamp: new Date().getTime(),
-            latitude: value.lat,
-            longitude: value.lon,
-          },
-        ]);
-      }
-      addNewTrackObservation({
-        docId: obs.docId,
-        versionId: obs.versionId,
-      });
-    },
-    [addNewTrackLocations, addNewTrackObservation, value],
-  );
-
-  const createObservation = React.useCallback(() => {
-    if (!value) throw new Error('no observation saved in persisted state ');
-    if (authState === 'obscured') {
-      clearDraft();
-      navigation.popTo('Home', {screen: 'Map'});
-      return;
-    }
-
-    const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
-    const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
-
-    if (unsavedPhotos.length === 0 && unsavedAudioRecordings.length === 0) {
-      createObservationAsync({
-        value: {
-          ...value,
-          presetRef: preset
-            ? {docId: preset.docId, versionId: preset.versionId}
-            : undefined,
-        },
-      })
-        .then(observation => {
-          clearDraft();
-
-          navigation.popTo('Home', {screen: 'Map'});
-
-          if (isTracking) {
-            addObservationRefToTrack(observation);
-          }
-        })
-        .catch(err => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
-        });
-
-      return;
-    }
-
-    (async () => {
-      let observation: Observation;
-
-      try {
-        // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
-        // but this approach is prone to creating "orphaned" blobs.
-        // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
-        // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
-        // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
-        const newAttachments = await Promise.all([
-          ...unsavedPhotos.map(p => {
-            return createPhotoAttachmentAsync(p);
-          }),
-          ...unsavedAudioRecordings.map(a => {
-            return createAudioAttachmentAsync(a);
-          }),
-        ]);
-
-        observation = await createObservationAsync({
-          value: {
-            ...value,
-            attachments: [...value.attachments, ...newAttachments],
-            presetRef: preset
-              ? {docId: preset.docId, versionId: preset.versionId}
-              : undefined,
-          },
-        });
-      } catch (err) {
-        Sentry.captureException(err);
-        navigation.navigate('ErrorBottomSheet');
-        return;
-      }
-
-      clearDraft();
-      navigation.popTo('Home', {screen: 'Map'});
-      if (isTracking) {
-        addObservationRefToTrack(observation);
-      }
-    })();
-  }, [
-    addObservationRefToTrack,
-    clearDraft,
-    createPhotoAttachmentAsync,
-    createAudioAttachmentAsync,
-    createObservationAsync,
-    isTracking,
-    navigation,
-    attachments,
-    value,
-    preset,
-    authState,
-  ]);
-
-  const checkAccuracyAndLocation = React.useCallback(() => {
-    const confirmationOptions: AlertButton[] = [
-      {
-        text: formatMessage(m.saveAnyway),
-        onPress: createObservation,
-        style: 'default',
-      },
-      {
-        text: formatMessage(m.manualEntry),
-        onPress: () => navigation.navigate('ManualGpsScreen'),
-        style: 'cancel',
-      },
-      {
-        text: formatMessage(m.keepWaiting),
-        onPress: () => {},
-      },
-    ];
-
-    if (!value) {
-      return;
-    }
-
-    // If the user has already inputted a manual location, do not check if location is accurate
-    if (value.metadata?.manualLocation) {
-      createObservation();
-      return;
-    }
-
-    const accuracy = value.metadata?.position?.coords?.accuracy;
-
-    if (!liveLocation) {
-      Alert.alert(
-        formatMessage(m.noGpsTitle),
-        formatMessage(m.noGpsDesc),
-        confirmationOptions,
-      );
-      return;
-    }
-
-    // If we don't have accuracy, allow save anyway (this is a remnant from mapeo: https://github.com/digidem/mapeo-mobile/blob/0c0ebbb9ef2261e21cd1d1c8bd5ab2fe42017ea3/src/frontend/screens/ObservationEdit/SaveButton.js#L125C3-L125C50)
-    if (
-      accuracy &&
-      typeof accuracy === 'number' &&
-      accuracy >= MAXIMUM_ACCURACY
-    ) {
-      Alert.alert(
-        formatMessage(m.weakGpsTitle),
-        formatMessage(m.weakGpsDesc),
-        confirmationOptions,
-      );
-      return;
-    }
-
-    createObservation();
-  }, [createObservation, formatMessage, navigation, liveLocation, value]);
-
-  React.useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <SaveButton
-          onPress={checkAccuracyAndLocation}
-          isLoading={
-            photoAttachmentStatus === 'pending' ||
-            audioAttachmentStatus === 'pending' ||
-            observationStatus === 'pending'
-          }
-        />
-      ),
-    });
-  }, [
-    navigation,
-    audioAttachmentStatus,
-    photoAttachmentStatus,
-    observationStatus,
-    checkAccuracyAndLocation,
-  ]);
+  const presetName = preset ? preset.name : formatMessage(m.observation);
 
   return (
-    <Editor
-      presetName={presetName}
-      PresetIcon={
-        <PresetCircleIcon
-          size="medium"
-          iconId={preset?.iconRef?.docId}
-          testID={`OBS.${preset?.name}-icon`}
-          color={preset?.color}
+    <ScreenContentWithDock
+      dockContainerStyle={{padding: 0}}
+      dockContent={<ActionsRow fieldRefs={preset?.fieldRefs} />}>
+      <View style={styles.container}>
+        <View
+          style={{
+            backgroundColor: projectDetails.projectColor,
+            paddingVertical: 10,
+            // without this the parent container border does not properly show
+            borderTopLeftRadius: 12,
+            borderTopRightRadius: 12,
+            paddingHorizontal: 20,
+          }}>
+          <HeaderText variant="header6">
+            {projectDetails.projectHeader}
+          </HeaderText>
+        </View>
+        <PresetView
+          onPressPreset={() =>
+            navigation.navigate('ObservationCategoryChooser')
+          }
+          PresetIcon={
+            <PresetCircleIcon
+              size="medium"
+              iconId={preset?.iconRef?.docId}
+              testID={`OBS.${preset?.name}-icon`}
+              color={preset?.color}
+            />
+          }
+          presetName={presetName}
         />
-      }
-      onPressPreset={() => navigation.navigate('ObservationCategoryChooser')}
-      notes={typeof notes !== 'string' ? '' : notes}
-      updateNotes={newVal => {
-        updateTags('notes', newVal);
-      }}
-      attachments={attachments}
-      location={coordinateInfo}
-      actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
-    />
+
+        <LiveLocationView />
+      </View>
+      <DescriptionField
+        notes={typeof notes !== 'string' ? '' : notes}
+        updateNotes={newVal => {
+          updateTags('notes', newVal);
+        }}
+      />
+      {attachments && attachments.length > 0 && (
+        <HorizontalScrollView
+          shouldShowLastItems={true}
+          minItemWidth={MIN_WIDTH}
+          gap={GAP}
+          renderChildren={size => (
+            <>
+              {attachments.map(att => {
+                if (isUnprocessedDraftPhoto(att)) {
+                  return <ThumbnailLoader size={size} key={att.draftPhotoId} />;
+                }
+                if (isDraftPhoto(att)) {
+                  return (
+                    <ThumbnailContainer
+                      key={att.draftPhotoId}
+                      accessibilityLabel="View draft photo."
+                      size={size}
+                      onPress={() =>
+                        navigation.navigate('DraftPhotoPreviewModal', {
+                          photo: att,
+                        })
+                      }>
+                      <ThumbnailImage uri={att.thumbnailUri} />
+                    </ThumbnailContainer>
+                  );
+                }
+
+                if (isUnsavedAudio(att)) {
+                  return (
+                    <ThumbnailContainer
+                      key={att.uri}
+                      size={size}
+                      onPress={() =>
+                        navigation.navigate('AudioDraftPlaybackScreen', {
+                          uri: att.uri,
+                          createdAt: att.createdAt,
+                          showRecordingSavedText: false,
+                        })
+                      }
+                      containerStyle={{
+                        backgroundColor: WHITE,
+                        borderColor: COMAPEO_BLUE,
+                        borderWidth: 2,
+                        paddingVertical: 8,
+                      }}
+                      accessibilityLabel="Play audio recording.">
+                      <PlayArrow width={48} height={48} />
+                      <BodyText variant="tinyMeta" style={{fontWeight: '500'}}>
+                        {millisecondsToMMSS(att.duration)}
+                      </BodyText>
+                      <DateDistance
+                        date={new Date(att.createdAt)}
+                        style={{
+                          fontSize: 12,
+                          fontWeight: '400',
+                          color: DARK_GREY,
+                        }}
+                      />
+                    </ThumbnailContainer>
+                  );
+                }
+              })}
+            </>
+          )}
+        />
+      )}
+    </ScreenContentWithDock>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: LIGHT_GREY,
+  },
+});
 
 export function createNavigationOptions({
   intl,
@@ -361,7 +199,7 @@ export function createNavigationOptions({
   return (): NativeStackNavigationOptions => {
     return {
       headerTitle: intl(m.navTitle),
-      headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
+      headerRight: () => <ObservationCreateSaveButton />,
       headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
     };
   };

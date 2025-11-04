@@ -12,7 +12,10 @@ import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
 import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
-import {storage} from './hooks/persistedState/createPersistedState';
+import {
+  MMKVStoreInitializer,
+  storage,
+} from './hooks/persistedState/createPersistedState';
 import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
@@ -33,11 +36,20 @@ import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
 import {createMapeoApi} from './lib/createMapeoApi.ts';
+import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
+import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
+import PostHog from 'posthog-react-native';
+import {Suspense} from 'react';
+import {Loading} from './sharedComponents/Loading.tsx';
+import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
+const devMode = applicationId?.endsWith('.dev');
+const testMode = applicationId?.endsWith('.pre');
+
 let sentryEnvironment: SentryEnvironment = 'production';
-if (applicationId?.endsWith('.dev') || applicationId?.endsWith('.pre')) {
+if (devMode || testMode) {
   sentryEnvironment = 'development';
 } else if (applicationId?.endsWith('.rc')) {
   sentryEnvironment = 'qa';
@@ -131,6 +143,8 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 });
 
 const savedLocationStore = createSavedLocationStore({persist: true});
+const lowStorageBannerStore = createLowStorageBannerStore();
+const earlyAccessStore = createEarlyAccessStore({persist: true});
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
@@ -169,6 +183,29 @@ TaskManager.defineTask(
   },
 );
 
+export const postHog = new PostHog(
+  'phc_cr3WAkAaM5rsbiTUF36fzlu8HTrfzL8nOy5elccBdpq',
+  {
+    host: 'https://us.i.posthog.com',
+    //@ts-expect-error - this is the zustand typing, which is he same as posthog's customStorage typing. But zustand typing is less strict, but its quite a ts workaround to make it work, this is the simplest solution.
+    customStorage: MMKVStoreInitializer,
+    defaultOptIn: false,
+    // disable for dev mode and e2e tests
+    disabled:
+      process.env.EXPO_PUBLIC_E2E_TEST === 'true' || devMode || testMode,
+  },
+);
+
+const appUsagePromptStore = createAppUsageStatsStore({
+  persist: true,
+  appUsageMetricsOptIn: () => {
+    postHog.optIn();
+  },
+  appUsageMetricsOptOut: () => {
+    postHog.optOut();
+  },
+});
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -186,25 +223,30 @@ const App = () => {
       <IntlProvider>
         {/* ServerLoading requires internationalization to be set up */}
         <ServerLoading serverStateStore={serverStateStore}>
-          <AppProviders
-            queryClient={queryClient}
-            localDiscoveryController={localDiscoveryController}
-            mapeoApi={mapeoApi}
-            persistedDrafObservationStore={persistedDraftObservationStore}
-            trackStore={persistedTrackStore}
-            securityStore={persistedSecurityStore}
-            coordinateFormatStore={persistedCoordinateFormatStore}
-            manualEntryCoordinateFormatStore={
-              persistedManualEntryCoordinateFormatStore
-            }
-            savedLocationStore={savedLocationStore}
-            activeProjectIdStore={persistedActiveProjectIdStore}
-            metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
-            <AppNavigator
-              permissionAsked={permissionsAsked}
-              navigationIntegration={navigationIntegration}
-            />
-          </AppProviders>
+          <Suspense fallback={<Loading />}>
+            <AppProviders
+              queryClient={queryClient}
+              localDiscoveryController={localDiscoveryController}
+              mapeoApi={mapeoApi}
+              persistedDrafObservationStore={persistedDraftObservationStore}
+              trackStore={persistedTrackStore}
+              securityStore={persistedSecurityStore}
+              coordinateFormatStore={persistedCoordinateFormatStore}
+              manualEntryCoordinateFormatStore={
+                persistedManualEntryCoordinateFormatStore
+              }
+              savedLocationStore={savedLocationStore}
+              activeProjectIdStore={persistedActiveProjectIdStore}
+              metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+              appUsageStatsStore={appUsagePromptStore}
+              lowStorageBannerStore={lowStorageBannerStore}
+              earlyAccessStore={earlyAccessStore}>
+              <AppNavigator
+                permissionAsked={permissionsAsked}
+                navigationIntegration={navigationIntegration}
+              />
+            </AppProviders>
+          </Suspense>
         </ServerLoading>
       </IntlProvider>
     </LocaleStoreProvider>

@@ -1,15 +1,23 @@
-import {useOwnRoleInProject, useProjectSettings} from '@comapeo/core-react';
-import {useIntl, defineMessages} from 'react-intl';
+import {
+  useOwnDeviceInfo,
+  useOwnRoleInProject,
+  useProjectSettings,
+} from '@comapeo/core-react';
 import {
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
+import {defineMessages, useIntl} from 'react-intl';
 
 const m = defineMessages({
-  soloProjectHeader: {
-    id: 'Screens.Project.soloProjectHeader',
-    defaultMessage: 'My Solo Project',
+  coordinator: {
+    id: 'useProjectRoleAndDetails.coordinator',
+    defaultMessage: 'Coordinator',
+  },
+  participant: {
+    id: 'useProjectRoleAndDetails.participant',
+    defaultMessage: 'Participant',
   },
 });
 
@@ -22,29 +30,24 @@ const m = defineMessages({
 export type FrontendRole = 'coordinator' | 'participant' | 'solo';
 
 export type ProjectDetails = {
+  role: FrontendRole;
+  projectHeader: string;
+  projectName: string | undefined;
   projectColor: string;
   projectDescription?: string;
-} & (
-  | {
-      role: Extract<FrontendRole, 'solo'>;
-      projectHeader: string;
-      projectName: undefined;
-    }
-  | {
-      role: Exclude<FrontendRole, 'solo'>;
-      projectName: string;
-      projectDescription?: string;
-    }
-);
+};
 
 export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
-  const {data: projectData} = useProjectSettings({projectId});
-  const {data: roleData} = useOwnRoleInProject({projectId});
   const {formatMessage} = useIntl();
+  const {data: projectData} = useProjectSettings({projectId});
+  const {
+    data: {name: deviceName},
+  } = useOwnDeviceInfo();
+  const {data: roleData} = useOwnRoleInProject({projectId});
 
   const soloProject: ProjectDetails = {
     role: 'solo',
-    projectHeader: formatMessage(m.soloProjectHeader),
+    projectHeader: deviceName || '',
     projectName: undefined,
     projectColor: '#E5F0FF',
   };
@@ -57,6 +60,7 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
   if (roleId === COORDINATOR_ROLE_ID || roleId === CREATOR_ROLE_ID) {
     return {
       role: 'coordinator',
+      projectHeader: `${projectData.name} - ${formatMessage(m.coordinator)}`,
       projectName: projectData.name,
       projectColor: projectData.projectColor || '#FFF5EB',
       projectDescription: projectData.projectDescription,
@@ -64,6 +68,7 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
   } else if (roleId === MEMBER_ROLE_ID) {
     return {
       role: 'participant',
+      projectHeader: `${projectData.name} - ${formatMessage(m.participant)}`,
       projectName: projectData.name,
       projectColor: projectData.projectColor || '#FFF5EB',
       projectDescription: projectData.projectDescription,

@@ -17,35 +17,33 @@ import {ObservationCategoryChooser} from '../../screens/PresetChooser/Observatio
 import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
-import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
+import {ProjectSettings} from '../../screens/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
-import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {
   CreateOrNameSoloProject,
   createNavigationOptions as createNameProjectNavOptions,
-} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject';
-import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/ProjectCreated';
-import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
-import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
-import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
-import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
-import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
-import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
-import {ReviewAndInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite';
+} from '../../screens/ProjectCreation/CreateOrNameSoloProject';
+import {ProjectCreated} from '../../screens/ProjectCreation/CreateOrNameSoloProject/ProjectCreated';
+import {YourTeam} from '../../screens/YourTeam';
+import {SelectDevice} from '../../screens/YourTeam/SelectDevice';
+import {SelectInviteeRole} from '../../screens/YourTeam/SelectInviteeRole';
+import {ReviewInvitation} from '../../screens/YourTeam/ReviewAndInvite/ReviewInvitation';
+import {InviteAccepted} from '../../screens/YourTeam/InviteAccepted';
+import {ReviewAndInvite} from '../../screens/YourTeam/ReviewAndInvite';
 import {
   DisplayScreen as DeviceNameDisplayScreen,
   createNavigationOptions as createDeviceNameDisplayNavOptions,
-} from '../../screens/Settings/ProjectSettings/DeviceName/DisplayScreen';
+} from '../../screens/DeviceName/DisplayScreen';
 import {
   EditScreen as DeviceNameEditScreen,
   createNavigationOptions as createDeviceNameEditNavOptions,
-} from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
+} from '../../screens/DeviceName/EditScreen';
 import {
   LocationInfoScreen,
   createNavigationOptions as createLocationInfoNavOptions,
 } from '../../screens/LocationInfoScreen';
-import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
-import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
+import {InviteDeclined} from '../../screens/YourTeam/InviteDeclined';
+import {UnableToCancelInvite} from '../../screens/YourTeam/ReviewAndInvite/UnableToCancelInvite';
 import {SyncScreen} from '../../screens/Exchange/index.tsx';
 import {
   ManualGpsScreen,
@@ -56,10 +54,6 @@ import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {
-  createNavigationOptions as createPhotoPreviewModalNavigationOptions,
-  PhotoPreviewModal,
-} from '../../screens/PhotoPreviewModal';
-import {
   ObservationCreate,
   createNavigationOptions as createObservationCreateNavigationOptions,
 } from '../../screens/ObservationCreate';
@@ -69,17 +63,18 @@ import {
   TrackScreen,
   createNavigationOptions as createTrackNavigationOptions,
 } from '../../screens/Track/index.tsx';
-import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
-import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
-import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
+import {DataAndPrivacy} from '../../screens/DataAndPrivacy/DataAndPrivacy';
+import {SettingsPrivacyPolicy} from '../../screens/DataAndPrivacy/SettingsPrivacyPolicy';
+import {TrackEdit} from '../../screens/TrackEdit';
+import {HeaderLeft as HeaderLeftTrackEdit} from '../../screens/TrackEdit/HeaderLeft';
 import {Config} from '../../screens/Settings/Config';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
-import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/AddRemoteArchive.tsx';
-import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
+import {AddRemoteArchive} from '../../screens/RemoteArchive/AddRemoteArchive.tsx';
+import {SuccessfullyAddedArchive} from '../../screens/RemoteArchive/SuccessfullyAddedArchive.tsx';
 import {
   createNavigationOptions as createBackgroundMapsNavigationOptions,
   BackgroundMapsScreen,
-} from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
+} from '../../screens/BackgroundMaps/BackgroundMaps.tsx';
 import {ExchangeSettingsBottomSheet} from '../../screens/Exchange/ExchangeSettingsBottomSheet.tsx';
 import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
 import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
@@ -88,22 +83,20 @@ import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessful
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
-import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
-import {MenuScreen} from '../../screens/MenuScreen';
-import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
-import {StartNewProjectScreen} from '../../screens/Settings/ProjectSettings/StartNewProject.tsx';
-import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
-import {EditProjectDetails} from '../../screens/Settings/ProjectSettings/EditProjectDetails.tsx';
+import {BackgroundMapErrorBottomSheet} from '../../screens/BackgroundMaps/ErrorBottomSheet.tsx';
+import {InviteCollaboratorsScreen} from '../../screens/YourTeam/InviteCollaborators.tsx';
+import {StartNewProjectScreen} from '../../screens/ProjectSettings/StartNewProject.tsx';
+import {EditProjectDetails} from '../../screens/ProjectSettings/EditProjectDetails.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
 import {TrackRecordingActive} from '../../screens/TrackRecordingActive.tsx';
 import {
   RemoteArchiveScreen,
   createNavigationOptions as createRemoteArchiveNavigationOptions,
-} from '../../screens/Settings/ProjectSettings/RemoteArchive/index.tsx';
+} from '../../screens/RemoteArchive/index.tsx';
 import {
   RemoveRemoteArchive,
   navigationOptions as removeRemoteArchiveNavigationOptions,
-} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoveRemoteArchive.tsx';
+} from '../../screens/RemoteArchive/RemoveRemoteArchive.tsx';
 import {ExportObservations} from '../../screens/ExportObservations.tsx';
 import {
   ConfirmDeletePhoto,
@@ -112,13 +105,34 @@ import {
 import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackScreen.tsx';
 import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
 import {DidNotMoveBottomSheet} from '../../screens/MapScreen/TrackBottomSheet/DidNotMoveBottomSheet.tsx';
+import {
+  DraftPhotoPreviewModal,
+  DraftPhotoPreviewModalNavOptions,
+} from '../../screens/PhotoPreviewModal/DraftPhotoPreviewModal.tsx';
+import {AttachedPhotoPreviewModal} from '../../screens/PhotoPreviewModal/AttachedPhotoPreviewModal.tsx';
+import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/sharedNavOptions.tsx';
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
+import {ShareProjectStats} from '../../screens/ProjectCreation/ShareProjectStats.tsx';
+import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
+import {AppUsagePromptInterstitial} from '../../screens/AppUsagePromptInterstitial.tsx';
+import {AppUsageSharingSuccess} from '../../screens/AppUsageSharingSuccess.tsx';
+import {ProjectStatistics} from '../../screens/ProjectStatistics/index.tsx';
+import {ProjectStatsTurnedOffBottomSheet} from '../../screens/ProjectStatistics/ProjectStatsTurnedOffBottomSheet.tsx';
+import {EarlyAccessOffBottomSheet} from '../../screens/Settings/AppSettings/EarlyAccessOffBottomSheet.tsx';
+import {EarlyAccess} from '../../screens/Settings/AppSettings/EarlyAccess.tsx';
+import {Collaborate} from '../../screens/ProjectCreation/Collaborate.tsx';
+import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject.tsx';
+import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjectIntro.tsx';
+import {NameDefaultProjectIntro} from '../../screens/ProjectCreation/NameDefaultProjectIntro.tsx';
+import {CollaboratorInfo} from '../../screens/YourTeam/CollaboratorInfo.tsx';
+import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
 // **NOTE**: No hooks allowed here (this is not a component, it is a function
 // that returns a react element)
-export const createDefaultScreenGroup = ({
+
+export const createAppScreens = ({
   intl,
 }: {
   intl: (title: MessageDescriptor) => string;
@@ -149,9 +163,9 @@ export const createDefaultScreenGroup = ({
         options={{headerShown: false}}
       />
       <RootStack.Screen
-        name="PhotoPreviewModal"
-        component={PhotoPreviewModal}
-        options={createPhotoPreviewModalNavigationOptions({intl})}
+        name="AttachedPhotoPreviewModal"
+        component={AttachedPhotoPreviewModal}
+        options={sharedPhotoPreviewNavOptions({intl})}
       />
       <RootStack.Screen
         name="ConfirmDeletePhoto"
@@ -219,9 +233,14 @@ export const createDefaultScreenGroup = ({
         options={{headerTitle: intl(CoordinateFormat.navTitle)}}
       />
       <RootStack.Screen
-        name="CreateOrJoinProject"
-        component={CreateOrJoinProject}
-        options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
+        name="Collaborate"
+        component={Collaborate}
+        options={{headerTitle: intl(Collaborate.navTitle)}}
+      />
+      <RootStack.Screen
+        name="JoinAProject"
+        component={JoinAProject}
+        options={{headerTitle: intl(JoinAProject.navTitle)}}
       />
       <RootStack.Screen
         name="CreateProject"
@@ -234,18 +253,8 @@ export const createDefaultScreenGroup = ({
         options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen
-        name="ProjectCreatedNewProject"
+        name="ProjectCreated"
         component={ProjectCreated}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="ProjectCreatedNewSolo"
-        component={ProjectCreated}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="JoinExistingProject"
-        component={JoinExistingProject}
         options={{headerShown: false}}
       />
       <RootStack.Screen
@@ -348,7 +357,15 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="TrackEdit"
         component={TrackEdit}
-        options={{headerTitle: intl(TrackEdit.navTitle)}}
+        options={({route}) => ({
+          headerTitle: intl(TrackEdit.navTitle),
+          headerLeft: props => (
+            <HeaderLeftTrackEdit
+              trackId={route.params.trackId}
+              headerBackButtonProps={props}
+            />
+          ),
+        })}
       />
       <RootStack.Screen
         name="Config"
@@ -414,20 +431,6 @@ export const createDefaultScreenGroup = ({
         options={{headerTitle: intl(ObservationMetadata.navTitle)}}
       />
       <RootStack.Screen
-        name="AllProjects"
-        component={AllProjects}
-        options={{headerTitle: intl(AllProjects.navTitle)}}
-      />
-      <RootStack.Screen
-        name="Menu"
-        component={MenuScreen}
-        options={{
-          headerShown: true,
-          animation: 'slide_from_right',
-          header: () => <MenuHeader />,
-        }}
-      />
-      <RootStack.Screen
         name="InviteCollaborators"
         component={InviteCollaboratorsScreen}
         options={{
@@ -450,6 +453,51 @@ export const createDefaultScreenGroup = ({
             <SaveButton onPress={() => {}} isLoading={false} />
           ),
         }}
+      />
+      <RootStack.Screen
+        name="ShareProjectStats"
+        component={ShareProjectStats}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="DraftPhotoPreviewModal"
+        component={DraftPhotoPreviewModal}
+        options={DraftPhotoPreviewModalNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="AppUsagePromptInterstitial"
+        component={AppUsagePromptInterstitial}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="AppUsageSharingSuccess"
+        component={AppUsageSharingSuccess}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="ProjectStatistics"
+        component={ProjectStatistics}
+        options={{headerTitle: intl(ProjectStatistics.navTitle)}}
+      />
+      <RootStack.Screen
+        name="EarlyAccess"
+        component={EarlyAccess}
+        options={{headerTitle: intl(EarlyAccess.navTitle)}}
+      />
+      <RootStack.Screen
+        name="StartNewProjectIntro"
+        component={StartNewProjectIntro}
+        options={{headerTitle: intl(StartNewProjectIntro.navTitle)}}
+      />
+      <RootStack.Screen
+        name="NameDefaultProjectIntro"
+        component={NameDefaultProjectIntro}
+        options={{headerTitle: intl(NameDefaultProjectIntro.navTitle)}}
+      />
+      <RootStack.Screen
+        name="CollaboratorInfo"
+        component={CollaboratorInfo}
+        options={{headerTitle: intl(CollaboratorInfo.navTitle)}}
       />
     </RootStack.Group>
     <RootStack.Group
@@ -493,6 +541,32 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="ConfirmPasscodeSheet"
         component={ConfirmPasscodeBottomSheet}
+      />
+      <RootStack.Screen
+        name="ExportSuccess"
+        component={ExportSuccess}
+        options={{
+          contentStyle: {backgroundColor: 'white'},
+        }}
+      />
+      <RootStack.Screen
+        name="ProjectStatsTurnedOff"
+        component={ProjectStatsTurnedOffBottomSheet}
+      />
+      <RootStack.Screen
+        name="EarlyAccessOff"
+        component={EarlyAccessOffBottomSheet}
+      />
+      <RootStack.Screen
+        name="AllProjects"
+        component={AllProjects}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <RootStack.Screen
+        name="ConfirmTrackDiscardBottomSheet"
+        component={ConfirmDiscardBottomSheet}
       />
     </RootStack.Group>
   </>

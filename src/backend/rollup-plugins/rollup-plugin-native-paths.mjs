@@ -12,7 +12,7 @@ export default function nativePathsPlugin({
   relativePath = 'node_modules',
 } = {}) {
   /**
-   * @type {Array<{ pattern: RegExp, replacement: (packageName: string) => string }>}
+   * @type {Array<{ pattern: RegExp, replacement: (packageName: string, filename: string) => string }>}
    */
   const replacements = [
     {
@@ -26,6 +26,12 @@ export default function nativePathsPlugin({
       replacement: (packageName) =>
         `require('node-gyp-build')(cjsPath.join(__dirname, '${relativePath}', '${packageName}'))`,
     },
+    {
+      pattern: /require\.addon\(['"]\.['"],\s+__filename\)/g,
+      replacement: (packageName, filename) =>
+        // NB: This is fragile, it depends on the original package calling this from a file in the package root
+        `require.addon('.', cjsPath.join(__dirname, '${relativePath}', '${packageName}', '${filename}'))`,
+    },
   ]
 
   return {
@@ -38,13 +44,14 @@ export default function nativePathsPlugin({
     transform(code, id) {
       const magicString = new MagicString(code)
       const packageName = getPackageName(id)
+      const filename = path.basename(id)
 
       if (!packageName) {
         return null
       }
 
       for (const { pattern, replacement } of replacements) {
-        magicString.replaceAll(pattern, replacement(packageName))
+        magicString.replaceAll(pattern, replacement(packageName, filename))
       }
 
       if (!magicString.hasChanged()) {

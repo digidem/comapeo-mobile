@@ -1,105 +1,149 @@
 import {useManyProjects} from '@comapeo/core-react';
 import * as React from 'react';
-import {View} from 'react-native';
-import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard';
+import {ListRenderItem, View} from 'react-native';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../sharedTypes/navigation';
-import {ViewStyleProp} from '../sharedTypes';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
-import {SecondaryButton} from '../sharedComponents/Buttons';
-import AddProjectIcon from '../images/AddProject.svg';
+import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import {FlatList} from 'react-native';
 import {useTracking} from '../hooks/useTracking';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
+import {ColorCard} from '../sharedComponents/ColorCard';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
+import {COMAPEO_BLUE} from '../lib/styles';
+import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
 
 const m = defineMessages({
-  navTitle: {
-    id: 'allProjects.navTitle',
-    defaultMessage: 'All Projects',
+  newCollab: {
+    id: 'allProjects.newCollab',
+    defaultMessage: 'New Collaboration',
   },
-  createNewProject: {
-    id: 'allProjects.createNewProject',
-    defaultMessage: 'Start new project',
+  close: {
+    id: 'allProjects.close',
+    defaultMessage: 'Close',
   },
 });
 
-export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
+type ProjectListItem = ReturnType<typeof useManyProjects>['data'][number];
+
+export const AllProjects = () => {
   const {data} = useManyProjects();
   const {projectId: currentProjectId} = useActiveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const {popTo, navigate} = useNavigationFromRoot();
+  const {goBack, navigate} = useNavigationFromRoot();
   const {formatMessage} = useIntl();
   const {isTracking} = useTracking();
+
+  const dataWithCurrentProjOnTop = React.useMemo(
+    () =>
+      [...data].sort((a, b) => {
+        if (a.projectId === currentProjectId) return -1;
+        if (b.projectId === currentProjectId) return 1;
+        return 0; // Keep original order for other elements
+      }),
+    [currentProjectId, data],
+  );
+
+  const handlePressId = React.useCallback(
+    (targetProjectId: string) => {
+      if (currentProjectId === targetProjectId) {
+        goBack();
+        return;
+      }
+      if (isTracking && currentProjectId !== targetProjectId) {
+        navigate('TrackRecordingActive');
+        return;
+      }
+      setActiveProjectId(targetProjectId);
+      goBack();
+    },
+    [currentProjectId, isTracking, goBack, navigate, setActiveProjectId],
+  );
+
+  const renderItem = React.useCallback<ListRenderItem<ProjectListItem>>(
+    ({item}) => {
+      const isSelected = item.projectId === currentProjectId;
+      return (
+        <React.Suspense fallback={<ProjectCardLoader />}>
+          <ProjectListItem
+            isSelected={isSelected}
+            projectId={item.projectId}
+            onPress={() => handlePressId(item.projectId)}
+          />
+        </React.Suspense>
+      );
+    },
+    [handlePressId, currentProjectId],
+  );
+
   return (
-    <View style={{flex: 1, paddingTop: 40}}>
+    <BottomSheetWrapper closeOnBackButtonPress>
+      <FlatList<ProjectListItem>
+        contentContainerStyle={{gap: 20, paddingBottom: 2}}
+        data={dataWithCurrentProjOnTop}
+        keyExtractor={p => p.projectId}
+        initialNumToRender={6}
+        windowSize={5}
+        removeClippedSubviews
+        renderItem={renderItem}
+      />
+
+      <PrimaryButton
+        fullSize={true}
+        onPress={() => {
+          navigate('Collaborate');
+        }}
+        style={{alignSelf: 'center', marginBottom: 10, marginTop: 20}}
+        text={formatMessage(m.newCollab)}
+      />
       <SecondaryButton
         fullSize={true}
-        style={{alignSelf: 'center', marginBottom: 20}}
-        text={formatMessage(m.createNewProject)}
+        style={{alignSelf: 'center'}}
+        text={formatMessage(m.close)}
         onPress={() => {
-          navigate('StartNewProject');
+          goBack();
         }}
-        renderIcon={() => <AddProjectIcon />}
+        renderIcon={({color, size}) => (
+          <Ionicons color={color} size={size} name="close-circle-outline" />
+        )}
       />
-      <FlatList
-        style={{padding: 20}}
-        data={data}
-        renderItem={({item}) => {
-          function handlePress() {
-            if (currentProjectId === item.projectId) {
-              popTo('Menu');
-              return;
-            }
-
-            if (isTracking && currentProjectId !== item.projectId) {
-              navigate('TrackRecordingActive');
-              return;
-            }
-            setActiveProjectId(item.projectId);
-            popTo('Menu');
-          }
-          return (
-            <ProjectInfoCardMinimal
-              style={{marginBottom: 20}}
-              key={item.projectId}
-              projectId={item.projectId}
-              onPress={handlePress}
-            />
-          );
-        }}
-      />
-    </View>
+    </BottomSheetWrapper>
   );
 };
 
-AllProjects.navTitle = m.navTitle;
+const ProjectCardLoader = () => (
+  <View
+    style={{
+      height: 60,
+      borderRadius: 12,
+      backgroundColor: '#eee',
+      marginBottom: 20,
+    }}
+  />
+);
 
-const ProjectInfoCardMinimal = ({
+const ProjectListItem = ({
   projectId,
-  style,
+  isSelected,
   onPress,
 }: {
   projectId: string;
-  style?: ViewStyleProp;
   onPress: () => void;
+  isSelected: boolean;
 }) => {
   const projectInfo = useProjectRoleAndDetails(projectId);
 
-  const header =
-    'projectHeader' in projectInfo
-      ? projectInfo.projectHeader
-      : projectInfo.projectName;
-
   return (
-    <ProjectInfoCard
+    <ColorCard
+      testID={`project_card_${projectInfo.projectHeader?.toLowerCase().replace(/\s+/g, '_')}`}
       onPress={onPress}
-      role={projectInfo.role}
-      headerText={header}
-      backgroundColor={projectInfo.projectColor}
-      style={style}
-      testID={`project_card_${header?.toLowerCase().replace(/\s+/g, '_')}`}
-    />
+      borderColor={isSelected ? COMAPEO_BLUE : undefined}
+      backgroundColor={projectInfo.projectColor}>
+      <View style={{padding: 20}}>
+        <HeaderText variant="header4">{projectInfo.projectHeader}</HeaderText>
+      </View>
+    </ColorCard>
   );
 };

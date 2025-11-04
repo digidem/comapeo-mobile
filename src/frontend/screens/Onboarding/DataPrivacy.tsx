@@ -1,139 +1,128 @@
 import * as React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useIntl} from 'react-intl';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {OnboardingParamsList} from '../../sharedTypes/navigation';
+import Ionicons from '@react-native-vector-icons/ionicons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
+
 import CoMapeoShield from '../../images/CoMapeoShield.svg';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {NEW_DARK_GREY} from '../../lib/styles';
-import {m} from './DataPrivacyMessages';
+import LockedWithKeyIcon from '../../images/LockedWithKey.svg';
+import HandshakeMediumMediumDarkIcon from '../../images/HandshakeMediumMediumDark.svg';
+import SafetyIcon from '../../images/Safety.svg';
+
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {SvgProps} from 'react-native-svg';
+import {NEW_DARK_GREY} from '../../lib/styles';
+import {OnboardingParamsList} from '../../sharedTypes/navigation';
+import {m} from './DataPrivacyMessages';
 
 export const DataPrivacy = ({
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'DataPrivacy'>) => {
-  const {formatMessage} = useIntl();
+  const {formatMessage: t} = useIntl();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <CoMapeoShield width={64} height={80} style={styles.shieldIcon} />
-      <HeaderText style={styles.title}>
-        {formatMessage(m.dataPrivacyTitle)}
-      </HeaderText>
-      <View style={styles.descriptionContainer}>
-        <BodyText style={styles.description}>
-          {formatMessage(m.dataPrivacyDescription)}
-        </BodyText>
-        <View style={styles.bulletPoints}>
-          <View style={styles.bulletPointContainer}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bulletIcon}
-            />
-            <BodyText variant="smallMeta" style={styles.bulletPointText}>
-              {formatMessage(m.dataPrivacyStays)}
-            </BodyText>
-          </View>
-          <View style={styles.bulletPointContainer}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bulletIcon}
-            />
-            <BodyText variant="smallMeta" style={styles.bulletPointText}>
-              {formatMessage(m.dataPrivacyEncrypted)}
-            </BodyText>
-          </View>
-          <View style={styles.bulletPointContainer}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bulletIcon}
-            />
-            <BodyText variant="smallMeta" style={styles.bulletPointText}>
-              {formatMessage(m.dataPrivacyManageAndControl)}
-            </BodyText>
-          </View>
-          <View style={styles.bulletPointContainer}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bulletIcon}
-            />
-            <BodyText variant="smallMeta" style={styles.bulletPointText}>
-              {formatMessage(m.dataPrivacyDiagnostic)}
-            </BodyText>
-          </View>
+    <ScreenContentWithDock
+      dockContent={
+        <View style={styles.buttonsContainer}>
+          <SecondaryButton
+            fullSize
+            text={t(m.learnMore)}
+            iconPosition="left"
+            renderIcon={({color, size}) => (
+              <MaterialIcons name="info-outline" color={color} size={size} />
+            )}
+            onPress={() => {
+              navigation.navigate('OnboardingPrivacyPolicy');
+            }}
+          />
+          <PrimaryButton
+            fullSize
+            text={t(m.next)}
+            iconPosition="right"
+            renderIcon={({color, size}) => (
+              <Ionicons
+                name="arrow-forward-circle-outline"
+                color={color}
+                size={size}
+              />
+            )}
+            onPress={() => {
+              navigation.replace('DeviceNaming');
+            }}
+          />
+        </View>
+      }>
+      <View style={styles.headerArea}>
+        <CoMapeoShield width={60} height={60} />
+        <HeaderText variant="header2" style={styles.title}>
+          {t(m.dataPrivacyTitle)}
+        </HeaderText>
+      </View>
+
+      <View style={styles.bodyContainer}>
+        <BodyText style={styles.introText}>{t(m.dataPrivacyIntro)}</BodyText>
+        <View style={styles.bulletList}>
+          <InfoListItem Icon={LockedWithKeyIcon} text={t(m.dataPrivacyStays)} />
+          <InfoListItem
+            Icon={HandshakeMediumMediumDarkIcon}
+            text={t(m.dataPrivacyManageAndControl)}
+          />
+          <InfoListItem Icon={SafetyIcon} text={t(m.dataPrivacyDiagnostic)} />
         </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <SecondaryButton
-          fullSize={true}
-          onPress={() => {
-            navigation.navigate('OnboardingPrivacyPolicy');
-          }}
-          text={formatMessage(m.learnMore)}
-        />
-
-        <PrimaryButton
-          fullSize={true}
-          onPress={() => {
-            navigation.navigate('DeviceNaming');
-          }}
-          text={formatMessage(m.next)}
-        />
-      </View>
-    </ScrollView>
+    </ScreenContentWithDock>
   );
 };
 
-const GAP = 16;
+function InfoListItem({text, Icon}: {text: string; Icon: React.FC<SvgProps>}) {
+  return (
+    <View style={styles.bulletItem}>
+      <Icon width={26} height={26} />
+      <BodyText variant="smallMeta" style={styles.bulletText}>
+        {text}
+      </BodyText>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    padding: 20,
-    justifyContent: 'space-around',
+  headerArea: {
+    alignSelf: 'center',
     alignItems: 'center',
-  },
-  shieldIcon: {
-    marginBottom: GAP,
+    gap: 10,
+    paddingTop: 60,
   },
   title: {
-    marginBottom: GAP,
+    textAlign: 'center',
+    paddingHorizontal: 20,
   },
-  descriptionContainer: {
-    alignItems: 'center',
-    width: '90%',
-    gap: GAP,
+  bodyContainer: {
+    gap: 30,
+    alignSelf: 'center',
+    paddingTop: 20,
+    paddingHorizontal: 20,
   },
-  description: {
-    textAlign: 'left',
+  introText: {
+    textAlign: 'center',
   },
-  bulletPoints: {
-    gap: 8,
-    paddingLeft: GAP,
-    width: '80%',
+  bulletList: {
+    gap: 12,
+    paddingHorizontal: 20,
   },
-  bulletPointContainer: {
+  bulletItem: {
     flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
   },
-  bulletIcon: {
-    marginRight: 8,
-    marginTop: 12,
-  },
-  bulletPointText: {
-    flex: 1,
+  bulletText: {
+    flexShrink: 1,
     color: NEW_DARK_GREY,
   },
-  buttonContainer: {
-    alignItems: 'center',
-    gap: GAP,
+  buttonsContainer: {
+    gap: 10,
   },
 });

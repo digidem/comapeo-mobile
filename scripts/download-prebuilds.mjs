@@ -21,10 +21,6 @@ export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
 
   return Promise.all(
     modules.map(async ({name, usesNapi, version}) => {
-      if (name === 'better-sqlite3') {
-        // We currently use this release suffix for better-sqlite3 prebuilds
-        version += '-bare-make';
-      }
       if (verbose) {
         console.log(`${name}: prebuilds start (${version})`);
       }
@@ -102,7 +98,10 @@ function getArtifactInfo({name, version, target, nodeAbi}) {
   const assetName = nodeAbi
     ? `${name}-${version}-node-${nodeAbi}-${target}.tar.gz`
     : `${name}-${version}-${target}.tar.gz`;
-
+  if (name === 'better-sqlite3') {
+    // We currently use this release suffix for better-sqlite3 prebuilds
+    version += '-bare-make';
+  }
   return {
     name,
     url: `https://github.com/digidem/${name}-nodejs-mobile/releases/download/${version}/${assetName}`,

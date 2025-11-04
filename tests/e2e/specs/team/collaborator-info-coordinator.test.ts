@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
-import {getDeviceTimezone, getFormattedDate} from '../../utils/date';
+import {getDeviceTimezone, getLongFormattedDate} from '../../utils/date';
 
 let deviceTimezone: string;
 
@@ -23,8 +23,8 @@ describe('Team - Collaborator Info as Coordinator', () => {
     const addedOnText = await $(byTextMatches('Added on'));
     await expect(addedOnText).toBeDisplayed();
 
-    const today = getFormattedDate(deviceTimezone);
-    await expect($(byText(today))).toBeDisplayed();
+    const today = getLongFormattedDate(deviceTimezone);
+    await expect($(byTextMatches(today))).toBeDisplayed();
   });
 
   it('should not display Leave Project or Remove Device buttons', async () => {

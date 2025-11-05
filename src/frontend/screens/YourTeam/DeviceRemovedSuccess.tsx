@@ -47,7 +47,7 @@ export const DeviceRemovedSuccess = ({
   );
 
   const handleReturnToTeam = () => {
-    navigation.popTo('YourTeam', {projectName});
+    navigation.popTo('YourTeam');
   };
 
   return (

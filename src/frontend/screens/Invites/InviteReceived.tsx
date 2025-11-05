@@ -7,11 +7,15 @@ import {
   useAcceptInvite,
   useRejectInvite,
   useSingleInvite,
+  useCreateProject,
 } from '@comapeo/core-react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
+import {
+  useActiveProjectIdActions,
+  useActiveProjectId,
+} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
@@ -64,6 +68,8 @@ export const InviteReceived = ({
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
   const {setActiveProjectId} = useActiveProjectIdActions();
+  const activeProjectId = useActiveProjectId();
+  const createProject = useCreateProject();
   const {isTracking} = useTracking();
 
   const projectColor = invite.projectColor;
@@ -82,6 +88,15 @@ export const InviteReceived = ({
       {
         onSuccess: projectId => {
           setActiveProjectId(projectId);
+
+          if (!activeProjectId) {
+            createProject.mutate(undefined, {
+              onError: err => {
+                Sentry.captureException(err);
+              },
+            });
+          }
+
           navigation.replace('InviteSuccessfullyAccepted', {
             projectName: invite.projectName,
           });

@@ -172,6 +172,8 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
+  LeaveProject: undefined;
+  LeftProjectConfirmation: undefined;
   CollaboratorInfo: {
     deviceId: string;
     isOwnDevice: boolean;

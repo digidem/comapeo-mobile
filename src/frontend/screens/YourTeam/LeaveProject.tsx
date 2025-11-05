@@ -10,11 +10,10 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLUE_GREY} from '../../lib/styles';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import {useLeaveProject} from '@comapeo/core-react';
+import {useLeaveProject, useManyProjects} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectSettings} from '../../hooks/server/projects';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
-import {useClientApi} from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 
@@ -46,23 +45,20 @@ export const LeaveProject = ({
   const {data: projectSettings} = useProjectSettings();
   const leaveProject = useLeaveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const {listProjects} = useClientApi();
+  const {data: projects} = useManyProjects();
 
   function handleLeaveProject() {
     leaveProject.mutate(
       {projectId},
       {
-        onSuccess: async () => {
+        onSuccess: () => {
           try {
             navigation.replace('LeftProjectConfirmation');
-            const projects = await listProjects();
-            if (projects && projects.length > 0) {
-              const defaultProject = projects.find(
-                project => project.name === undefined,
-              );
-              if (defaultProject?.projectId) {
-                setActiveProjectId(defaultProject.projectId);
-              }
+            const defaultProject = projects?.find(
+              project => project.name === undefined,
+            );
+            if (defaultProject?.projectId) {
+              setActiveProjectId(defaultProject.projectId);
             }
           } catch (err) {
             Sentry.captureException(err);

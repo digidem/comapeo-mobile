@@ -120,7 +120,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
               <MaterialDesignIcons size={size} color={color} name="export" />
             )}
             onPress={() => {
-              navigation.replace('LeaveProject');
+              navigation.navigate('LeaveProject');
             }}
           />
         ) : ownRoleIsCoordinator ? (

@@ -124,6 +124,8 @@ import {Collaborate} from '../../screens/ProjectCreation/Collaborate.tsx';
 import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject.tsx';
 import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjectIntro.tsx';
 import {NameDefaultProjectIntro} from '../../screens/ProjectCreation/NameDefaultProjectIntro.tsx';
+import {LeaveProject} from '../../screens/YourTeam/LeaveProject.tsx';
+import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
 import {CollaboratorInfo} from '../../screens/YourTeam/CollaboratorInfo.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 
@@ -493,6 +495,16 @@ export const createAppScreens = ({
         name="NameDefaultProjectIntro"
         component={NameDefaultProjectIntro}
         options={{headerTitle: intl(NameDefaultProjectIntro.navTitle)}}
+      />
+      <RootStack.Screen
+        name="LeaveProject"
+        component={LeaveProject}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="LeftProjectConfirmation"
+        component={LeftProjectConfirmation}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="CollaboratorInfo"

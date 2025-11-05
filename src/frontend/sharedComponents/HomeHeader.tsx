@@ -27,11 +27,6 @@ export function HomeHeader({
   const {data} = useStorageReadingQuery();
   const isLow = isLowStorage(data.freeBytes);
 
-  const projectName =
-    'projectHeader' in projectDetails
-      ? projectDetails.projectHeader
-      : projectDetails.projectName;
-
   return (
     <View
       style={[
@@ -60,7 +55,7 @@ export function HomeHeader({
             style={styles.text}
             numberOfLines={1}
             ellipsizeMode="tail">
-            {projectName}
+            {projectDetails.projectHeader}
           </HeaderText>
           {isLow && (
             <View style={{position: 'absolute', top: -2, right: -2}}>

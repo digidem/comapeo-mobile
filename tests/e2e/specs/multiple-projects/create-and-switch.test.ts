@@ -30,7 +30,9 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
   it('should display the project name in the side drawer', async () => {
     const doneBtn = await $(byTextMatches('Done'));
     await doneBtn.click();
-    await expect($(byText(`${output.names.secondProject}`))).toBeDisplayed();
+    await expect(
+      $(byText(`${output.names.secondProject} - Coordinator`)),
+    ).toBeDisplayed();
     await expect($(byText('Coordinator'))).toBeDisplayed();
 
     const switchButton = await $(byText('Switch Project'));

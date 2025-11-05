@@ -103,7 +103,7 @@ export type RootStackParamsList = {
     name: string;
     statsShared: boolean;
   };
-  YourTeam: {projectName: string};
+  YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;

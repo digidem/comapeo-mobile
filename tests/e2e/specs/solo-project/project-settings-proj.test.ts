@@ -14,7 +14,9 @@ describe('Project - Project Settings Named Project', () => {
     const screenHeader = await $(byText('Project Settings'));
     await expect(screenHeader).toBeDisplayed();
 
-    await expect($(byText(output.names.project))).toBeDisplayed();
+    await expect(
+      $(byText(`${output.names.project} - Coordinator`)),
+    ).toBeDisplayed();
     await expect(
       $(byTextMatches('This device is a coordinator on this project.')),
     ).toBeDisplayed();
@@ -29,7 +31,7 @@ describe('Project - Project Settings Named Project', () => {
     const projectCategories = await $(byText('Project Categories'));
     await projectCategories.scrollIntoView();
     await expect(projectCategories).toBeDisplayed();
-    await expect($(byTextMatches('@mapeo/'))).toBeDisplayed();
+    await expect($(byTextMatches('CoMapeo Default Config'))).toBeDisplayed();
     await expect($(byText('Update Set'))).toBeDisplayed();
 
     await $(byTextMatches('Project Statistics')).scrollIntoView();

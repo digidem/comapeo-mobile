@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {byResourceId, byText} from '../../utils/selectors';
 
 describe('Multiple Projects - All Projects Screen', () => {
   it('should show projects in order of creation when solo project is the selected project', async () => {
@@ -8,8 +8,12 @@ describe('Multiple Projects - All Projects Screen', () => {
     await $(byText('Switch Project')).click();
 
     const firstCard = await $(byResourceId('project_card_test_phone'));
-    const secondCard = await $(byResourceId('project_card_second_project'));
-    const thirdCard = await $(byResourceId('project_card_third_project'));
+    const secondCard = await $(
+      byResourceId('project_card_second_project_-_coordinator'),
+    );
+    const thirdCard = await $(
+      byResourceId('project_card_third_project_-_coordinator'),
+    );
 
     await firstCard.click();
 
@@ -28,13 +32,17 @@ describe('Multiple Projects - All Projects Screen', () => {
   });
 
   it('should show the selected project on top', async () => {
-    await $(byResourceId('project_card_second_project')).click();
+    await $(byResourceId('project_card_second_project_-_coordinator')).click();
 
     await $(byText('Switch Project')).click();
 
-    const firstCard = await $(byResourceId('project_card_second_project'));
+    const firstCard = await $(
+      byResourceId('project_card_second_project_-_coordinator'),
+    );
     const secondCard = await $(byResourceId('project_card_test_phone'));
-    const thirdCard = await $(byResourceId('project_card_third_project'));
+    const thirdCard = await $(
+      byResourceId('project_card_third_project_-_coordinator'),
+    );
 
     await expect(firstCard).toBeDisplayed();
     await expect(secondCard).toBeDisplayed();

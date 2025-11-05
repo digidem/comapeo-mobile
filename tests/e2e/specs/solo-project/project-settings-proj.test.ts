@@ -22,7 +22,7 @@ describe('Project - Project Settings Named Project', () => {
     const projectCategories = await $(byText('Project Categories'));
     await projectCategories.scrollIntoView();
     await expect(projectCategories).toBeDisplayed();
-    await expect($(byTextMatches('@mapeo/'))).toBeDisplayed();
+    await expect($(byTextMatches('CoMapeo Default Config'))).toBeDisplayed();
     await expect($(byText('Update Set'))).toBeDisplayed();
 
     await $(byTextMatches('Project Statistics')).scrollIntoView();

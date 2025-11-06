@@ -1049,6 +1049,24 @@
     "description": "Title language settings screen",
     "message": "言語"
   },
+  "screens.LeaveProject.cancel": {
+    "message": "取消"
+  },
+  "screens.LeaveProject.leaveProjectDescription": {
+    "message": "このデバイスは、このプロジェクトを表示または貢献しません。"
+  },
+  "screens.LeaveProject.leaveProjectTitle": {
+    "message": "{projectName} を離れますか？"
+  },
+  "screens.LeaveProject.yesLeave": {
+    "message": "はい、退出します"
+  },
+  "screens.LeftProjectConfirmation.openDefaultProject": {
+    "message": "{deviceName} を開く"
+  },
+  "screens.LeftProjectConfirmation.youveLeftProject": {
+    "message": "プロジェクトから退出しました。"
+  },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
     "message": "詳細情報"

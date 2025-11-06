@@ -82,7 +82,7 @@ export const RemovedFromProjectBottomSheet = ({
               {name}
             </HeaderText>
             {reason && (
-              <HeaderText variant="header5" style={styles.reasonText}>
+              <HeaderText variant="header5">
                 {formatMessage(m.reasonLabel, {reason})}
               </HeaderText>
             )}
@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
   projectName: {
     color: BLACK,
   },
-  reasonText: {},
   buttonContainer: {
     paddingTop: 18,
     alignItems: 'center',

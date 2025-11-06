@@ -68,7 +68,7 @@ export function createNavigationOptions({
 
 export const CollaboratorInfo: NativeNavigationComponent<
   'CollaboratorInfo'
-> = ({route}) => {
+> = ({route, navigation}) => {
   const {projectId} = useActiveProject();
   const isOwnDevice = route.params.isOwnDevice;
   const {formatDate, formatMessage} = useIntl();

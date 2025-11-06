@@ -123,7 +123,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
               navigation.navigate('LeaveProject');
             }}
           />
-        ) : ownRoleIsCoordinator && name ? (
+        ) : ownRoleIsCoordinator ? (
           <SecondaryDestructiveButton
             text={formatMessage(m.removeDevice)}
             fullSize={true}
@@ -132,9 +132,9 @@ export const CollaboratorInfo: NativeNavigationComponent<
               <MaterialIcon size={size} color={color} name="person-remove" />
             )}
             onPress={() => {
-              navigation.replace('RemoveDevice', {
+              navigation.navigate('RemoveDevice', {
                 deviceId: route.params.deviceId,
-                deviceName: name,
+                deviceName: name || '',
               });
             }}
           />

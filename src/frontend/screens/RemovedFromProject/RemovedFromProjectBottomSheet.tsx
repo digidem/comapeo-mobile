@@ -7,6 +7,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {VERY_LIGHT_GREY, BLACK} from '../../lib/styles';
 import {
   useCreateProject,
+  useLeaveProject,
   useManyProjects,
   useOwnRoleInProject,
   useProjectSettings,
@@ -14,6 +15,7 @@ import {
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {useEffect, useState} from 'react';
 import {Loading} from '../../sharedComponents/Loading';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   close: {
@@ -49,6 +51,7 @@ export const RemovedFromProjectBottomSheet = ({
   );
   const {setActiveProjectId} = useActiveProjectIdActions();
   const createProject = useCreateProject();
+  const leaveProject = useLeaveProject();
 
   // The user should ALWAYS have a default (solo) project. This was not implemented until after v6. So this creates one if it does not exist
   useEffect(() => {
@@ -89,14 +92,25 @@ export const RemovedFromProjectBottomSheet = ({
           </View>
 
           <View style={styles.buttonContainer}>
-            <SecondaryButton
-              fullSize
-              onPress={() => {
-                setActiveProjectId(defaultProjectId);
-                navigation.popToTop();
-              }}
-              text={formatMessage(m.close)}
-            />
+            {leaveProject.status === 'pending' ? (
+              <UIActivityIndicator />
+            ) : (
+              <SecondaryButton
+                fullSize
+                onPress={() => {
+                  leaveProject.mutate(
+                    {projectId},
+                    {
+                      onSuccess: () => {
+                        setActiveProjectId(defaultProjectId);
+                        navigation.popToTop();
+                      },
+                    },
+                  );
+                }}
+                text={formatMessage(m.close)}
+              />
+            )}
           </View>
         </View>
       )}

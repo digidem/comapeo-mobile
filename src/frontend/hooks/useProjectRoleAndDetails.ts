@@ -4,7 +4,6 @@ import {
   useProjectSettings,
 } from '@comapeo/core-react';
 import {
-  BLOCKED_ROLE_ID,
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
   MEMBER_ROLE_ID,
@@ -27,9 +26,8 @@ const m = defineMessages({
  * - 'coordinator': Backend role indicating the user manages the project.
  * - 'participant': Backend role indicating the user contributes to the project.
  * - 'solo': Derived frontend-only role indicating the user is the sole owner/manager.
- * - 'removed': Derived frontend-only role indicating the user has been removed from the project.
  */
-export type FrontendRole = 'coordinator' | 'participant' | 'solo' | 'removed';
+export type FrontendRole = 'coordinator' | 'participant' | 'solo';
 
 export type ProjectDetails = {
   role: FrontendRole;
@@ -54,41 +52,28 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
     projectColor: '#E5F0FF',
   };
 
-  if (!roleData?.roleId) return soloProject;
+  if (!projectData?.name || !roleData?.roleId) {
+    return soloProject;
+  }
 
   const {roleId} = roleData;
-
-  switch (roleId) {
-    case BLOCKED_ROLE_ID:
-      return {
-        role: 'removed',
-        projectHeader: '',
-        projectName: undefined,
-        projectColor: '#E5F0FF',
-      };
-
-    case COORDINATOR_ROLE_ID:
-    case CREATOR_ROLE_ID:
-      if (!projectData?.name) return soloProject;
-      return {
-        role: 'coordinator',
-        projectHeader: `${projectData.name} - ${formatMessage(m.coordinator)}`,
-        projectName: projectData.name,
-        projectColor: projectData.projectColor || '#FFF5EB',
-        projectDescription: projectData.projectDescription,
-      };
-
-    case MEMBER_ROLE_ID:
-      if (!projectData?.name) return soloProject;
-      return {
-        role: 'participant',
-        projectHeader: `${projectData.name} - ${formatMessage(m.participant)}`,
-        projectName: projectData.name,
-        projectColor: projectData.projectColor || '#FFF5EB',
-        projectDescription: projectData.projectDescription,
-      };
-
-    default:
-      return soloProject;
+  if (roleId === COORDINATOR_ROLE_ID || roleId === CREATOR_ROLE_ID) {
+    return {
+      role: 'coordinator',
+      projectHeader: `${projectData.name} - ${formatMessage(m.coordinator)}`,
+      projectName: projectData.name,
+      projectColor: projectData.projectColor || '#FFF5EB',
+      projectDescription: projectData.projectDescription,
+    };
+  } else if (roleId === MEMBER_ROLE_ID) {
+    return {
+      role: 'participant',
+      projectHeader: `${projectData.name} - ${formatMessage(m.participant)}`,
+      projectName: projectData.name,
+      projectColor: projectData.projectColor || '#FFF5EB',
+      projectDescription: projectData.projectDescription,
+    };
   }
+
+  return soloProject as ProjectDetails;
 }

@@ -128,6 +128,8 @@ import {
   CollaboratorInfo,
   createNavigationOptions as createCollaboratorInfoNavOptions,
 } from '../../screens/YourTeam/CollaboratorInfo.tsx';
+import {LeaveProject} from '../../screens/YourTeam/LeaveProject.tsx';
+import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -496,6 +498,16 @@ export const createAppScreens = ({
         name="NameDefaultProjectIntro"
         component={NameDefaultProjectIntro}
         options={{headerTitle: intl(NameDefaultProjectIntro.navTitle)}}
+      />
+      <RootStack.Screen
+        name="LeaveProject"
+        component={LeaveProject}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="LeftProjectConfirmation"
+        component={LeftProjectConfirmation}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="CollaboratorInfo"

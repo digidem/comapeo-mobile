@@ -1049,6 +1049,24 @@
     "description": "Title language settings screen",
     "message": "Sprache"
   },
+  "screens.LeaveProject.cancel": {
+    "message": "Abbrechen"
+  },
+  "screens.LeaveProject.leaveProjectDescription": {
+    "message": "Dieses Gerät wird dieses Projekt nicht mehr sehen oder zu ihm beitragen"
+  },
+  "screens.LeaveProject.leaveProjectTitle": {
+    "message": "{projectName} verlassen ?"
+  },
+  "screens.LeaveProject.yesLeave": {
+    "message": "Ja, verlassen"
+  },
+  "screens.LeftProjectConfirmation.openDefaultProject": {
+    "message": "{deviceName} öffnen"
+  },
+  "screens.LeftProjectConfirmation.youveLeftProject": {
+    "message": "Sie haben das Projekt verlassen."
+  },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
     "message": "Details"

@@ -14,6 +14,7 @@ import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 import {useIntl} from 'react-intl';
+import {ProjectRemovalListener} from '../../sharedComponents/ProjectRemovalListener';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -111,7 +112,27 @@ export const RootStackNavigator = () => {
 
   return (
     <ActiveProjectProvider activeProjectId={activeProjectId}>
-      <RootStack.Navigator {...commonNavigatorProps}>
+      <RootStack.Navigator
+        {...commonNavigatorProps}
+        layout={({navigation, state, children}) => {
+          const currentRouteName = state.routes[state.index]?.name;
+          return (
+            <React.Suspense fallback={<Loading />}>
+              <PendingInvitesListener
+                currentRouteName={currentRouteName}
+                navigateToInviteScreen={inviteId =>
+                  navigation.navigate('InviteReceived', {inviteId})
+                }
+              />
+              <ProjectRemovalListener
+                currentRouteName={currentRouteName}
+                navigation={navigation}
+                activeProjectId={activeProjectId}
+              />
+              {children}
+            </React.Suspense>
+          );
+        }}>
         {createAppScreens({intl: formatMessage})}
       </RootStack.Navigator>
     </ActiveProjectProvider>

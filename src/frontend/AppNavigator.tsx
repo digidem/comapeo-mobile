@@ -11,7 +11,6 @@ import {RootStackNavigator} from './Navigation/Stack';
 import type Sentry from '@sentry/react-native';
 import {PostHogProvider} from 'posthog-react-native';
 import {postHog} from './App';
-import {ProjectRemovalListener} from './sharedComponents/ProjectRemovalListener';
 
 export const AppNavigator = ({
   permissionAsked,
@@ -50,7 +49,6 @@ export const AppNavigator = ({
         client={postHog}
         autocapture={{captureScreens: false, captureTouches: true}}>
         <React.Suspense fallback={null}>
-          <ProjectRemovalListener navigationRef={containerRef} />
           <RootStackNavigator />
         </React.Suspense>
       </PostHogProvider>

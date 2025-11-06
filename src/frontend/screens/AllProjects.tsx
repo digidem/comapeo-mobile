@@ -36,6 +36,10 @@ export const AllProjects = () => {
   const {formatMessage} = useIntl();
   const {isTracking} = useTracking();
 
+  console.log(data);
+
+  console.log(data.length);
+
   const dataWithCurrentProjOnTop = React.useMemo(
     () =>
       [...data].sort((a, b) => {

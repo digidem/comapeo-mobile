@@ -1,61 +1,60 @@
 import * as React from 'react';
+import {CommonActions, NavigationHelpers} from '@react-navigation/native';
 import {
-  CommonActions,
-  type NavigationContainerRef,
-} from '@react-navigation/native';
-import {
-  useManyProjects,
+  useOwnRoleInProject,
   useProjectOwnRoleChangeListener,
-  useProjectSettings,
 } from '@comapeo/core-react';
 import type {RoleChangeEvent} from '@comapeo/core/dist/mapeo-project';
-import {
-  useActiveProjectId,
-  useActiveProjectIdActions,
-} from '../contexts/ActiveProjectIdStoreContext';
 import {BLOCKED_ROLE_ID} from '../sharedTypes';
-import type {AppStackParamsList} from '../sharedTypes/navigation';
+import {AppStackParamsList} from '../sharedTypes/navigation';
 
 export const ProjectRemovalListener = ({
-  navigationRef,
+  activeProjectId,
+  currentRouteName,
+  navigation,
 }: {
-  navigationRef: React.RefObject<NavigationContainerRef<AppStackParamsList> | null>;
+  activeProjectId: string;
+  currentRouteName: string | undefined;
+  navigation: NavigationHelpers<AppStackParamsList>;
 }) => {
-  const activeProjectId = useActiveProjectId();
-  const {setActiveProjectId} = useActiveProjectIdActions();
-  const {data: projects} = useManyProjects();
-  const {data: currentProjectSettings} = useProjectSettings({
-    projectId: activeProjectId || '',
-  });
+  const {
+    data: {roleId},
+  } = useOwnRoleInProject({projectId: activeProjectId});
+
+  const dispatchToRemovedProjectBottomSheet = React.useCallback(() => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          {name: 'Home'},
+          {
+            name: 'RemovedFromProjectBottomSheet',
+            params: {projectId: activeProjectId},
+          },
+        ],
+      }),
+    );
+  }, [activeProjectId, navigation]);
+
+  //checks on first open of project that the user has not been blocked
+  React.useEffect(() => {
+    if (
+      roleId === BLOCKED_ROLE_ID &&
+      currentRouteName !== 'RemovedFromProjectBottomSheet'
+    ) {
+      dispatchToRemovedProjectBottomSheet();
+    }
+  }, [roleId, dispatchToRemovedProjectBottomSheet, currentRouteName]);
 
   useProjectOwnRoleChangeListener({
-    projectId: activeProjectId || '',
+    projectId: activeProjectId,
     listener: React.useCallback(
       (event: RoleChangeEvent) => {
         if (event.role.roleId === BLOCKED_ROLE_ID) {
-          const defaultProject = projects?.find(p => !p.name);
-
-          if (defaultProject) {
-            setActiveProjectId(defaultProject.projectId);
-
-            navigationRef.current?.dispatch(
-              CommonActions.reset({
-                index: 0,
-                routes: [{name: 'Home'}],
-              }),
-            );
-
-            setTimeout(() => {
-              navigationRef.current?.navigate('RemovedFromProjectBottomSheet', {
-                projectName: currentProjectSettings?.name || 'Unknown Project',
-                projectColor: currentProjectSettings?.projectColor,
-                reason: event.role.reason,
-              });
-            }, 300);
-          }
+          dispatchToRemovedProjectBottomSheet();
         }
       },
-      [projects, currentProjectSettings, setActiveProjectId, navigationRef],
+      [dispatchToRemovedProjectBottomSheet],
     ),
   });
 

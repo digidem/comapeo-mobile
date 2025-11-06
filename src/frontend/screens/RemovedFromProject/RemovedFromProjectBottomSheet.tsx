@@ -5,6 +5,8 @@ import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {VERY_LIGHT_GREY, BLACK} from '../../lib/styles';
+import {useOwnRoleInProject, useProjectSettings} from '@comapeo/core-react';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 
 const m = defineMessages({
   close: {
@@ -26,7 +28,14 @@ export const RemovedFromProjectBottomSheet = ({
   navigation,
 }: NativeRootNavigationProps<'RemovedFromProjectBottomSheet'>) => {
   const {formatMessage} = useIntl();
-  const {projectName, projectColor, reason} = route.params;
+  const {projectId} = route.params;
+  const {
+    data: {reason},
+  } = useOwnRoleInProject({projectId});
+  const {
+    data: {name, projectColor},
+  } = useProjectSettings({projectId});
+  const {setActiveProjectId} = useActiveProjectIdActions();
 
   return (
     <BottomSheetWrapper>
@@ -41,7 +50,7 @@ export const RemovedFromProjectBottomSheet = ({
             {backgroundColor: projectColor || '#EEF6EE'},
           ]}>
           <HeaderText variant="header2" style={styles.projectName}>
-            {projectName}
+            {name}
           </HeaderText>
           {reason && (
             <HeaderText variant="header5" style={styles.reasonText}>
@@ -53,7 +62,7 @@ export const RemovedFromProjectBottomSheet = ({
         <View style={styles.buttonContainer}>
           <SecondaryButton
             fullSize
-            onPress={() => navigation.goBack()}
+            onPress={() => {}}
             text={formatMessage(m.close)}
           />
         </View>

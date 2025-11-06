@@ -1049,6 +1049,24 @@
     "description": "Title language settings screen",
     "message": "Lugha"
   },
+  "screens.LeaveProject.cancel": {
+    "message": "Ghairi"
+  },
+  "screens.LeaveProject.leaveProjectDescription": {
+    "message": "This device will no longer view or contribute to this project"
+  },
+  "screens.LeaveProject.leaveProjectTitle": {
+    "message": "Leave {projectName}?"
+  },
+  "screens.LeaveProject.yesLeave": {
+    "message": "Yes, Leave"
+  },
+  "screens.LeftProjectConfirmation.openDefaultProject": {
+    "message": "Open {deviceName}"
+  },
+  "screens.LeftProjectConfirmation.youveLeftProject": {
+    "message": "You've left the project."
+  },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
     "message": "Maelezo"

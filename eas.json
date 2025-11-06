@@ -53,6 +53,17 @@
       "env": {
         "APP_VARIANT": "preRelease"
       }
+    },
+    "match-production": {
+      "extends": "base",
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "autoIncrement": false,
+      "env": {
+        "APP_VARIANT": "production"
+      }
     }
   },
   "submit": {

@@ -2125,6 +2125,24 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "Sie nehmen gerade einen Track auf. Um dem Projekt beizutreten, stoppen Sie die Aufnahme"
   },
+  "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
+    "message": "Gerät entfernt."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.notified": {
+    "message": "<boldDevice>{deviceName}</boldDevice> wurde benachrichtigt, dass sie nicht mehr zu <boldProject>{projectName}</boldProject> beitragen können."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
+    "message": "Zurück zum Team"
+  },
+  "screens.YourTeam.RemoveDevice.reasonLabel": {
+    "message": "Grund für die Entfernung?"
+  },
+  "screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
+    "message": "Entfernen & benachrichtigen"
+  },
+  "screens.YourTeam.RemoveDevice.title": {
+    "message": "Gerät entfernen"
+  },
   "screens.YourTeam.TeamMemberCard.thisDevice": {
     "message": "Dieses Gerät"
   },

@@ -2125,6 +2125,24 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "現在トラックを録音しています。プロジェクトに参加するには、録音を停止してください。"
   },
+  "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
+    "message": "デバイスを削除しました。"
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.notified": {
+    "message": "<boldDevice>{deviceName}</boldDevice> は、 <boldProject>{projectName}</boldProject> の表示や貢献ができなくなったことが通知されました。"
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
+    "message": "チームに戻る"
+  },
+  "screens.YourTeam.RemoveDevice.reasonLabel": {
+    "message": "削除の理由は？"
+  },
+  "screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
+    "message": "削除＆通知"
+  },
+  "screens.YourTeam.RemoveDevice.title": {
+    "message": "端末を削除"
+  },
   "screens.YourTeam.TeamMemberCard.thisDevice": {
     "message": "このデバイス"
   },

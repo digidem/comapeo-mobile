@@ -2125,6 +2125,24 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "Je neemt momenteel een nummer op. Om deel te nemen aan het project stop je opname"
   },
+  "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
+    "message": "Apparaat verwijderd."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.notified": {
+    "message": "<boldDevice>{deviceName}</boldDevice> is verwittigd dat ze niet langer kunnen bekijken of bijdragen aan <boldProject>{projectName}</boldProject>."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
+    "message": "Terug naar Team"
+  },
+  "screens.YourTeam.RemoveDevice.reasonLabel": {
+    "message": "Reden voor verwijdering?"
+  },
+  "screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
+    "message": "Verwijderen & Melden"
+  },
+  "screens.YourTeam.RemoveDevice.title": {
+    "message": "Apparaat verwijderen"
+  },
   "screens.YourTeam.TeamMemberCard.thisDevice": {
     "message": "Dit apparaat"
   },

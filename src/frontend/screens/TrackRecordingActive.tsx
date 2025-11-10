@@ -41,7 +41,7 @@ export const TrackRecordingActive = ({
 
     if (hasMovedEnough) {
       endTracking();
-      navigation.replace('SaveTrack');
+      navigation.replace('TrackCategoryChooser', {trackAction: 'saveNew'});
       return;
     } else {
       navigation.goBack();

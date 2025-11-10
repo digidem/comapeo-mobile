@@ -80,6 +80,7 @@ export const CameraView = ({onAddPress}: Props) => {
         base64: false,
         exif: true,
         skipProcessing: false,
+        shutterSound: false,
         quality: 0.75,
         imageType: 'jpg',
       })

@@ -2125,6 +2125,24 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "You’re currently recording a track. To join project, stop recording"
   },
+  "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
+    "message": "Device removed."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.notified": {
+    "message": "<boldDevice>{deviceName}</boldDevice> has been notified they can no longer view or contribute to <boldProject>{projectName}</boldProject>."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
+    "message": "Return to Team"
+  },
+  "screens.YourTeam.RemoveDevice.reasonLabel": {
+    "message": "Reason for removal?"
+  },
+  "screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
+    "message": "Remove & Notify"
+  },
+  "screens.YourTeam.RemoveDevice.title": {
+    "message": "Remove Device"
+  },
   "screens.YourTeam.TeamMemberCard.thisDevice": {
     "message": "This device"
   },

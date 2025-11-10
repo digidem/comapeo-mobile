@@ -132,8 +132,10 @@ export const CollaboratorInfo: NativeNavigationComponent<
               <MaterialIcon size={size} color={color} name="person-remove" />
             )}
             onPress={() => {
-              // To Do: navigate to remove device success screen
-              console.log('Remove Device pressed');
+              navigation.navigate('RemoveDevice', {
+                deviceId: route.params.deviceId,
+                deviceName: name || '',
+              });
             }}
           />
         ) : null)}

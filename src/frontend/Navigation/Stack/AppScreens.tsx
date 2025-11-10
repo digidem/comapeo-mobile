@@ -30,6 +30,8 @@ import {SelectInviteeRole} from '../../screens/YourTeam/SelectInviteeRole';
 import {ReviewInvitation} from '../../screens/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/YourTeam/InviteAccepted';
 import {ReviewAndInvite} from '../../screens/YourTeam/ReviewAndInvite';
+import {RemoveDevice} from '../../screens/YourTeam/RemoveDevice';
+import {DeviceRemovedSuccess} from '../../screens/YourTeam/DeviceRemovedSuccess';
 import {
   DisplayScreen as DeviceNameDisplayScreen,
   createNavigationOptions as createDeviceNameDisplayNavOptions,
@@ -282,6 +284,16 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="InviteAccepted"
         component={InviteAccepted}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="RemoveDevice"
+        component={RemoveDevice}
+        options={{headerTitle: intl(RemoveDevice.navTitle)}}
+      />
+      <RootStack.Screen
+        name="DeviceRemovedSuccess"
+        component={DeviceRemovedSuccess}
         options={{headerShown: false}}
       />
       <RootStack.Screen

@@ -109,6 +109,8 @@ export type RootStackParamsList = {
   ReviewAndInvite: InviteProps;
   InviteAccepted: {name: string};
   InviteDeclined: InviteProps;
+  RemoveDevice: {deviceId: string; deviceName: string};
+  DeviceRemovedSuccess: {deviceName: string; projectName: string};
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;

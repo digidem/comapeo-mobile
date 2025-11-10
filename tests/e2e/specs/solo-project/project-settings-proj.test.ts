@@ -11,7 +11,7 @@ describe('Project - Project Settings Named Project', () => {
     const viewSettings = await $('~Go to project settings screen.');
     await viewSettings.click();
 
-    const screenHeader = await $(byText('Project Settings'));
+    const screenHeader = await $(byText('Coordinator Tools'));
     await expect(screenHeader).toBeDisplayed();
 
     await expect(

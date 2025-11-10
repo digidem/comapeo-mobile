@@ -29,7 +29,7 @@ describe('Settings - Coordinates Settings Flow', () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
 
-    await expect($(byTextMatches('App Settings'))).toBeDisplayed();
+    await expect($(byTextMatches('CoMapeo Settings'))).toBeDisplayed();
 
     await backBtn.click();
     await $(byResourceId('MAIN.map-screen')).click();

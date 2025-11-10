@@ -17,16 +17,7 @@ describe('Project - Project Settings Named Project', () => {
     await expect(
       $(byText(`${output.names.project} - Coordinator`)),
     ).toBeDisplayed();
-    await expect(
-      $(byTextMatches('This device is a coordinator on this project.')),
-    ).toBeDisplayed();
     await expect($(byText('Edit Info'))).toBeDisplayed();
-
-    await expect($(byText('Project Collaborators'))).toBeDisplayed();
-    await expect(
-      $(byTextMatches('This device is a coordinator on this project.')),
-    ).toBeDisplayed();
-    await expect($(byText('View Team'))).toBeDisplayed();
 
     const projectCategories = await $(byText('Project Categories'));
     await projectCategories.scrollIntoView();

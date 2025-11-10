@@ -53,7 +53,7 @@
     "@react-native-vector-icons/material-design-icons": "12.4.0",
     "@react-native-vector-icons/material-icons": "12.4.0",
     "@react-native-vector-icons/octicons": "20.4.0",
-    "@react-navigation/bottom-tabs": "7.4.7",
+    "@react-navigation/bottom-tabs": "7.8.4",
     "@react-navigation/native": "7.1.19",
     "@react-navigation/stack": "7.4.8",
     "@rnmapbox/maps": "10.1.42",

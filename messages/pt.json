@@ -2125,6 +2125,24 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "Você está gravando uma trilha agora. Para entrar em um projeto, pare a gravação"
   },
+  "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
+    "message": "Dispositivo removido."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.notified": {
+    "message": "<boldDevice>{deviceName}</boldDevice> foi notificada que não pode mais visualizar ou contribuir para <boldProject>{projectName}</boldProject>."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
+    "message": "Voltar para a equipe"
+  },
+  "screens.YourTeam.RemoveDevice.reasonLabel": {
+    "message": "Motivo da remoção?"
+  },
+  "screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
+    "message": "Remover e Notificar"
+  },
+  "screens.YourTeam.RemoveDevice.title": {
+    "message": "Remover o dispositivo"
+  },
   "screens.YourTeam.TeamMemberCard.thisDevice": {
     "message": "Este dispositivo"
   },

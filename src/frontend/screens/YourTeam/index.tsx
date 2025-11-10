@@ -23,7 +23,7 @@ import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 const m = defineMessages({
   title: {
     id: 'screens.Setting.ProjectSettings.YourTeam.title',
-    defaultMessage: 'Your Team',
+    defaultMessage: 'Team',
   },
   inviteDevice: {
     id: 'screens.Setting.ProjectSettings.YourTeam.inviteDevice',

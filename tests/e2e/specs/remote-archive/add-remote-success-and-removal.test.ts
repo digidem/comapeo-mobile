@@ -1,7 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
-import {getDeviceTimezone, getFormattedDate} from '../../utils/date';
+import {getDeviceTimezone, getShortFormattedDate} from '../../utils/date';
 import {output} from '../../utils/naming';
 
 let archiveAdded = false;
@@ -66,7 +66,7 @@ describe('Remote Archive - Add Success Flow', () => {
     await expect($(byResourceId('RA.archive-name'))).toHaveText(
       output.remoteServer,
     );
-    const today = getFormattedDate(deviceTimezone);
+    const today = getShortFormattedDate(deviceTimezone);
     await expect($(byText(today))).toBeDisplayed();
     await expect($(byTextMatches('Remove Server'))).toBeDisplayed();
   });

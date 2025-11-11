@@ -126,9 +126,12 @@ import {Collaborate} from '../../screens/ProjectCreation/Collaborate.tsx';
 import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject.tsx';
 import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjectIntro.tsx';
 import {NameDefaultProjectIntro} from '../../screens/ProjectCreation/NameDefaultProjectIntro.tsx';
+import {
+  CollaboratorInfo,
+  createNavigationOptions as createCollaboratorInfoNavOptions,
+} from '../../screens/YourTeam/CollaboratorInfo.tsx';
 import {LeaveProject} from '../../screens/YourTeam/LeaveProject.tsx';
 import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
-import {CollaboratorInfo} from '../../screens/YourTeam/CollaboratorInfo.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -521,7 +524,7 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="CollaboratorInfo"
         component={CollaboratorInfo}
-        options={{headerTitle: intl(CollaboratorInfo.navTitle)}}
+        options={createCollaboratorInfoNavOptions({intl})}
       />
     </RootStack.Group>
     <RootStack.Group

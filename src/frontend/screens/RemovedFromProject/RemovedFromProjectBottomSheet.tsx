@@ -93,7 +93,7 @@ export const RemovedFromProjectBottomSheet = ({
 
           <View style={styles.buttonContainer}>
             {leaveProject.status === 'pending' ? (
-              <UIActivityIndicator />
+              <UIActivityIndicator style={{margin: 20}} />
             ) : (
               <SecondaryButton
                 fullSize

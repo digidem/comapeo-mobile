@@ -19,6 +19,7 @@ const config = {
     path.resolve(__dirname, 'tests/e2e/specs/onboarding/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/settings/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/solo-project/index.tsx'),
+    path.resolve(__dirname, 'tests/e2e/specs/team/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/tracks/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/menu/index.test.ts'),
     //temporarily removing as remote archive seems to be down

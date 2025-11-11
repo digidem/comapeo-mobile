@@ -38,7 +38,7 @@
     "message": "Sucesso!"
   },
   "ExportSuccess.tracks": {
-    "message": "<bold>Tracks</bold> have been downloaded to your device."
+    "message": "As <bold>Trilhas</bold> foram baixadas em seu dispositivo."
   },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Voltar"
@@ -47,7 +47,7 @@
     "message": "Habilitado"
   },
   "Modal.GPSDisable.description": {
-    "message": "Para criar uma nova trilha, CoMapeo precisa acessar sua localização e GPS."
+    "message": "Para criar uma trilha, CoMapeo precisa acessar sua localização e GPS."
   },
   "Modal.GPSDisable.title": {
     "message": "GPS desativado"
@@ -62,7 +62,7 @@
     "message": "Parar trilha"
   },
   "Navigation.Menu.Settings": {
-    "message": "Configurações do Copeo"
+    "message": "Configurações do CoMapeo"
   },
   "Navigation.Menu.bgMaps": {
     "message": "Mapas de fundo"
@@ -74,7 +74,7 @@
     "message": "Coordenador"
   },
   "Navigation.Menu.coordinatorTools": {
-    "message": "Ferramentas do coordinator"
+    "message": "Ferramentas do coordenador"
   },
   "Navigation.Menu.currentProject": {
     "message": "Projeto Atual"
@@ -838,7 +838,7 @@
     "message": "Seus dados permanecem em seus dispositivos — criptografados e totalmente no seu controle."
   },
   "screens.DataPrivacy.title": {
-    "message": "O Copeo é privado por padrão."
+    "message": "O CoMapeo é privado por padrão."
   },
   "screens.DeviceNaming.Success.chooseProject": {
     "message": "Escolha abaixo para iniciar seu primeiro projeto."
@@ -901,7 +901,7 @@
     "message": "Insira sua senha"
   },
   "screens.EnterPassword.wrongPass": {
-    "message": "Senha incorreta. Por favor, tente novamente."
+    "message": "Senha incorreta. Por favor, tente novamente"
   },
   "screens.Exchange.WifiCard.noWifi": {
     "message": "Sem Wi-Fi"
@@ -955,7 +955,7 @@
     "message": "Todas as observações com midia incluída"
   },
   "screens.ExportObservations.allObservationsAndMediaDescription": {
-    "message": "Imagens e áudio um arquivo tipo .zip"
+    "message": "Imagens e áudio em um arquivo tipo .zip"
   },
   "screens.ExportObservations.allObservationsDescription": {
     "message": "Textos apenas como um arquivo do tipo GeoJSON"

@@ -4,7 +4,7 @@ import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {VERY_LIGHT_GREY, BLACK} from '../../lib/styles';
+import {BLACK} from '../../lib/styles';
 import {
   useCreateProject,
   useLeaveProject,
@@ -16,6 +16,8 @@ import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreCont
 import {useEffect, useState} from 'react';
 import {Loading} from '../../sharedComponents/Loading';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {ColorCard} from '../../sharedComponents/ColorCard';
+import {DEFAULT_PROJECT_COLOR} from '../../constants';
 
 const m = defineMessages({
   close: {
@@ -76,20 +78,18 @@ export const RemovedFromProjectBottomSheet = ({
             {formatMessage(m.title)}
           </HeaderText>
 
-          <View
-            style={[
-              styles.projectCard,
-              {backgroundColor: projectColor || '#EEF6EE'},
-            ]}>
-            <HeaderText variant="header2" style={styles.projectName}>
-              {name}
-            </HeaderText>
-            {reason && (
-              <HeaderText variant="header5">
-                {formatMessage(m.reasonLabel, {reason})}
+          <ColorCard backgroundColor={projectColor || DEFAULT_PROJECT_COLOR}>
+            <View style={{padding: 20, gap: 20}}>
+              <HeaderText variant="header2" style={styles.projectName}>
+                {name}
               </HeaderText>
-            )}
-          </View>
+              {reason && (
+                <HeaderText variant="header5">
+                  {formatMessage(m.reasonLabel, {reason})}
+                </HeaderText>
+              )}
+            </View>
+          </ColorCard>
 
           <View style={styles.buttonContainer}>
             {leaveProject.status === 'pending' ? (
@@ -125,21 +125,6 @@ const styles = StyleSheet.create({
   titleText: {
     textTransform: 'uppercase',
     color: BLACK,
-  },
-  projectCard: {
-    padding: 20,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: VERY_LIGHT_GREY,
-    gap: 20,
-    shadowColor: BLACK,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 5,
-    elevation: 1,
   },
   projectName: {
     color: BLACK,

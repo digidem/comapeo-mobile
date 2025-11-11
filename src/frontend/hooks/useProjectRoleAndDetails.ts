@@ -10,6 +10,7 @@ import {
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
+import {DEFAULT_PROJECT_COLOR} from '../constants';
 
 const m = defineMessages({
   coordinator: {
@@ -66,7 +67,7 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
       role: 'coordinator',
       projectHeader: `${projectData.name} - ${formatMessage(m.coordinator)}`,
       projectName: projectData.name,
-      projectColor: projectData.projectColor || '#FFF5EB',
+      projectColor: projectData.projectColor || DEFAULT_PROJECT_COLOR,
       projectDescription: projectData.projectDescription,
     };
   }
@@ -76,7 +77,7 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
       role: 'participant',
       projectHeader: `${projectData.name} - ${formatMessage(m.participant)}`,
       projectName: projectData.name,
-      projectColor: projectData.projectColor || '#FFF5EB',
+      projectColor: projectData.projectColor || DEFAULT_PROJECT_COLOR,
       projectDescription: projectData.projectDescription,
     };
   }
@@ -85,7 +86,7 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
     role: roleId === BLOCKED_ROLE_ID ? 'blocked' : undefined,
     projectHeader: projectData.name,
     projectName: projectData.name,
-    projectColor: projectData.projectColor || '#FFF5EB',
+    projectColor: projectData.projectColor || DEFAULT_PROJECT_COLOR,
     projectDescription: projectData.projectDescription,
   };
 }

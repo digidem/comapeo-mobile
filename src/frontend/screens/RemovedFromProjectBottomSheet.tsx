@@ -1,10 +1,10 @@
-import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
+import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
 import {StyleSheet, View} from 'react-native';
-import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {SecondaryButton} from '../sharedComponents/Buttons';
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BLACK} from '../../lib/styles';
+import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
+import {BLACK} from '../lib/styles';
 import {
   useCreateProject,
   useLeaveProject,
@@ -12,12 +12,12 @@ import {
   useOwnRoleInProject,
   useProjectSettings,
 } from '@comapeo/core-react';
-import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
+import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
 import {useEffect, useState} from 'react';
-import {Loading} from '../../sharedComponents/Loading';
+import {Loading} from '../sharedComponents/Loading';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {ColorCard} from '../../sharedComponents/ColorCard';
-import {DEFAULT_PROJECT_COLOR} from '../../constants';
+import {ColorCard} from '../sharedComponents/ColorCard';
+import {DEFAULT_PROJECT_COLOR} from '../constants';
 
 const m = defineMessages({
   close: {

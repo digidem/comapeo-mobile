@@ -28,8 +28,8 @@ const m = defineMessages({
     defaultMessage: 'CoMapeo Settings',
   },
   bgMap: {
-    id: 'Navigation.Menu.bgMaps',
-    defaultMessage: 'Background Maps',
+    id: 'Navigation.Menu.bgMap',
+    defaultMessage: 'Background Map',
   },
   gatherObservations: {
     id: 'Navigation.Menu.gatherObservations',

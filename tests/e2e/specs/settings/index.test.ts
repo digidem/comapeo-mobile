@@ -6,5 +6,6 @@ describe('Settings', function () {
   require('./coordinates.test');
   require('./language.test');
   require('./about-comapeo.test');
+  // TODO: re-enable once Early Access feature flag is back on
   // require('./early-access.test');
 });

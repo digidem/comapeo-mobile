@@ -3,7 +3,7 @@ import {useCallback} from 'react';
 import {BackHandler} from 'react-native';
 
 export const usePreventAndroidBackButton = () => {
-  return useFocusEffect(
+  useFocusEffect(
     useCallback(() => {
       const onBackPress = () => true;
 

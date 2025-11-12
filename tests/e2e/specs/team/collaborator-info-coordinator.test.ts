@@ -11,8 +11,8 @@ describe('Team - Collaborator Info as Coordinator', () => {
     deviceTimezone = await getDeviceTimezone();
   });
   it('should navigate to collaborator info screen and display own device details', async () => {
-    const viewTeamButton = await $(byText('View Team'));
-    await viewTeamButton.click();
+    const teamSettings = await $('~Go to your team screen.');
+    await teamSettings.click();
     const deviceName = await $(byTextMatches(output.names.device));
     await deviceName.click();
     const thisDeviceHeader = await $(byText('This Device'));
@@ -38,10 +38,7 @@ describe('Team - Collaborator Info as Coordinator', () => {
   it('should navigate back to map screen', async () => {
     let backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
-    await expect($(byText('Your Team'))).toBeDisplayed();
-    backButton = await $(byResourceId('MAIN.header-back-btn'));
-    await backButton.click();
-    await expect($(byText('Project Settings'))).toBeDisplayed();
+    await expect($(byText('Team'))).toBeDisplayed();
     backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
     await $(byResourceId('MAIN.map-screen')).click();

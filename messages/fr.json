@@ -64,8 +64,8 @@
   "Navigation.Menu.Settings": {
     "message": "Paramètres de CoMapeo"
   },
-  "Navigation.Menu.bgMaps": {
-    "message": "Cartes d'arrière-plan"
+  "Navigation.Menu.bgMap": {
+    "message": "Background Maps"
   },
   "Navigation.Menu.collaborate": {
     "message": "Collaborer"
@@ -244,20 +244,11 @@
   "Screens.ProjectSettings.configTitle": {
     "message": "Catégories de projet"
   },
-  "Screens.ProjectSettings.coordinator": {
-    "message": "Cet appareil est un coordinateur de ce projet."
-  },
   "Screens.ProjectSettings.editInfo": {
     "message": "Modifier les infos"
   },
   "Screens.ProjectSettings.invite": {
     "message": "Inviter des collaborateurs"
-  },
-  "Screens.ProjectSettings.participant": {
-    "message": "Cet appareil est un participant à ce projet."
-  },
-  "Screens.ProjectSettings.projectCollaborators": {
-    "message": "Collaborateurs de projet"
   },
   "Screens.ProjectSettings.projectStatsOff": {
     "message": "Statistiques du projet | OFF"
@@ -284,7 +275,7 @@
     "message": "Vous êtes en train de cartographier vous-même."
   },
   "Screens.ProjectSettings.title": {
-    "message": "Paramètres du projet"
+    "message": "Outils de coordinator"
   },
   "Screens.ProjectSettings.update": {
     "message": "Mise à jour"
@@ -297,9 +288,6 @@
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "Voir les détails"
-  },
-  "Screens.ProjectSettings.viewTeam": {
-    "message": "Voir l'équipe"
   },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Sécurité"
@@ -316,29 +304,17 @@
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Nom de l'appareil"
   },
-  "Screens.Settings.AppSettings.earlyAccess": {
-    "message": "Mode d'accès anticipé"
-  },
-  "Screens.Settings.AppSettings.earlyAccess.off": {
-    "message": "Accès anticipé DÉSACTIVÉ"
-  },
-  "Screens.Settings.AppSettings.earlyAccess.on": {
-    "message": "Accès anticipé activé"
-  },
   "Screens.Settings.AppSettings.language": {
     "message": "Langage"
   },
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Afficher la langue pour l'application"
   },
-  "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Map Management"
-  },
   "Screens.Settings.AppSettings.privacyPolicy": {
     "message": "Données & Confidentialité"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "Paramètres de l'application"
+    "message": "Paramètres de CoMapeo"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
@@ -1801,7 +1777,7 @@
     "message": "Les appareils ne contribuent plus à ce projet."
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "Votre équipe"
+    "message": "Equipe"
   },
   "screens.Settings.Collaborate.inviteDevices": {
     "message": "Inviter des appareils"

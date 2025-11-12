@@ -65,7 +65,7 @@ chmod +x mc
 ./mc alias set cf "${AWS_ENDPOINT_URL}" "${AWS_ACCESS_KEY_ID}" "${AWS_SECRET_ACCESS_KEY}"
 
 echo "Uploading to ${APK_UPLOAD_PATH}"
-./mc cp "$APK_FILE" "cf/${S3_BUCKET_NAME}/${APK_UPLOAD_PATH}"
+./mc cp "$APK_FILE" "cf/${S3_BUCKET_NAME}${APK_UPLOAD_PATH}"
 echo "Uploading to ${METADATA_UPLOAD_PATH}"
-./mc cp latest.json "cf/${S3_BUCKET_NAME}/${METADATA_UPLOAD_PATH}"
+./mc cp latest.json "cf/${S3_BUCKET_NAME}${METADATA_UPLOAD_PATH}"
 echo "Upload complete"

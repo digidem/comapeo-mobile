@@ -64,8 +64,8 @@
   "Navigation.Menu.Settings": {
     "message": "CoMapeo instellingen"
   },
-  "Navigation.Menu.bgMaps": {
-    "message": "Achtergrond Kaarten"
+  "Navigation.Menu.bgMap": {
+    "message": "Background Maps"
   },
   "Navigation.Menu.collaborate": {
     "message": "Samenwerken"
@@ -244,20 +244,11 @@
   "Screens.ProjectSettings.configTitle": {
     "message": "Project Categorieën"
   },
-  "Screens.ProjectSettings.coordinator": {
-    "message": "Dit apparaat is een coördinator voor dit project."
-  },
   "Screens.ProjectSettings.editInfo": {
     "message": "Info bewerken"
   },
   "Screens.ProjectSettings.invite": {
     "message": "Nodig samenwerkers uit"
-  },
-  "Screens.ProjectSettings.participant": {
-    "message": "Dit apparaat is een deelnemer in dit project."
-  },
-  "Screens.ProjectSettings.projectCollaborators": {
-    "message": "Project samenwerkers"
   },
   "Screens.ProjectSettings.projectStatsOff": {
     "message": "Project Statistieken Instrument UIT"
@@ -284,7 +275,7 @@
     "message": "Je bent alleen aan het mappen."
   },
   "Screens.ProjectSettings.title": {
-    "message": "Project Instellingen"
+    "message": "Coördinator Tools"
   },
   "Screens.ProjectSettings.update": {
     "message": "Updaten"
@@ -297,9 +288,6 @@
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "Details bekijken"
-  },
-  "Screens.ProjectSettings.viewTeam": {
-    "message": "Bekijk team"
   },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Beveiliging"
@@ -316,29 +304,17 @@
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Apparaat Naam"
   },
-  "Screens.Settings.AppSettings.earlyAccess": {
-    "message": "Vroegtijdige toegangsmodus"
-  },
-  "Screens.Settings.AppSettings.earlyAccess.off": {
-    "message": "Vroegtijdige toegang is UIT"
-  },
-  "Screens.Settings.AppSettings.earlyAccess.on": {
-    "message": "Vroegtijdige toegang is AAN"
-  },
   "Screens.Settings.AppSettings.language": {
     "message": "Taal"
   },
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Taal voor app weergeven"
   },
-  "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Map Management"
-  },
   "Screens.Settings.AppSettings.privacyPolicy": {
     "message": "Gegevens & Privacy"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App instellingen"
+    "message": "CoMapeo instellingen"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
@@ -1801,7 +1777,7 @@
     "message": "De toestellen dragen niet meer bij aan dit project."
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "Jouw team"
+    "message": "Team"
   },
   "screens.Settings.Collaborate.inviteDevices": {
     "message": "Apparaten uitnodigen"

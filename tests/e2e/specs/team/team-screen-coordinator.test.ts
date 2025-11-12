@@ -7,19 +7,11 @@ describe('Team - Team Screen as Coordinator', () => {
   it('should navigate to team screen from project settings', async () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
-    const viewSettings = await $('~Go to project settings screen.');
-    await viewSettings.click();
+    const teamSettings = await $('~Go to your team screen.');
+    await teamSettings.click();
 
-    const screenHeader = await $(byText('Project Settings'));
+    const screenHeader = await $(byText('Team'));
     await expect(screenHeader).toBeDisplayed();
-
-    const viewTeamButton = await $(byText('View Team'));
-    await viewTeamButton.click();
-  });
-
-  it('should display Your Team header', async () => {
-    const teamHeader = await $(byText('Your Team'));
-    await expect(teamHeader).toBeDisplayed();
   });
 
   it('should display Invite Device button as coordinator', async () => {
@@ -68,11 +60,8 @@ describe('Team - Team Screen as Coordinator', () => {
     await expect(pastCollaboratorsDescription).toBeDisplayed();
   });
 
-  it('should navigate back to project settings', async () => {
+  it('should navigate back to drawer menu', async () => {
     const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
-
-    const screenHeader = await $(byText('Project Settings'));
-    await expect(screenHeader).toBeDisplayed();
   });
 });

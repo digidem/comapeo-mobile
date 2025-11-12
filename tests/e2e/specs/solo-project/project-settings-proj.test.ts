@@ -11,20 +11,13 @@ describe('Project - Project Settings Named Project', () => {
     const viewSettings = await $('~Go to project settings screen.');
     await viewSettings.click();
 
-    const screenHeader = await $(byText('Project Settings'));
+    const screenHeader = await $(byText('Coordinator Tools'));
     await expect(screenHeader).toBeDisplayed();
 
-    await expect($(byText(output.names.project))).toBeDisplayed();
     await expect(
-      $(byTextMatches('This device is a coordinator on this project.')),
+      $(byText(`${output.names.project} - Coordinator`)),
     ).toBeDisplayed();
     await expect($(byText('Edit Info'))).toBeDisplayed();
-
-    await expect($(byText('Project Collaborators'))).toBeDisplayed();
-    await expect(
-      $(byTextMatches('This device is a coordinator on this project.')),
-    ).toBeDisplayed();
-    await expect($(byText('View Team'))).toBeDisplayed();
 
     const projectCategories = await $(byText('Project Categories'));
     await projectCategories.scrollIntoView();

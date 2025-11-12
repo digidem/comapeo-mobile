@@ -171,19 +171,15 @@ export const AboutSettings = () => {
           />
         </ListItem>
       </List>
-      {isEarly ? (
-        <View style={styles.bottomButton}>
-          <SecondaryButton
-            fullSize
-            text={t(m.seeUpdates)}
-            onPress={() =>
-              Linking.openURL(
-                'https://awana.digital/category/technical-updates',
-              )
-            }
-          />
-        </View>
-      ) : null}
+      <View style={styles.bottomButton}>
+        <SecondaryButton
+          fullSize
+          text={t(m.seeUpdates)}
+          onPress={() =>
+            Linking.openURL('https://awana.digital/category/technical-updates')
+          }
+        />
+      </View>
     </ScrollView>
   );
 };

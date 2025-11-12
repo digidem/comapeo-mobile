@@ -9,7 +9,7 @@ describe('Menu - basic functionality of the menu', () => {
     await header.click();
 
     const gatherObservations = await $(byText('Gather Observations'));
-    const backgroundMaps = await $(byText('Background Maps'));
+    const backgroundMaps = await $(byText('Background Map'));
     const coMapeoSettings = await $(byText('CoMapeo Settings'));
 
     await expect(gatherObservations).toBeDisplayed();
@@ -20,7 +20,7 @@ describe('Menu - basic functionality of the menu', () => {
   it('Should close menu on back button', async () => {
     await driver.back();
     const gatherObservations = await $(byText('Gather Observations'));
-    const backgroundMaps = await $(byText('Background Maps'));
+    const backgroundMaps = await $(byText('Background Map'));
     const coMapeoSettings = await $(byText('CoMapeo Settings'));
 
     await expect(gatherObservations).not.toBeDisplayed();
@@ -33,7 +33,7 @@ describe('Menu - basic functionality of the menu', () => {
     const header = await $('~Open Menu');
     await header.click();
 
-    const backgroundMaps = await $(byText('Background Maps'));
+    const backgroundMaps = await $(byText('Background Map'));
     await backgroundMaps.click();
 
     await expect(await $(byText('Background Map'))).toBeDisplayed();
@@ -46,7 +46,7 @@ describe('Menu - basic functionality of the menu', () => {
     const coMapeoSettings = await $(byTextMatches('CoMapeo Settings'));
     await coMapeoSettings.click();
 
-    await expect(await $(byText('App Settings'))).toBeDisplayed();
+    await expect(await $(byText('CoMapeo Settings'))).toBeDisplayed();
     await expect(await $(byText('Device Name'))).toBeDisplayed();
     await expect(await $(byText('Language'))).toBeDisplayed();
 

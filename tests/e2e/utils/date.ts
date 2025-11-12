@@ -1,9 +1,18 @@
-export function getFormattedDate(timezone: string): string {
+export function getShortFormattedDate(timezone: string): string {
   return new Date().toLocaleDateString('en-US', {
     timeZone: timezone,
     year: 'numeric',
     month: 'short',
     day: '2-digit',
+  });
+}
+
+export function getLongFormattedDate(timezone: string): string {
+  return new Date().toLocaleDateString('en-US', {
+    timeZone: timezone,
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 }
 

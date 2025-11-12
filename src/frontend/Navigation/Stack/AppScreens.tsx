@@ -11,7 +11,6 @@ import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
 import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
 import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
 import {Security} from '../../screens/Security';
-import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {ObservationCategoryChooser} from '../../screens/PresetChooser/ObservationCategoryChooser.tsx';
 import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
@@ -126,9 +125,12 @@ import {Collaborate} from '../../screens/ProjectCreation/Collaborate.tsx';
 import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject.tsx';
 import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjectIntro.tsx';
 import {NameDefaultProjectIntro} from '../../screens/ProjectCreation/NameDefaultProjectIntro.tsx';
+import {
+  CollaboratorInfo,
+  createNavigationOptions as createCollaboratorInfoNavOptions,
+} from '../../screens/YourTeam/CollaboratorInfo.tsx';
 import {LeaveProject} from '../../screens/YourTeam/LeaveProject.tsx';
 import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
-import {CollaboratorInfo} from '../../screens/YourTeam/CollaboratorInfo.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -147,14 +149,6 @@ export const createAppScreens = ({
         name="Home"
         options={{headerShown: false}}
         component={HomeTabs}
-      />
-      <RootStack.Screen
-        name="AuthScreen"
-        component={AuthScreen}
-        options={{
-          headerShown: false,
-          animation: 'fade',
-        }}
       />
       <RootStack.Screen
         name="ObservationEdit"
@@ -521,7 +515,7 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="CollaboratorInfo"
         component={CollaboratorInfo}
-        options={{headerTitle: intl(CollaboratorInfo.navTitle)}}
+        options={createCollaboratorInfoNavOptions({intl})}
       />
     </RootStack.Group>
     <RootStack.Group

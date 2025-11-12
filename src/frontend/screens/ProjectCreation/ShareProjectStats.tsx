@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, BackHandler} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
@@ -14,7 +14,7 @@ import {Loading} from '../../sharedComponents/Loading';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {useFocusEffect} from '@react-navigation/native';
+import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 
 const m = defineMessages({
   shareProjectStats: {
@@ -54,17 +54,7 @@ export const ShareProjectStats = ({
   const {projectId} = useActiveProject();
   const updateSettings = useUpdateProjectSettings({projectId});
 
-  // disables back button
-  useFocusEffect(
-    React.useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        () => true,
-      );
-
-      return () => subscription.remove();
-    }, []),
-  );
+  usePreventAndroidBackButton();
 
   const goToSuccess = React.useCallback(
     (statsShared: boolean) => {

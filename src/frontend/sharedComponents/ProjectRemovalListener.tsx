@@ -1,25 +1,24 @@
 import * as React from 'react';
-import {CommonActions, NavigationHelpers} from '@react-navigation/native';
+import {CommonActions, useNavigationState} from '@react-navigation/native';
 import {
   useOwnRoleInProject,
   useProjectOwnRoleChangeListener,
 } from '@comapeo/core-react';
 import type {RoleChangeEvent} from '@comapeo/core/dist/mapeo-project';
 import {BLOCKED_ROLE_ID} from '../sharedTypes';
-import {AppStackParamsList} from '../sharedTypes/navigation';
+import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
 
-export const ProjectRemovalListener = ({
-  activeProjectId,
-  currentRouteName,
-  navigation,
-}: {
-  activeProjectId: string;
-  currentRouteName: string | undefined;
-  navigation: NavigationHelpers<AppStackParamsList>;
-}) => {
+export const ProjectRemovalListener = () => {
+  const {projectId} = useActiveProject();
   const {
     data: {roleId},
-  } = useOwnRoleInProject({projectId: activeProjectId});
+  } = useOwnRoleInProject({projectId});
+
+  const navigation = useNavigationFromHomeTabs();
+  const routes = useNavigationState(val => val.routes);
+  const index = useNavigationState(val => val.index);
+  const currentRouteName = routes[index]?.name;
 
   const dispatchToRemovedProjectBottomSheet = React.useCallback(() => {
     navigation.dispatch(
@@ -29,12 +28,12 @@ export const ProjectRemovalListener = ({
           {name: 'Home'},
           {
             name: 'RemovedFromProjectBottomSheet',
-            params: {projectId: activeProjectId},
+            params: {projectId},
           },
         ],
       }),
     );
-  }, [activeProjectId, navigation]);
+  }, [projectId, navigation]);
 
   //checks on first open of project that the user has not been blocked
   React.useEffect(() => {
@@ -47,7 +46,7 @@ export const ProjectRemovalListener = ({
   }, [roleId, dispatchToRemovedProjectBottomSheet, currentRouteName]);
 
   useProjectOwnRoleChangeListener({
-    projectId: activeProjectId,
+    projectId,
     listener: React.useCallback(
       (event: RoleChangeEvent) => {
         if (event.role.roleId === BLOCKED_ROLE_ID) {

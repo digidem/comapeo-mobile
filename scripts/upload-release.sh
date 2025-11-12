@@ -7,7 +7,7 @@ if [ "$EAS_BUILD_PROFILE" = "production" ]; then
 elif [ "$EAS_BUILD_PROFILE" = "release-candidate" ]; then
   BUILD_PROFILE='rc'
 elif [ "$EAS_BUILD_PROFILE" = "pre-release" ]; then
-  BUILD_PROFILE='test'
+  BUILD_PROFILE='pre'
 else
   exit 0
 fi

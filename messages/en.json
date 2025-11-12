@@ -1005,11 +1005,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Project statistics are being shared"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Go To Map"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Go To Sync"
+  "screens.InviteSuccess.done": {
+    "message": "Done"
   },
   "screens.InviteSuccess.success": {
     "message": "Success"

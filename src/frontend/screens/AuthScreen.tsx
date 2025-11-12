@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -13,7 +12,6 @@ import {RED, BLACK} from '../lib/styles';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
-import {AppStackParamsList} from '../sharedTypes/navigation';
 import {usePasscodeLockout} from '../hooks/usePasscodeLockout';
 
 const m = defineMessages({
@@ -27,41 +25,14 @@ const m = defineMessages({
   },
 });
 
-export const AuthScreen = ({
-  navigation,
-}: NativeStackScreenProps<AppStackParamsList, 'AuthScreen'>) => {
+export const AuthScreen = () => {
   const {formatMessage: t} = useIntl();
   const [error, setError] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const {authenticate, authState} = useAuthContext();
+  const {authenticate} = useAuthContext();
   const [inputtedPass, setInputtedPass] = React.useState('');
   const scrollViewRef = React.useRef<ScrollView>(null);
   const {isLockedOut, message: lockoutMessage} = usePasscodeLockout();
-
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('beforeRemove', event => {
-      if (authState !== 'unauthenticated') return;
-      // Prevent back if unauthenticated
-      event.preventDefault();
-    });
-    return () => unsubscribe();
-  }, [authState, navigation]);
-
-  React.useEffect(() => {
-    if (authState === 'unauthenticated') return;
-
-    if (authState === 'authenticated') {
-      if (navigation.canGoBack()) {
-        navigation.goBack();
-      } else {
-        navigation.popTo('Home', {screen: 'Map'});
-      }
-    }
-
-    if (authState === 'obscured') {
-      navigation.popTo('Home', {screen: 'Map'});
-    }
-  }, [authState, navigation]);
 
   if (error) {
     if (inputtedPass.length === 5) setInputtedPass('');

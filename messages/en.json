@@ -1014,11 +1014,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Project statistics are being shared"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Go To Map"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Go To Sync"
+  "screens.InviteSuccess.done": {
+    "message": "Done"
   },
   "screens.InviteSuccess.success": {
     "message": "Success"
@@ -1746,14 +1743,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Invite Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Done"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Accepted!"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is now part of your project."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "View Team"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Review Invitation"

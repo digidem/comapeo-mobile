@@ -304,6 +304,15 @@
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Gerätename"
   },
+  "Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Frühzeitiger Zugriffsmodus"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.off": {
+    "message": "Frühzeitiger Zugriff ist AUS"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.on": {
+    "message": "Früherer Zugriff ist AN"
+  },
   "Screens.Settings.AppSettings.language": {
     "message": "Sprache"
   },

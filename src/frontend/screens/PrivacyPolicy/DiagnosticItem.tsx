@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {styles} from './styles';
 import {NEW_DARK_GREY} from '../../lib/styles';
 

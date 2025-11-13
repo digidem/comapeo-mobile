@@ -14,7 +14,8 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
 import {NEW_DARK_GREY} from '../lib/styles';
 
-import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsPromptContext';
+import {useAppUsageStatsActions} from '../contexts/AppUsageStatsContext';
+import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 const m = defineMessages({
   screenTitle: {
     id: 'screens.AppUsagePrompt.screenTitle',
@@ -47,9 +48,11 @@ const m = defineMessages({
   },
 });
 
-export const AppUsagePromptInterstitial = () => {
+export const AppUsagePromptInterstitial = ({
+  navigation,
+}: NativeRootNavigationProps<'AppUsagePromptInterstitial'>) => {
   const {formatMessage: t} = useIntl();
-  const {setOptedIn} = useAppUsageStatsPromptActions();
+  const {setOptedIn} = useAppUsageStatsActions();
 
   return (
     <ScreenContentWithDock
@@ -60,14 +63,15 @@ export const AppUsagePromptInterstitial = () => {
             text={t(m.notNow)}
             onPress={() => {
               setOptedIn(false);
+              navigation.pop();
             }}
           />
           <PrimaryButton
             fullSize
             text={t(m.countIn)}
             onPress={() => {
-              // will navigate to success screen eventually
-              console.log('will navigate to success screen');
+              setOptedIn(true);
+              navigation.replace('AppUsageSharingSuccess');
             }}
           />
         </View>

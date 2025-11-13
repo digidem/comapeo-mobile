@@ -19,7 +19,9 @@ const config = {
     path.resolve(__dirname, 'tests/e2e/specs/onboarding/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/settings/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/solo-project/index.tsx'),
+    path.resolve(__dirname, 'tests/e2e/specs/team/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/tracks/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/menu/index.test.ts'),
     //temporarily removing as remote archive seems to be down
     //path.resolve(__dirname, 'tests/e2e/specs/remote-archive/index.test.ts'),
     // path.resolve(__dirname, 'tests/e2e/specs/photos/index.test.ts'),
@@ -48,6 +50,7 @@ const config = {
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,
+      'appium:newCommandTimeout': 150,
       'bstack:options': {
         projectName: 'CoMapeo',
         buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,

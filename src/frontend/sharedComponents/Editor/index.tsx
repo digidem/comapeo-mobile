@@ -92,9 +92,7 @@ export const Editor = ({
             paddingHorizontal: 20,
           }}>
           <HeaderText variant="header6">
-            {projectDetails.role === 'solo'
-              ? projectDetails.projectHeader
-              : projectDetails.projectName}
+            {projectDetails.projectHeader}
           </HeaderText>
         </View>
         <PresetView {...presetProps} />
@@ -143,11 +141,7 @@ export const Editor = ({
                   );
                 }
                 // observationId must exist if there is a saved photo
-                if (isSavedPhoto(att)) {
-                  if (!observationId)
-                    throw new Error(
-                      'Observation ID is required for saved photos',
-                    );
+                if (isSavedPhoto(att) && observationId) {
                   return (
                     <React.Suspense
                       key={att.driveDiscoveryId + att.hash + att.type}

@@ -24,14 +24,14 @@ import {
 import {CoreBlobImage} from '../../sharedComponents/Images/CoreBlobImage.tsx';
 import {ImageErrorPlaceholder} from '../../sharedComponents/Images/ImageErrorPlaceholder.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {sharedStyles} from './sharedStyles.ts';
 import {useGetCreatedBy} from '../../hooks/server/useGetCreatedBy.ts';
 import {useSingleDocByDocId} from '@comapeo/core-react';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag.ts';
 import {Accordian} from '../../sharedComponents/Accordian.tsx';
-import Octicons from 'react-native-vector-icons/Octicons';
+import Octicons from '@react-native-vector-icons/octicons';
 
 const m = defineMessages({
   validatedByCoMapeo: {

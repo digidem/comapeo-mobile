@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {FrontendRole} from '../hooks/useProjectRoleAndDetails';
 import {HeaderText} from './Text/HeaderText';
 import {BodyText} from './Text/BodyText';

@@ -40,6 +40,9 @@ import {
 import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
 import {isLowStorage} from '../../lib/storage';
 import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
+import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
+import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
+import {useTrackState} from '../../contexts/TrackStoreContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -74,6 +77,7 @@ export const MapScreen = ({
   );
   const coords = location && getCoords(location);
   const [following, setFollowing] = React.useState(true);
+  const appUsageStore = useAppUsageStatsStore();
 
   const {data: styleUrl} = useMapStyleJsonUrl();
 
@@ -90,11 +94,15 @@ export const MapScreen = ({
   const BANNER_TOP = insets.top + 75;
 
   useCheckDraftObservationAndNavigate({authState});
+  useCheckUnsavedTrackAndNavigate({authState});
 
-  const handleAddPress = () => {
-    newDraft();
-    navigate('ObservationCategoryChooser');
-  };
+  useShouldShowAppUsagePrompt();
+
+  // if the user is on the map screen onboarding is not completed, record that they have completed it (this is because the app usage stats was added after the user already onboarded)
+  //using the store as this value does not need to be reactive
+  if (!appUsageStore.instance.getState().completedOnboardingAt) {
+    appUsageStore.actions.recordCompleteOnboarding();
+  }
 
   // This closes the track bottom sheet whenever the user is navigated away.
   // This prevents the closing animation from happening when the map screen is being reopened
@@ -105,6 +113,11 @@ export const MapScreen = ({
       };
     }, [navigation]),
   );
+
+  const handleAddPress = () => {
+    newDraft();
+    navigate('ObservationCategoryChooser');
+  };
 
   function handleLocationPress() {
     setZoom(DEFAULT_ZOOM);
@@ -244,6 +257,31 @@ function useCheckDraftObservationAndNavigate({
         navigate('ObservationCreate');
       }
     }, [existingObservation, navigate, presets, authState]),
+  );
+}
+
+function useCheckUnsavedTrackAndNavigate({authState}: {authState: AuthState}) {
+  const {navigate} = useNavigationFromHomeTabs();
+  const hasUnsavedTrack = useTrackState(
+    state => !state.isTracking && state.locationHistory.length > 0,
+  );
+  const trackPreset = useTrackState(state => state.preset);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // if no unsaved track or auth is obscured, stay home
+      if (!hasUnsavedTrack || authState === 'obscured') {
+        return;
+      }
+
+      // if no preset chosen, navigate to category chooser
+      if (!trackPreset) {
+        navigate('TrackCategoryChooser', {trackAction: 'saveNew'});
+      } else {
+        // if preset chosen, navigate to save track screen
+        navigate('SaveTrack');
+      }
+    }, [hasUnsavedTrack, trackPreset, navigate, authState]),
   );
 }
 

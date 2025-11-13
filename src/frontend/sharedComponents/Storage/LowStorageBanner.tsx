@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {BodyText} from '../Text/BodyText';

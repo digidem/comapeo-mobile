@@ -1,8 +1,8 @@
 import React from 'react';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcon from '@react-native-vector-icons/material-design-icons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
+import FontAwesomeIcon from '@react-native-vector-icons/fontawesome';
+import AntDesignIcon from '@react-native-vector-icons/ant-design';
 
 import {Image} from 'react-native';
 

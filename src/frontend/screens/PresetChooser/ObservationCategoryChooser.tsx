@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {usePresetsQuery} from '../../hooks/server/presets';
+import {usePresetsSelection} from '@comapeo/core-react';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {CategoryGrid} from './CategoryGrid';
@@ -10,6 +10,8 @@ import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 import {Preset} from '@comapeo/schema';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
 
 const m = defineMessages({
   title: {
@@ -21,16 +23,22 @@ const m = defineMessages({
 export const ObservationCategoryChooser: NativeNavigationComponent<
   'ObservationCategoryChooser'
 > = ({navigation}) => {
-  const {data: presets} = usePresetsQuery();
+  const {projectId} = useActiveProject();
+  const languageTag = useAppLanguageTag();
+  const presets = usePresetsSelection({
+    projectId: projectId,
+    dataType: 'observation',
+    lang: languageTag,
+  });
   const {updatePreset, usePreset} = useDraftObservation();
   const observationId = usePersistedDraftObservation(
     state => state.observationId,
   );
   const currentPreset = usePreset();
 
-  const filteredPresets = Array.from(presets)
-    .filter(p => p.geometry.includes('point'))
-    .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+  const filteredPresets = Array.from(presets).filter(p =>
+    p.geometry.includes('point'),
+  );
 
   const handleSelect = (preset: Preset) => {
     updatePreset(preset);

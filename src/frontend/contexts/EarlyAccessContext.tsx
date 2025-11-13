@@ -5,7 +5,7 @@ import {
   persist as createPersistedState,
 } from 'zustand/middleware';
 import * as v from 'valibot';
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
 
 // NOTE: Do not change!
 export const STORAGE_KEY = 'EarlyAccessStore' as const;
@@ -31,7 +31,7 @@ export function createEarlyAccessStore({persist} = {persist: false}) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => MMKVStoreInitializer),
         version: 0,
       }),
     );

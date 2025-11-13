@@ -6,7 +6,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {List, ListItem, ListItemText} from '../../sharedComponents/List';
 import {MethodName, useDeviceInfo} from '../../hooks/useDeviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {BLUE_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
 import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
@@ -77,6 +77,10 @@ const m = defineMessages({
     id: 'screens.AboutSettings.earlyAccessBanner',
     defaultMessage: 'You are in Early Access Mode.',
   },
+  comapeoWebsiteLabel: {
+    id: 'screens.AboutSettings.comapeoWebsiteLabel',
+    defaultMessage: 'CoMapeo Website',
+  },
 });
 
 const DeviceInfoListItem = ({
@@ -144,7 +148,9 @@ export const AboutSettings = () => {
           label={t(m.phoneModel)}
           deviceInfoMethod="getModel"
         />
-        <ListItem disableGutters>
+        <ListItem
+          disableGutters
+          onPress={() => Linking.openURL('https://openmoji.org/')}>
           <ListItemText
             primary={t(m.emojiSource)}
             secondary="https://openmoji.org/"
@@ -156,20 +162,24 @@ export const AboutSettings = () => {
             secondary={t(m.releaseName)}
           />
         </ListItem>
-      </List>
-      {isEarly ? (
-        <View style={styles.bottomButton}>
-          <SecondaryButton
-            fullSize
-            text={t(m.seeUpdates)}
-            onPress={() =>
-              Linking.openURL(
-                'https://awana.digital/category/technical-updates',
-              )
-            }
+        <ListItem
+          disableGutters
+          onPress={() => Linking.openURL('https://comapeo.app')}>
+          <ListItemText
+            primary={t(m.comapeoWebsiteLabel)}
+            secondary="comapeo.app"
           />
-        </View>
-      ) : null}
+        </ListItem>
+      </List>
+      <View style={styles.bottomButton}>
+        <SecondaryButton
+          fullSize
+          text={t(m.seeUpdates)}
+          onPress={() =>
+            Linking.openURL('https://awana.digital/category/technical-updates')
+          }
+        />
+      </View>
     </ScrollView>
   );
 };

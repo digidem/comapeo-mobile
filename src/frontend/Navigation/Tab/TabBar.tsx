@@ -1,8 +1,9 @@
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import ObservationListIcon from '../../images/ObservationList.svg';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import NotebookPenIcon from '../../images/NotebookPen.svg';
+import TracksIcon from '../../images/Tracks.svg';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useTracking} from '../../hooks/useTracking';
@@ -30,7 +31,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
         accessibilityLabel="Go to observations list."
         style={styles.buttonStyle}
         onPress={() => navigation.navigate('ObservationsList')}>
-        <ObservationListIcon
+        <NotebookPenIcon
           color={
             currentTab?.name === 'ObservationsList' ? COMAPEO_BLUE : MEDIUM_GREY
           }
@@ -104,10 +105,9 @@ const TrackButtonContent = ({isSelected}: {isSelected: boolean}) => {
           </BodyText>
         </View>
       )}
-      <MaterialIcons
+      <TracksIcon
         color={isSelected ? COMAPEO_BLUE : MEDIUM_GREY}
-        size={BUTTON_SIZE}
-        name="nordic-walking"
+        height={BUTTON_SIZE}
       />
     </>
   );

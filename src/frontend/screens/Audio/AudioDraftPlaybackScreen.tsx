@@ -16,7 +16,7 @@ import PlayArrow from '../../images/PlayArrow.svg';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import {DateDistance} from '../../sharedComponents/DateDistance';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {audioStyles} from './shared';
 

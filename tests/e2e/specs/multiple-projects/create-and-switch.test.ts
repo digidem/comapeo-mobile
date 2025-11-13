@@ -6,10 +6,10 @@ import {output} from '../../utils/naming';
 describe('Multiple Projects - Create and Switch Between Projects', () => {
   it('should create a second project from the All Projects screen', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
+    await $(byText('Collaborate')).click();
 
-    await $(byText('Start new project')).click();
-    await $(byText('Start')).click();
+    await $(byText('Start New Project')).click();
+    await $(byText('Next')).click();
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.secondProject);
     await $(byResourceId('PROJECT.create-btn')).click();
@@ -27,24 +27,22 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
     await expect($(byText('Invite a Device'))).toBeDisplayed();
   });
 
-  it('should land in the new project and display it on the Map screen', async () => {
+  it('should display the project name in the side drawer', async () => {
     const doneBtn = await $(byTextMatches('Done'));
     await doneBtn.click();
-
-    const header = await $(byResourceId('HOME.header-title'));
-    await expect(header).toHaveText(output.names.secondProject);
-  });
-
-  it('should display the project name in the side drawer', async () => {
-    await expect($(byText(`${output.names.secondProject}`))).toBeDisplayed();
+    await expect(
+      $(byText(`${output.names.secondProject} - Coordinator`)),
+    ).toBeDisplayed();
     await expect($(byText('Coordinator'))).toBeDisplayed();
 
-    const switchButton = await $(byText('Switch Projects'));
+    const switchButton = await $(byText('Switch Project'));
     await expect(switchButton).toBeDisplayed();
+
+    await expect($(byTextMatches('Exchange'))).toBeDisplayed();
   });
 
   it('should switch back to the Solo project and update headers accordingly', async () => {
-    await $(byText('All Projects')).click();
+    await $(byText('Switch Project')).click();
     await $(byTextMatches(output.names.device)).click();
     await $(byResourceId('MAIN.map-screen')).click();
 

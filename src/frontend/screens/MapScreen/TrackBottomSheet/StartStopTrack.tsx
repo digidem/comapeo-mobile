@@ -48,6 +48,11 @@ export const StartStopTrack = () => {
     [presets],
   );
 
+  function handleStartTracking() {
+    startTracking();
+    navigation.setParams({trackingOpen: false});
+  }
+
   async function finishTracking() {
     const hasMovedEnough = distance > 0.001;
 
@@ -61,7 +66,7 @@ export const StartStopTrack = () => {
     if (trackPresets.length === 0) {
       navigation.navigate('SaveTrack');
     } else {
-      navigation.navigate('TrackCategoryChooser');
+      navigation.navigate('TrackCategoryChooser', {trackAction: 'saveNew'});
     }
   }
 
@@ -75,7 +80,7 @@ export const StartStopTrack = () => {
           <PrimaryButton
             fullSize={true}
             text={formatMessage(m.defaultButtonText)}
-            onPress={startTracking}
+            onPress={handleStartTracking}
             renderIcon={() => <StartTrackingIcon />}
           />
         </>

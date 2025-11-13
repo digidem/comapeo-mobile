@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import TopoBackground from '../../images/TopoLogo.svg';
 import CoMapeoTextAsSVG from '../../images/CoMapeoText.svg';
 import WorldMap from '../../images/WorldMap.svg';
@@ -89,7 +89,7 @@ export const IntroToCoMapeo = ({
           fullSize
           text={formatMessage(m.getStarted)}
           onPress={() => {
-            navigation.navigate('DataPrivacy');
+            navigation.replace('DataPrivacy');
           }}
           iconPosition="right"
           renderIcon={({color, size}) => (

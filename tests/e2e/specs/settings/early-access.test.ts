@@ -48,7 +48,9 @@ describe('Settings - Early Access Mode', () => {
     await expect(
       $(byTextMatches('You are in Early Access Mode')),
     ).toBeDisplayed();
-    const aboutComapeoOption = await $('~Go to about CoMapeo screen.');
+    const appSettingsOption = await $('~Go to app settings screen.');
+    await appSettingsOption.click();
+    const aboutComapeoOption = await $(byResourceId('aboutSettingsButton'));
     await aboutComapeoOption.click();
     await expect(
       $(byTextMatches('You are in Early Access Mode.')),
@@ -57,8 +59,6 @@ describe('Settings - Early Access Mode', () => {
     await seeUpdates.scrollIntoView();
     await expect(seeUpdates).toBeDisplayed();
     await backBtn.click();
-    const appSettingsOption = await $('~Go to app settings screen.');
-    await appSettingsOption.click();
     await $(byResourceId('earlyAccessFlag')).click();
   });
 

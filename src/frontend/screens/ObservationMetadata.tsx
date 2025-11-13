@@ -12,9 +12,9 @@ import {VERY_LIGHT_GREY, NEW_DARK_GREY, WHITE, BLUE_GREY} from '../lib/styles';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
-import Octicons from 'react-native-vector-icons/Octicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Octicons from '@react-native-vector-icons/octicons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
+import MaterialCommunityIcons from '@react-native-vector-icons/material-design-icons';
 import UnverifiedBadge from '../images/UnverifiedBadge.svg';
 import {useProjectSettings} from '@comapeo/core-react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
@@ -66,7 +66,7 @@ const m = defineMessages({
   },
   sentFrom: {
     id: 'screens.ObservationMetadataVerified.sentFrom',
-    defaultMessage: 'CoMapeo Data sent from',
+    defaultMessage: 'CoMapeo Metadata sent from',
   },
   fallbackPresetName: {
     id: 'screens.Observation.fallbackPresetName',
@@ -74,9 +74,9 @@ const m = defineMessages({
     description:
       'Fallback name used when category name cannot be determined for observation',
   },
-  coMapeoData: {
-    id: 'screens.ObservationMetadataVerified.coMapeoData',
-    defaultMessage: 'CoMapeo Data',
+  coMapeoMetadata: {
+    id: 'screens.ObservationMetadataVerified.coMapeoMetadata',
+    defaultMessage: 'CoMapeo Metadata',
   },
   date: {
     id: 'screens.ObservationMetadataVerified.date',
@@ -262,7 +262,7 @@ export const ObservationMetadata: NativeNavigationComponent<
       : `-${formatMessage(m.locationManuallyEntered)}-\n-${formatMessage(m.sentByComapeo)}-`;
 
     const projectName = !name
-      ? formatMessage(m.coMapeoData)
+      ? formatMessage(m.coMapeoMetadata)
       : formatMessage(m.sentFrom) + ' ' + name;
 
     const categoryName = preset

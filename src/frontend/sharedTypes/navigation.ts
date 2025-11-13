@@ -59,7 +59,6 @@ export type RootStackParamsList = {
   AboutSettings: undefined;
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
-  Experiments: undefined;
   DraftPhotoPreviewModal: {
     photo: ProcessedDraftPhoto;
   };
@@ -73,25 +72,20 @@ export type RootStackParamsList = {
     // but we will eventually support deleting saved photos as well.
     photo: ProcessedDraftPhoto;
   };
-  TrackCategoryChooser: undefined;
+  TrackCategoryChooser:
+    | {trackAction: 'saveNew'}
+    | {trackAction: 'editExisting'; trackId: string};
   ObservationCategoryChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
   ObservationEdit: {observationId: string};
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
-  AddToProjectScreen: undefined;
-  UnableToLinkScreen: undefined;
-  ConnectingToDeviceScreen: {task: () => Promise<void>};
-  ConfirmLeavePracticeModeScreen: {projectAction: 'join' | 'create'};
   CreateProject: undefined;
   NameSoloProject: undefined;
   Security: undefined;
-  DirectionalArrow: undefined;
-  P2pUpgrade: undefined;
   ObservationFields: {question: number};
   ObservationCreate: undefined;
-  BGMapsSettings: undefined;
   AuthScreen: undefined;
   AppPasscode: undefined;
   ObscurePasscode: undefined;
@@ -101,34 +95,34 @@ export type RootStackParamsList = {
   EnterPassToTurnOff: undefined;
   AppSettings: undefined;
   ProjectSettings: undefined;
-  CreateOrJoinProject: undefined;
+  Collaborate: undefined;
+  JoinAProject: undefined;
+  StartNewProjectIntro: undefined;
+  NameDefaultProjectIntro: undefined;
   ProjectCreated: {
     name: string;
     statsShared: boolean;
   };
-  JoinExistingProject: undefined;
   YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;
   InviteAccepted: {name: string};
   InviteDeclined: InviteProps;
+  RemoveDevice: {deviceId: string; deviceName: string};
+  DeviceRemovedSuccess: {deviceName: string; projectName: string};
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
   Sync: undefined;
   Track: {trackId: string};
-  TrackEdit: {trackId: string};
+  TrackEdit: {trackId: string; newPresetId?: string};
   CreateTestData: undefined;
-  MediaSyncSettings: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
-  MapManagement: undefined;
   BackgroundMaps: undefined;
-  SyncPreviewsBottomSheet: undefined;
-  SyncEverythingBottomSheet: undefined;
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;
@@ -173,6 +167,14 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
+  LeaveProject: undefined;
+  LeftProjectConfirmation: undefined;
+  CollaboratorInfo: {
+    deviceId: string;
+    isOwnDevice: boolean;
+    deviceType: DeviceType;
+  };
+  ConfirmTrackDiscardBottomSheet: {trackId: string};
 };
 
 export type OnboardingParamsList = {

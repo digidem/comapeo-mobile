@@ -10,11 +10,11 @@ const UNIQUE_DESCRIPTION = 'Airstrip test obs for second project';
 describe('Multiple Projects - Project Data Retention', () => {
   it('should create an observation in the second project', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
-    await $(byText(output.names.secondProject)).click();
+    await driver.pause(1000);
+    await $(byText('Switch Project')).click();
+    await $(byText(`${output.names.secondProject} - Coordinator`)).click();
     await $(byResourceId('MAIN.map-screen')).click();
 
-    await $('~Go to map.').click();
     await $('~Add Observation').click();
     await $(byTextMatches('Airstrip')).click();
     const descriptionInput = await $(byResourceId('OBS.description-inp'));
@@ -39,9 +39,10 @@ describe('Multiple Projects - Project Data Retention', () => {
 
   it('should create a third project and not carry over the observation', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
-    await $(byText('Start new project')).click();
-    await $(byText('Start')).click();
+    await $(byText('Switch Project')).click();
+    await $(byText('New Collaboration')).click();
+    await $(byText('Start New Project')).click();
+    await $(byText('Next')).click();
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.thirdProject);
@@ -58,18 +59,25 @@ describe('Multiple Projects - Project Data Retention', () => {
     );
     const doneBtn = await $(byText('Done'));
     await doneBtn.click();
+    await driver.back();
+    await $('~Go to observations list.').click();
     await $(byResourceId('observationsEmptyView')).click();
 
     const header = await $(byResourceId('HOME.header-title'));
-    await expect(header).toHaveText(output.names.thirdProject);
+    await expect(header).toHaveText(
+      `${output.names.thirdProject} - Coordinator`,
+    );
     checkForElementGone(byText('Airstrip'));
   });
 
   it('should confirm the observation still exists in the second project', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
-    await $(byTextMatches(output.names.secondProject)).click();
-    await $(byResourceId('OBS.list-scrn')).click();
+    await $(byText('Switch Project')).click();
+    await $(
+      byTextMatches(`${output.names.secondProject} - Coordinator`),
+    ).click();
+    await driver.back();
+    await $('~Go to observations list.').click();
 
     const airstrip = await $(byText('Airstrip'));
     await expect(airstrip).toBeDisplayed();

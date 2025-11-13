@@ -5,7 +5,7 @@ import {
   persist as createPersistedState,
 } from 'zustand/middleware';
 
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
 import {useClientApi} from '@comapeo/core-react';
 import {Loading} from '../sharedComponents/Loading';
 
@@ -30,7 +30,7 @@ export function createActiveProjectIdStore({persist} = {persist: false}) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => MMKVStoreInitializer),
         version: 0,
       }),
     );

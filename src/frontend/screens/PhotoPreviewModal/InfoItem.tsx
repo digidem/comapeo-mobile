@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react';
 import {View} from 'react-native';
-import Octicons from 'react-native-vector-icons/Octicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Octicons from '@react-native-vector-icons/octicons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 import {NEW_DARK_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';

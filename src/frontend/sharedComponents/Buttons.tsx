@@ -14,43 +14,14 @@ type ButtonProps = {
   style?: ViewStyleProp;
 };
 
-export const PrimaryButton = ({
-  onPress,
-  renderIcon,
-  iconPosition = 'left',
-  text,
-  fullSize,
-  testID,
-  style,
-}: ButtonProps) => {
-  return (
-    <TouchableOpacity
-      testID={testID}
-      style={[
-        style,
-        buttonStyles.base,
-        {backgroundColor: COMAPEO_BLUE},
-        fullSize && {width: 280},
-      ]}
-      onPress={onPress}>
-      {renderIcon && iconPosition === 'left' && (
-        <View style={buttonStyles.iconSpacingLeft}>
-          {renderIcon({color: WHITE, size: 25})}
-        </View>
-      )}
-      <HeaderText variant="header5" style={{color: WHITE}}>
-        {text}
-      </HeaderText>
-      {renderIcon && iconPosition === 'right' && (
-        <View style={buttonStyles.iconSpacingRight}>
-          {renderIcon({color: WHITE, size: 25})}
-        </View>
-      )}
-    </TouchableOpacity>
-  );
+type ButtonColors = {
+  background: string;
+  text: string;
+  icon: string;
+  border: string;
 };
 
-export const SecondaryButton = ({
+const BaseButton = ({
   onPress,
   renderIcon,
   iconPosition = 'left',
@@ -58,7 +29,8 @@ export const SecondaryButton = ({
   fullSize,
   testID,
   style,
-}: ButtonProps) => {
+  colors,
+}: ButtonProps & {colors: ButtonColors}) => {
   return (
     <TouchableOpacity
       testID={testID}
@@ -66,69 +38,89 @@ export const SecondaryButton = ({
         style,
         buttonStyles.base,
         {
-          backgroundColor: WHITE,
+          backgroundColor: colors.background,
           borderWidth: 1.5,
-          borderColor: BLUE_GREY,
+          borderColor: colors.border,
         },
         fullSize && {width: 280},
       ]}
       onPress={onPress}>
       {renderIcon && iconPosition === 'left' && (
         <View style={buttonStyles.iconSpacingLeft}>
-          {renderIcon({color: COMAPEO_BLUE, size: 25})}
+          {renderIcon({color: colors.icon, size: 25})}
         </View>
       )}
-      <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
+      <HeaderText variant="header5" style={{color: colors.text}}>
         {text}
       </HeaderText>
       {renderIcon && iconPosition === 'right' && (
         <View style={buttonStyles.iconSpacingRight}>
-          {renderIcon({color: COMAPEO_BLUE, size: 25})}
+          {renderIcon({color: colors.icon, size: 25})}
         </View>
       )}
     </TouchableOpacity>
   );
 };
 
-export const DestructiveButton = ({
-  onPress,
-  renderIcon,
-  iconPosition = 'left',
-  text,
-  fullSize,
-  testID,
-  style,
-}: ButtonProps) => {
+export const PrimaryButton = (props: ButtonProps) => {
   return (
-    <TouchableOpacity
-      testID={testID}
-      style={[
-        style,
-        buttonStyles.base,
-        {backgroundColor: WARNING_RED},
-        fullSize && {width: 280},
-      ]}
-      onPress={onPress}>
-      {renderIcon && iconPosition === 'left' && (
-        <View style={buttonStyles.iconSpacingLeft}>
-          {renderIcon({color: WHITE, size: 25})}
-        </View>
-      )}
-      <HeaderText variant="header5" style={{color: WHITE}}>
-        {text}
-      </HeaderText>
-      {renderIcon && iconPosition === 'right' && (
-        <View style={buttonStyles.iconSpacingRight}>
-          {renderIcon({color: WHITE, size: 25})}
-        </View>
-      )}
-    </TouchableOpacity>
+    <BaseButton
+      {...props}
+      colors={{
+        background: COMAPEO_BLUE,
+        text: WHITE,
+        icon: WHITE,
+        border: COMAPEO_BLUE,
+      }}
+    />
+  );
+};
+
+export const SecondaryButton = (props: ButtonProps) => {
+  return (
+    <BaseButton
+      {...props}
+      colors={{
+        background: WHITE,
+        text: COMAPEO_BLUE,
+        icon: COMAPEO_BLUE,
+        border: BLUE_GREY,
+      }}
+    />
+  );
+};
+
+export const DestructiveButton = (props: ButtonProps) => {
+  return (
+    <BaseButton
+      {...props}
+      colors={{
+        background: WARNING_RED,
+        text: WHITE,
+        icon: WHITE,
+        border: WARNING_RED,
+      }}
+    />
+  );
+};
+
+export const SecondaryDestructiveButton = (props: ButtonProps) => {
+  return (
+    <BaseButton
+      {...props}
+      colors={{
+        background: WHITE,
+        text: WARNING_RED,
+        icon: WARNING_RED,
+        border: BLUE_GREY,
+      }}
+    />
   );
 };
 
 export const buttonStyles = StyleSheet.create({
   base: {
-    height: 50,
+    minHeight: 50,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

@@ -10,9 +10,8 @@ import {
   StyleSheet as RNStyleSheet,
 } from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import {deviceType} from 'expo-device';
-
 import DeviceIcon from '../../images/Device.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -80,7 +79,7 @@ export const DeviceNaming = ({
       },
       {
         onSuccess: () => {
-          navigation.navigate('Success');
+          navigation.replace('Success');
         },
       },
     );
@@ -124,13 +123,13 @@ export const DeviceNaming = ({
           </View>
           <View style={styles.buttonContainer}>
             {status === 'pending' ? (
-              <UIActivityIndicator />
+              <UIActivityIndicator size={30} style={{flex: 0}} />
             ) : (
               <PrimaryButton
                 testID="ONBOARDING.add-name-btn"
                 fullSize
                 onPress={handleSavePress}
-                text={status === 'success' ? '' : t(m.save)}
+                text={t(m.save)}
                 iconPosition="right"
                 renderIcon={({color, size}) => (
                   <Ionicons

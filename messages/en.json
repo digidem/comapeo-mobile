@@ -64,8 +64,8 @@
   "Navigation.Menu.Settings": {
     "message": "CoMapeo Settings"
   },
-  "Navigation.Menu.bgMaps": {
-    "message": "Background Maps"
+  "Navigation.Menu.bgMap": {
+    "message": "Background Map"
   },
   "Navigation.Menu.collaborate": {
     "message": "Collaborate"
@@ -244,20 +244,11 @@
   "Screens.ProjectSettings.configTitle": {
     "message": "Project Categories"
   },
-  "Screens.ProjectSettings.coordinator": {
-    "message": "This device is a coordinator on this project."
-  },
   "Screens.ProjectSettings.editInfo": {
     "message": "Edit Info"
   },
   "Screens.ProjectSettings.invite": {
     "message": "Invite Collaborators"
-  },
-  "Screens.ProjectSettings.participant": {
-    "message": "This device is a participant on this project."
-  },
-  "Screens.ProjectSettings.projectCollaborators": {
-    "message": "Project Collaborators"
   },
   "Screens.ProjectSettings.projectStatsOff": {
     "message": "Project Statistics | OFF"
@@ -284,7 +275,7 @@
     "message": "You’re mapping on your own."
   },
   "Screens.ProjectSettings.title": {
-    "message": "Project Settings"
+    "message": "Coordinator Tools"
   },
   "Screens.ProjectSettings.update": {
     "message": "Update"
@@ -297,9 +288,6 @@
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "View Details"
-  },
-  "Screens.ProjectSettings.viewTeam": {
-    "message": "View Team"
   },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Security"
@@ -331,14 +319,11 @@
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"
   },
-  "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Background Map"
-  },
   "Screens.Settings.AppSettings.privacyPolicy": {
     "message": "Data & Privacy"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App Settings"
+    "message": "CoMapeo Settings"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
@@ -1801,7 +1786,7 @@
     "message": "Devices no longer contributing to this project."
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "Your Team"
+    "message": "Team"
   },
   "screens.Settings.Collaborate.inviteDevices": {
     "message": "Invite Devices"

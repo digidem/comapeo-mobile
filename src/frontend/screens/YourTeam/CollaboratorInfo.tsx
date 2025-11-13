@@ -1,8 +1,12 @@
-import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
+import {
+  NativeNavigationComponent,
+  NativeRootNavigationProps,
+} from '../../sharedTypes/navigation';
 import {StyleSheet, View} from 'react-native';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
 import {useOwnRoleInProject, useSingleMember} from '@comapeo/core-react';
+import type {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -12,7 +16,6 @@ import {SecondaryDestructiveButton} from '../../sharedComponents/Buttons';
 
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import {useLayoutEffect} from 'react';
 import {isActiveArchiveServerMember} from '../../hooks/server/projects';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
@@ -47,6 +50,22 @@ const m = defineMessages({
   },
 });
 
+export function createNavigationOptions({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}) {
+  return ({
+    route,
+  }: NativeRootNavigationProps<'CollaboratorInfo'>): NativeStackNavigationOptions => {
+    return {
+      headerTitle: route.params.isOwnDevice
+        ? intl(m.thisDevice)
+        : intl(m.navTitle),
+    };
+  };
+}
+
 export const CollaboratorInfo: NativeNavigationComponent<
   'CollaboratorInfo'
 > = ({route, navigation}) => {
@@ -62,12 +81,6 @@ export const CollaboratorInfo: NativeNavigationComponent<
 
   const {data: ownRole} = useOwnRoleInProject({projectId});
 
-  useLayoutEffect(() => {
-    if (isOwnDevice) {
-      navigation.setOptions({title: formatMessage(m.thisDevice)});
-    }
-  }, [navigation, isOwnDevice, formatMessage]);
-
   const isCoordinator =
     role.roleId === COORDINATOR_ROLE_ID || role.roleId === CREATOR_ROLE_ID;
 
@@ -75,10 +88,14 @@ export const CollaboratorInfo: NativeNavigationComponent<
     ownRole.roleId === COORDINATOR_ROLE_ID ||
     ownRole.roleId === CREATOR_ROLE_ID;
 
+  const deviceType = route.params.deviceType;
+  const isDesktop = deviceType === 'desktop';
+  const canShowActionButton = !isCoordinator && !isArchiveServer && !isDesktop;
+
   return (
     <View style={styles.container}>
       <View style={styles.innerBox}>
-        <DeviceIcon deviceType={route.params.deviceType} size={80} />
+        <DeviceIcon deviceType={deviceType} size={80} />
         {name && (
           <HeaderText variant="header2" style={{textAlign: 'center'}}>
             {name}
@@ -109,8 +126,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
           })}
         </BodyText>
       </View>
-      {!isCoordinator &&
-        !isArchiveServer &&
+      {canShowActionButton &&
         (isOwnDevice ? (
           <SecondaryDestructiveButton
             text={formatMessage(m.leaveProject)}

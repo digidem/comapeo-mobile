@@ -59,7 +59,7 @@ export const ProjectCreated = ({
     navigation.popToTop();
   }
   function handleGoToInviteScreen() {
-    navigation.replace('SelectDevice');
+    navigation.navigate('SelectDevice');
   }
 
   return (

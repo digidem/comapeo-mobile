@@ -304,6 +304,15 @@
   "Screens.Settings.AppSettings.deviceName": {
     "message": "端末名"
   },
+  "Screens.Settings.AppSettings.earlyAccess": {
+    "message": "アーリーアクセスモード"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.off": {
+    "message": "アーリーアクセスはOFFです"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.on": {
+    "message": "アーリーアクセスはオンです"
+  },
   "Screens.Settings.AppSettings.language": {
     "message": "言語"
   },

@@ -88,10 +88,14 @@ export const CollaboratorInfo: NativeNavigationComponent<
     ownRole.roleId === COORDINATOR_ROLE_ID ||
     ownRole.roleId === CREATOR_ROLE_ID;
 
+  const deviceType = route.params.deviceType;
+  const isDesktop = deviceType === 'desktop';
+  const canShowActionButton = !isCoordinator && !isArchiveServer && !isDesktop;
+
   return (
     <View style={styles.container}>
       <View style={styles.innerBox}>
-        <DeviceIcon deviceType={route.params.deviceType} size={80} />
+        <DeviceIcon deviceType={deviceType} size={80} />
         {name && (
           <HeaderText variant="header2" style={{textAlign: 'center'}}>
             {name}
@@ -122,8 +126,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
           })}
         </BodyText>
       </View>
-      {!isCoordinator &&
-        !isArchiveServer &&
+      {canShowActionButton &&
         (isOwnDevice ? (
           <SecondaryDestructiveButton
             text={formatMessage(m.leaveProject)}

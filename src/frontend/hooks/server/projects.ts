@@ -9,7 +9,11 @@ import {
 import {useMutation, useQuery} from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {MEMBER_ROLE_ID} from '../../sharedTypes';
+import {
+  MEMBER_ROLE_ID,
+  COORDINATOR_ROLE_ID,
+  CREATOR_ROLE_ID,
+} from '../../sharedTypes';
 import {saveDocuments} from '@react-native-documents/picker';
 import {Exports} from '../../screens/ExportObservations';
 import * as FileSystem from 'expo-file-system';
@@ -171,3 +175,35 @@ export function useExportObservations({projectId}: {projectId: string}) {
 const normalizeFilePath = (uri: string) => {
   return uri.replace(/^file:\/\//, '');
 };
+
+const COORDINATOR_ROLES = new Set([COORDINATOR_ROLE_ID, CREATOR_ROLE_ID]);
+
+export function useIsLastCoordinator({deviceId}: {deviceId: string}) {
+  const {projectId} = useActiveProject();
+  const membersQuery = useManyMembers({projectId});
+
+  const coordinators = membersQuery.data.filter(member =>
+    COORDINATOR_ROLES.has(member.role.roleId),
+  );
+
+  return (
+    coordinators.length === 1 &&
+    coordinators.some(coordinator => coordinator.deviceId === deviceId)
+  );
+}
+
+export function useIsLastMember({deviceId}: {deviceId: string}) {
+  const {projectId} = useActiveProject();
+  const membersQuery = useManyMembers({projectId});
+
+  const membersOnProject = membersQuery.data.filter(
+    member =>
+      COORDINATOR_ROLES.has(member.role.roleId) ||
+      member.role.roleId === MEMBER_ROLE_ID,
+  );
+
+  return (
+    membersOnProject.length === 1 &&
+    membersOnProject.some(member => member.deviceId === deviceId)
+  );
+}

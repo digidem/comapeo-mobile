@@ -24,7 +24,6 @@ import SpeechBubbleIcon from '../../../images/SpeechBubble.svg';
 import {BLUE_GREY, NEW_DARK_GREY} from '../../../lib/styles';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
-import {useTracking} from '../../../hooks/useTracking';
 
 const m = defineMessages({
   title: {
@@ -90,8 +89,6 @@ export const CreateOrNameSoloProject = ({
     createProjectMutation.status === 'pending' ||
     updateSettingsMutation.status === 'pending';
 
-  const {isTracking} = useTracking();
-
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
     const unsubscribe = navigation.addListener('beforeRemove', event => {
@@ -143,10 +140,6 @@ export const CreateOrNameSoloProject = ({
         },
       );
     } else {
-      if (isTracking) {
-        navigation.navigate('TrackRecordingActive');
-        return;
-      }
       createProjectMutation.mutate(
         {name: projectName},
         {

@@ -17,7 +17,7 @@ const m = defineMessages({
   warningMessage: {
     id: 'screens.TrackRecordingActive.warningMessage',
     defaultMessage:
-      'You’re currently recording a track. To join project, stop recording',
+      'You’re currently recording a track. To join, switch, or start new project, stop recording.',
   },
   stopTracks: {
     id: 'screens.TrackRecordingActive.stopTracks',

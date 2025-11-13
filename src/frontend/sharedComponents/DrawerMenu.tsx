@@ -171,7 +171,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
           </ColorCard>
         </View>
 
-        {isEarly ? (
+        {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && isEarly ? (
           <View style={styles.label}>
             <MaterialIcon name="flag" size={20} />
             <BodyText>{formatMessage(m.earlyAccessLabel)}</BodyText>

@@ -74,3 +74,5 @@ export const projectColors: projectColor[] = [
   {color: '#FBE9E9', label: m.red},
   {color: '#E5E5EB', label: m.grey},
 ];
+
+export const DEFAULT_PROJECT_COLOR = '#FFF5EB';

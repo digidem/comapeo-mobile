@@ -1677,6 +1677,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Project Statistics | OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Close"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Reason: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "THIS DEVICE REMOVED FROM…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"

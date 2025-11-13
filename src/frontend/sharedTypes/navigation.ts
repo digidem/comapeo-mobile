@@ -142,6 +142,7 @@ export type RootStackParamsList = {
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};
   InviteCanceled: {projectName: string};
+  RemovedFromProjectBottomSheet: {projectId: string};
   ObservationMetadata: {observationId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};

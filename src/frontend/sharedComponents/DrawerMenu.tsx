@@ -170,7 +170,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
           </ColorCard>
         </View>
 
-        {isEarly ? (
+        {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && isEarly ? (
           <View style={styles.label}>
             <MaterialIcon name="flag" size={20} />
             <BodyText>{formatMessage(m.earlyAccessLabel)}</BodyText>
@@ -240,24 +240,30 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <PrimaryButton
-        testID="MENU.main-action-button"
-        style={{alignSelf: 'center', marginBottom: 20}}
-        onPress={() => {
-          if (role === 'solo') {
-            navigation.navigate('Collaborate');
-            return;
+      <View style={{marginBottom: 20, marginHorizontal: 20}}>
+        <PrimaryButton
+          testID="MENU.main-action-button"
+          style={{
+            alignSelf: 'center',
+            width: '100%',
+            maxWidth: 280,
+          }}
+          onPress={() => {
+            if (role === 'solo') {
+              navigation.navigate('Collaborate');
+              return;
+            }
+            navigation.navigate('Sync');
+          }}
+          fullSize={false}
+          text={formatMessage(role === 'solo' ? m.collaborate : m.exchange)}
+          renderIcon={
+            role === 'solo'
+              ? () => <CollaborateIcon color={WHITE} />
+              : () => <Exchange color={WHITE} />
           }
-          navigation.navigate('Sync');
-        }}
-        fullSize
-        text={formatMessage(role === 'solo' ? m.collaborate : m.exchange)}
-        renderIcon={
-          role === 'solo'
-            ? () => <CollaborateIcon color={WHITE} />
-            : () => <Exchange color={WHITE} />
-        }
-      />
+        />
+      </View>
     </View>
   );
 }

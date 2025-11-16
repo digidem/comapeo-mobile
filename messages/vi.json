@@ -1014,11 +1014,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Project statistics are being shared"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Đến Bản đồ"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Go To Sync"
+  "screens.InviteSuccess.done": {
+    "message": "Hoàn thành"
   },
   "screens.InviteSuccess.success": {
     "message": "Thành công"
@@ -1677,6 +1674,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Project Statistics | OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Reason: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "THIS DEVICE REMOVED FROM…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Có điều gì đang diễn ra ở đây?"
@@ -1737,14 +1743,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Hoàn thành"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is now part of your project."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "View Team"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Review Invitation"

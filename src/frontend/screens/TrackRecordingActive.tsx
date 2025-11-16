@@ -36,10 +36,9 @@ export const TrackRecordingActive = ({
   const distance = useTrackState(store => store.distance);
 
   function handleStopTracks() {
+    endTracking();
     const hasMovedEnough = distance > 0.001;
-
     if (hasMovedEnough) {
-      endTracking();
       navigation.replace('TrackCategoryChooser', {trackAction: 'saveNew'});
       return;
     } else {

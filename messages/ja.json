@@ -1014,11 +1014,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "プロジェクトの統計情報が共有されています"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "マップに移動"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "同期へ"
+  "screens.InviteSuccess.done": {
+    "message": "完了"
   },
   "screens.InviteSuccess.success": {
     "message": "成功"
@@ -1677,6 +1674,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "プロジェクト統計情報|OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "理由: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "THIS DEVICE REMOVED FROM…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "何がここで起こっているか?"
@@ -1737,14 +1743,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "完了"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> がプロジェクトの一部になりました。"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "チームを表示"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "招待状を確認"

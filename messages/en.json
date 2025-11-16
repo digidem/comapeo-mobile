@@ -2066,7 +2066,7 @@
     "message": "Stop Tracks"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "You’re currently recording a track. To join project, stop recording"
+    "message": "Tracks is recording. Stop Tracks to continue."
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

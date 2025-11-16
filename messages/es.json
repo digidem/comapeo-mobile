@@ -1014,11 +1014,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Se están compartiendo las estadísticas del proyecto"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Ir al mapa"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Ir a Sincronización"
+  "screens.InviteSuccess.done": {
+    "message": "Listo"
   },
   "screens.InviteSuccess.success": {
     "message": "Éxito"
@@ -1677,6 +1674,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Estadísticas del proyecto | OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Abrir ajustes"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Razón: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "ESTO DESCUENTO REMOVADO DE…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "¿Qué está pasando aquí?"
@@ -1737,14 +1743,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Añadir otro dispositivo"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Listo"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invitación aceptada"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> es ahora parte de tu proyecto."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Ver equipo"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Revisar invitación"

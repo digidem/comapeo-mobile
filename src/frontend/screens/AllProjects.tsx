@@ -94,6 +94,10 @@ export const AllProjects = () => {
       <PrimaryButton
         fullSize={true}
         onPress={() => {
+          if (isTracking) {
+            navigate('TrackRecordingActive');
+            return;
+          }
           navigate('Collaborate');
         }}
         style={{alignSelf: 'center', marginBottom: 10, marginTop: 20}}

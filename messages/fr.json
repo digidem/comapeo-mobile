@@ -1014,11 +1014,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Les statistiques du projet sont partagées"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Aller à la carte"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Aller à la synchronisation"
+  "screens.InviteSuccess.done": {
+    "message": "Terminé"
   },
   "screens.InviteSuccess.success": {
     "message": "Succès"
@@ -1677,6 +1674,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Statistiques du projet | OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Raison : {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "CET APPAREIL SUPPRIMER DE…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Que se passe-t-il ici?"
@@ -1737,14 +1743,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Terminé"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> fait maintenant partie de votre projet."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Voir l'équipe"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Revoir l'invitation"
@@ -2108,7 +2114,7 @@
     "message": "Arrêter les pistes"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Vous êtes actuellement en train d'enregistrer une piste. Pour rejoindre le projet, arrêtez l'enregistrement"
+    "message": "Les pistes sont en cours d'enregistrement. Arrêtez les pistes pour continuer."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Appareil supprimé."

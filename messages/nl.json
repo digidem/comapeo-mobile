@@ -2114,7 +2114,7 @@
     "message": "Stop tracks"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Je neemt momenteel een nummer op. Om deel te nemen aan het project stop je opname"
+    "message": "Nummers worden opgenomen. Stop tracks om door te gaan."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Apparaat verwijderd."

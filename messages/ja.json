@@ -2114,7 +2114,7 @@
     "message": "トラックを停止"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "現在トラックを録音しています。プロジェクトに参加するには、録音を停止してください。"
+    "message": "トラックが記録されています。トラックを停止して続行してください。"
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "デバイスを削除しました。"

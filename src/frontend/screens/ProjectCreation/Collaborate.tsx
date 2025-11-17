@@ -10,6 +10,7 @@ import JoinProjectIcon from '../../images/ProjectParticipant.svg';
 import StartNewIcon from '../../images/ProjectCoordinator.svg';
 import InviteDevices from '../../images/AddPerson.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {useTracking} from '../../hooks/useTracking';
 
 const m = defineMessages({
   title: {
@@ -37,6 +38,7 @@ export const Collaborate: NativeNavigationComponent<'Collaborate'> = ({
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
   const {role} = projectDetails;
+  const {isTracking} = useTracking();
 
   return (
     <View style={styles.content}>
@@ -62,7 +64,13 @@ export const Collaborate: NativeNavigationComponent<'Collaborate'> = ({
           />
         }
         text={t(m.startNewProject)}
-        onPress={() => navigation.navigate('StartNewProjectIntro')}
+        onPress={() => {
+          if (isTracking) {
+            navigation.navigate('TrackRecordingActive');
+            return;
+          }
+          navigation.navigate('StartNewProjectIntro');
+        }}
       />
       {role === 'solo' && (
         <OptionCard

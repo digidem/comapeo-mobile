@@ -4,11 +4,13 @@ import {
   useProjectSettings,
 } from '@comapeo/core-react';
 import {
+  BLOCKED_ROLE_ID,
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
+import {DEFAULT_PROJECT_COLOR} from '../constants';
 
 const m = defineMessages({
   coordinator: {
@@ -27,7 +29,12 @@ const m = defineMessages({
  * - 'participant': Backend role indicating the user contributes to the project.
  * - 'solo': Derived frontend-only role indicating the user is the sole owner/manager.
  */
-export type FrontendRole = 'coordinator' | 'participant' | 'solo';
+export type FrontendRole =
+  | 'coordinator'
+  | 'participant'
+  | 'solo'
+  | 'blocked'
+  | undefined;
 
 export type ProjectDetails = {
   role: FrontendRole;
@@ -45,35 +52,41 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
   } = useOwnDeviceInfo();
   const {data: roleData} = useOwnRoleInProject({projectId});
 
-  const soloProject: ProjectDetails = {
-    role: 'solo',
-    projectHeader: deviceName || '',
-    projectName: undefined,
-    projectColor: '#E5F0FF',
-  };
-
-  if (!projectData?.name || !roleData?.roleId) {
-    return soloProject;
+  if (!projectData?.name) {
+    return {
+      role: 'solo',
+      projectHeader: deviceName || '',
+      projectName: undefined,
+      projectColor: '#E5F0FF',
+    };
   }
-
   const {roleId} = roleData;
+
   if (roleId === COORDINATOR_ROLE_ID || roleId === CREATOR_ROLE_ID) {
     return {
       role: 'coordinator',
       projectHeader: `${projectData.name} - ${formatMessage(m.coordinator)}`,
       projectName: projectData.name,
-      projectColor: projectData.projectColor || '#FFF5EB',
-      projectDescription: projectData.projectDescription,
-    };
-  } else if (roleId === MEMBER_ROLE_ID) {
-    return {
-      role: 'participant',
-      projectHeader: `${projectData.name} - ${formatMessage(m.participant)}`,
-      projectName: projectData.name,
-      projectColor: projectData.projectColor || '#FFF5EB',
+      projectColor: projectData.projectColor || DEFAULT_PROJECT_COLOR,
       projectDescription: projectData.projectDescription,
     };
   }
 
-  return soloProject as ProjectDetails;
+  if (roleId === MEMBER_ROLE_ID) {
+    return {
+      role: 'participant',
+      projectHeader: `${projectData.name} - ${formatMessage(m.participant)}`,
+      projectName: projectData.name,
+      projectColor: projectData.projectColor || DEFAULT_PROJECT_COLOR,
+      projectDescription: projectData.projectDescription,
+    };
+  }
+
+  return {
+    role: roleId === BLOCKED_ROLE_ID ? 'blocked' : undefined,
+    projectHeader: projectData.name,
+    projectName: projectData.name,
+    projectColor: projectData.projectColor || DEFAULT_PROJECT_COLOR,
+    projectDescription: projectData.projectDescription,
+  };
 }

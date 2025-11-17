@@ -16,6 +16,11 @@
 - [Deleting Observations](#deleting-observations)
   - [Test Objectives](#test-objectives-5)
   - [Special Considerations](#special-considerations-5)
+- [Observation Navigation and App Restart](#observation-navigation-and-app-restart)
+  - [Test Objectives](#test-objectives-6)
+- [Exporting Observations](#exporting-observations)
+  - [Test Objectives](#test-objectives-7)
+  - [Special Considerations](#special-considerations-6)
 
 ### Overview
 
@@ -120,5 +125,37 @@ These tests deal with all issues related to Observations.
 
 ### Special Considerations
 
-- Assumes that an observation with the “Threat” preset exists and is editable by the current device
+- Assumes that an observation with the "Threat" preset exists and is editable by the current device
 - Does not currently verify that the deleted document is removed from storage or synced state, only that it no longer appears in the list
+
+## Observation Navigation and App Restart
+
+This test validates the app's navigation behavior and state retention when restarting during the observation creation flow.
+
+### Test Objectives
+
+- Verify app starts on Map screen when no observations exist
+- Confirm navigation to Preset Chooser when tapping Add Observation button
+- Verify app restores to Preset Chooser after restart when an observation is in progress but no preset selected
+- Confirm navigation to Observation Create screen when a preset is selected
+- Verify app retains Observation Create state after restart (observation draft is not lost)
+- Confirm discard flow returns user to Map screen
+
+## Exporting Observations
+
+This test validates the download/export functionality for observations, including validation and export options.
+
+### Test Objectives
+
+- Verify Download button does not appear when observations list is empty
+- Confirm Download Observations button appears when observations exist
+- Verify Export Observations bottom sheet displays both export options: "All Observations" and "All Observations with Media"
+- Confirm validation error appears when trying to download without selecting an option
+- Verify error disappears when an option is selected
+- Confirm download screen opens with "SAVE" option when Download is pressed
+- Verify Close button dismisses the bottom sheet
+
+### Special Considerations
+
+- Cannot fully test the actual file download or save functionality on BrowserStack
+- Test validates the UI flow and option selection but does not verify the exported file contents or format

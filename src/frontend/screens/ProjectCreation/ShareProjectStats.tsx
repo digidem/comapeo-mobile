@@ -14,6 +14,7 @@ import {Loading} from '../../sharedComponents/Loading';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 
 const m = defineMessages({
   shareProjectStats: {
@@ -52,6 +53,8 @@ export const ShareProjectStats = ({
 
   const {projectId} = useActiveProject();
   const updateSettings = useUpdateProjectSettings({projectId});
+
+  usePreventAndroidBackButton();
 
   const goToSuccess = React.useCallback(
     (statsShared: boolean) => {

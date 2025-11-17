@@ -10,7 +10,7 @@ const UPDATED_PROJECT_DESCRIPTION =
 
 describe('Multiple Projects - Edit Project Details', () => {
   it('should allow editing a named project’s name and description', async () => {
-    const thirdProject = await $(byText(output.names.thirdProject));
+    const thirdProject = await $(byTextMatches(output.names.thirdProject));
     await expect(thirdProject).toBeDisplayed();
     await thirdProject.click();
     await $(byTextMatches('Coordinator Tools')).click();

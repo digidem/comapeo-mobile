@@ -1,0 +1,22 @@
+diff --git a/node_modules/react-native-mmkv/MMKV/Core/MemoryFile.cpp b/node_modules/react-native-mmkv/MMKV/Core/MemoryFile.cpp
+index 42c7837..12175b0 100644
+--- a/node_modules/react-native-mmkv/MMKV/Core/MemoryFile.cpp
++++ b/node_modules/react-native-mmkv/MMKV/Core/MemoryFile.cpp
+@@ -342,7 +342,7 @@ bool zeroFillFile(int fd, size_t startPos, size_t size) {
+         return false;
+     }
+ 
+-    static const char zeros[4096] = {};
++    static const char zeros[16384] = {};
+     while (size >= sizeof(zeros)) {
+         if (write(fd, zeros, sizeof(zeros)) < 0) {
+             MMKVError("fail to write fd[%d], error:%s", fd, strerror(errno));
+@@ -369,7 +369,7 @@ bool getFileSize(int fd, size_t &size) {
+ }
+ 
+ size_t getPageSize() {
+-    return static_cast<size_t>(getpagesize());
++    return 16384;
+ }
+ 
+ #ifndef MMKV_APPLE

@@ -2114,7 +2114,7 @@
     "message": "Parar trilhas"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Você está gravando uma trilha agora. Para entrar em um projeto, pare a gravação"
+    "message": "Faixas estão gravando. Pare os trajetos para continuar."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Dispositivo removido."

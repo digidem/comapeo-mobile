@@ -49,3 +49,21 @@
 [closed #1471](https://github.com/digidem/comapeo-mobile/issues/1471): Create Secondary Destructive Button
 
 [closed #568](https://github.com/digidem/comapeo-mobile/issues/568): handle device type enum values from backend more thoroughly
+
+## Closed Issues Added to RC created on 2025-11-16 19:04:31 EST
+[closed #1276](https://github.com/digidem/comapeo-mobile/issues/1276): Change version naming to `${minor}.${patch}` to align with our own naming
+
+[closed #1519](https://github.com/digidem/comapeo-mobile/issues/1519): “Start new project” or “Invite Devices”/ Select Device - tap back goes back to creating a project
+
+[closed #1520](https://github.com/digidem/comapeo-mobile/issues/1520): Can create new project with active track
+
+[closed #1522](https://github.com/digidem/comapeo-mobile/issues/1522): Menu cleanup
+
+[closed #1530](https://github.com/digidem/comapeo-mobile/issues/1530): Exchange button too wide for 1080px screens
+
+[closed #1532](https://github.com/digidem/comapeo-mobile/issues/1532): Camera / shutter sound - Remove
+
+[closed #1540](https://github.com/digidem/comapeo-mobile/issues/1540): Project Invite / Update "success " flows
+
+[closed #1541](https://github.com/digidem/comapeo-mobile/issues/1541): App Passcode doesnt work when App went in bg mode
+

@@ -97,3 +97,37 @@ PR #1477: chore: file cleanup
 
 PR #1478: chore: adds secondary destructive button
 [closed #1471](https://github.com/digidem/comapeo-mobile/issues/1471)
+
+## Closed Prs cherry picked onto RC created on 2025-11-16 19:04:31 EST
+PR #1517: fix: use better-sqlite3 build with 16kb page-size support
+
+PR #1499: feat!: Update core: new comapeocat format & svg icons
+
+PR #1537: fix: removes shutter sound
+[closed #1532](https://github.com/digidem/comapeo-mobile/issues/1532)
+
+PR #1360: chore: Change app version name to major.minor
+[closed #1276](https://github.com/digidem/comapeo-mobile/issues/1276)
+
+PR #1542: fix: auth screen improperly navigating when authenticated
+[closed #1541](https://github.com/digidem/comapeo-mobile/issues/1541)
+
+PR #1538: fix: menu cleanup
+[closed #1522](https://github.com/digidem/comapeo-mobile/issues/1522)
+
+PR #1534: fix: new project invite back flow
+[closed #1519](https://github.com/digidem/comapeo-mobile/issues/1519)
+
+PR #1550: fix: button width drawer menu
+[closed #1530](https://github.com/digidem/comapeo-mobile/issues/1530)
+
+PR #1553: chore: change button text for accepted invites
+[closed #1540](https://github.com/digidem/comapeo-mobile/issues/1540)
+
+PR #1554: chore: update core dep
+
+PR #1535: fix: not create new project when track active
+[closed #1520](https://github.com/digidem/comapeo-mobile/issues/1520)
+
+PR #1558: chore: update ipc
+

@@ -5,9 +5,9 @@ import {
   createJSONStorage,
   PersistOptions,
 } from 'zustand/middleware';
-import {MMKV} from 'react-native-mmkv';
+import {createMMKV} from 'react-native-mmkv';
 
-export const storage = new MMKV();
+export const storage = createMMKV();
 
 type PersistedStoreKey = '@MapeoDraft';
 
@@ -20,7 +20,7 @@ export const MMKVStoreInitializer: StateStorage = {
     return value ?? null;
   },
   removeItem: name => {
-    return storage.delete(name);
+    return storage.remove(name);
   },
 };
 

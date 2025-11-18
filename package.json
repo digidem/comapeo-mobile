@@ -94,7 +94,7 @@
     "map-obj": "6.0.0",
     "nanoid": "5.1.6",
     "nodejs-mobile-react-native": "18.20.4",
-    "p-timeout": "6.1.4",
+    "p-timeout": "7.0.1",
     "posthog-react-native": "4.11.0",
     "promise": "8.3.0",
     "react": "19.0.0",

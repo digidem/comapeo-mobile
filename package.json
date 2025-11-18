@@ -91,7 +91,7 @@
     "geojson": "0.5.0",
     "geojson-geometries-lookup": "0.5.0",
     "lodash.isequal": "4.5.0",
-    "map-obj": "5.0.2",
+    "map-obj": "6.0.0",
     "nanoid": "5.1.6",
     "nodejs-mobile-react-native": "18.20.4",
     "p-timeout": "6.1.4",

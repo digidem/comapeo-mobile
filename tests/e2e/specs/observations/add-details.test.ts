@@ -91,5 +91,8 @@ describe('Observations - Add Details Flow', () => {
     );
     await culturalNameElem.scrollIntoView();
     await expect(culturalNameElem).toBeDisplayed();
+
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await driver.back();
   });
 });

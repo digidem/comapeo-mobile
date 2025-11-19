@@ -7,9 +7,9 @@ import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Observations - Edit Observation Flow', () => {
   it('should open editable observation and navigate to edit screen', async () => {
-    const lakeItem = await $(byTextMatches('Lake'));
-    await lakeItem.click();
-    await expect($(byTextMatches('Lake'))).toBeDisplayed();
+    const caveItem = await $(byTextMatches('Cave'));
+    await caveItem.click();
+    await expect($(byTextMatches('Cave'))).toBeDisplayed();
 
     const editBtn = await $(byResourceId('editButton'));
     await editBtn.click();
@@ -35,8 +35,8 @@ describe('Observations - Edit Observation Flow', () => {
 
     const detailInput = await $(byResourceId('OBS.details-inp'));
     await detailInput.setValue('New detail');
-    const doneBtn = await $(byTextMatches('Done'));
-    await doneBtn.click();
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
   });
 
   it('should save updated observation and return to view screen', async () => {
@@ -45,7 +45,7 @@ describe('Observations - Edit Observation Flow', () => {
     await driver.pause(1000);
     await handleGPSAlert();
 
-    await expect($(byTextMatches('Lake'))).toBeDisplayed();
+    await expect($(byTextMatches('Cave'))).toBeDisplayed();
     await expect($(byTextMatches('Updated description'))).toBeDisplayed();
     await expect($(byTextMatches('New detail'))).toBeDisplayed();
     await $(byResourceId('MAIN.header-back-btn')).click();

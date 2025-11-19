@@ -111,7 +111,7 @@ const KEEP_THESE = [
   // Static folders referenced by @comapeo/core code
   'node_modules/@comapeo/core/drizzle',
   // zip file that is the default config
-  'node_modules/@mapeo/default-config/dist/mapeo-default-config.comapeocat',
+  'node_modules/@comapeo/default-categories/dist/comapeo-default-categories.comapeocat',
   // Offline fallback map
   'node_modules/@comapeo/fallback-smp',
   // Bare's require.addon() needs the package.json present for native modules

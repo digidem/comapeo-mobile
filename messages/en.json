@@ -2114,7 +2114,7 @@
     "message": "Stop Tracks"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "You’re currently recording a track. To join project, stop recording"
+    "message": "Tracks is recording. Stop Tracks to continue."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Device removed."

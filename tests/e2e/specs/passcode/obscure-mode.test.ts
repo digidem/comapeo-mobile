@@ -9,6 +9,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
   it('should show an observations before going into obscure mode', async () => {
     await $('~Add Observation').click();
     const airstripCategory = await $(byTextMatches('Airstrip'));
+    await airstripCategory.scrollIntoView();
     await airstripCategory.click();
     await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));

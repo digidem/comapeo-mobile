@@ -5,7 +5,7 @@ fixes.
 
 ## nodejs-mobile-react-native
 
-### [Fix CopyNodeProjectAssets Gradle Step](./nodejs-mobile-react-native+18.20.4+001+fix-copy-node-project-assets-gradle-step.patch)
+### [Fix CopyNodeProjectAssets Gradle Step](./@comapeo+nodejs-mobile-react-native+18.20.4-0+001+fix-copy-node-project-assets-gradle-step.patch)
 
 When copying `comapeo-mobile/nodejs-assets/nodejs-project`
 into `comapeo-mobile/android/build/nodejs-assets/nodejs-project/`, it copies over the `prebuilds` we include for each
@@ -13,13 +13,13 @@ native module (found in `nodejs-project/node_modules/`). These are never deleted
 the APK includes these, which is not necessary because NMRN will use a target-specific directory that contains the
 native modules for their resolution e.g. `nodejs-native-assets/nodejs-native-assets/armeabi-v7a/node_modules/...`.
 
-### [Disable BuildNpmModules Gradle step](./nodejs-mobile-react-native+18.20.4+002+disable-build-npm-modules-gradle-step.patch)
+### [Disable BuildNpmModules Gradle step](./@comapeo+nodejs-mobile-react-native+18.20.4-0+002+disable-build-npm-modules-gradle-step.patch)
 
 This step assumes that there exists a `package.json` file and other files related to node-gyp in the native modules that
 we include, which isn't the case because we solely rely on using prebuilds. There's no need for `npm run build ...` to
 be called for our native modules, so this step can be skipped entirely.
 
-### [Fix DeleteIncorrectPrebuilds Gradle step](./nodejs-mobile-react-native+18.20.4+003+fix-delete-incorrect-prebuilds-gradle-step.patch)
+### [Fix DeleteIncorrectPrebuilds Gradle step](./@comapeo+nodejs-mobile-react-native+18.20.4-0+003+fix-delete-incorrect-prebuilds-gradle-step.patch)
 
 This step deletes all `.node` files found in the temp build directory and always runs after the `CopyNodeProjectAssets`
 step. However, the `DetectCorrectPrebuilds` step runs based on the output of `CopyNodeProjectAssets`, which is a
@@ -52,17 +52,17 @@ Gradle:
 
 https://docs.gradle.org/current/userguide/incremental_build.html
 
-### [Disable exact development environment Node version check](./nodejs-mobile-react-native+18.20.4+004+disable-node-version-check.patch)
+### [Disable exact development environment Node version check](./@comapeo+nodejs-mobile-react-native+18.20.4-0+004+disable-node-version-check.patch)
 
 This step ensures that the development environment is using the same major Node version as the runtime that comes with
 NodeJS Mobile React Native. The check is most relevant when building native modules, but since we use native prebuilds,
 skipping it does not seem to affect our ability to build the app and is thus (probably) not needed.
 
-### [Fix copying of Intel-based native prebuilds into native assets directory when building apk](./nodejs-mobile-react-native+18.20.4+005+fix-copying-x86-prebuilds.patch)
+### [Fix copying of Intel-based native prebuilds into native assets directory when building apk](./@comapeo+nodejs-mobile-react-native+18.20.4-0+005+fix-copying-x86-prebuilds.patch)
 
 When targeting Intel-based architectures (i.e. `x86_64`), the affected Gradle build steps were attempting to find native prebuilds using the extended target architecture name i.e. in each directory for relevant native Node modules, it was looking for `prebuilds/android-x86_64/` instead of `prebuilds/android-x64/`. This naming discrepancy is due to how our [prebuild template](https://github.com/digidem/nodejs-mobile-prebuilds-template) publishes the output from https://github.com/nodejs-mobile/prebuild-for-nodejs-mobile/, which uses an abbreviated name of the architecture (e.g. `x86_64` is referred to as `x64`).
 
-### [Fix addon resolution for addons using require-addon](./nodejs-mobile-react-native+18.20.4+006+fix-bare-prebuilds.patch)
+### [Fix addon resolution for addons using require-addon](./@comapeo+nodejs-mobile-react-native+18.20.4-0+006+fix-bare-prebuilds.patch)
 
 Native addons by the holepunch team use [`require-addon`](https://github.com/holepunchto/require-addon) to load native prebuilds. This package expects the native prebuilds to be in a `prebuilds/` directory at the root of the package, in contrast to modules which use `node-gyp-build`, which, at runtime, looks for prebuilds in `build/Release/`. This patch moves the prebuilds into the correct folder based on the presence of `binding.gyp`, and cleans up any unnecessary prebuilds to keep the APK size down.
 

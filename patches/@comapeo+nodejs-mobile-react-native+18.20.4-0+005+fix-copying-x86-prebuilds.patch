@@ -1,7 +1,7 @@
-diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
-index 724c377..705e4c8 100644
---- a/node_modules/nodejs-mobile-react-native/android/build.gradle
-+++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
+diff --git a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
+index 36ec3de..136bec8 100644
+--- a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
++++ b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
 @@ -370,7 +370,15 @@ if ("1".equals(shouldRebuildNativeModules)) {
  
              delete fileTree(dir: "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/node_modules/").matching {

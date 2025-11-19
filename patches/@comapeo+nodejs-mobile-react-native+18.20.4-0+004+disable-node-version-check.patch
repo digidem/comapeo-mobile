@@ -1,7 +1,7 @@
-diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
-index b1957a5..8fe2082 100644
---- a/node_modules/nodejs-mobile-react-native/android/build.gradle
-+++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
+diff --git a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
+index 63145bb..36ec3de 100644
+--- a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
++++ b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
 @@ -417,9 +417,9 @@ if ("1".equals(shouldRebuildNativeModules)) {
              if (nodeVersionResult.exitValue != 0) {
                  throw new GradleException("Failed to get node version: ${nodeVersionResult.errorOutput}")
@@ -15,10 +15,10 @@ index b1957a5..8fe2082 100644
              inputs.file "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/copy.timestamp"
              outputs.dir "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/"
              workingDir "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/"
-diff --git a/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh b/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
-index e743704..2938302 100644
---- a/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
-+++ b/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
+diff --git a/node_modules/@comapeo/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh b/node_modules/@comapeo/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
+index 82f4930..1d2d205 100644
+--- a/node_modules/@comapeo/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
++++ b/node_modules/@comapeo/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
 @@ -14,7 +14,7 @@ if [ "$CURRENT_NODE_VERSION" -ne "$DESIRED_NODE_VERSION" ]; then
    echo "nodejs-mobile-react-native requires Node.js version \
  $DESIRED_NODE_VERSION accessible from Xcode, but found \

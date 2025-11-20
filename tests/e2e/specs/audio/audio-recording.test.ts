@@ -8,6 +8,7 @@ describe('Audio - Recording Flow', () => {
     await addObsBtn.click();
 
     const airstripCategory = await $(byTextMatches('Airstrip'));
+    await airstripCategory.scrollIntoView();
     await airstripCategory.click();
 
     const micButton = await $(byResourceId('OBS.add-audio-btn'));

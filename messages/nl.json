@@ -62,13 +62,19 @@
     "message": "Stop tracks"
   },
   "Navigation.Menu.Settings": {
-    "message": "App instellingen"
+    "message": "CoMapeo instellingen"
   },
-  "Navigation.Menu.aboutCoMapeo": {
-    "message": "Over CoMapeo"
+  "Navigation.Menu.bgMap": {
+    "message": "Background Maps"
   },
-  "Navigation.Menu.allProjects": {
-    "message": "Alle projecten"
+  "Navigation.Menu.collaborate": {
+    "message": "Samenwerken"
+  },
+  "Navigation.Menu.coordinator": {
+    "message": "Coördinator"
+  },
+  "Navigation.Menu.coordinatorTools": {
+    "message": "Coördinator Tools"
   },
   "Navigation.Menu.currentProject": {
     "message": "Huidig project"
@@ -79,14 +85,23 @@
   "Navigation.Menu.exchange": {
     "message": "Ruil"
   },
-  "Navigation.Menu.invite": {
-    "message": "Uitnodigen"
+  "Navigation.Menu.gatherObservations": {
+    "message": "Waarnemingen verzamelen"
   },
-  "Navigation.Menu.privacyPolicy": {
-    "message": "Gegevens & Privacy"
+  "Navigation.Menu.justYou": {
+    "message": "U alleen"
   },
-  "Navigation.Menu.viewProject": {
-    "message": "Toon"
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "Je maakt zelf mapping uit."
+  },
+  "Navigation.Menu.participant": {
+    "message": "Deelnemer"
+  },
+  "Navigation.Menu.switchProject": {
+    "message": "Wissel project"
+  },
+  "Navigation.Menu.team": {
+    "message": "Team"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -229,20 +244,11 @@
   "Screens.ProjectSettings.configTitle": {
     "message": "Project Categorieën"
   },
-  "Screens.ProjectSettings.coordinator": {
-    "message": "Dit apparaat is een coördinator voor dit project."
-  },
   "Screens.ProjectSettings.editInfo": {
     "message": "Info bewerken"
   },
   "Screens.ProjectSettings.invite": {
     "message": "Nodig samenwerkers uit"
-  },
-  "Screens.ProjectSettings.participant": {
-    "message": "Dit apparaat is een deelnemer in dit project."
-  },
-  "Screens.ProjectSettings.projectCollaborators": {
-    "message": "Project samenwerkers"
   },
   "Screens.ProjectSettings.projectStatsOff": {
     "message": "Project Statistieken Instrument UIT"
@@ -269,7 +275,7 @@
     "message": "Je bent alleen aan het mappen."
   },
   "Screens.ProjectSettings.title": {
-    "message": "Project Instellingen"
+    "message": "Coördinator Tools"
   },
   "Screens.ProjectSettings.update": {
     "message": "Updaten"
@@ -283,11 +289,11 @@
   "Screens.ProjectSettings.viewDetails": {
     "message": "Details bekijken"
   },
-  "Screens.ProjectSettings.viewTeam": {
-    "message": "Bekijk team"
-  },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Beveiliging"
+  },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "Over CoMapeo"
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coördinaat systeem"
@@ -313,11 +319,11 @@
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Taal voor app weergeven"
   },
-  "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Map Management"
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Gegevens & Privacy"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App instellingen"
+    "message": "CoMapeo instellingen"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
@@ -402,11 +408,11 @@
   "TrackStats.kilometers": {
     "message": "km"
   },
-  "allProjects.createNewProject": {
-    "message": "Nieuw project starten"
+  "allProjects.close": {
+    "message": "Open Settings"
   },
-  "allProjects.navTitle": {
-    "message": "Alle projecten"
+  "allProjects.newCollab": {
+    "message": "Nieuwe samenwerking"
   },
   "constants.blue": {
     "message": "Blauw"
@@ -502,6 +508,9 @@
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
     "message": "Android versie"
+  },
+  "screens.AboutSettings.comapeoWebsiteLabel": {
+    "message": "CoMapeo website"
   },
   "screens.AboutSettings.earlyAccessBanner": {
     "message": "U bent in de Vroegtijdige toegangsmodus."
@@ -738,11 +747,23 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Universal Transverse Mercator (UTM)"
   },
+  "screens.DataAndPrivacy.appUsageId": {
+    "message": "ID-nummers worden willekeurig gecodeerd en elke maand veranderd."
+  },
+  "screens.DataAndPrivacy.appUsageText": {
+    "message": "Deel hoe u CoMapeo gebruikt met Awana Digital—er kan geen informatie gebruikt worden om u te volgen."
+  },
+  "screens.DataAndPrivacy.appUsageTitle": {
+    "message": "App gebruik"
+  },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Geanonimiseerde informatie over uw apparaat, app crasht, fouten en prestaties helpt Awana Digital om de app te verbeteren en fouten op te lossen."
   },
   "screens.DataAndPrivacy.diagnosticInfoTitle": {
     "message": "Diagnostische informatie"
+  },
+  "screens.DataAndPrivacy.ipAddress": {
+    "message": "CoMapeo slaat nooit IP-adressen op."
   },
   "screens.DataAndPrivacy.learnMore": {
     "message": "Meer informatie"
@@ -758,6 +779,9 @@
   },
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respecteert uw Privacy & Autonomie"
+  },
+  "screens.DataAndPrivacy.shareAppUsage": {
+    "message": "Deel App Gebruik"
   },
   "screens.DataPrivacy.diagnostic": {
     "message": "Diagnostische informatie is volledig geanonimiseerd—opt-out op elk moment."
@@ -969,11 +993,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Projectstatistieken worden gedeeld"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Ga naar de kaart"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Ga naar Sync"
+  "screens.InviteSuccess.done": {
+    "message": "Voltooid"
   },
   "screens.InviteSuccess.success": {
     "message": "Geslaagd"
@@ -1347,8 +1368,8 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Hoogte Nauwkeurigheid"
   },
-  "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "CoMapeo gegevens"
+  "screens.ObservationMetadataVerified.coMapeoMetadata": {
+    "message": "CoMapeo Metadata"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "Deze gegevens zijn handmatig ingevoerd."
@@ -1381,7 +1402,7 @@
     "message": "Verzonden door CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "CoMapeo gegevens verzonden vanuit"
+    "message": "CoMapeo metadata verzonden van"
   },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Snelheid"
@@ -1674,20 +1695,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Voltooid"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is nu onderdeel van uw project."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Bekijk team"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
-    "message": "Maak of neem deel aan project"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
-    "message": "Maak of neem deel aan een project om apparaten uit te nodigen"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Uitnodiging bekijken"
@@ -1729,7 +1744,19 @@
     "message": "Deelnemers"
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "Jouw team"
+    "message": "Team"
+  },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "Apparaten uitnodigen"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "Deelnemen aan een project"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "Samenwerken"
   },
   "screens.Settings.Config.created": {
     "message": "{date} aangemaakt op {time}"
@@ -1758,15 +1785,6 @@
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Benoem mijn project"
   },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go back"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
-    "message": "Hoe deel te nemen aan een project"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
-    "message": "Om deel te nemen aan een project vind je een coördinator van het project waaraan je wilt deelnemen. Vertel ze je apparaatnaam en de coördinator zal je een uitnodiging sturen."
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "Voltooid"
   },
@@ -1782,12 +1800,6 @@
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Voltooid!"
   },
-  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
-    "message": "Je bent al in een project. Om een nieuw project aan te maken moet je CoMapeo verwijderen en opnieuw installeren."
-  },
-  "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "Maak een project aan"
-  },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create Project"
   },
@@ -1797,17 +1809,8 @@
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Het gebruik van een bestaande projectnaam maakt ze niet hetzelfde project."
   },
-  "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "Deelnemen aan een bestaand CoMapeo Project"
-  },
-  "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "Deelnemen aan een project"
-  },
   "screens.Settings.CreateOrJoinProject.keepInMind": {
     "message": "Onthoud houden"
-  },
-  "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "Een project is een beveiligde container voor uw gegevens. Alleen apparaten die u uitnodigt kunnen gegevens invoeren en met u delen. Maak of neem deel aan een project om gegevens te delen met andere apparaten. Deze actie verwijdert tot nu toe waarnemingen die je hebt verzameld. Overweeg om belangrijke {icon} waarnemingen te delen naar je e-mail, voordat je verder gaat."
   },
   "screens.Settings.CreateOrJoinProject.projectUnique": {
     "message": "Elk project is uniek en kan niet met een ander project uitwisselen."
@@ -1818,14 +1821,14 @@
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "Opslaan"
   },
-  "screens.Settings.CreateOrJoinProject.startProject": {
-    "message": "Start een CoMapeo project"
+  "screens.Settings.JoinAProject.description": {
+    "message": "Vraag een projectcoördinator om een projectuitnodiging te ontvangen."
   },
-  "screens.Settings.CreateOrJoinProject.title": {
-    "message": "Maken of aansluiten"
+  "screens.Settings.JoinAProject.heading": {
+    "message": "Coördineren met uw team."
   },
-  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
-    "message": "Wat is een project"
+  "screens.Settings.JoinAProject.title": {
+    "message": "Deelnemen aan een project"
   },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "Geaccepteerde bestandstypen zijn .smp"
@@ -1886,6 +1889,30 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "Nodig apparaten uit voor een nieuw project met al je waarnemingen."
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "Start een nieuw project met mijn waarnemingen."
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "Volgende"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "Apparaten uitnodigen"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "Nodig apparaten uit voor een apart en leeg project."
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "Start een nieuw project zonder waarnemingen."
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Volgende"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Uitnodiging geweigerd"
@@ -2039,7 +2066,7 @@
     "message": "Stop tracks"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Je neemt momenteel een nummer op. Om deel te nemen aan het project stop je opname"
+    "message": "Nummers worden opgenomen. Stop tracks om door te gaan."
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

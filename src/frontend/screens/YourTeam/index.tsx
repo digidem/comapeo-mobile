@@ -21,7 +21,7 @@ import {SecondaryButton} from '../../sharedComponents/Buttons';
 const m = defineMessages({
   title: {
     id: 'screens.Setting.ProjectSettings.YourTeam.title',
-    defaultMessage: 'Your Team',
+    defaultMessage: 'Team',
   },
   inviteDevice: {
     id: 'screens.Setting.ProjectSettings.YourTeam.inviteDevice',

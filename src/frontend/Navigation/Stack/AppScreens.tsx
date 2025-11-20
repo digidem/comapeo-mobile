@@ -11,7 +11,6 @@ import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
 import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
 import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
 import {Security} from '../../screens/Security';
-import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {ObservationCategoryChooser} from '../../screens/PresetChooser/ObservationCategoryChooser.tsx';
 import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
@@ -66,6 +65,7 @@ import {
 import {DataAndPrivacy} from '../../screens/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/DataAndPrivacy/SettingsPrivacyPolicy';
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
+import {HeaderLeft as HeaderLeftTrackEdit} from '../../screens/TrackEdit/HeaderLeft';
 import {Config} from '../../screens/Settings/Config';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/RemoteArchive/AddRemoteArchive.tsx';
@@ -123,6 +123,7 @@ import {Collaborate} from '../../screens/ProjectCreation/Collaborate.tsx';
 import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject.tsx';
 import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjectIntro.tsx';
 import {NameDefaultProjectIntro} from '../../screens/ProjectCreation/NameDefaultProjectIntro.tsx';
+import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -140,14 +141,6 @@ export const createAppScreens = ({
         name="Home"
         options={{headerShown: false}}
         component={HomeTabs}
-      />
-      <RootStack.Screen
-        name="AuthScreen"
-        component={AuthScreen}
-        options={{
-          headerShown: false,
-          animation: 'fade',
-        }}
       />
       <RootStack.Screen
         name="ObservationEdit"
@@ -354,7 +347,15 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="TrackEdit"
         component={TrackEdit}
-        options={{headerTitle: intl(TrackEdit.navTitle)}}
+        options={({route}) => ({
+          headerTitle: intl(TrackEdit.navTitle),
+          headerLeft: props => (
+            <HeaderLeftTrackEdit
+              trackId={route.params.trackId}
+              headerBackButtonProps={props}
+            />
+          ),
+        })}
       />
       <RootStack.Screen
         name="Config"
@@ -468,11 +469,13 @@ export const createAppScreens = ({
         component={ProjectStatistics}
         options={{headerTitle: intl(ProjectStatistics.navTitle)}}
       />
-      <RootStack.Screen
-        name="EarlyAccess"
-        component={EarlyAccess}
-        options={{headerTitle: intl(EarlyAccess.navTitle)}}
-      />
+      {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && (
+        <RootStack.Screen
+          name="EarlyAccess"
+          component={EarlyAccess}
+          options={{headerTitle: intl(EarlyAccess.navTitle)}}
+        />
+      )}
       <RootStack.Screen
         name="StartNewProjectIntro"
         component={StartNewProjectIntro}
@@ -537,16 +540,22 @@ export const createAppScreens = ({
         name="ProjectStatsTurnedOff"
         component={ProjectStatsTurnedOffBottomSheet}
       />
-      <RootStack.Screen
-        name="EarlyAccessOff"
-        component={EarlyAccessOffBottomSheet}
-      />
+      {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && (
+        <RootStack.Screen
+          name="EarlyAccessOff"
+          component={EarlyAccessOffBottomSheet}
+        />
+      )}
       <RootStack.Screen
         name="AllProjects"
         component={AllProjects}
         options={{
           headerShown: false,
         }}
+      />
+      <RootStack.Screen
+        name="ConfirmTrackDiscardBottomSheet"
+        component={ConfirmDiscardBottomSheet}
       />
     </RootStack.Group>
   </>

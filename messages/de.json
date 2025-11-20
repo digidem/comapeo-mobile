@@ -62,13 +62,19 @@
     "message": "Tracks stoppen"
   },
   "Navigation.Menu.Settings": {
-    "message": "App-Einstellungen"
+    "message": "CoMapeo Einstellungen"
   },
-  "Navigation.Menu.aboutCoMapeo": {
-    "message": "Über CoMapeo"
+  "Navigation.Menu.bgMap": {
+    "message": "Background Maps"
   },
-  "Navigation.Menu.allProjects": {
-    "message": "Alle Projekte"
+  "Navigation.Menu.collaborate": {
+    "message": "Mitarbeiten"
+  },
+  "Navigation.Menu.coordinator": {
+    "message": "Koordinator"
+  },
+  "Navigation.Menu.coordinatorTools": {
+    "message": "Coordinator-Tools"
   },
   "Navigation.Menu.currentProject": {
     "message": "Aktuelles Projekt"
@@ -79,14 +85,23 @@
   "Navigation.Menu.exchange": {
     "message": "Umtausch"
   },
-  "Navigation.Menu.invite": {
-    "message": "Einladen"
+  "Navigation.Menu.gatherObservations": {
+    "message": "Beobachtungen sammeln"
   },
-  "Navigation.Menu.privacyPolicy": {
-    "message": "Daten & Privatsphäre"
+  "Navigation.Menu.justYou": {
+    "message": "Nur Sie"
   },
-  "Navigation.Menu.viewProject": {
-    "message": "Ansicht"
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "Du mappst auf eigene Faust."
+  },
+  "Navigation.Menu.participant": {
+    "message": "Teilnehmer"
+  },
+  "Navigation.Menu.switchProject": {
+    "message": "Projekt wechseln"
+  },
+  "Navigation.Menu.team": {
+    "message": "Team"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -229,20 +244,11 @@
   "Screens.ProjectSettings.configTitle": {
     "message": "Projektkategorien"
   },
-  "Screens.ProjectSettings.coordinator": {
-    "message": "Dieses Gerät ist ein Coordinator für dieses Projekt."
-  },
   "Screens.ProjectSettings.editInfo": {
     "message": "Info bearbeiten"
   },
   "Screens.ProjectSettings.invite": {
     "message": "Mitarbeiter einladen"
-  },
-  "Screens.ProjectSettings.participant": {
-    "message": "Dieses Gerät ist ein Teilnehmer an diesem Projekt."
-  },
-  "Screens.ProjectSettings.projectCollaborators": {
-    "message": "Projektmitarbeiter"
   },
   "Screens.ProjectSettings.projectStatsOff": {
     "message": "Projektstatistik | AUS"
@@ -269,7 +275,7 @@
     "message": "Du mappst auf eigene Faust."
   },
   "Screens.ProjectSettings.title": {
-    "message": "Projekteinstellungen"
+    "message": "Coordinator-Tools"
   },
   "Screens.ProjectSettings.update": {
     "message": "Aktualisieren"
@@ -283,11 +289,11 @@
   "Screens.ProjectSettings.viewDetails": {
     "message": "Details anzeigen"
   },
-  "Screens.ProjectSettings.viewTeam": {
-    "message": "Team ansehen"
-  },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Sicherheit"
+  },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "Über CoMapeo"
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Koordinatensystem"
@@ -313,11 +319,11 @@
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Sprache für App anzeigen"
   },
-  "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Map Management"
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Daten & Privatsphäre"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App-Einstellungen"
+    "message": "CoMapeo Einstellungen"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
@@ -402,11 +408,11 @@
   "TrackStats.kilometers": {
     "message": "km"
   },
-  "allProjects.createNewProject": {
-    "message": "Neues Projekt starten"
+  "allProjects.close": {
+    "message": "Open Settings"
   },
-  "allProjects.navTitle": {
-    "message": "Alle Projekte"
+  "allProjects.newCollab": {
+    "message": "Neue Zusammenarbeit"
   },
   "constants.blue": {
     "message": "Blau"
@@ -502,6 +508,9 @@
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
     "message": "Android Version"
+  },
+  "screens.AboutSettings.comapeoWebsiteLabel": {
+    "message": "CoMapeo Webseite"
   },
   "screens.AboutSettings.earlyAccessBanner": {
     "message": "Sie befinden sich im Frühzugriffsmodus."
@@ -738,11 +747,23 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Universelle Transverse Mercator (UTM)"
   },
+  "screens.DataAndPrivacy.appUsageId": {
+    "message": "Die ID-Nummern werden zufällig gestrichen und jeden Monat geändert."
+  },
+  "screens.DataAndPrivacy.appUsageText": {
+    "message": "Teilen Sie die Nutzung von CoMapeo mit Awana Digital – keine Informationen, die Sie teilen, können verwendet werden, um Sie zu verfolgen."
+  },
+  "screens.DataAndPrivacy.appUsageTitle": {
+    "message": "App-Nutzung"
+  },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Anonyme Informationen über Ihr Gerät, Abstürze der App, Fehler und Leistung helfen Awana Digital die App zu verbessern und Fehler zu beheben."
   },
   "screens.DataAndPrivacy.diagnosticInfoTitle": {
     "message": "Diagnostische Informationen"
+  },
+  "screens.DataAndPrivacy.ipAddress": {
+    "message": "CoMapeo speichert niemals IP-Adressen."
   },
   "screens.DataAndPrivacy.learnMore": {
     "message": "Mehr erfahren"
@@ -758,6 +779,9 @@
   },
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo respektiert Ihre Privatsphäre und Unabhängigkeit"
+  },
+  "screens.DataAndPrivacy.shareAppUsage": {
+    "message": "App-Nutzung teilen"
   },
   "screens.DataPrivacy.diagnostic": {
     "message": "Diagnoseinformationen werden vollständig anonymisiert – Opt-out zu jeder Zeit."
@@ -969,11 +993,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Projektstatistiken werden geteilt"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Zur Karte"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Gehe zu Sync"
+  "screens.InviteSuccess.done": {
+    "message": "Fertig"
   },
   "screens.InviteSuccess.success": {
     "message": "Erfolg"
@@ -1347,8 +1368,8 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Höhe Genauigkeit"
   },
-  "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "CoMapeo Daten"
+  "screens.ObservationMetadataVerified.coMapeoMetadata": {
+    "message": "CoMapeo Metadaten"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "Diese Daten wurden manuell eingegeben."
@@ -1381,7 +1402,7 @@
     "message": "Gesendet von CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "CoMapeo Daten gesendet von"
+    "message": "CoMapeo Metadaten gesendet von"
   },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Geschwindigkeit"
@@ -1674,20 +1695,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Fertig"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> ist jetzt Teil Ihres Projekts."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Team ansehen"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
-    "message": "Projekt erstellen oder beitreten"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
-    "message": "Erstellen oder beitreten eines Projekts, um Geräte einzuladen"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Einladung prüfen"
@@ -1729,7 +1744,19 @@
     "message": "Teilnehmer"
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "Ihr Team"
+    "message": "Team"
+  },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "Geräte einladen"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "Einem Projekt beitreten"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "Mitarbeiten"
   },
   "screens.Settings.Config.created": {
     "message": "{date} bei {time} erstellt"
@@ -1758,15 +1785,6 @@
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Mein Projekt benennen"
   },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go back"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
-    "message": "Wie man einem Projekt beitreten kann"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
-    "message": "Um einem Projekt beizutreten, finden Sie einen Koordinator des Projekts, dem Sie beitreten möchten. Sag ihnen deinen Gerätenamen und der Koordinator wird dir eine Einladung senden."
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "Fertig"
   },
@@ -1782,12 +1800,6 @@
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Erfolg!"
   },
-  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
-    "message": "Sie sind bereits in einem Projekt. Um ein neues Projekt zu erstellen, müssen Sie CoMapeo deinstallieren und neu installieren."
-  },
-  "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "Erstelle ein Projekt"
-  },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create Project"
   },
@@ -1797,17 +1809,8 @@
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Die Verwendung eines existierenden Projektnamens macht sie nicht zum selben Projekt."
   },
-  "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "An einem existierenden CoMapeo Projekt teilnehmen"
-  },
-  "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "Einem Projekt beitreten"
-  },
   "screens.Settings.CreateOrJoinProject.keepInMind": {
     "message": "Bedenken Sie"
-  },
-  "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "Ein Projekt ist ein sicherer Container für Ihre Daten. Nur Geräte, die Sie einladen können Daten eingeben und mit Ihnen teilen. Erstelle oder trete einem Projekt bei, um Daten mit anderen Geräten zu teilen. Diese Aktion wird Beobachtungen löschen, die Sie bisher gesammelt haben. Überlegen Sie {icon} wichtige Beobachtungen an Ihre E-Mail, bevor Sie fortfahren."
   },
   "screens.Settings.CreateOrJoinProject.projectUnique": {
     "message": "Jedes Projekt ist einzigartig und kann sich nicht mit einem anderen Projekt austauschen."
@@ -1818,14 +1821,14 @@
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "Speichern"
   },
-  "screens.Settings.CreateOrJoinProject.startProject": {
-    "message": "Ein CoMapeo Projekt starten"
+  "screens.Settings.JoinAProject.description": {
+    "message": "Bitten Sie einen Projektkoordinator, eine Projekteinladung zu erhalten."
   },
-  "screens.Settings.CreateOrJoinProject.title": {
-    "message": "Erstellen oder beitreten"
+  "screens.Settings.JoinAProject.heading": {
+    "message": "Koordinieren Sie Ihr Team."
   },
-  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
-    "message": "Was ist ein Projekt"
+  "screens.Settings.JoinAProject.title": {
+    "message": "Einem Projekt beitreten"
   },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "Akzeptierte Dateitypen sind .smp"
@@ -1886,6 +1889,30 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "Lade Geräte in ein neues Projekt mit all deinen Beobachtungen ein."
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "Mit meinen Beobachtungen ein neues Projekt starten."
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "Nächste Frage"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "Geräte einladen"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "Lade Geräte zu einem separaten und leeren Projekt ein."
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "Starten Sie ein neues Projekt ohne Beobachtungen."
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Nächste Frage"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Einladung abgelehnt"
@@ -2039,7 +2066,7 @@
     "message": "Tracks stoppen"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Sie nehmen gerade einen Track auf. Um dem Projekt beizutreten, stoppen Sie die Aufnahme"
+    "message": "Tracks werden aufgenommen. Stoppe Tracks um fortzufahren."
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

@@ -77,7 +77,7 @@ describe('Remote Archive - Add Success Flow', () => {
     const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
 
-    await expect($(byText('Project Settings'))).toBeDisplayed();
+    await expect($(byText('Coordinator Tools'))).toBeDisplayed();
     await expect($(byTextMatches('Remote Archive \\| ON'))).toBeDisplayed();
   });
 

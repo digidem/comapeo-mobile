@@ -8,7 +8,6 @@ import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import NoProjectIcon from '../../images/NoProjectIcon.svg';
-import ProjectParticipantIcon from '../../images/ProjectParticipant.svg';
 import ExchangeIcon from '../../images/Exchange.svg';
 import GraphIcon from '../../images/Graph.svg';
 import {
@@ -27,31 +26,15 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 const m = defineMessages({
   title: {
     id: 'Screens.ProjectSettings.title',
-    defaultMessage: 'Project Settings',
+    defaultMessage: 'Coordinator Tools',
   },
   soloDescription: {
     id: 'Screens.ProjectSettings.soloDescription',
     defaultMessage: 'You’re mapping on your own.',
   },
-  coordinator: {
-    id: 'Screens.ProjectSettings.coordinator',
-    defaultMessage: 'This device is a coordinator on this project.',
-  },
-  participant: {
-    id: 'Screens.ProjectSettings.participant',
-    defaultMessage: 'This device is a participant on this project.',
-  },
   invite: {
     id: 'Screens.ProjectSettings.invite',
     defaultMessage: 'Invite Collaborators',
-  },
-  projectCollaborators: {
-    id: 'Screens.ProjectSettings.projectCollaborators',
-    defaultMessage: 'Project Collaborators',
-  },
-  viewTeam: {
-    id: 'Screens.ProjectSettings.viewTeam',
-    defaultMessage: 'View Team',
   },
   configTitle: {
     id: 'Screens.ProjectSettings.configTitle',
@@ -146,27 +129,6 @@ export const ProjectSettings = () => {
             : undefined
         }
       />
-      {!isSolo && (
-        <SettingsCardRow
-          icon={
-            <ProjectParticipantIcon
-              width={24}
-              height={24}
-              color={NEW_DARK_GREY}
-            />
-          }
-          title={formatMessage(m.projectCollaborators)}
-          subtitle={
-            isCoordinator
-              ? formatMessage(m.coordinator)
-              : formatMessage(m.participant)
-          }
-          buttonText={formatMessage(m.viewTeam)}
-          onPress={() =>
-            navigate('YourTeam', {projectName: projectInfo.projectName})
-          }
-        />
-      )}
       {(isCoordinator || participantWithRemote) && (
         <SettingsCardRow
           icon={<ExchangeIcon width={24} height={24} color={NEW_DARK_GREY} />}

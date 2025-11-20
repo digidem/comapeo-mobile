@@ -6,7 +6,6 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {SecondaryButton, PrimaryButton} from '../../sharedComponents/Buttons';
 import {useFocusEffect} from '@react-navigation/native';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {resetToYourTeam} from '../../lib/resetToYourTeam';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLACK} from '../../lib/styles';
 
@@ -19,9 +18,9 @@ const m = defineMessages({
     id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice',
     defaultMessage: 'Invite Another Device',
   },
-  viewTeam: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam',
-    defaultMessage: 'View Team',
+  done: {
+    id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done',
+    defaultMessage: 'Done',
   },
   partOfProject: {
     id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject',
@@ -63,8 +62,8 @@ export const InviteAccepted = ({
       <View style={{alignItems: 'center', gap: 12}}>
         <SecondaryButton
           fullSize
-          text={t(m.viewTeam)}
-          onPress={() => resetToYourTeam(navigation.dispatch)}
+          text={t(m.done)}
+          onPress={() => navigation.popToTop()}
         />
         <PrimaryButton
           fullSize

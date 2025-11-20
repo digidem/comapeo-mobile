@@ -14,6 +14,7 @@ import {ColorCard} from '../sharedComponents/ColorCard';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {COMAPEO_BLUE} from '../lib/styles';
 import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
+import CheckMark from '../images/CheckMark.svg';
 
 const m = defineMessages({
   newCollab: {
@@ -93,6 +94,10 @@ export const AllProjects = () => {
       <PrimaryButton
         fullSize={true}
         onPress={() => {
+          if (isTracking) {
+            navigate('TrackRecordingActive');
+            return;
+          }
           navigate('Collaborate');
         }}
         style={{alignSelf: 'center', marginBottom: 10, marginTop: 20}}
@@ -146,8 +151,17 @@ const ProjectListItem = ({
       onPress={onPress}
       borderColor={isSelected ? COMAPEO_BLUE : undefined}
       backgroundColor={projectInfo.projectColor}>
-      <View style={{padding: 20}}>
-        <HeaderText variant="header4">{header}</HeaderText>
+      <View
+        style={{
+          padding: 20,
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 20,
+        }}>
+        <View style={{flex: 1}}>
+          <HeaderText variant="header4">{header}</HeaderText>
+        </View>
+        {isSelected && <CheckMark width={24} height={24} />}
       </View>
     </ColorCard>
   );

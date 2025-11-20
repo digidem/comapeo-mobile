@@ -29,10 +29,10 @@
     "message": "Terminé"
   },
   "ExportSuccess.obs": {
-    "message": "<bold>All observations</bold> have been downloaded to your device."
+    "message": "<bold>Toutes les observations</bold> ont été téléchargées sur votre appareil."
   },
   "ExportSuccess.obsMedia": {
-    "message": "<bold>All observations with media</bold> have been downloaded to your device."
+    "message": "<bold>Toutes les observations avec le média</bold> ont été téléchargées sur votre appareil."
   },
   "ExportSuccess.title": {
     "message": "Succès !"
@@ -364,7 +364,7 @@
     "message": "Libérer de l'espace"
   },
   "Storage.MenuAlert.onlyLeft": {
-    "message": "Only {free}mb left on your device"
+    "message": "Seulement {free}mb restants sur votre appareil"
   },
   "Storage.MenuAlert.subtitle": {
     "message": "Certaines fonctionnalités peuvent ne plus fonctionner."
@@ -613,7 +613,7 @@
     "message": "Le code d'accès de l'application vous permet d'ajouter une couche de sécurité supplémentaire en exigeant que vous saisissiez un code d'accès pour ouvrir l'application CoMapeo. Vous pouvez définir votre propre code d'accès à 5 chiffres en activant la fonction ci-dessous."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
+    "message": "<bold>Veuillez noter que les mots de passe oubliés ne peuvent pas être récupérés !</bold> Une fois cette fonctionnalité activée, si vous oubliez ou perdez votre code d'accès, vous ne serez pas en mesure d'ouvrir CoMapeo et perdrez l'accès aux données CoMapeo qui n'ont pas été échanger avec les autres participants au projet."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Annuler"
@@ -1517,7 +1517,7 @@
     "message": "Attaché par {name}"
   },
   "screens.PhotoPreviewModal.distanceFromObs": {
-    "message": "Attached {distance} from observation"
+    "message": "Attaché à {distance} de l'observation"
   },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Supprimer la photo"
@@ -1765,7 +1765,7 @@
     "message": "Annuler l'invitation"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage": {
-    "message": "Invite sent {seconds}s ago"
+    "message": "Invitation envoyée il y a {seconds}s"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
     "message": "En attente d'acceptation de l'invitation de l'appareil"

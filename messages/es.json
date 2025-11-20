@@ -29,10 +29,10 @@
     "message": "Listo"
   },
   "ExportSuccess.obs": {
-    "message": "<bold>All observations</bold> have been downloaded to your device."
+    "message": "<bold>Todas las observaciones</bold> han sido descargadas en tu dispositivo."
   },
   "ExportSuccess.obsMedia": {
-    "message": "<bold>All observations with media</bold> have been downloaded to your device."
+    "message": "<bold>Todas las observaciones</bold> han sido descargadas en tu dispositivo con multimedia."
   },
   "ExportSuccess.title": {
     "message": "¡Éxito!"

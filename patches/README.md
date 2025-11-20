@@ -66,6 +66,12 @@ When targeting Intel-based architectures (i.e. `x86_64`), the affected Gradle bu
 
 Native addons by the holepunch team use [`require-addon`](https://github.com/holepunchto/require-addon) to load native prebuilds. This package expects the native prebuilds to be in a `prebuilds/` directory at the root of the package, in contrast to modules which use `node-gyp-build`, which, at runtime, looks for prebuilds in `build/Release/`. This patch moves the prebuilds into the correct folder based on the presence of `binding.gyp`, and cleans up any unnecessary prebuilds to keep the APK size down.
 
+### [Fix issues with building APK due to outdated AGP version](./@comapeo+nodejs-mobile-react-native+18.20.4-1+007+update-agp-version.patch)
+
+Most of the context is described in https://github.com/digidem/comapeo-mobile/pull/1562#issuecomment-3559578083. Basically, due to the module using a very old version of Android Gradle Plugin (APG) ([2.3.0](https://developer.android.com/build/releases/past-releases/agp-2-3-0-release-notes)), it does not have the built-in behavior described [here](https://developer.android.com/studio/projects/configure-agp-ndk?language=agp4-1#agp_version_41), where any missing NDK that's needed will automatically be downloaded and installed. This was causing issues on when trying to build the APK in CI because it was trying to make use of an NDK version that is not installed on the CI runner image by default.
+
+This patch is most likely better suited to be done upstream as it also contains some other changes that are not strictly related to updating the AGP version. 
+
 ## react-native-indicators
 
 ### [Fix `key` prop error when using components](./react-native-indicators+0.17.0+001+fix-key-prop-error.patch)

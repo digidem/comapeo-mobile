@@ -29,10 +29,10 @@
     "message": "Terminé"
   },
   "ExportSuccess.obs": {
-    "message": "<bold>All observations</bold> have been downloaded to your device."
+    "message": "<bold>Toutes les observations</bold> ont été téléchargées sur votre appareil."
   },
   "ExportSuccess.obsMedia": {
-    "message": "<bold>All observations with media</bold> have been downloaded to your device."
+    "message": "<bold>Toutes les observations avec le média</bold> ont été téléchargées sur votre appareil."
   },
   "ExportSuccess.title": {
     "message": "Succès !"
@@ -62,13 +62,19 @@
     "message": "Arrêter les pistes"
   },
   "Navigation.Menu.Settings": {
-    "message": "Paramètres de l'application"
+    "message": "Paramètres de CoMapeo"
   },
-  "Navigation.Menu.aboutCoMapeo": {
-    "message": "À propos de CoMapeo"
+  "Navigation.Menu.bgMap": {
+    "message": "Background Maps"
   },
-  "Navigation.Menu.allProjects": {
-    "message": "Tous les projets"
+  "Navigation.Menu.collaborate": {
+    "message": "Collaborer"
+  },
+  "Navigation.Menu.coordinator": {
+    "message": "Coordonnateur"
+  },
+  "Navigation.Menu.coordinatorTools": {
+    "message": "Outils de coordinator"
   },
   "Navigation.Menu.currentProject": {
     "message": "Projet actuel"
@@ -79,14 +85,23 @@
   "Navigation.Menu.exchange": {
     "message": "Échanger"
   },
-  "Navigation.Menu.invite": {
-    "message": "Inviter"
+  "Navigation.Menu.gatherObservations": {
+    "message": "Collecter des observations"
   },
-  "Navigation.Menu.privacyPolicy": {
-    "message": "Données & Confidentialité"
+  "Navigation.Menu.justYou": {
+    "message": "Juste vous"
   },
-  "Navigation.Menu.viewProject": {
-    "message": "Afficher"
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "Vous vous associez vous-même."
+  },
+  "Navigation.Menu.participant": {
+    "message": "Participant"
+  },
+  "Navigation.Menu.switchProject": {
+    "message": "Changer de projet"
+  },
+  "Navigation.Menu.team": {
+    "message": "Equipe"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -229,20 +244,11 @@
   "Screens.ProjectSettings.configTitle": {
     "message": "Catégories de projet"
   },
-  "Screens.ProjectSettings.coordinator": {
-    "message": "Cet appareil est un coordinateur de ce projet."
-  },
   "Screens.ProjectSettings.editInfo": {
     "message": "Modifier les infos"
   },
   "Screens.ProjectSettings.invite": {
     "message": "Inviter des collaborateurs"
-  },
-  "Screens.ProjectSettings.participant": {
-    "message": "Cet appareil est un participant à ce projet."
-  },
-  "Screens.ProjectSettings.projectCollaborators": {
-    "message": "Collaborateurs de projet"
   },
   "Screens.ProjectSettings.projectStatsOff": {
     "message": "Statistiques du projet | OFF"
@@ -269,7 +275,7 @@
     "message": "Vous êtes en train de cartographier vous-même."
   },
   "Screens.ProjectSettings.title": {
-    "message": "Paramètres du projet"
+    "message": "Outils de coordinator"
   },
   "Screens.ProjectSettings.update": {
     "message": "Mise à jour"
@@ -283,11 +289,11 @@
   "Screens.ProjectSettings.viewDetails": {
     "message": "Voir les détails"
   },
-  "Screens.ProjectSettings.viewTeam": {
-    "message": "Voir l'équipe"
-  },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Sécurité"
+  },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "À propos de CoMapeo"
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Système de coordonnées"
@@ -313,11 +319,11 @@
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Afficher la langue pour l'application"
   },
-  "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Map Management"
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Données & Confidentialité"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "Paramètres de l'application"
+    "message": "Paramètres de CoMapeo"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
@@ -358,7 +364,7 @@
     "message": "Libérer de l'espace"
   },
   "Storage.MenuAlert.onlyLeft": {
-    "message": "Only {free}mb left on your device"
+    "message": "Seulement {free}mb restants sur votre appareil"
   },
   "Storage.MenuAlert.subtitle": {
     "message": "Certaines fonctionnalités peuvent ne plus fonctionner."
@@ -402,11 +408,11 @@
   "TrackStats.kilometers": {
     "message": "Km"
   },
-  "allProjects.createNewProject": {
-    "message": "Démarrer un nouveau projet"
+  "allProjects.close": {
+    "message": "Open Settings"
   },
-  "allProjects.navTitle": {
-    "message": "Tous les projets"
+  "allProjects.newCollab": {
+    "message": "Nouvelle collaboration"
   },
   "constants.blue": {
     "message": "Bleu"
@@ -502,6 +508,9 @@
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
     "message": "Version d'Android"
+  },
+  "screens.AboutSettings.comapeoWebsiteLabel": {
+    "message": "Site Web de CoMapeo"
   },
   "screens.AboutSettings.earlyAccessBanner": {
     "message": "Vous êtes en mode accès anticipé."
@@ -604,7 +613,7 @@
     "message": "Le code d'accès de l'application vous permet d'ajouter une couche de sécurité supplémentaire en exigeant que vous saisissiez un code d'accès pour ouvrir l'application CoMapeo. Vous pouvez définir votre propre code d'accès à 5 chiffres en activant la fonction ci-dessous."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
+    "message": "<bold>Veuillez noter que les mots de passe oubliés ne peuvent pas être récupérés !</bold> Une fois cette fonctionnalité activée, si vous oubliez ou perdez votre code d'accès, vous ne serez pas en mesure d'ouvrir CoMapeo et perdrez l'accès aux données CoMapeo qui n'ont pas été échanger avec les autres participants au projet."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Annuler"
@@ -738,11 +747,23 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Transverse Universelle de Mercator (UTM)"
   },
+  "screens.DataAndPrivacy.appUsageId": {
+    "message": "Les numéros d’identification sont mélangés aléatoirement et changés chaque mois."
+  },
+  "screens.DataAndPrivacy.appUsageText": {
+    "message": "Partagez la façon dont vous utilisez CoMapeo avec Awana Digital. Aucune information que vous partagez ne peut être utilisée pour vous suivre."
+  },
+  "screens.DataAndPrivacy.appUsageTitle": {
+    "message": "Utilisation de l'application"
+  },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Des informations anonymes sur votre appareil, des plantages d'applications, des erreurs et des performances aident Awana Digital à améliorer l'application et à corriger les erreurs."
   },
   "screens.DataAndPrivacy.diagnosticInfoTitle": {
     "message": "Informations sur le diagnostic"
+  },
+  "screens.DataAndPrivacy.ipAddress": {
+    "message": "CoMapeo ne stocke jamais les adresses IP."
   },
   "screens.DataAndPrivacy.learnMore": {
     "message": "En savoir plus"
@@ -758,6 +779,9 @@
   },
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo respecte votre vie privée et votre autonomie"
+  },
+  "screens.DataAndPrivacy.shareAppUsage": {
+    "message": "Partager l'utilisation de l'application"
   },
   "screens.DataPrivacy.diagnostic": {
     "message": "Les informations diagnostiques sont entièrement anonymisées — opt-out à tout moment."
@@ -969,11 +993,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Les statistiques du projet sont partagées"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Aller à la carte"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Aller à la synchronisation"
+  "screens.InviteSuccess.done": {
+    "message": "Terminé"
   },
   "screens.InviteSuccess.success": {
     "message": "Succès"
@@ -1347,8 +1368,8 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Précision d'altitude"
   },
-  "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "Données CoMapeo"
+  "screens.ObservationMetadataVerified.coMapeoMetadata": {
+    "message": "Métadonnées de CoMapeo"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "Ces données ont été saisies manuellement."
@@ -1381,7 +1402,7 @@
     "message": "Envoyé par CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "Données CoMapeo envoyées depuis"
+    "message": "Métadonnées de CoMapeo envoyées depuis"
   },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Rapidité"
@@ -1457,7 +1478,7 @@
     "message": "Attaché par {name}"
   },
   "screens.PhotoPreviewModal.distanceFromObs": {
-    "message": "Attached {distance} from observation"
+    "message": "Attaché à {distance} de l'observation"
   },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Supprimer la photo"
@@ -1674,20 +1695,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Terminé"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> fait maintenant partie de votre projet."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Voir l'équipe"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
-    "message": "Créer ou rejoindre un projet"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
-    "message": "Créez ou rejoignez un projet pour inviter des appareils"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Revoir l'invitation"
@@ -1702,7 +1717,7 @@
     "message": "Annuler l'invitation"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage": {
-    "message": "Invite sent {seconds}s ago"
+    "message": "Invitation envoyée il y a {seconds}s"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
     "message": "En attente d'acceptation de l'invitation de l'appareil"
@@ -1729,7 +1744,19 @@
     "message": "Participants"
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "Votre équipe"
+    "message": "Equipe"
+  },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "Inviter des appareils"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "Rejoindre un projet"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "Collaborer"
   },
   "screens.Settings.Config.created": {
     "message": "Créé {date} à {time}"
@@ -1758,15 +1785,6 @@
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Nommer mon projet"
   },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go back"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
-    "message": "Comment rejoindre un projet"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
-    "message": "Pour rejoindre un projet, trouvez un coordinateur du projet que vous souhaitez rejoindre. Dites-leur le nom de votre appareil et le coordinateur vous enverra une invitation."
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "Terminé"
   },
@@ -1782,12 +1800,6 @@
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Succès !"
   },
-  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
-    "message": "Vous êtes déjà sur un projet. Pour créer un nouveau projet, vous devez désinstaller et réinstaller CoMapeo."
-  },
-  "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "Créer un projet"
-  },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create Project"
   },
@@ -1797,17 +1809,8 @@
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "L'utilisation d'un nom de projet existant ne fait pas d'eux le même projet."
   },
-  "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "Rejoindre un projet CoMapeo existant"
-  },
-  "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "Rejoindre un projet"
-  },
   "screens.Settings.CreateOrJoinProject.keepInMind": {
     "message": "Gardez à l'esprit"
-  },
-  "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "Un projet est un conteneur sécurisé pour vos données. Seuls les appareils que vous invitez peuvent entrer et partager des données avec vous. Créez ou rejoignez un projet afin de partager des données avec d'autres appareils. Cette action supprimera les observations que vous avez collectées jusqu'à présent. Pensez à partager des observations importantes {icon} à votre e-mail avant de continuer."
   },
   "screens.Settings.CreateOrJoinProject.projectUnique": {
     "message": "Chaque projet est unique et ne peut pas échanger avec un autre projet."
@@ -1818,14 +1821,14 @@
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "Enregistrer"
   },
-  "screens.Settings.CreateOrJoinProject.startProject": {
-    "message": "Lancer un projet CoMapeo"
+  "screens.Settings.JoinAProject.description": {
+    "message": "Demandez à un coordinateur de projet de recevoir une invitation de projet."
   },
-  "screens.Settings.CreateOrJoinProject.title": {
-    "message": "Créer ou rejoindre"
+  "screens.Settings.JoinAProject.heading": {
+    "message": "Coordonner avec votre équipe."
   },
-  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
-    "message": "Qu'est-ce qu'un projet"
+  "screens.Settings.JoinAProject.title": {
+    "message": "Rejoindre un projet"
   },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "Les types de fichiers acceptés sont .smp"
@@ -1886,6 +1889,30 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "Invitez des appareils à un nouveau projet avec toutes vos observations."
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "Démarrer un nouveau projet en utilisant mes observations."
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "Suivant"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "Inviter des appareils"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "Inviter des appareils dans un projet séparé et vide."
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "Démarrer un nouveau projet sans observations."
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Suivant"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitation refusée"
@@ -2039,7 +2066,7 @@
     "message": "Arrêter les pistes"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Vous êtes actuellement en train d'enregistrer une piste. Pour rejoindre le projet, arrêtez l'enregistrement"
+    "message": "Les pistes sont en cours d'enregistrement. Arrêtez les pistes pour continuer."
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

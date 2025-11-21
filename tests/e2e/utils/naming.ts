@@ -10,4 +10,11 @@ export const output = {
   newpasscode: '23456',
   obscurepasscode: '00000',
   remoteServer: 'https://comapeo-mobile-e2e-01.fly.dev/',
+  observationDetails: {
+    name: 'Some body of Water',
+    type: 'Stream',
+    condition: 'Expected',
+    natResourceType: ['Water', 'Medicine'],
+    culturalName: 'Some Cultural Name',
+  },
 };

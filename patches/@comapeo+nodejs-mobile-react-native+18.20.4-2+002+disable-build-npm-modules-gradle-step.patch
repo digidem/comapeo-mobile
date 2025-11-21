@@ -1,8 +1,8 @@
 diff --git a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
-index c763d7b..1018405 100644
+index 39b8e95..e34f187 100644
 --- a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
 +++ b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
-@@ -404,6 +404,8 @@ if ("1".equals(shouldRebuildNativeModules)) {
+@@ -383,6 +383,8 @@ if ("1".equals(shouldRebuildNativeModules)) {
          }
  
          task "BuildNpmModules${abi_name}" (type:Exec) {
@@ -11,7 +11,7 @@ index c763d7b..1018405 100644
              dependsOn "DetectCorrectPrebuilds${abi_name}"
              description = "Building native modules for ${abi_name}."
              def nodeVersionStdout = new ByteArrayOutputStream()
-@@ -461,7 +463,9 @@ if ("1".equals(shouldRebuildNativeModules)) {
+@@ -440,7 +442,9 @@ if ("1".equals(shouldRebuildNativeModules)) {
          }
  
          task "CopyBuiltNpmAssets${abi_name}" (type:Sync) {

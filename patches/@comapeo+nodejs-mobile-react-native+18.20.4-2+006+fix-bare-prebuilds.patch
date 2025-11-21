@@ -1,8 +1,8 @@
 diff --git a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
-index 136bec8..51efb22 100644
+index 0798fc8..7d3e9da 100644
 --- a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
 +++ b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
-@@ -406,16 +406,27 @@ if ("1".equals(shouldRebuildNativeModules)) {
+@@ -385,16 +385,27 @@ if ("1".equals(shouldRebuildNativeModules)) {
                      def moduleName = moduleRoot.getName()
                      println "Preparing to use the prebuild in ${moduleName}"
                      delete "${moduleRoot}/build"

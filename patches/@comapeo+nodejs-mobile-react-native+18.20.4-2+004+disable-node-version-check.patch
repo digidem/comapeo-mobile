@@ -1,8 +1,8 @@
 diff --git a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
-index 63145bb..36ec3de 100644
+index 8df2d68..28efd8e 100644
 --- a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
 +++ b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
-@@ -417,9 +417,9 @@ if ("1".equals(shouldRebuildNativeModules)) {
+@@ -396,9 +396,9 @@ if ("1".equals(shouldRebuildNativeModules)) {
              if (nodeVersionResult.exitValue != 0) {
                  throw new GradleException("Failed to get node version: ${nodeVersionResult.errorOutput}")
              }
@@ -16,7 +16,7 @@ index 63145bb..36ec3de 100644
              outputs.dir "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/"
              workingDir "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/"
 diff --git a/node_modules/@comapeo/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh b/node_modules/@comapeo/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
-index 82f4930..1d2d205 100644
+index 82f4930..617d22f 100644
 --- a/node_modules/@comapeo/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
 +++ b/node_modules/@comapeo/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
 @@ -14,7 +14,7 @@ if [ "$CURRENT_NODE_VERSION" -ne "$DESIRED_NODE_VERSION" ]; then

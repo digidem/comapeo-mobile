@@ -16,11 +16,9 @@ import {SecondaryDestructiveButton} from '../../sharedComponents/Buttons';
 
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import {
-  isActiveArchiveServerMember,
-  useIsLastCoordinator,
-  useIsLastMember,
-} from '../../hooks/server/projects';
+import {isActiveArchiveServerMember} from '../../hooks/server/projects';
+import {useIsLastCoordinator} from '../../hooks/useIsLastCoordinator';
+import {useIsLastMember} from '../../hooks/useIsLastMember';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
 const m = defineMessages({
@@ -163,7 +161,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
               navigation.navigate('LeaveProject');
             }}
           />
-        ) : ownRoleIsCoordinator && !isCoordinator ? (
+        ) : ownRoleIsCoordinator && !isOwnDevice ? (
           <SecondaryDestructiveButton
             text={formatMessage(m.removeDevice)}
             fullSize={true}

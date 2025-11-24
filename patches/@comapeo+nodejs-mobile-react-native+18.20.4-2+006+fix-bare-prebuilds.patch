@@ -1,5 +1,5 @@
 diff --git a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
-index 0798fc8..7d3e9da 100644
+index c154016..2f17837 100644
 --- a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
 +++ b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
 @@ -385,16 +385,27 @@ if ("1".equals(shouldRebuildNativeModules)) {

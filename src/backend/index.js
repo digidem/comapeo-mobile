@@ -10,7 +10,7 @@ const MIGRATIONS_FOLDER_PATH = new URL(
 ).pathname
 
 const DEFAULT_CONFIG_PATH = new URL(
-  './node_modules/@mapeo/default-config/dist/mapeo-default-config.comapeocat',
+  './node_modules/@comapeo/default-categories/dist/comapeo-default-categories.comapeocat',
   import.meta.url,
 ).pathname
 

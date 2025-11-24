@@ -4,10 +4,10 @@ import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Observation - Metadata View Flow', () => {
   it('should open Observation from list and view metadata via date bar', async () => {
-    const obsItem = await $(byTextMatches('Clay'));
+    const obsItem = await $(byTextMatches('Tree'));
     await obsItem.click();
 
-    await expect($(byTextMatches('Clay'))).toBeDisplayed();
+    await expect($(byTextMatches('Tree'))).toBeDisplayed();
 
     const dateBar = await $('~Open Observation Metadata');
     await dateBar.click();

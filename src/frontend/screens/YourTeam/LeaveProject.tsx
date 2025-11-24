@@ -10,22 +10,32 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLUE_GREY} from '../../lib/styles';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import {useLeaveProject, useManyProjects} from '@comapeo/core-react';
+import {
+  useLeaveProject,
+  useManyProjects,
+  useOwnRoleInProject,
+} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectSettings} from '../../hooks/server/projects';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 
 const m = defineMessages({
   leaveProjectTitle: {
     id: 'screens.LeaveProject.leaveProjectTitle',
     defaultMessage: 'Leave {projectName}?',
   },
-  leaveProjectDescription: {
-    id: 'screens.LeaveProject.leaveProjectDescription',
+  leaveProjectDescriptionCoordinator: {
+    id: 'screens.LeaveProject.leaveProjectDescriptionCoordinator',
     defaultMessage:
-      'This device will no longer view or contribute to this project',
+      'Device will no longer be able to view, contribute to, or adjust this project.',
+  },
+  leaveProjectDescriptionParticipant: {
+    id: 'screens.LeaveProject.leaveProjectDescriptionParticipant',
+    defaultMessage:
+      'Device will no longer be able to view or contribute to this project.',
   },
   yesLeave: {
     id: 'screens.LeaveProject.yesLeave',
@@ -43,9 +53,14 @@ export const LeaveProject = ({
   const {formatMessage} = useIntl();
   const {projectId} = useActiveProject();
   const {data: projectSettings} = useProjectSettings();
+  const {data: ownRole} = useOwnRoleInProject({projectId});
   const leaveProject = useLeaveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
   const {data: projects} = useManyProjects();
+
+  const isCoordinator =
+    ownRole.roleId === COORDINATOR_ROLE_ID ||
+    ownRole.roleId === CREATOR_ROLE_ID;
 
   function handleLeaveProject() {
     leaveProject.mutate(
@@ -84,7 +99,11 @@ export const LeaveProject = ({
             })}
           </HeaderText>
           <BodyText style={styles.description}>
-            {formatMessage(m.leaveProjectDescription)}
+            {formatMessage(
+              isCoordinator
+                ? m.leaveProjectDescriptionCoordinator
+                : m.leaveProjectDescriptionParticipant,
+            )}
           </BodyText>
         </View>
       </View>

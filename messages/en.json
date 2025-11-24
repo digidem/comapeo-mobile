@@ -1034,8 +1034,11 @@
   "screens.LeaveProject.cancel": {
     "message": "Cancel"
   },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "This device will no longer view or contribute to this project"
+  "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
+    "message": "Device will no longer be able to view, contribute to, or adjust this project."
+  },
+  "screens.LeaveProject.leaveProjectDescriptionParticipant": {
+    "message": "Device will no longer be able to view or contribute to this project."
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "Leave {projectName}?"

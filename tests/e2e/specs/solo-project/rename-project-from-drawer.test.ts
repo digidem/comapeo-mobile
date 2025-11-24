@@ -9,11 +9,11 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
 
-    const houseCategory = await $(byTextMatches('House'));
+    const houseCategory = await $(byTextMatches('Animal'));
     await houseCategory.click();
 
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();
-    await expect($(byResourceId('OBS.House-icon'))).toBeDisplayed();
+    await expect($(byResourceId('OBS.Animal-icon'))).toBeDisplayed();
     await expect(houseCategory).toBeDisplayed();
     await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
@@ -86,7 +86,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
-    await expect($(byText('House'))).toBeDisplayed();
+    await expect($(byText('Animal'))).toBeDisplayed();
     const mapButton = await $('~Go to map.');
     await mapButton.click();
   });

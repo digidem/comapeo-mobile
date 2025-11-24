@@ -62,13 +62,19 @@
     "message": "Stop Tracks"
   },
   "Navigation.Menu.Settings": {
-    "message": "App Settings"
+    "message": "CoMapeo Settings"
   },
-  "Navigation.Menu.aboutCoMapeo": {
-    "message": "About CoMapeo"
+  "Navigation.Menu.bgMap": {
+    "message": "Background Maps"
   },
-  "Navigation.Menu.allProjects": {
-    "message": "All Projects"
+  "Navigation.Menu.collaborate": {
+    "message": "Collaborate"
+  },
+  "Navigation.Menu.coordinator": {
+    "message": "Coordinator"
+  },
+  "Navigation.Menu.coordinatorTools": {
+    "message": "Coordinator Tools"
   },
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
@@ -79,14 +85,23 @@
   "Navigation.Menu.exchange": {
     "message": "Exchange"
   },
-  "Navigation.Menu.invite": {
-    "message": "Invite"
+  "Navigation.Menu.gatherObservations": {
+    "message": "Gather Observations"
   },
-  "Navigation.Menu.privacyPolicy": {
-    "message": "Data & Privacy"
+  "Navigation.Menu.justYou": {
+    "message": "Just You"
   },
-  "Navigation.Menu.viewProject": {
-    "message": "View"
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "You're mapping on your own."
+  },
+  "Navigation.Menu.participant": {
+    "message": "Participant"
+  },
+  "Navigation.Menu.switchProject": {
+    "message": "Switch Project"
+  },
+  "Navigation.Menu.team": {
+    "message": "Team"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -229,20 +244,11 @@
   "Screens.ProjectSettings.configTitle": {
     "message": "Project Categories"
   },
-  "Screens.ProjectSettings.coordinator": {
-    "message": "This device is a coordinator on this project."
-  },
   "Screens.ProjectSettings.editInfo": {
     "message": "Edit Info"
   },
   "Screens.ProjectSettings.invite": {
     "message": "Invite Collaborators"
-  },
-  "Screens.ProjectSettings.participant": {
-    "message": "This device is a participant on this project."
-  },
-  "Screens.ProjectSettings.projectCollaborators": {
-    "message": "Project Collaborators"
   },
   "Screens.ProjectSettings.projectStatsOff": {
     "message": "Project Statistics | OFF"
@@ -269,7 +275,7 @@
     "message": "You’re mapping on your own."
   },
   "Screens.ProjectSettings.title": {
-    "message": "Project Settings"
+    "message": "Coordinator Tools"
   },
   "Screens.ProjectSettings.update": {
     "message": "Update"
@@ -283,11 +289,11 @@
   "Screens.ProjectSettings.viewDetails": {
     "message": "View Details"
   },
-  "Screens.ProjectSettings.viewTeam": {
-    "message": "View Team"
-  },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Security"
+  },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "About CoMapeo"
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
@@ -313,11 +319,11 @@
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"
   },
-  "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Map Management"
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Data & Privacy"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App Settings"
+    "message": "CoMapeo Settings"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
@@ -402,11 +408,11 @@
   "TrackStats.kilometers": {
     "message": "km"
   },
-  "allProjects.createNewProject": {
-    "message": "Start new project"
+  "allProjects.close": {
+    "message": "Open Settings"
   },
-  "allProjects.navTitle": {
-    "message": "All Projects"
+  "allProjects.newCollab": {
+    "message": "New Collaboration"
   },
   "constants.blue": {
     "message": "Blue"
@@ -502,6 +508,9 @@
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
     "message": "အန့်ဒရိုက် Android ဘားရှင်း"
+  },
+  "screens.AboutSettings.comapeoWebsiteLabel": {
+    "message": "CoMapeo Website"
   },
   "screens.AboutSettings.earlyAccessBanner": {
     "message": "You are in Early Access Mode."
@@ -713,6 +722,27 @@
   "screens.CameraScreen.noCameraAccess": {
     "message": "No access to camera. Please Allow access in setting"
   },
+  "screens.CollaboratorInfo.addedOn": {
+    "message": "Added on {date}"
+  },
+  "screens.CollaboratorInfo.coordinator": {
+    "message": "Coordinator"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "Leave Project"
+  },
+  "screens.CollaboratorInfo.navTitle": {
+    "message": "Collaborator Info"
+  },
+  "screens.CollaboratorInfo.participant": {
+    "message": "Participant"
+  },
+  "screens.CollaboratorInfo.removeDevice": {
+    "message": "Remove Device"
+  },
+  "screens.CollaboratorInfo.thisDevice": {
+    "message": "This Device"
+  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "ပယ်ဖျက်သည်"
   },
@@ -738,11 +768,23 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "UTM (Universal Transverse Mercator)"
   },
+  "screens.DataAndPrivacy.appUsageId": {
+    "message": "ID numbers are scrambled randomly and changed every month."
+  },
+  "screens.DataAndPrivacy.appUsageText": {
+    "message": "Share how you use CoMapeo with Awana Digital—no information you share can be used to track you."
+  },
+  "screens.DataAndPrivacy.appUsageTitle": {
+    "message": "App Usage"
+  },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
   },
   "screens.DataAndPrivacy.diagnosticInfoTitle": {
     "message": "Diagnostic Information"
+  },
+  "screens.DataAndPrivacy.ipAddress": {
+    "message": "CoMapeo never stores IP addresses."
   },
   "screens.DataAndPrivacy.learnMore": {
     "message": "Learn More"
@@ -758,6 +800,9 @@
   },
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respects Your Privacy & Autonomy"
+  },
+  "screens.DataAndPrivacy.shareAppUsage": {
+    "message": "Share App Usage"
   },
   "screens.DataPrivacy.diagnostic": {
     "message": "Diagnostic information is fully anonymized—opt-out any time."
@@ -988,6 +1033,24 @@
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "Language"
+  },
+  "screens.LeaveProject.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.LeaveProject.leaveProjectDescription": {
+    "message": "This device will no longer view or contribute to this project"
+  },
+  "screens.LeaveProject.leaveProjectTitle": {
+    "message": "Leave {projectName}?"
+  },
+  "screens.LeaveProject.yesLeave": {
+    "message": "Yes, Leave"
+  },
+  "screens.LeftProjectConfirmation.openDefaultProject": {
+    "message": "Open {deviceName}"
+  },
+  "screens.LeftProjectConfirmation.youveLeftProject": {
+    "message": "You've left the project."
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -1347,8 +1410,8 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Altitude Accuracy"
   },
-  "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "CoMapeo Data"
+  "screens.ObservationMetadataVerified.coMapeoMetadata": {
+    "message": "CoMapeo Metadata"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "This data was manually entered."
@@ -1381,7 +1444,7 @@
     "message": "Sent by CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "CoMapeo Data sent from"
+    "message": "CoMapeo Metadata sent from"
   },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Speed"
@@ -1683,12 +1746,6 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
     "message": "View Team"
   },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
-    "message": "Create or Join Project"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
-    "message": "Create or Join a Project to invite devices"
-  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Review Invitation"
   },
@@ -1708,28 +1765,40 @@
     "message": "Waiting for Device to Accept Invite"
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
-    "message": "Coordinators can invite devices, edit and delete data, and manage project details."
+    "message": "Can invite devices, edit and delete data, and manage project details."
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinators": {
     "message": "Coordinators"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
-    "message": "Date Added"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
-    "message": "Device Name"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "ကိရိယာများကို ဖိတ်ခေါ်ပါ"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
-    "message": "Participants can take and share observations. They cannot manage users or project details."
+    "message": "Can take and share observations but not manage users or project details."
   },
   "screens.Setting.ProjectSettings.YourTeam.participants": {
     "message": "Participants"
   },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
+    "message": "Past Collaborators"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
+    "message": "Devices no longer contributing to this project."
+  },
   "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "Your Team"
+    "message": "Team"
+  },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "Invite Devices"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "Join a Project"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "Collaborate"
   },
   "screens.Settings.Config.created": {
     "message": "Created {date} at {time}"
@@ -1758,15 +1827,6 @@
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Name My Project"
   },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go back"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
-    "message": "How to Join a Project"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
-    "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "ပြီးသွားပြီ"
   },
@@ -1782,12 +1842,6 @@
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Success!"
   },
-  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
-    "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
-  },
-  "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "Create a Project"
-  },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create Project"
   },
@@ -1797,17 +1851,8 @@
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Using an existing project name does not make them the same project."
   },
-  "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "Join an existing CoMapeo Project"
-  },
-  "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "Join a Project"
-  },
   "screens.Settings.CreateOrJoinProject.keepInMind": {
     "message": "Keep in mind"
-  },
-  "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.Settings.CreateOrJoinProject.projectUnique": {
     "message": "Each project is unique and cannot exchange with another project."
@@ -1818,14 +1863,14 @@
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "Save"
   },
-  "screens.Settings.CreateOrJoinProject.startProject": {
-    "message": "Start a CoMapeo Project"
+  "screens.Settings.JoinAProject.description": {
+    "message": "Ask a project coordinator to receive a project invitation."
   },
-  "screens.Settings.CreateOrJoinProject.title": {
-    "message": "Create or Join"
+  "screens.Settings.JoinAProject.heading": {
+    "message": "Coordinate with your team."
   },
-  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
-    "message": "What is a Project"
+  "screens.Settings.JoinAProject.title": {
+    "message": "Join a Project"
   },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "Accepted file types are .smp"
@@ -1886,6 +1931,30 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "Invite devices to a new project with all your observations."
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "Start a new project using my observations."
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "နောက်ထပ်"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "Invite Devices"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "Invite devices to a separate and empty project."
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "Start a new project with no observations."
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "နောက်ထပ်"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitation Declined"
@@ -2041,6 +2110,27 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "You’re currently recording a track. To join project, stop recording"
   },
+  "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
+    "message": "Device removed."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.notified": {
+    "message": "<boldDevice>{deviceName}</boldDevice> has been notified they can no longer view or contribute to <boldProject>{projectName}</boldProject>."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
+    "message": "Return to Team"
+  },
+  "screens.YourTeam.RemoveDevice.reasonLabel": {
+    "message": "Reason for removal?"
+  },
+  "screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
+    "message": "Remove & Notify"
+  },
+  "screens.YourTeam.RemoveDevice.title": {
+    "message": "Remove Device"
+  },
+  "screens.YourTeam.TeamMemberCard.thisDevice": {
+    "message": "This device"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"
@@ -2111,5 +2201,11 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Each project is unique and separate."
+  },
+  "useProjectRoleAndDetails.coordinator": {
+    "message": "Coordinator"
+  },
+  "useProjectRoleAndDetails.participant": {
+    "message": "Participant"
   }
 }

@@ -8,16 +8,16 @@ import {handleGPSAlert} from '../../utils/alerts';
 describe('Passcode - Obscure Passcode Mode', () => {
   it('should show an observations before going into obscure mode', async () => {
     await $('~Add Observation').click();
-    const airstripCategory = await $(byTextMatches('Airstrip'));
-    await airstripCategory.click();
+    const treeCategory = await $(byTextMatches('Tree'));
+    await treeCategory.click();
     await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     await handleGPSAlert();
 
     await $('~Go to observations list.').click();
-    const airstrip = await $(byText('Airstrip'));
-    await expect(airstrip).toBeDisplayed();
+    const tree = await $(byText('Tree'));
+    await expect(tree).toBeDisplayed();
   });
 
   it('should show a blank Observations screen after entering obscure passcode', async () => {
@@ -84,7 +84,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
 
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
-    await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
+    await expect($(byTextMatches('Tree'))).toBeDisplayed();
     checkForElementGone(byText('Animal'));
   });
 });

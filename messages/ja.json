@@ -62,13 +62,19 @@
     "message": "トラックを停止"
   },
   "Navigation.Menu.Settings": {
-    "message": "アプリの設定"
+    "message": "CoMapeoの設定"
   },
-  "Navigation.Menu.aboutCoMapeo": {
-    "message": "CoMapeoについて"
+  "Navigation.Menu.bgMap": {
+    "message": "Background Maps"
   },
-  "Navigation.Menu.allProjects": {
-    "message": "すべてのプロジェクト"
+  "Navigation.Menu.collaborate": {
+    "message": "共同作業"
+  },
+  "Navigation.Menu.coordinator": {
+    "message": "Coordinator"
+  },
+  "Navigation.Menu.coordinatorTools": {
+    "message": "コーディネータツール"
   },
   "Navigation.Menu.currentProject": {
     "message": "現在のプロジェクト"
@@ -79,14 +85,23 @@
   "Navigation.Menu.exchange": {
     "message": "交換"
   },
-  "Navigation.Menu.invite": {
-    "message": "招待"
+  "Navigation.Menu.gatherObservations": {
+    "message": "観察記録の収集"
   },
-  "Navigation.Menu.privacyPolicy": {
-    "message": "データ & プライバシー"
+  "Navigation.Menu.justYou": {
+    "message": "あなただけ"
   },
-  "Navigation.Menu.viewProject": {
-    "message": "表示"
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "あなたは自分でマッピングしています。"
+  },
+  "Navigation.Menu.participant": {
+    "message": "参加者"
+  },
+  "Navigation.Menu.switchProject": {
+    "message": "プロジェクトの切り替え"
+  },
+  "Navigation.Menu.team": {
+    "message": "チーム"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -229,20 +244,11 @@
   "Screens.ProjectSettings.configTitle": {
     "message": "プロジェクトのカテゴリ"
   },
-  "Screens.ProjectSettings.coordinator": {
-    "message": "このデバイスはこのプロジェクトのコーディネーターです。"
-  },
   "Screens.ProjectSettings.editInfo": {
     "message": "情報を編集"
   },
   "Screens.ProjectSettings.invite": {
     "message": "コラボレーターを招待"
-  },
-  "Screens.ProjectSettings.participant": {
-    "message": "このデバイスはこのプロジェクトの参加者です。"
-  },
-  "Screens.ProjectSettings.projectCollaborators": {
-    "message": "プロジェクトの共同作業"
   },
   "Screens.ProjectSettings.projectStatsOff": {
     "message": "プロジェクト統計情報|OFF"
@@ -269,7 +275,7 @@
     "message": "あなたは自分でマッピングしています。"
   },
   "Screens.ProjectSettings.title": {
-    "message": "プロジェクトの設定"
+    "message": "コーディネータツール"
   },
   "Screens.ProjectSettings.update": {
     "message": "更新"
@@ -283,11 +289,11 @@
   "Screens.ProjectSettings.viewDetails": {
     "message": "詳細を表示"
   },
-  "Screens.ProjectSettings.viewTeam": {
-    "message": "チームを表示"
-  },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "セキュリティ"
+  },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "CoMapeoについて"
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "座標系"
@@ -313,11 +319,11 @@
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "アプリの言語を表示する"
   },
-  "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Map Management"
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "データ & プライバシー"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "アプリの設定"
+    "message": "CoMapeoの設定"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
@@ -402,11 +408,11 @@
   "TrackStats.kilometers": {
     "message": "km"
   },
-  "allProjects.createNewProject": {
-    "message": "新しいプロジェクトを開始"
+  "allProjects.close": {
+    "message": "Open Settings"
   },
-  "allProjects.navTitle": {
-    "message": "すべてのプロジェクト"
+  "allProjects.newCollab": {
+    "message": "新しいコラボレーション"
   },
   "constants.blue": {
     "message": "青"
@@ -502,6 +508,9 @@
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
     "message": "Androidバージョン"
+  },
+  "screens.AboutSettings.comapeoWebsiteLabel": {
+    "message": "CoMapeo ウェブサイト"
   },
   "screens.AboutSettings.earlyAccessBanner": {
     "message": "アーリーアクセスモードに入っています。"
@@ -713,6 +722,27 @@
   "screens.CameraScreen.noCameraAccess": {
     "message": "カメラへのアクセスがありません。設定でアクセスを許可してください"
   },
+  "screens.CollaboratorInfo.addedOn": {
+    "message": "{date} に追加"
+  },
+  "screens.CollaboratorInfo.coordinator": {
+    "message": "Coordinator"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "プロジェクトを退出する"
+  },
+  "screens.CollaboratorInfo.navTitle": {
+    "message": "コラボレーター情報"
+  },
+  "screens.CollaboratorInfo.participant": {
+    "message": "参加者"
+  },
+  "screens.CollaboratorInfo.removeDevice": {
+    "message": "端末を削除"
+  },
+  "screens.CollaboratorInfo.thisDevice": {
+    "message": "このデバイス"
+  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "取消"
   },
@@ -738,11 +768,23 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "ユニバーサル横メルカトル図法(UTM)"
   },
+  "screens.DataAndPrivacy.appUsageId": {
+    "message": "ID番号はランダムにスクランブルされ、毎月変更されます。"
+  },
+  "screens.DataAndPrivacy.appUsageText": {
+    "message": "CoMapeoの使い方をAwana Digitalと共有しましょう。共有する情報を使用して追跡することはできません。"
+  },
+  "screens.DataAndPrivacy.appUsageTitle": {
+    "message": "アプリの使用状況"
+  },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "デバイスに関する匿名化された情報、アプリのクラッシュ、エラー、パフォーマンスは、Awana Digitalがアプリを改善し、エラーを修正するのに役立ちます。"
   },
   "screens.DataAndPrivacy.diagnosticInfoTitle": {
     "message": "診断情報"
+  },
+  "screens.DataAndPrivacy.ipAddress": {
+    "message": "CoMapeoはIPアドレスを決して保存しません。"
   },
   "screens.DataAndPrivacy.learnMore": {
     "message": "もっと詳しく"
@@ -758,6 +800,9 @@
   },
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeoはあなたのプライバシーと自律性を尊重します"
+  },
+  "screens.DataAndPrivacy.shareAppUsage": {
+    "message": "アプリの使用状況を共有"
   },
   "screens.DataPrivacy.diagnostic": {
     "message": "診断情報は完全に匿名化されます — いつでもオプトアウトできます。"
@@ -988,6 +1033,24 @@
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "言語"
+  },
+  "screens.LeaveProject.cancel": {
+    "message": "取消"
+  },
+  "screens.LeaveProject.leaveProjectDescription": {
+    "message": "このデバイスは、このプロジェクトを表示または貢献しません。"
+  },
+  "screens.LeaveProject.leaveProjectTitle": {
+    "message": "{projectName} を離れますか？"
+  },
+  "screens.LeaveProject.yesLeave": {
+    "message": "はい、退出します"
+  },
+  "screens.LeftProjectConfirmation.openDefaultProject": {
+    "message": "{deviceName} を開く"
+  },
+  "screens.LeftProjectConfirmation.youveLeftProject": {
+    "message": "プロジェクトから退出しました。"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -1347,8 +1410,8 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "高度の精度"
   },
-  "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "CoMapeo データ"
+  "screens.ObservationMetadataVerified.coMapeoMetadata": {
+    "message": "CoMapeo メタデータ"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "このデータは手動で入力されました。"
@@ -1381,7 +1444,7 @@
     "message": "CoMapeoから送信"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "CoMapeo データ送信元"
+    "message": "CoMapeoメタデータ送信元"
   },
   "screens.ObservationMetadataVerified.speed": {
     "message": "速度"
@@ -1683,12 +1746,6 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
     "message": "チームを表示"
   },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
-    "message": "プロジェクトを作成または参加"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
-    "message": "プロジェクトを作成または参加してデバイスを招待する"
-  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "招待状を確認"
   },
@@ -1708,28 +1765,40 @@
     "message": "デバイスが招待を承認するのを待っています"
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
-    "message": "コーディネーターは、デバイスの招待、データの編集、削除、プロジェクトの詳細の管理ができます。"
+    "message": "デバイスの招待、データの編集、削除、プロジェクトの詳細の管理ができます。"
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinators": {
     "message": "Coordinators"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
-    "message": "追加日"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
-    "message": "端末名"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "デバイスを招待"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
-    "message": "参加者は観察記録を取ったり共有したりできます。ユーザやプロジェクトの詳細を管理することはできません。"
+    "message": "観察記録を取ったり共有したりできますが、ユーザーやプロジェクトの詳細を管理することはできません。"
   },
   "screens.Setting.ProjectSettings.YourTeam.participants": {
     "message": "参加者"
   },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
+    "message": "過去のコラボレーション"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
+    "message": "デバイスはこのプロジェクトに貢献していません。"
+  },
   "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "あなたのチーム"
+    "message": "チーム"
+  },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "デバイスを招待する"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "プロジェクトに参加"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "共同作業"
   },
   "screens.Settings.Config.created": {
     "message": "{date} を {time} で作成しました"
@@ -1758,15 +1827,6 @@
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "プロジェクトの名前"
   },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go back"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
-    "message": "プロジェクトに参加する方法"
-  },
-  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
-    "message": "プロジェクトに参加するには、参加したいプロジェクトのコーディネーターを見つけます。 デバイス名を知らせると、コーディネーターが招待状を送信します。"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "完了"
   },
@@ -1782,12 +1842,6 @@
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "成功！"
   },
-  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
-    "message": "既にプロジェクトに参加しています。新しいプロジェクトを作成するには、CoMapeoをアンインストールして再インストールする必要があります。"
-  },
-  "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "プロジェクトを作成"
-  },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create Project"
   },
@@ -1797,17 +1851,8 @@
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "既存のプロジェクト名を使用すると、同じプロジェクトにはなりません。"
   },
-  "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "既存のCoMapeoプロジェクトに参加する"
-  },
-  "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "プロジェクトに参加"
-  },
   "screens.Settings.CreateOrJoinProject.keepInMind": {
     "message": "覚えておいてください"
-  },
-  "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "プロジェクトはデータの安全なコンテナです。招待したデバイスのみがデータを入力して共有できます。 他のデバイスとデータを共有するために、プロジェクトを作成または参加します。 この操作は、これまでに収集した観察記録を削除します。続行する前に、 {icon} の重要な観察記録をメールに共有することを検討してください。"
   },
   "screens.Settings.CreateOrJoinProject.projectUnique": {
     "message": "各プロジェクトは一意であり、他のプロジェクトと交換することはできません。"
@@ -1818,14 +1863,14 @@
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "保存"
   },
-  "screens.Settings.CreateOrJoinProject.startProject": {
-    "message": "CoMapeoプロジェクトを開始"
+  "screens.Settings.JoinAProject.description": {
+    "message": "プロジェクトコーディネーターにプロジェクトの招待を受け取るよう依頼します。"
   },
-  "screens.Settings.CreateOrJoinProject.title": {
-    "message": "作成または参加"
+  "screens.Settings.JoinAProject.heading": {
+    "message": "あなたのチームとコーディネートします。"
   },
-  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
-    "message": "プロジェクトとは"
+  "screens.Settings.JoinAProject.title": {
+    "message": "プロジェクトに参加"
   },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "受け入れられるファイルの種類は .smp です"
@@ -1886,6 +1931,30 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "すべての観察記録を持つ新しいプロジェクトにデバイスを招待します。"
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "私の観察記録を使用して新しいプロジェクトを開始します。"
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "次へ"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "デバイスを招待する"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "デバイスを別の空のプロジェクトに招待します。"
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "観察記録のない新しいプロジェクトを開始します。"
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "次へ"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "招待が拒否されました"
@@ -2041,6 +2110,27 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "現在トラックを録音しています。プロジェクトに参加するには、録音を停止してください。"
   },
+  "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
+    "message": "デバイスを削除しました。"
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.notified": {
+    "message": "<boldDevice>{deviceName}</boldDevice> は、 <boldProject>{projectName}</boldProject> の表示や貢献ができなくなったことが通知されました。"
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
+    "message": "チームに戻る"
+  },
+  "screens.YourTeam.RemoveDevice.reasonLabel": {
+    "message": "削除の理由は？"
+  },
+  "screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
+    "message": "削除＆通知"
+  },
+  "screens.YourTeam.RemoveDevice.title": {
+    "message": "端末を削除"
+  },
+  "screens.YourTeam.TeamMemberCard.thisDevice": {
+    "message": "このデバイス"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "オプションを表示"
@@ -2111,5 +2201,11 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "それぞれのプロジェクトは一意であり、それぞれ独立しています。"
+  },
+  "useProjectRoleAndDetails.coordinator": {
+    "message": "Coordinator"
+  },
+  "useProjectRoleAndDetails.participant": {
+    "message": "参加者"
   }
 }

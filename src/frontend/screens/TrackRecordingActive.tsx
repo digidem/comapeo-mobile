@@ -16,8 +16,7 @@ const m = defineMessages({
   },
   warningMessage: {
     id: 'screens.TrackRecordingActive.warningMessage',
-    defaultMessage:
-      'You’re currently recording a track. To join project, stop recording',
+    defaultMessage: 'Tracks is recording. Stop Tracks to continue.',
   },
   stopTracks: {
     id: 'screens.TrackRecordingActive.stopTracks',
@@ -37,11 +36,10 @@ export const TrackRecordingActive = ({
   const distance = useTrackState(store => store.distance);
 
   function handleStopTracks() {
+    endTracking();
     const hasMovedEnough = distance > 0.001;
-
     if (hasMovedEnough) {
-      endTracking();
-      navigation.replace('SaveTrack');
+      navigation.replace('TrackCategoryChooser', {trackAction: 'saveNew'});
       return;
     } else {
       navigation.goBack();

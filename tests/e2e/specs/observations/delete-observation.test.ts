@@ -4,13 +4,15 @@ import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Observations - Delete Observation Flow', () => {
-  it('should open "Threat" observation and verify it is editable', async () => {
-    const threatItem = await $(byTextMatches('Threat'));
-    await threatItem.click();
+  it('should open "Fungi" observation and verify it is editable', async () => {
+    const fungiItem = await $(byTextMatches('Fungi'));
+    await fungiItem.click();
 
-    await expect($(byTextMatches('Threat'))).toBeDisplayed();
+    await expect($(byTextMatches('Fungi'))).toBeDisplayed();
+    const deleteBtn = await $(byText('Delete'));
+    await deleteBtn.scrollIntoView();
     await expect($(byText('Share'))).toBeDisplayed();
-    await expect($(byText('Delete'))).toBeDisplayed();
+    await expect(deleteBtn).toBeDisplayed();
   });
 
   it('should open delete dialog and then cancel', async () => {
@@ -22,7 +24,7 @@ describe('Observations - Delete Observation Flow', () => {
     const cancelBtn = await $(byTextMatches('Cancel'));
     await cancelBtn.click();
 
-    await expect($(byTextMatches('Threat'))).toBeDisplayed();
+    await expect($(byTextMatches('Fungi'))).toBeDisplayed();
   });
 
   it('should delete the observation and confirm it is gone', async () => {
@@ -33,7 +35,7 @@ describe('Observations - Delete Observation Flow', () => {
     await confirmDelete.click();
 
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
-    checkForElementGone(byTextMatches('Threat'));
+    checkForElementGone(byTextMatches('Fungi'));
     await $('~Go to map.').click();
   });
 });

@@ -52,7 +52,7 @@ describe('Team - Leave Project Warning Screen', () => {
 
     const leaveConfirmationDescription = await $(
       byTextMatches(
-        'Device will no longer be able to view, contribute to, or administer this project.',
+        'Device will no longer be able to view, contribute to, or adjust this project',
       ),
     );
     await expect(leaveConfirmationDescription).toBeDisplayed();

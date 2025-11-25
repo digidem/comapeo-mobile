@@ -1,6 +1,6 @@
 {
   "name": "comapeo-mobile",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "build:backend": "node ./scripts/build-backend.mjs",
     "extract-messages": "formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --out-file ./messages/en.json",
     "eas-build-post-install": "npm run build:backend && npm run build:translations && npm run build:intl-polyfills",
+    "eas-build-on-success": "scripts/upload-release.sh",
     "upgrade-deps:all": "npm-check --update --save-exact",
     "upgrade-deps:production": "npm-check --update --save-exact --production",
     "upgrade-deps:dev": "npm-check --update --save-exact --dev-only",

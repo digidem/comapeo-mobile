@@ -1,6 +1,6 @@
 import {EventSubscription} from 'react-native';
 import EventEmitter from 'eventemitter3';
-import nodejs from 'nodejs-mobile-react-native';
+import nodejs from '@comapeo/nodejs-mobile-react-native';
 import type {ServerStateStore, ServerState} from './ServerStateStore.ts';
 import {ExhaustivenessError} from './ExhaustivenessError.ts';
 

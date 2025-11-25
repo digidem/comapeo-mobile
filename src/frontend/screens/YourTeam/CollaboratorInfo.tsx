@@ -161,7 +161,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
               navigation.navigate('LeaveProject');
             }}
           />
-        ) : ownRoleIsCoordinator && !isOwnDevice ? (
+        ) : ownRoleIsCoordinator ? (
           <SecondaryDestructiveButton
             text={formatMessage(m.removeDevice)}
             fullSize={true}

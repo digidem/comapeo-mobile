@@ -17,6 +17,8 @@ import {SecondaryDestructiveButton} from '../../sharedComponents/Buttons';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import {isActiveArchiveServerMember} from '../../hooks/server/projects';
+import {useIsLastCoordinator} from '../../hooks/useIsLastCoordinator';
+import {useIsLastMember} from '../../hooks/useIsLastMember';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
 const m = defineMessages({
@@ -90,7 +92,13 @@ export const CollaboratorInfo: NativeNavigationComponent<
 
   const deviceType = route.params.deviceType;
   const isDesktop = deviceType === 'desktop';
-  const canShowActionButton = !isCoordinator && !isArchiveServer && !isDesktop;
+
+  const isLastCoordinator = useIsLastCoordinator({
+    deviceId: route.params.deviceId,
+  });
+  const isLastMember = useIsLastMember({deviceId: route.params.deviceId});
+
+  const canShowActionButton = !isArchiveServer && !isDesktop;
 
   return (
     <View style={styles.container}>
@@ -136,6 +144,20 @@ export const CollaboratorInfo: NativeNavigationComponent<
               <MaterialDesignIcons size={size} color={color} name="export" />
             )}
             onPress={() => {
+              if (isLastMember) {
+                // TODO: Navigate to interstitial warning screen for last member when it is made
+                console.log(
+                  'Last member: Show warning that project will be empty',
+                );
+                return;
+              }
+              if (isLastCoordinator) {
+                // TODO: Navigate to interstitial warning screen for last coordinator when it is made
+                console.log(
+                  'Last coordinator: Show warning that no coordinators will remain',
+                );
+                return;
+              }
               navigation.navigate('LeaveProject');
             }}
           />

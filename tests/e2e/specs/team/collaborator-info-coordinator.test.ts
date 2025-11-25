@@ -27,9 +27,9 @@ describe('Team - Collaborator Info as Coordinator', () => {
     await expect($(byTextMatches(today))).toBeDisplayed();
   });
 
-  it('should not display Leave Project or Remove Device buttons', async () => {
+  it('should display Leave Project button but not Remove Device button', async () => {
     const leaveProjectButton = await $(byText('Leave Project'));
-    await expect(leaveProjectButton).not.toBeDisplayed();
+    await expect(leaveProjectButton).toBeDisplayed();
 
     const removeDeviceButton = await $(byText('Remove Device'));
     await expect(removeDeviceButton).not.toBeDisplayed();

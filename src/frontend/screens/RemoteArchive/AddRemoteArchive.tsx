@@ -13,11 +13,6 @@ import {Button} from '../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../utils/normalizeRemoteArchiveUrl';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {
-  BottomSheetModal,
-  useBottomSheetModal,
-} from '../../sharedComponents/BottomSheetModal';
-import {WhatsIncludedBottomSheetContent} from './WhatsIncludedBottomSheetContent';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useAddServerPeer} from '@comapeo/core-react';
@@ -190,9 +185,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   const {projectId} = useActiveProject();
   const {mutate, status} = useAddServerPeer({projectId});
   const {navigate, setOptions, addListener} = useNavigationFromRoot();
-  const {openSheet, isOpen, closeSheet, sheetRef} = useBottomSheetModal({
-    openOnMount: false,
-  });
+
   function handleAddRemoteArchive() {
     mutate(
       {baseUrl: url},
@@ -228,46 +221,39 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   }, [setOptions]);
 
   return (
-    <>
-      <ScreenContentWithDock
-        dockContent={
-          status === 'pending' ? (
-            <UIActivityIndicator style={{marginBottom: 20}} />
-          ) : (
-            <Button
-              fullWidth
-              onPress={
-                handleAddRemoteArchive
-              }>{`+ ${formatMessage(m.navTitle)}`}</Button>
-          )
-        }>
-        <HeaderText variant="header4" style={styles.title}>
-          {formatMessage(m.youAreAdding)}
-        </HeaderText>
-        <View style={{alignSelf: 'center', marginBottom: 20}}>
-          <HeaderText variant="header5">{name}</HeaderText>
-          <BodyText variant="smallMeta">{url}</BodyText>
-        </View>
-        <View style={styles.greyBox}>
-          <BodyText variant="smallMeta">
-            {formatMessage(m.archiveInfo)}
-          </BodyText>
-          <BodyText style={{marginTop: 5}} variant="smallMeta">
-            {formatMessage(m.permission)}
-          </BodyText>
-          <TouchableOpacity onPress={openSheet}>
-            <HeaderText
-              variant="header5"
-              style={{color: COMAPEO_BLUE, marginTop: 10}}>
-              {formatMessage(m.whatsIncluded)}
-            </HeaderText>
-          </TouchableOpacity>
-        </View>
-      </ScreenContentWithDock>
-      <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
-        <WhatsIncludedBottomSheetContent closeSheet={closeSheet} />
-      </BottomSheetModal>
-    </>
+    <ScreenContentWithDock
+      dockContent={
+        status === 'pending' ? (
+          <UIActivityIndicator style={{marginBottom: 20}} />
+        ) : (
+          <Button
+            fullWidth
+            onPress={
+              handleAddRemoteArchive
+            }>{`+ ${formatMessage(m.navTitle)}`}</Button>
+        )
+      }>
+      <HeaderText variant="header4" style={styles.title}>
+        {formatMessage(m.youAreAdding)}
+      </HeaderText>
+      <View style={{alignSelf: 'center', marginBottom: 20}}>
+        <HeaderText variant="header5">{name}</HeaderText>
+        <BodyText variant="smallMeta">{url}</BodyText>
+      </View>
+      <View style={styles.greyBox}>
+        <BodyText variant="smallMeta">{formatMessage(m.archiveInfo)}</BodyText>
+        <BodyText style={{marginTop: 5}} variant="smallMeta">
+          {formatMessage(m.permission)}
+        </BodyText>
+        <TouchableOpacity onPress={() => navigate('WhatsIncludedBottomSheet')}>
+          <HeaderText
+            variant="header5"
+            style={{color: COMAPEO_BLUE, marginTop: 10}}>
+            {formatMessage(m.whatsIncluded)}
+          </HeaderText>
+        </TouchableOpacity>
+      </View>
+    </ScreenContentWithDock>
   );
 };
 

@@ -523,10 +523,6 @@
     "description": "Label for phone model",
     "message": "Modèle du téléphone"
   },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Aperçu"
-  },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Nom de la version"

@@ -14,9 +14,7 @@ describe('Project - Project Settings Named Project', () => {
     const screenHeader = await $(byText('Coordinator Tools'));
     await expect(screenHeader).toBeDisplayed();
 
-    await expect(
-      $(byText(`${output.names.project} - Coordinator`)),
-    ).toBeDisplayed();
+    await expect($(byText(output.names.project))).toBeDisplayed();
     await expect($(byText('Edit Info'))).toBeDisplayed();
 
     const projectCategories = await $(byText('Project Categories'));

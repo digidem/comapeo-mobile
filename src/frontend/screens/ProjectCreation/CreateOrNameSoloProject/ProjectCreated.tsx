@@ -76,7 +76,11 @@ export const ProjectCreated = ({
             <FormattedMessage
               {...m.projectReady}
               values={{
-                projectName: <HeaderText variant="header5">{name}</HeaderText>,
+                projectName: (
+                  <HeaderText key="projectName" variant="header5">
+                    {name}
+                  </HeaderText>
+                ),
               }}
             />
           </BodyText>

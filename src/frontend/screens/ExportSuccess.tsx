@@ -65,7 +65,9 @@ export const ExportSuccess = ({
             {...bodyMsg}
             values={{
               bold: (chunks: React.ReactNode) => (
-                <HeaderText variant="header5">{chunks}</HeaderText>
+                <HeaderText key={chunks?.toString()} variant="header5">
+                  {chunks}
+                </HeaderText>
               ),
             }}
           />

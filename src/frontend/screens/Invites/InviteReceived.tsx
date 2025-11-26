@@ -8,14 +8,12 @@ import {
   useRejectInvite,
   useSingleInvite,
   useCreateProject,
+  useManyProjects,
 } from '@comapeo/core-react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {
-  useActiveProjectIdActions,
-  useActiveProjectId,
-} from '../../contexts/ActiveProjectIdStoreContext';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
@@ -68,9 +66,11 @@ export const InviteReceived = ({
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const activeProjectId = useActiveProjectId();
   const createProject = useCreateProject();
   const {isTracking} = useTracking();
+  const {data: allProjects} = useManyProjects();
+
+  const hasDefaultProject = allProjects.some(proj => !proj.name);
 
   const projectColor = invite.projectColor;
   const statsShared = invite.sendStats;
@@ -89,7 +89,7 @@ export const InviteReceived = ({
         onSuccess: projectId => {
           setActiveProjectId(projectId);
 
-          if (!activeProjectId) {
+          if (!hasDefaultProject) {
             createProject.mutate(undefined, {
               onError: err => {
                 Sentry.captureException(err);

@@ -18,81 +18,58 @@ export const createOnboardingScreens = ({
 }: {
   intl: (title: MessageDescriptor) => string;
 }) => (
-  <RootStack.Group key="onboarding">
-    <RootStack.Screen
-      name="IntroToCoMapeo"
-      component={IntroToCoMapeo}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="DataPrivacy"
-      component={DataPrivacy}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="OnboardingPrivacyPolicy"
-      component={OnboardingPrivacyPolicy}
-      options={{headerTitle: intl(OnboardingPrivacyPolicy.navTitle)}}
-    />
-    <RootStack.Screen
-      name="DeviceNaming"
-      component={DeviceNaming}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="Success"
-      component={Success}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="JoinProjectIntro"
-      component={JoinProjectIntro}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="MapOnYourOwnIntro"
-      component={MapOnYourOwnIntro}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="ErrorBottomSheet"
-      options={{
+  <>
+    <RootStack.Group key="onboarding">
+      <RootStack.Screen
+        name="IntroToCoMapeo"
+        component={IntroToCoMapeo}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="DataPrivacy"
+        component={DataPrivacy}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="OnboardingPrivacyPolicy"
+        component={OnboardingPrivacyPolicy}
+        options={{headerTitle: intl(OnboardingPrivacyPolicy.navTitle)}}
+      />
+      <RootStack.Screen
+        name="DeviceNaming"
+        component={DeviceNaming}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="Success"
+        component={Success}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="JoinProjectIntro"
+        component={JoinProjectIntro}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="MapOnYourOwnIntro"
+        component={MapOnYourOwnIntro}
+        options={{headerShown: false}}
+      />
+    </RootStack.Group>
+    <RootStack.Group
+      screenOptions={{
         presentation: 'transparentModal',
         headerShown: false,
         animation: 'none',
         contentStyle: {backgroundColor: 'transparent'},
-      }}
-      component={ErrorBottomSheet}
-    />
-    <RootStack.Screen
-      name="InviteReceived"
-      options={{
-        presentation: 'transparentModal',
-        headerShown: false,
-        animation: 'none',
-        contentStyle: {backgroundColor: 'transparent'},
-      }}
-      component={InviteReceived}
-    />
-    <RootStack.Screen
-      name="InviteSuccessfullyAccepted"
-      options={{
-        presentation: 'transparentModal',
-        headerShown: false,
-        animation: 'none',
-        contentStyle: {backgroundColor: 'transparent'},
-      }}
-      component={InviteSuccessfullyAccepted}
-    />
-    <RootStack.Screen
-      name="InviteCanceled"
-      options={{
-        presentation: 'transparentModal',
-        headerShown: false,
-        animation: 'none',
-        contentStyle: {backgroundColor: 'transparent'},
-      }}
-      component={InviteCanceled}
-    />
-  </RootStack.Group>
+      }}>
+      <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
+      <RootStack.Screen name="InviteReceived" component={InviteReceived} />
+      <RootStack.Screen
+        name="InviteSuccessfullyAccepted"
+        component={InviteSuccessfullyAccepted}
+      />
+      <RootStack.Screen name="InviteCanceled" component={InviteCanceled} />
+    </RootStack.Group>
+  </>
 );

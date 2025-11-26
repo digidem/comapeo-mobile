@@ -8,12 +8,8 @@ describe('Multiple Projects - All Projects Screen', () => {
     await $(byText('Switch Project')).click();
 
     const firstCard = await $(byResourceId('project_card_test_phone'));
-    const secondCard = await $(
-      byResourceId('project_card_second_project_-_coordinator'),
-    );
-    const thirdCard = await $(
-      byResourceId('project_card_third_project_-_coordinator'),
-    );
+    const secondCard = await $(byResourceId('project_card_second_project'));
+    const thirdCard = await $(byResourceId('project_card_third_project'));
 
     await firstCard.click();
 
@@ -32,17 +28,13 @@ describe('Multiple Projects - All Projects Screen', () => {
   });
 
   it('should show the selected project on top', async () => {
-    await $(byResourceId('project_card_second_project_-_coordinator')).click();
+    await $(byResourceId('project_card_second_project')).click();
 
     await $(byText('Switch Project')).click();
 
-    const firstCard = await $(
-      byResourceId('project_card_second_project_-_coordinator'),
-    );
+    const firstCard = await $(byResourceId('project_card_second_project'));
     const secondCard = await $(byResourceId('project_card_test_phone'));
-    const thirdCard = await $(
-      byResourceId('project_card_third_project_-_coordinator'),
-    );
+    const thirdCard = await $(byResourceId('project_card_third_project'));
 
     await expect(firstCard).toBeDisplayed();
     await expect(secondCard).toBeDisplayed();

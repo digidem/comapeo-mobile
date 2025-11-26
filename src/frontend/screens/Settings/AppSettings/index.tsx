@@ -4,13 +4,13 @@ import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {useAuthContext} from '../../../contexts/AuthContext';
 import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
 import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
-import {useEarlyAccessState} from '../../../contexts/EarlyAccessContext';
 import BlackShieldIcon from '../../../images/BlackShield.svg';
+import {useEarlyAccessState} from '../../../contexts/EarlyAccessContext';
 
 const m = defineMessages({
   title: {
     id: 'Screens.Settings.AppSettings.title',
-    defaultMessage: 'App Settings',
+    defaultMessage: 'CoMapeo Settings',
   },
   language: {
     id: 'Screens.Settings.AppSettings.language',
@@ -28,10 +28,6 @@ const m = defineMessages({
     id: 'Screens.Settings.AppSettings.coordinateSystemDesc',
     defaultMessage: 'UTM,Lat/Lon,DMS',
   },
-  mapManagement: {
-    id: 'Screens.Settings.AppSettings.mapManagement',
-    defaultMessage: 'Background Map',
-  },
   security: {
     id: 'Screens.Settings.AppSettings.Drawer.security',
     defaultMessage: 'Security',
@@ -39,6 +35,14 @@ const m = defineMessages({
   deviceName: {
     id: 'Screens.Settings.AppSettings.deviceName',
     defaultMessage: 'Device Name',
+  },
+  privacyPolicy: {
+    id: 'Screens.Settings.AppSettings.privacyPolicy',
+    defaultMessage: 'Data & Privacy',
+  },
+  aboutCoMapeo: {
+    id: 'Screens.Settings.AppSettings.aboutCoMapeo',
+    defaultMessage: 'About CoMapeo',
   },
   earlyAccessTitle: {
     id: 'Screens.Settings.AppSettings.earlyAccess',
@@ -51,14 +55,6 @@ const m = defineMessages({
   earlyAccessOff: {
     id: 'Screens.Settings.AppSettings.earlyAccess.off',
     defaultMessage: 'Early Access is OFF',
-  },
-  privacyPolicy: {
-    id: 'Screens.Settings.AppSettings.privacyPolicy',
-    defaultMessage: 'Data & Privacy',
-  },
-  aboutCoMapeo: {
-    id: 'Screens.Settings.AppSettings.aboutCoMapeo',
-    defaultMessage: 'About CoMapeo',
   },
 });
 
@@ -96,25 +92,6 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
     },
     {
       onPress: () => {
-        navigation.navigate('BackgroundMaps');
-      },
-      testID: 'mapManagementButton',
-      primaryText: formatMessage(m.mapManagement),
-      materialIconName: 'map',
-    },
-    {
-      onPress: () => {
-        navigation.navigate('EarlyAccess');
-      },
-      testID: 'earlyAccessFlag',
-      primaryText: formatMessage(m.earlyAccessTitle),
-      secondaryText: isEarlyAccess
-        ? formatMessage(m.earlyAccessOn)
-        : formatMessage(m.earlyAccessOff),
-      materialIconName: 'flag',
-    },
-    {
-      onPress: () => {
         navigation.navigate('DataAndPrivacy');
       },
       testID: 'dataAndPrivacyButton',
@@ -129,6 +106,22 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
       primaryText: formatMessage(m.aboutCoMapeo),
       materialIconName: 'info-outline',
     },
+
+    ...(process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS
+      ? [
+          {
+            onPress: () => {
+              navigation.navigate('EarlyAccess');
+            },
+            testID: 'earlyAccessFlag',
+            primaryText: formatMessage(m.earlyAccessTitle),
+            secondaryText: isEarlyAccess
+              ? formatMessage(m.earlyAccessOn)
+              : formatMessage(m.earlyAccessOff),
+            materialIconName: 'flag' as const,
+          },
+        ]
+      : []),
 
     ...(authState !== 'obscured'
       ? [

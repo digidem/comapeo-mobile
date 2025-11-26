@@ -11,6 +11,9 @@
 - [About Screen](#about-screen)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
+- [Early Access Mode](#early-access-mode)
+  - [Test Objectives](#test-objectives-3)
+  - [Special Considerations](#special-considerations-3)
 
 ## Settings
 
@@ -60,3 +63,23 @@ Settings e2e tests test the user's interactions with many things within the side
 
 - This does not test what appears in the subheadings of the details because that will change frequently and is specific to the phone
 - Technically, the back button is supposed to go back to the settings drawer open screen but that is not prioritized right now.
+
+## Early Access Mode
+
+This test validates the Early Access Mode feature, which allows users to opt in to preview upcoming CoMapeo features before they are released to all users.
+
+### Test Objectives
+
+- Verify Early Access Mode initially shows as OFF in App Settings
+- Confirm navigation to Early Access Mode screen displays "See CoMapeo Updates" option
+- Verify toggling Early Access ON displays confirmation checkbox and info message about data visibility
+- Confirm special text row appears when Early Access is enabled
+- Verify App Settings list item updates to show "Early Access is ON"
+- Confirm "You are in Early Access Mode" banner appears on other screens (menu, About CoMapeo)
+- Verify toggling Early Access OFF shows bottom sheet confirmation
+- Confirm bottom sheet closes and checkbox returns to OFF state
+- Verify App Settings list item updates back to "Early Access is OFF"
+
+### Special Considerations
+
+- We don't actually have any features in early access mode yet, but eventually we should be able to test in E2E if they do appear and this test can be added on to

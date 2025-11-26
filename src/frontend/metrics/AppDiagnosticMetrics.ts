@@ -157,7 +157,7 @@ export class AppDiagnosticMetrics {
    */
   async #doUpdate(): Promise<void> {
     if (!this.#isEnabled) {
-      storage.delete(STORAGE_KEY);
+      storage.remove(STORAGE_KEY);
       return;
     }
 

@@ -64,11 +64,6 @@ const m = defineMessages({
     defaultMessage: 'Release name',
     description: 'Label for the release name',
   },
-  releaseName: {
-    id: 'screens.AboutSettings.releaseName',
-    defaultMessage: 'Preview',
-    description: 'The CoMapeo chosen release name for the version of the app',
-  },
   seeUpdates: {
     id: 'screens.AboutSettings.seeUpdates',
     defaultMessage: 'See CoMapeo Updates',
@@ -117,7 +112,7 @@ export const AboutSettings = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {isEarly ? (
+      {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && isEarly ? (
         <View style={styles.banner} testID="ABOUT.ea-banner">
           <MaterialIcon name="flag" size={20} />
           <BodyText>{t(m.earlyAccessBanner)}</BodyText>
@@ -157,10 +152,7 @@ export const AboutSettings = () => {
           />
         </ListItem>
         <ListItem disableGutters>
-          <ListItemText
-            primary={t(m.releaseNameLabel)}
-            secondary={t(m.releaseName)}
-          />
+          <ListItemText primary={t(m.releaseNameLabel)} secondary="Abare" />
         </ListItem>
         <ListItem
           disableGutters
@@ -171,19 +163,15 @@ export const AboutSettings = () => {
           />
         </ListItem>
       </List>
-      {isEarly ? (
-        <View style={styles.bottomButton}>
-          <SecondaryButton
-            fullSize
-            text={t(m.seeUpdates)}
-            onPress={() =>
-              Linking.openURL(
-                'https://awana.digital/category/technical-updates',
-              )
-            }
-          />
-        </View>
-      ) : null}
+      <View style={styles.bottomButton}>
+        <SecondaryButton
+          fullSize
+          text={t(m.seeUpdates)}
+          onPress={() =>
+            Linking.openURL('https://awana.digital/category/technical-updates')
+          }
+        />
+      </View>
     </ScrollView>
   );
 };

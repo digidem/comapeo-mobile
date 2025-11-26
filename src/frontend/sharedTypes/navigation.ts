@@ -109,6 +109,8 @@ export type RootStackParamsList = {
   ReviewAndInvite: InviteProps;
   InviteAccepted: {name: string};
   InviteDeclined: InviteProps;
+  RemoveDevice: {deviceId: string; deviceName: string};
+  DeviceRemovedSuccess: {deviceName: string; projectName: string};
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
@@ -140,6 +142,7 @@ export type RootStackParamsList = {
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};
   InviteCanceled: {projectName: string};
+  RemovedFromProjectBottomSheet: {projectId: string};
   ObservationMetadata: {observationId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
@@ -165,6 +168,8 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
+  LeaveProject: undefined;
+  LeftProjectConfirmation: undefined;
   CollaboratorInfo: {
     deviceId: string;
     isOwnDevice: boolean;

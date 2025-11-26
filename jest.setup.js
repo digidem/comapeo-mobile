@@ -23,6 +23,8 @@ jest.mock('expo/src/winter/ImportMetaRegistry', () => ({
   },
 }));
 
+jest.mock('react-native-nitro-modules', () => {});
+
 jest.mock('@gorhom/bottom-sheet', () => mockBottomSheet);
 
 jest.mock('@react-native-community/netinfo', () => mockNetInfo);

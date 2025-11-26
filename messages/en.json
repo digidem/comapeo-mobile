@@ -64,8 +64,8 @@
   "Navigation.Menu.Settings": {
     "message": "CoMapeo Settings"
   },
-  "Navigation.Menu.bgMaps": {
-    "message": "Background Maps"
+  "Navigation.Menu.bgMap": {
+    "message": "Background Map"
   },
   "Navigation.Menu.collaborate": {
     "message": "Collaborate"
@@ -244,20 +244,11 @@
   "Screens.ProjectSettings.configTitle": {
     "message": "Project Categories"
   },
-  "Screens.ProjectSettings.coordinator": {
-    "message": "This device is a coordinator on this project."
-  },
   "Screens.ProjectSettings.editInfo": {
     "message": "Edit Info"
   },
   "Screens.ProjectSettings.invite": {
     "message": "Invite Collaborators"
-  },
-  "Screens.ProjectSettings.participant": {
-    "message": "This device is a participant on this project."
-  },
-  "Screens.ProjectSettings.projectCollaborators": {
-    "message": "Project Collaborators"
   },
   "Screens.ProjectSettings.projectStatsOff": {
     "message": "Project Statistics | OFF"
@@ -284,7 +275,7 @@
     "message": "You’re mapping on your own."
   },
   "Screens.ProjectSettings.title": {
-    "message": "Project Settings"
+    "message": "Coordinator Tools"
   },
   "Screens.ProjectSettings.update": {
     "message": "Update"
@@ -297,9 +288,6 @@
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "View Details"
-  },
-  "Screens.ProjectSettings.viewTeam": {
-    "message": "View Team"
   },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Security"
@@ -331,14 +319,11 @@
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"
   },
-  "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Background Map"
-  },
   "Screens.Settings.AppSettings.privacyPolicy": {
     "message": "Data & Privacy"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App Settings"
+    "message": "CoMapeo Settings"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
@@ -537,10 +522,6 @@
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "Phone model"
-  },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Preview"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -1029,11 +1010,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Project statistics are being shared"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Go To Map"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Go To Sync"
+  "screens.InviteSuccess.done": {
+    "message": "Done"
   },
   "screens.InviteSuccess.success": {
     "message": "Success"
@@ -1048,6 +1026,24 @@
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "Language"
+  },
+  "screens.LeaveProject.cancel": {
+    "message": "Cancel"
+  },
+  "screens.LeaveProject.leaveProjectDescription": {
+    "message": "This device will no longer view or contribute to this project"
+  },
+  "screens.LeaveProject.leaveProjectTitle": {
+    "message": "Leave {projectName}?"
+  },
+  "screens.LeaveProject.yesLeave": {
+    "message": "Yes, Leave"
+  },
+  "screens.LeftProjectConfirmation.openDefaultProject": {
+    "message": "Open {deviceName}"
+  },
+  "screens.LeftProjectConfirmation.youveLeftProject": {
+    "message": "You've left the project."
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -1674,6 +1670,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Project Statistics | OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Close"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Reason: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "THIS DEVICE REMOVED FROM…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
@@ -1734,14 +1739,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Invite Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Done"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Accepted!"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is now part of your project."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "View Team"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Review Invitation"
@@ -1783,7 +1788,7 @@
     "message": "Devices no longer contributing to this project."
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "Your Team"
+    "message": "Team"
   },
   "screens.Settings.Collaborate.inviteDevices": {
     "message": "Invite Devices"
@@ -2105,7 +2110,25 @@
     "message": "Stop Tracks"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "You’re currently recording a track. To join project, stop recording"
+    "message": "Tracks is recording. Stop Tracks to continue."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
+    "message": "Device removed."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.notified": {
+    "message": "<boldDevice>{deviceName}</boldDevice> has been notified they can no longer view or contribute to <boldProject>{projectName}</boldProject>."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
+    "message": "Return to Team"
+  },
+  "screens.YourTeam.RemoveDevice.reasonLabel": {
+    "message": "Reason for removal?"
+  },
+  "screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
+    "message": "Remove & Notify"
+  },
+  "screens.YourTeam.RemoveDevice.title": {
+    "message": "Remove Device"
   },
   "screens.YourTeam.TeamMemberCard.thisDevice": {
     "message": "This device"

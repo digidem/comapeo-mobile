@@ -11,7 +11,6 @@ import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
 import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
 import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
 import {Security} from '../../screens/Security';
-import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {ObservationCategoryChooser} from '../../screens/PresetChooser/ObservationCategoryChooser.tsx';
 import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
@@ -30,6 +29,8 @@ import {SelectInviteeRole} from '../../screens/YourTeam/SelectInviteeRole';
 import {ReviewInvitation} from '../../screens/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/YourTeam/InviteAccepted';
 import {ReviewAndInvite} from '../../screens/YourTeam/ReviewAndInvite';
+import {RemoveDevice} from '../../screens/YourTeam/RemoveDevice';
+import {DeviceRemovedSuccess} from '../../screens/YourTeam/DeviceRemovedSuccess';
 import {
   DisplayScreen as DeviceNameDisplayScreen,
   createNavigationOptions as createDeviceNameDisplayNavOptions,
@@ -81,6 +82,7 @@ import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
 import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
 import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
+import {RemovedFromProjectBottomSheet} from '../../screens/RemovedFromProjectBottomSheet.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/BackgroundMaps/ErrorBottomSheet.tsx';
@@ -124,7 +126,12 @@ import {Collaborate} from '../../screens/ProjectCreation/Collaborate.tsx';
 import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject.tsx';
 import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjectIntro.tsx';
 import {NameDefaultProjectIntro} from '../../screens/ProjectCreation/NameDefaultProjectIntro.tsx';
-import {CollaboratorInfo} from '../../screens/YourTeam/CollaboratorInfo.tsx';
+import {
+  CollaboratorInfo,
+  createNavigationOptions as createCollaboratorInfoNavOptions,
+} from '../../screens/YourTeam/CollaboratorInfo.tsx';
+import {LeaveProject} from '../../screens/YourTeam/LeaveProject.tsx';
+import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -143,14 +150,6 @@ export const createAppScreens = ({
         name="Home"
         options={{headerShown: false}}
         component={HomeTabs}
-      />
-      <RootStack.Screen
-        name="AuthScreen"
-        component={AuthScreen}
-        options={{
-          headerShown: false,
-          animation: 'fade',
-        }}
       />
       <RootStack.Screen
         name="ObservationEdit"
@@ -280,6 +279,16 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="InviteAccepted"
         component={InviteAccepted}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="RemoveDevice"
+        component={RemoveDevice}
+        options={{headerTitle: intl(RemoveDevice.navTitle)}}
+      />
+      <RootStack.Screen
+        name="DeviceRemovedSuccess"
+        component={DeviceRemovedSuccess}
         options={{headerShown: false}}
       />
       <RootStack.Screen
@@ -479,11 +488,13 @@ export const createAppScreens = ({
         component={ProjectStatistics}
         options={{headerTitle: intl(ProjectStatistics.navTitle)}}
       />
-      <RootStack.Screen
-        name="EarlyAccess"
-        component={EarlyAccess}
-        options={{headerTitle: intl(EarlyAccess.navTitle)}}
-      />
+      {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && (
+        <RootStack.Screen
+          name="EarlyAccess"
+          component={EarlyAccess}
+          options={{headerTitle: intl(EarlyAccess.navTitle)}}
+        />
+      )}
       <RootStack.Screen
         name="StartNewProjectIntro"
         component={StartNewProjectIntro}
@@ -495,9 +506,19 @@ export const createAppScreens = ({
         options={{headerTitle: intl(NameDefaultProjectIntro.navTitle)}}
       />
       <RootStack.Screen
+        name="LeaveProject"
+        component={LeaveProject}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="LeftProjectConfirmation"
+        component={LeftProjectConfirmation}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
         name="CollaboratorInfo"
         component={CollaboratorInfo}
-        options={{headerTitle: intl(CollaboratorInfo.navTitle)}}
+        options={createCollaboratorInfoNavOptions({intl})}
       />
     </RootStack.Group>
     <RootStack.Group
@@ -521,6 +542,10 @@ export const createAppScreens = ({
         component={InviteSuccessfullyAccepted}
       />
       <RootStack.Screen name="InviteCanceled" component={InviteCanceled} />
+      <RootStack.Screen
+        name="RemovedFromProjectBottomSheet"
+        component={RemovedFromProjectBottomSheet}
+      />
       <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
       <RootStack.Screen
         name="BackgroundMapErrorBottomSheet"
@@ -553,10 +578,12 @@ export const createAppScreens = ({
         name="ProjectStatsTurnedOff"
         component={ProjectStatsTurnedOffBottomSheet}
       />
-      <RootStack.Screen
-        name="EarlyAccessOff"
-        component={EarlyAccessOffBottomSheet}
-      />
+      {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && (
+        <RootStack.Screen
+          name="EarlyAccessOff"
+          component={EarlyAccessOffBottomSheet}
+        />
+      )}
       <RootStack.Screen
         name="AllProjects"
         component={AllProjects}

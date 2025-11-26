@@ -9,7 +9,9 @@
 - [Viewing and Editing a Track](#viewing-and-editing-a-track)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
-- [Future Coverage Considerations](#future-coverage-considerations)
+- [Track with No Movement](#track-with-no-movement)
+  - [Test Objectives](#test-objectives-3)
+  - [Special Considerations](#special-considerations-3)
 
 ## Onboarding
 
@@ -74,7 +76,20 @@ Ensures saved tracks appear in the Observations list, show correct data, and sup
 - Does not validate map visuals or line data
 - Does not test deletion flow
 
-## Future Coverage Considerations
+## Track with No Movement
 
-- Add tests for discard flow (tap X → Discard Track → confirm return to Map)
-- Add test for deleting a track from the detail screen and verifying it is removed from the list
+This test validates the warning and recovery flow when a user attempts to stop tracking without moving beyond the minimum distance threshold.
+
+### Test Objectives
+
+- Verify track can be started from Tracks tab
+- Confirm stopping track immediately (without movement) triggers warning modal
+- Verify "No Track Recorded" warning message is displayed
+- Confirm explanatory text appears: "You didn't move beyond one meter."
+- Verify "Continue Recording" button allows user to resume tracking
+- Confirm user can exit tracks normally after continuing recording
+
+### Special Considerations
+
+- In BrowserStack, we cannot simulate actual GPS movement, so the test validates the UI flow for insufficient movement
+- Note: The current test listed under "Viewing and Editing a Track" is currently disabled in the test suite because since we require at least 1 meter of movement, it no longer works

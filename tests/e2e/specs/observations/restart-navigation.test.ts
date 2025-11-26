@@ -15,7 +15,6 @@ describe('MAIN - Observation Navigation Flow', () => {
     await addObsBtn.click();
 
     await expect($(byTextMatches('Choose a category'))).toBeDisplayed();
-    await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
   });
 
   it('should navigate to PresetChooser if an observation exists but no preset selected', async () => {
@@ -26,8 +25,8 @@ describe('MAIN - Observation Navigation Flow', () => {
   });
 
   it('should navigate to ObservationCreate when a preset is selected', async () => {
-    const houseCategory = await $(byTextMatches('House'));
-    await houseCategory.click();
+    const animalCategory = await $(byTextMatches('Animal'));
+    await animalCategory.click();
 
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();
   });

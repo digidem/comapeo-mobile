@@ -1,6 +1,6 @@
 import {getRandomBytes} from 'expo-crypto';
 import {getItemAsync, setItemAsync} from 'expo-secure-store';
-import nodejs from '@comapeo/nodejs-mobile-react-native';
+import nodejs from 'nodejs-mobile-react-native';
 import {uint8ArrayToHex} from 'uint8array-extras';
 
 const ROOT_KEY = '__RootKey';

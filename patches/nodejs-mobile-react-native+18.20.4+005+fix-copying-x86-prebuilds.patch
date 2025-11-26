@@ -1,8 +1,8 @@
-diff --git a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
-index 28efd8e..27dad02 100644
---- a/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
-+++ b/node_modules/@comapeo/nodejs-mobile-react-native/android/build.gradle
-@@ -349,7 +349,15 @@ if ("1".equals(shouldRebuildNativeModules)) {
+diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
+index 724c377..705e4c8 100644
+--- a/node_modules/nodejs-mobile-react-native/android/build.gradle
++++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
+@@ -370,7 +370,15 @@ if ("1".equals(shouldRebuildNativeModules)) {
  
              delete fileTree(dir: "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/node_modules/").matching {
                  include "**/*.node" // Look for all .node files
@@ -19,7 +19,7 @@ index 28efd8e..27dad02 100644
                  exclude "**/build/Release/*" // Don't touch the prebuilds moved here from previous run of DetectCorrectPrebuilds step
              }
          }
-@@ -362,7 +370,15 @@ if ("1".equals(shouldRebuildNativeModules)) {
+@@ -383,7 +391,15 @@ if ("1".equals(shouldRebuildNativeModules)) {
  
              doLast {
                  def correctDotNodes = fileTree(dir: "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/node_modules/").matching {

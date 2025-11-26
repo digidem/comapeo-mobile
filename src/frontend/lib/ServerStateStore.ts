@@ -1,4 +1,4 @@
-import nodejs from '@comapeo/nodejs-mobile-react-native';
+import nodejs from 'nodejs-mobile-react-native';
 import type {StatusMessage} from '../../backend/src/status';
 export type {StatusMessage as ServerState} from '../../backend/src/status';
 

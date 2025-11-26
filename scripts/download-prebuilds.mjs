@@ -72,7 +72,7 @@ export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
 function getNodeJsMobileNodeVersions() {
   const nodeVersionFilePath = new URL(
     'android/libnode/include/node/node_version.h',
-    new URL(import.meta.resolve('@comapeo/nodejs-mobile-react-native')),
+    new URL(import.meta.resolve('nodejs-mobile-react-native')),
   ).pathname;
 
   const content = fs.readFileSync(nodeVersionFilePath, 'utf-8');

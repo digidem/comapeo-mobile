@@ -523,10 +523,6 @@
     "description": "Label for phone model",
     "message": "Telefoon model"
   },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Voorvertoning"
-  },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Release naam"

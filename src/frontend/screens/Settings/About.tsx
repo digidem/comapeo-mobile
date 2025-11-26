@@ -167,9 +167,7 @@ export const AboutSettings = () => {
         <SecondaryButton
           fullSize
           text={t(m.seeUpdates)}
-          onPress={() =>
-            Linking.openURL('https://awana.digital/category/technical-updates')
-          }
+          onPress={() => Linking.openURL('https://comapeo.app')}
         />
       </View>
     </ScrollView>

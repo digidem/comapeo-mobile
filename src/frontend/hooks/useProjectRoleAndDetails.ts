@@ -9,19 +9,7 @@ import {
   CREATOR_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
-import {defineMessages, useIntl} from 'react-intl';
 import {DEFAULT_PROJECT_COLOR} from '../constants';
-
-const m = defineMessages({
-  coordinator: {
-    id: 'useProjectRoleAndDetails.coordinator',
-    defaultMessage: 'Coordinator',
-  },
-  participant: {
-    id: 'useProjectRoleAndDetails.participant',
-    defaultMessage: 'Participant',
-  },
-});
 
 /**
  * Represents the role of a user within a project, as used in the frontend.
@@ -45,7 +33,6 @@ export type ProjectDetails = {
 };
 
 export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
-  const {formatMessage} = useIntl();
   const {data: projectData} = useProjectSettings({projectId});
   const {
     data: {name: deviceName},
@@ -65,7 +52,7 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
   if (roleId === COORDINATOR_ROLE_ID || roleId === CREATOR_ROLE_ID) {
     return {
       role: 'coordinator',
-      projectHeader: `${projectData.name} - ${formatMessage(m.coordinator)}`,
+      projectHeader: projectData.name,
       projectName: projectData.name,
       projectColor: projectData.projectColor || DEFAULT_PROJECT_COLOR,
       projectDescription: projectData.projectDescription,
@@ -75,7 +62,7 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
   if (roleId === MEMBER_ROLE_ID) {
     return {
       role: 'participant',
-      projectHeader: `${projectData.name} - ${formatMessage(m.participant)}`,
+      projectHeader: projectData.name,
       projectName: projectData.name,
       projectColor: projectData.projectColor || DEFAULT_PROJECT_COLOR,
       projectDescription: projectData.projectDescription,

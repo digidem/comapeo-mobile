@@ -2203,11 +2203,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "それぞれのプロジェクトは一意であり、それぞれ独立しています。"
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coordinator"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "参加者"
   }
 }

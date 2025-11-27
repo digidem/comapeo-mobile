@@ -29,10 +29,10 @@
     "message": "Terminé"
   },
   "ExportSuccess.obs": {
-    "message": "<bold>All observations</bold> have been downloaded to your device."
+    "message": "<bold>Toutes les observations</bold> ont été téléchargées sur votre appareil."
   },
   "ExportSuccess.obsMedia": {
-    "message": "<bold>All observations with media</bold> have been downloaded to your device."
+    "message": "<bold>Toutes les observations avec le média</bold> ont été téléchargées sur votre appareil."
   },
   "ExportSuccess.title": {
     "message": "Succès !"
@@ -364,7 +364,7 @@
     "message": "Libérer de l'espace"
   },
   "Storage.MenuAlert.onlyLeft": {
-    "message": "Only {free}mb left on your device"
+    "message": "Seulement {free}mb restants sur votre appareil"
   },
   "Storage.MenuAlert.subtitle": {
     "message": "Certaines fonctionnalités peuvent ne plus fonctionner."
@@ -523,10 +523,6 @@
     "description": "Label for phone model",
     "message": "Modèle du téléphone"
   },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Aperçu"
-  },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Nom de la version"
@@ -613,7 +609,7 @@
     "message": "Le code d'accès de l'application vous permet d'ajouter une couche de sécurité supplémentaire en exigeant que vous saisissiez un code d'accès pour ouvrir l'application CoMapeo. Vous pouvez définir votre propre code d'accès à 5 chiffres en activant la fonction ci-dessous."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
+    "message": "<bold>Veuillez noter que les mots de passe oubliés ne peuvent pas être récupérés !</bold> Une fois cette fonctionnalité activée, si vous oubliez ou perdez votre code d'accès, vous ne serez pas en mesure d'ouvrir CoMapeo et perdrez l'accès aux données CoMapeo qui n'ont pas été échanger avec les autres participants au projet."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Annuler"
@@ -1014,11 +1010,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Les statistiques du projet sont partagées"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Aller à la carte"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Aller à la synchronisation"
+  "screens.InviteSuccess.done": {
+    "message": "Terminé"
   },
   "screens.InviteSuccess.success": {
     "message": "Succès"
@@ -1520,7 +1513,7 @@
     "message": "Attaché par {name}"
   },
   "screens.PhotoPreviewModal.distanceFromObs": {
-    "message": "Attached {distance} from observation"
+    "message": "Attaché à {distance} de l'observation"
   },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Supprimer la photo"
@@ -1677,6 +1670,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Statistiques du projet | OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Raison : {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "CET APPAREIL SUPPRIMER DE…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Que se passe-t-il ici?"
@@ -1737,14 +1739,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Terminé"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> fait maintenant partie de votre projet."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Voir l'équipe"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Revoir l'invitation"
@@ -1759,7 +1761,7 @@
     "message": "Annuler l'invitation"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage": {
-    "message": "Invite sent {seconds}s ago"
+    "message": "Invitation envoyée il y a {seconds}s"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
     "message": "En attente d'acceptation de l'invitation de l'appareil"
@@ -2108,7 +2110,7 @@
     "message": "Arrêter les pistes"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Vous êtes actuellement en train d'enregistrer une piste. Pour rejoindre le projet, arrêtez l'enregistrement"
+    "message": "Les pistes sont en cours d'enregistrement. Arrêtez les pistes pour continuer."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Appareil supprimé."
@@ -2201,11 +2203,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Chaque projet est unique et séparé."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coordonnateur"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Participant"
   }
 }

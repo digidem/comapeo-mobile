@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet} from 'react-native';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {StyleSheet, Text} from 'react-native';
 
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
@@ -52,7 +52,18 @@ export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = () => {
         {t(m.title)}
       </HeaderText>
       <BodyText>{t(m.passcodeDescription)}</BodyText>
-      <BodyText>{t(m.warning)}</BodyText>
+      <BodyText>
+        <FormattedMessage
+          {...m.warning}
+          values={{
+            bold: (chunks: React.ReactNode) => (
+              <Text key="bold" style={{fontWeight: 'bold'}}>
+                {chunks}
+              </Text>
+            ),
+          }}
+        />
+      </BodyText>
     </ScreenContentWithDock>
   );
 };

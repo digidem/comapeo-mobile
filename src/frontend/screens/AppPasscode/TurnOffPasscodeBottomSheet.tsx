@@ -35,7 +35,9 @@ export const TurnOffPasscodeBottomSheet = () => {
 
   async function unsetAppPasscode() {
     await setPasscode(null);
-    navigation.pop(3);
+    // Pop 4 screens to get back to Security:
+    // Popto('Security') screen does not work.
+    navigation.pop(4);
   }
 
   return (

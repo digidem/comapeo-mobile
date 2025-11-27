@@ -523,10 +523,6 @@
     "description": "Label for phone model",
     "message": "Modelo do telefone"
   },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Pré-visualizar"
-  },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Nome do lançamento"
@@ -1014,11 +1010,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Estatísticas do projeto estão sendo compartilhadas"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Ir para o Mapa"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Ir para Sincronização"
+  "screens.InviteSuccess.done": {
+    "message": "Concluído"
   },
   "screens.InviteSuccess.success": {
     "message": "Sucesso"
@@ -1677,6 +1670,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Estatísticas do Projeto OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Abrir Configurações"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Motivo: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "ESTE DISPOSITIVO REMOVIDO DE…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "O que está acontecendo aqui?"
@@ -1737,14 +1739,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Adicionar outro dispositivo"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Concluído"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Convite aceito"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> agora faz parte do seu projeto."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Ver Equipe"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Revisar convite"
@@ -2108,7 +2110,7 @@
     "message": "Parar trilhas"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Você está gravando uma trilha agora. Para entrar em um projeto, pare a gravação"
+    "message": "Faixas estão gravando. Pare os trajetos para continuar."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Dispositivo removido."
@@ -2201,11 +2203,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Cada projeto é único e separado."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coordenador"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Participante"
   }
 }

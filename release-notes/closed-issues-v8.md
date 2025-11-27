@@ -53,3 +53,15 @@
 [closed #1540](https://github.com/digidem/comapeo-mobile/issues/1540): Project Invite / Update "success " flows
 
 [closed #1541](https://github.com/digidem/comapeo-mobile/issues/1541): App Passcode doesnt work when App went in bg mode
+
+## Closed Issues Added to RC created on 2025-11-27 16:15:50 EST
+[closed #1533](https://github.com/digidem/comapeo-mobile/issues/1533): Can't receive invite during onboarding
+
+[closed #1582](https://github.com/digidem/comapeo-mobile/issues/1582): Leave or removed from project/ cant be re-invited
+
+[closed #1583](https://github.com/digidem/comapeo-mobile/issues/1583): Data export/  Saved file doesnt end in geojson extension
+
+[closed #1585](https://github.com/digidem/comapeo-mobile/issues/1585): Category names are not being translated
+
+[closed #1586](https://github.com/digidem/comapeo-mobile/issues/1586): "see comapeo update" button change
+

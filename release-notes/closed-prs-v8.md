@@ -109,3 +109,20 @@ PR #1566: New Crowdin updates
 PR #1484: Release Candidate v7.0
 
 PR #1563: chore: new default config
+
+## Closed Prs cherry picked onto RC created on 2025-11-27 16:15:50 EST
+PR #1584: Fix export observation file extension
+[closed #1583](https://github.com/digidem/comapeo-mobile/issues/1583)
+
+PR #1515: fix: invite available during onboarding
+[closed #1533](https://github.com/digidem/comapeo-mobile/issues/1533)
+
+PR #1587: fix: update url
+[closed #1586](https://github.com/digidem/comapeo-mobile/issues/1586)
+
+PR #1588: chore: update core to latest
+[closed #1585](https://github.com/digidem/comapeo-mobile/issues/1585)
+
+PR #1590: fix: reinvite devices that were on proj before
+[closed #1582](https://github.com/digidem/comapeo-mobile/issues/1582)
+

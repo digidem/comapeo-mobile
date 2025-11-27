@@ -2203,11 +2203,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Cada projeto é único e separado."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coordenador"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Participante"
   }
 }

@@ -523,10 +523,6 @@
     "description": "Label for phone model",
     "message": "Handy Modell"
   },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Vorschau"
-  },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Release-Name"
@@ -1014,11 +1010,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Projektstatistiken werden geteilt"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Zur Karte"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Gehe zu Sync"
+  "screens.InviteSuccess.done": {
+    "message": "Fertig"
   },
   "screens.InviteSuccess.success": {
     "message": "Erfolg"
@@ -1677,6 +1670,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Projektstatistik | AUS"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Grund: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "DIESE GERÄT VON… ENTFERNT"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Was passiert hier?"
@@ -1737,14 +1739,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Fertig"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> ist jetzt Teil Ihres Projekts."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Team ansehen"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Einladung prüfen"
@@ -2108,7 +2110,7 @@
     "message": "Tracks stoppen"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Sie nehmen gerade einen Track auf. Um dem Projekt beizutreten, stoppen Sie die Aufnahme"
+    "message": "Tracks werden aufgenommen. Stoppe Tracks um fortzufahren."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Gerät entfernt."
@@ -2201,11 +2203,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Jedes Projekt ist einzigartig und separat."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Koordinator"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Teilnehmer"
   }
 }

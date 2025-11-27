@@ -523,10 +523,6 @@
     "description": "Label for phone model",
     "message": "携帯電話の機種"
   },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "プレビュー"
-  },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "リリース名"
@@ -1014,11 +1010,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "プロジェクトの統計情報が共有されています"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "マップに移動"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "同期へ"
+  "screens.InviteSuccess.done": {
+    "message": "完了"
   },
   "screens.InviteSuccess.success": {
     "message": "成功"
@@ -1677,6 +1670,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "プロジェクト統計情報|OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "理由: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "THIS DEVICE REMOVED FROM…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "何がここで起こっているか?"
@@ -1737,14 +1739,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "完了"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> がプロジェクトの一部になりました。"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "チームを表示"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "招待状を確認"
@@ -2108,7 +2110,7 @@
     "message": "トラックを停止"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "現在トラックを録音しています。プロジェクトに参加するには、録音を停止してください。"
+    "message": "トラックが記録されています。トラックを停止して続行してください。"
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "デバイスを削除しました。"
@@ -2201,11 +2203,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "それぞれのプロジェクトは一意であり、それぞれ独立しています。"
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coordinator"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "参加者"
   }
 }

@@ -176,6 +176,13 @@ export type RootStackParamsList = {
     deviceType: DeviceType;
   };
   ConfirmTrackDiscardBottomSheet: {trackId: string};
+  TurnOffPasscodeBottomSheet: undefined;
+  DeleteCustomMapBottomSheet: undefined;
+  MapAddedBottomSheet: undefined;
+  ConfirmDiscardObservationBottomSheet: undefined;
+  ConfirmDiscardChangesBottomSheet: {observationId: string};
+  WhatsIncludedBottomSheet: undefined;
+  ConfirmDiscardTrackBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

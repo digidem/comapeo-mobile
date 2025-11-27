@@ -133,6 +133,13 @@ import {
 import {LeaveProject} from '../../screens/YourTeam/LeaveProject.tsx';
 import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
+import {TurnOffPasscodeBottomSheet} from '../../screens/AppPasscode/TurnOffPasscodeBottomSheet.tsx';
+import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
+import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
+import {ConfirmDiscardObservationBottomSheet} from '../../screens/ObservationCreate/ConfirmDiscardObservationBottomSheet.tsx';
+import {ConfirmDiscardChangesBottomSheet} from '../../screens/ObservationEdit/ConfirmDiscardChangesBottomSheet.tsx';
+import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsIncludedBottomSheet.tsx';
+import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -594,6 +601,34 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ConfirmTrackDiscardBottomSheet"
         component={ConfirmDiscardBottomSheet}
+      />
+      <RootStack.Screen
+        name="TurnOffPasscodeBottomSheet"
+        component={TurnOffPasscodeBottomSheet}
+      />
+      <RootStack.Screen
+        name="DeleteCustomMapBottomSheet"
+        component={DeleteCustomMapBottomSheet}
+      />
+      <RootStack.Screen
+        name="MapAddedBottomSheet"
+        component={MapAddedBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDiscardObservationBottomSheet"
+        component={ConfirmDiscardObservationBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDiscardChangesBottomSheet"
+        component={ConfirmDiscardChangesBottomSheet}
+      />
+      <RootStack.Screen
+        name="WhatsIncludedBottomSheet"
+        component={WhatsIncludedBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDiscardTrackBottomSheet"
+        component={ConfirmDiscardTrackBottomSheet}
       />
     </RootStack.Group>
   </>

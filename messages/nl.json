@@ -2203,11 +2203,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Elk project is uniek en scheidt."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coördinator"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Deelnemer"
   }
 }

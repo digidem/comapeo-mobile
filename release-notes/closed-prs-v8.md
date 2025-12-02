@@ -126,3 +126,12 @@ PR #1588: chore: update core to latest
 PR #1590: fix: reinvite devices that were on proj before
 [closed #1582](https://github.com/digidem/comapeo-mobile/issues/1582)
 
+
+## Closed Prs cherry picked onto RC created on 2025-12-02 15:14:25 EST
+PR #1593: New Crowdin updates
+
+PR #1600: chore: downgrade react-native-share
+[closed #1599](https://github.com/digidem/comapeo-mobile/issues/1599)
+
+PR #1603: chore: can't add any device that has already been on project
+

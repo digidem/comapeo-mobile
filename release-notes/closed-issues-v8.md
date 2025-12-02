@@ -65,3 +65,7 @@
 
 [closed #1586](https://github.com/digidem/comapeo-mobile/issues/1586): "see comapeo update" button change
 
+
+## Closed Issues Added to RC created on 2025-12-02 15:14:25 EST
+[closed #1599](https://github.com/digidem/comapeo-mobile/issues/1599): Observation sharing
+

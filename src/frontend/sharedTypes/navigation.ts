@@ -168,12 +168,13 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
-  LeaveProject: undefined;
+  LeaveProject: {memberType: 'coordinator' | 'participant'};
   LeftProjectConfirmation: undefined;
   CollaboratorInfo: {
     deviceId: string;
     isOwnDevice: boolean;
     deviceType: DeviceType;
+    memberType: 'coordinator' | 'participant';
   };
   ConfirmTrackDiscardBottomSheet: {trackId: string};
 };

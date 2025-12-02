@@ -78,14 +78,12 @@ export const CollaboratorInfo: NativeNavigationComponent<
     projectId,
     deviceId: route.params.deviceId,
   });
-  const {name, role, joinedAt} = member;
+  const {name, joinedAt} = member;
   const isArchiveServer = isActiveArchiveServerMember(member);
 
   const {data: ownRole} = useOwnRoleInProject({projectId});
 
-  const isCoordinator =
-    role.roleId === COORDINATOR_ROLE_ID || role.roleId === CREATOR_ROLE_ID;
-
+  const isCoordinator = route.params.memberType === 'coordinator';
   const ownRoleIsCoordinator =
     ownRole.roleId === COORDINATOR_ROLE_ID ||
     ownRole.roleId === CREATOR_ROLE_ID;
@@ -146,6 +144,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
             onPress={() => {
               if (isLastMember) {
                 navigation.navigate('LeaveProjectWarning', {
+                  memberType: route.params.memberType,
                   warningType: 'lastDevice',
                   deviceType,
                 });
@@ -153,12 +152,15 @@ export const CollaboratorInfo: NativeNavigationComponent<
               }
               if (isLastCoordinator) {
                 navigation.navigate('LeaveProjectWarning', {
+                  memberType: route.params.memberType,
                   warningType: 'lastCoordinator',
                   deviceType,
                 });
                 return;
               }
-              navigation.navigate('LeaveProject');
+              navigation.navigate('LeaveProject', {
+                memberType: route.params.memberType,
+              });
             }}
           />
         ) : ownRoleIsCoordinator ? (

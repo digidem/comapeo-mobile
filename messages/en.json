@@ -523,10 +523,6 @@
     "description": "Label for phone model",
     "message": "Phone model"
   },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Preview"
-  },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Release name"
@@ -2234,11 +2230,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Each project is unique and separate."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coordinator"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Participant"
   }
 }

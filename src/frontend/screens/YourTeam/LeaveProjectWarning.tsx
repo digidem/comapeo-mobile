@@ -68,7 +68,9 @@ export const LeaveProjectWarning = ({
   const isLastCoordinator = warningType === 'lastCoordinator';
 
   function handleContinue() {
-    navigation.navigate('LeaveProject');
+    navigation.navigate('LeaveProject', {
+      memberType: isLastCoordinator ? 'coordinator' : 'participant',
+    });
   }
 
   return (

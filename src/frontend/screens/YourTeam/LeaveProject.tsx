@@ -10,17 +10,12 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLUE_GREY} from '../../lib/styles';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import {
-  useLeaveProject,
-  useManyProjects,
-  useOwnRoleInProject,
-} from '@comapeo/core-react';
+import {useLeaveProject, useManyProjects} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectSettings} from '../../hooks/server/projects';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 
 const m = defineMessages({
   leaveProjectTitle: {
@@ -48,19 +43,17 @@ const m = defineMessages({
 });
 
 export const LeaveProject = ({
+  route,
   navigation,
 }: NativeRootNavigationProps<'LeaveProject'>) => {
   const {formatMessage} = useIntl();
   const {projectId} = useActiveProject();
   const {data: projectSettings} = useProjectSettings();
-  const {data: ownRole} = useOwnRoleInProject({projectId});
   const leaveProject = useLeaveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
   const {data: projects} = useManyProjects();
 
-  const isCoordinator =
-    ownRole.roleId === COORDINATOR_ROLE_ID ||
-    ownRole.roleId === CREATOR_ROLE_ID;
+  const isCoordinator = route.params.memberType === 'coordinator';
 
   function handleLeaveProject() {
     leaveProject.mutate(

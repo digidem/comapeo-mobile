@@ -114,6 +114,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
             thisDevice={deviceInfo.deviceId === coordinator.deviceId}
             onPress={() => {
               navigation.navigate('CollaboratorInfo', {
+                memberType: 'coordinator',
                 deviceId: coordinator.deviceId,
                 isOwnDevice: deviceInfo.deviceId === coordinator.deviceId,
                 deviceType: coordinator.deviceType,
@@ -137,6 +138,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
             thisDevice={deviceInfo.deviceId === participant.deviceId}
             onPress={() => {
               navigation.navigate('CollaboratorInfo', {
+                memberType: 'participant',
                 deviceId: participant.deviceId,
                 isOwnDevice: deviceInfo.deviceId === participant.deviceId,
                 deviceType: participant.deviceType,

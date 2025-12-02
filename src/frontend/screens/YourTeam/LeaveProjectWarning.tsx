@@ -63,13 +63,13 @@ export const LeaveProjectWarning = ({
   navigation,
 }: NativeRootNavigationProps<'LeaveProjectWarning'>) => {
   const {formatMessage} = useIntl();
-  const {warningType, deviceType} = route.params;
+  const {warningType, deviceType, memberType} = route.params;
 
   const isLastCoordinator = warningType === 'lastCoordinator';
 
   function handleContinue() {
     navigation.navigate('LeaveProject', {
-      memberType: isLastCoordinator ? 'coordinator' : 'participant',
+      memberType,
     });
   }
 

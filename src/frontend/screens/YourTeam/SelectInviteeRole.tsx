@@ -1,7 +1,6 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {LIGHT_GREY, MEDIUM_GREY} from '../../lib/styles';
@@ -75,7 +74,7 @@ type RoleCardProps = {
 const RoleCard = ({role, onPress}: RoleCardProps) => {
   const {formatMessage} = useIntl();
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} testID={`role-card-${role}`}>
       <View style={styles.roleCardContentContainer}>
         <MaterialIcon name="radio-button-off" size={24} color={MEDIUM_GREY} />
         <View style={styles.flex}>

@@ -1,0 +1,22 @@
+diff --git a/node_modules/@comapeo/core/src/mapeo-manager.js b/node_modules/@comapeo/core/src/mapeo-manager.js
+index cdcce62..627479d 100644
+--- a/node_modules/@comapeo/core/src/mapeo-manager.js
++++ b/node_modules/@comapeo/core/src/mapeo-manager.js
+@@ -767,7 +767,7 @@ export class MapeoManager extends TypedEmitter {
+     // 5. Wait for initial project sync
+     if (waitForSync) {
+       try {
+-        await this.#waitForInitialSync(project)
++        await project.$sync.waitForSync('initial')
+       } catch (e) {
+         this.#l.log('ERROR: could not do initial project sync', e)
+       }
+@@ -1074,7 +1074,7 @@ export class MapeoManager extends TypedEmitter {
+     await project[kProjectLeave]()
+ 
+     // Sync any role changes from project leave
+-    await this.#waitForInitialSync(project)
++    await project.$sync.waitForSync('initial')
+   }
+ 
+   async getMapStyleJsonUrl() {

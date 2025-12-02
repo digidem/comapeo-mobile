@@ -14,11 +14,6 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {LIGHT_GREY} from '../../lib/styles';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
-import {
-  COORDINATOR_ROLE_ID,
-  CREATOR_ROLE_ID,
-  MEMBER_ROLE_ID,
-} from '../../sharedTypes';
 
 const m = defineMessages({
   title: {
@@ -70,15 +65,11 @@ function InvitableDevicesList() {
   const projectMembersQuery = useManyMembers(projectId);
 
   const invitableDevices = devices.filter(device => {
-    const existingMember = projectMembersQuery.data.find(
-      member =>
-        member.deviceId === device.deviceId &&
-        (member.role.roleId === COORDINATOR_ROLE_ID ||
-          member.role.roleId === CREATOR_ROLE_ID ||
-          member.role.roleId === MEMBER_ROLE_ID),
+    const existingOrPreviousMember = projectMembersQuery.data.some(
+      member => member.deviceId === device.deviceId,
     );
 
-    if (!existingMember) {
+    if (!existingOrPreviousMember) {
       return true;
     }
 

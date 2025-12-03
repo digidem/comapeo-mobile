@@ -1030,8 +1030,11 @@
   "screens.LeaveProject.cancel": {
     "message": "取消"
   },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "このデバイスは、このプロジェクトを表示または貢献しません。"
+  "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
+    "message": "デバイスはこのプロジェクトを表示、貢献、調整することができなくなります。"
+  },
+  "screens.LeaveProject.leaveProjectDescriptionParticipant": {
+    "message": "デバイスは、このプロジェクトを表示または貢献することができなくなります。"
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "{projectName} を離れますか？"

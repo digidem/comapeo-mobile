@@ -7,7 +7,6 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
   it('creates observation and records first audio', async () => {
     await $('~Add Observation').click();
     const community = await $(byTextMatches('Community'));
-    await community.scrollIntoView();
     await community.click();
     await $(byResourceId('OBS.add-audio-btn')).click();
     await driver.pause(3000);

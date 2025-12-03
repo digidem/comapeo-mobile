@@ -7,9 +7,8 @@ describe('Audio - Recording Flow', () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
 
-    const airstripCategory = await $(byTextMatches('Airstrip'));
-    await airstripCategory.scrollIntoView();
-    await airstripCategory.click();
+    const caveCategory = await $(byTextMatches('Cave'));
+    await caveCategory.click();
 
     const micButton = await $(byResourceId('OBS.add-audio-btn'));
     await micButton.click();
@@ -34,6 +33,6 @@ describe('Audio - Recording Flow', () => {
     await editorReturn.click();
 
     await expect($('~Play audio recording.')).toBeDisplayed();
-    await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
+    await expect($(byTextMatches('Cave'))).toBeDisplayed();
   });
 });

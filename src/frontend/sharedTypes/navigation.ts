@@ -173,12 +173,13 @@ export type RootStackParamsList = {
     warningType: 'lastCoordinator' | 'lastDevice';
     deviceType: DeviceType;
   };
-  LeaveProject: {memberType: 'coordinator' | 'participant'};
+  LeaveProject: {
+    memberType: 'coordinator' | 'participant';
+  };
   LeftProjectConfirmation: undefined;
   CollaboratorInfo: {
     deviceId: string;
     isOwnDevice: boolean;
-    deviceType: DeviceType;
     memberType: 'coordinator' | 'participant';
   };
   ConfirmTrackDiscardBottomSheet: {trackId: string};

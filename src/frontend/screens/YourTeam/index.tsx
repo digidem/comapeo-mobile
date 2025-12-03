@@ -117,7 +117,6 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
                 memberType: 'coordinator',
                 deviceId: coordinator.deviceId,
                 isOwnDevice: deviceInfo.deviceId === coordinator.deviceId,
-                deviceType: coordinator.deviceType,
               });
             }}
           />
@@ -141,7 +140,6 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
                 memberType: 'participant',
                 deviceId: participant.deviceId,
                 isOwnDevice: deviceInfo.deviceId === participant.deviceId,
-                deviceType: participant.deviceType,
               });
             }}
           />

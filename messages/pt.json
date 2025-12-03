@@ -1030,8 +1030,11 @@
   "screens.LeaveProject.cancel": {
     "message": "Cancelar"
   },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "Este dispositivo não verá mais ou contribuirá para este projeto"
+  "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
+    "message": "O dispositivo não será mais capaz de visualizar, contribuir ou ajustar este projeto."
+  },
+  "screens.LeaveProject.leaveProjectDescriptionParticipant": {
+    "message": "O dispositivo não será mais capaz de ver ou contribuir para este projeto."
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "Sair de {projectName}?"

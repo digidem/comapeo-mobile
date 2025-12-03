@@ -1030,8 +1030,11 @@
   "screens.LeaveProject.cancel": {
     "message": "Annuleren"
   },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "Dit apparaat zal niet langer bekijken of bijdragen aan dit project"
+  "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
+    "message": "Apparaat zal niet langer in staat zijn om dit project te bekijken, bij te dragen of aan te passen."
+  },
+  "screens.LeaveProject.leaveProjectDescriptionParticipant": {
+    "message": "Apparaat zal niet langer in staat zijn om dit project te bekijken of bij te dragen."
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "Verlaat {projectName}?"

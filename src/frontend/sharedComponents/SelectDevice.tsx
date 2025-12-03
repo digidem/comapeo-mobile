@@ -44,7 +44,7 @@ const m = defineMessages({
   },
 });
 
-type SelectionMode = 'invites' | 'sendMap';
+type SelectionMode = 'invites' | 'shareMap';
 
 export const SelectDevice = () => {
   const ssid = useLocalDiscoveryState(state => state.ssid);
@@ -57,7 +57,7 @@ export const SelectDevice = () => {
   const projectMembersQuery = useManyMembers(projectId);
 
   const selectionMode: SelectionMode =
-    route.name === 'SelectMapShareDevice' ? 'sendMap' : 'invites';
+    route.name === 'SelectMapShareDevice' ? 'shareMap' : 'invites';
 
   const selectableDevices = getSelectableDevices({
     peers: devices,
@@ -98,7 +98,7 @@ export const SelectDevice = () => {
           }
 
           const handlePress = () => {
-            if (selectionMode === 'sendMap') {
+            if (selectionMode === 'shareMap') {
               // TODO: Navigate to map sharing in subsequent PR
               console.log('Share map with device:', deviceId);
             } else {
@@ -147,7 +147,7 @@ export function getSelectableDevices({
   projectMembers,
   selectionMode,
 }: GetSelectableDevicesParams): PublicPeerInfo[] {
-  if (selectionMode === 'sendMap') {
+  if (selectionMode === 'shareMap') {
     // For map sharing, return peers that are members of the current project
     // TODO: possibly update this to include members from all projects the user is part of
     return peers.filter(device => {

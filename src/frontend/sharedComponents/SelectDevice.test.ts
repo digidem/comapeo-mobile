@@ -128,7 +128,7 @@ describe('getSelectableDevices', () => {
     });
   });
 
-  describe('sendMap mode', () => {
+  describe('shareMap mode', () => {
     it('should return only peers that are project members', () => {
       const peers = [
         mockPeer('peer-1', 'Peer 1'),
@@ -143,7 +143,7 @@ describe('getSelectableDevices', () => {
       const result = getSelectableDevices({
         peers,
         projectMembers,
-        selectionMode: 'sendMap',
+        selectionMode: 'shareMap',
       });
 
       expect(result).toHaveLength(2);
@@ -160,7 +160,7 @@ describe('getSelectableDevices', () => {
       const result = getSelectableDevices({
         peers,
         projectMembers,
-        selectionMode: 'sendMap',
+        selectionMode: 'shareMap',
       });
 
       expect(result).toHaveLength(0);
@@ -173,7 +173,7 @@ describe('getSelectableDevices', () => {
       const result = getSelectableDevices({
         peers,
         projectMembers,
-        selectionMode: 'sendMap',
+        selectionMode: 'shareMap',
       });
 
       expect(result).toHaveLength(0);
@@ -194,7 +194,7 @@ describe('getSelectableDevices', () => {
       const result = getSelectableDevices({
         peers,
         projectMembers,
-        selectionMode: 'sendMap',
+        selectionMode: 'shareMap',
       });
 
       expect(result).toHaveLength(3);
@@ -216,7 +216,7 @@ describe('getSelectableDevices', () => {
       const result = getSelectableDevices({
         peers,
         projectMembers,
-        selectionMode: 'sendMap',
+        selectionMode: 'shareMap',
       });
 
       expect(result).toHaveLength(2);
@@ -235,14 +235,14 @@ describe('getSelectableDevices', () => {
         selectionMode: 'invites',
       });
 
-      const sendMapResult = getSelectableDevices({
+      const shareMapResult = getSelectableDevices({
         peers,
         projectMembers,
-        selectionMode: 'sendMap',
+        selectionMode: 'shareMap',
       });
 
       expect(invitesResult).toHaveLength(0);
-      expect(sendMapResult).toHaveLength(0);
+      expect(shareMapResult).toHaveLength(0);
     });
 
     it('should handle case where peer deviceId does not match any project member', () => {

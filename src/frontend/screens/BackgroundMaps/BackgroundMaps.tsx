@@ -19,6 +19,7 @@ import {
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
 import {Button} from '../../sharedComponents/Button';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -172,6 +173,15 @@ export function BackgroundMapsScreen() {
           }}
           onRemoveMap={() => {
             removeMapBottomSheet.openSheet();
+          }}
+        />
+
+        {/* TODO: Temporary dev button for map sharing - will be replaced with proper UI */}
+        <SecondaryButton
+          fullSize
+          text="Share Map"
+          onPress={() => {
+            navigate('SelectMapShareDevice');
           }}
         />
 

@@ -105,6 +105,7 @@ export type RootStackParamsList = {
   };
   YourTeam: undefined;
   SelectDevice: undefined;
+  SelectMapShareDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;
   InviteAccepted: {name: string};

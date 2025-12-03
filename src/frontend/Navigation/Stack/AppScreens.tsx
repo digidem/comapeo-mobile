@@ -24,7 +24,7 @@ import {
 } from '../../screens/ProjectCreation/CreateOrNameSoloProject';
 import {ProjectCreated} from '../../screens/ProjectCreation/CreateOrNameSoloProject/ProjectCreated';
 import {YourTeam} from '../../screens/YourTeam';
-import {SelectDevice} from '../../screens/YourTeam/SelectDevice';
+import {SelectDevice} from '../../sharedComponents/SelectDevice';
 import {SelectInviteeRole} from '../../screens/YourTeam/SelectInviteeRole';
 import {ReviewInvitation} from '../../screens/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/YourTeam/InviteAccepted';
@@ -263,6 +263,11 @@ export const createAppScreens = ({
       />
       <RootStack.Screen
         name="SelectDevice"
+        component={SelectDevice}
+        options={{headerTitle: intl(SelectDevice.navTitle)}}
+      />
+      <RootStack.Screen
+        name="SelectMapShareDevice"
         component={SelectDevice}
         options={{headerTitle: intl(SelectDevice.navTitle)}}
       />

@@ -8,6 +8,7 @@ import {
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useAppLanguageTag} from '../useAppLanguageTag';
+import {usePresetsQuery} from './presets';
 
 export function useTracks() {
   const {projectId} = useActiveProject();
@@ -54,8 +55,7 @@ export function useTrackPresets() {
 }
 
 export function useGetPresetById(presetRefId: string | undefined) {
-  const {projectId} = useActiveProject();
-  const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
+  const {data: allPresets} = usePresetsQuery();
 
   if (!presetRefId || !allPresets) return null;
 

@@ -64,11 +64,6 @@ const m = defineMessages({
     defaultMessage: 'Release name',
     description: 'Label for the release name',
   },
-  releaseName: {
-    id: 'screens.AboutSettings.releaseName',
-    defaultMessage: 'Preview',
-    description: 'The CoMapeo chosen release name for the version of the app',
-  },
   seeUpdates: {
     id: 'screens.AboutSettings.seeUpdates',
     defaultMessage: 'See CoMapeo Updates',
@@ -157,10 +152,7 @@ export const AboutSettings = () => {
           />
         </ListItem>
         <ListItem disableGutters>
-          <ListItemText
-            primary={t(m.releaseNameLabel)}
-            secondary={t(m.releaseName)}
-          />
+          <ListItemText primary={t(m.releaseNameLabel)} secondary="Abare" />
         </ListItem>
         <ListItem
           disableGutters
@@ -175,9 +167,7 @@ export const AboutSettings = () => {
         <SecondaryButton
           fullSize
           text={t(m.seeUpdates)}
-          onPress={() =>
-            Linking.openURL('https://awana.digital/category/technical-updates')
-          }
+          onPress={() => Linking.openURL('https://comapeo.app')}
         />
       </View>
     </ScrollView>

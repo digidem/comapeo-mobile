@@ -523,10 +523,6 @@
     "description": "Label for phone model",
     "message": "Telefoon model"
   },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Voorvertoning"
-  },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Release naam"
@@ -1014,11 +1010,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Projectstatistieken worden gedeeld"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Ga naar de kaart"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Ga naar Sync"
+  "screens.InviteSuccess.done": {
+    "message": "Voltooid"
   },
   "screens.InviteSuccess.success": {
     "message": "Geslaagd"
@@ -1677,6 +1670,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Project Statistieken Instrument UIT"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Reden: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "DEZE APPARAAT VERWIJDEREN VAN…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Wat gebeurt er hier?"
@@ -1737,14 +1739,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Voltooid"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is nu onderdeel van uw project."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Bekijk team"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Uitnodiging bekijken"
@@ -2108,7 +2110,7 @@
     "message": "Stop tracks"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Je neemt momenteel een nummer op. Om deel te nemen aan het project stop je opname"
+    "message": "Nummers worden opgenomen. Stop tracks om door te gaan."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Apparaat verwijderd."
@@ -2201,11 +2203,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Elk project is uniek en scheidt."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coördinator"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Deelnemer"
   }
 }

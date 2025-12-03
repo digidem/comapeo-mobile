@@ -127,7 +127,7 @@ export function useExportObservations({projectId}: {projectId: string}) {
             const results = await saveDocuments({
               sourceUris: [filepath],
               mimeType: 'application/geo+json',
-              fileName,
+              fileName: `${fileName}.geojson`,
             });
 
             FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
@@ -154,7 +154,7 @@ export function useExportObservations({projectId}: {projectId: string}) {
           const results = await saveDocuments({
             sourceUris: [filepath],
             mimeType: 'application/zip',
-            fileName,
+            fileName: `${fileName}.zip`,
           });
 
           FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {

@@ -173,7 +173,6 @@ export type RootStackParamsList = {
   CollaboratorInfo: {
     deviceId: string;
     isOwnDevice: boolean;
-    deviceType: DeviceType;
     memberType: 'coordinator' | 'participant';
   };
   ConfirmTrackDiscardBottomSheet: {trackId: string};

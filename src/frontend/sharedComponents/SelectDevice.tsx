@@ -7,7 +7,6 @@ import {type MemberInfo} from '@comapeo/core/dist/member-api';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {useLocalDiscoveryState} from '../hooks/useLocalDiscoveryState';
 import {useLocalPeers} from '../hooks/useLocalPeers';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import WifiIcon from '../images/WifiIcon.svg';
 import {DeviceNameWithIcon} from './DeviceNameWithIcon';
 import {BodyText} from './Text/BodyText';
@@ -15,7 +14,7 @@ import {HeaderText} from './Text/HeaderText';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {LIGHT_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
-import {useRoute} from '@react-navigation/native';
+import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
@@ -46,11 +45,12 @@ const m = defineMessages({
 
 type SelectionMode = 'invites' | 'shareMap';
 
-export const SelectDevice = () => {
+export const SelectDevice = ({
+  navigation,
+  route,
+}: NativeRootNavigationProps<'SelectDevice' | 'SelectMapShareDevice'>) => {
   const ssid = useLocalDiscoveryState(state => state.ssid);
   const {formatMessage: t} = useIntl();
-  const route = useRoute();
-  const navigation = useNavigationFromRoot();
 
   const devices = useInitiallyConnectedPeers();
   const projectId = useActiveProject();

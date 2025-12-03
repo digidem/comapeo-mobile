@@ -269,7 +269,7 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="SelectMapShareDevice"
         component={SelectDevice}
-        options={{headerTitle: intl(SelectDevice.navTitle)}}
+        options={{headerTitle: intl(SelectDevice.navTitleMapShare)}}
       />
       <RootStack.Screen
         name="SelectInviteeRole"

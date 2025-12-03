@@ -26,6 +26,10 @@ const m = defineMessages({
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.title',
     defaultMessage: 'Select Device to Invite',
   },
+  titleMapShare: {
+    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare',
+    defaultMessage: 'Select Device',
+  },
   notSeeingDevice: {
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice',
     defaultMessage: 'Not seeing a Device?',
@@ -130,6 +134,7 @@ export const SelectDevice = () => {
 };
 
 SelectDevice.navTitle = m.title;
+SelectDevice.navTitleMapShare = m.titleMapShare;
 
 type GetSelectableDevicesParams = {
   peers: PublicPeerInfo[];

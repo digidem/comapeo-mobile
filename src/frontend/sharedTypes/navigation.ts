@@ -168,7 +168,14 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
-  LeaveProject: {memberType: 'coordinator' | 'participant'};
+  LeaveProjectWarning: {
+    memberType: 'coordinator' | 'participant';
+    warningType: 'lastCoordinator' | 'lastDevice';
+    deviceType: DeviceType;
+  };
+  LeaveProject: {
+    memberType: 'coordinator' | 'participant';
+  };
   LeftProjectConfirmation: undefined;
   CollaboratorInfo: {
     deviceId: string;

@@ -1,6 +1,7 @@
 import {getSelectableDevices} from './SelectDevice';
 import {type MemberInfo} from '@comapeo/core/dist/member-api';
 import {type MapeoClientApi} from '@comapeo/ipc';
+import {BLOCKED_ROLE_ID, LEFT_ROLE_ID} from '../sharedTypes';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
@@ -221,6 +222,74 @@ describe('getSelectableDevices', () => {
 
       expect(result).toHaveLength(2);
       expect(result.map(p => p.deviceId)).toEqual(['peer-2', 'peer-4']);
+    });
+
+    it('should filter out blocked members', () => {
+      const peers = [
+        mockPeer('peer-1', 'Peer 1'),
+        mockPeer('peer-2', 'Peer 2'),
+        mockPeer('peer-3', 'Peer 3'),
+      ];
+      const projectMembers = [
+        mockMember('peer-1', 'COORDINATOR_ROLE_ID'),
+        mockMember('peer-2', BLOCKED_ROLE_ID),
+        mockMember('peer-3', 'MEMBER_ROLE_ID'),
+      ];
+
+      const result = getSelectableDevices({
+        peers,
+        projectMembers,
+        selectionMode: 'shareMap',
+      });
+
+      expect(result).toHaveLength(2);
+      expect(result.map(p => p.deviceId)).toEqual(['peer-1', 'peer-3']);
+    });
+
+    it('should filter out left members', () => {
+      const peers = [
+        mockPeer('peer-1', 'Peer 1'),
+        mockPeer('peer-2', 'Peer 2'),
+        mockPeer('peer-3', 'Peer 3'),
+      ];
+      const projectMembers = [
+        mockMember('peer-1', 'COORDINATOR_ROLE_ID'),
+        mockMember('peer-2', LEFT_ROLE_ID),
+        mockMember('peer-3', 'MEMBER_ROLE_ID'),
+      ];
+
+      const result = getSelectableDevices({
+        peers,
+        projectMembers,
+        selectionMode: 'shareMap',
+      });
+
+      expect(result).toHaveLength(2);
+      expect(result.map(p => p.deviceId)).toEqual(['peer-1', 'peer-3']);
+    });
+
+    it('should filter out both blocked and left members', () => {
+      const peers = [
+        mockPeer('peer-1', 'Peer 1'),
+        mockPeer('peer-2', 'Peer 2'),
+        mockPeer('peer-3', 'Peer 3'),
+        mockPeer('peer-4', 'Peer 4'),
+      ];
+      const projectMembers = [
+        mockMember('peer-1', 'COORDINATOR_ROLE_ID'),
+        mockMember('peer-2', BLOCKED_ROLE_ID),
+        mockMember('peer-3', LEFT_ROLE_ID),
+        mockMember('peer-4', 'MEMBER_ROLE_ID'),
+      ];
+
+      const result = getSelectableDevices({
+        peers,
+        projectMembers,
+        selectionMode: 'shareMap',
+      });
+
+      expect(result).toHaveLength(2);
+      expect(result.map(p => p.deviceId)).toEqual(['peer-1', 'peer-4']);
     });
   });
 

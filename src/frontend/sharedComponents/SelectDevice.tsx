@@ -15,6 +15,7 @@ import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {LIGHT_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {BLOCKED_ROLE_ID, LEFT_ROLE_ID} from '../sharedTypes';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
@@ -52,7 +53,7 @@ export const SelectDevice = ({
   const ssid = useLocalDiscoveryState(state => state.ssid);
   const {formatMessage: t} = useIntl();
 
-  const devices = useInitiallyConnectedPeers();
+  const availablePeers = useInitiallyConnectedPeers();
   const projectId = useActiveProject();
   const projectMembersQuery = useManyMembers(projectId);
 
@@ -60,7 +61,7 @@ export const SelectDevice = ({
     route.name === 'SelectMapShareDevice' ? 'shareMap' : 'invites';
 
   const selectableDevices = getSelectableDevices({
-    peers: devices,
+    peers: availablePeers,
     projectMembers: projectMembersQuery.data,
     selectionMode,
   });
@@ -148,17 +149,17 @@ export function getSelectableDevices({
   selectionMode,
 }: GetSelectableDevicesParams): PublicPeerInfo[] {
   if (selectionMode === 'shareMap') {
-    // For map sharing, return peers that are members of the current project
-    // TODO: possibly update this to include members from all projects the user is part of
     return peers.filter(device => {
-      const isProjectMember = projectMembers.some(
-        member => member.deviceId === device.deviceId,
+      const isActiveProjectMember = projectMembers.some(
+        member =>
+          member.deviceId === device.deviceId &&
+          member.role.roleId !== BLOCKED_ROLE_ID &&
+          member.role.roleId !== LEFT_ROLE_ID,
       );
-      return isProjectMember;
+      return isActiveProjectMember;
     });
   }
 
-  // For invites, filter out devices that are already project members
   return peers.filter(device => {
     const existingOrPreviousMember = projectMembers.some(
       member => member.deviceId === device.deviceId,

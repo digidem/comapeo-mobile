@@ -1042,6 +1042,30 @@
   "screens.LeaveProject.yesLeave": {
     "message": "Oui, quitter"
   },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Annuler"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Continuer"
+  },
+  "screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "Avant de partir, exportez des données importantes."
+  },
+  "screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "Pour éviter cela, invitez un nouvel appareil en tant que coordinateur."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "Si cet appareil quitte, alors aucun autre appareil ne peut ajouter ou supprimer des périphériques, ajuster les informations du projet, ou mettre à jour les catégories définies."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "L'appareil est le dernier coordinator."
+  },
+  "screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "Si cet appareil quitte, toutes les données de ce projet seront perdues."
+  },
+  "screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "L'appareil est le dernier appareil."
+  },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Ouvrir {deviceName}"
   },

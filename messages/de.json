@@ -1042,6 +1042,30 @@
   "screens.LeaveProject.yesLeave": {
     "message": "Ja, verlassen"
   },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Abbrechen"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Fortsetzen"
+  },
+  "screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "Exportieren Sie vor dem Verlassen wichtige Daten."
+  },
+  "screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "Um dies zu vermeiden, laden Sie ein neues Gerät als Koordinator."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "Wenn dieses Gerät verlässt, kann kein anderes Gerät Geräte hinzufügen oder entfernen, Projektinformationen anpassen oder die gesetzten Kategorien aktualisieren."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "Gerät ist der letzte Coordinator."
+  },
+  "screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "Wenn dieses Gerät verlässt, gehen alle Daten zu diesem Projekt verloren."
+  },
+  "screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "Gerät ist das letzte Gerät."
+  },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "{deviceName} öffnen"
   },

@@ -142,17 +142,19 @@ export const CollaboratorInfo: NativeNavigationComponent<
             )}
             onPress={() => {
               if (isLastMember) {
-                // TODO: Navigate to interstitial warning screen for last member when it is made
-                console.log(
-                  'Last member: Show warning that project will be empty',
-                );
+                navigation.navigate('LeaveProjectWarning', {
+                  memberType: route.params.memberType,
+                  warningType: 'lastDevice',
+                  deviceType,
+                });
                 return;
               }
               if (isLastCoordinator) {
-                // TODO: Navigate to interstitial warning screen for last coordinator when it is made
-                console.log(
-                  'Last coordinator: Show warning that no coordinators will remain',
-                );
+                navigation.navigate('LeaveProjectWarning', {
+                  memberType: route.params.memberType,
+                  warningType: 'lastCoordinator',
+                  deviceType,
+                });
                 return;
               }
               navigation.navigate('LeaveProject', {

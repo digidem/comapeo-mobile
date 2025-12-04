@@ -5,4 +5,5 @@ describe('Team', function () {
   require('../solo-project/helper/minimal-project-creation.test');
   require('./team-screen-coordinator.test');
   require('./collaborator-info-coordinator.test');
+  require('./leave-project-warning.test');
 });

@@ -1042,6 +1042,30 @@
   "screens.LeaveProject.yesLeave": {
     "message": "はい、退出します"
   },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "取消"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "続ける"
+  },
+  "screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "出発する前に、重要なデータをエクスポートしてください。"
+  },
+  "screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "これを回避するには、新しいデバイスをコーディネーターとして招待してください。"
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "このデバイスが離れている場合、他のデバイスはデバイスを追加または削除できません。プロジェクト情報を調整したり、カテゴリセットを更新したりできません。"
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "デバイスは最後のコーディネーターです。"
+  },
+  "screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "このデバイスを離れると、このプロジェクト上のすべてのデータが失われます。"
+  },
+  "screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "デバイスは最後のデバイスです。"
+  },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "{deviceName} を開く"
   },

@@ -1042,6 +1042,30 @@
   "screens.LeaveProject.yesLeave": {
     "message": "Ja, verlaat"
   },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Annuleren"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Doorgaan"
+  },
+  "screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "Voordat je vertrekt, exporteer je belangrijke gegevens."
+  },
+  "screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "Nodig een nieuw apparaat uit als coördinator om dit te voorkomen."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "Als dit apparaat weggaat, kan geen ander apparaat apparaten toevoegen of verwijderen, projectinformatie aanpassen of de ingestelde categorieën bijwerken."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "Apparaat is laatste coördinator."
+  },
+  "screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "Als dit apparaat vertrekt, zullen alle gegevens van dit project verloren gaan."
+  },
+  "screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "Apparaat is laatste apparaat."
+  },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Open {deviceName}"
   },

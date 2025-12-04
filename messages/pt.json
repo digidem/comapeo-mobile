@@ -1042,6 +1042,30 @@
   "screens.LeaveProject.yesLeave": {
     "message": "Sim, Sair"
   },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Cancelar"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Continue"
+  },
+  "screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "Antes de sair, exporte quaisquer dados importantes."
+  },
+  "screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "Para evitar isso, convide um novo dispositivo como um coordinator."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "Se este dispositivo sair do dispositivo, então nenhum outro dispositivo pode adicionar ou remover dispositivos, ajustar as informações do projeto ou atualizar as categorias definidas."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "O dispositivo é o último coordinator."
+  },
+  "screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "Se este dispositivo sair, todos os dados neste projeto serão perdidos."
+  },
+  "screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "O dispositivo é o último dispositivo."
+  },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Abrir {deviceName}"
   },

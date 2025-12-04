@@ -19,7 +19,7 @@ describe('Audio - Playback and Delete', () => {
     const deleteBtn = await $(byText('Delete'));
     await deleteBtn.click();
 
-    await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
+    await expect($(byTextMatches('Cave'))).toBeDisplayed();
     await checkForElementGone('~Play audio recording.');
   });
 

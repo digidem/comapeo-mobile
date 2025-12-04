@@ -65,11 +65,11 @@ function InvitableDevicesList() {
   const projectMembersQuery = useManyMembers(projectId);
 
   const invitableDevices = devices.filter(device => {
-    const existingMember = projectMembersQuery.data.find(
+    const existingOrPreviousMember = projectMembersQuery.data.some(
       member => member.deviceId === device.deviceId,
     );
 
-    if (!existingMember) {
+    if (!existingOrPreviousMember) {
       return true;
     }
 

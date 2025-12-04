@@ -131,6 +131,7 @@ import {
   createNavigationOptions as createCollaboratorInfoNavOptions,
 } from '../../screens/YourTeam/CollaboratorInfo.tsx';
 import {LeaveProject} from '../../screens/YourTeam/LeaveProject.tsx';
+import {LeaveProjectWarning} from '../../screens/YourTeam/LeaveProjectWarning.tsx';
 import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 import {TurnOffPasscodeBottomSheet} from '../../screens/AppPasscode/TurnOffPasscodeBottomSheet.tsx';
@@ -511,6 +512,11 @@ export const createAppScreens = ({
         name="NameDefaultProjectIntro"
         component={NameDefaultProjectIntro}
         options={{headerTitle: intl(NameDefaultProjectIntro.navTitle)}}
+      />
+      <RootStack.Screen
+        name="LeaveProjectWarning"
+        component={LeaveProjectWarning}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="LeaveProject"

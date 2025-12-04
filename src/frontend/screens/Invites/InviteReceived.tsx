@@ -7,6 +7,8 @@ import {
   useAcceptInvite,
   useRejectInvite,
   useSingleInvite,
+  useCreateProject,
+  useManyProjects,
 } from '@comapeo/core-react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -64,7 +66,11 @@ export const InviteReceived = ({
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
   const {setActiveProjectId} = useActiveProjectIdActions();
+  const createProject = useCreateProject();
   const {isTracking} = useTracking();
+  const {data: allProjects} = useManyProjects();
+
+  const hasDefaultProject = allProjects.some(proj => !proj.name);
 
   const projectColor = invite.projectColor;
   const statsShared = invite.sendStats;
@@ -82,6 +88,15 @@ export const InviteReceived = ({
       {
         onSuccess: projectId => {
           setActiveProjectId(projectId);
+
+          if (!hasDefaultProject) {
+            createProject.mutate(undefined, {
+              onError: err => {
+                Sentry.captureException(err);
+              },
+            });
+          }
+
           navigation.replace('InviteSuccessfullyAccepted', {
             projectName: invite.projectName,
           });

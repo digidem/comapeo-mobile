@@ -78,19 +78,16 @@ export const CollaboratorInfo: NativeNavigationComponent<
     projectId,
     deviceId: route.params.deviceId,
   });
-  const {name, role, joinedAt} = member;
+  const {name, joinedAt, deviceType} = member;
   const isArchiveServer = isActiveArchiveServerMember(member);
 
   const {data: ownRole} = useOwnRoleInProject({projectId});
 
-  const isCoordinator =
-    role.roleId === COORDINATOR_ROLE_ID || role.roleId === CREATOR_ROLE_ID;
-
+  const isCoordinator = route.params.memberType === 'coordinator';
   const ownRoleIsCoordinator =
     ownRole.roleId === COORDINATOR_ROLE_ID ||
     ownRole.roleId === CREATOR_ROLE_ID;
 
-  const deviceType = route.params.deviceType;
   const isDesktop = deviceType === 'desktop';
 
   const isLastCoordinator = useIsLastCoordinator({
@@ -145,20 +142,24 @@ export const CollaboratorInfo: NativeNavigationComponent<
             )}
             onPress={() => {
               if (isLastMember) {
-                // TODO: Navigate to interstitial warning screen for last member when it is made
-                console.log(
-                  'Last member: Show warning that project will be empty',
-                );
+                navigation.navigate('LeaveProjectWarning', {
+                  memberType: route.params.memberType,
+                  warningType: 'lastDevice',
+                  deviceType,
+                });
                 return;
               }
               if (isLastCoordinator) {
-                // TODO: Navigate to interstitial warning screen for last coordinator when it is made
-                console.log(
-                  'Last coordinator: Show warning that no coordinators will remain',
-                );
+                navigation.navigate('LeaveProjectWarning', {
+                  memberType: route.params.memberType,
+                  warningType: 'lastCoordinator',
+                  deviceType,
+                });
                 return;
               }
-              navigation.navigate('LeaveProject');
+              navigation.navigate('LeaveProject', {
+                memberType: route.params.memberType,
+              });
             }}
           />
         ) : ownRoleIsCoordinator ? (

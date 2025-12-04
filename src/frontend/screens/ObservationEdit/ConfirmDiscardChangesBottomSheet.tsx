@@ -45,10 +45,10 @@ export const ConfirmDiscardChangesBottomSheet = ({
   const {clearDraft} = useDraftObservation();
 
   function handleDiscard() {
-    clearDraft();
     navigation.popTo('Observation', {
       observationId: route.params.observationId,
     });
+    clearDraft();
   }
 
   return (

@@ -81,28 +81,41 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
   // TODO: This shouldn't be an effect, the logic should happen when the user
   // presses the edit button.
+
+  // Track if we've loaded the draft for this observation to prevent reloading
+  const loadedObservationIdRef = React.useRef<string | null>(null);
+
   React.useEffect(() => {
     let cancelled = false;
-    if (value) return;
-
-    async function createDraftFromExistingObservation(docId: string) {
-      const observation = await projectApi.observation.getByDocId(docId);
-      if (cancelled) return;
-      const presets = await projectApi.preset.getMany();
-      if (cancelled) return;
-      let matchingPreset;
-      if (observation.presetRef) {
-        matchingPreset = presets.find(
-          p => p.docId === observation.presetRef?.docId,
-        );
-      }
-      if (!matchingPreset) {
-        matchingPreset = matchPreset(observation.tags, presets);
-      }
-      existingObservationToDraft(observation, matchingPreset);
+    const currentObservationId = route.params?.observationId;
+    if (loadedObservationIdRef.current === currentObservationId) {
+      return;
+    }
+    if (currentObservationId !== loadedObservationIdRef.current) {
+      loadedObservationIdRef.current = null;
     }
 
-    createDraftFromExistingObservation(route.params?.observationId);
+    if (!value && loadedObservationIdRef.current !== currentObservationId) {
+      async function createDraftFromExistingObservation(docId: string) {
+        const observation = await projectApi.observation.getByDocId(docId);
+        if (cancelled) return;
+        const presets = await projectApi.preset.getMany();
+        if (cancelled) return;
+        let matchingPreset;
+        if (observation.presetRef) {
+          matchingPreset = presets.find(
+            p => p.docId === observation.presetRef?.docId,
+          );
+        }
+        if (!matchingPreset) {
+          matchingPreset = matchPreset(observation.tags, presets);
+        }
+        existingObservationToDraft(observation, matchingPreset);
+        loadedObservationIdRef.current = currentObservationId;
+      }
+
+      createDraftFromExistingObservation(currentObservationId);
+    }
 
     return () => {
       cancelled = true;
@@ -113,7 +126,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     route.params?.observationId,
     projectApi.observation,
     projectApi.preset,
-    navigation,
   ]);
 
   const handleNavigationSuccess = React.useCallback(() => {

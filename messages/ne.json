@@ -1042,6 +1042,30 @@
   "screens.LeaveProject.yesLeave": {
     "message": "Yes, Leave"
   },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "रद्द"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "जारी राख्ने"
+  },
+  "screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "Before leaving, export any important data."
+  },
+  "screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "To avoid this, invite a new device as a coordinator."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "If this device leaves, then no other device can add or remove devices, adjust project info, or update the categories set."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "Device is last coordinator."
+  },
+  "screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "If this device leaves, then all data on this project will be lost."
+  },
+  "screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "Device is last device."
+  },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Open {deviceName}"
   },

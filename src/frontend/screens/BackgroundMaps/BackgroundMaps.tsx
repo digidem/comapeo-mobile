@@ -12,21 +12,32 @@ import {
 } from '../../hooks/server/maps';
 import ErrorSvg from '../../images/Error.svg';
 import GreenCheckSvg from '../../images/Success.svg';
-import {RED, WHITE} from '../../lib/styles';
+import StackSvg from '../../images/Stack.svg';
+import {
+  RED,
+  WHITE,
+  DARK_GREY,
+  NEW_DARK_GREY,
+  VERY_LIGHT_GREY,
+  BLUE_GREY,
+} from '../../lib/styles';
 import {
   BottomSheetModal,
   BottomSheetModalContent,
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
-import {Button} from '../../sharedComponents/Button';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {ChooseMapFile} from './ChooseMapFile';
-import {CustomMapDetails} from './CustomMapDetails';
 import * as Sentry from '@sentry/react-native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {
+  SecondaryButton,
+  DestructiveButton,
+} from '../../sharedComponents/Buttons';
+import {bytesToMegabytes} from '../../lib/bytesToMegabytes';
 
 const m = defineMessages({
   screenTitle: {
@@ -95,6 +106,22 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.importErrorDescription',
     defaultMessage: 'Unable to import the file. Please go back and try again.',
   },
+  sendMap: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.sendMap',
+    defaultMessage: 'Send Map',
+  },
+  removeMap: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.removeMap',
+    defaultMessage: 'Remove Map',
+  },
+  addedOn: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.addedOn',
+    defaultMessage: 'Added on {date}',
+  },
+  megabytes: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.megabytes',
+    defaultMessage: '{size} MB',
+  },
 });
 
 export function createNavigationOptions({
@@ -122,16 +149,25 @@ export function BackgroundMapsScreen() {
   const importCustomMapMutation = useImportCustomMapFile();
   const removeCustomMapMutation = useRemoveCustomMapFile();
   const customMapInfoQuery = useGetCustomMapInfo();
+  const hasBackgroundMap =
+    customMapInfoQuery.data !== undefined && customMapInfoQuery.data !== null;
 
   return (
     <>
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.descriptionContainer}>
-          <BodyText>{t(m.description1)}</BodyText>
-          <BodyText>{t(m.description2)}</BodyText>
-        </View>
+      <ScrollView
+        contentContainerStyle={[
+          styles.container,
+          hasBackgroundMap && styles.containerWithMap,
+        ]}>
+        {!hasBackgroundMap && (
+          <View style={styles.descriptionContainer}>
+            <BodyText>{t(m.description1)}</BodyText>
+            <BodyText>{t(m.description2)}</BodyText>
+          </View>
+        )}
 
         <CustomMapInfoSection
+          customMapInfoQuery={customMapInfoQuery}
           onChooseFile={() => {
             selectFileMutation.mutate(
               {
@@ -180,9 +216,9 @@ export function BackgroundMapsScreen() {
             <BodyText variant="large" style={styles.infoLoadErrorText}>
               {t(m.customMapInfoLoadError)}
             </BodyText>
-            <Button
-              fullWidth
-              variant="outlined"
+            <DestructiveButton
+              fullSize
+              text={t(m.removeMapFile)}
               onPress={() => {
                 removeCustomMapMutation.mutate(undefined, {
                   onError: err => {
@@ -190,13 +226,11 @@ export function BackgroundMapsScreen() {
                     navigate('ErrorBottomSheet');
                   },
                 });
-              }}>
-              <HeaderText
-                variant="header5"
-                style={styles.removeMapFileButtonText}>
-                {t(m.removeMapFile)}
-              </HeaderText>
-            </Button>
+              }}
+              renderIcon={({color, size}) => (
+                <MaterialIcon name="delete" size={size} color={color} />
+              )}
+            />
           </>
         )}
       </ScrollView>
@@ -266,27 +300,83 @@ export function BackgroundMapsScreen() {
 }
 
 function CustomMapInfoSection({
+  customMapInfoQuery,
   onChooseFile,
   onRemoveMap,
 }: {
+  customMapInfoQuery: ReturnType<typeof useGetCustomMapInfo>;
   onChooseFile: () => void;
   onRemoveMap: () => void;
 }) {
-  const customMapInfoQuery = useGetCustomMapInfo();
+  const {formatMessage: t} = useIntl();
 
-  if (customMapInfoQuery.status === 'pending') {
+  if (customMapInfoQuery.status === 'pending' || customMapInfoQuery.isLoading) {
     return <Loading size={10} />;
   }
 
   if (customMapInfoQuery.data) {
+    const calculatedSize = customMapInfoQuery.data.size
+      ? bytesToMegabytes(customMapInfoQuery.data.size).toFixed(0)
+      : undefined;
+    const displayedSize =
+      calculatedSize === undefined
+        ? undefined
+        : parseInt(calculatedSize, 10) < 1
+          ? '<1'
+          : calculatedSize;
+
     return (
-      <CustomMapDetails
-        loading={customMapInfoQuery.isFetching}
-        name={customMapInfoQuery.data.name}
-        dateAdded={customMapInfoQuery.data.created}
-        size={customMapInfoQuery.data.size}
-        onRemove={onRemoveMap}
-      />
+      <View style={styles.hasMapContainer}>
+        <View style={styles.cardContainer}>
+          <View style={styles.centerStuff}>
+            <View style={styles.iconBackground}>
+              <StackSvg width={47} height={50} color={DARK_GREY} />
+            </View>
+
+            <HeaderText variant="header2" style={styles.mapName}>
+              {customMapInfoQuery.data.name}
+            </HeaderText>
+
+            <View style={styles.sizeContainer}>
+              <StackSvg width={19} height={20} color={NEW_DARK_GREY} />
+              <HeaderText variant="header4">
+                {displayedSize !== undefined &&
+                  t(m.megabytes, {size: displayedSize})}
+              </HeaderText>
+            </View>
+          </View>
+
+          <BodyText style={styles.dateText}>
+            {t(m.addedOn, {
+              date: new Intl.DateTimeFormat(undefined, {
+                year: 'numeric',
+                month: 'long',
+                day: '2-digit',
+              }).format(customMapInfoQuery.data.created),
+            })}
+          </BodyText>
+
+          <SecondaryButton
+            fullSize
+            text={t(m.sendMap)}
+            onPress={() => {
+              // TODO: Implement send map functionality
+            }}
+            renderIcon={({color, size}) => (
+              <MaterialIcon name="send" size={size} color={color} />
+            )}
+          />
+        </View>
+
+        <DestructiveButton
+          fullSize
+          text={t(m.removeMap)}
+          onPress={onRemoveMap}
+          renderIcon={({color, size}) => (
+            <MaterialIcon name="delete" size={size} color={color} />
+          )}
+        />
+      </View>
     );
   }
 
@@ -302,6 +392,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 40,
     gap: 36,
+    flexGrow: 1,
+  },
+  containerWithMap: {
+    paddingVertical: 20,
   },
   descriptionContainer: {
     gap: 20,
@@ -310,8 +404,49 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: RED,
   },
-  removeMapFileButtonText: {
-    letterSpacing: 0.5,
-    color: RED,
+  hasMapContainer: {
+    flex: 1,
+    gap: 15,
+    alignItems: 'center',
+  },
+  cardContainer: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    borderColor: BLUE_GREY,
+    borderWidth: 1,
+    borderRadius: 10,
+    flex: 1,
+  },
+  centerStuff: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 12,
+  },
+  iconBackground: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: VERY_LIGHT_GREY,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mapName: {
+    textAlign: 'center',
+    color: DARK_GREY,
+  },
+  sizeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10,
+  },
+  dateText: {
+    textAlign: 'center',
+    color: NEW_DARK_GREY,
+    flex: 1,
   },
 });

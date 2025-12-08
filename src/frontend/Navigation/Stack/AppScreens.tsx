@@ -76,6 +76,7 @@ import {
   createNavigationOptions as createBackgroundMapsNavigationOptions,
   BackgroundMapsScreen,
 } from '../../screens/BackgroundMaps/BackgroundMaps.tsx';
+import {WaitingForMapAccept} from '../../screens/BackgroundMaps/WaitingForMapAccept.tsx';
 import {ExchangeSettingsBottomSheet} from '../../screens/Exchange/ExchangeSettingsBottomSheet.tsx';
 import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
 import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
@@ -386,6 +387,11 @@ export const createAppScreens = ({
         name="BackgroundMaps"
         component={BackgroundMapsScreen}
         options={createBackgroundMapsNavigationOptions({intl})}
+      />
+      <RootStack.Screen
+        name="WaitingForMapAccept"
+        component={WaitingForMapAccept}
+        options={{headerShown: false}}
       />
 
       {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (

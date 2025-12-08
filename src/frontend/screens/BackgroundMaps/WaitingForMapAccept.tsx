@@ -1,0 +1,128 @@
+import * as React from 'react';
+import {AppState, StyleSheet, View} from 'react-native';
+import {defineMessages, useIntl} from 'react-intl';
+import * as Sentry from '@sentry/react-native';
+
+import {
+  useSendMapShare,
+  useRequestCancelMapShare,
+} from '../../hooks/server/mapShare';
+import InviteSent from '../../images/InviteSent.svg';
+import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {TextButton} from '../../sharedComponents/TextButton';
+
+const m = defineMessages({
+  waitingMessage: {
+    id: 'screens.Settings.MapManagement.WaitingForMapToAccept.waitingMessage',
+    defaultMessage: 'Waiting for Device to Accept Map',
+  },
+  timerMessage: {
+    id: 'screens.Settings.MapManagement.WaitingForMapToAccept.timerMessage',
+    defaultMessage: 'Map sent {time}s ago',
+  },
+  cancel: {
+    id: 'screens.Settings.MapManagement.WaitingForMapToAccept.cancel',
+    defaultMessage: 'Cancel',
+  },
+});
+
+export function WaitingForMapAccept({
+  navigation,
+}: NativeRootNavigationProps<'WaitingForMapAccept'>) {
+  const {formatMessage: t} = useIntl();
+  const {projectId} = useActiveProject();
+
+  const [time, setTime] = React.useState(0);
+  const sendMapShareMutation = useSendMapShare({projectId});
+  const requestCancelMapShareMutation = useRequestCancelMapShare({projectId});
+  const hasSentMapShareRef = React.useRef(false);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({headerShown: false});
+  }, [navigation]);
+
+  usePreventAndroidBackButton();
+
+  const cancelShare = React.useCallback(() => {
+    if (requestCancelMapShareMutation.status === 'error') {
+      navigation.goBack();
+      return;
+    }
+
+    requestCancelMapShareMutation.mutate(undefined, {
+      onSuccess: () => {
+        navigation.goBack();
+      },
+      onError: err => {
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet');
+      },
+    });
+  }, [navigation, requestCancelMapShareMutation]);
+
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextState => {
+      if (nextState === 'background') {
+        cancelShare();
+      }
+    });
+
+    return () => subscription.remove();
+  }, [cancelShare]);
+
+  React.useEffect(() => {
+    if (sendMapShareMutation.status === 'error') return;
+
+    if (hasSentMapShareRef.current) return;
+
+    hasSentMapShareRef.current = true;
+    sendMapShareMutation.mutate(undefined, {
+      onError: err => {
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet');
+      },
+    });
+  }, [navigation, sendMapShareMutation]);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => setTime(prev => prev + 1), 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <InviteSent />
+      <HeaderText style={{marginTop: 10, textAlign: 'center'}}>
+        {t(m.waitingMessage)}
+      </HeaderText>
+      <BodyText style={{marginTop: 20}}>
+        {t(m.timerMessage, {time: formatElapsed(time)})}
+      </BodyText>
+
+      <TextButton title={t(m.cancel)} onPress={cancelShare} />
+    </View>
+  );
+}
+
+function formatElapsed(totalSeconds: number) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${minutes.toString().padStart(2, '0')}:${seconds
+    .toString()
+    .padStart(2, '0')}`;
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 35,
+    flex: 1,
+  },
+});

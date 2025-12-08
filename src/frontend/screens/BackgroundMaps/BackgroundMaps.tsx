@@ -27,6 +27,7 @@ import {ChooseMapFile} from './ChooseMapFile';
 import {CustomMapDetails} from './CustomMapDetails';
 import * as Sentry from '@sentry/react-native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   screenTitle: {
@@ -130,6 +131,12 @@ export function BackgroundMapsScreen() {
           <BodyText>{t(m.description1)}</BodyText>
           <BodyText>{t(m.description2)}</BodyText>
         </View>
+
+        <SecondaryButton
+          onPress={() => navigate('WaitingForMapAccept')}
+          fullSize
+          text={'Go to Waiting for Accept Map Screen'}
+        />
 
         <CustomMapInfoSection
           onChooseFile={() => {

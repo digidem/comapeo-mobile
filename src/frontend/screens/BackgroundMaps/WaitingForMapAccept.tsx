@@ -3,10 +3,7 @@ import {AppState, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 
-import {
-  useSendMapShare,
-  useRequestCancelMapShare,
-} from '../../hooks/server/mapShare';
+import {useSendMapShare, useRequestCancelMapShare} from '@comapeo/core-react';
 import InviteSent from '../../images/InviteSent.svg';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -103,9 +100,23 @@ export function WaitingForMapAccept({
           // Sentry.captureException(err);
           // navigation.navigate('ErrorBottomSheet');
         },
-        onSuccess: (result: 'ACCEPT' | 'REJECT' | 'ALREADY') => {
+        onSuccess: (
+          result:
+            | {decision: 'ACCEPT' | 'UNRECOGNIZED'; shareId: string}
+            | {
+                decision: 'REJECT';
+                shareId: string;
+                reason:
+                  | 'ALREADY'
+                  | 'UNRECOGNIZED'
+                  | 'DISK_SPACE'
+                  | 'USER_REJECTED';
+              },
+        ) => {
           console.log('Map share result:', result);
-          // add navigation to next screen here based on what we get
+          // TODO: Handle different decisions and navigate accordingly
+          // - If decision is 'ACCEPT', the map is being downloaded
+          // - If decision is 'REJECT', check the reason (could be 'ALREADY' if they have it)
         },
       },
     );

@@ -152,6 +152,49 @@ export function BackgroundMapsScreen() {
   const hasBackgroundMap =
     customMapInfoQuery.data !== undefined && customMapInfoQuery.data !== null;
 
+  const handleChooseFile = () => {
+    selectFileMutation.mutate(
+      {
+        copyToCacheDirectory: false,
+        allowedExtensions: ['smp'],
+      },
+      {
+        onSuccess: asset => {
+          if (!asset) return;
+
+          importCustomMapMutation.mutate(
+            {
+              uri: asset.uri,
+            },
+            {
+              onSuccess: () => {
+                mapAddedBottomSheet.openSheet();
+              },
+              onError: err => {
+                Sentry.captureException(err);
+                navigate('BackgroundMapErrorBottomSheet', {
+                  title: t(m.importErrorTitle),
+                  description: t(m.importErrorDesciption),
+                });
+              },
+            },
+          );
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigate('BackgroundMapErrorBottomSheet', {
+            title: t(m.importErrorTitle),
+            description: t(m.importErrorDesciption),
+          });
+        },
+      },
+    );
+  };
+
+  const handleRemoveMap = () => {
+    removeMapBottomSheet.openSheet();
+  };
+
   return (
     <>
       <ScrollView
@@ -159,79 +202,26 @@ export function BackgroundMapsScreen() {
           styles.container,
           hasBackgroundMap && styles.containerWithMap,
         ]}>
-        {!hasBackgroundMap && (
-          <View style={styles.descriptionContainer}>
-            <BodyText>{t(m.description1)}</BodyText>
-            <BodyText>{t(m.description2)}</BodyText>
-          </View>
-        )}
-
-        <CustomMapInfoSection
-          customMapInfoQuery={customMapInfoQuery}
-          onChooseFile={() => {
-            selectFileMutation.mutate(
-              {
-                copyToCacheDirectory: false,
-                allowedExtensions: ['smp'],
-              },
-              {
-                onSuccess: asset => {
-                  if (!asset) return;
-
-                  importCustomMapMutation.mutate(
-                    {
-                      uri: asset.uri,
-                    },
-                    {
-                      onSuccess: () => {
-                        mapAddedBottomSheet.openSheet();
-                      },
-                      onError: err => {
-                        Sentry.captureException(err);
-                        navigate('BackgroundMapErrorBottomSheet', {
-                          title: t(m.importErrorTitle),
-                          description: t(m.importErrorDesciption),
-                        });
-                      },
-                    },
-                  );
-                },
+        {customMapInfoQuery.status === 'error' ? (
+          <ErrorScreen
+            onRemove={() => {
+              removeCustomMapMutation.mutate(undefined, {
                 onError: err => {
                   Sentry.captureException(err);
-                  navigate('BackgroundMapErrorBottomSheet', {
-                    title: t(m.importErrorTitle),
-                    description: t(m.importErrorDesciption),
-                  });
+                  navigate('ErrorBottomSheet');
                 },
-              },
-            );
-          }}
-          onRemoveMap={() => {
-            removeMapBottomSheet.openSheet();
-          }}
-        />
-
-        {customMapInfoQuery.status === 'error' && (
-          <>
-            <BodyText variant="large" style={styles.infoLoadErrorText}>
-              {t(m.customMapInfoLoadError)}
-            </BodyText>
-            <DestructiveButton
-              fullSize
-              text={t(m.removeMapFile)}
-              onPress={() => {
-                removeCustomMapMutation.mutate(undefined, {
-                  onError: err => {
-                    Sentry.captureException(err);
-                    navigate('ErrorBottomSheet');
-                  },
-                });
-              }}
-              renderIcon={({color, size}) => (
-                <MaterialIcon name="delete" size={size} color={color} />
-              )}
-            />
-          </>
+              });
+            }}
+          />
+        ) : customMapInfoQuery.isLoading || customMapInfoQuery.isPending ? (
+          <Loading size={10} />
+        ) : hasBackgroundMap ? (
+          <MapInfoScreen
+            customMapInfo={customMapInfoQuery.data!}
+            onRemoveMap={handleRemoveMap}
+          />
+        ) : (
+          <NoMapScreen onChooseFile={handleChooseFile} />
         )}
       </ScrollView>
 
@@ -299,91 +289,111 @@ export function BackgroundMapsScreen() {
   );
 }
 
-function CustomMapInfoSection({
-  customMapInfoQuery,
-  onChooseFile,
+function NoMapScreen({onChooseFile}: {onChooseFile: () => void}) {
+  const {formatMessage: t} = useIntl();
+
+  return (
+    <>
+      <View style={styles.descriptionContainer}>
+        <BodyText>{t(m.description1)}</BodyText>
+        <BodyText>{t(m.description2)}</BodyText>
+      </View>
+      <ChooseMapFile onChooseFile={onChooseFile} />
+    </>
+  );
+}
+
+function MapInfoScreen({
+  customMapInfo,
   onRemoveMap,
 }: {
-  customMapInfoQuery: ReturnType<typeof useGetCustomMapInfo>;
-  onChooseFile: () => void;
+  customMapInfo: NonNullable<ReturnType<typeof useGetCustomMapInfo>['data']>;
   onRemoveMap: () => void;
 }) {
   const {formatMessage: t} = useIntl();
 
-  if (customMapInfoQuery.status === 'pending' || customMapInfoQuery.isLoading) {
-    return <Loading size={10} />;
-  }
+  const calculatedSize = customMapInfo.size
+    ? bytesToMegabytes(customMapInfo.size).toFixed(0)
+    : undefined;
+  const displayedSize =
+    calculatedSize === undefined
+      ? undefined
+      : parseInt(calculatedSize, 10) < 1
+        ? '<1'
+        : calculatedSize;
 
-  if (customMapInfoQuery.data) {
-    const calculatedSize = customMapInfoQuery.data.size
-      ? bytesToMegabytes(customMapInfoQuery.data.size).toFixed(0)
-      : undefined;
-    const displayedSize =
-      calculatedSize === undefined
-        ? undefined
-        : parseInt(calculatedSize, 10) < 1
-          ? '<1'
-          : calculatedSize;
-
-    return (
-      <View style={styles.hasMapContainer}>
-        <View style={styles.cardContainer}>
-          <View style={styles.centerStuff}>
-            <View style={styles.iconBackground}>
-              <StackSvg width={47} height={50} color={DARK_GREY} />
-            </View>
-
-            <HeaderText variant="header2" style={styles.mapName}>
-              {customMapInfoQuery.data.name}
-            </HeaderText>
-
-            <View style={styles.sizeContainer}>
-              <StackSvg width={19} height={20} color={NEW_DARK_GREY} />
-              <HeaderText variant="header4">
-                {displayedSize !== undefined &&
-                  t(m.megabytes, {size: displayedSize})}
-              </HeaderText>
-            </View>
+  return (
+    <View style={styles.hasMapContainer}>
+      <View style={styles.cardContainer}>
+        <View style={styles.centerStuff}>
+          <View style={styles.iconBackground}>
+            <StackSvg width={47} height={50} color={DARK_GREY} />
           </View>
 
-          <BodyText style={styles.dateText}>
-            {t(m.addedOn, {
-              date: new Intl.DateTimeFormat(undefined, {
-                year: 'numeric',
-                month: 'long',
-                day: '2-digit',
-              }).format(customMapInfoQuery.data.created),
-            })}
-          </BodyText>
+          <HeaderText variant="header2" style={styles.mapName}>
+            {customMapInfo.name}
+          </HeaderText>
 
-          <SecondaryButton
-            fullSize
-            text={t(m.sendMap)}
-            onPress={() => {
-              // TODO: Implement send map functionality
-            }}
-            renderIcon={({color, size}) => (
-              <MaterialIcon name="send" size={size} color={color} />
-            )}
-          />
+          <View style={styles.sizeContainer}>
+            <StackSvg width={19} height={20} color={NEW_DARK_GREY} />
+            <HeaderText variant="header4">
+              {displayedSize !== undefined &&
+                t(m.megabytes, {size: displayedSize})}
+            </HeaderText>
+          </View>
         </View>
 
-        <DestructiveButton
+        <BodyText style={styles.dateText}>
+          {t(m.addedOn, {
+            date: new Intl.DateTimeFormat(undefined, {
+              year: 'numeric',
+              month: 'long',
+              day: '2-digit',
+            }).format(customMapInfo.created),
+          })}
+        </BodyText>
+
+        <SecondaryButton
           fullSize
-          text={t(m.removeMap)}
-          onPress={onRemoveMap}
+          text={t(m.sendMap)}
+          onPress={() => {
+            // TODO: Implement send map functionality
+          }}
           renderIcon={({color, size}) => (
-            <MaterialIcon name="delete" size={size} color={color} />
+            <MaterialIcon name="send" size={size} color={color} />
           )}
         />
       </View>
-    );
-  }
 
-  return customMapInfoQuery.isFetching ? (
-    <Loading size={10} />
-  ) : (
-    <ChooseMapFile onChooseFile={onChooseFile} />
+      <DestructiveButton
+        fullSize
+        text={t(m.removeMap)}
+        onPress={onRemoveMap}
+        renderIcon={({color, size}) => (
+          <MaterialIcon name="delete" size={size} color={color} />
+        )}
+      />
+    </View>
+  );
+}
+
+function ErrorScreen({onRemove}: {onRemove: () => void}) {
+  const {formatMessage: t} = useIntl();
+
+  return (
+    <>
+      <BodyText variant="large" style={styles.infoLoadErrorText}>
+        {t(m.customMapInfoLoadError)}
+      </BodyText>
+      <DestructiveButton
+        fullSize
+        text={t(m.removeMapFile)}
+        onPress={onRemove}
+        renderIcon={({color, size}) => (
+          <MaterialIcon name="delete" size={size} color={color} />
+        )}
+      />
+    </>
   );
 }
 

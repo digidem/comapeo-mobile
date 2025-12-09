@@ -10,8 +10,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
-import {useManyDocs} from '@comapeo/core-react';
-import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
+import {usePresetsQuery} from '../../hooks/server/presets.ts';
 
 const m = defineMessages({
   track: {
@@ -35,9 +34,7 @@ const TrackObservationItemNotMemoized = ({
 }: ObservationListItemProps) => {
   const {formatMessage} = useIntl();
   const isMine = useIsMyDocument(track.originalVersionId);
-  const projectId = useActiveProject().projectId;
-  const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
-
+  const {data: allPresets} = usePresetsQuery();
   const matchedPreset =
     track.presetRef && allPresets.find(p => p.docId === track.presetRef?.docId);
 

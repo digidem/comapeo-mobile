@@ -23,8 +23,6 @@ describe('Create Project and land on map screen', () => {
     await $(byResourceId('MAIN.map-screen')).click();
 
     const header = await $(byResourceId('HOME.header-title'));
-    await expect(header).toHaveText(
-      `${output.names.secondProject} - Coordinator`,
-    );
+    await expect(header).toHaveText(output.names.secondProject);
   });
 });

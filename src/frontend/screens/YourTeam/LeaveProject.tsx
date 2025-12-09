@@ -22,10 +22,15 @@ const m = defineMessages({
     id: 'screens.LeaveProject.leaveProjectTitle',
     defaultMessage: 'Leave {projectName}?',
   },
-  leaveProjectDescription: {
-    id: 'screens.LeaveProject.leaveProjectDescription',
+  leaveProjectDescriptionCoordinator: {
+    id: 'screens.LeaveProject.leaveProjectDescriptionCoordinator',
     defaultMessage:
-      'This device will no longer view or contribute to this project',
+      'Device will no longer be able to view, contribute to, or adjust this project.',
+  },
+  leaveProjectDescriptionParticipant: {
+    id: 'screens.LeaveProject.leaveProjectDescriptionParticipant',
+    defaultMessage:
+      'Device will no longer be able to view or contribute to this project.',
   },
   yesLeave: {
     id: 'screens.LeaveProject.yesLeave',
@@ -38,6 +43,7 @@ const m = defineMessages({
 });
 
 export const LeaveProject = ({
+  route,
   navigation,
 }: NativeRootNavigationProps<'LeaveProject'>) => {
   const {formatMessage} = useIntl();
@@ -46,6 +52,8 @@ export const LeaveProject = ({
   const leaveProject = useLeaveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
   const {data: projects} = useManyProjects();
+
+  const isCoordinator = route.params.memberType === 'coordinator';
 
   function handleLeaveProject() {
     leaveProject.mutate(
@@ -84,7 +92,11 @@ export const LeaveProject = ({
             })}
           </HeaderText>
           <BodyText style={styles.description}>
-            {formatMessage(m.leaveProjectDescription)}
+            {formatMessage(
+              isCoordinator
+                ? m.leaveProjectDescriptionCoordinator
+                : m.leaveProjectDescriptionParticipant,
+            )}
           </BodyText>
         </View>
       </View>

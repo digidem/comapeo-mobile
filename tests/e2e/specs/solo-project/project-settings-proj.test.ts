@@ -14,15 +14,15 @@ describe('Project - Project Settings Named Project', () => {
     const screenHeader = await $(byText('Coordinator Tools'));
     await expect(screenHeader).toBeDisplayed();
 
-    await expect(
-      $(byText(`${output.names.project} - Coordinator`)),
-    ).toBeDisplayed();
+    await expect($(byText(output.names.project))).toBeDisplayed();
     await expect($(byText('Edit Info'))).toBeDisplayed();
 
     const projectCategories = await $(byText('Project Categories'));
     await projectCategories.scrollIntoView();
     await expect(projectCategories).toBeDisplayed();
-    await expect($(byTextMatches('CoMapeo Default Config'))).toBeDisplayed();
+    await expect(
+      $(byTextMatches('CoMapeo Default Categories')),
+    ).toBeDisplayed();
     await expect($(byText('Update Set'))).toBeDisplayed();
 
     await $(byTextMatches('Project Statistics')).scrollIntoView();

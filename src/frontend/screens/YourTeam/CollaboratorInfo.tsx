@@ -17,6 +17,8 @@ import {SecondaryDestructiveButton} from '../../sharedComponents/Buttons';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import {isActiveArchiveServerMember} from '../../hooks/server/projects';
+import {useIsLastCoordinator} from '../../hooks/useIsLastCoordinator';
+import {useIsLastMember} from '../../hooks/useIsLastMember';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
 const m = defineMessages({
@@ -76,21 +78,24 @@ export const CollaboratorInfo: NativeNavigationComponent<
     projectId,
     deviceId: route.params.deviceId,
   });
-  const {name, role, joinedAt} = member;
+  const {name, joinedAt, deviceType} = member;
   const isArchiveServer = isActiveArchiveServerMember(member);
 
   const {data: ownRole} = useOwnRoleInProject({projectId});
 
-  const isCoordinator =
-    role.roleId === COORDINATOR_ROLE_ID || role.roleId === CREATOR_ROLE_ID;
-
+  const isCoordinator = route.params.memberType === 'coordinator';
   const ownRoleIsCoordinator =
     ownRole.roleId === COORDINATOR_ROLE_ID ||
     ownRole.roleId === CREATOR_ROLE_ID;
 
-  const deviceType = route.params.deviceType;
   const isDesktop = deviceType === 'desktop';
-  const canShowActionButton = !isCoordinator && !isArchiveServer && !isDesktop;
+
+  const isLastCoordinator = useIsLastCoordinator({
+    deviceId: route.params.deviceId,
+  });
+  const isLastMember = useIsLastMember({deviceId: route.params.deviceId});
+
+  const canShowActionButton = !isArchiveServer && !isDesktop;
 
   return (
     <View style={styles.container}>
@@ -136,7 +141,25 @@ export const CollaboratorInfo: NativeNavigationComponent<
               <MaterialDesignIcons size={size} color={color} name="export" />
             )}
             onPress={() => {
-              navigation.navigate('LeaveProject');
+              if (isLastMember) {
+                navigation.navigate('LeaveProjectWarning', {
+                  memberType: route.params.memberType,
+                  warningType: 'lastDevice',
+                  deviceType,
+                });
+                return;
+              }
+              if (isLastCoordinator) {
+                navigation.navigate('LeaveProjectWarning', {
+                  memberType: route.params.memberType,
+                  warningType: 'lastCoordinator',
+                  deviceType,
+                });
+                return;
+              }
+              navigation.navigate('LeaveProject', {
+                memberType: route.params.memberType,
+              });
             }}
           />
         ) : ownRoleIsCoordinator ? (

@@ -121,10 +121,16 @@ export function useRemoveCustomMapFile() {
  */
 export function useGetCustomMapInfo() {
   const {data: styleUrl} = useMapStyleJsonUrl();
+  const isE2ETest = process.env.EXPO_PUBLIC_E2E_TEST;
 
   return useQuery({
-    queryKey: [...getMapsQueryKey(), 'custom', 'info', {styleUrl}],
+    queryKey: [...getMapsQueryKey(), 'custom', 'info', {styleUrl, isE2ETest}],
     queryFn: async () => {
+      // In E2E tests, our custom map server is not available, so we skip fetching custom map info.
+      if (isE2ETest) {
+        return null;
+      }
+
       const response = await fetchCustomMapInfo(styleUrl);
 
       if (response.status === 404) {
@@ -137,6 +143,7 @@ export function useGetCustomMapInfo() {
 
       return v.parse(CustomMapInfoSchema, await response.json());
     },
+    enabled: !isE2ETest,
   });
 }
 

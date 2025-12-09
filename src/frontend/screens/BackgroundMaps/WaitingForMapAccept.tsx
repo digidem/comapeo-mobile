@@ -53,15 +53,21 @@ export function WaitingForMapAccept({
       return;
     }
 
-    requestCancelMapShareMutation.mutate(undefined, {
-      onSuccess: () => {
-        navigation.goBack();
+    // TODO: Replace with real shareId once we track it from the send operation
+    const TEMP_FAKE_SHARE_ID = 'fake-share-id-for-testing';
+
+    requestCancelMapShareMutation.mutate(
+      {shareId: TEMP_FAKE_SHARE_ID},
+      {
+        onSuccess: () => {
+          navigation.goBack();
+        },
+        onError: (err: Error) => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
       },
-      onError: err => {
-        Sentry.captureException(err);
-        navigation.navigate('ErrorBottomSheet');
-      },
-    });
+    );
   }, [navigation, requestCancelMapShareMutation]);
 
   React.useEffect(() => {
@@ -80,12 +86,29 @@ export function WaitingForMapAccept({
     if (hasSentMapShareRef.current) return;
 
     hasSentMapShareRef.current = true;
-    sendMapShareMutation.mutate(undefined, {
-      onError: err => {
-        Sentry.captureException(err);
-        navigation.navigate('ErrorBottomSheet');
+    // TODO: Replace with real deviceId and mapId once the select device screen is merged
+    // These should probably come from navigation params
+    const TEMP_FAKE_DEVICE_ID = 'fake-device-id-for-testing';
+    const TEMP_FAKE_MAP_ID = 'fake-map-id-for-testing';
+
+    sendMapShareMutation.mutate(
+      {deviceId: TEMP_FAKE_DEVICE_ID, mapId: TEMP_FAKE_MAP_ID},
+      {
+        onError: (err: Error) => {
+          console.log(
+            'Map share error (expected with fake data):',
+            err.message,
+          );
+          // TODO: Uncomment when using real data
+          // Sentry.captureException(err);
+          // navigation.navigate('ErrorBottomSheet');
+        },
+        onSuccess: (result: 'ACCEPT' | 'REJECT' | 'ALREADY') => {
+          console.log('Map share result:', result);
+          // add navigation to next screen here based on what we get
+        },
       },
-    });
+    );
   }, [navigation, sendMapShareMutation]);
 
   React.useEffect(() => {

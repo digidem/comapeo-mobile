@@ -1,34 +1,12 @@
-import {type UseMutationResult} from '@tanstack/react-query';
+// @ts-expect-error - hooks exist in the package but aren't exported from the main index yet
+import * as mapHooks from '@comapeo/core-react/dist/esm/hooks/maps.js';
 
-// TODO: replace with @comapeo/core-react when useSendMapShare/useRequestCancelMapShare ship
+export const useSendMapShare = mapHooks.useSendMapShare;
+export const useRequestCancelInvite = mapHooks.useRequestCancelInvite;
+export const useManyMapShares = mapHooks.useManyMapShares;
+export const useSingleMapShare = mapHooks.useSingleMapShare;
+export const useAcceptMapShare = mapHooks.useAcceptMapShare;
+export const useRejectMapShare = mapHooks.useRejectMapShare;
 
-type MapShareMutationResult = Pick<
-  UseMutationResult<unknown, unknown, unknown, unknown>,
-  'error' | 'mutate' | 'mutateAsync' | 'reset' | 'status'
->;
-
-const fallbackError = new Error(
-  'Map share hooks are not available in the current @comapeo/core-react version.',
-);
-
-const fallbackResult: MapShareMutationResult = {
-  error: fallbackError,
-  mutate: () => {},
-  mutateAsync: () => Promise.reject(fallbackError),
-  reset: () => {},
-  status: 'error',
-};
-
-export function useSendMapShare(_opts: {
-  projectId: string;
-}): MapShareMutationResult {
-  void _opts;
-  return fallbackResult;
-}
-
-export function useRequestCancelMapShare(_opts: {
-  projectId: string;
-}): MapShareMutationResult {
-  void _opts;
-  return fallbackResult;
-}
+// Re-export useRequestCancelInvite as useRequestCancelMapShare for compatibility with existing code
+export const useRequestCancelMapShare = mapHooks.useRequestCancelInvite;

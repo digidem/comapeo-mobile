@@ -6,7 +6,8 @@ import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import {type AppStackParamsList} from './sharedTypes/navigation';
 
-import {useSetUpInvitesListeners} from '@comapeo/core-react';
+// TODO: Re-enable when using a version of @comapeo/core-react that exports this hook
+// import {useSetUpInvitesListeners} from '@comapeo/core-react';
 import {RootStackNavigator} from './Navigation/Stack';
 import type Sentry from '@sentry/react-native';
 import {PostHogProvider} from 'posthog-react-native';
@@ -23,7 +24,8 @@ export const AppNavigator = ({
 }) => {
   const containerRef =
     React.useRef<NavigationContainerRef<AppStackParamsList>>(null);
-  useSetUpInvitesListeners();
+  // TODO: Re-enable when using a version of @comapeo/core-react that exports this hook
+  // useSetUpInvitesListeners();
 
   if (permissionAsked) {
     SplashScreen.hide();

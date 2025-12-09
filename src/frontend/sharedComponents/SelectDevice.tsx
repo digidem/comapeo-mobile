@@ -15,7 +15,13 @@ import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {LIGHT_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {BLOCKED_ROLE_ID, LEFT_ROLE_ID} from '../sharedTypes';
+import {
+  BLOCKED_ROLE_ID,
+  COORDINATOR_ROLE_ID,
+  CREATOR_ROLE_ID,
+  LEFT_ROLE_ID,
+  MEMBER_ROLE_ID,
+} from '../sharedTypes';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
@@ -161,11 +167,15 @@ export function getSelectableDevices({
   }
 
   return peers.filter(device => {
-    const existingOrPreviousMember = projectMembers.some(
-      member => member.deviceId === device.deviceId,
+    const existingMember = projectMembers.some(
+      member =>
+        member.deviceId === device.deviceId &&
+        (member.role.roleId === COORDINATOR_ROLE_ID ||
+          member.role.roleId === CREATOR_ROLE_ID ||
+          member.role.roleId === MEMBER_ROLE_ID),
     );
 
-    return !existingOrPreviousMember;
+    return !existingMember;
   });
 }
 

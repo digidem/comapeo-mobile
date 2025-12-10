@@ -477,6 +477,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Seleccionar dispositivo para invitar"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
+    "message": "Seleccionar dispositivo"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "Como persona Coordinadora, este dispositivo puede invitar y quitar dispositivos de este proyecto y administrar los detalles del Proyecto."
   },

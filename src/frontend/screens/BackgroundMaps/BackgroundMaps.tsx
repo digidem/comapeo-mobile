@@ -12,21 +12,34 @@ import {
 } from '../../hooks/server/maps';
 import ErrorSvg from '../../images/Error.svg';
 import GreenCheckSvg from '../../images/Success.svg';
-import {RED, WHITE} from '../../lib/styles';
+import StackSvg from '../../images/Stack.svg';
+import {
+  RED,
+  WHITE,
+  DARK_GREY,
+  NEW_DARK_GREY,
+  VERY_LIGHT_GREY,
+  BLUE_GREY,
+} from '../../lib/styles';
 import {
   BottomSheetModal,
   BottomSheetModalContent,
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
-import {Button} from '../../sharedComponents/Button';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {ChooseMapFile} from './ChooseMapFile';
-import {CustomMapDetails} from './CustomMapDetails';
 import * as Sentry from '@sentry/react-native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {
+  SecondaryButton,
+  DestructiveButton,
+  SecondaryDestructiveButton,
+} from '../../sharedComponents/Buttons';
+import {bytesToMegabytes} from '../../lib/bytesToMegabytes';
+import {Button} from '../../sharedComponents/Button';
+import {DownloadIcon} from '../../sharedComponents/icons';
 
 const m = defineMessages({
   screenTitle: {
@@ -95,6 +108,30 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.importErrorDescription',
     defaultMessage: 'Unable to import the file. Please go back and try again.',
   },
+  sendMap: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.sendMap',
+    defaultMessage: 'Send Map',
+  },
+  removeMap: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.removeMap',
+    defaultMessage: 'Remove Map',
+  },
+  addedOn: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.addedOn',
+    defaultMessage: 'Added on {date}',
+  },
+  megabytes: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.megabytes',
+    defaultMessage: '{size} MB',
+  },
+  chooseFile: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.chooseFile',
+    defaultMessage: 'Choose File',
+  },
+  acceptedFileTypes: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes',
+    defaultMessage: 'Accepted file types are .smp',
+  },
 });
 
 export function createNavigationOptions({
@@ -113,7 +150,6 @@ export function createNavigationOptions({
 
 export function BackgroundMapsScreen() {
   const {formatMessage: t} = useIntl();
-
   const {navigate} = useNavigationFromRoot();
   const mapAddedBottomSheet = useBottomSheetModal({openOnMount: false});
   const removeMapBottomSheet = useBottomSheetModal({openOnMount: false});
@@ -123,81 +159,72 @@ export function BackgroundMapsScreen() {
   const removeCustomMapMutation = useRemoveCustomMapFile();
   const customMapInfoQuery = useGetCustomMapInfo();
 
+  const handleChooseFile = () => {
+    selectFileMutation.mutate(
+      {
+        copyToCacheDirectory: false,
+        allowedExtensions: ['smp'],
+      },
+      {
+        onSuccess: asset => {
+          if (!asset) return;
+
+          importCustomMapMutation.mutate(
+            {
+              uri: asset.uri,
+            },
+            {
+              onSuccess: () => {
+                mapAddedBottomSheet.openSheet();
+              },
+              onError: err => {
+                Sentry.captureException(err);
+                navigate('BackgroundMapErrorBottomSheet', {
+                  title: t(m.importErrorTitle),
+                  description: t(m.importErrorDesciption),
+                });
+              },
+            },
+          );
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigate('BackgroundMapErrorBottomSheet', {
+            title: t(m.importErrorTitle),
+            description: t(m.importErrorDesciption),
+          });
+        },
+      },
+    );
+  };
+
+  const handleRemoveMap = () => {
+    removeMapBottomSheet.openSheet();
+  };
+
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.descriptionContainer}>
-          <BodyText>{t(m.description1)}</BodyText>
-          <BodyText>{t(m.description2)}</BodyText>
-        </View>
-
-        <CustomMapInfoSection
-          onChooseFile={() => {
-            selectFileMutation.mutate(
-              {
-                copyToCacheDirectory: false,
-                allowedExtensions: ['smp'],
-              },
-              {
-                onSuccess: asset => {
-                  if (!asset) return;
-
-                  importCustomMapMutation.mutate(
-                    {
-                      uri: asset.uri,
-                    },
-                    {
-                      onSuccess: () => {
-                        mapAddedBottomSheet.openSheet();
-                      },
-                      onError: err => {
-                        Sentry.captureException(err);
-                        navigate('BackgroundMapErrorBottomSheet', {
-                          title: t(m.importErrorTitle),
-                          description: t(m.importErrorDesciption),
-                        });
-                      },
-                    },
-                  );
-                },
+        {customMapInfoQuery.isPending ? (
+          <Loading size={10} />
+        ) : customMapInfoQuery.data ? (
+          <MapInfoScreen
+            customMapInfo={customMapInfoQuery.data}
+            onRemoveMap={handleRemoveMap}
+          />
+        ) : (
+          <NoMapScreen
+            error={customMapInfoQuery.error}
+            onChooseFile={handleChooseFile}
+            onRemoveMapFile={() => {
+              removeCustomMapMutation.mutate(undefined, {
                 onError: err => {
                   Sentry.captureException(err);
-                  navigate('BackgroundMapErrorBottomSheet', {
-                    title: t(m.importErrorTitle),
-                    description: t(m.importErrorDesciption),
-                  });
+                  navigate('ErrorBottomSheet');
                 },
-              },
-            );
-          }}
-          onRemoveMap={() => {
-            removeMapBottomSheet.openSheet();
-          }}
-        />
-
-        {customMapInfoQuery.status === 'error' && (
-          <>
-            <BodyText variant="large" style={styles.infoLoadErrorText}>
-              {t(m.customMapInfoLoadError)}
-            </BodyText>
-            <Button
-              fullWidth
-              variant="outlined"
-              onPress={() => {
-                removeCustomMapMutation.mutate(undefined, {
-                  onError: err => {
-                    Sentry.captureException(err);
-                    navigate('ErrorBottomSheet');
-                  },
-                });
-              }}>
-              <HeaderText
-                variant="header5"
-                style={styles.removeMapFileButtonText}>
-                {t(m.removeMapFile)}
-              </HeaderText>
-            </Button>
-          </>
+              });
+            }}
+          />
         )}
       </ScrollView>
 
@@ -265,43 +292,139 @@ export function BackgroundMapsScreen() {
   );
 }
 
-function CustomMapInfoSection({
+function NoMapScreen({
+  error,
   onChooseFile,
+  onRemoveMapFile,
+}: {
+  error: Error | null;
+  onChooseFile: () => void;
+  onRemoveMapFile: () => void;
+}) {
+  const {formatMessage: t} = useIntl();
+
+  return (
+    <View style={{marginTop: 20}}>
+      <View style={styles.descriptionContainer}>
+        <BodyText>{t(m.description1)}</BodyText>
+        <BodyText>{t(m.description2)}</BodyText>
+      </View>
+      <View style={{gap: 20, marginTop: 40}}>
+        <Button fullWidth variant="outlined" onPress={onChooseFile}>
+          <View style={styles.buttonContentContainer}>
+            <DownloadIcon size={24} />
+            <View>
+              <HeaderText variant="header5" style={styles.buttonTextBase}>
+                {t(m.chooseFile)}
+                <HeaderText variant="header5" style={styles.asteriskText}>
+                  {' '}
+                  *
+                </HeaderText>
+              </HeaderText>
+            </View>
+          </View>
+        </Button>
+        <BodyText variant="smallMeta" style={styles.fileTypeText}>
+          {t(m.acceptedFileTypes)}
+        </BodyText>
+      </View>
+      {error && (
+        <View style={{marginTop: 40}}>
+          <BodyText variant="large" style={styles.infoLoadErrorText}>
+            {t(m.customMapInfoLoadError)}
+          </BodyText>
+          <View style={{alignItems: 'center', marginTop: 20}}>
+            <SecondaryDestructiveButton
+              fullSize
+              text={t(m.removeMapFile)}
+              onPress={onRemoveMapFile}
+            />
+          </View>
+        </View>
+      )}
+    </View>
+  );
+}
+
+function MapInfoScreen({
+  customMapInfo,
   onRemoveMap,
 }: {
-  onChooseFile: () => void;
+  customMapInfo: NonNullable<ReturnType<typeof useGetCustomMapInfo>['data']>;
   onRemoveMap: () => void;
 }) {
-  const customMapInfoQuery = useGetCustomMapInfo();
+  const {formatMessage: t} = useIntl();
 
-  if (customMapInfoQuery.status === 'pending') {
-    return <Loading size={10} />;
-  }
+  const calculatedSize = customMapInfo.size
+    ? bytesToMegabytes(customMapInfo.size).toFixed(0)
+    : undefined;
+  const displayedSize =
+    calculatedSize === undefined
+      ? undefined
+      : parseInt(calculatedSize, 10) < 1
+        ? '<1'
+        : calculatedSize;
 
-  if (customMapInfoQuery.data) {
-    return (
-      <CustomMapDetails
-        loading={customMapInfoQuery.isFetching}
-        name={customMapInfoQuery.data.name}
-        dateAdded={customMapInfoQuery.data.created}
-        size={customMapInfoQuery.data.size}
-        onRemove={onRemoveMap}
+  return (
+    <View style={styles.hasMapContainer}>
+      <View style={styles.cardContainer}>
+        <View style={styles.centerStuff}>
+          <View style={styles.iconBackground}>
+            <StackSvg width={47} height={50} color={DARK_GREY} />
+          </View>
+
+          <HeaderText variant="header2" style={styles.mapName}>
+            {customMapInfo.name}
+          </HeaderText>
+
+          <View style={styles.sizeContainer}>
+            <StackSvg width={19} height={20} color={NEW_DARK_GREY} />
+            <HeaderText variant="header4">
+              {displayedSize !== undefined &&
+                t(m.megabytes, {size: displayedSize})}
+            </HeaderText>
+          </View>
+        </View>
+
+        <BodyText style={styles.dateText}>
+          {t(m.addedOn, {
+            date: new Intl.DateTimeFormat(undefined, {
+              year: 'numeric',
+              month: 'long',
+              day: '2-digit',
+            }).format(customMapInfo.created),
+          })}
+        </BodyText>
+
+        <SecondaryButton
+          fullSize
+          text={t(m.sendMap)}
+          onPress={() => {
+            // navigate('SelectMapShareDevice');
+          }}
+          renderIcon={({color, size}) => (
+            <MaterialIcon name="send" size={size} color={color} />
+          )}
+        />
+      </View>
+      <DestructiveButton
+        fullSize
+        text={t(m.removeMap)}
+        onPress={onRemoveMap}
+        renderIcon={({color, size}) => (
+          <MaterialIcon name="delete" size={size} color={color} />
+        )}
       />
-    );
-  }
-
-  return customMapInfoQuery.isFetching ? (
-    <Loading size={10} />
-  ) : (
-    <ChooseMapFile onChooseFile={onChooseFile} />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingVertical: 40,
+    paddingVertical: 20,
     gap: 36,
+    flexGrow: 1,
   },
   descriptionContainer: {
     gap: 20,
@@ -310,8 +433,64 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: RED,
   },
-  removeMapFileButtonText: {
+  hasMapContainer: {
+    flex: 1,
+    gap: 15,
+    alignItems: 'center',
+  },
+  cardContainer: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    borderColor: BLUE_GREY,
+    borderWidth: 1,
+    borderRadius: 10,
+    flex: 1,
+  },
+  centerStuff: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 12,
+  },
+  iconBackground: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: VERY_LIGHT_GREY,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mapName: {
+    textAlign: 'center',
+    color: DARK_GREY,
+  },
+  sizeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10,
+  },
+  dateText: {
+    textAlign: 'center',
+    color: NEW_DARK_GREY,
+    flex: 1,
+  },
+  buttonContentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  buttonTextBase: {
     letterSpacing: 0.5,
+  },
+  asteriskText: {
     color: RED,
+  },
+  fileTypeText: {
+    textAlign: 'center',
+    color: NEW_DARK_GREY,
   },
 });

@@ -1904,12 +1904,6 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Join a Project"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
-    "message": "Accepted file types are .smp"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Choose File"
-  },
   "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Accepted file types are .smp"
   },

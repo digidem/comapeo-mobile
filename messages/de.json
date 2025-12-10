@@ -477,6 +477,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Gerät zum Laden auswählen"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
+    "message": "Gerät auswählen"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "Als Koordinator kann dieses Gerät Benutzer einladen und entfernen und Projektdetails verwalten."
   },

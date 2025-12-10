@@ -1904,17 +1904,20 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Join a Project"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Accepted file types are .smp"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Choose File"
+  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
+    "message": "Added on {date}"
   },
   "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
     "message": "Added on {date}"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "This cannot be undone."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "Choose File"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "Close"

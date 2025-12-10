@@ -30,14 +30,16 @@ import {Loading} from '../../sharedComponents/Loading';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {ChooseMapFile} from './ChooseMapFile';
 import * as Sentry from '@sentry/react-native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {
   SecondaryButton,
   DestructiveButton,
+  SecondaryDestructiveButton,
 } from '../../sharedComponents/Buttons';
 import {bytesToMegabytes} from '../../lib/bytesToMegabytes';
+import {Button} from '../../sharedComponents/Button';
+import {DownloadIcon} from '../../sharedComponents/icons';
 
 const m = defineMessages({
   screenTitle: {
@@ -121,6 +123,14 @@ const m = defineMessages({
   megabytes: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.megabytes',
     defaultMessage: '{size} MB',
+  },
+  chooseFile: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.chooseFile',
+    defaultMessage: 'Choose File',
+  },
+  acceptedFileTypes: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes',
+    defaultMessage: 'Accepted file types are .smp',
   },
 });
 
@@ -294,28 +304,45 @@ function NoMapScreen({
   const {formatMessage: t} = useIntl();
 
   return (
-    <>
+    <View style={{marginTop: 20}}>
       <View style={styles.descriptionContainer}>
         <BodyText>{t(m.description1)}</BodyText>
         <BodyText>{t(m.description2)}</BodyText>
       </View>
-      <ChooseMapFile onChooseFile={onChooseFile} />
+      <View style={{gap: 20, marginTop: 40}}>
+        <Button fullWidth variant="outlined" onPress={onChooseFile}>
+          <View style={styles.buttonContentContainer}>
+            <DownloadIcon size={24} />
+            <View>
+              <HeaderText variant="header5" style={styles.buttonTextBase}>
+                {t(m.chooseFile)}
+                <HeaderText variant="header5" style={styles.asteriskText}>
+                  {' '}
+                  *
+                </HeaderText>
+              </HeaderText>
+            </View>
+          </View>
+        </Button>
+        <BodyText variant="smallMeta" style={styles.fileTypeText}>
+          {t(m.acceptedFileTypes)}
+        </BodyText>
+      </View>
       {error && (
-        <>
+        <View style={{marginTop: 40}}>
           <BodyText variant="large" style={styles.infoLoadErrorText}>
             {t(m.customMapInfoLoadError)}
           </BodyText>
-          <DestructiveButton
-            fullSize
-            text={t(m.removeMapFile)}
-            onPress={onRemoveMapFile}
-            renderIcon={({color, size}) => (
-              <MaterialIcon name="delete" size={size} color={color} />
-            )}
-          />
-        </>
+          <View style={{alignItems: 'center', marginTop: 20}}>
+            <SecondaryDestructiveButton
+              fullSize
+              text={t(m.removeMapFile)}
+              onPress={onRemoveMapFile}
+            />
+          </View>
+        </View>
       )}
-    </>
+    </View>
   );
 }
 
@@ -327,7 +354,6 @@ function MapInfoScreen({
   onRemoveMap: () => void;
 }) {
   const {formatMessage: t} = useIntl();
-  const {navigate} = useNavigationFromRoot();
 
   const calculatedSize = customMapInfo.size
     ? bytesToMegabytes(customMapInfo.size).toFixed(0)
@@ -374,17 +400,13 @@ function MapInfoScreen({
           fullSize
           text={t(m.sendMap)}
           onPress={() => {
-            // TODO: Get the actual mapId from the map info once the backend provides it
-            navigate('SelectMapShareDevice', {
-              mapId: 'default',
-            });
+            // navigate('SelectMapShareDevice');
           }}
           renderIcon={({color, size}) => (
             <MaterialIcon name="send" size={size} color={color} />
           )}
         />
       </View>
-
       <DestructiveButton
         fullSize
         text={t(m.removeMap)}
@@ -400,7 +422,7 @@ function MapInfoScreen({
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingVertical: 40,
+    paddingVertical: 20,
     gap: 36,
     flexGrow: 1,
   },
@@ -415,7 +437,6 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 15,
     alignItems: 'center',
-    marginVertical: 20,
   },
   cardContainer: {
     flexDirection: 'column',
@@ -456,5 +477,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: NEW_DARK_GREY,
     flex: 1,
+  },
+  buttonContentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  buttonTextBase: {
+    letterSpacing: 0.5,
+  },
+  asteriskText: {
+    color: RED,
+  },
+  fileTypeText: {
+    textAlign: 'center',
+    color: NEW_DARK_GREY,
   },
 });

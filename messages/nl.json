@@ -477,6 +477,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Selecteer apparaat om uit te nodigen"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
+    "message": "Selecteer apparaat"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "Als coördinator kan dit apparaat gebruikers uitnodigen en verwijderen en projectdetails beheren."
   },

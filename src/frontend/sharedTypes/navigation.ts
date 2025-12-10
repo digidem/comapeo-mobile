@@ -105,7 +105,9 @@ export type RootStackParamsList = {
   };
   YourTeam: undefined;
   SelectDevice: undefined;
-  SelectMapShareDevice: undefined;
+  SelectMapShareDevice: {
+    mapId: string;
+  };
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;
   InviteAccepted: {name: string};
@@ -124,7 +126,10 @@ export type RootStackParamsList = {
   SettingsPrivacyPolicy: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   BackgroundMaps: undefined;
-  WaitingForMapAccept: undefined;
+  WaitingForMapAccept: {
+    deviceId: string;
+    mapId: string;
+  };
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;

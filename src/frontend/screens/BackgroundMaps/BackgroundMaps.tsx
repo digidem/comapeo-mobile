@@ -374,7 +374,10 @@ function MapInfoScreen({
           fullSize
           text={t(m.sendMap)}
           onPress={() => {
-            navigate('SelectMapShareDevice');
+            // TODO: Get the actual mapId from the map info once the backend provides it
+            navigate('SelectMapShareDevice', {
+              mapId: 'default',
+            });
           }}
           renderIcon={({color, size}) => (
             <MaterialIcon name="send" size={size} color={color} />

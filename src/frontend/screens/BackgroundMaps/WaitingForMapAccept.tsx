@@ -28,10 +28,12 @@ const m = defineMessages({
 });
 
 export function WaitingForMapAccept({
+  route,
   navigation,
 }: NativeRootNavigationProps<'WaitingForMapAccept'>) {
   const {formatMessage: t} = useIntl();
   const {projectId} = useActiveProject();
+  const {deviceId, mapId} = route.params;
 
   const [time, setTime] = React.useState(0);
   const sendMapShareMutation = useSendMapShare({projectId});
@@ -83,22 +85,13 @@ export function WaitingForMapAccept({
     if (hasSentMapShareRef.current) return;
 
     hasSentMapShareRef.current = true;
-    // TODO: Replace with real deviceId and mapId once the select device screen is merged
-    // These should probably come from navigation params
-    const TEMP_FAKE_DEVICE_ID = 'fake-device-id-for-testing';
-    const TEMP_FAKE_MAP_ID = 'fake-map-id-for-testing';
 
     sendMapShareMutation.mutate(
-      {deviceId: TEMP_FAKE_DEVICE_ID, mapId: TEMP_FAKE_MAP_ID},
+      {deviceId, mapId},
       {
         onError: (err: Error) => {
-          console.log(
-            'Map share error (expected with fake data):',
-            err.message,
-          );
-          // TODO: Uncomment when using real data
-          // Sentry.captureException(err);
-          // navigation.navigate('ErrorBottomSheet');
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
         },
         onSuccess: (
           result:
@@ -117,10 +110,11 @@ export function WaitingForMapAccept({
           // TODO: Handle different decisions and navigate accordingly
           // - If decision is 'ACCEPT', the map is being downloaded
           // - If decision is 'REJECT', check the reason (could be 'ALREADY' if they have it)
+          navigation.popTo('BackgroundMaps');
         },
       },
     );
-  }, [navigation, sendMapShareMutation]);
+  }, [deviceId, mapId, navigation, sendMapShareMutation]);
 
   React.useEffect(() => {
     const interval = setInterval(() => setTime(prev => prev + 1), 1000);

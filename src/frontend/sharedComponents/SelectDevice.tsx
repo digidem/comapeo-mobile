@@ -66,6 +66,8 @@ export const SelectDevice = ({
   const selectionMode: SelectionMode =
     route.name === 'SelectMapShareDevice' ? 'shareMap' : 'invites';
 
+  const mapId = route.name === 'SelectMapShareDevice' && route.params?.mapId;
+
   const selectableDevices = getSelectableDevices({
     peers: availablePeers,
     projectMembers: projectMembersQuery.data,
@@ -106,8 +108,13 @@ export const SelectDevice = ({
 
           const handlePress = () => {
             if (selectionMode === 'shareMap') {
-              // TODO: Navigate to map sharing in subsequent PR
-              console.log('Share map with device:', deviceId);
+              if (!mapId) {
+                return;
+              }
+              navigation.navigate('WaitingForMapAccept', {
+                deviceId: deviceId,
+                mapId: mapId,
+              });
             } else {
               navigation.navigate('SelectInviteeRole', {
                 name: name || '',

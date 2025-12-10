@@ -1964,6 +1964,15 @@
   "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
     "message": "Send Map"
   },
+  "screens.Settings.MapManagement.MapDeclineScreen.close": {
+    "message": "Close"
+  },
+  "screens.Settings.MapManagement.MapDeclineScreen.deviceNoSpace": {
+    "message": "Device does not have enough space."
+  },
+  "screens.Settings.MapManagement.MapDeclineScreen.mapDeclined": {
+    "message": "Map declined."
+  },
   "screens.Settings.MapManagement.WaitingForMapToAccept.cancel": {
     "message": "Cancel"
   },

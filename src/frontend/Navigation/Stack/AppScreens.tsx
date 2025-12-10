@@ -135,6 +135,7 @@ import {LeaveProject} from '../../screens/YourTeam/LeaveProject.tsx';
 import {LeaveProjectWarning} from '../../screens/YourTeam/LeaveProjectWarning.tsx';
 import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
+import {SendingMap} from '../../screens/BackgroundMaps/SendingMap.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -396,6 +397,11 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="WaitingForMapAccept"
         component={WaitingForMapAccept}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="SendingMap"
+        component={SendingMap}
         options={{headerShown: false}}
       />
 

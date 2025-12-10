@@ -130,6 +130,9 @@ export type RootStackParamsList = {
     deviceId: string;
     mapId: string;
   };
+  SendingMap: {
+    shareId: string;
+  };
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;

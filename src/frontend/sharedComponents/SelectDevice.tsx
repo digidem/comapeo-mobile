@@ -22,6 +22,7 @@ import {
   LEFT_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
+import {SecondaryButton} from './Buttons';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
@@ -143,6 +144,20 @@ export const SelectDevice = ({
           );
         })}
       </View>
+
+      {selectionMode === 'shareMap' && (
+        <View style={{gap: 10, marginTop: 20, paddingHorizontal: 20}}>
+          <SecondaryButton
+            fullSize
+            text="Sending Map Test"
+            onPress={() =>
+              navigation.navigate('SendingMap', {
+                shareId: 'test-share-id-for-ui',
+              })
+            }
+          />
+        </View>
+      )}
     </ScrollView>
   );
 };

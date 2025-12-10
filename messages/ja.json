@@ -477,6 +477,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "招待するデバイスを選択"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
+    "message": "デバイスを選択"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "コーディネーターとして、このデバイスはユーザーの招待と削除、およびプロジェクトの詳細を管理することができます。"
   },

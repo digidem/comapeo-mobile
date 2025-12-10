@@ -477,6 +477,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Sélectionnez l'appareil à inviter"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
+    "message": "Sélectionner un appareil"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "En tant que coordinateur, cet appareil peut inviter et supprimer des utilisateurs, et gérer les détails du projet."
   },

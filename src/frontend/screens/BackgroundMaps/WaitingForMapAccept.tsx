@@ -106,11 +106,15 @@ export function WaitingForMapAccept({
                   | 'USER_REJECTED';
               },
         ) => {
-          console.log('Map share result:', result);
-          // TODO: Handle different decisions and navigate accordingly
-          // - If decision is 'ACCEPT', the map is being downloaded
-          // - If decision is 'REJECT', check the reason (could be 'ALREADY' if they have it)
-          navigation.popTo('BackgroundMaps');
+          if (result.decision === 'ACCEPT') {
+            // TODO: Navigate to success screen when it's created
+            navigation.popTo('BackgroundMaps');
+          } else if (result.decision === 'REJECT') {
+            navigation.navigate('MapDeclineScreen', {reason: result.reason});
+          } else {
+            // UNRECOGNIZED decision - go back to BackgroundMaps?
+            navigation.popTo('BackgroundMaps');
+          }
         },
       },
     );

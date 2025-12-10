@@ -130,6 +130,9 @@ export type RootStackParamsList = {
     deviceId: string;
     mapId: string;
   };
+  MapDeclineScreen: {
+    reason: 'USER_REJECTED' | 'DISK_SPACE' | 'ALREADY' | 'UNRECOGNIZED';
+  };
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;

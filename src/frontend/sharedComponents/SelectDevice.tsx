@@ -15,6 +15,7 @@ import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {LIGHT_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {SecondaryButton} from './Buttons';
 import {
   BLOCKED_ROLE_ID,
   COORDINATOR_ROLE_ID,
@@ -143,6 +144,28 @@ export const SelectDevice = ({
           );
         })}
       </View>
+
+      {/* TODO: Remove these temporary test buttons before merging */}
+      {selectionMode === 'shareMap' && (
+        <View style={{gap: 10, marginTop: 20, paddingHorizontal: 20}}>
+          <SecondaryButton
+            fullSize
+            text="Map Declined Test"
+            onPress={() => {
+              navigation.navigate('MapDeclineScreen', {
+                reason: 'USER_REJECTED',
+              });
+            }}
+          />
+          <SecondaryButton
+            fullSize
+            text="Device No Space Test"
+            onPress={() => {
+              navigation.navigate('MapDeclineScreen', {reason: 'DISK_SPACE'});
+            }}
+          />
+        </View>
+      )}
     </ScrollView>
   );
 };

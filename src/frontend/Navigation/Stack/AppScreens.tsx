@@ -87,6 +87,7 @@ import {RemovedFromProjectBottomSheet} from '../../screens/RemovedFromProjectBot
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/BackgroundMaps/ErrorBottomSheet.tsx';
+import {MapDeclineScreen} from '../../screens/BackgroundMaps/MapDeclineScreen.tsx';
 import {InviteCollaboratorsScreen} from '../../screens/YourTeam/InviteCollaborators.tsx';
 import {StartNewProjectScreen} from '../../screens/ProjectSettings/StartNewProject.tsx';
 import {EditProjectDetails} from '../../screens/ProjectSettings/EditProjectDetails.tsx';
@@ -396,6 +397,11 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="WaitingForMapAccept"
         component={WaitingForMapAccept}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="MapDeclineScreen"
+        component={MapDeclineScreen}
         options={{headerShown: false}}
       />
 

@@ -1910,9 +1910,6 @@
   "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
     "message": "Added on {date}"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
-    "message": "Added on {date}"
-  },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "This cannot be undone."
   },

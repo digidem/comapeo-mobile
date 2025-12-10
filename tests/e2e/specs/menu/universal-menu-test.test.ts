@@ -39,7 +39,8 @@ describe('Menu - basic functionality of the menu', () => {
     await expect(await $(byText('Background Map'))).toBeDisplayed();
     await driver.pause(2000);
 
-    // In E2E, custom map server is not available, so we expect an error screen
+    await expect(await $(byTextMatches('Choose File'))).toBeDisplayed();
+
     const errorMessage = await $(
       byTextMatches('Could not get custom map information'),
     );

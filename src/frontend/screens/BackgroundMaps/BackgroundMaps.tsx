@@ -140,7 +140,6 @@ export function createNavigationOptions({
 
 export function BackgroundMapsScreen() {
   const {formatMessage: t} = useIntl();
-
   const {navigate} = useNavigationFromRoot();
   const mapAddedBottomSheet = useBottomSheetModal({openOnMount: false});
   const removeMapBottomSheet = useBottomSheetModal({openOnMount: false});
@@ -149,8 +148,6 @@ export function BackgroundMapsScreen() {
   const importCustomMapMutation = useImportCustomMapFile();
   const removeCustomMapMutation = useRemoveCustomMapFile();
   const customMapInfoQuery = useGetCustomMapInfo();
-  const hasBackgroundMap =
-    customMapInfoQuery.data !== undefined && customMapInfoQuery.data !== null;
 
   const handleChooseFile = () => {
     selectFileMutation.mutate(
@@ -197,14 +194,19 @@ export function BackgroundMapsScreen() {
 
   return (
     <>
-      <ScrollView
-        contentContainerStyle={[
-          styles.container,
-          hasBackgroundMap && styles.containerWithMap,
-        ]}>
-        {customMapInfoQuery.status === 'error' ? (
-          <ErrorScreen
-            onRemove={() => {
+      <ScrollView contentContainerStyle={styles.container}>
+        {customMapInfoQuery.isPending ? (
+          <Loading size={10} />
+        ) : customMapInfoQuery.data ? (
+          <MapInfoScreen
+            customMapInfo={customMapInfoQuery.data}
+            onRemoveMap={handleRemoveMap}
+          />
+        ) : (
+          <NoMapScreen
+            error={customMapInfoQuery.error}
+            onChooseFile={handleChooseFile}
+            onRemoveMapFile={() => {
               removeCustomMapMutation.mutate(undefined, {
                 onError: err => {
                   Sentry.captureException(err);
@@ -213,15 +215,6 @@ export function BackgroundMapsScreen() {
               });
             }}
           />
-        ) : customMapInfoQuery.isLoading || customMapInfoQuery.isPending ? (
-          <Loading size={10} />
-        ) : hasBackgroundMap ? (
-          <MapInfoScreen
-            customMapInfo={customMapInfoQuery.data!}
-            onRemoveMap={handleRemoveMap}
-          />
-        ) : (
-          <NoMapScreen onChooseFile={handleChooseFile} />
         )}
       </ScrollView>
 
@@ -289,7 +282,15 @@ export function BackgroundMapsScreen() {
   );
 }
 
-function NoMapScreen({onChooseFile}: {onChooseFile: () => void}) {
+function NoMapScreen({
+  error,
+  onChooseFile,
+  onRemoveMapFile,
+}: {
+  error: Error | null;
+  onChooseFile: () => void;
+  onRemoveMapFile: () => void;
+}) {
   const {formatMessage: t} = useIntl();
 
   return (
@@ -299,6 +300,21 @@ function NoMapScreen({onChooseFile}: {onChooseFile: () => void}) {
         <BodyText>{t(m.description2)}</BodyText>
       </View>
       <ChooseMapFile onChooseFile={onChooseFile} />
+      {error && (
+        <>
+          <BodyText variant="large" style={styles.infoLoadErrorText}>
+            {t(m.customMapInfoLoadError)}
+          </BodyText>
+          <DestructiveButton
+            fullSize
+            text={t(m.removeMapFile)}
+            onPress={onRemoveMapFile}
+            renderIcon={({color, size}) => (
+              <MaterialIcon name="delete" size={size} color={color} />
+            )}
+          />
+        </>
+      )}
     </>
   );
 }
@@ -311,6 +327,7 @@ function MapInfoScreen({
   onRemoveMap: () => void;
 }) {
   const {formatMessage: t} = useIntl();
+  const {navigate} = useNavigationFromRoot();
 
   const calculatedSize = customMapInfo.size
     ? bytesToMegabytes(customMapInfo.size).toFixed(0)
@@ -357,7 +374,7 @@ function MapInfoScreen({
           fullSize
           text={t(m.sendMap)}
           onPress={() => {
-            // TODO: Implement send map functionality
+            navigate('SelectMapShareDevice');
           }}
           renderIcon={({color, size}) => (
             <MaterialIcon name="send" size={size} color={color} />
@@ -377,35 +394,12 @@ function MapInfoScreen({
   );
 }
 
-function ErrorScreen({onRemove}: {onRemove: () => void}) {
-  const {formatMessage: t} = useIntl();
-
-  return (
-    <>
-      <BodyText variant="large" style={styles.infoLoadErrorText}>
-        {t(m.customMapInfoLoadError)}
-      </BodyText>
-      <DestructiveButton
-        fullSize
-        text={t(m.removeMapFile)}
-        onPress={onRemove}
-        renderIcon={({color, size}) => (
-          <MaterialIcon name="delete" size={size} color={color} />
-        )}
-      />
-    </>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     paddingVertical: 40,
     gap: 36,
     flexGrow: 1,
-  },
-  containerWithMap: {
-    paddingVertical: 20,
   },
   descriptionContainer: {
     gap: 20,
@@ -418,6 +412,7 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 15,
     alignItems: 'center',
+    marginVertical: 20,
   },
   cardContainer: {
     flexDirection: 'column',

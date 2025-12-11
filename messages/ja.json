@@ -1904,14 +1904,17 @@
   "screens.Settings.JoinAProject.title": {
     "message": "プロジェクトに参加"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "受け入れられるファイルの種類は .smp です"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "ファイルを選択"
+  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
+    "message": "{date} に追加"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "この操作は元に戻せません。"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "ファイルを選択"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "閉じる"
@@ -1946,23 +1949,20 @@
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "インポートエラー"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "地図を削除"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "地図ファイルを削除"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"
   },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "追加日"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "地図名"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "地図を削除"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
+  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
+    "message": "地図を送信"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "すべての観察記録を持つ新しいプロジェクトにデバイスを招待します。"

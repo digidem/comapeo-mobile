@@ -4,7 +4,7 @@ import {MessageDescriptor} from 'react-intl';
 import {
   ObservationEdit,
   createNavigationOptions as createObservationEditNavOptions,
-} from '../../screens/ObservationEdit/ObservationEdit';
+} from '../../screens/ObservationEdit';
 import {AddPhotoScreen} from '../../screens/AddPhoto';
 import {AppPasscode} from '../../screens/AppPasscode';
 import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';

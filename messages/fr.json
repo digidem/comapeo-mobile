@@ -1904,14 +1904,17 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Rejoindre un projet"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Les types de fichiers acceptés sont .smp"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Choisir un fichier"
+  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
+    "message": "Ajouté le {date}"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Cela ne peut pas être annulé."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "Choisir un fichier"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "Fermer"
@@ -1946,23 +1949,20 @@
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Erreur d'importation"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Supprimer la carte"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Supprimer le fichier de carte"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"
   },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Date d'ajout"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Nom de carte"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Supprimer la carte"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
+  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
+    "message": "Envoyer la carte"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invitez des appareils à un nouveau projet avec toutes vos observations."

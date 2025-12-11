@@ -134,6 +134,7 @@ import {LeaveProject} from '../../screens/YourTeam/LeaveProject.tsx';
 import {LeaveProjectWarning} from '../../screens/YourTeam/LeaveProjectWarning.tsx';
 import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
+import {ConfirmDiscardObservationBottomSheet} from '../../screens/ObservationCreate/ConfirmDiscardObservationBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -605,6 +606,10 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ConfirmTrackDiscardBottomSheet"
         component={ConfirmDiscardBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDiscardObservationBottomSheet"
+        component={ConfirmDiscardObservationBottomSheet}
       />
     </RootStack.Group>
   </>

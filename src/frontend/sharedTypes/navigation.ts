@@ -184,6 +184,7 @@ export type RootStackParamsList = {
     memberType: 'coordinator' | 'participant';
   };
   ConfirmTrackDiscardBottomSheet: {trackId: string};
+  ConfirmDiscardObservationBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

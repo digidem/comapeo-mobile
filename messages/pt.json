@@ -1904,14 +1904,17 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Participe de um projeto"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Tipos de arquivos aceitos são .smp"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Selecionar Arquivo"
+  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
+    "message": "Adicionado em {date}"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Isto não pode ser desfeito."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "Selecionar Arquivo"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "Fechar"
@@ -1946,23 +1949,20 @@
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Erro ao importar"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Excluir mapa"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Remover arquivo do mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Mapas de fundo"
   },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Data de inclusão"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Nome do Mapa"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Excluir mapa"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
+  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
+    "message": "Enviar mapa"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Convide dispositivos para um novo projeto com todas as suas observações."

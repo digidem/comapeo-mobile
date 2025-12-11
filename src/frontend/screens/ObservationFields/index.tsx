@@ -49,28 +49,16 @@ export const ObservationFields = ({
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
   const current = route.params.question;
-  const observationId = usePersistedDraftObservation(
-    store => store.observationId,
-  );
 
   const onBackPress = React.useCallback(() => {
     if (current === 1) {
-      if (navigation.canGoBack()) {
-        navigation.goBack();
-        return;
-      }
-      if (observationId) {
-        navigation.popTo('ObservationEdit', {observationId});
-        return;
-      }
-
-      navigation.popTo('ObservationCreate');
+      navigation.goBack();
     }
 
     navigation.popTo('ObservationFields', {
       question: current - 1,
     });
-  }, [current, navigation, observationId]);
+  }, [current, navigation]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -115,7 +103,7 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
           question: questionNumber + 1,
         })
       : observationId
-        ? navigation.popTo('ObservationEdit', {observationId})
+        ? navigation.popTo('ObservationEdit')
         : navigation.popTo('ObservationCreate');
 
   return (

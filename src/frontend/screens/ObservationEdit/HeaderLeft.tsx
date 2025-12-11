@@ -36,13 +36,9 @@ const m = defineMessages({
 
 type HeaderLeftProps = {
   headerBackButtonProps: HeaderBackButtonProps;
-  observationId: string;
 };
 
-export const HeaderLeft = ({
-  headerBackButtonProps,
-  observationId,
-}: HeaderLeftProps) => {
+export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   const {closeSheet, openSheet, isOpen, sheetRef} = useBottomSheetModal({
     openOnMount: false,
   });
@@ -69,7 +65,7 @@ export const HeaderLeft = ({
   function handleDiscard() {
     clearDraft();
     closeSheet();
-    navigation.popTo('Observation', {observationId});
+    navigation.goBack();
   }
 
   return (

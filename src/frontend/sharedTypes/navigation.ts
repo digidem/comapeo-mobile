@@ -78,7 +78,7 @@ export type RootStackParamsList = {
   ObservationCategoryChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
-  ObservationEdit: {observationId: string};
+  ObservationEdit: undefined;
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
   CreateProject: undefined;

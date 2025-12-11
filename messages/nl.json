@@ -1904,14 +1904,17 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Deelnemen aan een project"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Geaccepteerde bestandstypen zijn .smp"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Bestand kiezen"
+  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
+    "message": "Toegevoegd op {date}"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Dit kan niet ongedaan worden gemaakt."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "Bestand kiezen"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "Afsluiten"
@@ -1946,23 +1949,20 @@
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Fout bij importeren"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Kaart verwijderen"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Kaartbestand verwijderen"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"
   },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Datum toegevoegd"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Kaart naam"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Kaart verwijderen"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
+  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
+    "message": "Kaart verzenden"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Nodig apparaten uit voor een nieuw project met al je waarnemingen."

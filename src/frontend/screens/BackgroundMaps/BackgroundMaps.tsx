@@ -10,22 +10,14 @@ import {
   useImportCustomMapFile,
   useRemoveCustomMapFile,
 } from '../../hooks/server/maps';
-import ErrorSvg from '../../images/Error.svg';
-import GreenCheckSvg from '../../images/Success.svg';
 import StackSvg from '../../images/Stack.svg';
 import {
   RED,
-  WHITE,
   DARK_GREY,
   NEW_DARK_GREY,
   VERY_LIGHT_GREY,
   BLUE_GREY,
 } from '../../lib/styles';
-import {
-  BottomSheetModal,
-  BottomSheetModalContent,
-  useBottomSheetModal,
-} from '../../sharedComponents/BottomSheetModal';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -151,8 +143,6 @@ export function createNavigationOptions({
 export function BackgroundMapsScreen() {
   const {formatMessage: t} = useIntl();
   const {navigate} = useNavigationFromRoot();
-  const mapAddedBottomSheet = useBottomSheetModal({openOnMount: false});
-  const removeMapBottomSheet = useBottomSheetModal({openOnMount: false});
 
   const selectFileMutation = useSelectFile();
   const importCustomMapMutation = useImportCustomMapFile();
@@ -175,7 +165,7 @@ export function BackgroundMapsScreen() {
             },
             {
               onSuccess: () => {
-                mapAddedBottomSheet.openSheet();
+                navigate('MapAddedBottomSheet');
               },
               onError: err => {
                 Sentry.captureException(err);
@@ -199,7 +189,7 @@ export function BackgroundMapsScreen() {
   };
 
   const handleRemoveMap = () => {
-    removeMapBottomSheet.openSheet();
+    navigate('DeleteCustomMapBottomSheet');
   };
 
   return (
@@ -227,67 +217,6 @@ export function BackgroundMapsScreen() {
           />
         )}
       </ScrollView>
-
-      <BottomSheetModal
-        ref={removeMapBottomSheet.sheetRef}
-        isOpen={removeMapBottomSheet.isOpen}>
-        <BottomSheetModalContent
-          loading={removeCustomMapMutation.isPending}
-          icon={<ErrorSvg />}
-          title={t(m.deleteCustomMapTitle)}
-          description={
-            t(m.deleteCustomMapDescription) + '\n\n' + t(m.cannotBeUndone)
-          }
-          buttonConfigs={[
-            {
-              dangerous: true,
-              variation: 'filled',
-              text: t(m.deleteMapButtonText),
-              icon: <MaterialIcon size={30} name="delete" color={WHITE} />,
-              onPress: () => {
-                removeCustomMapMutation.mutate(undefined, {
-                  onSuccess: () => {
-                    removeMapBottomSheet.closeSheet();
-                  },
-                });
-              },
-            },
-            {
-              variation: 'outlined',
-              text: t(m.close),
-              onPress: () => {
-                removeMapBottomSheet.closeSheet();
-              },
-            },
-          ]}
-        />
-      </BottomSheetModal>
-
-      <BottomSheetModal
-        fullScreen
-        ref={mapAddedBottomSheet.sheetRef}
-        isOpen={mapAddedBottomSheet.isOpen}>
-        <BottomSheetModalContent
-          icon={
-            <GreenCheckSvg
-              style={{
-                marginTop: 80,
-              }}
-            />
-          }
-          title={t(m.customMapAddedTitle)}
-          description={t(m.customMapAddedDescription)}
-          buttonConfigs={[
-            {
-              variation: 'outlined',
-              text: t(m.close),
-              onPress: () => {
-                mapAddedBottomSheet.closeSheet();
-              },
-            },
-          ]}
-        />
-      </BottomSheetModal>
     </>
   );
 }

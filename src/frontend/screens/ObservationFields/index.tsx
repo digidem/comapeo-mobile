@@ -53,6 +53,7 @@ export const ObservationFields = ({
   const onBackPress = React.useCallback(() => {
     if (current === 1) {
       navigation.goBack();
+      return;
     }
 
     navigation.popTo('ObservationFields', {

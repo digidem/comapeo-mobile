@@ -1904,14 +1904,17 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Unirse a un proyecto"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Los tipos de archivo aceptados son .smp"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Elegir archivo"
+  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
+    "message": "Añadido en {date}"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Esta acción no se puede deshacer."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "Elegir archivo"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "Cerrar"
@@ -1946,23 +1949,20 @@
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Error al importar"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Eliminar mapa"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Eliminar archivo de mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"
   },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Fecha agregada"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Nombre del mapa"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Eliminar mapa"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
+  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
+    "message": "Enviar Mapa"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invita dispositivos a un nuevo proyecto con todas tus observaciones."

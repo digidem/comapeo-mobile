@@ -32,7 +32,7 @@ const m = defineMessages({
   },
   deleteMapButtonText: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText',
-    defaultMessage: 'Delete Map test',
+    defaultMessage: 'Delete Map',
   },
   close: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.close',

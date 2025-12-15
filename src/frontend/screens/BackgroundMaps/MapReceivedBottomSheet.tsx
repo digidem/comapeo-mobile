@@ -1,6 +1,10 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
+import bboxPolygon from '@turf/bbox-polygon';
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
+import {point} from '@turf/helpers';
+import {distance} from '@turf/distance';
 
 import StackSvg from '../../images/Stack.svg';
 import CautionSvg from '../../images/caution.svg';
@@ -9,19 +13,21 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
+import {useLocationState} from '../../contexts/LocationContext';
 import {
   BLACK,
-  DARK_GREY,
   BLUE_GREY,
   NEW_DARK_GREY,
   VERY_LIGHT_GREY,
   LIGHT_GREEN,
+  LIGHT_ORANGE,
 } from '../../lib/styles';
 
 const m = defineMessages({
   sharingDevice: {
     id: 'screens.Settings.MapManagement.MapReceived.sharingDevice',
-    defaultMessage: '{deviceName} wants to share a map',
+    defaultMessage: '{deviceName} wants to share...',
   },
   accept: {
     id: 'screens.Settings.MapManagement.MapReceived.accept',
@@ -47,6 +53,10 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.MapReceived.mbNeeded',
     defaultMessage: '{size} MB needed',
   },
+  megabytes: {
+    id: 'screens.Settings.MapManagement.MapReceived.megabytes',
+    defaultMessage: '{size} MB',
+  },
 });
 
 type WarningType = 'location' | 'space' | null;
@@ -56,15 +66,64 @@ export function MapReceivedBottomSheet({
   navigation,
 }: NativeRootNavigationProps<'MapReceivedBottomSheet'>) {
   const {formatMessage: t} = useIntl();
-  const {shareId, mapName, deviceName, sizeInBytes} = route.params;
+  const {shareId, mapName, deviceName, sizeInBytes, testBbox} = route.params;
 
-  // TODO: Implement actual location check using turf.js
-  // For now, using placeholder values
+  const {data: storageData} = useStorageReadingQuery();
+  const {freeBytes} = storageData;
+
+  const currentLocation = useLocationState(state => state.location);
+
   const [warning, setWarning] = React.useState<WarningType>(null);
   const [distanceKm, setDistanceKm] = React.useState(0);
   const [mbNeeded, setMbNeeded] = React.useState(0);
 
   const sizeInMB = Math.round(sizeInBytes / (1024 * 1024));
+
+  React.useEffect(() => {
+    if (freeBytes < sizeInBytes) {
+      const needed = Math.ceil((sizeInBytes - freeBytes) / (1024 * 1024));
+      setWarning('space');
+      setMbNeeded(needed);
+    }
+  }, [freeBytes, sizeInBytes]);
+
+  React.useEffect(() => {
+    if (warning === 'space') return;
+
+    // TODO: Get the bounding box from the map share API
+    // For now, using a placeholder bounding box (or testBbox for testing)
+    // Format: [minLng, minLat, maxLng, maxLat]
+    // Default: Colombia area
+    const bbox: [number, number, number, number] = testBbox || [
+      -79.0, -4.0, -66.0, 13.0,
+    ];
+
+    if (!currentLocation?.coords) {
+      return;
+    }
+
+    const userPoint = point([
+      currentLocation.coords.longitude,
+      currentLocation.coords.latitude,
+    ]);
+
+    const bboxPoly = bboxPolygon(bbox);
+
+    const isInside = booleanPointInPolygon(userPoint, bboxPoly);
+
+    if (!isInside) {
+      const centerLng = (bbox[0]! + bbox[2]!) / 2;
+      const centerLat = (bbox[1]! + bbox[3]!) / 2;
+      const centerPoint = point([centerLng, centerLat]);
+
+      const distanceKilometers = distance(userPoint, centerPoint, {
+        units: 'kilometers',
+      });
+
+      setWarning('location');
+      setDistanceKm(distanceKilometers);
+    }
+  }, [currentLocation, warning, testBbox]);
 
   const handleAccept = () => {
     // TODO: Navigate to ReplaceBackgroundMapScreen when it's created
@@ -83,9 +142,9 @@ export function MapReceivedBottomSheet({
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
-        <HeaderText variant="header6" style={styles.header}>
+        <BodyText variant="tinyMeta" style={styles.header}>
           {t(m.sharingDevice, {deviceName})}
-        </HeaderText>
+        </BodyText>
 
         <View style={styles.mapCard}>
           <View style={styles.mapCardContent}>
@@ -93,34 +152,34 @@ export function MapReceivedBottomSheet({
               {mapName}
             </HeaderText>
 
-            <View style={styles.mapMetadata}>
-              <View style={styles.iconRow}>
-                <View style={styles.iconContainer}>
-                  <StackSvg width={17} height={18} color={DARK_GREY} />
-                </View>
-                <BodyText style={styles.sizeText}>{sizeInMB} MB</BodyText>
+            <View style={styles.iconRow}>
+              <View style={styles.iconContainer}>
+                <StackSvg width={17} height={18} color={NEW_DARK_GREY} />
               </View>
+              <BodyText style={styles.sizeText}>
+                {t(m.megabytes, {size: sizeInMB})}
+              </BodyText>
             </View>
+
+            {warning && (
+              <View style={styles.warningBox}>
+                <CautionSvg width={20} height={20} />
+                <View style={styles.warningTextContainer}>
+                  <BodyText variant="smallMeta">
+                    {warning === 'location'
+                      ? t(m.locationNotCovered)
+                      : t(m.notEnoughSpace)}
+                  </BodyText>
+                  <BodyText style={styles.warningSubtitle}>
+                    {warning === 'location'
+                      ? t(m.kmAway, {distance: distanceKm.toFixed(1)})
+                      : t(m.mbNeeded, {size: mbNeeded})}
+                  </BodyText>
+                </View>
+              </View>
+            )}
           </View>
         </View>
-
-        {warning && (
-          <View style={styles.warningBox}>
-            <CautionSvg width={20} height={20} />
-            <View style={styles.warningTextContainer}>
-              <BodyText variant="smallMeta">
-                {warning === 'location'
-                  ? t(m.locationNotCovered)
-                  : t(m.notEnoughSpace)}
-              </BodyText>
-              <BodyText style={styles.warningSubtitle}>
-                {warning === 'location'
-                  ? t(m.kmAway, {distance: distanceKm.toFixed(1)})
-                  : t(m.mbNeeded, {size: mbNeeded})}
-              </BodyText>
-            </View>
-          </View>
-        )}
 
         <View style={styles.buttonsContainer}>
           {warning !== 'space' && (
@@ -139,12 +198,12 @@ export function MapReceivedBottomSheet({
 
 const styles = StyleSheet.create({
   container: {
-    gap: 20,
-    paddingTop: 20,
+    gap: 12,
   },
   header: {
     textTransform: 'uppercase',
     color: BLACK,
+    fontWeight: '500',
   },
   mapCard: {
     backgroundColor: LIGHT_GREEN,
@@ -163,9 +222,6 @@ const styles = StyleSheet.create({
   },
   mapName: {
     color: BLACK,
-  },
-  mapMetadata: {
-    gap: 10,
   },
   iconRow: {
     flexDirection: 'row',
@@ -186,10 +242,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
     gap: 10,
-    backgroundColor: BLUE_GREY,
+    backgroundColor: LIGHT_ORANGE,
     borderWidth: 1,
     borderColor: BLUE_GREY,
-    borderRadius: 4,
+    borderRadius: 2,
   },
   warningTextContainer: {
     flex: 1,
@@ -198,6 +254,8 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
   },
   buttonsContainer: {
+    paddingTop: 8,
     gap: 12,
+    alignItems: 'center',
   },
 });

@@ -26,3 +26,4 @@ export const GPS_MODAL_TEXT = 'rgb(40,40,40)';
 export const DARK_GREEN = '#59A553';
 export const WARNING_RED = '#D92222';
 export const LIGHT_GREEN = '#EEF6EE';
+export const LIGHT_ORANGE = '#FFF5EB';

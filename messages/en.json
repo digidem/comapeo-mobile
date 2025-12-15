@@ -1973,6 +1973,12 @@
   "screens.Settings.MapManagement.MapDeclineScreen.mapDeclined": {
     "message": "Map declined."
   },
+  "screens.Settings.MapManagement.MapSent.done": {
+    "message": "Done"
+  },
+  "screens.Settings.MapManagement.MapSent.mapSent": {
+    "message": "Map sent!"
+  },
   "screens.Settings.MapManagement.SendingMap.cancel": {
     "message": "Cancel"
   },

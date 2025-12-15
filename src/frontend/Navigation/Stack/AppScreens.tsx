@@ -135,6 +135,9 @@ import {LeaveProjectWarning} from '../../screens/YourTeam/LeaveProjectWarning.ts
 import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 import {ConfirmDiscardObservationBottomSheet} from '../../screens/ObservationCreate/ConfirmDiscardObservationBottomSheet.tsx';
+import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsIncludedBottomSheet.tsx';
+import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
+import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -606,6 +609,18 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ConfirmTrackDiscardBottomSheet"
         component={ConfirmDiscardBottomSheet}
+      />
+      <RootStack.Screen
+        name="DeleteCustomMapBottomSheet"
+        component={DeleteCustomMapBottomSheet}
+      />
+      <RootStack.Screen
+        name="MapAddedBottomSheet"
+        component={MapAddedBottomSheet}
+      />
+      <RootStack.Screen
+        name="WhatsIncludedBottomSheet"
+        component={WhatsIncludedBottomSheet}
       />
       <RootStack.Screen
         name="ConfirmDiscardObservationBottomSheet"

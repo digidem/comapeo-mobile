@@ -1,6 +1,7 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
+import * as Sentry from '@sentry/react-native';
 
 import {useManyMembers} from '@comapeo/core-react';
 import {type MemberInfo} from '@comapeo/core/dist/member-api';
@@ -15,6 +16,7 @@ import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {LIGHT_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {SecondaryButton} from './Buttons';
 import {
   BLOCKED_ROLE_ID,
   COORDINATOR_ROLE_ID,
@@ -22,7 +24,6 @@ import {
   LEFT_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
-import {SecondaryButton} from './Buttons';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
@@ -110,6 +111,12 @@ export const SelectDevice = ({
           const handlePress = () => {
             if (selectionMode === 'shareMap') {
               if (!mapId) {
+                // This should never happen, but if it does, report to Sentry and show error
+                const error = new Error(
+                  'mapId is missing when trying to share map',
+                );
+                Sentry.captureException(error);
+                navigation.navigate('ErrorBottomSheet');
                 return;
               }
               navigation.navigate('WaitingForMapAccept', {
@@ -145,6 +152,7 @@ export const SelectDevice = ({
         })}
       </View>
 
+      {/* TODO: Remove these temporary test buttons before merging */}
       {selectionMode === 'shareMap' && (
         <View style={{gap: 10, marginTop: 20, paddingHorizontal: 20}}>
           <SecondaryButton
@@ -155,6 +163,22 @@ export const SelectDevice = ({
                 shareId: 'test-share-id-for-ui',
               })
             }
+          />
+          <SecondaryButton
+            fullSize
+            text="Map Declined Test"
+            onPress={() => {
+              navigation.navigate('MapDeclineScreen', {
+                reason: 'USER_REJECTED',
+              });
+            }}
+          />
+          <SecondaryButton
+            fullSize
+            text="Device No Space Test"
+            onPress={() => {
+              navigation.navigate('MapDeclineScreen', {reason: 'DISK_SPACE'});
+            }}
           />
         </View>
       )}

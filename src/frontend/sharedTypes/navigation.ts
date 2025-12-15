@@ -133,6 +133,9 @@ export type RootStackParamsList = {
   SendingMap: {
     shareId: string;
   };
+  MapDeclineScreen: {
+    reason: 'USER_REJECTED' | 'DISK_SPACE' | 'ALREADY' | 'UNRECOGNIZED';
+  };
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;
@@ -193,6 +196,11 @@ export type RootStackParamsList = {
     memberType: 'coordinator' | 'participant';
   };
   ConfirmTrackDiscardBottomSheet: {trackId: string};
+  MapAddedBottomSheet: undefined;
+  DeleteCustomMapBottomSheet: undefined;
+  WhatsIncludedBottomSheet: undefined;
+  ConfirmDiscardObservationBottomSheet: undefined;
+  ConfirmDiscardTrackBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

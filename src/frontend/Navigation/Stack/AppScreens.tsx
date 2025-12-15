@@ -87,6 +87,7 @@ import {RemovedFromProjectBottomSheet} from '../../screens/RemovedFromProjectBot
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/BackgroundMaps/ErrorBottomSheet.tsx';
+import {MapDeclineScreen} from '../../screens/BackgroundMaps/MapDeclineScreen.tsx';
 import {InviteCollaboratorsScreen} from '../../screens/YourTeam/InviteCollaborators.tsx';
 import {StartNewProjectScreen} from '../../screens/ProjectSettings/StartNewProject.tsx';
 import {EditProjectDetails} from '../../screens/ProjectSettings/EditProjectDetails.tsx';
@@ -136,6 +137,11 @@ import {LeaveProjectWarning} from '../../screens/YourTeam/LeaveProjectWarning.ts
 import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 import {SendingMap} from '../../screens/BackgroundMaps/SendingMap.tsx';
+import {ConfirmDiscardObservationBottomSheet} from '../../screens/ObservationCreate/ConfirmDiscardObservationBottomSheet.tsx';
+import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsIncludedBottomSheet.tsx';
+import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
+import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
+import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -404,6 +410,11 @@ export const createAppScreens = ({
         component={SendingMap}
         options={{headerShown: false}}
       />
+      <RootStack.Screen
+        name="MapDeclineScreen"
+        component={MapDeclineScreen}
+        options={{headerShown: false}}
+      />
 
       {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
         <RootStack.Screen
@@ -617,6 +628,26 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ConfirmTrackDiscardBottomSheet"
         component={ConfirmDiscardBottomSheet}
+      />
+      <RootStack.Screen
+        name="DeleteCustomMapBottomSheet"
+        component={DeleteCustomMapBottomSheet}
+      />
+      <RootStack.Screen
+        name="MapAddedBottomSheet"
+        component={MapAddedBottomSheet}
+      />
+      <RootStack.Screen
+        name="WhatsIncludedBottomSheet"
+        component={WhatsIncludedBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDiscardObservationBottomSheet"
+        component={ConfirmDiscardObservationBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDiscardTrackBottomSheet"
+        component={ConfirmDiscardTrackBottomSheet}
       />
     </RootStack.Group>
   </>

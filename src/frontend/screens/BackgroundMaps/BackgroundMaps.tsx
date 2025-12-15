@@ -10,34 +10,28 @@ import {
   useImportCustomMapFile,
   useRemoveCustomMapFile,
 } from '../../hooks/server/maps';
-import ErrorSvg from '../../images/Error.svg';
-import GreenCheckSvg from '../../images/Success.svg';
 import StackSvg from '../../images/Stack.svg';
 import {
   RED,
-  WHITE,
   DARK_GREY,
   NEW_DARK_GREY,
   VERY_LIGHT_GREY,
   BLUE_GREY,
 } from '../../lib/styles';
-import {
-  BottomSheetModal,
-  BottomSheetModalContent,
-  useBottomSheetModal,
-} from '../../sharedComponents/BottomSheetModal';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {ChooseMapFile} from './ChooseMapFile';
 import * as Sentry from '@sentry/react-native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {
   SecondaryButton,
   DestructiveButton,
+  SecondaryDestructiveButton,
 } from '../../sharedComponents/Buttons';
 import {bytesToMegabytes} from '../../lib/bytesToMegabytes';
+import {Button} from '../../sharedComponents/Button';
+import {DownloadIcon} from '../../sharedComponents/icons';
 
 const m = defineMessages({
   screenTitle: {
@@ -122,6 +116,14 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.megabytes',
     defaultMessage: '{size} MB',
   },
+  chooseFile: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.chooseFile',
+    defaultMessage: 'Choose File',
+  },
+  acceptedFileTypes: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes',
+    defaultMessage: 'Accepted file types are .smp',
+  },
 });
 
 export function createNavigationOptions({
@@ -141,8 +143,6 @@ export function createNavigationOptions({
 export function BackgroundMapsScreen() {
   const {formatMessage: t} = useIntl();
   const {navigate} = useNavigationFromRoot();
-  const mapAddedBottomSheet = useBottomSheetModal({openOnMount: false});
-  const removeMapBottomSheet = useBottomSheetModal({openOnMount: false});
 
   const selectFileMutation = useSelectFile();
   const importCustomMapMutation = useImportCustomMapFile();
@@ -165,7 +165,7 @@ export function BackgroundMapsScreen() {
             },
             {
               onSuccess: () => {
-                mapAddedBottomSheet.openSheet();
+                navigate('MapAddedBottomSheet');
               },
               onError: err => {
                 Sentry.captureException(err);
@@ -189,7 +189,7 @@ export function BackgroundMapsScreen() {
   };
 
   const handleRemoveMap = () => {
-    removeMapBottomSheet.openSheet();
+    navigate('DeleteCustomMapBottomSheet');
   };
 
   return (
@@ -217,67 +217,6 @@ export function BackgroundMapsScreen() {
           />
         )}
       </ScrollView>
-
-      <BottomSheetModal
-        ref={removeMapBottomSheet.sheetRef}
-        isOpen={removeMapBottomSheet.isOpen}>
-        <BottomSheetModalContent
-          loading={removeCustomMapMutation.isPending}
-          icon={<ErrorSvg />}
-          title={t(m.deleteCustomMapTitle)}
-          description={
-            t(m.deleteCustomMapDescription) + '\n\n' + t(m.cannotBeUndone)
-          }
-          buttonConfigs={[
-            {
-              dangerous: true,
-              variation: 'filled',
-              text: t(m.deleteMapButtonText),
-              icon: <MaterialIcon size={30} name="delete" color={WHITE} />,
-              onPress: () => {
-                removeCustomMapMutation.mutate(undefined, {
-                  onSuccess: () => {
-                    removeMapBottomSheet.closeSheet();
-                  },
-                });
-              },
-            },
-            {
-              variation: 'outlined',
-              text: t(m.close),
-              onPress: () => {
-                removeMapBottomSheet.closeSheet();
-              },
-            },
-          ]}
-        />
-      </BottomSheetModal>
-
-      <BottomSheetModal
-        fullScreen
-        ref={mapAddedBottomSheet.sheetRef}
-        isOpen={mapAddedBottomSheet.isOpen}>
-        <BottomSheetModalContent
-          icon={
-            <GreenCheckSvg
-              style={{
-                marginTop: 80,
-              }}
-            />
-          }
-          title={t(m.customMapAddedTitle)}
-          description={t(m.customMapAddedDescription)}
-          buttonConfigs={[
-            {
-              variation: 'outlined',
-              text: t(m.close),
-              onPress: () => {
-                mapAddedBottomSheet.closeSheet();
-              },
-            },
-          ]}
-        />
-      </BottomSheetModal>
     </>
   );
 }
@@ -294,28 +233,45 @@ function NoMapScreen({
   const {formatMessage: t} = useIntl();
 
   return (
-    <>
+    <View style={{marginTop: 20}}>
       <View style={styles.descriptionContainer}>
         <BodyText>{t(m.description1)}</BodyText>
         <BodyText>{t(m.description2)}</BodyText>
       </View>
-      <ChooseMapFile onChooseFile={onChooseFile} />
+      <View style={{gap: 20, marginTop: 40}}>
+        <Button fullWidth variant="outlined" onPress={onChooseFile}>
+          <View style={styles.buttonContentContainer}>
+            <DownloadIcon size={24} />
+            <View>
+              <HeaderText variant="header5" style={styles.buttonTextBase}>
+                {t(m.chooseFile)}
+                <HeaderText variant="header5" style={styles.asteriskText}>
+                  {' '}
+                  *
+                </HeaderText>
+              </HeaderText>
+            </View>
+          </View>
+        </Button>
+        <BodyText variant="smallMeta" style={styles.fileTypeText}>
+          {t(m.acceptedFileTypes)}
+        </BodyText>
+      </View>
       {error && (
-        <>
+        <View style={{marginTop: 40}}>
           <BodyText variant="large" style={styles.infoLoadErrorText}>
             {t(m.customMapInfoLoadError)}
           </BodyText>
-          <DestructiveButton
-            fullSize
-            text={t(m.removeMapFile)}
-            onPress={onRemoveMapFile}
-            renderIcon={({color, size}) => (
-              <MaterialIcon name="delete" size={size} color={color} />
-            )}
-          />
-        </>
+          <View style={{alignItems: 'center', marginTop: 20}}>
+            <SecondaryDestructiveButton
+              fullSize
+              text={t(m.removeMapFile)}
+              onPress={onRemoveMapFile}
+            />
+          </View>
+        </View>
       )}
-    </>
+    </View>
   );
 }
 
@@ -327,7 +283,6 @@ function MapInfoScreen({
   onRemoveMap: () => void;
 }) {
   const {formatMessage: t} = useIntl();
-  const {navigate} = useNavigationFromRoot();
 
   const calculatedSize = customMapInfo.size
     ? bytesToMegabytes(customMapInfo.size).toFixed(0)
@@ -374,17 +329,17 @@ function MapInfoScreen({
           fullSize
           text={t(m.sendMap)}
           onPress={() => {
-            // TODO: Get the actual mapId from the map info once the backend provides it
-            navigate('SelectMapShareDevice', {
-              mapId: 'default',
-            });
+            // TODO: Get actual mapId from backend - currently using 'default' as placeholder
+            // Once we have the proper API to get the current map, replace 'default' with the real mapId
+            // navigate('SelectMapShareDevice', {
+            //   mapId: 'default',
+            // });
           }}
           renderIcon={({color, size}) => (
             <MaterialIcon name="send" size={size} color={color} />
           )}
         />
       </View>
-
       <DestructiveButton
         fullSize
         text={t(m.removeMap)}
@@ -400,7 +355,7 @@ function MapInfoScreen({
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingVertical: 40,
+    paddingVertical: 20,
     gap: 36,
     flexGrow: 1,
   },
@@ -415,7 +370,6 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 15,
     alignItems: 'center',
-    marginVertical: 20,
   },
   cardContainer: {
     flexDirection: 'column',
@@ -456,5 +410,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: NEW_DARK_GREY,
     flex: 1,
+  },
+  buttonContentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  buttonTextBase: {
+    letterSpacing: 0.5,
+  },
+  asteriskText: {
+    color: RED,
+  },
+  fileTypeText: {
+    textAlign: 'center',
+    color: NEW_DARK_GREY,
   },
 });

@@ -137,6 +137,7 @@ import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardB
 import {ConfirmDiscardObservationBottomSheet} from '../../screens/ObservationCreate/ConfirmDiscardObservationBottomSheet.tsx';
 import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsIncludedBottomSheet.tsx';
 import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
+import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
 
@@ -618,6 +619,10 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="MapAddedBottomSheet"
         component={MapAddedBottomSheet}
+      />
+      <RootStack.Screen
+        name="MapReceivedBottomSheet"
+        component={MapReceivedBottomSheet}
       />
       <RootStack.Screen
         name="WhatsIncludedBottomSheet"

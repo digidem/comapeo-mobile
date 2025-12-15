@@ -9,6 +9,7 @@ import {Loading} from '../../sharedComponents/Loading';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {createAppScreens} from './AppScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
+import {PendingMapSharesListener} from '../../sharedComponents/PendingMapSharesListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {AuthScreen} from '../../screens/AuthScreen';
@@ -62,6 +63,17 @@ export const RootStackNavigator = () => {
         currentRouteName={state.routes[state.index]?.name}
         navigateToInviteScreen={inviteId =>
           navigation.navigate('InviteReceived', {inviteId})
+        }
+      />
+      <PendingMapSharesListener
+        currentRouteName={state.routes[state.index]?.name}
+        navigateToMapShareScreen={(shareId, mapName, deviceName, sizeInBytes) =>
+          navigation.navigate('MapReceivedBottomSheet', {
+            shareId,
+            mapName,
+            deviceName,
+            sizeInBytes,
+          })
         }
       />
       {children}

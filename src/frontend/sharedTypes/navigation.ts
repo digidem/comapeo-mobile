@@ -124,6 +124,12 @@ export type RootStackParamsList = {
   SettingsPrivacyPolicy: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   BackgroundMaps: undefined;
+  MapReceivedBottomSheet: {
+    shareId: string;
+    mapName: string;
+    deviceName: string;
+    sizeInBytes: number;
+  };
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;

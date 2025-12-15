@@ -184,9 +184,10 @@ export type RootStackParamsList = {
     memberType: 'coordinator' | 'participant';
   };
   ConfirmTrackDiscardBottomSheet: {trackId: string};
-  WhatsIncludedBottomSheet: undefined;
   MapAddedBottomSheet: undefined;
   DeleteCustomMapBottomSheet: undefined;
+  WhatsIncludedBottomSheet: undefined;
+  ConfirmDiscardObservationBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

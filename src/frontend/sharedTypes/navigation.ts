@@ -185,6 +185,8 @@ export type RootStackParamsList = {
   };
   ConfirmTrackDiscardBottomSheet: {trackId: string};
   WhatsIncludedBottomSheet: undefined;
+  MapAddedBottomSheet: undefined;
+  DeleteCustomMapBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

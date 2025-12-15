@@ -41,6 +41,15 @@ export function SendingMap({
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
+  // TODO: Replace this timeout with actual API when map sending completes
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      navigation.replace('MapSent');
+    }, 3000);
+
+    return () => clearTimeout(timeout);
+  }, [navigation]);
+
   const handleCancel = () => {
     requestCancelMapShareMutation.mutate(
       {shareId},

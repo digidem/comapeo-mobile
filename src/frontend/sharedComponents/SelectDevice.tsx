@@ -159,26 +159,10 @@ export const SelectDevice = ({
             fullSize
             text="Sending Map Test"
             onPress={() =>
-              navigation.navigate('SendingMap', {
+              navigation.replace('SendingMap', {
                 shareId: 'test-share-id-for-ui',
               })
             }
-          />
-          <SecondaryButton
-            fullSize
-            text="Map Declined Test"
-            onPress={() => {
-              navigation.navigate('MapDeclineScreen', {
-                reason: 'USER_REJECTED',
-              });
-            }}
-          />
-          <SecondaryButton
-            fullSize
-            text="Device No Space Test"
-            onPress={() => {
-              navigation.navigate('MapDeclineScreen', {reason: 'DISK_SPACE'});
-            }}
           />
         </View>
       )}

@@ -137,6 +137,7 @@ import {LeaveProjectWarning} from '../../screens/YourTeam/LeaveProjectWarning.ts
 import {LeftProjectConfirmation} from '../../screens/YourTeam/LeftProjectConfirmation.tsx';
 import {ConfirmDiscardBottomSheet} from '../../screens/TrackEdit/ConfirmDiscardBottomSheet.tsx';
 import {SendingMap} from '../../screens/BackgroundMaps/SendingMap.tsx';
+import {MapSent} from '../../screens/BackgroundMaps/MapSent.tsx';
 import {ConfirmDiscardObservationBottomSheet} from '../../screens/ObservationCreate/ConfirmDiscardObservationBottomSheet.tsx';
 import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsIncludedBottomSheet.tsx';
 import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
@@ -408,6 +409,11 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="SendingMap"
         component={SendingMap}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="MapSent"
+        component={MapSent}
         options={{headerShown: false}}
       />
       <RootStack.Screen

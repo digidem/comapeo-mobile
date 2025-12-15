@@ -133,6 +133,7 @@ export type RootStackParamsList = {
   SendingMap: {
     shareId: string;
   };
+  MapSent: undefined;
   MapDeclineScreen: {
     reason: 'USER_REJECTED' | 'DISK_SPACE' | 'ALREADY' | 'UNRECOGNIZED';
   };

@@ -1964,12 +1964,6 @@
   "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
     "message": "Send Map"
   },
-  "screens.Settings.MapManagement.SendingMap.cancel": {
-    "message": "Cancel"
-  },
-  "screens.Settings.MapManagement.SendingMap.sending": {
-    "message": "Sending..."
-  },
   "screens.Settings.MapManagement.MapDeclineScreen.close": {
     "message": "Close"
   },
@@ -1978,6 +1972,12 @@
   },
   "screens.Settings.MapManagement.MapDeclineScreen.mapDeclined": {
     "message": "Map declined."
+  },
+  "screens.Settings.MapManagement.SendingMap.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Settings.MapManagement.SendingMap.sending": {
+    "message": "Sending..."
   },
   "screens.Settings.MapManagement.WaitingForMapToAccept.cancel": {
     "message": "Cancel"

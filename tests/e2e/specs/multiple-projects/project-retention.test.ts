@@ -16,9 +16,8 @@ describe('Multiple Projects - Project Data Retention', () => {
     await $(byResourceId('MAIN.map-screen')).click();
 
     await $('~Add Observation').click();
-    const airstripCategory = await $(byTextMatches('Airstrip'));
-    await airstripCategory.scrollIntoView();
-    await airstripCategory.click();
+    const treeCategory = await $(byTextMatches('Tree'));
+    await treeCategory.click();
     const descriptionInput = await $(byResourceId('OBS.description-inp'));
     await descriptionInput.click();
     await descriptionInput.setValue(UNIQUE_DESCRIPTION);
@@ -29,9 +28,9 @@ describe('Multiple Projects - Project Data Retention', () => {
     await handleGPSAlert();
 
     await $('~Go to observations list.').click();
-    const airstrip = await $(byText('Airstrip'));
-    await expect(airstrip).toBeDisplayed();
-    await airstrip.click();
+    const tree = await $(byText('Tree'));
+    await expect(tree).toBeDisplayed();
+    await tree.click();
 
     const description = await $(byText(UNIQUE_DESCRIPTION));
     await expect(description).toBeDisplayed();
@@ -77,9 +76,9 @@ describe('Multiple Projects - Project Data Retention', () => {
     await driver.back();
     await $('~Go to observations list.').click();
 
-    const airstrip = await $(byText('Airstrip'));
-    await expect(airstrip).toBeDisplayed();
-    await airstrip.click();
+    const tree = await $(byText('Tree'));
+    await expect(tree).toBeDisplayed();
+    await tree.click();
 
     const description = await $(byText(UNIQUE_DESCRIPTION));
     await expect(description).toBeDisplayed();

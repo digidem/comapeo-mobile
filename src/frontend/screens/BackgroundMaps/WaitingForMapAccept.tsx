@@ -36,13 +36,11 @@ export function WaitingForMapAccept({
   const {deviceId, mapId} = route.params;
 
   const [time, setTime] = React.useState(0);
-  const sendMapShareMutation = useSendMapShare({projectId});
-  const requestCancelMapShareMutation = useRequestCancelMapShare({projectId});
-  const hasSentMapShareRef = React.useRef(false);
+  const [shareId, setShareId] = React.useState<string | null>(null);
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({headerShown: false});
-  }, [navigation]);
+  // TODO: When new API is ready, replace useSendMapShare with useSentMapShare (or whatever it will be called)
+  const {mutate: sendMapShare} = useSendMapShare({projectId});
+  const requestCancelMapShareMutation = useRequestCancelMapShare({projectId});
 
   usePreventAndroidBackButton();
 
@@ -52,22 +50,26 @@ export function WaitingForMapAccept({
       return;
     }
 
-    // TODO: Replace with real shareId once we track it from the send operation
-    const TEMP_FAKE_SHARE_ID = 'fake-share-id-for-testing';
+    // TODO: Once we have the shareId from the API response, use it here
+    if (!shareId) {
+      // If we don't have a shareId yet, just go back
+      navigation.goBack();
+      return;
+    }
 
     requestCancelMapShareMutation.mutate(
-      {shareId: TEMP_FAKE_SHARE_ID},
+      {shareId},
       {
         onSuccess: () => {
           navigation.goBack();
         },
         onError: (err: Error) => {
           Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
+          navigation.replace('ErrorBottomSheet');
         },
       },
     );
-  }, [navigation, requestCancelMapShareMutation]);
+  }, [navigation, requestCancelMapShareMutation, shareId]);
 
   React.useEffect(() => {
     const subscription = AppState.addEventListener('change', nextState => {
@@ -80,18 +82,12 @@ export function WaitingForMapAccept({
   }, [cancelShare]);
 
   React.useEffect(() => {
-    if (sendMapShareMutation.status === 'error') return;
-
-    if (hasSentMapShareRef.current) return;
-
-    hasSentMapShareRef.current = true;
-
-    sendMapShareMutation.mutate(
+    sendMapShare(
       {deviceId, mapId},
       {
         onError: (err: Error) => {
           Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
+          navigation.replace('ErrorBottomSheet');
         },
         onSuccess: (
           result:
@@ -106,15 +102,24 @@ export function WaitingForMapAccept({
                   | 'USER_REJECTED';
               },
         ) => {
-          console.log('Map share result:', result);
-          // TODO: Handle different decisions and navigate accordingly
-          // - If decision is 'ACCEPT', the map is being downloaded
-          // - If decision is 'REJECT', check the reason (could be 'ALREADY' if they have it)
-          navigation.popTo('BackgroundMaps');
+          setShareId(result.shareId);
+
+          if (result.decision === 'ACCEPT') {
+            // TODO: Navigate to SendingMap screen once that PR is ready
+            // navigation.replace('SendingMap', {shareId: result.shareId});
+            navigation.popTo('BackgroundMaps');
+          } else if (result.decision === 'REJECT') {
+            // TODO: Navigate to MapDeclineScreen when that PR is ready
+            // navigation.navigate('MapDeclineScreen', {reason: result.reason});
+            navigation.popTo('BackgroundMaps');
+          } else {
+            // UNRECOGNIZED decision - go back to BackgroundMaps
+            navigation.popTo('BackgroundMaps');
+          }
         },
       },
     );
-  }, [deviceId, mapId, navigation, sendMapShareMutation]);
+  }, [sendMapShare, deviceId, mapId, navigation, setShareId]);
 
   React.useEffect(() => {
     const interval = setInterval(() => setTime(prev => prev + 1), 1000);

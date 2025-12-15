@@ -1,6 +1,7 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
+import * as Sentry from '@sentry/react-native';
 
 import {useManyMembers} from '@comapeo/core-react';
 import {type MemberInfo} from '@comapeo/core/dist/member-api';
@@ -109,6 +110,12 @@ export const SelectDevice = ({
           const handlePress = () => {
             if (selectionMode === 'shareMap') {
               if (!mapId) {
+                // This should never happen, but if it does, report to Sentry and show error
+                const error = new Error(
+                  'mapId is missing when trying to share map',
+                );
+                Sentry.captureException(error);
+                navigation.navigate('ErrorBottomSheet');
                 return;
               }
               navigation.navigate('WaitingForMapAccept', {

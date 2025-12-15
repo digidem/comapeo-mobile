@@ -28,16 +28,6 @@ import ErrorIcon from '../images/Error.svg';
 import DiscardIcon from '../images/delete.svg';
 
 const m = defineMessages({
-  discardTitle: {
-    id: 'AppContainer.EditHeader.discardTitle',
-    defaultMessage: 'Discard observation?',
-    description: 'Title of dialog that shows when cancelling a new observation',
-  },
-  discardObservationDescription: {
-    id: 'AppContainer.EditHeader.discardObservationDescription',
-    defaultMessage:
-      'Your Observation will not be saved. This cannot be undone. ',
-  },
   discardChangesTitle: {
     id: 'AppContainer.EditHeader.discardChangesTitle',
     defaultMessage: 'Discard changes?',
@@ -51,11 +41,6 @@ const m = defineMessages({
     id: 'AppContainer.EditHeader.discardCancel',
     defaultMessage: 'Continue editing',
     description: 'Button on dialog to keep editing (cancelling close action)',
-  },
-  discardObservationButton: {
-    id: 'AppContainer.EditHeader.discardObservationButton',
-    defaultMessage: 'Discard Observation',
-    description: 'Title of dialog that shows when cancelling observation edits',
   },
   discardChangesButton: {
     id: 'AppContainer.EditHeader.discardChangesButton',
@@ -112,29 +97,21 @@ export const CustomHeaderLeftClose = ({
         <HeaderBackNewObservation
           tintColor={tintColor}
           headerBackButtonProps={headerBackButtonProps}
-          openBottomSheet={openSheet}
+          openBottomSheet={() =>
+            navigation.navigate('ConfirmDiscardObservationBottomSheet')
+          }
         />
       )}
       <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
         <BottomSheetModalContent
-          title={
-            observationId
-              ? formatMessage(m.discardChangesTitle)
-              : formatMessage(m.discardTitle)
-          }
-          description={
-            observationId
-              ? formatMessage(m.discardChangesDescription)
-              : formatMessage(m.discardObservationDescription)
-          }
+          title={formatMessage(m.discardChangesTitle)}
+          description={formatMessage(m.discardChangesDescription)}
           buttonConfigs={[
             {
               variation: 'filled',
               dangerous: true,
               onPress: handleDiscard,
-              text: observationId
-                ? formatMessage(m.discardChangesButton)
-                : formatMessage(m.discardObservationButton),
+              text: formatMessage(m.discardChangesButton),
               icon: <DiscardIcon />,
             },
             {

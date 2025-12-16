@@ -11,8 +11,10 @@ import type {AccelerometerMeasurement} from 'expo-sensors';
 import type {CameraCapturedPicture} from 'expo-camera';
 import {manipulateAsync} from 'expo-image-manipulator';
 import {excludeKeys} from 'filter-obj';
-import type {Position} from '../../sharedTypes/index.ts';
+import type {Attachment, Position} from '../../sharedTypes/index.ts';
 import {throwIfAborted} from '../../lib/throwIfAborted.ts';
+import {parse} from 'valibot';
+import {PhotoEXIFSchema} from '../../lib/exif.ts';
 
 export type DraftObservationStore = ReturnType<
   typeof createDraftObservationStore
@@ -111,9 +113,21 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
   }): Promise<T> {
     try {
       const processResult = await processPromise;
-      _updateAttachment('photo', id, {
-        [outputKey]: {uri: processResult.uri, processingState: 'complete'},
-      });
+      if ('exif' in processResult) {
+        const extractedExif = parse(PhotoEXIFSchema, processResult.exif);
+        _updateAttachment('photo', id, {
+          [outputKey]: {
+            uri: processResult.uri,
+            processingState: 'complete',
+            exif: extractedExif,
+          },
+        });
+      } else {
+        _updateAttachment('photo', id, {
+          [outputKey]: {uri: processResult.uri, processingState: 'complete'},
+        });
+      }
+
       return processResult;
     } catch (reason) {
       const error = reasonToError(reason);
@@ -378,6 +392,7 @@ export type UnsavedPhotoAttachment = {
   location?: LocationObject;
   timestamp: number;
   abortController: AbortController;
+  photoExif?: Extract<Attachment, {type: 'photo'}>['photoExif'];
 };
 
 export type PhotoMetadata = Pick<

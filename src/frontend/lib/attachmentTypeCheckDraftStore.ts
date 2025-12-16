@@ -1,5 +1,8 @@
 import {AccelerometerMeasurement} from 'expo-sensors';
-import {UnsavedAttachmentBlob} from '../contexts/PersistedStores/DraftObservationStore';
+import {
+  UnsavedAttachmentBlob,
+  UnsavedAudioAttachment,
+} from '../contexts/PersistedStores/DraftObservationStore';
 import {LocationObject} from 'expo-location';
 
 export type UnsavedPhotoAttachment = {
@@ -124,4 +127,19 @@ export function isUnsavedPhotoAttachment(
   }
 
   return true;
+}
+
+export function isUnsavedAudioAttachment(
+  obj: unknown,
+): obj is UnsavedAudioAttachment {
+  if (typeof obj !== 'object' || obj === null) return false;
+
+  const candidate = obj as Partial<UnsavedAudioAttachment>;
+
+  return (
+    typeof candidate.id === 'number' &&
+    candidate.type === 'audio' &&
+    isAbortController(candidate.abortController) &&
+    isUnsavedAttachmentBlob(candidate.original)
+  );
 }

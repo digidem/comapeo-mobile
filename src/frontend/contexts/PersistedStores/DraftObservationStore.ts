@@ -393,7 +393,7 @@ type ManualPosition = {
   };
 };
 
-type UnsavedAudioAttachment = {
+export type UnsavedAudioAttachment = {
   id: number;
   original: UnsavedAttachmentBlob;
   type: 'audio';

@@ -2,10 +2,6 @@ import {useCreateDocument} from '@comapeo/core-react';
 import {Observation} from '@comapeo/schema';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {
-  usePersistedDraftObservation,
-  usePreset,
-} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {
   useCreatePhotoAttachment,
   useCreateAudioAttachment,
 } from '../../hooks/server/media';
@@ -30,6 +26,10 @@ import {Alert, AlertButton, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useQueryClient} from '@tanstack/react-query';
 import {defineMessages, useIntl} from 'react-intl';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 const MAXIMUM_ACCURACY = 10;
 
@@ -75,16 +75,19 @@ const m = defineMessages({
 });
 
 export const ObservationCreateSaveButton = () => {
-  const value = usePersistedDraftObservation(store => store.value);
-  const attachments = usePersistedDraftObservation(store => store.attachments);
+  const value = useDraftObservationState(store => store.value);
+  // const attachments = usePersistedDraftObservation(store => store.attachments);
+  const preset = useDraftObservationState(store => store.value?.presetRef);
   const {authState} = useAuthContext();
-  const {clearDraft} = useDraftObservation();
+  const {clearDraft} = useDraftObservationActions();
   const navigation = useNavigationFromRoot();
   const {projectId} = useActiveProject();
   const isTracking = useTrackState(state => state.isTracking);
-  const preset = usePreset();
   const queryClient = useQueryClient();
   const {formatMessage} = useIntl();
+
+  //@ts-expect-error for now
+  const attachments = [];
 
   const {
     mutateAsync: createPhotoAttachmentAsync,
@@ -157,29 +160,29 @@ export const ObservationCreateSaveButton = () => {
       return;
     }
 
-    const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
-    const unsavedAudio = attachments.filter(isUnsavedAudio);
+    // const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
+    // const unsavedAudio = attachments.filter(isUnsavedAudio);
 
     try {
-      let newAttachments: Attachment[] = [];
+      // let newAttachments: Attachment[] = [];
 
-      if (unsavedPhotos.length > 0 || unsavedAudio.length > 0) {
-        const photoPromises = unsavedPhotos.map(p =>
-          createPhotoAttachmentAsync(p),
-        );
-        const audioPromises = unsavedAudio.map(a =>
-          createAudioAttachmentAsync(a),
-        );
-        newAttachments = await Promise.all([
-          ...photoPromises,
-          ...audioPromises,
-        ]);
-      }
+      // if (unsavedPhotos.length > 0 || unsavedAudio.length > 0) {
+      //   const photoPromises = unsavedPhotos.map(p =>
+      //     createPhotoAttachmentAsync(p),
+      //   );
+      //   const audioPromises = unsavedAudio.map(a =>
+      //     createAudioAttachmentAsync(a),
+      //   );
+      //   newAttachments = await Promise.all([
+      //     ...photoPromises,
+      //     ...audioPromises,
+      //   ]);
+      // }
 
       const createdObservation = await createObservationAsync({
         value: {
           ...value,
-          attachments: [...value.attachments, ...newAttachments],
+          attachments: [...value.attachments],
           presetRef: preset
             ? {docId: preset.docId, versionId: preset.versionId}
             : undefined,

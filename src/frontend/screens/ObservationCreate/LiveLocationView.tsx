@@ -1,13 +1,12 @@
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {useDraftObservationState} from '../../contexts/DraftObservationContext';
+
 import {Divider} from '../../sharedComponents/Divider';
 import {LocationView} from '../../sharedComponents/Editor/LocationView';
-import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 
 export const LiveLocationView = () => {
-  useMostAccurateLocationForObservation();
-  const lat = usePersistedDraftObservation(store => store.value?.lat);
-  const lon = usePersistedDraftObservation(store => store.value?.lon);
-  const accuracy = usePersistedDraftObservation(
+  const lat = useDraftObservationState(store => store.value?.lat);
+  const lon = useDraftObservationState(store => store.value?.lon);
+  const accuracy = useDraftObservationState(
     store => store.value?.metadata?.position?.coords.accuracy,
   );
 

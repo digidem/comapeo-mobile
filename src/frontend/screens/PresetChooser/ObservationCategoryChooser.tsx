@@ -2,7 +2,6 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {usePresetsSelection} from '@comapeo/core-react';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {CategoryGrid} from './CategoryGrid';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -12,6 +11,10 @@ import {Preset} from '@comapeo/schema';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   title: {
@@ -30,11 +33,11 @@ export const ObservationCategoryChooser: NativeNavigationComponent<
     dataType: 'observation',
     lang: languageTag,
   });
-  const {updatePreset, usePreset} = useDraftObservation();
+  const preset = useDraftObservationState(state => state.value?.presetRef);
+  const {updatePreset} = useDraftObservationActions();
   const observationId = usePersistedDraftObservation(
     state => state.observationId,
   );
-  const currentPreset = usePreset();
 
   const filteredPresets = Array.from(presets).filter(p =>
     p.geometry.includes('point'),
@@ -57,7 +60,7 @@ export const ObservationCategoryChooser: NativeNavigationComponent<
     navigation.setOptions({
       title: m.title.defaultMessage,
       headerLeft: props =>
-        currentPreset ? (
+        preset ? (
           <CustomHeaderLeft
             onPress={handleGoBack}
             headerBackButtonProps={props}
@@ -66,7 +69,7 @@ export const ObservationCategoryChooser: NativeNavigationComponent<
           <CustomHeaderLeftClose headerBackButtonProps={props} />
         ),
     });
-  }, [navigation, currentPreset, handleGoBack]);
+  }, [navigation, preset, handleGoBack]);
 
   return (
     <View style={styles.container} testID="MAIN.categories-scrn">

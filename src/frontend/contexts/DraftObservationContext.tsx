@@ -57,7 +57,7 @@ function useDraftObservationContext() {
 }
 
 const LOCATION_OPTIONS: Location.LocationOptions = {
-  accuracy: Location.Accuracy.Highest,
+  accuracy: Location.Accuracy.BestForNavigation,
   timeInterval: 1000,
 };
 /** We don't update the position of an observation with the location from the

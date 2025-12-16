@@ -1,19 +1,17 @@
-import {captureException} from '@sentry/react-native';
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {CameraView as ExpoCameraView, useCameraPermissions} from 'expo-camera';
+import {
+  CameraCapturedPicture,
+  CameraView as ExpoCameraView,
+  useCameraPermissions,
+} from 'expo-camera';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
-import {parse} from 'valibot';
 
 import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
-import {
-  MediaMetadata,
-  PhotoPromiseWithMetadata,
-} from '../contexts/PhotoPromiseContext/types';
-import {PhotoEXIFSchema} from '../lib/exif';
 import {useLocationState} from '../contexts/LocationContext';
+import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -28,7 +26,10 @@ const m = defineMessages({
 
 type Props = {
   // Called when the user takes a picture.
-  onAddPress: (capture: PhotoPromiseWithMetadata) => void;
+  onAddPress: (photo: {
+    capturePromise: Promise<CameraCapturedPicture>;
+    metadata: PhotoMetadata;
+  }) => void;
 };
 
 export const CameraView = ({onAddPress}: Props) => {
@@ -75,48 +76,25 @@ export const CameraView = ({onAddPress}: Props) => {
 
     setCapturing(true);
 
-    ref.current
-      .takePictureAsync({
-        base64: false,
-        exif: true,
-        skipProcessing: false,
-        shutterSound: false,
-        quality: 0.75,
-        imageType: 'jpg',
-      })
-      .then(pic => {
-        if (!pic) return;
+    const photoPromise = ref.current.takePictureAsync({
+      base64: false,
+      exif: true,
+      skipProcessing: false,
+      shutterSound: false,
+      quality: 0.75,
+      imageType: 'jpg',
+    });
 
-        let mediaMetadata: MediaMetadata = {
-          location,
-          timestamp: Date.now(),
-        };
+    onAddPress({
+      capturePromise: photoPromise,
+      metadata: {
+        location,
+        accelerometer: accelerometerMeasurement.current || undefined,
+        timestamp: Date.now(),
+      },
+    });
 
-        if (pic.exif) {
-          try {
-            const extractedExif = parse(PhotoEXIFSchema, pic.exif);
-
-            mediaMetadata = {
-              ...mediaMetadata,
-              photoExif: extractedExif,
-            };
-          } catch (err) {
-            captureException(err);
-          }
-        }
-
-        onAddPress({
-          capturePromise: Promise.resolve({uri: pic.uri}),
-          mediaMetadata,
-        });
-      })
-      .catch(err => {
-        captureException(err);
-        setCapturing(false);
-      })
-      .finally(() => {
-        setCapturing(false);
-      });
+    setCapturing(false);
   }, [capturing, setCapturing, onAddPress, location]);
 
   const disableButton = capturing || !cameraReady;

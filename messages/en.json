@@ -1994,16 +1994,16 @@
   "screens.Settings.MapManagement.MapReceived.sharingDevice": {
     "message": "{deviceName} wants to share..."
   },
-  "screens.Settings.MapManagement.ReplaceBackgroundMapConfirm.cancel": {
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.cancel": {
     "message": "Cancel"
   },
-  "screens.Settings.MapManagement.ReplaceBackgroundMapConfirm.replaceMapDescription": {
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.replaceMapDescription": {
     "message": "This device has a background map that will be replaced if you continue."
   },
-  "screens.Settings.MapManagement.ReplaceBackgroundMapConfirm.replaceMapTitle": {
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.replaceMapTitle": {
     "message": "Replace current background map?"
   },
-  "screens.Settings.MapManagement.ReplaceBackgroundMapConfirm.yesReplace": {
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.yesReplace": {
     "message": "Yes, Replace"
   },
   "screens.Settings.MapManagement.UpdatingBackgroundMap.cancel": {

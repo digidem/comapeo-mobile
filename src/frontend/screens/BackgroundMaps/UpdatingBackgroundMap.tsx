@@ -41,8 +41,8 @@ export function UpdatingBackgroundMap({
   }, [navigation]);
 
   React.useEffect(() => {
-    // is there any way to get progress from this?
-    // Do I need to actually do something to replace or update the map?
+    // TODO: use usemanymapshares and/ or useSingleMapShare to track progress?
+    // Not sure how to do this exactly yet.
     acceptMapShare(
       {shareId},
       {

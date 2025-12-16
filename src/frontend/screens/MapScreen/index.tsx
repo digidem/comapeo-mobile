@@ -9,7 +9,6 @@ import {
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
@@ -43,6 +42,7 @@ import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner'
 import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
 import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
 import {useTrackState} from '../../contexts/TrackStoreContext';
+import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -68,8 +68,7 @@ export const MapScreen = ({
   const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
     React.useState(false);
   const {dimensions, mapKey, onLayout} = useResetMapLayout();
-
-  const {newDraft} = useDraftObservation();
+  const {createDraft} = useDraftObservationActions();
   const {navigate} = useNavigationFromHomeTabs();
   const {isTracking} = useTracking();
   const location = useLocationState(store =>
@@ -115,7 +114,7 @@ export const MapScreen = ({
   );
 
   const handleAddPress = () => {
-    newDraft();
+    createDraft();
     navigate('ObservationCategoryChooser');
   };
 

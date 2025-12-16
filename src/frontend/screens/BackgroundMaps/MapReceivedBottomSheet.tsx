@@ -15,6 +15,7 @@ import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
 import {useLocationState} from '../../contexts/LocationContext';
+import {useGetCustomMapInfo} from '../../hooks/server/maps';
 import {
   BLACK,
   BLUE_GREY,
@@ -23,6 +24,8 @@ import {
   LIGHT_GREEN,
   LIGHT_ORANGE,
 } from '../../lib/styles';
+import {useRejectMapShare} from '@comapeo/core-react';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   sharingDevice: {
@@ -71,6 +74,9 @@ export function MapReceivedBottomSheet({
   const {data: storageData} = useStorageReadingQuery();
   const {freeBytes} = storageData;
 
+  const customMapInfoQuery = useGetCustomMapInfo();
+  const hasExistingMap = !!customMapInfoQuery.data;
+
   const currentLocation = useLocationState(state => state.location);
 
   const [warning, setWarning] = React.useState<WarningType>(null);
@@ -78,6 +84,7 @@ export function MapReceivedBottomSheet({
   const [mbNeeded, setMbNeeded] = React.useState(0);
 
   const sizeInMB = Math.round(sizeInBytes / (1024 * 1024));
+  const {mutate: rejectMapShare} = useRejectMapShare();
 
   React.useEffect(() => {
     if (freeBytes < sizeInBytes) {
@@ -126,17 +133,27 @@ export function MapReceivedBottomSheet({
   }, [currentLocation, warning, testBbox]);
 
   const handleAccept = () => {
-    // TODO: Navigate to ReplaceBackgroundMapScreen when it's created
-    // navigation.navigate('ReplaceBackgroundMapScreen', {shareId});
-    console.log('Accept map share:', shareId);
-    navigation.goBack();
+    if (hasExistingMap) {
+      navigation.replace('ReplaceBackgroundMap', {shareId});
+    } else {
+      navigation.replace('UpdatingBackgroundMap', {shareId});
+    }
   };
 
   const handleDecline = () => {
-    // TODO: Call useRequestRejectMapShare when API is ready
-    // The API doesn't support rejection reason yet
-    console.log('Decline map share:', shareId);
-    navigation.goBack();
+    // reason?
+    rejectMapShare(
+      {shareId},
+      {
+        onSuccess: () => {
+          navigation.popTo('BackgroundMaps');
+        },
+        onError: (err: Error) => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
+      },
+    );
   };
 
   return (

@@ -131,6 +131,13 @@ export type RootStackParamsList = {
     sizeInBytes: number;
     testBbox?: [number, number, number, number]; // [minLng, minLat, maxLng, maxLat] - for testing only
   };
+  ReplaceBackgroundMap: {
+    shareId: string;
+  };
+  UpdatingBackgroundMap: {
+    shareId: string;
+  };
+  BackgroundMapUpdated: undefined;
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;

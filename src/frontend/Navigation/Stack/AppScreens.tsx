@@ -138,6 +138,9 @@ import {ConfirmDiscardObservationBottomSheet} from '../../screens/ObservationCre
 import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsIncludedBottomSheet.tsx';
 import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
 import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
+import {ReplaceBackgroundMap} from '../../screens/BackgroundMaps/ReplaceBackgroundMap.tsx';
+import {UpdatingBackgroundMap} from '../../screens/BackgroundMaps/UpdatingBackgroundMap.tsx';
+import {BackgroundMapUpdated} from '../../screens/BackgroundMaps/BackgroundMapUpdated.tsx';
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
 
@@ -536,6 +539,21 @@ export const createAppScreens = ({
         name="CollaboratorInfo"
         component={CollaboratorInfo}
         options={createCollaboratorInfoNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="ReplaceBackgroundMap"
+        component={ReplaceBackgroundMap}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="UpdatingBackgroundMap"
+        component={UpdatingBackgroundMap}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="BackgroundMapUpdated"
+        component={BackgroundMapUpdated}
+        options={{headerShown: false}}
       />
     </RootStack.Group>
     <RootStack.Group

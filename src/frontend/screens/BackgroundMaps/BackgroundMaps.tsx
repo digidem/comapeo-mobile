@@ -228,6 +228,11 @@ export function BackgroundMapsScreen() {
           <HeaderText variant="header6" style={{textAlign: 'center'}}>
             Test Map Received Bottom Sheets
           </HeaderText>
+          {/* Testing Replace Flow:
+              1. Import a custom map first (using "Choose File" button above)
+              2. Then test these buttons - they will show "Replace" confirmation
+              3. To test without replace flow, delete the map first
+          */}
           <SecondaryButton
             fullSize
             text="Normal Map Received Test"
@@ -238,31 +243,6 @@ export function BackgroundMapsScreen() {
                 deviceName: 'Device ABC',
                 sizeInBytes: 33 * 1024 * 1024, // 33 MB
                 testBbox: [-180, -90, 180, 90], // World bbox - always shows normal (no location warning)
-              })
-            }
-          />
-          <SecondaryButton
-            fullSize
-            text="Location Warning Test"
-            onPress={() =>
-              navigate('MapReceivedBottomSheet', {
-                shareId: 'test-share-id-location',
-                mapName: 'Remote Area Map',
-                deviceName: 'Device XYZ',
-                sizeInBytes: 50 * 1024 * 1024, // 50 MB
-                testBbox: [-79.0, -4.0, -66.0, 13.0], // Colombia - triggers location warning if outside
-              })
-            }
-          />
-          <SecondaryButton
-            fullSize
-            text="No Space Warning Test"
-            onPress={() =>
-              navigate('MapReceivedBottomSheet', {
-                shareId: 'test-share-id-nospace',
-                mapName: 'Huge Map',
-                deviceName: 'Device 123',
-                sizeInBytes: 10000 * 1024 * 1024 * 1024, // 10TB - Will trigger no space warning
               })
             }
           />

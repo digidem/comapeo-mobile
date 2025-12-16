@@ -351,7 +351,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
 
 type ObservationTagValue = Observation['tags'][number];
 
-type UnsavedAttachmentBlob =
+export type UnsavedAttachmentBlob =
   | {
       uri: string;
       processingState: 'complete';
@@ -366,7 +366,7 @@ type UnsavedAttachmentBlob =
       processingState: 'error';
     };
 
-type UnsavedPhotoAttachment = {
+export type UnsavedPhotoAttachment = {
   id: number;
   type: 'photo';
   // Represents unprocessed blob (i.e. not resized or rotated)

@@ -23,7 +23,11 @@ import {
   LIGHT_GREEN,
   LIGHT_ORANGE,
 } from '../../lib/styles';
-import {useRejectMapShare, useSingleMapShare} from '@comapeo/core-react';
+import {
+  useRejectMapShare,
+  useSingleMapShare,
+  useAcceptMapShare,
+} from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
@@ -124,13 +128,25 @@ export function MapReceivedBottomSheet({
   ]);
 
   const {mutate: rejectMapShare} = useRejectMapShare();
+  const {mutate: acceptMapShare} = useAcceptMapShare();
 
   const handleAccept = () => {
-    if (hasExistingMap) {
-      navigation.replace('ReplaceBackgroundMap', {shareId});
-    } else {
-      navigation.replace('UpdatingBackgroundMap', {shareId});
-    }
+    acceptMapShare(
+      {shareId},
+      {
+        onError: (err: Error) => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
+        onSuccess: () => {
+          if (hasExistingMap) {
+            navigation.replace('ReplaceBackgroundMap', {shareId});
+          } else {
+            navigation.replace('UpdatingBackgroundMap', {shareId});
+          }
+        },
+      },
+    );
   };
 
   const handleDecline = () => {

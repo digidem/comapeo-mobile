@@ -5,7 +5,7 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {Bar as ProgressBar} from 'react-native-progress';
 import * as Sentry from '@sentry/react-native';
 
-import {useRejectMapShare, useAcceptMapShare} from '@comapeo/core-react';
+import {useRejectMapShare, useSingleMapShare} from '@comapeo/core-react';
 import StackSvg from '../../images/Stack.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -34,32 +34,24 @@ export function UpdatingBackgroundMap({
   const {formatMessage: t} = useIntl();
   const {shareId} = route.params;
   const {mutate: rejectMapShare} = useRejectMapShare();
-  const {mutate: acceptMapShare} = useAcceptMapShare();
+  const {data: mapShare} = useSingleMapShare({shareId});
 
   React.useLayoutEffect(() => {
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
   React.useEffect(() => {
-    // TODO: use usemanymapshares and/ or useSingleMapShare to track progress?
-    // Not sure how to do this exactly yet.
-    acceptMapShare(
-      {shareId},
-      {
-        onError: (err: Error) => {
-          Sentry.captureException(err);
-          navigation.replace('ErrorBottomSheet');
-        },
-        onSuccess: () => {
-          navigation.replace('BackgroundMapUpdated');
-        },
-      },
-    );
-  }, [shareId, navigation, acceptMapShare]);
+    if (!mapShare) return;
+
+    if (mapShare.state === 'completed') {
+      navigation.replace('BackgroundMapUpdated');
+    } else if (mapShare.state === 'error') {
+      Sentry.captureException(mapShare.error);
+      navigation.replace('ErrorBottomSheet');
+    }
+  }, [mapShare, navigation]);
 
   const handleCancel = () => {
-    // TODO: Does useRejectMapShare work during download
-    // or do we need a separate API to cancel an in-progress download?
     rejectMapShare(
       {shareId},
       {
@@ -73,6 +65,16 @@ export function UpdatingBackgroundMap({
       },
     );
   };
+
+  const downloadProgress = React.useMemo(() => {
+    if (!mapShare || mapShare.state !== 'downloading') {
+      return 0;
+    }
+    const progress = mapShare.bytesDownloaded / mapShare.estimatedSizeBytes;
+    return Math.min(progress, 1);
+  }, [mapShare]);
+
+  const isDownloading = mapShare?.state === 'downloading';
 
   return (
     <View style={styles.container}>
@@ -91,7 +93,8 @@ export function UpdatingBackgroundMap({
             style={styles.syncIcon}
           />
           <ProgressBar
-            indeterminate
+            progress={isDownloading ? downloadProgress : undefined}
+            indeterminate={!isDownloading}
             indeterminateAnimationDuration={2000}
             width={250}
             height={8}

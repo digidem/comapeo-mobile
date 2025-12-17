@@ -5,7 +5,7 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {Bar as ProgressBar} from 'react-native-progress';
 import * as Sentry from '@sentry/react-native';
 
-import {useRequestCancelMapShare} from '@comapeo/core-react';
+import {useRequestCancelMapShare, useSingleMapShare} from '@comapeo/core-react';
 import StackSvg from '../../images/Stack.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -35,20 +35,22 @@ export function SendingMap({
   const {formatMessage: t} = useIntl();
   const {projectId} = useActiveProject();
   const {shareId} = route.params;
+  const {data: mapShare} = useSingleMapShare({shareId});
   const requestCancelMapShareMutation = useRequestCancelMapShare({projectId});
+  const isDownloading = mapShare?.state === 'downloading';
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({headerShown: false});
-  }, [navigation]);
-
-  // TODO: Replace this timeout with actual API when map sending completes
   React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      navigation.replace('MapSent');
-    }, 3000);
-
-    return () => clearTimeout(timeout);
-  }, [navigation]);
+    if (!mapShare) return;
+    if (mapShare.state === 'completed') {
+      navigation.popTo('MapSent');
+    } else if (mapShare.state === 'cancelled') {
+      // should this go to a declined screen instead?
+      navigation.popTo('BackgroundMaps');
+    } else if (mapShare.state === 'error') {
+      Sentry.captureException(new Error('Map share failed'));
+      navigation.replace('ErrorBottomSheet');
+    }
+  }, [mapShare, navigation, shareId]);
 
   const handleCancel = () => {
     requestCancelMapShareMutation.mutate(
@@ -64,6 +66,14 @@ export function SendingMap({
       },
     );
   };
+
+  const downloadProgress = React.useMemo(() => {
+    if (!mapShare || mapShare.state !== 'downloading') {
+      return 0;
+    }
+    const progress = mapShare.bytesDownloaded / mapShare.estimatedSizeBytes;
+    return Math.min(progress, 1);
+  }, [mapShare]);
 
   return (
     <View style={styles.container}>
@@ -82,7 +92,8 @@ export function SendingMap({
             style={styles.syncIcon}
           />
           <ProgressBar
-            indeterminate
+            progress={isDownloading ? downloadProgress : undefined}
+            indeterminate={!isDownloading}
             indeterminateAnimationDuration={2000}
             width={250}
             height={8}

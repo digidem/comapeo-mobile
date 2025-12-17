@@ -197,14 +197,29 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     }
   }
 
-  function addAudio(uri: string) {
+  /**
+   *
+   * @returns audio attachment ID
+   */
+  function addAudio({
+    uri,
+    duration,
+    createdAt,
+  }: {
+    uri: string;
+    duration: number;
+    createdAt: number;
+  }) {
     const newAttachment: UnsavedAudioAttachment = {
       id: nextAttachmentId++,
       type: 'audio',
       original: {uri, processingState: 'complete'},
+      timestamp: createdAt,
+      duration,
       abortController: new AbortController(),
     };
     _addAttachment(newAttachment);
+    return newAttachment.id;
   }
 
   function deleteUnsavedAttachment(id: number) {
@@ -396,6 +411,8 @@ export type UnsavedAudioAttachment = {
   original: UnsavedAttachmentBlob;
   type: 'audio';
   abortController: AbortController;
+  timestamp: number;
+  duration: number;
 };
 
 type UnsavedAttachment = UnsavedPhotoAttachment | UnsavedAudioAttachment;

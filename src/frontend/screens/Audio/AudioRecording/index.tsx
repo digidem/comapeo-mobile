@@ -67,15 +67,20 @@ export function AudioRecording({
     try {
       const result = await stopRecording();
 
-      if (!result?.uri || !result.createdAt) {
+      if (!result?.uri || !result.createdAt || !result.duration) {
         navigation.replace('ErrorBottomSheet');
         return;
       }
-      addAudio(result.uri);
+      const audioId = addAudio({
+        uri: result.uri,
+        createdAt: result.createdAt,
+        duration: result.duration,
+      });
       navigation.replace('AudioDraftPlaybackScreen', {
         uri: result.uri,
         createdAt: result.createdAt,
         showRecordingSavedText: true,
+        audioId,
       });
     } finally {
       setIsLoading(false);

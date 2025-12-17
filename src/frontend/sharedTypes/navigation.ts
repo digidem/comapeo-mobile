@@ -135,6 +135,7 @@ export type RootStackParamsList = {
     uri: string;
     createdAt: number;
     showRecordingSavedText: boolean;
+    audioId: number;
   };
   AudioAttachmentPlaybackScreen: {
     driveDiscoveryId: string;

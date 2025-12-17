@@ -15,10 +15,10 @@ import {StopIcon} from '../../sharedComponents/icons';
 import PlayArrow from '../../images/PlayArrow.svg';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import {DateDistance} from '../../sharedComponents/DateDistance';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {audioStyles} from './shared';
+import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   recordingSaved: {
@@ -39,11 +39,11 @@ export const AudioDraftPlaybackScreen = ({
   navigation,
   route,
 }: NativeRootNavigationProps<'AudioDraftPlaybackScreen'>) => {
-  const {uri, createdAt, showRecordingSavedText} = route.params;
+  const {uri, createdAt, showRecordingSavedText, audioId} = route.params;
   const {duration, currentPosition, isPlaying, startPlayback, stopPlayback} =
     useAudioPlayback(uri);
   const {formatMessage} = useIntl();
-  const {deleteAudio} = useDraftObservation();
+  const {deleteUnsavedAttachment} = useDraftObservationActions();
 
   const progress = duration ? currentPosition / duration : 0;
 
@@ -62,7 +62,7 @@ export const AudioDraftPlaybackScreen = ({
             fullSize
             text={formatMessage(m.delete)}
             onPress={() => {
-              deleteAudio(uri, false);
+              deleteUnsavedAttachment(audioId);
               navigation.goBack();
             }}
             renderIcon={({color, size}) => (

@@ -20,7 +20,6 @@ import {
   ThumbnailContainer,
   ThumbnailLoader,
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer';
-import {isUnsavedAudio} from '../../lib/attachmentTypeChecks';
 import {ThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail';
 import {COMAPEO_BLUE, DARK_GREY, LIGHT_GREY, WHITE} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -158,40 +157,44 @@ export const ObservationCreate = ({
                   }
                 }
 
-                // if (isUnsavedAudioAttachment(att)) {
-                //   return (
-                //     <ThumbnailContainer
-                //       key={att.id}
-                //       size={size}
-                //       onPress={() =>
-                //         navigation.navigate('AudioDraftPlaybackScreen', {
-                //           uri: att.original.uri,
-                //           createdAt: att.createdAt,
-                //           showRecordingSavedText: false,
-                //         })
-                //       }
-                //       containerStyle={{
-                //         backgroundColor: WHITE,
-                //         borderColor: COMAPEO_BLUE,
-                //         borderWidth: 2,
-                //         paddingVertical: 8,
-                //       }}
-                //       accessibilityLabel="Play audio recording.">
-                //       <PlayArrow width={48} height={48} />
-                //       <BodyText variant="tinyMeta" style={{fontWeight: '500'}}>
-                //         {millisecondsToMMSS(att.duration)}
-                //       </BodyText>
-                //       <DateDistance
-                //         date={new Date(att.createdAt)}
-                //         style={{
-                //           fontSize: 12,
-                //           fontWeight: '400',
-                //           color: DARK_GREY,
-                //         }}
-                //       />
-                //     </ThumbnailContainer>
-                //   );
-                // }
+                if (
+                  isUnsavedAudioAttachment(att) &&
+                  att.original.uri !== null
+                ) {
+                  return (
+                    <ThumbnailContainer
+                      key={att.id}
+                      size={size}
+                      onPress={() =>
+                        navigation.navigate('AudioDraftPlaybackScreen', {
+                          uri: att.original.uri!,
+                          audioId: att.id,
+                          createdAt: att.timestamp,
+                          showRecordingSavedText: false,
+                        })
+                      }
+                      containerStyle={{
+                        backgroundColor: WHITE,
+                        borderColor: COMAPEO_BLUE,
+                        borderWidth: 2,
+                        paddingVertical: 8,
+                      }}
+                      accessibilityLabel="Play audio recording.">
+                      <PlayArrow width={48} height={48} />
+                      <BodyText variant="tinyMeta" style={{fontWeight: '500'}}>
+                        {millisecondsToMMSS(att.duration)}
+                      </BodyText>
+                      <DateDistance
+                        date={new Date(att.timestamp)}
+                        style={{
+                          fontSize: 12,
+                          fontWeight: '400',
+                          color: DARK_GREY,
+                        }}
+                      />
+                    </ThumbnailContainer>
+                  );
+                }
               })}
             </>
           )}

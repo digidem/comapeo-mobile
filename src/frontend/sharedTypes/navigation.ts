@@ -5,13 +5,14 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {DeviceRoleForNewInvite, DeviceType} from '.';
+import {DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
 import {
   ProcessedDraftPhoto,
   SavedPhoto,
 } from '../contexts/PhotoPromiseContext/types';
 import {Audio} from 'expo-av';
 import {Exports} from '../screens/ExportObservations';
+import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 
 export interface TabBarIconProps {
   size: number;
@@ -60,7 +61,10 @@ export type RootStackParamsList = {
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
   DraftPhotoPreviewModal: {
-    photo: ProcessedDraftPhoto;
+    photoMetadata: PhotoMetadata;
+    photoExif?: PhotoEXIF;
+    uri: string;
+    photoId: number;
   };
   AttachedPhotoPreviewModal: {
     photo: SavedPhoto;
@@ -68,9 +72,7 @@ export type RootStackParamsList = {
   };
   ConfirmDeletePhoto: {
     onSuccess?: () => void;
-    // We currently only support deleting processed draft photos
-    // but we will eventually support deleting saved photos as well.
-    photo: ProcessedDraftPhoto;
+    photoId: number;
   };
   TrackCategoryChooser:
     | {trackAction: 'saveNew'}

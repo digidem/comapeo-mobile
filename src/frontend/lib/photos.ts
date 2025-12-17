@@ -1,3 +1,4 @@
+import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import type {ProcessedDraftPhoto} from '../contexts/PhotoPromiseContext/types';
 import type {Attachment, PhotoEXIF} from '../sharedTypes';
 import {getPhotoLayout, type PhotoLayout} from './exif';
@@ -42,24 +43,26 @@ export function getAttachmentPhotoInfo(
   };
 }
 
-export function getDraftPhotoInfo(
-  photo: ProcessedDraftPhoto,
-): DisplayablePhotoInfo {
-  const {photoExif} = photo.mediaMetadata;
-
+export function getDraftPhotoInfo({
+  photoMetadata,
+  photoExif,
+}: {
+  photoMetadata: PhotoMetadata;
+  photoExif?: PhotoEXIF;
+}): DisplayablePhotoInfo {
   const exifBasedInfo = photoExif ? extractInfoFromEXIF(photoExif) : undefined;
 
   return {
     ...exifBasedInfo,
     coordinates:
-      typeof photo.mediaMetadata.location?.coords.longitude === 'number' &&
-      typeof photo.mediaMetadata.location?.coords.latitude === 'number'
+      typeof photoMetadata.location?.coords.longitude === 'number' &&
+      typeof photoMetadata.location?.coords.latitude === 'number'
         ? {
-            longitude: photo.mediaMetadata.location.coords.longitude,
-            latitude: photo.mediaMetadata.location.coords.latitude,
+            longitude: photoMetadata.location.coords.longitude,
+            latitude: photoMetadata.location.coords.latitude,
           }
         : undefined,
-    createdAt: photo.mediaMetadata.timestamp,
+    createdAt: photoMetadata.timestamp,
     external: false,
   };
 }

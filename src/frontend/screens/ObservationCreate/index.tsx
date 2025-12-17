@@ -128,26 +128,34 @@ export const ObservationCreate = ({
                 if (isUnsavedPhotoAttachment(att)) {
                   // if the preview and thumbnail are not ready, show loader
                   if (
+                    att.original.uri === null ||
                     att.preview.processingState !== 'complete' ||
                     att.thumbnail.processingState !== 'complete'
                   ) {
                     return <ThumbnailLoader size={size} key={att.id} />;
+                  } else {
+                    return (
+                      <ThumbnailContainer
+                        key={att.id}
+                        accessibilityLabel="View draft photo."
+                        size={size}
+                        onPress={() =>
+                          navigation.navigate('DraftPhotoPreviewModal', {
+                            photoId: att.id,
+                            photoExif: att.photoExif,
+                            // We check for null above, so here it is safe to assert non-null
+                            uri: att.original.uri!,
+                            photoMetadata: {
+                              timestamp: att.timestamp,
+                              location: att.location,
+                              accelerometer: att.accelerometer,
+                            },
+                          })
+                        }>
+                        <ThumbnailImage uri={att.preview.uri} />
+                      </ThumbnailContainer>
+                    );
                   }
-
-                  return (
-                    <ThumbnailContainer
-                      key={att.id}
-                      accessibilityLabel="View draft photo."
-                      size={size}
-                      onPress={
-                        () => {}
-                        // navigation.navigate('DraftPhotoPreviewModal', {
-                        //   photo: att,
-                        // })
-                      }>
-                      <ThumbnailImage uri={att.preview.uri} />
-                    </ThumbnailContainer>
-                  );
                 }
 
                 // if (isUnsavedAudioAttachment(att)) {

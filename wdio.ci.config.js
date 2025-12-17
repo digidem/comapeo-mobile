@@ -13,6 +13,7 @@ const config = {
   specs: [
     path.resolve(__dirname, 'tests/e2e/specs/passcode/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/audio/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/tracks/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/exchange/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/multiple-projects/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/observations/index.test.ts'),
@@ -20,7 +21,6 @@ const config = {
     path.resolve(__dirname, 'tests/e2e/specs/settings/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/solo-project/index.tsx'),
     path.resolve(__dirname, 'tests/e2e/specs/team/index.test.ts'),
-    path.resolve(__dirname, 'tests/e2e/specs/tracks/index.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/menu/index.test.ts'),
     //temporarily removing as remote archive seems to be down
     //path.resolve(__dirname, 'tests/e2e/specs/remote-archive/index.test.ts'),

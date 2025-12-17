@@ -126,10 +126,6 @@ export type RootStackParamsList = {
   BackgroundMaps: undefined;
   MapReceivedBottomSheet: {
     shareId: string;
-    mapName: string;
-    deviceName: string;
-    sizeInBytes: number;
-    testBbox?: [number, number, number, number]; // [minLng, minLat, maxLng, maxLat] - for testing only
   };
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {

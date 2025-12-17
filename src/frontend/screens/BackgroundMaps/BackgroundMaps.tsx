@@ -216,57 +216,6 @@ export function BackgroundMapsScreen() {
             }}
           />
         )}
-
-        {/* TODO: Remove these test buttons before merging */}
-        <View
-          style={{
-            gap: 10,
-            marginTop: 20,
-            paddingBottom: 20,
-            alignItems: 'center',
-          }}>
-          <HeaderText variant="header6" style={{textAlign: 'center'}}>
-            Test Map Received Bottom Sheets
-          </HeaderText>
-          <SecondaryButton
-            fullSize
-            text="Normal Map Received Test"
-            onPress={() =>
-              navigate('MapReceivedBottomSheet', {
-                shareId: 'test-share-id',
-                mapName: 'My Custom Map',
-                deviceName: 'Device ABC',
-                sizeInBytes: 33 * 1024 * 1024, // 33 MB
-                testBbox: [-180, -90, 180, 90], // World bbox - always shows normal (no location warning)
-              })
-            }
-          />
-          <SecondaryButton
-            fullSize
-            text="Location Warning Test"
-            onPress={() =>
-              navigate('MapReceivedBottomSheet', {
-                shareId: 'test-share-id-location',
-                mapName: 'Remote Area Map',
-                deviceName: 'Device XYZ',
-                sizeInBytes: 50 * 1024 * 1024, // 50 MB
-                testBbox: [-79.0, -4.0, -66.0, 13.0], // Colombia - triggers location warning if outside
-              })
-            }
-          />
-          <SecondaryButton
-            fullSize
-            text="No Space Warning Test"
-            onPress={() =>
-              navigate('MapReceivedBottomSheet', {
-                shareId: 'test-share-id-nospace',
-                mapName: 'Huge Map',
-                deviceName: 'Device 123',
-                sizeInBytes: 10000 * 1024 * 1024 * 1024, // 10TB - Will trigger no space warning
-              })
-            }
-          />
-        </View>
       </ScrollView>
     </>
   );

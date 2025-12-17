@@ -1,5 +1,5 @@
-import {useManyMapShares} from '@comapeo/core-react';
-import {useEffect} from 'react';
+import {useManyMapShares, useOwnDeviceInfo} from '@comapeo/core-react';
+import {useEffect, useRef} from 'react';
 import {isEditingScreen} from '../lib/screenNameChecks';
 
 const isMapShareScreen = (screenName: string) => {
@@ -14,22 +14,37 @@ export const PendingMapSharesListener = ({
   navigateToMapShareScreen,
 }: {
   currentRouteName: string | undefined;
-  navigateToMapShareScreen: (
-    shareId: string,
-    mapName: string,
-    deviceName: string,
-    sizeInBytes: number,
-  ) => void;
+  navigateToMapShareScreen: (shareId: string) => void;
 }) => {
-  // TODO: When API is ready, replace useManyMapShares with useReceivedMapShares
+  // TODO: When API is ready, replace useManyMapShares with useReceivedMapShares and then won't need to check for sending device id
   const {data: mapShares} = useManyMapShares();
+  const {data: ownDeviceInfo} = useOwnDeviceInfo();
+
+  const shownSharesRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
-    const pendingShare = mapShares.find(
-      share => share.state === 'pending' && share.role === 'receiver',
+    if (!ownDeviceInfo) return;
+    const receivedShares = mapShares.filter(
+      share => share.senderDeviceId !== ownDeviceInfo.deviceId,
+    );
+
+    const pendingShare = receivedShares.find(
+      share => share.state === 'pending',
+    );
+
+    console.log(
+      'PendingMapSharesListener checking pending shares ...',
+      pendingShare,
     );
 
     if (!pendingShare || !currentRouteName) return;
+
+    // hopefully temporary code because right now the api is not updating from pending to accepted/rejected
+    if (shownSharesRef.current.has(pendingShare.shareId)) {
+      return;
+    }
+
+    console.log('Current route name:', currentRouteName);
 
     // If user is already interacting with a map share, do nothing
     if (isMapShareScreen(currentRouteName)) return;
@@ -37,19 +52,9 @@ export const PendingMapSharesListener = ({
     // Don't interrupt editing screens
     if (isEditingScreen(currentRouteName)) return;
 
-    // TODO: Get actual map name and device name from the API
-    // For now using placeholder values
-    const mapName = pendingShare.mapId || 'Custom Map';
-    const deviceName = pendingShare.deviceId.slice(0, 8);
-    const sizeInBytes = 33 * 1024 * 1024; // Placeholder: 33 MB
-
-    navigateToMapShareScreen(
-      pendingShare.shareId,
-      mapName,
-      deviceName,
-      sizeInBytes,
-    );
-  }, [mapShares, currentRouteName, navigateToMapShareScreen]);
+    shownSharesRef.current.add(pendingShare.shareId);
+    navigateToMapShareScreen(pendingShare.shareId);
+  }, [mapShares, currentRouteName, navigateToMapShareScreen, ownDeviceInfo]);
 
   return null;
 };

@@ -7,7 +7,10 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import type {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import type {Attachment} from '../../sharedTypes';
 import type {UnsavedAudio} from '../../sharedTypes/audio';
-import {UnsavedPhotoAttachment} from '../../contexts/PersistedStores/DraftObservationStore';
+import {
+  UnsavedAudioAttachment,
+  UnsavedPhotoAttachment,
+} from '../../contexts/PersistedStores/DraftObservationStore';
 
 export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
   const {mutateAsync: createBlobAsync} = useCreateBlob({projectId});
@@ -69,9 +72,12 @@ export function useCreateAudioAttachment({projectId}: {projectId: string}) {
   const {mutateAsync: createBlobAsync} = useCreateBlob({projectId});
 
   return useMutation({
-    mutationFn: async (file: UnsavedAudio): Promise<Attachment> => {
+    mutationFn: async (file: UnsavedAudioAttachment): Promise<Attachment> => {
+      if (file.original.uri === null) {
+        throw new Error('Cannot create audio attachment: URI is null');
+      }
       const blob = await createBlobAsync({
-        original: new URL(file.uri).pathname,
+        original: new URL(file.original.uri).pathname,
         metadata: {
           mimeType: 'audio/mp4',
         },
@@ -83,7 +89,7 @@ export function useCreateAudioAttachment({projectId}: {projectId: string}) {
         name: blob.name,
         type: blob.type,
         external: false,
-        createdAt: new Date(file.createdAt).toISOString(),
+        createdAt: new Date(file.timestamp).toISOString(),
       };
     },
   });

@@ -25,7 +25,10 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
-import {isUnsavedPhotoAttachment} from '../../lib/attachmentTypeCheckDraftStore';
+import {
+  isUnsavedAudioAttachment,
+  isUnsavedPhotoAttachment,
+} from '../../lib/attachmentTypeCheckDraftStore';
 
 const MAXIMUM_ACCURACY = 10;
 
@@ -164,7 +167,11 @@ export const ObservationCreateSaveButton = () => {
         isUnsavedPhotoAttachment(att),
       );
 
-      if (attachmentsArrays.length > 0) {
+      const audioAttachments = attachmentsArrays.filter(([, att]) =>
+        isUnsavedAudioAttachment(att),
+      );
+
+      if (photoAttachments.length > 0) {
         const photoPromises = photoAttachments.map(([, photo]) => {
           //@ts-expect-error we check type above
           return createPhotoAttachmentAsync(photo);
@@ -173,6 +180,18 @@ export const ObservationCreateSaveButton = () => {
         newAttachments = [
           ...newAttachments,
           ...(await Promise.all(photoPromises)),
+        ];
+      }
+
+      if (audioAttachments.length > 0) {
+        const audioPromises = audioAttachments.map(([, audio]) => {
+          //@ts-expect-error we check type above
+          return createAudioAttachmentAsync(audio);
+        });
+
+        newAttachments = [
+          ...newAttachments,
+          ...(await Promise.all(audioPromises)),
         ];
       }
 

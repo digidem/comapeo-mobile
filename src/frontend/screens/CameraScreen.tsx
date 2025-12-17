@@ -15,11 +15,11 @@ export const CameraScreen = ({
   const {createDraft, addPhoto} = useDraftObservationActions();
 
   function handleAddPress(capture: {
-    capturePromise: Promise<CameraCapturedPicture>;
+    photo: CameraCapturedPicture;
     metadata: PhotoMetadata;
   }) {
     createDraft();
-    addPhoto(capture.capturePromise, capture.metadata);
+    addPhoto(capture.photo, capture.metadata);
     navigation.navigate('ObservationCategoryChooser');
   }
 

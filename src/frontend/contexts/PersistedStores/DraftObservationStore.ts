@@ -113,20 +113,9 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
   }): Promise<T> {
     try {
       const processResult = await processPromise;
-      if ('exif' in processResult) {
-        const extractedExif = parse(PhotoEXIFSchema, processResult.exif);
-        _updateAttachment('photo', id, {
-          [outputKey]: {
-            uri: processResult.uri,
-            processingState: 'complete',
-            exif: extractedExif,
-          },
-        });
-      } else {
-        _updateAttachment('photo', id, {
-          [outputKey]: {uri: processResult.uri, processingState: 'complete'},
-        });
-      }
+      _updateAttachment('photo', id, {
+        [outputKey]: {uri: processResult.uri, processingState: 'complete'},
+      });
 
       return processResult;
     } catch (reason) {
@@ -139,13 +128,14 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
   }
 
   async function addPhoto(
-    capturePromise: Promise<CameraCapturedPicture>,
+    picture: CameraCapturedPicture,
     metadata: PhotoMetadata,
   ) {
-    const newAttachment = createNewPhotoAttachment(
-      nextAttachmentId++,
+    const newAttachment = createNewPhotoAttachment({
+      id: nextAttachmentId++,
       metadata,
-    );
+      picture,
+    });
     const {
       abortController: {signal},
       id,
@@ -153,13 +143,6 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     _addAttachment(newAttachment);
 
     try {
-      const {uri: rawUri} = await _processPhotoAttachment({
-        id,
-        outputKey: 'raw',
-        processPromise: capturePromise,
-      });
-      throwIfAborted(signal);
-
       // TODO: Previously, rotation of the original photo could fail on older
       // devices with low memory, so we would skip rotation and save the raw
       // image as the original, and then rotate the preview and thumbnail, which
@@ -174,7 +157,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         id,
         outputKey: 'original',
         processPromise: manipulateAsync(
-          rawUri,
+          picture.uri,
           [{rotate: getPhotoRotation(metadata.accelerometer)}],
           {compress: ORIGINAL_COMPRESSION},
         ),
@@ -207,8 +190,8 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
       });
       throwIfAborted(signal);
     } catch (reason) {
+      console.log('photo processing not working, ', reason);
       if (reason instanceof Error && reason.name === 'AbortError') {
-        // TODO: Remove attachment from state
       }
       // TODO: Report other errors to Sentry
     }
@@ -469,18 +452,25 @@ function createEmptyObservationValue(): ObservationValueWithPreset {
   };
 }
 
-function createNewPhotoAttachment(
-  id: number,
-  metadata: PhotoMetadata,
-): UnsavedAttachment {
+function createNewPhotoAttachment({
+  id,
+  metadata,
+  picture,
+}: {
+  id: number;
+  metadata: PhotoMetadata;
+  picture: CameraCapturedPicture;
+}): UnsavedAttachment {
   return {
     id,
     type: 'photo',
-    raw: {uri: null, processingState: 'pending'},
+    raw: {uri: picture.uri, processingState: 'complete'},
     original: {uri: null, processingState: 'pending'},
     thumbnail: {uri: null, processingState: 'pending'},
     preview: {uri: null, processingState: 'pending'},
     abortController: new AbortController(),
+    photoExif:
+      'exif' in picture ? parse(PhotoEXIFSchema, picture.exif) : undefined,
     ...metadata,
   };
 }

@@ -12,6 +12,8 @@ import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
 import {useLocationState} from '../contexts/LocationContext';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
+import * as Sentry from '@sentry/react-native';
+import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -27,7 +29,7 @@ const m = defineMessages({
 type Props = {
   // Called when the user takes a picture.
   onAddPress: (photo: {
-    capturePromise: Promise<CameraCapturedPicture>;
+    photo: CameraCapturedPicture;
     metadata: PhotoMetadata;
   }) => void;
 };
@@ -40,6 +42,7 @@ export const CameraView = ({onAddPress}: Props) => {
     React.useRef<AccelerometerMeasurement | null>(null);
   const [permissionsResponse] = useCameraPermissions();
   const location = useLocationState(store => store.location);
+  const navigation = useNavigationFromRoot();
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -76,26 +79,33 @@ export const CameraView = ({onAddPress}: Props) => {
 
     setCapturing(true);
 
-    const photoPromise = ref.current.takePictureAsync({
-      base64: false,
-      exif: true,
-      skipProcessing: false,
-      shutterSound: false,
-      quality: 0.75,
-      imageType: 'jpg',
-    });
-
-    onAddPress({
-      capturePromise: photoPromise,
-      metadata: {
-        location,
-        accelerometer: accelerometerMeasurement.current || undefined,
-        timestamp: Date.now(),
-      },
-    });
-
-    setCapturing(false);
-  }, [capturing, setCapturing, onAddPress, location]);
+    ref.current
+      .takePictureAsync({
+        base64: false,
+        exif: true,
+        skipProcessing: false,
+        shutterSound: false,
+        quality: 0.75,
+        imageType: 'jpg',
+      })
+      .then(photo => {
+        onAddPress({
+          photo,
+          metadata: {
+            location,
+            accelerometer: accelerometerMeasurement.current || undefined,
+            timestamp: Date.now(),
+          },
+        });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet');
+      })
+      .finally(() => {
+        setCapturing(false);
+      });
+  }, [capturing, setCapturing, onAddPress, location, navigation]);
 
   const disableButton = capturing || !cameraReady;
   const permissionGranted = permissionsResponse?.status === 'granted';

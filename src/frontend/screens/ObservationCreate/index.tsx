@@ -68,6 +68,7 @@ export const ObservationCreate = ({
   const attachments = useDraftObservationState(
     store => store.unsavedAttachments,
   );
+
   const notes = useDraftObservationState(store => store.value?.tags.notes);
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
@@ -116,7 +117,7 @@ export const ObservationCreate = ({
           updateTag('notes', newVal);
         }}
       />
-      {/* {attachments && (
+      {attachments && (
         <HorizontalScrollView
           shouldShowLastItems={true}
           minItemWidth={MIN_WIDTH}
@@ -133,60 +134,61 @@ export const ObservationCreate = ({
                     return <ThumbnailLoader size={size} key={att.id} />;
                   }
 
-                  // return (
-                  //   <ThumbnailContainer
-                  //     key={att.id}
-                  //     accessibilityLabel="View draft photo."
-                  //     size={size}
-                  //     onPress={() =>
-                  //       navigation.navigate('DraftPhotoPreviewModal', {
-                  //         photo: att,
-                  //       })
-                  //     }>
-                  //     <ThumbnailImage uri={att.preview.uri} />
-                  //   </ThumbnailContainer>
-                  // );
-                }
-
-                if (isUnsavedAudioAttachment(att)) {
                   return (
                     <ThumbnailContainer
                       key={att.id}
+                      accessibilityLabel="View draft photo."
                       size={size}
-                      onPress={() =>
-                        navigation.navigate('AudioDraftPlaybackScreen', {
-                          uri: att.original.uri,
-                          createdAt: att.createdAt,
-                          showRecordingSavedText: false,
-                        })
-                      }
-                      containerStyle={{
-                        backgroundColor: WHITE,
-                        borderColor: COMAPEO_BLUE,
-                        borderWidth: 2,
-                        paddingVertical: 8,
-                      }}
-                      accessibilityLabel="Play audio recording.">
-                      <PlayArrow width={48} height={48} />
-                      <BodyText variant="tinyMeta" style={{fontWeight: '500'}}>
-                        {millisecondsToMMSS(att.duration)}
-                      </BodyText>
-                      <DateDistance
-                        date={new Date(att.createdAt)}
-                        style={{
-                          fontSize: 12,
-                          fontWeight: '400',
-                          color: DARK_GREY,
-                        }}
-                      />
+                      onPress={
+                        () => {}
+                        // navigation.navigate('DraftPhotoPreviewModal', {
+                        //   photo: att,
+                        // })
+                      }>
+                      <ThumbnailImage uri={att.preview.uri} />
                     </ThumbnailContainer>
                   );
                 }
+
+                // if (isUnsavedAudioAttachment(att)) {
+                //   return (
+                //     <ThumbnailContainer
+                //       key={att.id}
+                //       size={size}
+                //       onPress={() =>
+                //         navigation.navigate('AudioDraftPlaybackScreen', {
+                //           uri: att.original.uri,
+                //           createdAt: att.createdAt,
+                //           showRecordingSavedText: false,
+                //         })
+                //       }
+                //       containerStyle={{
+                //         backgroundColor: WHITE,
+                //         borderColor: COMAPEO_BLUE,
+                //         borderWidth: 2,
+                //         paddingVertical: 8,
+                //       }}
+                //       accessibilityLabel="Play audio recording.">
+                //       <PlayArrow width={48} height={48} />
+                //       <BodyText variant="tinyMeta" style={{fontWeight: '500'}}>
+                //         {millisecondsToMMSS(att.duration)}
+                //       </BodyText>
+                //       <DateDistance
+                //         date={new Date(att.createdAt)}
+                //         style={{
+                //           fontSize: 12,
+                //           fontWeight: '400',
+                //           color: DARK_GREY,
+                //         }}
+                //       />
+                //     </ThumbnailContainer>
+                //   );
+                // }
               })}
             </>
           )}
         />
-      )} */}
+      )}
     </ScreenContentWithDock>
   );
 };

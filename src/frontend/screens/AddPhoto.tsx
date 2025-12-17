@@ -22,10 +22,10 @@ export const AddPhotoScreen = ({
   const {addPhoto} = useDraftObservationActions();
 
   const handleAddPress = (capture: {
-    capturePromise: Promise<CameraCapturedPicture>;
+    photo: CameraCapturedPicture;
     metadata: PhotoMetadata;
   }) => {
-    addPhoto(capture.capturePromise, capture.metadata);
+    addPhoto(capture.photo, capture.metadata);
     navigation.pop();
   };
 

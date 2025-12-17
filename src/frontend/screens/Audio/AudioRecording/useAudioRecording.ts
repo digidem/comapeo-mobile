@@ -1,14 +1,12 @@
 import {useState, useCallback} from 'react';
 import {Audio} from 'expo-av';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../../../hooks/useDraftObservation';
 
 export function useAudioRecording() {
   const [recordingInstance, setRecordingInstance] =
     useState<Audio.Recording | null>(null);
   const [status, setStatus] = useState<Audio.RecordingStatus | null>(null);
   const {navigate} = useNavigationFromRoot();
-  const {addAudio} = useDraftObservation();
 
   const startRecording = useCallback(async () => {
     try {
@@ -41,12 +39,11 @@ export function useAudioRecording() {
       if (!uri || !duration) throw new Error('Missing URI or duration');
       const createdAt = Date.now();
 
-      addAudio({uri, duration, createdAt});
       return {uri, createdAt, duration};
     } catch {
       navigate('ErrorBottomSheet');
     }
-  }, [addAudio, navigate, recordingInstance, status]);
+  }, [navigate, recordingInstance, status]);
 
   return {startRecording, stopRecording, status};
 }

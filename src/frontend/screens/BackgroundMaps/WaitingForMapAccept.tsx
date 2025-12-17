@@ -3,7 +3,7 @@ import {AppState, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 
-import {useSendMapShare, useRequestCancelMapShare} from '@comapeo/core-react';
+import {useRequestCancelMapShare, useSingleMapShare} from '@comapeo/core-react';
 import InviteSent from '../../images/InviteSent.svg';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -33,26 +33,16 @@ export function WaitingForMapAccept({
 }: NativeRootNavigationProps<'WaitingForMapAccept'>) {
   const {formatMessage: t} = useIntl();
   const {projectId} = useActiveProject();
-  const {deviceId, mapId} = route.params;
+  const {shareId} = route.params;
 
   const [time, setTime] = React.useState(0);
-  const [shareId, setShareId] = React.useState<string | null>(null);
-
-  // TODO: When new API is ready, replace useSendMapShare with useSentMapShare (or whatever it will be called)
-  const {mutate: sendMapShare} = useSendMapShare({projectId});
+  const {data: mapShare} = useSingleMapShare({shareId});
   const requestCancelMapShareMutation = useRequestCancelMapShare({projectId});
 
   usePreventAndroidBackButton();
 
   const cancelShare = React.useCallback(() => {
     if (requestCancelMapShareMutation.status === 'error') {
-      navigation.goBack();
-      return;
-    }
-
-    // TODO: Once we have the shareId from the API response, use it here
-    if (!shareId) {
-      // If we don't have a shareId yet, just go back
       navigation.goBack();
       return;
     }
@@ -82,43 +72,23 @@ export function WaitingForMapAccept({
   }, [cancelShare]);
 
   React.useEffect(() => {
-    sendMapShare(
-      {deviceId, mapId},
-      {
-        onError: (err: Error) => {
-          Sentry.captureException(err);
-          navigation.replace('ErrorBottomSheet');
-        },
-        onSuccess: (
-          result:
-            | {decision: 'ACCEPT' | 'UNRECOGNIZED'; shareId: string}
-            | {
-                decision: 'REJECT';
-                shareId: string;
-                reason:
-                  | 'ALREADY'
-                  | 'UNRECOGNIZED'
-                  | 'DISK_SPACE'
-                  | 'USER_REJECTED';
-              },
-        ) => {
-          // Store the shareId so we can use it for cancellation
-          setShareId(result.shareId);
+    if (!mapShare) return;
 
-          if (result.decision === 'ACCEPT') {
-            // TODO: Navigate to SendingMap screen once that PR is merged
-            // navigation.replace('SendingMap', {shareId: result.shareId});
-            navigation.popTo('BackgroundMaps');
-          } else if (result.decision === 'REJECT') {
-            navigation.navigate('MapDeclineScreen', {reason: result.reason});
-          } else {
-            // UNRECOGNIZED decision - go back to BackgroundMaps
-            navigation.popTo('BackgroundMaps');
-          }
-        },
-      },
-    );
-  }, [sendMapShare, deviceId, mapId, navigation, setShareId]);
+    if (mapShare.state === 'downloading' || mapShare.state === 'completed') {
+      // TODO: Navigate to SendingMap screen once that PR is ready
+      // navigation.replace('SendingMap', {shareId});
+      navigation.popTo('BackgroundMaps');
+    } else if (mapShare.state === 'rejected') {
+      // TODO: Navigate to MapDeclineScreen when that PR is ready
+      // navigation.navigate('MapDeclineScreen', {reason: mapShare.reason});
+      navigation.popTo('BackgroundMaps');
+    } else if (mapShare.state === 'cancelled') {
+      navigation.popTo('BackgroundMaps');
+    } else if (mapShare.state === 'error') {
+      Sentry.captureException(new Error('Map share failed'));
+      navigation.replace('ErrorBottomSheet');
+    }
+  }, [mapShare, navigation]);
 
   React.useEffect(() => {
     const interval = setInterval(() => setTime(prev => prev + 1), 1000);

@@ -105,9 +105,7 @@ export type RootStackParamsList = {
   };
   YourTeam: undefined;
   SelectDevice: undefined;
-  SelectMapShareDevice: {
-    mapId: string;
-  };
+  SelectMapShareDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;
   InviteAccepted: {name: string};
@@ -127,8 +125,7 @@ export type RootStackParamsList = {
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   BackgroundMaps: undefined;
   WaitingForMapAccept: {
-    deviceId: string;
-    mapId: string;
+    shareId: string;
   };
   MapDeclineScreen: {
     reason: 'USER_REJECTED' | 'DISK_SPACE' | 'ALREADY' | 'UNRECOGNIZED';

@@ -9,7 +9,6 @@ import {
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -42,7 +41,10 @@ import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner'
 import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
 import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
 import {useTrackState} from '../../contexts/TrackStoreContext';
-import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -235,9 +237,7 @@ function useCheckDraftObservationAndNavigate({
 }) {
   const {data: presets} = usePresetsQuery();
   const {navigate} = useNavigationFromHomeTabs();
-  const existingObservation = usePersistedDraftObservation(
-    store => store.value,
-  );
+  const existingObservation = useDraftObservationState(store => store.value);
 
   useFocusEffect(
     React.useCallback(() => {

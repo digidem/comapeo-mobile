@@ -8,12 +8,12 @@ import {Question} from './Question';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
+import {useDraftObservationState} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   nextQuestion: {
@@ -46,8 +46,7 @@ export const ObservationFields = ({
     docType: 'field',
     lang: languageTag,
   });
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
+  const preset = useDraftObservationState(store => store.value?.presetRef);
   const current = route.params.question;
 
   const onBackPress = React.useCallback(() => {
@@ -88,8 +87,7 @@ export const ObservationFields = ({
 const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
+  const preset = useDraftObservationState(store => store.value?.presetRef);
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
@@ -117,8 +115,7 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
 };
 
 const DetailsTitle = ({questionNumber}: {questionNumber: number}) => {
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
+  const preset = useDraftObservationState(store => store.value?.presetRef);
 
   return (
     <Text numberOfLines={1} style={styles.title}>

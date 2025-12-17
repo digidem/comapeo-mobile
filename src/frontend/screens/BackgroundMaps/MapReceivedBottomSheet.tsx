@@ -3,8 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import bboxPolygon from '@turf/bbox-polygon';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
-import {point} from '@turf/helpers';
-import {distance} from '@turf/distance';
+import pointToPolygonDistance from '@turf/point-to-polygon-distance';
 
 import StackSvg from '../../images/Stack.svg';
 import CautionSvg from '../../images/caution.svg';
@@ -24,7 +23,7 @@ import {
   LIGHT_GREEN,
   LIGHT_ORANGE,
 } from '../../lib/styles';
-import {useRejectMapShare} from '@comapeo/core-react';
+import {useRejectMapShare, useSingleMapShare} from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
@@ -62,14 +61,13 @@ const m = defineMessages({
   },
 });
 
-type WarningType = 'location' | 'space' | null;
-
 export function MapReceivedBottomSheet({
   route,
   navigation,
 }: NativeRootNavigationProps<'MapReceivedBottomSheet'>) {
   const {formatMessage: t} = useIntl();
-  const {shareId, mapName, deviceName, sizeInBytes, testBbox} = route.params;
+  const {shareId} = route.params;
+  const {data: mapShare} = useSingleMapShare({shareId});
 
   const {data: storageData} = useStorageReadingQuery();
   const {freeBytes} = storageData;
@@ -79,58 +77,53 @@ export function MapReceivedBottomSheet({
 
   const currentLocation = useLocationState(state => state.location);
 
-  const [warning, setWarning] = React.useState<WarningType>(null);
-  const [distanceKm, setDistanceKm] = React.useState(0);
-  const [mbNeeded, setMbNeeded] = React.useState(0);
+  const warningInfo = React.useMemo(() => {
+    if (freeBytes < mapShare.estimatedSizeBytes) {
+      const mbNeeded = Math.ceil(
+        (mapShare.estimatedSizeBytes - freeBytes) / (1024 * 1024),
+      );
+      return {
+        warning: 'space' as const,
+        distanceKm: null,
+        mbNeeded,
+      };
+    }
 
-  const sizeInMB = Math.round(sizeInBytes / (1024 * 1024));
+    if (currentLocation?.coords && mapShare.bounds) {
+      const userPoint = [
+        currentLocation.coords.longitude,
+        currentLocation.coords.latitude,
+      ];
+      const bboxPoly = bboxPolygon(mapShare.bounds);
+      const isInside = booleanPointInPolygon(userPoint, bboxPoly);
+      if (!isInside) {
+        const distanceKm = pointToPolygonDistance(userPoint, bboxPoly, {
+          units: 'kilometers',
+        });
+
+        return {
+          warning: 'location' as const,
+          distanceKm,
+          mbNeeded: 0,
+        };
+      }
+    }
+
+    // per Gregor, if there is no current location, consider the user to be inside the map
+
+    return {
+      warning: null,
+      distanceKm: null,
+      mbNeeded: 0,
+    };
+  }, [
+    freeBytes,
+    mapShare.estimatedSizeBytes,
+    mapShare.bounds,
+    currentLocation,
+  ]);
+
   const {mutate: rejectMapShare} = useRejectMapShare();
-
-  React.useEffect(() => {
-    if (freeBytes < sizeInBytes) {
-      const needed = Math.ceil((sizeInBytes - freeBytes) / (1024 * 1024));
-      setWarning('space');
-      setMbNeeded(needed);
-    }
-  }, [freeBytes, sizeInBytes]);
-
-  React.useEffect(() => {
-    if (warning === 'space') return;
-
-    // TODO: Get the bounding box from the map share API
-    // For now, using a placeholder bounding box (or testBbox for testing)
-    // Format: [minLng, minLat, maxLng, maxLat]
-    // Default: Colombia area
-    const bbox: [number, number, number, number] = testBbox || [
-      -79.0, -4.0, -66.0, 13.0,
-    ];
-
-    if (!currentLocation?.coords) {
-      return;
-    }
-
-    const userPoint = point([
-      currentLocation.coords.longitude,
-      currentLocation.coords.latitude,
-    ]);
-
-    const bboxPoly = bboxPolygon(bbox);
-
-    const isInside = booleanPointInPolygon(userPoint, bboxPoly);
-
-    if (!isInside) {
-      const centerLng = (bbox[0]! + bbox[2]!) / 2;
-      const centerLat = (bbox[1]! + bbox[3]!) / 2;
-      const centerPoint = point([centerLng, centerLat]);
-
-      const distanceKilometers = distance(userPoint, centerPoint, {
-        units: 'kilometers',
-      });
-
-      setWarning('location');
-      setDistanceKm(distanceKilometers);
-    }
-  }, [currentLocation, warning, testBbox]);
 
   const handleAccept = () => {
     if (hasExistingMap) {
@@ -146,7 +139,7 @@ export function MapReceivedBottomSheet({
       {shareId},
       {
         onSuccess: () => {
-          navigation.popTo('BackgroundMaps');
+          navigation.goBack();
         },
         onError: (err: Error) => {
           Sentry.captureException(err);
@@ -160,13 +153,13 @@ export function MapReceivedBottomSheet({
     <BottomSheetWrapper>
       <View style={styles.container}>
         <BodyText variant="tinyMeta" style={styles.header}>
-          {t(m.sharingDevice, {deviceName})}
+          {t(m.sharingDevice, {deviceName: mapShare.senderDeviceName})}
         </BodyText>
 
         <View style={styles.mapCard}>
           <View style={styles.mapCardContent}>
             <HeaderText variant="header2" style={styles.mapName}>
-              {mapName}
+              {mapShare.mapName}
             </HeaderText>
 
             <View style={styles.iconRow}>
@@ -174,23 +167,27 @@ export function MapReceivedBottomSheet({
                 <StackSvg width={17} height={18} color={NEW_DARK_GREY} />
               </View>
               <BodyText style={styles.sizeText}>
-                {t(m.megabytes, {size: sizeInMB})}
+                {t(m.megabytes, {
+                  size: mapShare.estimatedSizeBytes / (1024 * 1024),
+                })}
               </BodyText>
             </View>
 
-            {warning && (
+            {warningInfo.warning && (
               <View style={styles.warningBox}>
                 <CautionSvg width={20} height={20} />
                 <View style={styles.warningTextContainer}>
                   <BodyText variant="smallMeta">
-                    {warning === 'location'
+                    {warningInfo.warning === 'location'
                       ? t(m.locationNotCovered)
                       : t(m.notEnoughSpace)}
                   </BodyText>
                   <BodyText style={styles.warningSubtitle}>
-                    {warning === 'location'
-                      ? t(m.kmAway, {distance: distanceKm.toFixed(1)})
-                      : t(m.mbNeeded, {size: mbNeeded})}
+                    {warningInfo.warning === 'location'
+                      ? t(m.kmAway, {
+                          distance: warningInfo.distanceKm?.toFixed(1),
+                        })
+                      : t(m.mbNeeded, {size: warningInfo.mbNeeded})}
                   </BodyText>
                 </View>
               </View>
@@ -199,7 +196,7 @@ export function MapReceivedBottomSheet({
         </View>
 
         <View style={styles.buttonsContainer}>
-          {warning !== 'space' && (
+          {warningInfo.warning !== 'space' && (
             <PrimaryButton fullSize text={t(m.accept)} onPress={handleAccept} />
           )}
           <SecondaryButton

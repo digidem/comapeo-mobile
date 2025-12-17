@@ -67,12 +67,9 @@ export const RootStackNavigator = () => {
       />
       <PendingMapSharesListener
         currentRouteName={state.routes[state.index]?.name}
-        navigateToMapShareScreen={(shareId, mapName, deviceName, sizeInBytes) =>
+        navigateToMapShareScreen={shareId =>
           navigation.navigate('MapReceivedBottomSheet', {
             shareId,
-            mapName,
-            deviceName,
-            sizeInBytes,
           })
         }
       />

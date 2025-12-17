@@ -216,37 +216,6 @@ export function BackgroundMapsScreen() {
             }}
           />
         )}
-
-        {/* TODO: Remove these test buttons before merging */}
-        <View
-          style={{
-            gap: 10,
-            marginTop: 20,
-            paddingBottom: 20,
-            alignItems: 'center',
-          }}>
-          <HeaderText variant="header6" style={{textAlign: 'center'}}>
-            Test Map Received Bottom Sheets
-          </HeaderText>
-          {/* Testing Replace Flow:
-              1. Import a custom map first (using "Choose File" button above)
-              2. Then test these buttons - they will show "Replace" confirmation
-              3. To test without replace flow, delete the map first
-          */}
-          <SecondaryButton
-            fullSize
-            text="Normal Map Received Test"
-            onPress={() =>
-              navigate('MapReceivedBottomSheet', {
-                shareId: 'test-share-id',
-                mapName: 'My Custom Map',
-                deviceName: 'Device ABC',
-                sizeInBytes: 33 * 1024 * 1024, // 33 MB
-                testBbox: [-180, -90, 180, 90], // World bbox - always shows normal (no location warning)
-              })
-            }
-          />
-        </View>
       </ScrollView>
     </>
   );

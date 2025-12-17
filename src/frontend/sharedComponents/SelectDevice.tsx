@@ -3,7 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import * as Sentry from '@sentry/react-native';
 
-import {useManyMembers} from '@comapeo/core-react';
+import {useManyMembers, useSendMapShare} from '@comapeo/core-react';
 import {type MemberInfo} from '@comapeo/core/dist/member-api';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {useLocalDiscoveryState} from '../hooks/useLocalDiscoveryState';
@@ -61,13 +61,12 @@ export const SelectDevice = ({
   const {formatMessage: t} = useIntl();
 
   const availablePeers = useInitiallyConnectedPeers();
-  const projectId = useActiveProject();
-  const projectMembersQuery = useManyMembers(projectId);
+  const {projectId} = useActiveProject();
+  const projectMembersQuery = useManyMembers({projectId});
+  const {mutate: sendMapShare} = useSendMapShare({projectId});
 
   const selectionMode: SelectionMode =
     route.name === 'SelectMapShareDevice' ? 'shareMap' : 'invites';
-
-  const mapId = route.name === 'SelectMapShareDevice' && route.params?.mapId;
 
   const selectableDevices = getSelectableDevices({
     peers: availablePeers,
@@ -109,19 +108,20 @@ export const SelectDevice = ({
 
           const handlePress = () => {
             if (selectionMode === 'shareMap') {
-              if (!mapId) {
-                // This should never happen, but if it does, report to Sentry and show error
-                const error = new Error(
-                  'mapId is missing when trying to share map',
-                );
-                Sentry.captureException(error);
-                navigation.navigate('ErrorBottomSheet');
-                return;
-              }
-              navigation.navigate('WaitingForMapAccept', {
-                deviceId: deviceId,
-                mapId: mapId,
-              });
+              sendMapShare(
+                {deviceId},
+                {
+                  onError: (err: Error) => {
+                    Sentry.captureException(err);
+                    navigation.navigate('ErrorBottomSheet');
+                  },
+                  onSuccess: result => {
+                    navigation.navigate('WaitingForMapAccept', {
+                      shareId: result.shareId,
+                    });
+                  },
+                },
+              );
             } else {
               navigation.navigate('SelectInviteeRole', {
                 name: name || '',

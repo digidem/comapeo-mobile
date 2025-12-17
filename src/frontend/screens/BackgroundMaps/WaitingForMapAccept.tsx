@@ -79,8 +79,9 @@ export function WaitingForMapAccept({
       // navigation.replace('SendingMap', {shareId});
       navigation.popTo('BackgroundMaps');
     } else if (mapShare.state === 'rejected') {
-      // TODO: Navigate to MapDeclineScreen when that PR is ready
-      // navigation.navigate('MapDeclineScreen', {reason: mapShare.reason});
+      // Navigate to MapDeclineScreen to show the reason for rejection,
+      // but I currently don't have access to the reason without the result of useSendMapShare
+      // navigation.navigate('MapDeclineScreen', {reason: mapShare.result.reason});
       navigation.popTo('BackgroundMaps');
     } else if (mapShare.state === 'cancelled') {
       navigation.popTo('BackgroundMaps');

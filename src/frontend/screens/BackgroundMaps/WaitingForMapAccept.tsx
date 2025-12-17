@@ -79,10 +79,8 @@ export function WaitingForMapAccept({
       // navigation.replace('SendingMap', {shareId});
       navigation.popTo('BackgroundMaps');
     } else if (mapShare.state === 'rejected') {
-      // Navigate to MapDeclineScreen to show the reason for rejection,
-      // but I currently don't have access to the reason without the result of useSendMapShare
-      // navigation.navigate('MapDeclineScreen', {reason: mapShare.result.reason});
-      navigation.popTo('BackgroundMaps');
+      // there is a reason here, but typescript types need to be updated
+      navigation.navigate('MapDeclineScreen', {reason: mapShare.reason});
     } else if (mapShare.state === 'cancelled') {
       navigation.popTo('BackgroundMaps');
     } else if (mapShare.state === 'error') {

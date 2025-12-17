@@ -5,14 +5,9 @@ import {
   useCreatePhotoAttachment,
   useCreateAudioAttachment,
 } from '../../hooks/server/media';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {STORAGE_QUERY_KEY} from '../../hooks/useStorageReadingQuery';
 import SaveCheck from '../../images/CheckMark.svg';
-import {
-  isProcessedDraftPhoto,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {
@@ -30,6 +25,7 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
+import {isUnsavedPhotoAttachment} from '../../lib/attachmentTypeCheckDraftStore';
 
 const MAXIMUM_ACCURACY = 10;
 
@@ -76,7 +72,9 @@ const m = defineMessages({
 
 export const ObservationCreateSaveButton = () => {
   const value = useDraftObservationState(store => store.value);
-  // const attachments = usePersistedDraftObservation(store => store.attachments);
+  const attachments = useDraftObservationState(
+    store => store.unsavedAttachments,
+  );
   const preset = useDraftObservationState(store => store.value?.presetRef);
   const {authState} = useAuthContext();
   const {clearDraft} = useDraftObservationActions();
@@ -85,9 +83,6 @@ export const ObservationCreateSaveButton = () => {
   const isTracking = useTrackState(state => state.isTracking);
   const queryClient = useQueryClient();
   const {formatMessage} = useIntl();
-
-  //@ts-expect-error for now
-  const attachments = [];
 
   const {
     mutateAsync: createPhotoAttachmentAsync,
@@ -160,29 +155,31 @@ export const ObservationCreateSaveButton = () => {
       return;
     }
 
-    // const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
-    // const unsavedAudio = attachments.filter(isUnsavedAudio);
-
+    let newAttachments: Attachment[] = [];
     try {
-      // let newAttachments: Attachment[] = [];
+      const attachmentsArrays =
+        attachments !== null ? [...attachments.entries()] : [];
 
-      // if (unsavedPhotos.length > 0 || unsavedAudio.length > 0) {
-      //   const photoPromises = unsavedPhotos.map(p =>
-      //     createPhotoAttachmentAsync(p),
-      //   );
-      //   const audioPromises = unsavedAudio.map(a =>
-      //     createAudioAttachmentAsync(a),
-      //   );
-      //   newAttachments = await Promise.all([
-      //     ...photoPromises,
-      //     ...audioPromises,
-      //   ]);
-      // }
+      const photoAttachments = attachmentsArrays.filter(([, att]) =>
+        isUnsavedPhotoAttachment(att),
+      );
+
+      if (attachmentsArrays.length > 0) {
+        const photoPromises = photoAttachments.map(([, photo]) => {
+          //@ts-expect-error we check type above
+          return createPhotoAttachmentAsync(photo);
+        });
+
+        newAttachments = [
+          ...newAttachments,
+          ...(await Promise.all(photoPromises)),
+        ];
+      }
 
       const createdObservation = await createObservationAsync({
         value: {
           ...value,
-          attachments: [...value.attachments],
+          attachments: [...value.attachments, ...newAttachments],
           presetRef: preset
             ? {docId: preset.docId, versionId: preset.versionId}
             : undefined,

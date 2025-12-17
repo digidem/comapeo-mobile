@@ -13,7 +13,7 @@ import {manipulateAsync} from 'expo-image-manipulator';
 import {excludeKeys} from 'filter-obj';
 import type {Attachment, Position} from '../../sharedTypes/index.ts';
 import {throwIfAborted} from '../../lib/throwIfAborted.ts';
-import {parse} from 'valibot';
+import {parse, safeParse} from 'valibot';
 import {PhotoEXIFSchema} from '../../lib/exif.ts';
 
 export type DraftObservationStore = ReturnType<

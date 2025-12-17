@@ -7,19 +7,23 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import type {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import type {Attachment} from '../../sharedTypes';
 import type {UnsavedAudio} from '../../sharedTypes/audio';
+import {UnsavedPhotoAttachment} from '../../contexts/PersistedStores/DraftObservationStore';
 
 export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
   const {mutateAsync: createBlobAsync} = useCreateBlob({projectId});
 
   return useMutation({
-    mutationFn: async (photo: ProcessedDraftPhoto): Promise<Attachment> => {
+    mutationFn: async (photo: UnsavedPhotoAttachment): Promise<Attachment> => {
+      if (photo.original.uri === null) {
+        throw new Error('Cannot create photo attachment: URI is null');
+      }
       const blob = await createBlobAsync({
-        original: new URL(photo.originalUri).pathname,
-        preview: photo.previewUri
-          ? new URL(photo.previewUri).pathname
+        original: new URL(photo.original.uri).pathname,
+        preview: photo.preview.uri
+          ? new URL(photo.preview.uri).pathname
           : undefined,
-        thumbnail: photo.thumbnailUri
-          ? new URL(photo.thumbnailUri).pathname
+        thumbnail: photo.thumbnail.uri
+          ? new URL(photo.thumbnail.uri).pathname
           : undefined,
         // TODO: DraftPhoto type should probably carry MIME type info that feeds this
         // although backend currently only uses first part of path
@@ -28,11 +32,11 @@ export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
         },
       });
 
-      const position = photo.mediaMetadata.location
-        ? expoLocationToAttachmentPosition(photo.mediaMetadata.location)
+      const position = photo.location
+        ? expoLocationToAttachmentPosition(photo.location)
         : undefined;
 
-      const createdAt = new Date(photo.mediaMetadata.timestamp).toISOString();
+      const createdAt = new Date(photo.timestamp).toISOString();
 
       // Should not happen but just in case...
       if (blob.type !== 'photo') {
@@ -55,7 +59,7 @@ export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
         external: false,
         createdAt,
         position,
-        photoExif: photo.mediaMetadata.photoExif,
+        photoExif: photo.photoExif,
       };
     },
   });

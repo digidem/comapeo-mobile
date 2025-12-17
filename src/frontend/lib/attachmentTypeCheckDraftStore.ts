@@ -2,21 +2,11 @@ import {AccelerometerMeasurement} from 'expo-sensors';
 import {
   UnsavedAttachmentBlob,
   UnsavedAudioAttachment,
+  UnsavedPhotoAttachment,
 } from '../contexts/PersistedStores/DraftObservationStore';
 import {LocationObject} from 'expo-location';
-
-export type UnsavedPhotoAttachment = {
-  id: number;
-  type: 'photo';
-  raw: UnsavedAttachmentBlob;
-  original: UnsavedAttachmentBlob;
-  thumbnail: UnsavedAttachmentBlob;
-  preview: UnsavedAttachmentBlob;
-  accelerometer?: AccelerometerMeasurement;
-  location?: LocationObject;
-  timestamp: number;
-  abortController: AbortController;
-};
+import {parse, safeParse} from 'valibot';
+import {PhotoEXIFSchema} from './exif';
 
 // --- Type Guards ---
 
@@ -122,6 +112,14 @@ export function isUnsavedPhotoAttachment(
     'location' in candidate &&
     candidate.location !== undefined &&
     !isLocationObject(candidate.location)
+  ) {
+    return false;
+  }
+
+  if (
+    'photoExif' in candidate &&
+    candidate.photoExif !== undefined &&
+    !safeParse(PhotoEXIFSchema, candidate.photoExif).success
   ) {
     return false;
   }

@@ -14,7 +14,6 @@ import {
 } from 'react-intl';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {BLACK} from '../../lib/styles';
 import {IconButton} from '../../sharedComponents/IconButton';
 import SaveCheck from '../../images/CheckMark.svg';
@@ -36,6 +35,7 @@ import {
   useManualEntryCoordinateFormatActions,
   useManualEntryCoordinateFormat,
 } from '../../contexts/ManualEntryCoordinateFormatStoreContext';
+import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   title: {
@@ -90,7 +90,7 @@ export const ManualGpsScreen = ({
   const entryCoordinateFormat = useManualEntryCoordinateFormat();
 
   const {setFormat} = useManualEntryCoordinateFormatActions();
-  const {updateObservationPosition} = useDraftObservation();
+  const {updatePosition} = useDraftObservationActions();
 
   React.useEffect(() => {
     function handleSavePress() {
@@ -115,7 +115,7 @@ export const ManualGpsScreen = ({
         );
       }
 
-      updateObservationPosition({
+      updatePosition({
         manualLocation: true,
         position: {
           coords: {
@@ -135,7 +135,7 @@ export const ManualGpsScreen = ({
         </IconButton>
       ),
     });
-  }, [navigation, convertedData, updateObservationPosition, t]);
+  }, [navigation, convertedData, updatePosition, t]);
 
   const locationCoordinates =
     observationValue &&

@@ -5,7 +5,7 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
+import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
 import {
   ProcessedDraftPhoto,
   SavedPhoto,
@@ -67,7 +67,7 @@ export type RootStackParamsList = {
     photoId: number;
   };
   AttachedPhotoPreviewModal: {
-    photo: SavedPhoto;
+    photo: Extract<Attachment, {type: 'photo'}>;
     observationDocId: string;
   };
   ConfirmDeletePhoto: {
@@ -141,7 +141,7 @@ export type RootStackParamsList = {
     driveDiscoveryId: string;
     name: string;
     type: 'audio';
-    createdAt: string;
+    createdAt?: string;
   };
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};

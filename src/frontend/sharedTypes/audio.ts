@@ -3,7 +3,6 @@ import {LocationObject} from 'expo-location';
 
 export type AudioAttachment = Omit<Attachment, 'type'> & {
   type: 'audio';
-  deleted?: boolean;
 };
 
 export type UnsavedAudio = {

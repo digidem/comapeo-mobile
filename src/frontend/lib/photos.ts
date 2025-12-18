@@ -1,5 +1,4 @@
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
-import type {ProcessedDraftPhoto} from '../contexts/PhotoPromiseContext/types';
 import type {Attachment, PhotoEXIF} from '../sharedTypes';
 import {getPhotoLayout, type PhotoLayout} from './exif';
 

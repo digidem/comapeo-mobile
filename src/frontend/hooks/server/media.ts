@@ -4,9 +4,7 @@ import {useMutation} from '@tanstack/react-query';
 import type {LocationObject} from 'expo-location';
 import {URL} from 'react-native-url-polyfill';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import type {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import type {Attachment} from '../../sharedTypes';
-import type {UnsavedAudio} from '../../sharedTypes/audio';
 import {
   UnsavedAudioAttachment,
   UnsavedPhotoAttachment,

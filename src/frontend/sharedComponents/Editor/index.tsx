@@ -1,6 +1,4 @@
 import * as React from 'react';
-import {Photo} from '../../contexts/PhotoPromiseContext/types';
-import {Audio} from '../../sharedTypes/audio';
 import {DescriptionField} from './DescriptionField';
 import {ScreenContentWithDock} from '../ScreenContentWithDock';
 import {StyleSheet, View} from 'react-native';
@@ -19,7 +17,6 @@ type EditorProps = {
   PresetIcon: React.ReactNode;
   notes?: string;
   updateNotes?: (newNotes: string) => void;
-  attachments?: (Audio | Photo)[];
   location?: {
     lat: number | undefined;
     lon: number | undefined;

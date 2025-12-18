@@ -21,7 +21,7 @@ import {Attachment} from '../../sharedTypes';
 import {
   isUnsavedAudioAttachment,
   isUnsavedPhotoAttachment,
-} from '../../lib/attachmentTypeCheckDraftStore';
+} from '../../lib/attachmentTypeChecks';
 
 export const ObservationEditSaveButton = () => {
   const value = useDraftObservationState(store => store.value);

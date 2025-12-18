@@ -34,7 +34,7 @@ import {
 import {
   isUnsavedAudioAttachment,
   isUnsavedPhotoAttachment,
-} from '../../lib/attachmentTypeCheckDraftStore';
+} from '../../lib/attachmentTypeChecks';
 
 const m = defineMessages({
   observation: {

@@ -11,10 +11,13 @@ import {InsetMapView} from './InsetMapView';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {useManyDocs} from '@comapeo/core-react';
-import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
+
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
-import {isSavedPhoto, isAudioAttachment} from '../../lib/attachmentTypeChecks';
+import {
+  isSavedPhoto,
+  isAudioAttachment,
+} from '../../lib/attachmentTypeChecks.ts';
 import {TrackAccordian} from './TrackAccordian.tsx';
 import {Divider} from '../../sharedComponents/Divider.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
@@ -34,6 +37,7 @@ import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoT
 import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioSavedThumbnail.tsx';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext.tsx';
+import {SavedPhoto} from '../../sharedTypes/index.ts';
 
 const m = defineMessages({
   deleteTitle: {

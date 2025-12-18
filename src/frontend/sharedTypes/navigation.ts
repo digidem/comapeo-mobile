@@ -6,10 +6,6 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
-import {
-  ProcessedDraftPhoto,
-  SavedPhoto,
-} from '../contexts/PhotoPromiseContext/types';
 import {Audio} from 'expo-av';
 import {Exports} from '../screens/ExportObservations';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';

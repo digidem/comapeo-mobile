@@ -7,7 +7,6 @@ import isEqual from 'lodash.isequal';
 import {CloseIcon} from './icons';
 import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../hooks/useDraftObservation';
 import {defineMessages, useIntl} from 'react-intl';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
 import {ClientGeneratedObservation} from '../sharedTypes';
@@ -26,6 +25,7 @@ import {
 
 import ErrorIcon from '../images/Error.svg';
 import DiscardIcon from '../images/delete.svg';
+import {useDraftObservationActions} from '../contexts/DraftObservationContext';
 
 const m = defineMessages({
   discardChangesTitle: {
@@ -74,7 +74,7 @@ export const CustomHeaderLeftClose = ({
     openOnMount: false,
   });
   const {formatMessage} = useIntl();
-  const {clearDraft} = useDraftObservation();
+  const {clearDraft} = useDraftObservationActions();
   const navigation = useNavigationFromRoot();
 
   const handleDiscard = React.useCallback(() => {

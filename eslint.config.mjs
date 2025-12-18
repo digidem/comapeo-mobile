@@ -10,7 +10,7 @@ import * as tsParser from '@typescript-eslint/parser';
 import pluginJest from 'eslint-plugin-jest';
 import pluginReactNative from 'eslint-plugin-react-native';
 import pluginTestingLibrary from 'eslint-plugin-testing-library';
-import * as pluginReactHooks from 'eslint-plugin-react-hooks';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import pluginTs from 'typescript-eslint';
 
@@ -65,7 +65,7 @@ const frontendConfig = pluginTs.config(
       pluginQuery.configs['flat/recommended'],
       pluginReact.configs['recommended-typescript'],
       pluginReact.configs['disable-dom'],
-      pluginReactHooks.configs['recommended-latest'],
+      pluginReactHooks.configs.flat['recommended-latest'],
       // https://github.com/facebook/react-native/issues/42996#issuecomment-2275994981
       {
         name: 'eslint-plugin-react-native',
@@ -91,6 +91,14 @@ const frontendConfig = pluginTs.config(
       'react-hooks/exhaustive-deps': 'error',
       // We want to strictly adhere
       'react-hooks/rules-of-hooks': 'error',
+      // Downgrade new stricter rules to warnings for now (from react-hooks v7)
+      'react-hooks/set-state-in-effect': 'warn',
+      'react-hooks/purity': 'warn',
+      'react-hooks/incompatible-library': 'warn',
+      'react-hooks/immutability': 'warn',
+      'react-hooks/refs': 'warn',
+      'react-hooks/globals': 'warn',
+      '@eslint-react/hooks-extra/no-useless-custom-hooks': 'warn',
       // Doesn't work well with custom components that wrap Text component
       'react-native/no-raw-text': 'off',
       // We only work on Android for now

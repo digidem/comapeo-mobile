@@ -32,8 +32,8 @@ import {
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
 import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
 import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioSavedThumbnail.tsx';
-import {useDraftObservation} from '../../hooks/useDraftObservation.ts';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
+import {useDraftObservationActions} from '../../contexts/DraftObservationContext.tsx';
 
 const m = defineMessages({
   deleteTitle: {
@@ -56,7 +56,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {observationId} = route.params;
   const {projectId} = useActiveProject();
   const {observation, preset} = useObservationWithPreset(observationId);
-  const {existingObservationToDraft} = useDraftObservation();
+  const {createDraft} = useDraftObservationActions();
 
   const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
   const {lat, lon, metadata} = observation;
@@ -82,7 +82,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             <ObservationHeaderRight
               canEdit={canEdit}
               setObservationToStoreAndNavigateToEdit={() => {
-                existingObservationToDraft(observation, preset);
+                createDraft({...observation, presetRef: preset});
                 navigation.navigate('ObservationEdit');
               }}
             />
@@ -92,7 +92,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         return <ObservationHeaderRight canEdit={canEdit} />;
       },
     });
-  }, [canEdit, navigation, observation, existingObservationToDraft, preset]);
+  }, [canEdit, navigation, observation, createDraft, preset]);
 
   return (
     <ScrollView

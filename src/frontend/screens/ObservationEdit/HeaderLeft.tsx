@@ -7,10 +7,10 @@ import {
 } from '../../sharedComponents/BottomSheetModal';
 import {ConfirmDiscardBottomSheetContent} from '../../sharedComponents/ConfirmDiscardBottomSheetContent';
 import {defineMessages, useIntl} from 'react-intl';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useFocusEffect} from '@react-navigation/native';
 import {BackHandler} from 'react-native';
+import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   discardTitle: {
@@ -43,7 +43,7 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
     openOnMount: false,
   });
   const {formatMessage} = useIntl();
-  const {clearDraft} = useDraftObservation();
+  const {clearDraft} = useDraftObservationActions();
   const navigation = useNavigationFromRoot();
 
   useFocusEffect(

@@ -2,7 +2,6 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {usePresetsSelection} from '@comapeo/core-react';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {CategoryGrid} from './CategoryGrid';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {WHITE} from '../../lib/styles';
@@ -35,9 +34,7 @@ export const ObservationCategoryChooser: NativeNavigationComponent<
   });
   const preset = useDraftObservationState(state => state.value?.presetRef);
   const {updatePreset} = useDraftObservationActions();
-  const observationId = usePersistedDraftObservation(
-    state => state.observationId,
-  );
+  const observationId = useDraftObservationState(state => state.id?.docId);
 
   const filteredPresets = Array.from(presets).filter(p =>
     p.geometry.includes('point'),

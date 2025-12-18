@@ -9,7 +9,6 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
@@ -88,9 +87,7 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const preset = useDraftObservationState(store => store.value?.presetRef);
-  const observationId = usePersistedDraftObservation(
-    store => store.observationId,
-  );
+  const observationId = useDraftObservationState(store => store.id?.docId);
 
   const isLastQuestion =
     questionNumber >= (preset ? preset.fieldRefs.length : 0);

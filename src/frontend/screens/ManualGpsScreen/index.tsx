@@ -29,13 +29,15 @@ import {
 import {DdForm} from './DdForm';
 import {DmsForm} from './DmsForm';
 import {UtmForm} from './UtmForm';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {
   useManualEntryCoordinateFormatActions,
   useManualEntryCoordinateFormat,
 } from '../../contexts/ManualEntryCoordinateFormatStoreContext';
-import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   title: {
@@ -83,9 +85,7 @@ export const ManualGpsScreen = ({
     [t],
   );
 
-  const observationValue = usePersistedDraftObservation(
-    observationValueSelector,
-  );
+  const observationValue = useDraftObservationState(observationValueSelector);
 
   const entryCoordinateFormat = useManualEntryCoordinateFormat();
 
@@ -212,7 +212,7 @@ export function createNavigationOptions({
 }
 
 function observationValueSelector(
-  state: Parameters<Parameters<typeof usePersistedDraftObservation>[0]>[0],
+  state: Parameters<Parameters<typeof useDraftObservationState>[0]>[0],
 ) {
   return state.value;
 }

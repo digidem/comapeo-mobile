@@ -11,7 +11,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
 import {ClientGeneratedObservation} from '../sharedTypes';
 import {Observation} from '@comapeo/schema';
-import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
 import {
   CommonActions,
   useFocusEffect,
@@ -25,7 +24,10 @@ import {
 
 import ErrorIcon from '../images/Error.svg';
 import DiscardIcon from '../images/delete.svg';
-import {useDraftObservationActions} from '../contexts/DraftObservationContext';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../contexts/DraftObservationContext';
 
 const m = defineMessages({
   discardChangesTitle: {
@@ -170,16 +172,18 @@ const HeaderBackEditObservation = ({
 }: HeaderBackEditObservationProps) => {
   const navigation = useNavigationFromRoot();
   const {observation} = useObservationWithPreset(observationId);
-  const attachments = usePersistedDraftObservation(store => store.attachments);
-  const draftObservation = usePersistedDraftObservation(store => store.value);
+  const unsavedAttachments = useDraftObservationState(
+    store => store.unsavedAttachments,
+  );
+  const draftObservation = useDraftObservationState(store => store.value);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
       if (
         checkEqual(observation, {
-          numberOfAttachments: attachments.length,
           edited: draftObservation,
-        })
+        }) ||
+        unsavedAttachments
       ) {
         return;
       }
@@ -190,7 +194,13 @@ const HeaderBackEditObservation = ({
     });
 
     return () => unsubscribe();
-  }, [observation, attachments, draftObservation, openBottomSheet, navigation]);
+  }, [
+    observation,
+    unsavedAttachments,
+    draftObservation,
+    openBottomSheet,
+    navigation,
+  ]);
 
   return (
     <SharedBackButton
@@ -221,17 +231,11 @@ function checkEqual(
   original: Observation,
   {
     edited,
-    numberOfAttachments,
   }: {
     edited: Observation | ClientGeneratedObservation | null;
-    numberOfAttachments?: number;
   },
 ) {
   if (!edited || !('docId' in edited)) return true;
-  // attachments are created right before an observation is made, so we need to check # attachments that are about to be saved
-  const {attachments: originalAtts} = original;
-
-  if (originalAtts.length !== numberOfAttachments) return false;
 
   return isEqual(original, edited);
 }

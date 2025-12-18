@@ -85,6 +85,8 @@ const frontendConfig = pluginTs.config(
       '@eslint-react/web-api/no-leaked-event-listener': 'off',
       // Not relevant for React Native
       '@eslint-react/web-api/no-leaked-resize-observer': 'off',
+      // useContext is still valid 
+      '@eslint-react/no-use-context':'off',
       // There are some cases in app code when it's needed
       '@typescript-eslint/no-require-imports': 'off',
       // We want to strictly adhere

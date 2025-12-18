@@ -9,7 +9,6 @@ import {
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
-import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
@@ -19,7 +18,6 @@ import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
-import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {GPSPill} from '../../sharedComponents/GPSPill';
@@ -235,9 +233,10 @@ function useCheckDraftObservationAndNavigate({
 }: {
   authState: AuthState;
 }) {
-  const {data: presets} = usePresetsQuery();
   const {navigate} = useNavigationFromHomeTabs();
   const existingObservation = useDraftObservationState(store => store.value);
+
+  console.log({existingObservation});
 
   useFocusEffect(
     React.useCallback(() => {
@@ -246,7 +245,7 @@ function useCheckDraftObservationAndNavigate({
         return;
       }
       // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
-      if (!matchPreset(existingObservation.tags, presets)) {
+      if (!existingObservation.presetRef) {
         navigate('ObservationCategoryChooser');
 
         // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
@@ -255,7 +254,7 @@ function useCheckDraftObservationAndNavigate({
       } else {
         navigate('ObservationCreate');
       }
-    }, [existingObservation, navigate, presets, authState]),
+    }, [existingObservation, navigate, authState]),
   );
 }
 

@@ -5,7 +5,10 @@ import {
   type Preset,
 } from '@comapeo/schema';
 import {createStore, type StoreApi} from 'zustand';
-import {persist as createPersistedState} from 'zustand/middleware';
+import {
+  persist as createPersistedState,
+  createJSONStorage,
+} from 'zustand/middleware';
 import type {LocationObject, LocationProviderStatus} from 'expo-location';
 import type {AccelerometerMeasurement} from 'expo-sensors';
 import type {CameraCapturedPicture} from 'expo-camera';
@@ -16,6 +19,7 @@ import {throwIfAborted} from '../../lib/throwIfAborted.ts';
 import {parse} from 'valibot';
 import {PhotoEXIFSchema} from '../../lib/exif.ts';
 import * as Sentry from '@sentry/react-native';
+import {MMKVStoreInitializer} from '../../hooks/persistedState/createPersistedState';
 
 export type DraftObservationStore = ReturnType<
   typeof createDraftObservationStore
@@ -53,7 +57,11 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
 
   if (persist) {
     instance = createStore(
-      createPersistedState(createEmptyStoreState, {name: '@MapeoDraft'}),
+      createPersistedState(createEmptyStoreState, {
+        name: '@MapeoDraft',
+        storage: createJSONStorage(() => MMKVStoreInitializer),
+        version: 0,
+      }),
     );
   } else {
     instance = createStore(createEmptyStoreState);

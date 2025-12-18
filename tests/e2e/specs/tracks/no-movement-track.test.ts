@@ -36,26 +36,26 @@ describe('Tracks - No movement flow', () => {
   it('opens discard modal and chooses to continue editing', async () => {
     const trackBtn = await $('~Go to tracking.');
     await trackBtn.click();
-
+    // 30 seconds
     const stopTracksBtn = await $(byTextMatches('Stop Tracks'));
-    await stopTracksBtn.waitForDisplayed({timeout: 10000});
+    // await stopTracksBtn.waitForDisplayed({timeout: 5000});
     await tapElement(stopTracksBtn);
-
+    // takes about 1 minute
     await expect($(byTextMatches('No Track Recorded'))).toBeDisplayed();
     await expect(
       $(byTextMatches("You didn't move beyond one meter.")),
     ).toBeDisplayed();
-
+    // this takes 1:45 or 1:50!
     const continueBtn = await $(byTextMatches('Continue Recording'));
-    await continueBtn.waitForDisplayed({timeout: 10000});
+    // await continueBtn.waitForDisplayed({timeout: 5000});
     await tapElement(continueBtn);
-
+    // this part happens super fast.
     const stopTracksBtn2 = await $(byTextMatches('Stop Tracks'));
-    await stopTracksBtn2.waitForDisplayed({timeout: 10000});
+    // await stopTracksBtn2.waitForDisplayed({timeout: 5000});
     await tapElement(stopTracksBtn2);
 
     const exitButton = await $(byTextMatches('Exit Tracks'));
-    await exitButton.waitForDisplayed({timeout: 10000});
+    // await exitButton.waitForDisplayed({timeout: 5000});
     await tapElement(exitButton);
 
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();

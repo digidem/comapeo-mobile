@@ -97,17 +97,25 @@ export const TrackBottomSheet = React.memo(() => {
     return <StartStopTrack />;
   };
 
-  return (
-    // Semi hacky, but without this <View> the animated view bounces too far initially and then bounces back down to adjust.
-    <View style={styles.container}>
-      <Animated.View
-        style={styles.animatedBackground}
-        entering={SlideInDown.duration(250)}
-        exiting={SlideOutDown.duration(250)}>
-        {renderContent()}
-      </Animated.View>
-    </View>
-  );
+  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
+  if (isE2E) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.animatedBackground}>{renderContent()}</View>
+      </View>
+    );
+  } else
+    return (
+      // Semi hacky, but without this <View> the animated view bounces too far initially and then bounces back down to adjust.
+      <View style={styles.container}>
+        <Animated.View
+          style={styles.animatedBackground}
+          entering={SlideInDown.duration(250)}
+          exiting={SlideOutDown.duration(250)}>
+          {renderContent()}
+        </Animated.View>
+      </View>
+    );
 });
 
 const styles = StyleSheet.create({

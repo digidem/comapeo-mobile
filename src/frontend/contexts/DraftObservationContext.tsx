@@ -41,9 +41,9 @@ export const DraftObservationProvider = ({
 }: DraftObservationProviderProps) => {
   createDraftObservationLocationUpdator(draftObservationStore);
   return (
-    <DraftObservationContext.Provider value={draftObservationStore}>
+    <DraftObservationContext value={draftObservationStore}>
       {children}
-    </DraftObservationContext.Provider>
+    </DraftObservationContext>
   );
 };
 

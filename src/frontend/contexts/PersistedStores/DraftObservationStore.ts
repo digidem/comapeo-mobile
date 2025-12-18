@@ -82,10 +82,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
   function _addAttachment(attachment: UnsavedAttachment): void {
     setAssertDraft(prev => {
       return {
-        unsavedAttachments: new Map(prev.unsavedAttachments).set(
-          attachment.id,
-          attachment,
-        ),
+        unsavedAttachments: [...prev.unsavedAttachments, attachment],
       };
     });
   }
@@ -96,17 +93,18 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     partial: Partial<Extract<UnsavedAttachment, {type: T}>>,
   ): void {
     setAssertDraft(prev => {
-      const attachment = prev.unsavedAttachments.get(id);
-      if (!attachment) return prev;
-      if (attachment.type !== type) {
-        throw new Error(`Attachment with id ${id} is not of type ${type}`);
-      }
+      const updatedAttachments = prev.unsavedAttachments.map(att => {
+        if (att.id === id) {
+          if (att.type !== type) {
+            throw new Error(`Attachment with id ${id} is not of type ${type}`);
+          }
+          return {...att, ...partial};
+        }
+        return att;
+      });
 
       return {
-        unsavedAttachments: new Map(prev.unsavedAttachments).set(id, {
-          ...attachment,
-          ...partial,
-        }),
+        unsavedAttachments: updatedAttachments,
       };
     });
   }
@@ -230,10 +228,8 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
 
   function deleteUnsavedAttachment(id: number) {
     setAssertDraft(prev => {
-      if (!prev.unsavedAttachments.has(id)) return prev;
-      const attachments = new Map(prev.unsavedAttachments);
-      attachments.delete(id);
-      return {unsavedAttachments: attachments};
+      const newAttachments = prev.unsavedAttachments.filter(a => a.id !== id);
+      return {unsavedAttachments: newAttachments};
     });
   }
 
@@ -247,7 +243,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         {
           value: valueOf(observation),
           id: {docId: observation.docId, versionId: observation.versionId},
-          unsavedAttachments: new Map(),
+          unsavedAttachments: [],
           initialPosition: null,
         },
         true,
@@ -257,7 +253,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         {
           value: createEmptyObservationValue(),
           id: null,
-          unsavedAttachments: new Map(),
+          unsavedAttachments: [],
           initialPosition: null,
         },
         true,
@@ -441,7 +437,7 @@ type ObservationValueWithPreset = Exclude<ObservationValue, 'presetRef'> & {
 type DraftStatePopulated = {
   value: ObservationValueWithPreset;
   id: {docId: string; versionId: string} | null;
-  unsavedAttachments: Map<number, UnsavedAttachment>;
+  unsavedAttachments: UnsavedAttachment[];
   /** Initial (first) position of an observation. Not currently persisted, but
    * used for checking if the user moves away from the original location */
   initialPosition: Position | null;

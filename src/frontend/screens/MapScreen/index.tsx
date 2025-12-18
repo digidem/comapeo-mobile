@@ -236,8 +236,6 @@ function useCheckDraftObservationAndNavigate({
   const {navigate} = useNavigationFromHomeTabs();
   const existingObservation = useDraftObservationState(store => store.value);
 
-  console.log({existingObservation});
-
   useFocusEffect(
     React.useCallback(() => {
       // if no exisiting observation, stay home

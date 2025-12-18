@@ -160,39 +160,36 @@ export const ObservationCreateSaveButton = () => {
 
     let newAttachments: Attachment[] = [];
     try {
-      const attachmentsArrays =
-        attachments !== null ? [...attachments.entries()] : [];
+      if (attachments) {
+        const photoAttachments = attachments.filter(att =>
+          isUnsavedPhotoAttachment(att),
+        );
 
-      const photoAttachments = attachmentsArrays.filter(([, att]) =>
-        isUnsavedPhotoAttachment(att),
-      );
+        const audioAttachments = attachments.filter(att =>
+          isUnsavedAudioAttachment(att),
+        );
 
-      const audioAttachments = attachmentsArrays.filter(([, att]) =>
-        isUnsavedAudioAttachment(att),
-      );
+        if (photoAttachments.length > 0) {
+          const photoPromises = photoAttachments.map(photo => {
+            return createPhotoAttachmentAsync(photo);
+          });
 
-      if (photoAttachments.length > 0) {
-        const photoPromises = photoAttachments.map(([, photo]) => {
-          //@ts-expect-error we check type above
-          return createPhotoAttachmentAsync(photo);
-        });
+          newAttachments = [
+            ...newAttachments,
+            ...(await Promise.all(photoPromises)),
+          ];
+        }
 
-        newAttachments = [
-          ...newAttachments,
-          ...(await Promise.all(photoPromises)),
-        ];
-      }
+        if (audioAttachments.length > 0) {
+          const audioPromises = audioAttachments.map(audio => {
+            return createAudioAttachmentAsync(audio);
+          });
 
-      if (audioAttachments.length > 0) {
-        const audioPromises = audioAttachments.map(([, audio]) => {
-          //@ts-expect-error we check type above
-          return createAudioAttachmentAsync(audio);
-        });
-
-        newAttachments = [
-          ...newAttachments,
-          ...(await Promise.all(audioPromises)),
-        ];
+          newAttachments = [
+            ...newAttachments,
+            ...(await Promise.all(audioPromises)),
+          ];
+        }
       }
 
       const createdObservation = await createObservationAsync({

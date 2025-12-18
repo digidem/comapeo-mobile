@@ -13,8 +13,9 @@ import {manipulateAsync} from 'expo-image-manipulator';
 import {excludeKeys} from 'filter-obj';
 import type {Attachment, Position} from '../../sharedTypes/index.ts';
 import {throwIfAborted} from '../../lib/throwIfAborted.ts';
-import {parse, safeParse} from 'valibot';
+import {parse} from 'valibot';
 import {PhotoEXIFSchema} from '../../lib/exif.ts';
+import * as Sentry from '@sentry/react-native';
 
 export type DraftObservationStore = ReturnType<
   typeof createDraftObservationStore
@@ -190,10 +191,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
       });
       throwIfAborted(signal);
     } catch (reason) {
-      console.log('photo processing not working, ', reason);
-      if (reason instanceof Error && reason.name === 'AbortError') {
-      }
-      // TODO: Report other errors to Sentry
+      Sentry.captureException(reason);
     }
   }
 

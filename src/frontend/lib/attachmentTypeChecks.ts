@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {AccelerometerMeasurement} from 'expo-sensors';
 import {
   UnsavedAttachmentBlob,

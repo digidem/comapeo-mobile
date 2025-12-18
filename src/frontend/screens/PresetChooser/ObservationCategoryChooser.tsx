@@ -43,7 +43,7 @@ export const ObservationCategoryChooser: NativeNavigationComponent<
   const handleSelect = (preset: Preset) => {
     updatePreset(preset);
     if (observationId) {
-      navigation.navigate('ObservationEdit', {observationId});
+      navigation.popTo('ObservationEdit');
     } else {
       navigation.navigate('ObservationCreate');
     }

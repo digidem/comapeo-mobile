@@ -252,7 +252,7 @@ function useCheckDraftObservationAndNavigate({
 
         // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
       } else if ('docId' in existingObservation) {
-        navigate('ObservationEdit', {observationId: existingObservation.docId});
+        navigate('ObservationEdit');
       } else {
         navigate('ObservationCreate');
       }

@@ -9,6 +9,7 @@ import {
   DraftObservationStore,
   convertPosition,
 } from './PersistedStores/DraftObservationStore.ts';
+import {useLocationContext} from './LocationContext.tsx';
 
 export function useDraftObservationState(): DraftState;
 export function useDraftObservationState<T>(
@@ -39,7 +40,8 @@ export const DraftObservationProvider = ({
   children,
   draftObservationStore,
 }: DraftObservationProviderProps) => {
-  createDraftObservationLocationUpdator(draftObservationStore);
+  const locationStore = useLocationContext();
+  createDraftObservationLocationUpdator({draftObservationStore, locationStore});
   return (
     <DraftObservationContext value={draftObservationStore}>
       {children}
@@ -56,10 +58,6 @@ function useDraftObservationContext() {
   return value;
 }
 
-const LOCATION_OPTIONS: Location.LocationOptions = {
-  accuracy: Location.Accuracy.BestForNavigation,
-  timeInterval: 1000,
-};
 /** We don't update the position of an observation with the location from the
  * device location provider if the location is older than this threshold */
 const STALE_LOCATION_THRESHOLD_MS = 1000;
@@ -74,28 +72,25 @@ const MOVED_AWAY_THRESHOLD_METERS = 100;
  * update is 15m away. */
 const ACCURACY_MOVED_AWAY_FACTOR = 1.5;
 
-async function createDraftObservationLocationUpdator({
-  instance,
-  actions: {updatePosition},
-}: DraftObservationStore) {
-  let {granted: locationPermissionGranted} =
-    await Location.getForegroundPermissionsAsync();
-  let locationSubscriptionPromise: Promise<Location.LocationSubscription> | null =
-    null;
+function createDraftObservationLocationUpdator({
+  draftObservationStore,
+  locationStore,
+}: {
+  draftObservationStore: DraftObservationStore;
+  locationStore: ReturnType<typeof useLocationContext>;
+}) {
   let appState: AppStateStatus = AppState.currentState;
-  let isNewlyCreatedDraftInStore = isNewlyCreatedDraft(instance.getState());
+  let isNewlyCreatedDraftInStore = isNewlyCreatedDraft(
+    draftObservationStore.instance.getState(),
+  );
+  let locationStoreSubscriber: (() => void) | null = null;
 
   AppState.addEventListener('change', async nextAppState => {
     appState = nextAppState;
-    if (appState === 'active' && !locationPermissionGranted) {
-      locationPermissionGranted = (
-        await Location.getForegroundPermissionsAsync()
-      ).granted;
-    }
     watchPositionIfNeeded();
   });
 
-  instance.subscribe(storeState => {
+  draftObservationStore.instance.subscribe(storeState => {
     isNewlyCreatedDraftInStore = isNewlyCreatedDraft(storeState);
     watchPositionIfNeeded();
   });
@@ -104,24 +99,26 @@ async function createDraftObservationLocationUpdator({
     const shouldBeWatchingPosition =
       appState === 'active' &&
       isNewlyCreatedDraftInStore &&
-      locationPermissionGranted;
+      locationStore.getState().locationPermission === 'granted';
 
-    if (shouldBeWatchingPosition && !locationSubscriptionPromise) {
-      locationSubscriptionPromise = Location.watchPositionAsync(
-        LOCATION_OPTIONS,
-        onPositionUpdate,
-      );
-    } else if (!shouldBeWatchingPosition && locationSubscriptionPromise) {
-      // Avoid a race condition by nulling the state before awaiting the promise
-      const locationSubscriptionPromiseCopy = locationSubscriptionPromise;
-      locationSubscriptionPromise = null;
-      const subscription = await locationSubscriptionPromiseCopy;
-      subscription.remove();
+    if (shouldBeWatchingPosition && !locationStoreSubscriber) {
+      locationStoreSubscriber = locationStore.subscribe(store => {
+        const location = store.location;
+        if (location) {
+          onPositionUpdate(location);
+        }
+      });
+    }
+
+    if (!shouldBeWatchingPosition && locationStoreSubscriber) {
+      locationStoreSubscriber();
+      locationStoreSubscriber = null;
     }
   }
 
   function onPositionUpdate(location: Location.LocationObject) {
-    const {value: currentDraft, initialPosition} = instance.getState();
+    const {value: currentDraft, initialPosition} =
+      draftObservationStore.instance.getState();
     if (!currentDraft) return;
 
     const isManualLocation = !!currentDraft.metadata?.manualLocation;
@@ -131,7 +128,7 @@ async function createDraftObservationLocationUpdator({
       Date.now() - location.timestamp > STALE_LOCATION_THRESHOLD_MS;
     if (isStale) return;
 
-    instance.setState(prev => {
+    draftObservationStore.instance.setState(prev => {
       if (prev.initialPosition || !prev.value) return prev;
       return {...prev, initialPosition: convertPosition(location)};
     });
@@ -156,10 +153,10 @@ async function createDraftObservationLocationUpdator({
 
     if (!isMoreAccurate) return;
 
-    updatePosition({
+    draftObservationStore.actions.updatePosition({
       manualLocation: false,
       position: location,
-      // TODO: Also add positionProvider. Probably needs access to the locationProvider store.
+      positionProvider: locationStore.getState().providerStatus,
     });
   }
 }

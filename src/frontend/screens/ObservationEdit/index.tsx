@@ -178,7 +178,7 @@ export const ObservationEdit = ({
               {attachments &&
                 attachments.map(att => {
                   if (isUnsavedPhotoAttachment(att)) {
-                    // if the preview and thumbnail are not ready, show loader
+                    // if the original and thumbnail are not ready, show loader
                     if (
                       att.original.processingState !== 'complete' ||
                       att.thumbnail.processingState !== 'complete'

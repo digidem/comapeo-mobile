@@ -23,11 +23,43 @@ module.exports = function (api) {
         'babel-preset-expo',
         {
           'react-compiler': {
-            // eslint-disable-next-line no-unused-vars
             sources: filename => {
-              // Incremental adoption: Start with just one simple component
-              // For now, compile nothing until we verify it works
-              return false;
+              if (filename.includes('src/frontend/sharedComponents/')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/screens/')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/contexts/')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/hooks/')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/utils/')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/animations/')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/types/')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/sharedTypes/')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/lib/')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/Navigation/')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/App.tsx')) {
+                return true;
+              }
+              if (filename.includes('src/frontend/AppNavigator.tsx')) {
+                return true;
+              }
             },
           },
         },

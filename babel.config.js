@@ -20,6 +20,7 @@ module.exports = function (api) {
     compact: true,
     presets: ['babel-preset-expo'],
     plugins: [
+      ['babel-plugin-react-compiler'],
       ['transform-inline-environment-variables', {include: requiredEnvVars}],
       // react-native-reanimated/plugin has to be last
       'react-native-reanimated/plugin',

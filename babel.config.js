@@ -24,40 +24,7 @@ module.exports = function (api) {
         {
           'react-compiler': {
             sources: filename => {
-              if (filename.includes('src/frontend/sharedComponents/')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/screens/')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/contexts/')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/hooks/')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/utils/')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/animations/')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/types/')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/sharedTypes/')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/lib/')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/Navigation/')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/App.tsx')) {
-                return true;
-              }
-              if (filename.includes('src/frontend/AppNavigator.tsx')) {
+              if (filename.includes('src/frontend/')) {
                 return true;
               }
             },

@@ -24,9 +24,7 @@ module.exports = function (api) {
         {
           'react-compiler': {
             sources: filename => {
-              if (filename.includes('src/frontend/')) {
-                return true;
-              }
+              return filename.includes('src/frontend/');
             },
           },
         },

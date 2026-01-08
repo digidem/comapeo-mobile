@@ -11,9 +11,6 @@
     "updates": {
       "enabled": false
     },
-    "experiments": {
-      "reactCompiler": true
-    },
     "plugins": [
       "expo-localization",
       "expo-secure-store",

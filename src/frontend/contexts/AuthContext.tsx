@@ -47,6 +47,10 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const isAudioPermissionModalOpen = useIsAudioPermissionModalOpen();
 
   React.useEffect(() => {
+    if (!FlagSecureModule) {
+      console.warn('FlagSecureModule not available');
+      return;
+    }
     if (passcode !== null && !isE2E) {
       FlagSecureModule.activate();
     } else {

@@ -8,7 +8,6 @@ import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useTracking} from '../../hooks/useTracking';
 import {useTrackTimer} from '../../hooks/useTrackTimer.ts';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 const BUTTON_SIZE = 25;
 const HIT_SLOP = 20;
@@ -25,7 +24,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
     navigation.navigate('Map', {trackingOpen: true});
   }
   return (
-    <SafeAreaView edges={['bottom']} style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity
         hitSlop={HIT_SLOP}
         testID="tabBarButtonObservationsList"
@@ -89,7 +88,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
           }
         />
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 

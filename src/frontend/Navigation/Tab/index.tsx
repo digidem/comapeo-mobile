@@ -7,7 +7,7 @@ import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
 import {TabBar} from './TabBar';
 import {Loading} from '../../sharedComponents/Loading';
-import {COMAPEO_DARK_BLUE, WHITE} from '../../lib/styles';
+import {MEDIUM_GREY, WHITE} from '../../lib/styles';
 import {Drawer} from 'react-native-drawer-layout';
 import {DrawerMenu} from '../../sharedComponents/DrawerMenu';
 import {useOpenDrawer} from '../../hooks/useOpenDrawer';
@@ -21,8 +21,8 @@ export const HomeTabs = () => {
 
   return (
     <SafeAreaView
-      edges={['top']}
-      style={{flex: 1, backgroundColor: COMAPEO_DARK_BLUE}}>
+      edges={['top', 'bottom']}
+      style={{flex: 1, backgroundColor: MEDIUM_GREY}}>
       <ProjectRemovalListener />
       <Drawer
         open={drawerOpen}

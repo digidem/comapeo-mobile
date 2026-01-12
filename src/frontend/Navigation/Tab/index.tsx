@@ -7,11 +7,12 @@ import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
 import {TabBar} from './TabBar';
 import {Loading} from '../../sharedComponents/Loading';
-import {WHITE} from '../../lib/styles';
+import {COMAPEO_DARK_BLUE, WHITE} from '../../lib/styles';
 import {Drawer} from 'react-native-drawer-layout';
 import {DrawerMenu} from '../../sharedComponents/DrawerMenu';
 import {useOpenDrawer} from '../../hooks/useOpenDrawer';
 import {ProjectRemovalListener} from '../../sharedComponents/ProjectRemovalListener';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
@@ -19,7 +20,9 @@ export const HomeTabs = () => {
   const [drawerOpen, setDrawerOpen] = useOpenDrawer();
 
   return (
-    <>
+    <SafeAreaView
+      edges={['top']}
+      style={{flex: 1, backgroundColor: COMAPEO_DARK_BLUE}}>
       <ProjectRemovalListener />
       <Drawer
         open={drawerOpen}
@@ -80,6 +83,6 @@ export const HomeTabs = () => {
           <Tab.Screen name="Camera" component={CameraScreen} />
         </Tab.Navigator>
       </Drawer>
-    </>
+    </SafeAreaView>
   );
 };

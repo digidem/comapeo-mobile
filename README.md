@@ -14,7 +14,7 @@ The next version of Mapeo Mobile
 
    1. Install [Node](https://nodejs.org), ideally through a proper node version manager such as [nvm](https://github.com/nvm-sh/nvm), [fnm](https://github.com/Schniz/fnm), [asdf](https://asdf-vm.com/), or [mise](https://mise.jdx.dev/)
 
-      - This project uses **Node v20** with **npm v10**
+      - This project uses **Node v20.19.5+** with **npm v10** (minimum Node v20.19.4 required)
 
    2. Follow the React Native instructions for setting up the development environment: https://reactnative.dev/docs/environment-setup
 

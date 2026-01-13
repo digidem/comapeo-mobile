@@ -1407,7 +1407,7 @@
     "message": "Apa yang terjadi di sini?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Sunting Pengamatan"
   },
   "screens.ObservationEdit.observation": {

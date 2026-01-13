@@ -1407,7 +1407,7 @@
     "message": "Có điều gì đang diễn ra ở đây?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Chỉnh sửa quan sát"
   },
   "screens.ObservationEdit.observation": {

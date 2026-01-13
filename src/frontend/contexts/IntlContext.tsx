@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {IntlProvider as ReactIntlProvider, CustomFormats} from 'react-intl';
 import {StyleSheet, Text} from 'react-native';
+import {useLocales} from 'expo-localization';
 
 import messages from '../../../translations/messages.json';
 import {useAppLanguageTag} from '../hooks/useAppLanguageTag';
@@ -26,16 +27,24 @@ const DEFAULT_RICH_TEXT_MAPPINGS: NonNullable<
 
 export const IntlProvider = ({children}: {children: React.ReactNode}) => {
   const languageTag = useAppLanguageTag();
+  const systemLocales = useLocales();
 
   const messagesToUse = React.useMemo(() => {
     const languageCode = extractLanguageCode(languageTag);
+    const systemLanguageTags = systemLocales.map(l => l.languageTag);
+    const merged = {};
 
-    return {
-      // Add fallbacks for non-regional tags (e.g. "en" for "en-GB")
-      ...(messages[languageCode as TranslatedLanguageTag] || {}),
-      ...(messages[languageTag as TranslatedLanguageTag] || {}),
-    };
-  }, [languageTag]);
+    // Merge messages in order of priority: specific system locales, app language code, full app language tag
+    for (const tag of [
+      ...systemLanguageTags.reverse(),
+      languageCode,
+      languageTag,
+    ]) {
+      Object.assign(merged, messages[tag as TranslatedLanguageTag] || {});
+    }
+
+    return merged;
+  }, [languageTag, systemLocales]);
 
   return (
     <ReactIntlProvider

@@ -18,13 +18,8 @@ function getMapsQueryKey() {
   return [ROOT_QUERY_KEY, 'maps'] as const;
 }
 
-function getCustomMapsDirectory() {
-  return new URL('maps', DOCUMENT_DIRECTORY).href;
-}
-
-function getDefaultCustomMapFilePath() {
-  return getCustomMapsDirectory() + '/default.smp';
-}
+const CUSTOM_MAPS_DIRECTORY = new URL('maps', DOCUMENT_DIRECTORY).href;
+const DEFAULT_CUSTOM_MAP_FILE_PATH = CUSTOM_MAPS_DIRECTORY + '/default.smp';
 
 const CustomMapInfoSchema = v.object({
   created: v.pipe(
@@ -76,10 +71,9 @@ export function useImportCustomMapFile() {
 
   return useMutation({
     mutationFn: async (opts: {uri: string}) => {
-      const filePath = getDefaultCustomMapFilePath();
       await FileSystem.copyAsync({
         from: opts.uri,
-        to: filePath,
+        to: DEFAULT_CUSTOM_MAP_FILE_PATH,
       });
 
       const styleUrl = await api.getMapStyleJsonUrl();
@@ -87,7 +81,7 @@ export function useImportCustomMapFile() {
       const response = await fetchCustomMapInfo(styleUrl);
 
       if (!response.ok) {
-        FileSystem.deleteAsync(filePath, {
+        FileSystem.deleteAsync(DEFAULT_CUSTOM_MAP_FILE_PATH, {
           idempotent: true,
         }).catch(noop);
 
@@ -109,7 +103,7 @@ export function useRemoveCustomMapFile() {
 
   return useMutation({
     mutationFn: () => {
-      return FileSystem.deleteAsync(getDefaultCustomMapFilePath(), {
+      return FileSystem.deleteAsync(DEFAULT_CUSTOM_MAP_FILE_PATH, {
         idempotent: true,
       });
     },

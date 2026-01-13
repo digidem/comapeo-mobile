@@ -1407,7 +1407,7 @@
     "message": "Wat gebeurt er hier?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Waarneming wijzigen"
   },
   "screens.ObservationEdit.observation": {

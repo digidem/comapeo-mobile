@@ -193,10 +193,10 @@
     "prettier": "3.6.2",
     "random-access-memory": "6.2.1",
     "react-native-svg-transformer": "1.5.1",
-    "react-test-renderer": "19.0.0",
+    "react-test-renderer": "19.1.0",
     "semver": "7.7.2",
     "type-fest": "4.41.0",
-    "typescript": "5.9.2",
+    "typescript": "5.8.3",
     "typescript-eslint": "8.36.0",
     "webdriverio": "9.16.2"
   }

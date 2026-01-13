@@ -55,9 +55,6 @@
   "Modal.GPSEnable.button.default": {
     "message": "トラックの開始"
   },
-  "Modal.GPSEnable.button.loading": {
-    "message": "Loading…"
-  },
   "Modal.GPSEnable.button.stop": {
     "message": "トラックを停止"
   },
@@ -610,9 +607,6 @@
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "App Passcodeを使用すると、CoMapeoアプリを開くためにパスコードを入力することで、追加のセキュリティ層を追加することができます。 以下の機能をオンにすることで、独自の5桁のパスコードを定義できます。"
-  },
-  "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "取消"
@@ -1491,10 +1485,6 @@
     "description": "message shown when there is an unexpected error when loading observations",
     "message": "観察記録の読み込み中にエラーが発生しました。CoMapeoを終了して再起動してください。"
   },
-  "screens.ObservationsList.loading": {
-    "description": "message shown whilst observations are loading",
-    "message": "Loading… this can take a while after synchronizing with a new device"
-  },
   "screens.Onboarding.JoinProjectIntro.close": {
     "message": "Open Settings"
   },
@@ -1705,9 +1695,6 @@
   },
   "screens.RemovedFromProjectBottomSheet.reasonLabel": {
     "message": "理由: {reason}"
-  },
-  "screens.RemovedFromProjectBottomSheet.title": {
-    "message": "THIS DEVICE REMOVED FROM…"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

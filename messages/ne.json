@@ -1407,7 +1407,7 @@
     "message": "यहाँ के भइ राखेकाे छ?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "अवलाेकन सम्पादन"
   },
   "screens.ObservationEdit.observation": {

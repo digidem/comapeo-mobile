@@ -1,4 +1,4 @@
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 import * as DocumentPicker from 'expo-document-picker';
 import {Image as ExpoImage} from 'expo-image';
 
@@ -66,10 +66,10 @@ export async function selectFile({
 export async function getExpoImageStorageSize(
   imageURL: string,
 ): Promise<number> {
-  let fileInfo: FileSystem.FileInfo;
+  let fileInfo;
 
   if (imageURL.startsWith('file://')) {
-    fileInfo = await FileSystem.getInfoAsync(imageURL, {size: true});
+    fileInfo = await FileSystem.getInfoAsync(imageURL);
   } else {
     const cachePath = await ExpoImage.getCachePathAsync(imageURL);
 
@@ -77,9 +77,7 @@ export async function getExpoImageStorageSize(
       throw new Error(`Could not get size for image at ${imageURL}`);
     }
 
-    fileInfo = await FileSystem.getInfoAsync(`file://${cachePath}`, {
-      size: true,
-    });
+    fileInfo = await FileSystem.getInfoAsync(`file://${cachePath}`);
   }
 
   if (!fileInfo.exists) {

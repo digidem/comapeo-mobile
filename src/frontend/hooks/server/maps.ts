@@ -1,6 +1,6 @@
 import {useClientApi, useMapStyleUrl} from '@comapeo/core-react';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 import * as v from 'valibot';
 
 import {DOCUMENT_DIRECTORY} from '../../lib/file-system';

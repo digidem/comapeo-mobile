@@ -1407,7 +1407,7 @@
     "message": "මෙතන මොකද වෙන්නේ?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "නිරීක්ෂණ සංස්කරණය කරන්න"
   },
   "screens.ObservationEdit.observation": {

@@ -1407,7 +1407,7 @@
     "message": "Энд юу болоод байгаа юм бэ?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Сануулга засах"
   },
   "screens.ObservationEdit.observation": {

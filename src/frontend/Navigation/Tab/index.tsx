@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {MapScreen} from '../../screens/MapScreen';
 import {ObservationsList} from '../../screens/ObservationsList';
@@ -7,12 +8,11 @@ import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
 import {TabBar} from './TabBar';
 import {Loading} from '../../sharedComponents/Loading';
-import {MEDIUM_GREY, WHITE} from '../../lib/styles';
+import {WHITE} from '../../lib/styles';
 import {Drawer} from 'react-native-drawer-layout';
 import {DrawerMenu} from '../../sharedComponents/DrawerMenu';
 import {useOpenDrawer} from '../../hooks/useOpenDrawer';
 import {ProjectRemovalListener} from '../../sharedComponents/ProjectRemovalListener';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
@@ -20,9 +20,7 @@ export const HomeTabs = () => {
   const [drawerOpen, setDrawerOpen] = useOpenDrawer();
 
   return (
-    <SafeAreaView
-      edges={['top', 'bottom']}
-      style={{flex: 1, backgroundColor: MEDIUM_GREY}}>
+    <SafeAreaView edges={['top']} style={{flex: 1, backgroundColor: WHITE}}>
       <ProjectRemovalListener />
       <Drawer
         open={drawerOpen}

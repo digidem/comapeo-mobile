@@ -1407,7 +1407,7 @@
     "message": "O que está acontecendo aqui?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Editar Observação"
   },
   "screens.ObservationEdit.observation": {

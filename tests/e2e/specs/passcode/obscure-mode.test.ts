@@ -8,7 +8,7 @@ import {handleGPSAlert} from '../../utils/alerts';
 describe('Passcode - Obscure Passcode Mode', () => {
   it('should show an observations before going into obscure mode', async () => {
     await $('~Add Observation').click();
-    const communityCategory = await $(byTextMatches('Community'));
+    const communityCategory = await $(byText('Community'));
     await communityCategory.click();
     await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));

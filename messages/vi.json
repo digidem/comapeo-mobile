@@ -1,19 +1,19 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Tiếp tục chỉnh sửa"
+    "message": "Tiếp tục chỉnh sửa",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardChangesButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Hủy bỏ thay đổi"
+    "message": "Hủy bỏ thay đổi",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "AppContainer.EditHeader.discardChangesTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Hủy bỏ thay đổi?"
+    "message": "Hủy bỏ thay đổi?",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Hủy bỏ quan sát?"
+    "message": "Hủy bỏ quan sát?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "Hoàn thành"
@@ -23,9 +23,6 @@
   },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Quay trở lại"
-  },
-  "Modal.GPSDisable.button": {
-    "message": "Enable"
   },
   "Modal.GPSDisable.description": {
     "message": "To create a Track CoMapeo needs access to your location and GPS."
@@ -37,16 +34,16 @@
     "message": "Background Maps"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Tiếp tục chỉnh sửa"
+    "message": "Tiếp tục chỉnh sửa",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Hủy bỏ thay đổi"
+    "message": "Hủy bỏ thay đổi",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "ObservationEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Hủy bỏ thay đổi?"
+    "message": "Hủy bỏ thay đổi?",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Đóng"
@@ -55,8 +52,8 @@
     "message": "Đóng"
   },
   "SaveTrack.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Tiếp tục chỉnh sửa"
+    "message": "Tiếp tục chỉnh sửa",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "Screens.ProjectSettings.update": {
     "message": "Cập nhật"
@@ -74,36 +71,36 @@
     "message": "Language"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "Hủy"
+    "message": "Hủy",
+    "description": "Text for cancel action button."
   },
   "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Hủy"
+    "message": "Hủy",
+    "description": "Button to cancel delete of observation"
   },
   "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Có, xóa"
+    "message": "Có, xóa",
+    "description": "Button to confirm delete of observation"
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
-    "message": "Xóa"
+    "message": "Xóa",
+    "description": "Button to delete an observation"
   },
   "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "Chia sẻ"
+    "message": "Chia sẻ",
+    "description": "Button to share an observation"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Tiếp tục chỉnh sửa"
+    "message": "Tiếp tục chỉnh sửa",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Hủy bỏ thay đổi?"
+    "message": "Hủy bỏ thay đổi?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Hủy bỏ thay đổi"
+    "message": "Hủy bỏ thay đổi",
+    "description": "Button to confirm discarding the track"
   },
   "allProjects.close": {
     "message": "Open Settings"
@@ -112,20 +109,20 @@
     "message": "Tên dự án"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "Android GD2I"
+    "message": "Android GD2I",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "Phiên bản Android"
+    "message": "Phiên bản Android",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "Dòng điện thoại"
+    "message": "Dòng điện thoại",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Không xác định"
+    "message": "Không xác định",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "Hủy"
@@ -218,20 +215,20 @@
     "message": "Xóa ảnh này?"
   },
   "screens.CoordinateFormat.dd": {
-    "description": "Decimal Degrees coordinate format",
-    "message": "Độ thập phân (DD)"
+    "message": "Độ thập phân (DD)",
+    "description": "Decimal Degrees coordinate format"
   },
   "screens.CoordinateFormat.dms": {
-    "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Độ/Phút/Giây (DMS)"
+    "message": "Độ/Phút/Giây (DMS)",
+    "description": "Degrees/Minutes/Seconds coordinate format"
   },
   "screens.CoordinateFormat.title": {
-    "description": "Title coordinate format screen",
-    "message": "Định dạng tọa độ"
+    "message": "Định dạng tọa độ",
+    "description": "Title coordinate format screen"
   },
   "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "Hệ tọa độ vuông góc (UTM)"
+    "message": "Hệ tọa độ vuông góc (UTM)",
+    "description": "Universal Transverse Mercator coordinate format"
   },
   "screens.DataPrivacy.next": {
     "message": "Tiếp theo"
@@ -285,8 +282,8 @@
     "message": "Thành công"
   },
   "screens.LanguageSettings.title": {
-    "description": "Title language settings screen",
-    "message": "Language"
+    "message": "Language",
+    "description": "Title language settings screen"
   },
   "screens.LeaveProject.cancel": {
     "message": "Hủy"
@@ -298,40 +295,40 @@
     "message": "Tiếp tục"
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "Chi tiết"
+    "message": "Chi tiết",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.gpsHeader": {
-    "description": "Header for GPS screen",
-    "message": "Vị trí GPS hiện tại"
+    "message": "Vị trí GPS hiện tại",
+    "description": "Header for GPS screen"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "Lần cập nhật gần nhất"
+    "message": "Lần cập nhật gần nhất",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "Tọa độ Độ thập phân"
+    "message": "Tọa độ Độ thập phân",
+    "description": "Section title for DD coordinates"
   },
   "screens.LocationInfoScreen.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "Tọa độ DMS"
+    "message": "Tọa độ DMS",
+    "description": "Section title for DMS coordinates"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "Trạng thái cảm biến"
+    "message": "Trạng thái cảm biến",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "Tọa độ UTM"
+    "message": "Tọa độ UTM",
+    "description": "Section title for UTM coordinates"
   },
   "screens.LocationInfoScreen.no": {
-    "description": "if a location sensor is active yes/no",
-    "message": "Không"
+    "message": "Không",
+    "description": "if a location sensor is active yes/no"
   },
   "screens.LocationInfoScreen.yes": {
-    "description": "if a location sensor is active yes/no",
-    "message": "Có"
+    "message": "Có",
+    "description": "if a location sensor is active yes/no"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "Đông"
@@ -433,8 +430,8 @@
     "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "Nhập tọa độ"
+    "message": "Nhập tọa độ",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
     "message": "Hệ tọa độ vuông góc (UTM)"
@@ -455,35 +452,35 @@
     "message": "Use Your Location"
   },
   "screens.Observation.ObservationView.delete": {
-    "description": "Button to delete an observation",
-    "message": "Xóa"
+    "message": "Xóa",
+    "description": "Button to delete an observation"
   },
   "screens.Observation.ObservationView.noAnswer": {
-    "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "Không có câu trả lời"
+    "message": "Không có câu trả lời",
+    "description": "Placeholder text for fields on an observation which are not answered"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Quan sát"
+    "message": "Quan sát",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.ObservationView.share": {
-    "description": "Button to share an observation",
-    "message": "Chia sẻ"
+    "message": "Chia sẻ",
+    "description": "Button to share an observation"
   },
   "screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Hủy"
+    "message": "Hủy",
+    "description": "Button to cancel delete of observation"
   },
   "screens.Observation.comapeoAlert": {
     "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Có, xóa"
+    "message": "Có, xóa",
+    "description": "Button to confirm delete of observation"
   },
   "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Xóa quan sát?"
+    "message": "Xóa quan sát?",
+    "description": "Title of dialog asking confirmation to delete an observation"
   },
   "screens.Observation.description": {
     "message": "Mô tả:"
@@ -492,101 +489,101 @@
     "message": "Chi tiết:"
   },
   "screens.Observation.fallbackCategoryName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Quan sát"
+    "message": "Quan sát",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Quan sát"
+    "message": "Quan sát",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.Observation.location": {
     "message": "Vị trí:"
   },
   "screens.Observation.title": {
-    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "Quan sát"
+    "message": "Quan sát",
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Tiếp tục chờ"
+    "message": "Tiếp tục chờ",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "Tọa độ thủ công"
+    "message": "Tọa độ thủ công",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "Quan sát này không có vị trí. Bạn có thể tiếp tục chờ tín hiệu GPS, lưu quan sát mà không có vị trí, hoặc nhập tọa độ thủ công"
+    "message": "Quan sát này không có vị trí. Bạn có thể tiếp tục chờ tín hiệu GPS, lưu quan sát mà không có vị trí, hoặc nhập tọa độ thủ công",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "Không có tín hiệu GPS"
+    "message": "Không có tín hiệu GPS",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "Print"
+    "message": "Print",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "Độ chính xác của GPS thấp. Bạn có thể tiếp tục đợi để có độ chính xác cao hơn, lưu quan sát với độ chính xác thấp, hoặc nhập tọa độ thủ công"
+    "message": "Độ chính xác của GPS thấp. Bạn có thể tiếp tục đợi để có độ chính xác cao hơn, lưu quan sát với độ chính xác thấp, hoặc nhập tọa độ thủ công",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Tín hiệu GPS yếu"
+    "message": "Tín hiệu GPS yếu",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.changePreset": {
     "message": "Thay đổi"
   },
   "screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Có điều gì đang diễn ra ở đây?"
+    "message": "Có điều gì đang diễn ra ở đây?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "Quan sát mới"
+    "message": "Quan sát mới",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Quan sát"
+    "message": "Quan sát",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationDetails.done": {
-    "description": "Button text when all questions are complete",
-    "message": "Hoàn thành"
+    "message": "Hoàn thành",
+    "description": "Button text when all questions are complete"
   },
   "screens.ObservationDetails.nextQuestion": {
-    "description": "Button text to navigate to next question",
-    "message": "Tiếp theo"
+    "message": "Tiếp theo",
+    "description": "Button text to navigate to next question"
   },
   "screens.ObservationDetails.title": {
-    "description": "Title of observation details screen showing question number and total",
-    "message": "Câu hỏi {current} của {total}"
+    "message": "Câu hỏi {current} của {total}",
+    "description": "Title of observation details screen showing question number and total"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Có điều gì đang diễn ra ở đây?"
+    "message": "Có điều gì đang diễn ra ở đây?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
-    "description": "Button label to add details",
-    "message": "Chi tiết"
+    "message": "Chi tiết",
+    "description": "Button label to add details"
   },
   "screens.ObservationEdit.changePreset": {
     "message": "Thay đổi"
   },
   "screens.ObservationEdit.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Có điều gì đang diễn ra ở đây?"
+    "message": "Có điều gì đang diễn ra ở đây?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for edit observation screen",
-    "message": "Chỉnh sửa quan sát"
+    "message": "Chỉnh sửa quan sát",
+    "description": "screen title for edit observation screen"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Quan sát"
+    "message": "Quan sát",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "Các quan sát"
+    "message": "Các quan sát",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "Vĩ độ"
@@ -598,20 +595,20 @@
     "message": "Kinh độ"
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "Đến Bản đồ"
+    "message": "Đến Bản đồ",
+    "description": "Back button on observation list screen when no observations are yet recorded"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Bắt đầu từ chế độ xem bản đồ hoặc máy ảnh để ghi lại quan sát đầu tiên của bạn."
+    "message": "Bắt đầu từ chế độ xem bản đồ hoặc máy ảnh để ghi lại quan sát đầu tiên của bạn.",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "Thêm Quan sát"
+    "message": "Thêm Quan sát",
+    "description": "Title of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.loading": {
-    "description": "message shown whilst observations are loading",
-    "message": "Đang tải... việc này có thể càn một chút thời gian sau khi đồng bộ hóa với thiết bị mới"
+    "message": "Đang tải... việc này có thể càn một chút thời gian sau khi đồng bộ hóa với thiết bị mới",
+    "description": "message shown whilst observations are loading"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
     "message": "Open Settings"
@@ -629,8 +626,8 @@
     "message": "Open Settings"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Có điều gì đang diễn ra ở đây?"
+    "message": "Có điều gì đang diễn ra ở đây?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.Security.obscurePasscodeDescriptionActivated": {
     "message": "Bảo vệ thiế bị của bạn khỏi bị tịch thu"
@@ -786,8 +783,8 @@
     "message": "Ngừng kết nối"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Tìm kiếm…"
+    "message": "Tìm kiếm…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Thay đổi"

@@ -1,18 +1,18 @@
 {
   "AppContainer.EditHeader.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "Tiếp tục chỉnh sửa"
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "Hủy bỏ thay đổi"
   },
   "AppContainer.EditHeader.discardChangesDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes?"
+    "message": "Hủy bỏ thay đổi?"
   },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -23,10 +23,10 @@
   },
   "AppContainer.EditHeader.discardTitle": {
     "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Discard observation?"
+    "message": "Hủy bỏ quan sát?"
   },
   "ExportSuccess.done": {
-    "message": "Done"
+    "message": "Hoàn thành"
   },
   "ExportSuccess.obs": {
     "message": "<bold>All observations</bold> have been downloaded to your device."
@@ -35,19 +35,19 @@
     "message": "<bold>All observations with media</bold> have been downloaded to your device."
   },
   "ExportSuccess.title": {
-    "message": "Success!"
+    "message": "Thành công!"
   },
   "ExportSuccess.tracks": {
     "message": "<bold>Tracks</bold> have been downloaded to your device."
   },
   "MapManagement.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "Quay trở lại"
   },
   "Modal.GPSDisable.button": {
-    "message": "Enable GPS"
+    "message": "Enable"
   },
   "Modal.GPSDisable.description": {
-    "message": "GPS and location needed to record tracks."
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Disabled"
@@ -56,7 +56,7 @@
     "message": "Start Tracks"
   },
   "Modal.GPSEnable.button.loading": {
-    "message": "Loading…"
+    "message": "Đang tải…"
   },
   "Modal.GPSEnable.button.stop": {
     "message": "Stop Tracks"
@@ -65,7 +65,7 @@
     "message": "CoMapeo Settings"
   },
   "Navigation.Menu.bgMap": {
-    "message": "Background Map"
+    "message": "Background Maps"
   },
   "Navigation.Menu.collaborate": {
     "message": "Collaborate"
@@ -105,18 +105,18 @@
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "Tiếp tục chỉnh sửa"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "Hủy bỏ thay đổi"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
   },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes?"
+    "message": "Hủy bỏ thay đổi?"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
@@ -203,10 +203,10 @@
     "message": "All project devices can sync with this Archive, sharing data over the internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
-    "message": "Close"
+    "message": "Đóng"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
-    "message": "Close"
+    "message": "Đóng"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
     "message": "Device Names"
@@ -228,7 +228,7 @@
   },
   "SaveTrack.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "Tiếp tục chỉnh sửa"
   },
   "SaveTrack.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling track edits",
@@ -278,19 +278,19 @@
     "message": "Coordinator Tools"
   },
   "Screens.ProjectSettings.update": {
-    "message": "Update"
+    "message": "Cập nhật"
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Update Set"
   },
   "Screens.ProjectSettings.view": {
-    "message": "View"
+    "message": "Xem"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "View Details"
   },
   "Screens.Settings.AppSettings.Drawer.security": {
-    "message": "Security"
+    "message": "Bảo mật"
   },
   "Screens.Settings.AppSettings.aboutCoMapeo": {
     "message": "About CoMapeo"
@@ -302,7 +302,7 @@
     "message": "UTM,Lat/Lon,DMS"
   },
   "Screens.Settings.AppSettings.deviceName": {
-    "message": "Device Name"
+    "message": "Tên thiết bị"
   },
   "Screens.Settings.AppSettings.earlyAccess": {
     "message": "Early Access Mode"
@@ -327,7 +327,7 @@
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
-    "message": "Cancel"
+    "message": "Hủy"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
     "description": "Explanation for consequences of removing archive server.",
@@ -343,19 +343,19 @@
   },
   "SharedComponents.ActionButtons.cancel": {
     "description": "Button to cancel delete of observation",
-    "message": "Cancel"
+    "message": "Hủy"
   },
   "SharedComponents.ActionButtons.confirm": {
     "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
+    "message": "Có, xóa"
   },
   "SharedComponents.ActionButtons.delete": {
     "description": "Button to delete an observation",
-    "message": "Delete"
+    "message": "Xóa"
   },
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "Chia sẻ"
   },
   "Storage.MapBanner.title": {
     "message": "Your device has low storage."
@@ -392,15 +392,15 @@
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "Tiếp tục chỉnh sửa"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Discard changes?"
+    "message": "Hủy bỏ thay đổi?"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard changes"
+    "message": "Hủy bỏ thay đổi"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -409,7 +409,7 @@
     "message": "km"
   },
   "allProjects.close": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "allProjects.newCollab": {
     "message": "New Collaboration"
@@ -454,7 +454,7 @@
     "message": "Project Description"
   },
   "screen.EditProjectDetails.projectName": {
-    "message": "Project Name"
+    "message": "Tên dự án"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
@@ -476,9 +476,6 @@
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Select Device to Invite"
-  },
-  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "Select Device"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "As a Coordinator this device can invite and remove users, and manage project details."
@@ -506,11 +503,11 @@
   },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
-    "message": "Android build number"
+    "message": "Android GD2I"
   },
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
-    "message": "Android version"
+    "message": "Phiên bản Android"
   },
   "screens.AboutSettings.comapeoWebsiteLabel": {
     "message": "CoMapeo Website"
@@ -524,7 +521,11 @@
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
-    "message": "Phone model"
+    "message": "Dòng điện thoại"
+  },
+  "screens.AboutSettings.releaseName": {
+    "description": "The CoMapeo chosen release name for the version of the app",
+    "message": "Preview"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -539,23 +540,23 @@
   },
   "screens.AboutSettings.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Unknown"
+    "message": "Không xác định"
   },
   "screens.AddPhoto.cancel": {
-    "message": "Cancel"
+    "message": "Hủy"
   },
   "screens.AppPasscode": {
-    "message": "App Passcode"
+    "message": "Mật khẩu Ứng dụng"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
-    "message": "Cancel"
+    "message": "Hủy"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
     "message": "Passcode: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
-    "message": "Save App Passcode"
+    "message": "Lưu mật khẩu ứng dụng"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
     "message": "Make sure to note your passcode in a secure location before saving."
@@ -564,34 +565,34 @@
     "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
-    "message": "Please Enter Passcode"
+    "message": "Vui lòng nhập mật khẩu"
   },
   "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
-    "message": "Enter Passcode"
+    "message": "Nhập mật khẩu"
   },
   "screens.AppPasscode.InputPasscodeScreen.cancel": {
-    "message": "Cancel"
+    "message": "Hủy"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
-    "message": "Re-enter Passcode"
+    "message": "Nhập lại mật khẩu"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
-    "message": "Set App Passcode"
+    "message": "Thiết lập mật khauar ứng dụng"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
-    "message": "Next"
+    "message": "Tiếp theo"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
-    "message": "Password must be 5 numbers"
+    "message": "Mật khẩu phải có 5 số"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
-    "message": "Cannot be used as a Passcode"
+    "message": "Không thể sử dụng làm mật khẩu"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
-    "message": "Password does not match"
+    "message": "Mật khẩu không khớp"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
-    "message": "Incorrect Passcode"
+    "message": "Mật khẩu không đúng"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
     "message": "This passcode will be required to open the CoMapeo App"
@@ -603,10 +604,10 @@
     "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
-    "message": "Continue"
+    "message": "Tiếp tục"
   },
   "screens.AppPasscode.NewPasscode.Splash.title": {
-    "message": "What is App Passcode?"
+    "message": "Mật khẩu Ứng dụng là gì?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app. You can define your own 5-digit passcode by turning on the feature below."
@@ -615,28 +616,28 @@
     "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
-    "message": "Cancel"
+    "message": "Hủy"
   },
   "screens.AppPasscode.TurnOffPasscode.changePasscode": {
-    "message": "Change App Passcode"
+    "message": "Đổi mật khẩu ứng dụng"
   },
   "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
-    "message": "You are currently using App Passcode. See below to stop using or change your passcode."
+    "message": "Bạn đang sử dụng Mật khẩu ứng dụng. Xem bên dưới để ngừng sử dụng hoặc thay đổi mật khẩu của bạn."
   },
   "screens.AppPasscode.TurnOffPasscode.description": {
     "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app."
   },
   "screens.AppPasscode.TurnOffPasscode.title": {
-    "message": "App Passcode"
+    "message": "Mật khẩu Ứng dụng"
   },
   "screens.AppPasscode.TurnOffPasscode.turnOff": {
-    "message": "Turn Off"
+    "message": "Tắt"
   },
   "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
-    "message": "Turn Off App Passcode?"
+    "message": "Tắt mật khẩu ứng dụng?"
   },
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
-    "message": "Use App Passcode"
+    "message": "Sử dụng mật khẩu ứng dụng"
   },
   "screens.AppUsagePrompt.countIn": {
     "message": "Yes, count me in"
@@ -660,7 +661,7 @@
     "message": "Turn off at any time."
   },
   "screens.AppUsageSharingSuccess.done": {
-    "message": "Done"
+    "message": "Hoàn thành"
   },
   "screens.AppUsageSharingSuccess.nowSharing": {
     "message": "is now sharing how you use CoMapeo with Awana Digital."
@@ -669,13 +670,13 @@
     "message": "Change this anytime by navigating to Data & Privacy in the Menu."
   },
   "screens.AppUsageSharingSuccess.success": {
-    "message": "Success!"
+    "message": "Thành công!"
   },
   "screens.AudioAttachmentPlayback.navTitle": {
     "message": "Audio Recording"
   },
   "screens.AudioAttachmentPlayback.share": {
-    "message": "Share"
+    "message": "Chia sẻ"
   },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for granting the audio permission",
@@ -701,7 +702,7 @@
     "message": "Back to Editing"
   },
   "screens.AudioPlaybackNew.delete": {
-    "message": "Delete"
+    "message": "Xóa"
   },
   "screens.AudioPlaybackNew.recordingSaved": {
     "message": "Recording Saved!"
@@ -728,7 +729,7 @@
     "message": "Coordinator"
   },
   "screens.CollaboratorInfo.leaveProject": {
-    "message": "Leave Project"
+    "message": "Rời khỏi dự án"
   },
   "screens.CollaboratorInfo.navTitle": {
     "message": "Collaborator Info"
@@ -743,29 +744,29 @@
     "message": "This Device"
   },
   "screens.ConfirmDeletePhoto.cancel": {
-    "message": "Cancel"
+    "message": "Hủy"
   },
   "screens.ConfirmDeletePhoto.deletePhoto": {
     "message": "Delete Photo"
   },
   "screens.ConfirmDeletePhoto.title": {
-    "message": "Delete this photo?"
+    "message": "Xóa ảnh này?"
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
-    "message": "Decimal Degrees (DD)"
+    "message": "Độ thập phân (DD)"
   },
   "screens.CoordinateFormat.dms": {
     "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "Độ/Phút/Giây (DMS)"
   },
   "screens.CoordinateFormat.title": {
     "description": "Title coordinate format screen",
-    "message": "Coordinate Format"
+    "message": "Định dạng tọa độ"
   },
   "screens.CoordinateFormat.utm": {
     "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "Hệ tọa độ vuông góc (UTM)"
   },
   "screens.DataAndPrivacy.appUsageId": {
     "message": "ID numbers are scrambled randomly and changed every month."
@@ -816,7 +817,7 @@
     "message": "Easily manage and control sharing and collaboration."
   },
   "screens.DataPrivacy.next": {
-    "message": "Next"
+    "message": "Tiếp theo"
   },
   "screens.DataPrivacy.stays": {
     "message": "Your data stays on your devices—fully encrypted and in your control."
@@ -831,13 +832,13 @@
     "message": "{deviceName} is ready!"
   },
   "screens.DeviceNaming.Success.joinProject": {
-    "message": "Join a Project"
+    "message": "Tham gia một dự án"
   },
   "screens.DeviceNaming.Success.mapOnYourOwn": {
     "message": "Map On Your Own"
   },
   "screens.DeviceNaming.Success.success": {
-    "message": "Success!"
+    "message": "Thành công!"
   },
   "screens.DeviceNaming.description": {
     "message": "Distinct names help collaborators using CoMapeo to recognize you."
@@ -846,10 +847,10 @@
     "message": "Name Your Device"
   },
   "screens.DeviceNaming.placeholder": {
-    "message": "Device Name"
+    "message": "Tên thiết bị"
   },
   "screens.DeviceNaming.save": {
-    "message": "Save"
+    "message": "Print"
   },
   "screens.EarlyAccess.feedbackLink": {
     "message": "Share it here"
@@ -873,7 +874,7 @@
     "message": "Use Early Access Features"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "screens.EarlyAccessTurnedOff.desc": {
     "message": "Data from Early Access will be hidden after switching off, but is still saved. Switch back anytime to see it."
@@ -882,16 +883,16 @@
     "message": "Early Access Data"
   },
   "screens.EnterPassword.enterPass": {
-    "message": "Enter your passcode"
+    "message": "Nhập mật khẩu"
   },
   "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect Passcode"
+    "message": "Mật khẩu không đúng, vui lòng thử lại"
   },
   "screens.Exchange.WifiCard.noWifi": {
     "message": "No Wi-Fi"
   },
   "screens.ExchangeSettingsBottomSheet.close": {
-    "message": "Close"
+    "message": "Đóng"
   },
   "screens.ExchangeSettingsBottomSheet.everythingDesc": {
     "message": "Full size photos and audio. Uses more storage."
@@ -906,7 +907,7 @@
     "message": "Exchange Previews Only"
   },
   "screens.ExchangeSettingsBottomSheet.save": {
-    "message": "Save"
+    "message": "Print"
   },
   "screens.ExchangeSettingsCard.changeSettings": {
     "message": "Change Settings"
@@ -918,7 +919,7 @@
     "message": "Get started in two simple ways:"
   },
   "screens.ExchangeSoloScreen.goBack": {
-    "message": "Go Back"
+    "message": "Quay trở lại"
   },
   "screens.ExchangeSoloScreen.inviteCollaborators": {
     "message": "Invite collaborators to your project from the main menu"
@@ -945,10 +946,10 @@
     "message": "Text only as a GeoJSON file"
   },
   "screens.ExportObservations.close": {
-    "message": "Close"
+    "message": "Đóng"
   },
   "screens.ExportObservations.download": {
-    "message": "Download"
+    "message": "Tải xuống"
   },
   "screens.ExportObservations.errorMessage": {
     "message": "Choose an option"
@@ -987,7 +988,7 @@
     "message": "Invite Canceled"
   },
   "screens.InviteCancelled.close": {
-    "message": "Close"
+    "message": "Đóng"
   },
   "screens.InviteCancelled.projectInviteCanceled": {
     "message": "Your invitation to {projectName} has been canceled."
@@ -996,7 +997,7 @@
     "message": "coordinator"
   },
   "screens.InviteReceived.declineInvite": {
-    "message": "Decline Invite"
+    "message": "Từ chối lời mời"
   },
   "screens.InviteReceived.invitedToJoin": {
     "message": "You've been invited to..."
@@ -1013,11 +1014,14 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Project statistics are being shared"
   },
-  "screens.InviteSuccess.done": {
-    "message": "Done"
+  "screens.InviteSuccess.goToMap": {
+    "message": "Đến Bản đồ"
+  },
+  "screens.InviteSuccess.goToSync": {
+    "message": "Go To Sync"
   },
   "screens.InviteSuccess.success": {
-    "message": "Success"
+    "message": "Thành công"
   },
   "screens.InviteSuccess.youHaveJoined": {
     "message": "You have joined {projectName}"
@@ -1031,43 +1035,16 @@
     "message": "Language"
   },
   "screens.LeaveProject.cancel": {
-    "message": "Cancel"
+    "message": "Hủy"
   },
-  "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
-    "message": "Device will no longer be able to view, contribute to, or adjust this project."
-  },
-  "screens.LeaveProject.leaveProjectDescriptionParticipant": {
-    "message": "Device will no longer be able to view or contribute to this project."
+  "screens.LeaveProject.leaveProjectDescription": {
+    "message": "This device will no longer view or contribute to this project"
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "Leave {projectName}?"
   },
   "screens.LeaveProject.yesLeave": {
     "message": "Yes, Leave"
-  },
-  "screens.LeaveProjectWarning.cancel": {
-    "message": "Cancel"
-  },
-  "screens.LeaveProjectWarning.continueButton": {
-    "message": "Continue"
-  },
-  "screens.LeaveProjectWarning.exportRecommendation": {
-    "message": "Before leaving, export any important data."
-  },
-  "screens.LeaveProjectWarning.inviteRecommendation": {
-    "message": "To avoid this, invite a new device as a coordinator."
-  },
-  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
-    "message": "If this device leaves, then no other device can add or remove devices, adjust project info, or update the categories set."
-  },
-  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
-    "message": "Device is last coordinator."
-  },
-  "screens.LeaveProjectWarning.lastDeviceDescription": {
-    "message": "If this device leaves, then all data on this project will be lost."
-  },
-  "screens.LeaveProjectWarning.lastDeviceTitle": {
-    "message": "Device is last device."
   },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Open {deviceName}"
@@ -1077,129 +1054,129 @@
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
-    "message": "Details"
+    "message": "Chi tiết"
   },
   "screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",
-    "message": "Current GPS Location"
+    "message": "Vị trí GPS hiện tại"
   },
   "screens.LocationInfoScreen.lastUpdate": {
     "description": "Section title for time of last GPS update",
-    "message": "Last update"
+    "message": "Lần cập nhật gần nhất"
   },
   "screens.LocationInfoScreen.locationDD": {
     "description": "Section title for DD coordinates",
-    "message": "Coordinates Decimal Degrees"
+    "message": "Tọa độ Độ thập phân"
   },
   "screens.LocationInfoScreen.locationDMS": {
     "description": "Section title for DMS coordinates",
-    "message": "Coordinates DMS"
+    "message": "Tọa độ DMS"
   },
   "screens.LocationInfoScreen.locationSensors": {
     "description": "Heading for section about location sensor status",
-    "message": "Sensor Status"
+    "message": "Trạng thái cảm biến"
   },
   "screens.LocationInfoScreen.locationUTM": {
     "description": "Section title for UTM coordinates",
-    "message": "Coordinates UTM"
+    "message": "Tọa độ UTM"
   },
   "screens.LocationInfoScreen.no": {
     "description": "if a location sensor is active yes/no",
-    "message": "No"
+    "message": "Không"
   },
   "screens.LocationInfoScreen.yes": {
     "description": "if a location sensor is active yes/no",
-    "message": "Yes"
+    "message": "Có"
   },
   "screens.ManualGpsScreen.DdForm.east": {
-    "message": "East"
+    "message": "Đông"
   },
   "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
-    "message": "Invalid coordinates"
+    "message": "Tọa độ không hợp lệ"
   },
   "screens.ManualGpsScreen.DdForm.latInputLabel": {
-    "message": "Latitude value"
+    "message": "Giá trị vĩ độ"
   },
   "screens.ManualGpsScreen.DdForm.latitude": {
-    "message": "Latitude"
+    "message": "Vĩ độ"
   },
   "screens.ManualGpsScreen.DdForm.lonInputLabel": {
-    "message": "Longitude value"
+    "message": "Giá trị kinh độ"
   },
   "screens.ManualGpsScreen.DdForm.longitude": {
-    "message": "Longitude"
+    "message": "Kinh độ"
   },
   "screens.ManualGpsScreen.DdForm.north": {
-    "message": "North"
+    "message": "Bắc"
   },
   "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
-    "message": "Select latitude cardinality"
+    "message": "Chọn vĩ độ"
   },
   "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
-    "message": "Select longitude cardinality"
+    "message": "Chọn kinh độ"
   },
   "screens.ManualGpsScreen.DdForm.south": {
-    "message": "South"
+    "message": "Nam"
   },
   "screens.ManualGpsScreen.DdForm.west": {
-    "message": "West"
+    "message": "Tây"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
-    "message": "{field} minutes input"
+    "message": "{field} nhập phút"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
-    "message": "{field} seconds input"
+    "message": "{field} nhập giây"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
-    "message": "Degrees"
+    "message": "Độ"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
-    "message": "{field} degrees input"
+    "message": "{field} nhập độ"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
-    "message": "Direction"
+    "message": "Hướng"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
-    "message": "Minutes"
+    "message": "Phút"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
-    "message": "Seconds"
+    "message": "Giây"
   },
   "screens.ManualGpsScreen.DmsForm.east": {
-    "message": "East"
+    "message": "Đông"
   },
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
-    "message": "Invalid coordinates"
+    "message": "Tọa độ không hợp lệ"
   },
   "screens.ManualGpsScreen.DmsForm.latitude": {
-    "message": "Latitude"
+    "message": "Vĩ độ"
   },
   "screens.ManualGpsScreen.DmsForm.longitude": {
-    "message": "Longitude"
+    "message": "Kinh độ"
   },
   "screens.ManualGpsScreen.DmsForm.north": {
-    "message": "North"
+    "message": "Bắc"
   },
   "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
-    "message": "Select latitude cardinality"
+    "message": "Chọn vĩ độ"
   },
   "screens.ManualGpsScreen.DmsForm.south": {
-    "message": "South"
+    "message": "Nam"
   },
   "screens.ManualGpsScreen.DmsForm.west": {
-    "message": "West"
+    "message": "Tây"
   },
   "screens.ManualGpsScreen.coordinateFormat": {
-    "message": "Coordinate Format"
+    "message": "Định dạng tọa độ"
   },
   "screens.ManualGpsScreen.decimalDegrees": {
-    "message": "Decimal Degrees (DD)"
+    "message": "Độ thập phân (DD)"
   },
   "screens.ManualGpsScreen.degreesMinutesSeconds": {
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "Độ/Phút/Giây (DMS)"
   },
   "screens.ManualGpsScreen.easting": {
-    "message": "East"
+    "message": "Hướng Đông"
   },
   "screens.ManualGpsScreen.eastingSuffix": {
     "message": "mE"
@@ -1208,17 +1185,17 @@
     "message": "Invalid coordinates. Latitude must be between -90 and 90. Longitude must be between -180 and 180"
   },
   "screens.ManualGpsScreen.northing": {
-    "message": "North"
+    "message": "Hướng Bắc"
   },
   "screens.ManualGpsScreen.northingSuffix": {
     "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
-    "message": "Enter coordinates"
+    "message": "Nhập tọa độ"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "Hệ tọa độ vuông góc (UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "Zone Letter"
@@ -1227,13 +1204,13 @@
     "message": "Zone Number"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "Use Location? Tracks location even when closed. Data remains on device only."
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On Location"
+    "message": "Turn On"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Location?"
+    "message": "Use Your Location"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
@@ -1252,57 +1229,57 @@
   },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
-    "message": "Delete"
+    "message": "Xóa"
   },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "No answer"
+    "message": "Không có câu trả lời"
   },
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "Quan sát"
   },
   "screens.Observation.ObservationView.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "Chia sẻ"
   },
   "screens.Observation.TrackList.track": {
     "message": "Track"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
-    "message": "Cancel"
+    "message": "Hủy"
   },
   "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo data sent from *{projectName}*"
+    "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
+    "message": "Có, xóa"
   },
   "screens.Observation.defaultProjectName": {
     "message": "My Project"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Delete observation?"
+    "message": "Xóa quan sát?"
   },
   "screens.Observation.description": {
-    "message": "Description:"
+    "message": "Mô tả:"
   },
   "screens.Observation.details": {
-    "message": "Details:"
+    "message": "Chi tiết:"
   },
   "screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "Quan sát"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "Quan sát"
   },
   "screens.Observation.location": {
-    "message": "Location:"
+    "message": "Vị trí:"
   },
   "screens.Observation.precision": {
     "message": "Precision:"
@@ -1323,65 +1300,65 @@
   },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "Observation"
+    "message": "Quan sát"
   },
   "screens.ObservationCategoryChooser.title": {
     "message": "Choose a category"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
     "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Continue waiting"
+    "message": "Tiếp tục chờ"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
     "description": "Button to manually enter GPS coordinates",
-    "message": "Manual Coords"
+    "message": "Tọa độ thủ công"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually"
+    "message": "Quan sát này không có vị trí. Bạn có thể tiếp tục chờ tín hiệu GPS, lưu quan sát mà không có vị trí, hoặc nhập tọa độ thủ công"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
     "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "No GPS signal"
+    "message": "Không có tín hiệu GPS"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
     "description": "Button to save regardless of GPS state",
-    "message": "Save"
+    "message": "Print"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
     "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
+    "message": "Độ chính xác của GPS thấp. Bạn có thể tiếp tục đợi để có độ chính xác cao hơn, lưu quan sát với độ chính xác thấp, hoặc nhập tọa độ thủ công"
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
     "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Weak GPS signal"
+    "message": "Tín hiệu GPS yếu"
   },
   "screens.ObservationCreate.changePreset": {
-    "message": "Change"
+    "message": "Thay đổi"
   },
   "screens.ObservationCreate.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "Có điều gì đang diễn ra ở đây?"
   },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "Quan sát mới"
   },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "Quan sát"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
-    "message": "Done"
+    "message": "Hoàn thành"
   },
   "screens.ObservationDetails.nextQuestion": {
     "description": "Button text to navigate to next question",
-    "message": "Next"
+    "message": "Tiếp theo"
   },
   "screens.ObservationDetails.title": {
     "description": "Title of observation details screen showing question number and total",
-    "message": "Question {current} of {total}"
+    "message": "Câu hỏi {current} của {total}"
   },
   "screens.ObservationEdit.ObservationEditView.audioButton": {
     "description": "Button label for adding audio",
@@ -1389,30 +1366,30 @@
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "Có điều gì đang diễn ra ở đây?"
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
-    "message": "Details"
+    "message": "Chi tiết"
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
     "message": "Photo"
   },
   "screens.ObservationEdit.changePreset": {
-    "message": "Change"
+    "message": "Thay đổi"
   },
   "screens.ObservationEdit.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "Có điều gì đang diễn ra ở đây?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for edit observation screen",
-    "message": "Edit Observation"
+    "description": "screen title for new observation screen",
+    "message": "Chỉnh sửa quan sát"
   },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "Quan sát"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Track"
@@ -1422,7 +1399,7 @@
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
-    "message": "Observations"
+    "message": "Các quan sát"
   },
   "screens.ObservationMetadataVerified.accuracy": {
     "message": "Accuracy"
@@ -1446,16 +1423,16 @@
     "message": "How we validate"
   },
   "screens.ObservationMetadataVerified.latitude": {
-    "message": "Latitude"
+    "message": "Vĩ độ"
   },
   "screens.ObservationMetadataVerified.location": {
-    "message": "Location"
+    "message": "Vị trí"
   },
   "screens.ObservationMetadataVerified.locationManuallyEntered": {
     "message": "Location was manually entered"
   },
   "screens.ObservationMetadataVerified.longitude": {
-    "message": "Longitude"
+    "message": "Kinh độ"
   },
   "screens.ObservationMetadataVerified.manuallyEntered": {
     "message": "Manually entered."
@@ -1477,15 +1454,15 @@
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "Go To Map"
+    "message": "Đến Bản đồ"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
     "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Start from map or camera view to record your first observation."
+    "message": "Bắt đầu từ chế độ xem bản đồ hoặc máy ảnh để ghi lại quan sát đầu tiên của bạn."
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "Add Observations"
+    "message": "Thêm Quan sát"
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
@@ -1493,22 +1470,22 @@
   },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
-    "message": "Loading… this can take a while after synchronizing with a new device"
+    "message": "Đang tải... việc này có thể càn một chút thời gian sau khi đồng bộ hóa với thiết bị mới"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "screens.Onboarding.JoinProjectIntro.description": {
     "message": "Coordinate with your team to receive a project invitation."
   },
   "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Join a Project"
+    "message": "Tham gia một dự án"
   },
   "screens.Onboarding.MapOnYourOwnIntro.addAudio": {
     "message": "Add audio recordings."
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "screens.Onboarding.MapOnYourOwnIntro.description": {
     "message": "Explore CoMapeo—invite collaborators anytime."
@@ -1692,7 +1669,7 @@
     "message": "Project stats are shared with Awana Digital"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "screens.ProjectStatisticsTurnedOff.desc": {
     "message": "This change will take effect next time you Exchange with team members."
@@ -1700,18 +1677,9 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Project Statistics | OFF"
   },
-  "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Close"
-  },
-  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
-    "message": "Reason: {reason}"
-  },
-  "screens.RemovedFromProjectBottomSheet.title": {
-    "message": "THIS DEVICE REMOVED FROM…"
-  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "Có điều gì đang diễn ra ở đây?"
   },
   "screens.SaveTrack.TrackEditView.title": {
     "description": "Title for new track screen",
@@ -1725,31 +1693,31 @@
     "message": "To use, turn on App Passcode"
   },
   "screens.Security.obscurePasscodeDescriptionActivated": {
-    "message": "Protect your device against seizure"
+    "message": "Bảo vệ thiế bị của bạn khỏi bị tịch thu"
   },
   "screens.Security.obscurePasscodeHeader": {
     "message": "Obscure Passcode"
   },
   "screens.Security.passDesriptionPassNotSet": {
-    "message": "Passcode not set"
+    "message": "Mật khẩu chưa được đặt"
   },
   "screens.Security.passDesriptionPassSet": {
-    "message": "Passcode is set"
+    "message": "Mật khẩu đã được đặt"
   },
   "screens.Security.passcodeHeader": {
-    "message": "App Passcode"
+    "message": "Mật khẩu Ứng dụng"
   },
   "screens.Security.securitySubheader": {
-    "message": "Device Security"
+    "message": "Bảo mật thiết bị"
   },
   "screens.Security.title": {
-    "message": "Security"
+    "message": "Bảo mật"
   },
   "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel": {
     "message": "Your Device Name"
   },
   "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title": {
-    "message": "Device Name"
+    "message": "Tên thiết bị"
   },
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.deviceNameLabel": {
     "message": "Edit Device Name"
@@ -1761,22 +1729,22 @@
     "message": "Discard Changes"
   },
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
-    "message": "Discard changes?"
+    "message": "Hủy bỏ thay đổi?"
   },
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
-    "message": "Device Name"
+    "message": "Tên thiết bị"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Invite Another Device"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
-    "message": "Done"
+    "message": "Add Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Accepted!"
+    "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is now part of your project."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
+    "message": "View Team"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Review Invitation"
@@ -1803,7 +1771,7 @@
     "message": "Coordinators"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
-    "message": "Invite Device"
+    "message": "Mời thiết bị tham gia"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Can take and share observations but not manage users or project details."
@@ -1824,10 +1792,10 @@
     "message": "Invite Devices"
   },
   "screens.Settings.Collaborate.joinProject": {
-    "message": "Join a Project"
+    "message": "Tham gia một dự án"
   },
   "screens.Settings.Collaborate.startNewProject": {
-    "message": "Start New Project"
+    "message": "Create a Project"
   },
   "screens.Settings.Collaborate.title": {
     "message": "Collaborate"
@@ -1842,28 +1810,28 @@
     "message": "Successfully imported categories:"
   },
   "screens.Settings.Config.name": {
-    "message": "Category Set:"
+    "message": "Config Name:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Categories"
+    "message": "Configuration"
   },
   "screens.Settings.Config.okButton": {
     "message": "OK"
   },
   "screens.Settings.Config.projectName": {
-    "message": "Project Name:"
+    "message": "Tên dự án:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Start New Project"
+    "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Name My Project"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
-    "message": "Done"
+    "message": "Hoàn thành"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
-    "message": "Invite a Device"
+    "message": "Invite Device"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
     "message": "{projectName} is now ready for you to invite devices."
@@ -1872,13 +1840,13 @@
     "message": "Project statistics are being shared with Awana Digital"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
-    "message": "Success!"
+    "message": "Thành công!"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create"
+    "message": "Create Project"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Project Name"
+    "message": "Enter a name for the Project"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Using an existing project name does not make them the same project."
@@ -1893,7 +1861,7 @@
     "message": "Request invites to join existing projects."
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
-    "message": "Save"
+    "message": "Print"
   },
   "screens.Settings.JoinAProject.description": {
     "message": "Ask a project coordinator to receive a project invitation."
@@ -1902,22 +1870,19 @@
     "message": "Coordinate with your team."
   },
   "screens.Settings.JoinAProject.title": {
-    "message": "Join a Project"
+    "message": "Tham gia một dự án"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "Accepted file types are .smp"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
-    "message": "Added on {date}"
+  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
+    "message": "Choose File"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "This cannot be undone."
   },
-  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
-    "message": "Choose File"
-  },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
-    "message": "Close"
+    "message": "Đóng"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
     "message": "You will see this map when you are offline, but you will not see a map outside the area defined in your custom map."
@@ -1935,34 +1900,37 @@
     "message": "Delete Custom Map?"
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
-    "message": "Delete Map"
+    "message": "Xoá bản đồ"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Custom background maps let you view maps offline."
+    "message": "Adding a custom map will enable you to see a map when you are offline."
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Note: Custom background maps are not shared with collaborators."
+    "message": "Your custom map is not shared with other devices in your project."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "Unable to import the file. Please go back and try again."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
-    "message": "Import Error"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
-    "message": "{size} MB"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
-    "message": "Remove Map"
+    "message": "Lỗi nhập"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Remove Map File"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Map"
+    "message": "Background Maps"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
-    "message": "Send Map"
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
+    "message": "Date Added"
+  },
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
+    "message": "Map Name"
+  },
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
+    "message": "Gỡ bỏ bản đồ"
+  },
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
+    "message": "{value} MB"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invite devices to a new project with all your observations."
@@ -1971,7 +1939,7 @@
     "message": "Start a new project using my observations."
   },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
-    "message": "Next"
+    "message": "Tiếp theo"
   },
   "screens.Settings.NameDefaultProjectIntro.title": {
     "message": "Invite Devices"
@@ -1983,16 +1951,16 @@
     "message": "Start a new project with no observations."
   },
   "screens.Settings.StartNewProjectIntro.nextButton": {
-    "message": "Next"
+    "message": "Tiếp theo"
   },
   "screens.Settings.StartNewProjectIntro.title": {
-    "message": "Start New Project"
+    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitation Declined"
   },
   "screens.Settings.YourTeam.close": {
-    "message": "Close"
+    "message": "Đóng"
   },
   "screens.Settings.YourTeam.deviceHasJoined": {
     "message": "Device Has Joined {projectName}"
@@ -2025,25 +1993,25 @@
     "message": "Yes, Share Stats"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "screens.Sync.NoWifiDisplay.description": {
-    "message": "Check device’s settings and connectivity."
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
   },
   "screens.Sync.NoWifiDisplay.title": {
-    "message": "No Wi-Fi."
+    "message": "No WiFi"
   },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "You're all caught up!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "Up to date!"
+    "message": "All data synced"
   },
   "screens.Sync.ProjectSyncDisplay.close": {
-    "message": "Close"
+    "message": "Đóng"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found."
+    "message": "Devices found"
   },
   "screens.Sync.ProjectSyncDisplay.exchangeAction": {
     "message": "Change Settings"
@@ -2085,13 +2053,13 @@
     "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete!"
+    "message": "Complete! You're up to date"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Exchanging..."
+    "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices..."
+    "message": "Waiting for devices"
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
@@ -2103,10 +2071,10 @@
     "message": "Remote Archive connected"
   },
   "screens.Track.ObservationList.observation": {
-    "message": "Observation"
+    "message": "Quan sát"
   },
   "screens.Track.ObservationList.observations": {
-    "message": "Observations"
+    "message": "Các quan sát"
   },
   "screens.Track.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete a track",
@@ -2131,7 +2099,7 @@
     "message": "Track"
   },
   "screens.TrackRecordingActive.cancel": {
-    "message": "Cancel"
+    "message": "Hủy"
   },
   "screens.TrackRecordingActive.recordingTracks": {
     "message": "Recording Tracks!"
@@ -2140,7 +2108,7 @@
     "message": "Stop Tracks"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Tracks is recording. Stop Tracks to continue."
+    "message": "You’re currently recording a track. To join project, stop recording"
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Device removed."
@@ -2168,20 +2136,20 @@
     "message": "Show Options"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
-    "message": "Disconnected"
+    "message": "Ngừng kết nối"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
     "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+    "message": "Tìm kiếm…"
   },
   "sharedComponents.Editor.PresetView.Change": {
-    "message": "Change"
+    "message": "Thay đổi"
   },
   "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "Quay trở lại"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
@@ -2193,7 +2161,7 @@
     "message": "Participant"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Go Back"
+    "message": "Quay trở lại"
   },
   "soloProject.inviteCollaborators.introText": {
     "message": "Share observations with others using CoMapeo."
@@ -2214,7 +2182,7 @@
     "message": "Invite Collaborators"
   },
   "soloProject.startNewProject.goBack": {
-    "message": "Go Back"
+    "message": "Quay trở lại"
   },
   "soloProject.startNewProject.introText": {
     "message": "Secure and private way to exchange with collaborators."
@@ -2233,5 +2201,11 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Each project is unique and separate."
+  },
+  "useProjectRoleAndDetails.coordinator": {
+    "message": "Coordinator"
+  },
+  "useProjectRoleAndDetails.participant": {
+    "message": "Participant"
   }
 }

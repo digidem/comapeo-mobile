@@ -1,18 +1,18 @@
 {
   "AppContainer.EditHeader.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "निरन्तर सम्पादन"
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "परिवर्तन रद्द"
   },
   "AppContainer.EditHeader.discardChangesDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes?"
+    "message": "परिवर्तन रद्द?"
   },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -23,10 +23,10 @@
   },
   "AppContainer.EditHeader.discardTitle": {
     "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Discard observation?"
+    "message": "अवलाेकन हटाउने?"
   },
   "ExportSuccess.done": {
-    "message": "Done"
+    "message": "भयाे"
   },
   "ExportSuccess.obs": {
     "message": "<bold>All observations</bold> have been downloaded to your device."
@@ -35,19 +35,19 @@
     "message": "<bold>All observations with media</bold> have been downloaded to your device."
   },
   "ExportSuccess.title": {
-    "message": "Success!"
+    "message": "सफल!"
   },
   "ExportSuccess.tracks": {
     "message": "<bold>Tracks</bold> have been downloaded to your device."
   },
   "MapManagement.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "पछाडी जानुहाेस"
   },
   "Modal.GPSDisable.button": {
-    "message": "Enable GPS"
+    "message": "Enable"
   },
   "Modal.GPSDisable.description": {
-    "message": "GPS and location needed to record tracks."
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Disabled"
@@ -65,7 +65,7 @@
     "message": "CoMapeo Settings"
   },
   "Navigation.Menu.bgMap": {
-    "message": "Background Map"
+    "message": "Background Maps"
   },
   "Navigation.Menu.collaborate": {
     "message": "Collaborate"
@@ -105,18 +105,18 @@
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "निरन्तर सम्पादन"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "परिवर्तन रद्द"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
   },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes?"
+    "message": "परिवर्तन रद्द?"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
@@ -228,7 +228,7 @@
   },
   "SaveTrack.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "निरन्तर सम्पादन"
   },
   "SaveTrack.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling track edits",
@@ -314,7 +314,7 @@
     "message": "Early Access is ON"
   },
   "Screens.Settings.AppSettings.language": {
-    "message": "Language"
+    "message": "भाषा"
   },
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"
@@ -327,7 +327,7 @@
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
     "description": "Explanation for consequences of removing archive server.",
@@ -343,19 +343,19 @@
   },
   "SharedComponents.ActionButtons.cancel": {
     "description": "Button to cancel delete of observation",
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "SharedComponents.ActionButtons.confirm": {
     "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
+    "message": "हुन्छ, मेट्नु"
   },
   "SharedComponents.ActionButtons.delete": {
     "description": "Button to delete an observation",
-    "message": "Delete"
+    "message": "मेटाउने"
   },
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "साझा गरियो"
   },
   "Storage.MapBanner.title": {
     "message": "Your device has low storage."
@@ -392,15 +392,15 @@
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "निरन्तर सम्पादन"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Discard changes?"
+    "message": "परिवर्तन रद्द?"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard changes"
+    "message": "परिवर्तन रद्द"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -409,7 +409,7 @@
     "message": "km"
   },
   "allProjects.close": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "allProjects.newCollab": {
     "message": "New Collaboration"
@@ -477,9 +477,6 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Select Device to Invite"
   },
-  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "Select Device"
-  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "As a Coordinator this device can invite and remove users, and manage project details."
   },
@@ -506,11 +503,11 @@
   },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
-    "message": "Android build number"
+    "message": "Android build नम्बर"
   },
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
-    "message": "Android version"
+    "message": "Android संस्करण"
   },
   "screens.AboutSettings.comapeoWebsiteLabel": {
     "message": "CoMapeo Website"
@@ -524,7 +521,11 @@
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
-    "message": "Phone model"
+    "message": "फाेन माेडल"
+  },
+  "screens.AboutSettings.releaseName": {
+    "description": "The CoMapeo chosen release name for the version of the app",
+    "message": "Preview"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -539,23 +540,23 @@
   },
   "screens.AboutSettings.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Unknown"
+    "message": "अज्ञात"
   },
   "screens.AddPhoto.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.AppPasscode": {
-    "message": "App Passcode"
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
     "message": "Passcode: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
-    "message": "Save App Passcode"
+    "message": "एपकाे पासकाेड संग्रह गर्नुहाेस"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
     "message": "Make sure to note your passcode in a secure location before saving."
@@ -570,25 +571,25 @@
     "message": "Enter Passcode"
   },
   "screens.AppPasscode.InputPasscodeScreen.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
-    "message": "Re-enter Passcode"
+    "message": "पुनः पासकोड प्रविष्ट गर्नुहोस्"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
-    "message": "Set App Passcode"
+    "message": "एपकाे पासकाेड बनाउनु हाेस"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
-    "message": "Next"
+    "message": "अर्काे"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
-    "message": "Password must be 5 numbers"
+    "message": "पासवर्ड अनिवार्य रूपमा ५ वटा नम्बरकाे हुनु पर्छ"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
-    "message": "Cannot be used as a Passcode"
+    "message": "पासकोडको रूपमा प्रयोग गर्न सकिँदैन"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
-    "message": "Password does not match"
+    "message": "पासवर्ड मिलेन"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
     "message": "Incorrect Passcode"
@@ -603,10 +604,10 @@
     "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
-    "message": "Continue"
+    "message": "जारी राख्ने"
   },
   "screens.AppPasscode.NewPasscode.Splash.title": {
-    "message": "What is App Passcode?"
+    "message": "एपकाे पासकोड के हाे?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app. You can define your own 5-digit passcode by turning on the feature below."
@@ -615,10 +616,10 @@
     "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.AppPasscode.TurnOffPasscode.changePasscode": {
-    "message": "Change App Passcode"
+    "message": "एपकाे पासकोड परिवर्तन गर्नुहोस्"
   },
   "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
     "message": "You are currently using App Passcode. See below to stop using or change your passcode."
@@ -627,16 +628,16 @@
     "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app."
   },
   "screens.AppPasscode.TurnOffPasscode.title": {
-    "message": "App Passcode"
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
   },
   "screens.AppPasscode.TurnOffPasscode.turnOff": {
-    "message": "Turn Off"
+    "message": "बन्द गर्नु"
   },
   "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
-    "message": "Turn Off App Passcode?"
+    "message": "एपकाे पासकाेड बन्द गर्नु?"
   },
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
-    "message": "Use App Passcode"
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
   },
   "screens.AppUsagePrompt.countIn": {
     "message": "Yes, count me in"
@@ -660,7 +661,7 @@
     "message": "Turn off at any time."
   },
   "screens.AppUsageSharingSuccess.done": {
-    "message": "Done"
+    "message": "भयाे"
   },
   "screens.AppUsageSharingSuccess.nowSharing": {
     "message": "is now sharing how you use CoMapeo with Awana Digital."
@@ -669,13 +670,13 @@
     "message": "Change this anytime by navigating to Data & Privacy in the Menu."
   },
   "screens.AppUsageSharingSuccess.success": {
-    "message": "Success!"
+    "message": "सफल!"
   },
   "screens.AudioAttachmentPlayback.navTitle": {
     "message": "Audio Recording"
   },
   "screens.AudioAttachmentPlayback.share": {
-    "message": "Share"
+    "message": "साझा गरियो"
   },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for granting the audio permission",
@@ -701,7 +702,7 @@
     "message": "Back to Editing"
   },
   "screens.AudioPlaybackNew.delete": {
-    "message": "Delete"
+    "message": "मेटाउने"
   },
   "screens.AudioPlaybackNew.recordingSaved": {
     "message": "Recording Saved!"
@@ -743,7 +744,7 @@
     "message": "This Device"
   },
   "screens.ConfirmDeletePhoto.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.ConfirmDeletePhoto.deletePhoto": {
     "message": "Delete Photo"
@@ -816,7 +817,7 @@
     "message": "Easily manage and control sharing and collaboration."
   },
   "screens.DataPrivacy.next": {
-    "message": "Next"
+    "message": "अर्काे"
   },
   "screens.DataPrivacy.stays": {
     "message": "Your data stays on your devices—fully encrypted and in your control."
@@ -837,7 +838,7 @@
     "message": "Map On Your Own"
   },
   "screens.DeviceNaming.Success.success": {
-    "message": "Success!"
+    "message": "सफल!"
   },
   "screens.DeviceNaming.description": {
     "message": "Distinct names help collaborators using CoMapeo to recognize you."
@@ -849,7 +850,7 @@
     "message": "Device Name"
   },
   "screens.DeviceNaming.save": {
-    "message": "Save"
+    "message": "संग्रह"
   },
   "screens.EarlyAccess.feedbackLink": {
     "message": "Share it here"
@@ -873,7 +874,7 @@
     "message": "Use Early Access Features"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "screens.EarlyAccessTurnedOff.desc": {
     "message": "Data from Early Access will be hidden after switching off, but is still saved. Switch back anytime to see it."
@@ -885,7 +886,7 @@
     "message": "Enter your passcode"
   },
   "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect Passcode"
+    "message": "Incorrect passcode, please try again"
   },
   "screens.Exchange.WifiCard.noWifi": {
     "message": "No Wi-Fi"
@@ -906,7 +907,7 @@
     "message": "Exchange Previews Only"
   },
   "screens.ExchangeSettingsBottomSheet.save": {
-    "message": "Save"
+    "message": "संग्रह"
   },
   "screens.ExchangeSettingsCard.changeSettings": {
     "message": "Change Settings"
@@ -918,7 +919,7 @@
     "message": "Get started in two simple ways:"
   },
   "screens.ExchangeSoloScreen.goBack": {
-    "message": "Go Back"
+    "message": "पछाडी जानुहाेस"
   },
   "screens.ExchangeSoloScreen.inviteCollaborators": {
     "message": "Invite collaborators to your project from the main menu"
@@ -1013,11 +1014,14 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Project statistics are being shared"
   },
-  "screens.InviteSuccess.done": {
-    "message": "Done"
+  "screens.InviteSuccess.goToMap": {
+    "message": "नक्सामा जानु हाेला"
+  },
+  "screens.InviteSuccess.goToSync": {
+    "message": "Go To Sync"
   },
   "screens.InviteSuccess.success": {
-    "message": "Success"
+    "message": "सफल"
   },
   "screens.InviteSuccess.youHaveJoined": {
     "message": "You have joined {projectName}"
@@ -1028,46 +1032,19 @@
   },
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
-    "message": "Language"
+    "message": "भाषा"
   },
   "screens.LeaveProject.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
-  "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
-    "message": "Device will no longer be able to view, contribute to, or adjust this project."
-  },
-  "screens.LeaveProject.leaveProjectDescriptionParticipant": {
-    "message": "Device will no longer be able to view or contribute to this project."
+  "screens.LeaveProject.leaveProjectDescription": {
+    "message": "This device will no longer view or contribute to this project"
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "Leave {projectName}?"
   },
   "screens.LeaveProject.yesLeave": {
     "message": "Yes, Leave"
-  },
-  "screens.LeaveProjectWarning.cancel": {
-    "message": "Cancel"
-  },
-  "screens.LeaveProjectWarning.continueButton": {
-    "message": "Continue"
-  },
-  "screens.LeaveProjectWarning.exportRecommendation": {
-    "message": "Before leaving, export any important data."
-  },
-  "screens.LeaveProjectWarning.inviteRecommendation": {
-    "message": "To avoid this, invite a new device as a coordinator."
-  },
-  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
-    "message": "If this device leaves, then no other device can add or remove devices, adjust project info, or update the categories set."
-  },
-  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
-    "message": "Device is last coordinator."
-  },
-  "screens.LeaveProjectWarning.lastDeviceDescription": {
-    "message": "If this device leaves, then all data on this project will be lost."
-  },
-  "screens.LeaveProjectWarning.lastDeviceTitle": {
-    "message": "Device is last device."
   },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Open {deviceName}"
@@ -1077,15 +1054,15 @@
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
-    "message": "Details"
+    "message": "विवरणहरू"
   },
   "screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",
-    "message": "Current GPS Location"
+    "message": "हालकाे GPS ठेगाना"
   },
   "screens.LocationInfoScreen.lastUpdate": {
     "description": "Section title for time of last GPS update",
-    "message": "Last update"
+    "message": "पछिल्लाे अपडेट"
   },
   "screens.LocationInfoScreen.locationDD": {
     "description": "Section title for DD coordinates",
@@ -1097,22 +1074,22 @@
   },
   "screens.LocationInfoScreen.locationSensors": {
     "description": "Heading for section about location sensor status",
-    "message": "Sensor Status"
+    "message": "सेन्सरकाे अवस्था"
   },
   "screens.LocationInfoScreen.locationUTM": {
     "description": "Section title for UTM coordinates",
-    "message": "Coordinates UTM"
+    "message": "UTM निर्देश"
   },
   "screens.LocationInfoScreen.no": {
     "description": "if a location sensor is active yes/no",
-    "message": "No"
+    "message": "हाेइन"
   },
   "screens.LocationInfoScreen.yes": {
     "description": "if a location sensor is active yes/no",
-    "message": "Yes"
+    "message": "हाे"
   },
   "screens.ManualGpsScreen.DdForm.east": {
-    "message": "East"
+    "message": "पुर्व"
   },
   "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
     "message": "Invalid coordinates"
@@ -1130,7 +1107,7 @@
     "message": "Longitude"
   },
   "screens.ManualGpsScreen.DdForm.north": {
-    "message": "North"
+    "message": "उत्तर"
   },
   "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
     "message": "Select latitude cardinality"
@@ -1166,7 +1143,7 @@
     "message": "Seconds"
   },
   "screens.ManualGpsScreen.DmsForm.east": {
-    "message": "East"
+    "message": "पुर्व"
   },
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
     "message": "Invalid coordinates"
@@ -1178,7 +1155,7 @@
     "message": "Longitude"
   },
   "screens.ManualGpsScreen.DmsForm.north": {
-    "message": "North"
+    "message": "उत्तर"
   },
   "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
     "message": "Select latitude cardinality"
@@ -1199,7 +1176,7 @@
     "message": "Degrees/Minutes/Seconds (DMS)"
   },
   "screens.ManualGpsScreen.easting": {
-    "message": "East"
+    "message": "पुर्व"
   },
   "screens.ManualGpsScreen.eastingSuffix": {
     "message": "mE"
@@ -1208,32 +1185,32 @@
     "message": "Invalid coordinates. Latitude must be between -90 and 90. Longitude must be between -180 and 180"
   },
   "screens.ManualGpsScreen.northing": {
-    "message": "North"
+    "message": "उत्तर"
   },
   "screens.ManualGpsScreen.northingSuffix": {
     "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
-    "message": "Enter coordinates"
+    "message": "निर्देश भित्र प्रवेश"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
     "message": "Universal Transverse Mercator (UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
-    "message": "Zone Letter"
+    "message": "क्षेत्र पत्र"
   },
   "screens.ManualGpsScreen.zoneNumber": {
-    "message": "Zone Number"
+    "message": "जाेन नम्बर"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "Use Location? Tracks location even when closed. Data remains on device only."
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On Location"
+    "message": "Turn On"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Location?"
+    "message": "Use Your Location"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
@@ -1252,40 +1229,40 @@
   },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
-    "message": "Delete"
+    "message": "मेटाउने"
   },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "No answer"
+    "message": "उत्तर छैन"
   },
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "अवलाेकन"
   },
   "screens.Observation.ObservationView.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "साझा गरियो"
   },
   "screens.Observation.TrackList.track": {
     "message": "Track"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo data sent from *{projectName}*"
+    "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
+    "message": "हुन्छ, मेट्नु"
   },
   "screens.Observation.defaultProjectName": {
     "message": "My Project"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Delete observation?"
+    "message": "अवलाेकन हटाउने?"
   },
   "screens.Observation.description": {
     "message": "Description:"
@@ -1295,11 +1272,11 @@
   },
   "screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "अवलाेकन"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "अवलाेकन"
   },
   "screens.Observation.location": {
     "message": "Location:"
@@ -1323,65 +1300,65 @@
   },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "Observation"
+    "message": "अवलाेकन"
   },
   "screens.ObservationCategoryChooser.title": {
     "message": "Choose a category"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
     "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Continue waiting"
+    "message": "पर्खाइ निरन्तर"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
     "description": "Button to manually enter GPS coordinates",
-    "message": "Manual Coords"
+    "message": "म्यानुअल काेर्डस्"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually"
+    "message": "याे अवलाेकनकाे लाेकेसन छैन । तपाइले GPS संकेत निरन्तर कुर्न सक्नु हुनेछ, अवलाेकनलाइ लाेकेसन बेगर संग्रह गर्न सक्नुहुन्छ, वा निर्देशलाइ अाफैले राख्नु"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
     "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "No GPS signal"
+    "message": "GPS संकेत छैन"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
     "description": "Button to save regardless of GPS state",
-    "message": "Save"
+    "message": "संग्रह"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
     "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
+    "message": "GPS यथार्थता न्यून छ, दुरूस्त GPS काे लागि कुर्न सक्नु हुन्छ, न्यून GPS यथार्थतामा संग्रह गर्न सक्नु हुन्छ, वा अाफैले निर्देश गर्न सक्नुहुन्छ"
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
     "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Weak GPS signal"
+    "message": "कमजाेर GPS संकेत"
   },
   "screens.ObservationCreate.changePreset": {
-    "message": "Change"
+    "message": "परिवर्तन"
   },
   "screens.ObservationCreate.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "यहाँ के भइ राखेकाे छ?"
   },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "नया अवलाेकन"
   },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "अवलाेकन"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
-    "message": "Done"
+    "message": "भयाे"
   },
   "screens.ObservationDetails.nextQuestion": {
     "description": "Button text to navigate to next question",
-    "message": "Next"
+    "message": "अर्काे"
   },
   "screens.ObservationDetails.title": {
     "description": "Title of observation details screen showing question number and total",
-    "message": "Question {current} of {total}"
+    "message": "प्रश्न {हाल} मा {जम्मा}"
   },
   "screens.ObservationEdit.ObservationEditView.audioButton": {
     "description": "Button label for adding audio",
@@ -1389,30 +1366,30 @@
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "यहाँ के भइ राखेकाे छ?"
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
-    "message": "Details"
+    "message": "विवरणहरू"
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
     "message": "Photo"
   },
   "screens.ObservationEdit.changePreset": {
-    "message": "Change"
+    "message": "परिवर्तन"
   },
   "screens.ObservationEdit.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "यहाँ के भइ राखेकाे छ?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for edit observation screen",
-    "message": "Edit Observation"
+    "description": "screen title for new observation screen",
+    "message": "अवलाेकन सम्पादन"
   },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "अवलाेकन"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Track"
@@ -1422,7 +1399,7 @@
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
-    "message": "Observations"
+    "message": "अवलाेकनहरू"
   },
   "screens.ObservationMetadataVerified.accuracy": {
     "message": "Accuracy"
@@ -1477,15 +1454,15 @@
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "Go To Map"
+    "message": "नक्सामा जानु हाेला"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
     "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Start from map or camera view to record your first observation."
+    "message": "पहिलो अवलोकन रेकर्ड गर्न नक्सा वा क्यामेरा दृश्यबाट सुरू गर्नु."
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "Add Observations"
+    "message": "अवलोकन थप्नुहोस"
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
@@ -1493,10 +1470,10 @@
   },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
-    "message": "Loading… this can take a while after synchronizing with a new device"
+    "message": "लाेड हुँदै... नयाँ उपकरणसँग सिंक्राेनाइज हुन केहि समय लाग्न सक्छ"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "screens.Onboarding.JoinProjectIntro.description": {
     "message": "Coordinate with your team to receive a project invitation."
@@ -1508,7 +1485,7 @@
     "message": "Add audio recordings."
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "screens.Onboarding.MapOnYourOwnIntro.description": {
     "message": "Explore CoMapeo—invite collaborators anytime."
@@ -1692,7 +1669,7 @@
     "message": "Project stats are shared with Awana Digital"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "screens.ProjectStatisticsTurnedOff.desc": {
     "message": "This change will take effect next time you Exchange with team members."
@@ -1700,18 +1677,9 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Project Statistics | OFF"
   },
-  "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Close"
-  },
-  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
-    "message": "Reason: {reason}"
-  },
-  "screens.RemovedFromProjectBottomSheet.title": {
-    "message": "THIS DEVICE REMOVED FROM…"
-  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "यहाँ के भइ राखेकाे छ?"
   },
   "screens.SaveTrack.TrackEditView.title": {
     "description": "Title for new track screen",
@@ -1725,7 +1693,7 @@
     "message": "To use, turn on App Passcode"
   },
   "screens.Security.obscurePasscodeDescriptionActivated": {
-    "message": "Protect your device against seizure"
+    "message": "आफ्नो यन्त्रलाई आक्रमणबाट सुरक्षित गर्नुहोस्"
   },
   "screens.Security.obscurePasscodeHeader": {
     "message": "Obscure Passcode"
@@ -1737,7 +1705,7 @@
     "message": "Passcode is set"
   },
   "screens.Security.passcodeHeader": {
-    "message": "App Passcode"
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
   },
   "screens.Security.securitySubheader": {
     "message": "Device Security"
@@ -1761,22 +1729,22 @@
     "message": "Discard Changes"
   },
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
-    "message": "Discard changes?"
+    "message": "परिवर्तन रद्द?"
   },
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
     "message": "Device Name"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Invite Another Device"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
-    "message": "Done"
+    "message": "Add Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Accepted!"
+    "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is now part of your project."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
+    "message": "View Team"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Review Invitation"
@@ -1803,7 +1771,7 @@
     "message": "Coordinators"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
-    "message": "Invite Device"
+    "message": "उपकरणलाई निमन्त्रणा"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Can take and share observations but not manage users or project details."
@@ -1827,7 +1795,7 @@
     "message": "Join a Project"
   },
   "screens.Settings.Collaborate.startNewProject": {
-    "message": "Start New Project"
+    "message": "Create a Project"
   },
   "screens.Settings.Collaborate.title": {
     "message": "Collaborate"
@@ -1842,28 +1810,28 @@
     "message": "Successfully imported categories:"
   },
   "screens.Settings.Config.name": {
-    "message": "Category Set:"
+    "message": "Config Name:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Categories"
+    "message": "Configuration"
   },
   "screens.Settings.Config.okButton": {
-    "message": "OK"
+    "message": "ठिक छ"
   },
   "screens.Settings.Config.projectName": {
     "message": "Project Name:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Start New Project"
+    "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Name My Project"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
-    "message": "Done"
+    "message": "भयाे"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
-    "message": "Invite a Device"
+    "message": "Invite Device"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
     "message": "{projectName} is now ready for you to invite devices."
@@ -1872,13 +1840,13 @@
     "message": "Project statistics are being shared with Awana Digital"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
-    "message": "Success!"
+    "message": "सफल!"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create"
+    "message": "Create Project"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Project Name"
+    "message": "Enter a name for the Project"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Using an existing project name does not make them the same project."
@@ -1893,7 +1861,7 @@
     "message": "Request invites to join existing projects."
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
-    "message": "Save"
+    "message": "संग्रह"
   },
   "screens.Settings.JoinAProject.description": {
     "message": "Ask a project coordinator to receive a project invitation."
@@ -1904,17 +1872,14 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Join a Project"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
     "message": "Accepted file types are .smp"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
-    "message": "Added on {date}"
+  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
+    "message": "Choose File"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "This cannot be undone."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
-    "message": "Choose File"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "Close"
@@ -1938,31 +1903,34 @@
     "message": "Delete Map"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Custom background maps let you view maps offline."
+    "message": "Adding a custom map will enable you to see a map when you are offline."
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Note: Custom background maps are not shared with collaborators."
+    "message": "Your custom map is not shared with other devices in your project."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "Unable to import the file. Please go back and try again."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
-    "message": "Import Error"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
-    "message": "{size} MB"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
-    "message": "Remove Map"
+    "message": "भित्राउनमा समस्या"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Remove Map File"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Map"
+    "message": "Background Maps"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
-    "message": "Send Map"
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
+    "message": "Date Added"
+  },
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
+    "message": "Map Name"
+  },
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
+    "message": "Remove Map"
+  },
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
+    "message": "{value} MB"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invite devices to a new project with all your observations."
@@ -1971,7 +1939,7 @@
     "message": "Start a new project using my observations."
   },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
-    "message": "Next"
+    "message": "अर्काे"
   },
   "screens.Settings.NameDefaultProjectIntro.title": {
     "message": "Invite Devices"
@@ -1983,10 +1951,10 @@
     "message": "Start a new project with no observations."
   },
   "screens.Settings.StartNewProjectIntro.nextButton": {
-    "message": "Next"
+    "message": "अर्काे"
   },
   "screens.Settings.StartNewProjectIntro.title": {
-    "message": "Start New Project"
+    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitation Declined"
@@ -2025,25 +1993,25 @@
     "message": "Yes, Share Stats"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Close"
+    "message": "Open Settings"
   },
   "screens.Sync.NoWifiDisplay.description": {
-    "message": "Check device’s settings and connectivity."
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
   },
   "screens.Sync.NoWifiDisplay.title": {
-    "message": "No Wi-Fi."
+    "message": "No WiFi"
   },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "You're all caught up!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "Up to date!"
+    "message": "All data synced"
   },
   "screens.Sync.ProjectSyncDisplay.close": {
     "message": "Close"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found."
+    "message": "Devices found"
   },
   "screens.Sync.ProjectSyncDisplay.exchangeAction": {
     "message": "Change Settings"
@@ -2085,13 +2053,13 @@
     "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete!"
+    "message": "Complete! You're up to date"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Exchanging..."
+    "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices..."
+    "message": "Waiting for devices"
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
@@ -2103,10 +2071,10 @@
     "message": "Remote Archive connected"
   },
   "screens.Track.ObservationList.observation": {
-    "message": "Observation"
+    "message": "अवलाेकन"
   },
   "screens.Track.ObservationList.observations": {
-    "message": "Observations"
+    "message": "अवलाेकनहरू"
   },
   "screens.Track.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete a track",
@@ -2131,7 +2099,7 @@
     "message": "Track"
   },
   "screens.TrackRecordingActive.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.TrackRecordingActive.recordingTracks": {
     "message": "Recording Tracks!"
@@ -2140,7 +2108,7 @@
     "message": "Stop Tracks"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Tracks is recording. Stop Tracks to continue."
+    "message": "You’re currently recording a track. To join project, stop recording"
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Device removed."
@@ -2175,13 +2143,13 @@
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
     "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+    "message": "खाेजी जारी …"
   },
   "sharedComponents.Editor.PresetView.Change": {
-    "message": "Change"
+    "message": "परिवर्तन"
   },
   "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "पछाडी जानुहाेस"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
@@ -2193,7 +2161,7 @@
     "message": "Participant"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Go Back"
+    "message": "पछाडी जानुहाेस"
   },
   "soloProject.inviteCollaborators.introText": {
     "message": "Share observations with others using CoMapeo."
@@ -2214,7 +2182,7 @@
     "message": "Invite Collaborators"
   },
   "soloProject.startNewProject.goBack": {
-    "message": "Go Back"
+    "message": "पछाडी जानुहाेस"
   },
   "soloProject.startNewProject.introText": {
     "message": "Secure and private way to exchange with collaborators."
@@ -2233,5 +2201,11 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Each project is unique and separate."
+  },
+  "useProjectRoleAndDetails.coordinator": {
+    "message": "Coordinator"
+  },
+  "useProjectRoleAndDetails.participant": {
+    "message": "Participant"
   }
 }

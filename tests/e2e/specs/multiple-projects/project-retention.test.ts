@@ -17,7 +17,6 @@ describe('Multiple Projects - Project Data Retention', () => {
 
     await $('~Add Observation').click();
     const airstripCategory = await $(byTextMatches('Airstrip'));
-    await airstripCategory.scrollIntoView();
     await airstripCategory.click();
     const descriptionInput = await $(byResourceId('OBS.description-inp'));
     await descriptionInput.click();

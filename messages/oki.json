@@ -1,22 +1,19 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Taastay iweechweech"
+    "message": "Taastay iweechweech",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardChangesButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Toochinee weecheet"
+    "message": "Toochinee weecheet",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "AppContainer.EditHeader.discardChangesTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Toochinee weecheet?"
+    "message": "Toochinee weecheet?",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Toochinee observation?"
-  },
-  "Modal.GPSDisable.button": {
-    "message": "Enable"
+    "message": "Toochinee observation?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "Modal.GPSDisable.description": {
     "message": "To create a Track CoMapeo needs access to your location and GPS."
@@ -25,16 +22,16 @@
     "message": "Background Maps"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Taastay iweechweech"
+    "message": "Taastay iweechweech",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Toochinee weecheet"
+    "message": "Toochinee weecheet",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "ObservationEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Toochinee weecheet?"
+    "message": "Toochinee weecheet?",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Keer"
@@ -43,35 +40,35 @@
     "message": "Keer"
   },
   "SaveTrack.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Taastay iweechweech"
+    "message": "Taastay iweechweech",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "Noomtee"
+    "message": "Noomtee",
+    "description": "Text for cancel action button."
   },
   "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Noomtee"
+    "message": "Noomtee",
+    "description": "Button to cancel delete of observation"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Taastay iweechweech"
+    "message": "Taastay iweechweech",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Toochinee weecheet?"
+    "message": "Toochinee weecheet?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Toochinee weecheet"
+    "message": "Toochinee weecheet",
+    "description": "Button to confirm discarding the track"
   },
   "allProjects.close": {
     "message": "Open Settings"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Meengetoksee"
+    "message": "Meengetoksee",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "Noomtee"
@@ -125,8 +122,8 @@
     "message": "Use Your Location"
   },
   "screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Noomtee"
+    "message": "Noomtee",
+    "description": "Button to cancel delete of observation"
   },
   "screens.Observation.comapeoAlert": {
     "message": "CoMapeo Alert"
@@ -225,7 +222,7 @@
     "message": "Noomtee"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Cheeng'…"
+    "message": "Cheeng'…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   }
 }

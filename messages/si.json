@@ -1,19 +1,19 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "සංස්කරණය කරගෙන යන්න"
+    "message": "සංස්කරණය කරගෙන යන්න",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardChangesButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "වෙනස්කම් ඉවතලන්න"
+    "message": "වෙනස්කම් ඉවතලන්න",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "AppContainer.EditHeader.discardChangesTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "වෙනස්කම් ඉවතලන්න?"
+    "message": "වෙනස්කම් ඉවතලන්න?",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "නිරීක්ෂණය ඉවතලන්නද?"
+    "message": "නිරීක්ෂණය ඉවතලන්නද?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "හරි"
@@ -23,9 +23,6 @@
   },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "ආපසු යන්න"
-  },
-  "Modal.GPSDisable.button": {
-    "message": "Enable"
   },
   "Modal.GPSDisable.description": {
     "message": "To create a Track CoMapeo needs access to your location and GPS."
@@ -37,16 +34,16 @@
     "message": "Background Maps"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "සංස්කරණය කරගෙන යන්න"
+    "message": "සංස්කරණය කරගෙන යන්න",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "වෙනස්කම් ඉවතලන්න"
+    "message": "වෙනස්කම් ඉවතලන්න",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "ObservationEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "වෙනස්කම් ඉවතලන්න?"
+    "message": "වෙනස්කම් ඉවතලන්න?",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "වසන්න"
@@ -55,8 +52,8 @@
     "message": "වසන්න"
   },
   "SaveTrack.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "සංස්කරණය කරගෙන යන්න"
+    "message": "සංස්කරණය කරගෙන යන්න",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "Screens.ProjectSettings.update": {
     "message": "යාවත්කාලීන කරන්න"
@@ -74,36 +71,36 @@
     "message": "භාෂාව"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "අවලංගු කරන්න"
+    "message": "අවලංගු කරන්න",
+    "description": "Text for cancel action button."
   },
   "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "අවලංගු කරන්න"
+    "message": "අවලංගු කරන්න",
+    "description": "Button to cancel delete of observation"
   },
   "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "ඔව්, මකන්න"
+    "message": "ඔව්, මකන්න",
+    "description": "Button to confirm delete of observation"
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
-    "message": "මකන්න"
+    "message": "මකන්න",
+    "description": "Button to delete an observation"
   },
   "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "බෙදාගන්න"
+    "message": "බෙදාගන්න",
+    "description": "Button to share an observation"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "සංස්කරණය කරගෙන යන්න"
+    "message": "සංස්කරණය කරගෙන යන්න",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "වෙනස්කම් ඉවතලන්න?"
+    "message": "වෙනස්කම් ඉවතලන්න?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "වෙනස්කම් ඉවතලන්න"
+    "message": "වෙනස්කම් ඉවතලන්න",
+    "description": "Button to confirm discarding the track"
   },
   "allProjects.close": {
     "message": "Open Settings"
@@ -112,20 +109,20 @@
     "message": "ව්යාපෘතියේ නම"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "Android ගොඩනැගීමේ අංකය"
+    "message": "Android ගොඩනැගීමේ අංකය",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "ඇන්ඩ්රොයිඩ් අනුවාදය"
+    "message": "ඇන්ඩ්රොයිඩ් අනුවාදය",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "දුරකථන ආකෘතිය"
+    "message": "දුරකථන ආකෘතිය",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "නොදන්නා"
+    "message": "නොදන්නා",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "අවලංගු කරන්න"
@@ -212,20 +209,20 @@
     "message": "මෙම ඡායාරූපය මකන්නද?"
   },
   "screens.CoordinateFormat.dd": {
-    "description": "Decimal Degrees coordinate format",
-    "message": "දශම අංශක (DD)"
+    "message": "දශම අංශක (DD)",
+    "description": "Decimal Degrees coordinate format"
   },
   "screens.CoordinateFormat.dms": {
-    "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "උපාධි/මිනිත්තු/තත්පර (DMS)"
+    "message": "උපාධි/මිනිත්තු/තත්පර (DMS)",
+    "description": "Degrees/Minutes/Seconds coordinate format"
   },
   "screens.CoordinateFormat.title": {
-    "description": "Title coordinate format screen",
-    "message": "සම්බන්ධීකරණ ආකෘතිය"
+    "message": "සම්බන්ධීකරණ ආකෘතිය",
+    "description": "Title coordinate format screen"
   },
   "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "Universal Transverse Mercator (UTM)",
+    "description": "Universal Transverse Mercator coordinate format"
   },
   "screens.DataPrivacy.next": {
     "message": "ඊළඟ"
@@ -276,8 +273,8 @@
     "message": "සාර්ථකත්වය"
   },
   "screens.LanguageSettings.title": {
-    "description": "Title language settings screen",
-    "message": "භාෂාව"
+    "message": "භාෂාව",
+    "description": "Title language settings screen"
   },
   "screens.LeaveProject.cancel": {
     "message": "අවලංගු කරන්න"
@@ -289,40 +286,40 @@
     "message": "ඉදිරියට යන්න"
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "විස්තරය"
+    "message": "විස්තරය",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.gpsHeader": {
-    "description": "Header for GPS screen",
-    "message": "වත්මන් GPS ස්ථානය"
+    "message": "වත්මන් GPS ස්ථානය",
+    "description": "Header for GPS screen"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "අවසන් යාවත්කාලීනය"
+    "message": "අවසන් යාවත්කාලීනය",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "ඛණ්ඩාංක දශම අංශක"
+    "message": "ඛණ්ඩාංක දශම අංශක",
+    "description": "Section title for DD coordinates"
   },
   "screens.LocationInfoScreen.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "ඛණ්ඩාංක DMS"
+    "message": "ඛණ්ඩාංක DMS",
+    "description": "Section title for DMS coordinates"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "සංවේදක තත්ත්වය"
+    "message": "සංවේදක තත්ත්වය",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "ඛණ්ඩාංක UTM"
+    "message": "ඛණ්ඩාංක UTM",
+    "description": "Section title for UTM coordinates"
   },
   "screens.LocationInfoScreen.no": {
-    "description": "if a location sensor is active yes/no",
-    "message": "නැහැ"
+    "message": "නැහැ",
+    "description": "if a location sensor is active yes/no"
   },
   "screens.LocationInfoScreen.yes": {
-    "description": "if a location sensor is active yes/no",
-    "message": "ඔව්"
+    "message": "ඔව්",
+    "description": "if a location sensor is active yes/no"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "නැගෙනහිර"
@@ -424,8 +421,8 @@
     "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "ඛණ්ඩාංක ඇතුළත් කරන්න"
+    "message": "ඛණ්ඩාංක ඇතුළත් කරන්න",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
     "message": "Universal Transverse Mercator (UTM)"
@@ -446,35 +443,35 @@
     "message": "Use Your Location"
   },
   "screens.Observation.ObservationView.delete": {
-    "description": "Button to delete an observation",
-    "message": "මකන්න"
+    "message": "මකන්න",
+    "description": "Button to delete an observation"
   },
   "screens.Observation.ObservationView.noAnswer": {
-    "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "පිළිතුරක් නැත"
+    "message": "පිළිතුරක් නැත",
+    "description": "Placeholder text for fields on an observation which are not answered"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "නිරීක්ෂණ"
+    "message": "නිරීක්ෂණ",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.ObservationView.share": {
-    "description": "Button to share an observation",
-    "message": "බෙදාගන්න"
+    "message": "බෙදාගන්න",
+    "description": "Button to share an observation"
   },
   "screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "අවලංගු කරන්න"
+    "message": "අවලංගු කරන්න",
+    "description": "Button to cancel delete of observation"
   },
   "screens.Observation.comapeoAlert": {
     "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "ඔව්, මකන්න"
+    "message": "ඔව්, මකන්න",
+    "description": "Button to confirm delete of observation"
   },
   "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "නිරීක්ෂණය මකන්නද?"
+    "message": "නිරීක්ෂණය මකන්නද?",
+    "description": "Title of dialog asking confirmation to delete an observation"
   },
   "screens.Observation.description": {
     "message": "විස්තර:"
@@ -483,98 +480,98 @@
     "message": "විස්තරය:"
   },
   "screens.Observation.fallbackCategoryName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "නිරීක්ෂණ"
+    "message": "නිරීක්ෂණ",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "නිරීක්ෂණ"
+    "message": "නිරීක්ෂණ",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.Observation.title": {
-    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "නිරීක්ෂණ"
+    "message": "නිරීක්ෂණ",
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "දිගටම බලා සිටින්න"
+    "message": "දිගටම බලා සිටින්න",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "ඛණ්ඩාංක අතින් ඇතුල් කරන්න"
+    "message": "ඛණ්ඩාංක අතින් ඇතුල් කරන්න",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "මෙම නිරීක්ෂණයට ස්ථානයක් නොමැත. ඔබට GPS සංඥාවක් සඳහා රැඳී සිටිය හැක, ස්ථානයක් නොමැතිව නිරීක්ෂණ සුරකින්න, හෝ ඛණ්ඩාංක අතින් ඇතුල් කරන්න"
+    "message": "මෙම නිරීක්ෂණයට ස්ථානයක් නොමැත. ඔබට GPS සංඥාවක් සඳහා රැඳී සිටිය හැක, ස්ථානයක් නොමැතිව නිරීක්ෂණ සුරකින්න, හෝ ඛණ්ඩාංක අතින් ඇතුල් කරන්න",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "GPS සංඥා නැත"
+    "message": "GPS සංඥා නැත",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "සුරකින්න"
+    "message": "සුරකින්න",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS නිරවද්‍යතාවය අඩුයි. වඩා හොඳ නිරවද්‍යතාවයක් සඳහා ඔබට දිගටම බලා සිටිය හැක, අඩු නිරවද්‍යතාවයකින් නිරීක්ෂණය සුරකින්න, හෝ ඛණ්ඩාංක අතින් ඇතුල් කරන්න"
+    "message": "GPS නිරවද්‍යතාවය අඩුයි. වඩා හොඳ නිරවද්‍යතාවයක් සඳහා ඔබට දිගටම බලා සිටිය හැක, අඩු නිරවද්‍යතාවයකින් නිරීක්ෂණය සුරකින්න, හෝ ඛණ්ඩාංක අතින් ඇතුල් කරන්න",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "දුර්වල GPS සංඥා"
+    "message": "දුර්වල GPS සංඥා",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.changePreset": {
     "message": "වෙනස් කරන්න"
   },
   "screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "මෙතන මොකද වෙන්නේ?"
+    "message": "මෙතන මොකද වෙන්නේ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "නව නිරීක්ෂණයක්"
+    "message": "නව නිරීක්ෂණයක්",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "නිරීක්ෂණ"
+    "message": "නිරීක්ෂණ",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationDetails.done": {
-    "description": "Button text when all questions are complete",
-    "message": "කළා"
+    "message": "කළා",
+    "description": "Button text when all questions are complete"
   },
   "screens.ObservationDetails.nextQuestion": {
-    "description": "Button text to navigate to next question",
-    "message": "ඊළඟ"
+    "message": "ඊළඟ",
+    "description": "Button text to navigate to next question"
   },
   "screens.ObservationDetails.title": {
-    "description": "Title of observation details screen showing question number and total",
-    "message": "ප්‍රශ්නය {current} වල {total}"
+    "message": "ප්‍රශ්නය {current} වල {total}",
+    "description": "Title of observation details screen showing question number and total"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "මෙතන මොකද වෙන්නේ?"
+    "message": "මෙතන මොකද වෙන්නේ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
-    "description": "Button label to add details",
-    "message": "විස්තරය"
+    "message": "විස්තරය",
+    "description": "Button label to add details"
   },
   "screens.ObservationEdit.changePreset": {
     "message": "වෙනස් කරන්න"
   },
   "screens.ObservationEdit.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "මෙතන මොකද වෙන්නේ?"
+    "message": "මෙතන මොකද වෙන්නේ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for edit observation screen",
-    "message": "නිරීක්ෂණ සංස්කරණය කරන්න"
+    "message": "නිරීක්ෂණ සංස්කරණය කරන්න",
+    "description": "screen title for edit observation screen"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "නිරීක්ෂණ"
+    "message": "නිරීක්ෂණ",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "නිරීක්ෂණය"
+    "message": "නිරීක්ෂණය",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "අක්ෂාංශ"
@@ -583,20 +580,20 @@
     "message": "දේශාංශ"
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "සිතියම වෙත යන්න"
+    "message": "සිතියම වෙත යන්න",
+    "description": "Back button on observation list screen when no observations are yet recorded"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "ඔබගේ පළමු නිරීක්ෂණය වාර්තා කිරීමට සිතියමෙන් හෝ කැමරා දර්ශනයෙන් ආරම්භ කරන්න."
+    "message": "ඔබගේ පළමු නිරීක්ෂණය වාර්තා කිරීමට සිතියමෙන් හෝ කැමරා දර්ශනයෙන් ආරම්භ කරන්න.",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "නිරීක්ෂණය එකතු කරන්න"
+    "message": "නිරීක්ෂණය එකතු කරන්න",
+    "description": "Title of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.loading": {
-    "description": "message shown whilst observations are loading",
-    "message": "පූරණය වෙමින් පවතී... මෙය නව උපාංගයක් සමඟ සමමුහුර්ත කිරීමෙන් පසු යම් කාලයක් ගත විය හැක"
+    "message": "පූරණය වෙමින් පවතී... මෙය නව උපාංගයක් සමඟ සමමුහුර්ත කිරීමෙන් පසු යම් කාලයක් ගත විය හැක",
+    "description": "message shown whilst observations are loading"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
     "message": "Open Settings"
@@ -614,8 +611,8 @@
     "message": "Open Settings"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "මෙතන මොකද වෙන්නේ?"
+    "message": "මෙතන මොකද වෙන්නේ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.Security.obscurePasscodeDescriptionActivated": {
     "message": "අල්ලා ගැනීමෙන් ඔබේ උපාංගය ආරක්ෂා කරන්න"
@@ -768,8 +765,8 @@
     "message": "සම්බන්ද තාවයක් නැත"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "සොයමින්…"
+    "message": "සොයමින්…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "වෙනස් කරන්න"

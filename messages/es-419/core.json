@@ -28,12 +28,6 @@
   "ExportSuccess.done": {
     "message": "Listo"
   },
-  "ExportSuccess.obs": {
-    "message": "<bold>All observations</bold> have been downloaded to your device."
-  },
-  "ExportSuccess.obsMedia": {
-    "message": "<bold>All observations with media</bold> have been downloaded to your device."
-  },
   "ExportSuccess.title": {
     "message": "¡Éxito!"
   },
@@ -132,9 +126,6 @@
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
     "message": "Solo una persona coordinadora del proyecto puede desactivar el archivo remoto."
-  },
-  "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
-    "message": "Url"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded": {
     "message": "Ve lo que está incluido"
@@ -405,9 +396,6 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Tus cambios no se guardarán. Esto no se puede deshacer."
   },
-  "TrackStats.kilometers": {
-    "message": "km"
-  },
   "allProjects.close": {
     "message": "Abrir ajustes"
   },
@@ -522,10 +510,6 @@
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "Modelo del teléfono"
-  },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Vista previa"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -888,9 +872,6 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Contraseña incorrecta, inténtelo de nuevo"
   },
-  "screens.Exchange.WifiCard.noWifi": {
-    "message": "No Wi-Fi"
-  },
   "screens.ExchangeSettingsBottomSheet.close": {
     "message": "Cerrar"
   },
@@ -1014,12 +995,6 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Se están compartiendo las estadísticas del proyecto"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Ir al mapa"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Ir a Sincronización"
-  },
   "screens.InviteSuccess.success": {
     "message": "Éxito"
   },
@@ -1036,9 +1011,6 @@
   },
   "screens.LeaveProject.cancel": {
     "message": "Cancelar"
-  },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "Este dispositivo ya no verá o contribuirá a este proyecto"
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "¿Abandonar {projectName}?"
@@ -1079,10 +1051,6 @@
   "screens.LocationInfoScreen.locationUTM": {
     "description": "Section title for UTM coordinates",
     "message": "Coordenadas UTM"
-  },
-  "screens.LocationInfoScreen.no": {
-    "description": "if a location sensor is active yes/no",
-    "message": "No"
   },
   "screens.LocationInfoScreen.yes": {
     "description": "if a location sensor is active yes/no",
@@ -1178,17 +1146,11 @@
   "screens.ManualGpsScreen.easting": {
     "message": "Este"
   },
-  "screens.ManualGpsScreen.eastingSuffix": {
-    "message": "mE"
-  },
   "screens.ManualGpsScreen.invalidCoordinates": {
     "message": "Coordenadas no válidas. Latitud debe estar entre -90 y 90. La longitud debe estar entre -180 y 180"
   },
   "screens.ManualGpsScreen.northing": {
     "message": "Norte"
-  },
-  "screens.ManualGpsScreen.northingSuffix": {
-    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
@@ -1360,10 +1322,6 @@
     "description": "Title of observation details screen showing question number and total",
     "message": "Pregunta {current} de {total}"
   },
-  "screens.ObservationEdit.ObservationEditView.audioButton": {
-    "description": "Button label for adding audio",
-    "message": "Audio"
-  },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "¿Qué está pasando aquí?"
@@ -1384,7 +1342,7 @@
     "message": "¿Qué está pasando aquí?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Editar observación"
   },
   "screens.ObservationEdit.observation": {
@@ -1524,10 +1482,6 @@
   },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Eliminar foto"
-  },
-  "screens.PhotoPreviewModal.imageStorageSize": {
-    "description": "Image size in megabytes",
-    "message": "{value} MB"
   },
   "screens.PhotoPreviewModal.landscape": {
     "description": "Describes image layout when taking photo horizontally",
@@ -1743,9 +1697,6 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> es ahora parte de tu proyecto."
   },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Ver equipo"
-  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Revisar invitación"
   },
@@ -1815,9 +1766,6 @@
   "screens.Settings.Config.navTitle": {
     "message": "Configuración"
   },
-  "screens.Settings.Config.okButton": {
-    "message": "OK"
-  },
   "screens.Settings.Config.projectName": {
     "message": "Nombre del Proyecto:"
   },
@@ -1872,12 +1820,6 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Unirse a un proyecto"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
-    "message": "Los tipos de archivo aceptados son .smp"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Elegir archivo"
-  },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Esta acción no se puede deshacer."
   },
@@ -1919,18 +1861,6 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Fecha agregada"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Nombre del mapa"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Eliminar mapa"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invita dispositivos a un nuevo proyecto con todas tus observaciones."
@@ -2037,17 +1967,11 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
     "message": "No se encontraron dispositivos."
   },
-  "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No Wi-Fi."
-  },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Comenzar"
   },
   "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Detener"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncProgress": {
-    "message": "{value}%"
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
     "message": "¡Completado! Esperando a que se unan otros dispositivos"
@@ -2060,9 +1984,6 @@
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Esperando a los dispositivos"
-  },
-  "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
-    "message": "{ssid}"
   },
   "screens.Sync.headerTitle": {
     "message": "Intercambiar"
@@ -2201,11 +2122,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Cada proyecto es único y separado."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Persona Coordinadora"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Participante"
   }
 }

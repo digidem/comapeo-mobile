@@ -11,6 +11,10 @@ const TRANSLATIONS_DIR_PATH = path.join(
   PROJECT_ROOT_DIR_PATH,
   'assets/translations',
 );
+const SUPPORTED_LOCALES_FILE_PATH = path.join(
+  PROJECT_ROOT_DIR_PATH,
+  'src/frontend/supported-locales.json',
+);
 const MESSAGES_DIR_PATH = path.join(PROJECT_ROOT_DIR_PATH, 'messages');
 
 await run();
@@ -22,6 +26,7 @@ async function run() {
     withFileTypes: true,
   });
   const promises = [];
+  const supportedLocales = [];
 
   for (const folder of localesFolders) {
     if (!folder.isDirectory()) continue;
@@ -35,12 +40,18 @@ async function run() {
 so it will not appear as a language option in CoMapeo.
 Add the language name in English and the native language to \`languages.json\`
 in order to allow users to select '${locale}' in CoMapeo`);
+        } else if (hasTranslations) {
+          supportedLocales.push(locale);
         }
       }),
     );
   }
 
   await Promise.all(promises);
+  await fs.writeFile(
+    SUPPORTED_LOCALES_FILE_PATH,
+    JSON.stringify(supportedLocales, null, 2),
+  );
 
   console.log(`Successfully built translations to ${TRANSLATIONS_DIR_PATH}`);
 }

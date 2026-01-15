@@ -13,6 +13,7 @@ import pluginTestingLibrary from 'eslint-plugin-testing-library';
 import * as pluginReactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import pluginTs from 'typescript-eslint';
+import localRules from './eslint-local-rules.mjs';
 
 const gitignorePath = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -76,6 +77,16 @@ const frontendConfig = pluginTs.config(
           }),
         },
         rules: pluginReactNative.configs.all.rules,
+      },
+      // Local rules for intl priority comments
+      {
+        name: 'local-rules',
+        plugins: {
+          'local': localRules,
+        },
+        rules: {
+          'local/intl-priority-comment': 'error',
+        },
       },
     ],
     rules: {

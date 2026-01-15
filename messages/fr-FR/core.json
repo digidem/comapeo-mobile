@@ -28,12 +28,6 @@
   "ExportSuccess.done": {
     "message": "Terminé"
   },
-  "ExportSuccess.obs": {
-    "message": "<bold>All observations</bold> have been downloaded to your device."
-  },
-  "ExportSuccess.obsMedia": {
-    "message": "<bold>All observations with media</bold> have been downloaded to your device."
-  },
   "ExportSuccess.title": {
     "message": "Succès !"
   },
@@ -94,9 +88,6 @@
   "Navigation.Menu.mappingOnOwn": {
     "message": "Vous vous associez vous-même."
   },
-  "Navigation.Menu.participant": {
-    "message": "Participant"
-  },
   "Navigation.Menu.switchProject": {
     "message": "Changer de projet"
   },
@@ -132,9 +123,6 @@
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
     "message": "Seul un coordinateur de projet peut désactiver les archives à distance."
-  },
-  "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
-    "message": "Url"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded": {
     "message": "Voir ce qui est inclus"
@@ -298,9 +286,6 @@
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Système de coordonnées"
   },
-  "Screens.Settings.AppSettings.coordinateSystemDesc": {
-    "message": "UTM,Lat/Lon,DMS"
-  },
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Nom de l'appareil"
   },
@@ -363,9 +348,6 @@
   "Storage.MenuAlert.cta": {
     "message": "Libérer de l'espace"
   },
-  "Storage.MenuAlert.onlyLeft": {
-    "message": "Only {free}mb left on your device"
-  },
   "Storage.MenuAlert.subtitle": {
     "message": "Certaines fonctionnalités peuvent ne plus fonctionner."
   },
@@ -423,9 +405,6 @@
   "constants.grey": {
     "message": "Gris"
   },
-  "constants.orange": {
-    "message": "Orange"
-  },
   "constants.red": {
     "message": "Rouge"
   },
@@ -459,9 +438,6 @@
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordonnateur"
   },
-  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
-    "message": "Participant"
-  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Envoyer une invitation"
   },
@@ -493,10 +469,6 @@
     "description": "Label for CoMapeo build number",
     "message": "Version de CoMapeo"
   },
-  "screens.AboutSettings.CoMapeoType": {
-    "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)",
-    "message": "CoMapeo variant"
-  },
   "screens.AboutSettings.CoMapeoVersion": {
     "description": "Label for CoMapeo version",
     "message": "Version de CoMapeo"
@@ -522,10 +494,6 @@
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "Modèle du téléphone"
-  },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Aperçu"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -591,9 +559,6 @@
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
     "message": "Le mot de passe ne correspond pas"
   },
-  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
-    "message": "Incorrect Passcode"
-  },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
     "message": "Ce code d'accès sera requis pour ouvrir l'application CoMapeo"
   },
@@ -611,9 +576,6 @@
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "Le code d'accès de l'application vous permet d'ajouter une couche de sécurité supplémentaire en exigeant que vous saisissiez un code d'accès pour ouvrir l'application CoMapeo. Vous pouvez définir votre propre code d'accès à 5 chiffres en activant la fonction ci-dessous."
-  },
-  "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Annuler"
@@ -733,9 +695,6 @@
   },
   "screens.CollaboratorInfo.navTitle": {
     "message": "Informations sur le collaborateur"
-  },
-  "screens.CollaboratorInfo.participant": {
-    "message": "Participant"
   },
   "screens.CollaboratorInfo.removeDevice": {
     "message": "Supprimer l'appareil"
@@ -888,9 +847,6 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
   },
-  "screens.Exchange.WifiCard.noWifi": {
-    "message": "No Wi-Fi"
-  },
   "screens.ExchangeSettingsBottomSheet.close": {
     "message": "Fermer"
   },
@@ -993,9 +949,6 @@
   "screens.InviteCancelled.projectInviteCanceled": {
     "message": "Votre invitation à {projectName} a été annulée."
   },
-  "screens.InviteReceived.coordinatorRole": {
-    "message": "coordinator"
-  },
   "screens.InviteReceived.declineInvite": {
     "message": "Décliner l'invitation"
   },
@@ -1008,17 +961,8 @@
   "screens.InviteReceived.joinProject": {
     "message": "Rejoindre le projet"
   },
-  "screens.InviteReceived.participantRole": {
-    "message": "participant"
-  },
   "screens.InviteReceived.sharedStats": {
     "message": "Les statistiques du projet sont partagées"
-  },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Aller à la carte"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Aller à la synchronisation"
   },
   "screens.InviteSuccess.success": {
     "message": "Succès"
@@ -1036,9 +980,6 @@
   },
   "screens.LeaveProject.cancel": {
     "message": "Annuler"
-  },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "Cet appareil ne sera plus affiché ou ne contribuera plus à ce projet"
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "Quitter {projectName}?"
@@ -1097,14 +1038,8 @@
   "screens.ManualGpsScreen.DdForm.latInputLabel": {
     "message": "Valeur de la latitude"
   },
-  "screens.ManualGpsScreen.DdForm.latitude": {
-    "message": "Latitude"
-  },
   "screens.ManualGpsScreen.DdForm.lonInputLabel": {
     "message": "Valeur de la longitude"
-  },
-  "screens.ManualGpsScreen.DdForm.longitude": {
-    "message": "Longitude"
   },
   "screens.ManualGpsScreen.DdForm.north": {
     "message": "Nord"
@@ -1133,12 +1068,6 @@
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
     "message": "{field} degrés entrés"
   },
-  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
-    "message": "Direction"
-  },
-  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
-    "message": "Minutes"
-  },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
     "message": "Secondes"
   },
@@ -1147,12 +1076,6 @@
   },
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
     "message": "Coordonnées invalides"
-  },
-  "screens.ManualGpsScreen.DmsForm.latitude": {
-    "message": "Latitude"
-  },
-  "screens.ManualGpsScreen.DmsForm.longitude": {
-    "message": "Longitude"
   },
   "screens.ManualGpsScreen.DmsForm.north": {
     "message": "Nord"
@@ -1178,17 +1101,11 @@
   "screens.ManualGpsScreen.easting": {
     "message": "Est"
   },
-  "screens.ManualGpsScreen.eastingSuffix": {
-    "message": "mE"
-  },
   "screens.ManualGpsScreen.invalidCoordinates": {
     "message": "Coordonnées non valides. La latitude doit être comprise entre -90 et 90. La longitude doit être comprise entre -180 et 180"
   },
   "screens.ManualGpsScreen.northing": {
     "message": "Nord"
-  },
-  "screens.ManualGpsScreen.northingSuffix": {
-    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
@@ -1218,9 +1135,6 @@
   "screens.ObscurePasscode.instructions": {
     "message": "Entrez le code ci-dessus pour cacher vos données dans CoMapeo"
   },
-  "screens.ObscurePasscode.title": {
-    "message": "Obscure Passcode"
-  },
   "screens.ObscurePasscode.toggleMessage": {
     "message": "Utiliser le mot de passe obscure"
   },
@@ -1234,10 +1148,6 @@
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
     "message": "Pas de réponse"
-  },
-  "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Observation"
   },
   "screens.Observation.ObservationView.share": {
     "description": "Button to share an observation",
@@ -1264,19 +1174,8 @@
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Supprimer l'observation?"
   },
-  "screens.Observation.description": {
-    "message": "Description:"
-  },
   "screens.Observation.details": {
     "message": "Détails:"
-  },
-  "screens.Observation.fallbackCategoryName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
-  },
-  "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
   },
   "screens.Observation.location": {
     "message": "Emplacement:"
@@ -1291,16 +1190,9 @@
   "screens.Observation.shareMessageFooter": {
     "message": "Envoyé depuis CoMapeo"
   },
-  "screens.Observation.shareMessageTitle": {
-    "message": "CoMapeo Alert"
-  },
   "screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
     "message": "Texte de partage"
-  },
-  "screens.Observation.title": {
-    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "Observation"
   },
   "screens.ObservationCategoryChooser.title": {
     "message": "Choisissez une catégorie"
@@ -1344,10 +1236,6 @@
     "description": "screen title for new observation screen",
     "message": "Nouvelle observation"
   },
-  "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Observation"
-  },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
     "message": "Terminé"
@@ -1360,10 +1248,6 @@
     "description": "Title of observation details screen showing question number and total",
     "message": "Question {current} sur {total}"
   },
-  "screens.ObservationEdit.ObservationEditView.audioButton": {
-    "description": "Button label for adding audio",
-    "message": "Audio"
-  },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Que se passe-t-il ici?"
@@ -1371,10 +1255,6 @@
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
     "message": "Détails"
-  },
-  "screens.ObservationEdit.ObservationEditView.photoButton": {
-    "description": "Button label for adding photo",
-    "message": "Photo"
   },
   "screens.ObservationEdit.changePreset": {
     "message": "Modifier"
@@ -1384,12 +1264,8 @@
     "message": "Que se passe-t-il ici?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Modifier l'observation"
-  },
-  "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Observation"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Piste"
@@ -1397,15 +1273,8 @@
   "screens.ObservationList.downloadObservation": {
     "message": "Télécharger les observations"
   },
-  "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "Observations"
-  },
   "screens.ObservationMetadataVerified.accuracy": {
     "message": "Précision"
-  },
-  "screens.ObservationMetadataVerified.altitude": {
-    "message": "Altitude"
   },
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Précision d'altitude"
@@ -1416,23 +1285,14 @@
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "Ces données ont été saisies manuellement."
   },
-  "screens.ObservationMetadataVerified.date": {
-    "message": "Date"
-  },
   "screens.ObservationMetadataVerified.howWeCheck": {
     "message": "Comment nous validons"
-  },
-  "screens.ObservationMetadataVerified.latitude": {
-    "message": "Latitude"
   },
   "screens.ObservationMetadataVerified.location": {
     "message": "Localisation"
   },
   "screens.ObservationMetadataVerified.locationManuallyEntered": {
     "message": "L'emplacement a été entré manuellement"
-  },
-  "screens.ObservationMetadataVerified.longitude": {
-    "message": "Longitude"
   },
   "screens.ObservationMetadataVerified.manuallyEntered": {
     "message": "Saisie manuellement."
@@ -1519,15 +1379,8 @@
     "description": "Label for the person who attached the photo to the observation",
     "message": "Attaché par {name}"
   },
-  "screens.PhotoPreviewModal.distanceFromObs": {
-    "message": "Attached {distance} from observation"
-  },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Supprimer la photo"
-  },
-  "screens.PhotoPreviewModal.imageStorageSize": {
-    "description": "Image size in megabytes",
-    "message": "{value} MB"
   },
   "screens.PhotoPreviewModal.landscape": {
     "description": "Describes image layout when taking photo horizontally",
@@ -1535,10 +1388,6 @@
   },
   "screens.PhotoPreviewModal.navTitle": {
     "message": "Informations sur la photo"
-  },
-  "screens.PhotoPreviewModal.portrait": {
-    "description": "Describes image layout when taking photo vertically",
-    "message": "Portrait"
   },
   "screens.PhotoPreviewModal.timeAttached": {
     "description": "Label for the time when the photo was attached to an observation",
@@ -1592,9 +1441,6 @@
   },
   "screens.PrivacyPolicy.deviceInfoDescription": {
     "message": "Comme le modèle et le fabricant de votre appareil; système d'exploitation des périphériques; taille de l'écran; locale du périphérique (langue); mémoire du périphérique."
-  },
-  "screens.PrivacyPolicy.diagnosticsTitle": {
-    "message": "Diagnostics"
   },
   "screens.PrivacyPolicy.noPII": {
     "message": "Aucune information personnellement identifiable"
@@ -1695,9 +1541,6 @@
   "screens.Security.obscurePasscodeDescriptionActivated": {
     "message": "Protégez votre appareil contre la saisie"
   },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
-  },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Code d'accès non défini"
   },
@@ -1743,9 +1586,6 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> fait maintenant partie de votre projet."
   },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Voir l'équipe"
-  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Revoir l'invitation"
   },
@@ -1757,9 +1597,6 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite": {
     "message": "Annuler l'invitation"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage": {
-    "message": "Invite sent {seconds}s ago"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
     "message": "En attente d'acceptation de l'invitation de l'appareil"
@@ -1775,9 +1612,6 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Peut prendre et partager des observations mais ne gère pas les détails des utilisateurs ou du projet."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.participants": {
-    "message": "Participants"
   },
   "screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
     "message": "Collaborateurs passés"
@@ -1814,9 +1648,6 @@
   },
   "screens.Settings.Config.navTitle": {
     "message": "Configuration"
-  },
-  "screens.Settings.Config.okButton": {
-    "message": "OK"
   },
   "screens.Settings.Config.projectName": {
     "message": "Nom du projet :"
@@ -1872,12 +1703,6 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Rejoindre un projet"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
-    "message": "Les types de fichiers acceptés sont .smp"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Choisir un fichier"
-  },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Cela ne peut pas être annulé."
   },
@@ -1919,18 +1744,6 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Date d'ajout"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Nom de carte"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Supprimer la carte"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invitez des appareils à un nouveau projet avec toutes vos observations."
@@ -2037,17 +1850,11 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
     "message": "Aucun appareil trouvé."
   },
-  "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No Wi-Fi."
-  },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Début"
   },
   "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Arrêter"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncProgress": {
-    "message": "{value}%"
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
     "message": "Terminé ! En attente que d'autres appareils rejoignent"
@@ -2061,20 +1868,11 @@
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
   },
-  "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
-    "message": "{ssid}"
-  },
   "screens.Sync.headerTitle": {
     "message": "Échanger"
   },
   "screens.Sync.remoteArchiveConnected": {
     "message": "Archive distante connectée"
-  },
-  "screens.Track.ObservationList.observation": {
-    "message": "Observation"
-  },
-  "screens.Track.ObservationList.observations": {
-    "message": "Observations"
   },
   "screens.Track.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete a track",
@@ -2157,9 +1955,6 @@
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordonnateur"
   },
-  "sharedComponents.RoleWithIcon.participant": {
-    "message": "Participant"
-  },
   "soloProject.inviteCollaborators.goBack": {
     "message": "Retour"
   },
@@ -2201,11 +1996,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Chaque projet est unique et séparé."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coordonnateur"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Participant"
   }
 }

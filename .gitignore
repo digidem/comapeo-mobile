@@ -55,6 +55,7 @@ yarn.lock
 
 # Translation files
 /translations
+/assets/translations
 
 # Intl polyfills (generated via /scripts/build-intl-polyfills.mjs)
 /src/frontend/polyfills/intl.ts

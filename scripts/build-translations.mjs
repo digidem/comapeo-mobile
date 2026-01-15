@@ -7,7 +7,10 @@ import {fileURLToPath} from 'node:url';
 import LANGUAGE_NAME_TRANSLATIONS from '../src/frontend/languages.json' with {type: 'json'};
 
 const PROJECT_ROOT_DIR_PATH = fileURLToPath(new URL('../', import.meta.url));
-const TRANSLATIONS_DIR_PATH = path.join(PROJECT_ROOT_DIR_PATH, 'translations');
+const TRANSLATIONS_DIR_PATH = path.join(
+  PROJECT_ROOT_DIR_PATH,
+  'assets/translations',
+);
 const MESSAGES_DIR_PATH = path.join(PROJECT_ROOT_DIR_PATH, 'messages');
 
 await run();

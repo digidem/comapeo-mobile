@@ -6,7 +6,7 @@ import stringify from 'json-stable-stringify';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 
-/** @import { FormatFn, CompileFn } from '@formatjs/cli-lib' */
+/** @import { FormatFn } from '@formatjs/cli-lib' */
 /**
  * @typedef { Record<string, {message: string, description?: string}> } CrowdinJson
  */

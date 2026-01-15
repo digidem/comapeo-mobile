@@ -39,11 +39,11 @@ async function run() {
     format: {format, serialize},
   });
   for (const priority of priorities) {
+    if (!output[priority]) {
+      continue;
+    }
     const outputPath = path.join(MESSAGES_DIR_PATH, `${priority}.json`);
-    await fs.writeFile(
-      outputPath,
-      stringify(output[priority] || {}, {space: 2}),
-    );
+    await fs.writeFile(outputPath, stringify(output[priority], {space: 2}));
   }
 }
 

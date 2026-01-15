@@ -133,9 +133,6 @@
   "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
     "message": "Somente um Coordenador de Projeto pode desativar o Arquivo Remoto."
   },
-  "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
-    "message": "Url"
-  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded": {
     "message": "Veja o que está incluído"
   },
@@ -298,9 +295,6 @@
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Sistema de Coordenadas"
   },
-  "Screens.Settings.AppSettings.coordinateSystemDesc": {
-    "message": "UTM,Lat/Lon,DMS"
-  },
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Nome do Dispositivo"
   },
@@ -404,9 +398,6 @@
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Suas alterações não serão salvas. Isso não poderá ser desfeito."
-  },
-  "TrackStats.kilometers": {
-    "message": "km"
   },
   "allProjects.close": {
     "message": "Abrir Configurações"
@@ -523,10 +514,6 @@
     "description": "Label for phone model",
     "message": "Modelo do telefone"
   },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Pré-visualizar"
-  },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
     "message": "Nome do lançamento"
@@ -602,9 +589,6 @@
   },
   "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
     "message": "Definir senha"
-  },
-  "screens.AppPasscode.NewPasscode.Splash.continue": {
-    "message": "Continue"
   },
   "screens.AppPasscode.NewPasscode.Splash.title": {
     "message": "O que é Senha do aplicativo?"
@@ -1014,12 +998,6 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Estatísticas do projeto estão sendo compartilhadas"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Ir para o Mapa"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Ir para Sincronização"
-  },
   "screens.InviteSuccess.success": {
     "message": "Sucesso"
   },
@@ -1036,9 +1014,6 @@
   },
   "screens.LeaveProject.cancel": {
     "message": "Cancelar"
-  },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "Este dispositivo não verá mais ou contribuirá para este projeto"
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "Sair de {projectName}?"
@@ -1097,14 +1072,8 @@
   "screens.ManualGpsScreen.DdForm.latInputLabel": {
     "message": "Valor da latitude"
   },
-  "screens.ManualGpsScreen.DdForm.latitude": {
-    "message": "Latitude"
-  },
   "screens.ManualGpsScreen.DdForm.lonInputLabel": {
     "message": "Valor da longitude"
-  },
-  "screens.ManualGpsScreen.DdForm.longitude": {
-    "message": "Longitude"
   },
   "screens.ManualGpsScreen.DdForm.north": {
     "message": "Norte"
@@ -1148,12 +1117,6 @@
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
     "message": "Coordenadas inválidas"
   },
-  "screens.ManualGpsScreen.DmsForm.latitude": {
-    "message": "Latitude"
-  },
-  "screens.ManualGpsScreen.DmsForm.longitude": {
-    "message": "Longitude"
-  },
   "screens.ManualGpsScreen.DmsForm.north": {
     "message": "Norte"
   },
@@ -1178,17 +1141,11 @@
   "screens.ManualGpsScreen.easting": {
     "message": "Leste"
   },
-  "screens.ManualGpsScreen.eastingSuffix": {
-    "message": "mE"
-  },
   "screens.ManualGpsScreen.invalidCoordinates": {
     "message": "Coordenadas inválidas. A Latitude deve estar entre -90 e 90. A Longitude deve estar entre -180 e 180"
   },
   "screens.ManualGpsScreen.northing": {
     "message": "Norte"
-  },
-  "screens.ManualGpsScreen.northingSuffix": {
-    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
@@ -1384,7 +1341,7 @@
     "message": "O que está acontecendo aqui?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Editar Observação"
   },
   "screens.ObservationEdit.observation": {
@@ -1404,9 +1361,6 @@
   "screens.ObservationMetadataVerified.accuracy": {
     "message": "Precisão"
   },
-  "screens.ObservationMetadataVerified.altitude": {
-    "message": "Altitude"
-  },
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Precisão da Altitude"
   },
@@ -1422,17 +1376,11 @@
   "screens.ObservationMetadataVerified.howWeCheck": {
     "message": "Como nós validamos"
   },
-  "screens.ObservationMetadataVerified.latitude": {
-    "message": "Latitude"
-  },
   "screens.ObservationMetadataVerified.location": {
     "message": "Localização"
   },
   "screens.ObservationMetadataVerified.locationManuallyEntered": {
     "message": "A localização foi inserida manualmente"
-  },
-  "screens.ObservationMetadataVerified.longitude": {
-    "message": "Longitude"
   },
   "screens.ObservationMetadataVerified.manuallyEntered": {
     "message": "Inserido manualmente."
@@ -1524,10 +1472,6 @@
   },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Excluir foto"
-  },
-  "screens.PhotoPreviewModal.imageStorageSize": {
-    "description": "Image size in megabytes",
-    "message": "{value} MB"
   },
   "screens.PhotoPreviewModal.landscape": {
     "description": "Describes image layout when taking photo horizontally",
@@ -1743,9 +1687,6 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> agora faz parte do seu projeto."
   },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Ver Equipe"
-  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Revisar convite"
   },
@@ -1815,9 +1756,6 @@
   "screens.Settings.Config.navTitle": {
     "message": "Configurações"
   },
-  "screens.Settings.Config.okButton": {
-    "message": "OK"
-  },
   "screens.Settings.Config.projectName": {
     "message": "Nome do projeto:"
   },
@@ -1872,12 +1810,6 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Participe de um projeto"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
-    "message": "Tipos de arquivos aceitos são .smp"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Selecionar Arquivo"
-  },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Isto não pode ser desfeito."
   },
@@ -1919,18 +1851,6 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Mapas de fundo"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Data de inclusão"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Nome do Mapa"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Excluir mapa"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Convide dispositivos para um novo projeto com todas as suas observações."
@@ -2046,9 +1966,6 @@
   "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Parar"
   },
-  "screens.Sync.ProjectSyncDisplay.syncProgress": {
-    "message": "{value}%"
-  },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
     "message": "Concluído! Esperando que outros dispositivos participem"
   },
@@ -2060,9 +1977,6 @@
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Aguardando dispositivos"
-  },
-  "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
-    "message": "{ssid}"
   },
   "screens.Sync.headerTitle": {
     "message": "Trocar"
@@ -2201,11 +2115,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Cada projeto é único e separado."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coordenador"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Participante"
   }
 }

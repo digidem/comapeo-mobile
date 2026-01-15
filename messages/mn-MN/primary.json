@@ -1,0 +1,767 @@
+{
+  "AppContainer.EditHeader.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "AppContainer.EditHeader.discardChangesButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Өөрчлөлтийг цуцлах"
+  },
+  "AppContainer.EditHeader.discardChangesTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Өөрчлөлтийг цуцлах уу? "
+  },
+  "AppContainer.EditHeader.discardTitle": {
+    "description": "Title of dialog that shows when cancelling a new observation",
+    "message": "Сануулгаас татгалзах уу?"
+  },
+  "ExportSuccess.done": {
+    "message": "Дууслаа"
+  },
+  "ExportSuccess.title": {
+    "message": "Амжилттай!"
+  },
+  "MapManagement.ErrorBottomSheet.goBack": {
+    "message": "Буцах"
+  },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "Modal.GPSEnable.button.loading": {
+    "message": "Ачааллаж байна"
+  },
+  "Navigation.Menu.bgMap": {
+    "message": "Background Maps"
+  },
+  "ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Өөрчлөлтийг цуцлах"
+  },
+  "ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Өөрчлөлтийг цуцлах уу? "
+  },
+  "ProjectSettings.RemoteArchive.Success.close": {
+    "message": "Хаах"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
+    "message": "Хаах"
+  },
+  "SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "Screens.ProjectSettings.update": {
+    "message": "Шинэчлэх"
+  },
+  "Screens.ProjectSettings.view": {
+    "message": "Харах"
+  },
+  "Screens.Settings.AppSettings.Drawer.security": {
+    "message": "Аюулгүй байдал"
+  },
+  "Screens.Settings.AppSettings.deviceName": {
+    "message": "Төхөөрөмжний нэр"
+  },
+  "Screens.Settings.AppSettings.language": {
+    "message": "Хэл"
+  },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
+    "description": "Text for cancel action button.",
+    "message": "Цуцлах"
+  },
+  "SharedComponents.ActionButtons.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Цуцлах"
+  },
+  "SharedComponents.ActionButtons.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Тийм, устгах"
+  },
+  "SharedComponents.ActionButtons.delete": {
+    "description": "Button to delete an observation",
+    "message": "Устгах"
+  },
+  "SharedComponents.ActionButtons.share": {
+    "description": "Button to share an observation",
+    "message": "Хуваалцах"
+  },
+  "TrackEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "TrackEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "Өөрчлөлтийг цуцлах уу? "
+  },
+  "TrackEdit.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "Өөрчлөлтийг цуцлах"
+  },
+  "allProjects.close": {
+    "message": "Open Settings"
+  },
+  "hooks.usePasscodeLockout.lockoutMessage": {
+    "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
+  },
+  "screen.EditProjectDetails.projectName": {
+    "message": "Төслийн нэр"
+  },
+  "screens.AboutSettings.androidBuild": {
+    "description": "Label for Android build number",
+    "message": "Android бүтээх дугаар"
+  },
+  "screens.AboutSettings.androidVersion": {
+    "description": "Label for Android version",
+    "message": "Android хувилбар"
+  },
+  "screens.AboutSettings.phoneModel": {
+    "description": "Label for phone model",
+    "message": "Гар утасны загвар"
+  },
+  "screens.AboutSettings.unknownValue": {
+    "description": "Shown when a device info (e.g. version number) is unknown",
+    "message": "Үл мэдэгдэх"
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "Аппликэйшний нууц үгийг хадгалах"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
+    "message": "Нууц үгийг оруулна уу"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
+    "message": "Нууц үг оруулах"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "Нууц үг дахин оруулах"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "Нууц үг тохируулах"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "Дараагийнх"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "Нууц үг 5 оронтой тоо байх ёстой"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "Нууц үг болгон ашиглах боломжгүй"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "Нууц үг тохирохгүй байна"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
+    "message": "Нууц үг буруу"
+  },
+  "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
+    "message": "Нууц үг тохируулах"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Үргэлжлүүлэх"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "Аппликэйшний нууц үг гэж юу вэ?"
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "Аппликэйшний нууц үгийг өөрчлөх"
+  },
+  "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
+    "message": "Та одоогоор Аппликэйшний нууц үгийг ашиглаж байна. Нууц үгээ ашиглахаа зогсоох эсвэл өөрчлөхийн тулд доороос үзнэ үү."
+  },
+  "screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOff": {
+    "message": "Унтраах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
+    "message": "Аппликэйшний нууц үгийг унтраах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "Аппликэйшний нууц үгийг ашиглах"
+  },
+  "screens.AppUsageSharingSuccess.done": {
+    "message": "Дууслаа"
+  },
+  "screens.AppUsageSharingSuccess.success": {
+    "message": "Амжилттай!"
+  },
+  "screens.AudioAttachmentPlayback.share": {
+    "message": "Хуваалцах"
+  },
+  "screens.AudioPlaybackNew.delete": {
+    "message": "Устгах"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "Төслийг орхих"
+  },
+  "screens.ConfirmDeletePhoto.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.ConfirmDeletePhoto.title": {
+    "message": "Энэ зургийг устгах уу?"
+  },
+  "screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "Солбицолын формат"
+  },
+  "screens.DataPrivacy.next": {
+    "message": "Дараагийнх"
+  },
+  "screens.DeviceNaming.Success.joinProject": {
+    "message": "Төсөлд нэгдэх"
+  },
+  "screens.DeviceNaming.Success.success": {
+    "message": "Амжилттай!"
+  },
+  "screens.DeviceNaming.placeholder": {
+    "message": "Төхөөрөмжний нэр"
+  },
+  "screens.DeviceNaming.save": {
+    "message": "Хадгалах"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EnterPassword.enterPass": {
+    "message": "Нууц үгээ оруулах"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Нууц үг буруу байна, дахин оролдоно уу"
+  },
+  "screens.ExchangeSettingsBottomSheet.close": {
+    "message": "Хаах"
+  },
+  "screens.ExchangeSettingsBottomSheet.save": {
+    "message": "Хадгалах"
+  },
+  "screens.ExchangeSoloScreen.goBack": {
+    "message": "Буцах"
+  },
+  "screens.ExportObservations.close": {
+    "message": "Хаах"
+  },
+  "screens.ExportObservations.download": {
+    "message": "Татах"
+  },
+  "screens.InviteCancelled.close": {
+    "message": "Хаах"
+  },
+  "screens.InviteReceived.declineInvite": {
+    "message": "Урилгаас татгалзах"
+  },
+  "screens.InviteSuccess.success": {
+    "message": "Амжилттай"
+  },
+  "screens.LanguageSettings.title": {
+    "description": "Title language settings screen",
+    "message": "Хэл"
+  },
+  "screens.LeaveProject.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.LocationInfoScreen.details": {
+    "description": "Section title for details about current position",
+    "message": "Дэлгэрэнгүй"
+  },
+  "screens.LocationInfoScreen.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "Одоогийн GPS-ийн байршил"
+  },
+  "screens.LocationInfoScreen.lastUpdate": {
+    "description": "Section title for time of last GPS update",
+    "message": "Сүүлийн шинэчлэл"
+  },
+  "screens.LocationInfoScreen.locationDD": {
+    "description": "Section title for DD coordinates",
+    "message": "Аравтын зэрэгтэй солбицолууд"
+  },
+  "screens.LocationInfoScreen.locationDMS": {
+    "description": "Section title for DMS coordinates",
+    "message": "DMS-ийн солбицолууд"
+  },
+  "screens.LocationInfoScreen.locationSensors": {
+    "description": "Heading for section about location sensor status",
+    "message": "Мэдрэгчийн төлөв"
+  },
+  "screens.LocationInfoScreen.locationUTM": {
+    "description": "Section title for UTM coordinates",
+    "message": "UTM-ийн солбицолууд"
+  },
+  "screens.LocationInfoScreen.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Үгүй"
+  },
+  "screens.LocationInfoScreen.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Тийм"
+  },
+  "screens.ManualGpsScreen.DdForm.east": {
+    "message": "Дорнод"
+  },
+  "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
+    "message": "Буруу солбицол"
+  },
+  "screens.ManualGpsScreen.DdForm.latInputLabel": {
+    "message": "Өргөрөгийн утга"
+  },
+  "screens.ManualGpsScreen.DdForm.latitude": {
+    "message": "Өргөрөг"
+  },
+  "screens.ManualGpsScreen.DdForm.lonInputLabel": {
+    "message": "Уртрагын утга"
+  },
+  "screens.ManualGpsScreen.DdForm.longitude": {
+    "message": "Уртраг"
+  },
+  "screens.ManualGpsScreen.DdForm.north": {
+    "message": "Хойд"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
+    "message": "Өргөргийн үндсэн байдлыг сонгох"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
+    "message": "Уртрагын үндсэн байдлыг сонгох"
+  },
+  "screens.ManualGpsScreen.DdForm.south": {
+    "message": "Өмнөд"
+  },
+  "screens.ManualGpsScreen.DdForm.west": {
+    "message": "Өрнөд"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
+    "message": "{field} минутын оролт"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
+    "message": "{field} секундын оролт"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
+    "message": "Өнцөг"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
+    "message": "Чиглэл"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
+    "message": "Минут"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
+    "message": "Секунд"
+  },
+  "screens.ManualGpsScreen.DmsForm.east": {
+    "message": "Дорнод"
+  },
+  "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
+    "message": "Буруу солбицол"
+  },
+  "screens.ManualGpsScreen.DmsForm.latitude": {
+    "message": "Өргөрөг"
+  },
+  "screens.ManualGpsScreen.DmsForm.longitude": {
+    "message": "Уртраг"
+  },
+  "screens.ManualGpsScreen.DmsForm.north": {
+    "message": "Хойд"
+  },
+  "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
+    "message": "Өргөргийн үндсэн байдлыг сонгох"
+  },
+  "screens.ManualGpsScreen.DmsForm.south": {
+    "message": "Өмнөд"
+  },
+  "screens.ManualGpsScreen.DmsForm.west": {
+    "message": "Өрнөд"
+  },
+  "screens.ManualGpsScreen.coordinateFormat": {
+    "message": "Солбицолын формат"
+  },
+  "screens.ManualGpsScreen.easting": {
+    "message": "Дорнод"
+  },
+  "screens.ManualGpsScreen.northing": {
+    "message": "Хойд"
+  },
+  "screens.ManualGpsScreen.title": {
+    "description": "title of manual GPS screen",
+    "message": "Солбицол оруулах"
+  },
+  "screens.ManualGpsScreen.zoneLetter": {
+    "message": "Бүсийн үсэг"
+  },
+  "screens.ManualGpsScreen.zoneNumber": {
+    "message": "Бүсын дугаар"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
+    "message": "Turn On"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
+    "message": "Use Your Location"
+  },
+  "screens.ObscurePasscode.title": {
+    "message": "Тодорхой бус нууц үг"
+  },
+  "screens.ObscurePasscode.toggleMessage": {
+    "message": "Тодорхой бус нууц үгийг ашиглах"
+  },
+  "screens.ObscurePasscode.whatIsObscure": {
+    "message": "Тодорхой бус нууц үг юу вэ?"
+  },
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Устгах"
+  },
+  "screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "Хариулт алга"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Сануулга"
+  },
+  "screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "Хуваалцах"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Цуцлах"
+  },
+  "screens.Observation.comapeoAlert": {
+    "message": "CoMapeo Alert"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Тийм, устгах"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Сануулгыг устгах уу?"
+  },
+  "screens.Observation.description": {
+    "message": "Тодорхойлолт:"
+  },
+  "screens.Observation.details": {
+    "message": "Дэлгэрэнгүй:"
+  },
+  "screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Сануулга"
+  },
+  "screens.Observation.fallbackPresetName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Сануулга"
+  },
+  "screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Сануулга"
+  },
+  "screens.ObservationCreate.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Үргэлжлүүлэн хүлээж байна"
+  },
+  "screens.ObservationCreate.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Гар ажиллагаатай солбицолууд"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Энэ сануулга нь байршилгүй. Та GPS дохиог үргэлжлүүлэн хүлээх, сануулгыг байршилгүйгээр хадгалах эсвэл солбицолуудыг гараар оруулах боломжтой"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "GPS-ийн дохио байхгүй"
+  },
+  "screens.ObservationCreate.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Хадгалах"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPS-ийн нарийвчлал бага байна. Та илүү нарийвчлалтай байхыг үргэлжлүүлэн хүлээх, ажиглалтыг бага нарийвчлалтайгаар хадгалах эсвэл солбицолыг гараар оруулах боломжтой."
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "GPS-ийн дохио сул байна"
+  },
+  "screens.ObservationCreate.changePreset": {
+    "message": "Өөрчлөх"
+  },
+  "screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Энд юу болоод байгаа юм бэ?"
+  },
+  "screens.ObservationCreate.navTitle": {
+    "description": "screen title for new observation screen",
+    "message": "Шинэ сануулга"
+  },
+  "screens.ObservationCreate.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Сануулга"
+  },
+  "screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "Дууслаа"
+  },
+  "screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "Дараагийнх"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Энд юу болоод байгаа юм бэ?"
+  },
+  "screens.ObservationEdit.ObservationEditView.detailsButton": {
+    "description": "Button label to add details",
+    "message": "Дэлгэрэнгүй"
+  },
+  "screens.ObservationEdit.changePreset": {
+    "message": "Өөрчлөх"
+  },
+  "screens.ObservationEdit.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Энд юу болоод байгаа юм бэ?"
+  },
+  "screens.ObservationEdit.navTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "Сануулга засах"
+  },
+  "screens.ObservationEdit.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Сануулга"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Сануулгууд"
+  },
+  "screens.ObservationMetadataVerified.latitude": {
+    "message": "Өргөрөг"
+  },
+  "screens.ObservationMetadataVerified.longitude": {
+    "message": "Уртраг"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "Газрын зураг руу очих"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "Анхны сануулгаа бичхийн тулд газрын зураг эсвэл камерын харагдацаас эхэл."
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "Сануулгууд нэмэх"
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "Ачаалж байна... шинэ төхөөрөмжтэй зэрэгцүүлэлт хийсний дараа хэсэг хугацаа шаардагдах болно"
+  },
+  "screens.Onboarding.JoinProjectIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.JoinProjectIntro.title": {
+    "message": "Төсөлд нэгдэх"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.ProjectStatisticsTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Энд юу болоод байгаа юм бэ?"
+  },
+  "screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "Төхөөрөмжөө хураахаас хамгаалаарай"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Тодорхой бус нууц үг"
+  },
+  "screens.Security.passDesriptionPassNotSet": {
+    "message": "Нууц үгийг тохируулаагүй байна"
+  },
+  "screens.Security.passDesriptionPassSet": {
+    "message": "Нууц үгийг тохируулсан байна"
+  },
+  "screens.Security.passcodeHeader": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "screens.Security.securitySubheader": {
+    "message": "Төхөөрөмжийн аюулгүй байдал"
+  },
+  "screens.Security.title": {
+    "message": "Аюулгүй байдал"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title": {
+    "message": "Төхөөрөмжний нэр"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "Өөрчлөлтийг цуцлах уу? "
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
+    "message": "Төхөөрөмжний нэр"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
+    "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "Төхөөрөмж урих"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "Төсөлд нэгдэх"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.Config.navTitle": {
+    "message": "Configuration"
+  },
+  "screens.Settings.Config.okButton": {
+    "message": "Баталгаажуулах"
+  },
+  "screens.Settings.Config.projectName": {
+    "message": "Төслийн нэр:"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "Дууслаа"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
+    "message": "Invite Device"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
+    "message": "Амжилттай!"
+  },
+  "screens.Settings.CreateOrJoinProject.createProjectButton": {
+    "message": "Create Project"
+  },
+  "screens.Settings.CreateOrJoinProject.enterName": {
+    "message": "Enter a name for the Project"
+  },
+  "screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "Хадгалах"
+  },
+  "screens.Settings.JoinAProject.title": {
+    "message": "Төсөлд нэгдэх"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.close": {
+    "message": "Хаах"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
+    "message": "Газрын зургийг устгах"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
+    "message": "Импорт хийхэд гарсан алдаа"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
+    "message": "Background Maps"
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "Дараагийнх"
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Дараагийнх"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.YourTeam.close": {
+    "message": "Хаах"
+  },
+  "screens.Sync.NoWifiDisplay.buttonText": {
+    "message": "Open Settings"
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.NoWifiDisplay.title": {
+    "message": "No WiFi"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.close": {
+    "message": "Хаах"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesFound": {
+    "message": "Devices found"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
+    "message": "Complete! You're up to date"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
+  },
+  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
+    "message": "Waiting for devices"
+  },
+  "screens.Track.ObservationList.observation": {
+    "message": "Сануулга"
+  },
+  "screens.Track.ObservationList.observations": {
+    "message": "Сануулгууд"
+  },
+  "screens.TrackRecordingActive.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "You’re currently recording a track. To join project, stop recording"
+  },
+  "sharedComponents.DeviceIconWithName.Disconnected": {
+    "message": "Сүлжээний холболт салгасан"
+  },
+  "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Хайлт хийж байна..."
+  },
+  "sharedComponents.Editor.PresetView.Change": {
+    "message": "Өөрчлөх"
+  },
+  "sharedComponents.ErrorBottomSheet.goBack": {
+    "message": "Буцах"
+  },
+  "soloProject.inviteCollaborators.goBack": {
+    "message": "Буцах"
+  },
+  "soloProject.startNewProject.goBack": {
+    "message": "Буцах"
+  }
+}

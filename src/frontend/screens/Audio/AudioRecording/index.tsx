@@ -15,7 +15,7 @@ import {
 import {UIActivityIndicator} from 'react-native-indicators';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {Audio} from 'expo-av';
+import {getRecordingPermissionsAsync, PermissionResponse} from 'expo-audio';
 
 const m = defineMessages({
   lessThan5: {
@@ -39,13 +39,18 @@ export function AudioRecording({
   const {startRecording, stopRecording, status} = useAudioRecording();
   const timeElapsed = status?.durationMillis || 0;
   const [isLoading, setIsLoading] = React.useState(true);
-  const [audioPermission] = Audio.usePermissions();
+  const [audioPermission, setAudioPermission] =
+    React.useState<PermissionResponse | null>(null);
 
   const {formatMessage} = useIntl();
 
   usePreventBackButtonWhileRecording({
     shouldPrevent: !isLoading,
   });
+
+  React.useEffect(() => {
+    getRecordingPermissionsAsync().then(setAudioPermission);
+  }, []);
 
   React.useEffect(() => {
     const start = async () => {

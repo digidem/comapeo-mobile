@@ -98,7 +98,9 @@ export const AudioDraftPlaybackScreen = ({
         />
         <View>
           <HeaderText style={{textAlign: 'center'}} variant="header3">
-            {millisecondsToMMSS(isPlaying ? currentPosition : duration)}
+            {millisecondsToMMSS(
+              currentPosition > 0 ? currentPosition : duration,
+            )}
           </HeaderText>
           <DateDistance
             date={new Date(createdAt)}

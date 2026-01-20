@@ -1,85 +1,78 @@
-import {Audio, AVPlaybackStatus, AVPlaybackStatusSuccess} from 'expo-av';
+import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio';
 import {useCallback, useEffect, useState, useRef} from 'react';
-import {Sound} from 'expo-av/build/Audio/Sound';
 import {useNavigationFromRoot} from './useNavigationWithTypes';
 
 export const useAudioPlayback = (recordingUri: string) => {
-  const recordedSoundRef = useRef<Sound | null>(null);
+  const player = useAudioPlayer({uri: recordingUri});
+  const status = useAudioPlayerStatus(player);
   const [isPlaying, setPlaying] = useState(false);
-  const [duration, setDuration] = useState<number>(0);
   const [currentPosition, setCurrentPosition] = useState(0);
+  const lastPositionRef = useRef(0);
   const {navigate} = useNavigationFromRoot();
 
-  const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
-    const update = status as AVPlaybackStatusSuccess;
-    if (update.didJustFinish) {
+  useEffect(() => {
+    if (status.playing !== isPlaying) {
+      setPlaying(status.playing);
+    }
+
+    if (status.playing && status.currentTime !== undefined) {
+      const positionMs = status.currentTime * 1000;
+      setCurrentPosition(positionMs);
+      lastPositionRef.current = positionMs;
+    }
+
+    if (status.didJustFinish && !status.playing) {
       setPlaying(false);
-      setCurrentPosition(update.durationMillis ?? 0);
-    } else {
-      setPlaying(update.isPlaying);
-      if (update.isPlaying) {
-        setCurrentPosition(update.positionMillis);
+      if (status.duration) {
+        const endPositionMs = status.duration * 1000;
+        setCurrentPosition(endPositionMs);
+        lastPositionRef.current = endPositionMs;
       }
     }
-  }, []);
-
-  useEffect(() => {
-    let isCancelled = false;
-
-    Audio.Sound.createAsync({uri: recordingUri})
-      .then(({sound, status}) => {
-        if (isCancelled) {
-          sound.unloadAsync().catch(() => {});
-          return;
-        }
-        recordedSoundRef.current = sound;
-        setDuration((status as AVPlaybackStatusSuccess).durationMillis ?? 0);
-        sound.setOnPlaybackStatusUpdate(audioCallbackHandler);
-      })
-      .catch(() => {
-        if (!isCancelled) {
-          navigate('ErrorBottomSheet');
-        }
-      });
-
-    return () => {
-      isCancelled = true;
-      if (recordedSoundRef.current) {
-        recordedSoundRef.current.unloadAsync();
-        recordedSoundRef.current = null;
-      }
-    };
-  }, [recordingUri, audioCallbackHandler, navigate]);
+  }, [
+    status.playing,
+    status.currentTime,
+    status.didJustFinish,
+    status.duration,
+    isPlaying,
+  ]);
 
   const startPlayback = useCallback(async () => {
-    if (!recordedSoundRef.current || isPlaying) return;
+    if (!player || isPlaying) return;
+
+    const duration = status.duration || 0;
+    const currentTime = status.currentTime || 0;
+
+    if (currentTime >= duration && duration > 0) {
+      player.seekTo(0);
+      setCurrentPosition(0);
+      lastPositionRef.current = 0;
+    }
 
     try {
-      if (currentPosition >= duration) {
-        await recordedSoundRef.current.setPositionAsync(0);
-        setCurrentPosition(0);
-      }
-
-      await recordedSoundRef.current.playAsync();
+      player.play();
       setPlaying(true);
     } catch {
       navigate('ErrorBottomSheet');
     }
-  }, [isPlaying, currentPosition, duration, navigate]);
+  }, [player, isPlaying, status.duration, status.currentTime, navigate]);
 
   const stopPlayback = useCallback(async () => {
-    if (!recordedSoundRef.current || !isPlaying) return;
+    if (!player || !isPlaying) return;
 
     try {
-      await recordedSoundRef.current!.pauseAsync();
-      setPlaying(false);
+      player.pause();
     } catch {
       navigate('ErrorBottomSheet');
+      return;
     }
-  }, [isPlaying, navigate]);
+
+    setPlaying(false);
+    setCurrentPosition(lastPositionRef.current);
+  }, [player, isPlaying, navigate]);
 
   return {
-    duration,
+    duration: status.duration ? status.duration * 1000 : 0,
     isPlaying,
     currentPosition,
     startPlayback,

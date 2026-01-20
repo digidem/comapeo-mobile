@@ -10,7 +10,7 @@ import {
   ProcessedDraftPhoto,
   SavedPhoto,
 } from '../contexts/PhotoPromiseContext/types';
-import {Audio} from 'expo-av';
+import {PermissionResponse} from 'expo-audio';
 import {Exports} from '../screens/ExportObservations';
 
 export interface TabBarIconProps {
@@ -126,7 +126,7 @@ export type RootStackParamsList = {
   BackgroundMaps: undefined;
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
-    audioPermission: Audio.PermissionResponse;
+    audioPermission: PermissionResponse;
   };
   AudioRecording: undefined;
   AudioDraftPlaybackScreen: {

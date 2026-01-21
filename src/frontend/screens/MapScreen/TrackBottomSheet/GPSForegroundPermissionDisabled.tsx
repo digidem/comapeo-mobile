@@ -1,11 +1,10 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {PrimaryButton} from '../../../sharedComponents/Buttons';
 import NoGpsAlert from '../../../images/AlertIcon.svg';
 import {Circle} from '../../../sharedComponents/icons/Circle';
+import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
   gpsDisabledTitle: {
@@ -32,15 +31,17 @@ export const GPSForegroundPermissionDisabled = ({
 
   return (
     <View style={styles.wrapper}>
-      <Circle radius={30} style={{marginBottom: 20, overflow: 'visible'}}>
-        <NoGpsAlert width={70} height={70} />
-      </Circle>
-      <HeaderText variant="header2" style={{marginBottom: 10}}>
-        {formatMessage(m.gpsDisabledTitle)}
-      </HeaderText>
-      <BodyText style={styles.description}>
-        {formatMessage(m.gpsDisabledDescription)}
-      </BodyText>
+      <IconTitleDescription
+        icon={
+          <Circle radius={30} style={{marginBottom: 20, overflow: 'visible'}}>
+            <NoGpsAlert width={70} height={70} />
+          </Circle>
+        }
+        title={formatMessage(m.gpsDisabledTitle)}
+        description={formatMessage(m.gpsDisabledDescription)}
+        gap={10}
+        style={styles.messageStack}
+      />
       <PrimaryButton
         fullSize
         onPress={askForegroundLocationPermission}
@@ -56,5 +57,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
   },
-  description: {marginBottom: 30, paddingHorizontal: 50, textAlign: 'center'},
+  messageStack: {
+    marginBottom: 30,
+    paddingHorizontal: 50,
+  },
 });

@@ -13,9 +13,8 @@ import {
   DestructiveButton,
   SecondaryButton,
 } from '../../sharedComponents/Buttons';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
   title: {
@@ -56,13 +55,11 @@ export function RemoveRemoteArchive({
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
-        <View style={styles.infoContainer}>
-          <Error />
-          <HeaderText variant="header2" style={{textAlign: 'center'}}>
-            {t(m.title, {name: name || baseUrl})}
-          </HeaderText>
-          <BodyText style={{textAlign: 'center'}}>{t(m.description)}</BodyText>
-        </View>
+        <IconTitleDescription
+          icon={<Error />}
+          title={t(m.title, {name: name || baseUrl})}
+          description={t(m.description)}
+        />
 
         <View style={styles.buttonContainer}>
           {removeServerPeer.status === 'pending' ? (
@@ -118,10 +115,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     gap: 40,
-  },
-  infoContainer: {
-    alignItems: 'center',
-    gap: 20,
   },
   buttonContainer: {
     gap: 20,

@@ -1,7 +1,5 @@
 import {BottomSheetWrapper} from '../../../sharedComponents/BottomSheetWrapper';
 import {defineMessages, useIntl} from 'react-intl';
-import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {
   SecondaryButton,
   DestructiveButton,
@@ -11,6 +9,7 @@ import {useTracking} from '../../../hooks/useTracking';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import ErrorIcon from '../../../images/Error.svg';
 import {StyleSheet, View} from 'react-native';
+import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
   noTrackRecorded: {
@@ -44,15 +43,12 @@ export const DidNotMoveBottomSheet = ({
   return (
     <BottomSheetWrapper>
       <View style={styles.content}>
-        <ErrorIcon width="60" height={60} />
-
-        <HeaderText variant="header2" style={styles.headerText}>
-          {formatMessage(m.noTrackRecorded)}
-        </HeaderText>
-
-        <BodyText style={styles.bodyText}>
-          {formatMessage(m.didNotMove)}
-        </BodyText>
+        <IconTitleDescription
+          icon={<ErrorIcon width="60" height={60} />}
+          title={formatMessage(m.noTrackRecorded)}
+          description={formatMessage(m.didNotMove)}
+          gap={10}
+        />
 
         <View style={styles.buttonContainer}>
           <DestructiveButton
@@ -86,13 +82,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingBottom: 20,
     gap: 10,
-  },
-  headerText: {
-    textAlign: 'center',
-  },
-  bodyText: {
-    textAlign: 'center',
-    fontSize: 16,
   },
   buttonContainer: {
     paddingTop: 10,

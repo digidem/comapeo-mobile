@@ -4,7 +4,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Button} from '../../sharedComponents/Button';
 import GreenCheck from '../../images/Success.svg';
-import {StyleSheet} from 'react-native';
 import {MEDIUM_GREY} from '../../lib/styles';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -59,5 +58,3 @@ export const SuccessfullyAddedArchive = ({
     </ScreenContentWithDock>
   );
 };
-
-const styles = StyleSheet.create({});

@@ -32,6 +32,8 @@ import {
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
 import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
 import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioSavedThumbnail.tsx';
+import {useDraftObservation} from '../../hooks/useDraftObservation.ts';
+import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -52,15 +54,9 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   navigation,
 }) => {
   const {observationId} = route.params;
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <ObservationHeaderRight observationId={observationId} />
-      ),
-    });
-  }, [navigation, observationId]);
   const {projectId} = useActiveProject();
   const {observation, preset} = useObservationWithPreset(observationId);
+  const {existingObservationToDraft} = useDraftObservation();
 
   const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
   const {lat, lon, metadata} = observation;
@@ -75,6 +71,28 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     (attachment): attachment is SavedPhoto | AudioAttachment =>
       isSavedPhoto(attachment) || isAudioAttachment(attachment),
   );
+
+  const canEdit = useCanEditOrDelete(observation.originalVersionId);
+
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        if (canEdit) {
+          return (
+            <ObservationHeaderRight
+              canEdit={canEdit}
+              setObservationToStoreAndNavigateToEdit={() => {
+                existingObservationToDraft(observation, preset);
+                navigation.navigate('ObservationEdit');
+              }}
+            />
+          );
+        }
+
+        return <ObservationHeaderRight canEdit={canEdit} />;
+      },
+    });
+  }, [canEdit, navigation, observation, existingObservationToDraft, preset]);
 
   return (
     <ScrollView

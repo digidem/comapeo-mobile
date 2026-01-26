@@ -4,6 +4,7 @@ import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
 import {
   Keyboard,
   KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   View,
   TouchableWithoutFeedback,
@@ -156,57 +157,60 @@ export const CreateOrNameSoloProject = ({
   };
 
   return (
-    <KeyboardAvoidingView>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
-          <View>
-            <HeaderText variant="header5" style={{marginHorizontal: 20}}>
-              {t(m.enterName)}
-            </HeaderText>
-            <View style={{marginHorizontal: 20, marginTop: 10}}>
-              <HookFormTextInput
-                testID="PROJECT.name-inp"
-                control={control}
-                name="projectName"
-                rules={{maxLength: 100, required: true, minLength: 1}}
-                showCharacterCount
-              />
-            </View>
-            <View style={styles.divider} />
-            <View style={styles.infoBox}>
-              <HeaderText variant="header6" style={styles.infoHeading}>
-                {t(m.keepInMind)}
+    <KeyboardAvoidingView style={{flex: 1}}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={styles.container}>
+            <View>
+              <HeaderText variant="header5" style={{marginHorizontal: 20}}>
+                {t(m.enterName)}
               </HeaderText>
+              <View style={{marginHorizontal: 20, marginTop: 10}}>
+                <HookFormTextInput
+                  testID="PROJECT.name-inp"
+                  control={control}
+                  name="projectName"
+                  rules={{maxLength: 100, required: true, minLength: 1}}
+                  showCharacterCount
+                />
+              </View>
+              <View style={styles.divider} />
+              <View style={styles.infoBox}>
+                <HeaderText variant="header6" style={styles.infoHeading}>
+                  {t(m.keepInMind)}
+                </HeaderText>
 
-              <InfoRow Icon={UniqueProjectIcon} text={t(m.projectUnique)} />
-              <InfoRow
-                Icon={NameMismatchIcon}
-                text={t(m.existingProjectName)}
-              />
-              <InfoRow Icon={SpeechBubbleIcon} text={t(m.requestInvites)} />
+                <InfoRow Icon={UniqueProjectIcon} text={t(m.projectUnique)} />
+                <InfoRow
+                  Icon={NameMismatchIcon}
+                  text={t(m.existingProjectName)}
+                />
+                <InfoRow Icon={SpeechBubbleIcon} text={t(m.requestInvites)} />
+              </View>
+            </View>
+
+            <View
+              style={{
+                paddingHorizontal: 20,
+                alignItems: 'center',
+                paddingTop: 10,
+              }}>
+              {mutationIsPending ? (
+                <UIActivityIndicator size={30} style={{marginBottom: 20}} />
+              ) : (
+                <PrimaryButton
+                  testID="PROJECT.create-btn"
+                  fullSize={true}
+                  text={
+                    isSolo ? t(m.saveProjectButton) : t(m.createProjectButton)
+                  }
+                  onPress={handleSubmit(handleCreateOrUpdateProject)}
+                />
+              )}
             </View>
           </View>
-
-          <View
-            style={{
-              paddingHorizontal: 20,
-              alignItems: 'center',
-            }}>
-            {mutationIsPending ? (
-              <UIActivityIndicator size={30} style={{marginBottom: 20}} />
-            ) : (
-              <PrimaryButton
-                testID="PROJECT.create-btn"
-                fullSize={true}
-                text={
-                  isSolo ? t(m.saveProjectButton) : t(m.createProjectButton)
-                }
-                onPress={handleSubmit(handleCreateOrUpdateProject)}
-              />
-            )}
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -245,10 +249,13 @@ function InfoRow({Icon, text}: InfoRowProps) {
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     paddingTop: 40,
     paddingBottom: 20,
-    height: '100%',
+    minHeight: '100%',
     justifyContent: 'space-between',
   },
   divider: {

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
-import SimpleTrackIcon from '../../images/SimpleTrack.svg';
-import {millisecondsToHHMMSS} from '../../lib/millisecondsToFormattedTime';
-import {BLUE_GREY} from '../../lib/styles';
-import {BodyText} from '../Text/BodyText';
+import SimpleTrackIcon from '../images/SimpleTrack.svg';
+import {millisecondsToHHMMSS} from '../lib/millisecondsToFormattedTime';
+import {BLUE_GREY} from '../lib/styles';
+import {BodyText} from './Text/BodyText';
 import {defineMessages, useIntl} from 'react-intl';
 
 const m = defineMessages({

@@ -63,10 +63,13 @@ export const ObservationCategoryChooser: NativeNavigationComponent<
             headerBackButtonProps={props}
           />
         ) : (
-          <CustomHeaderLeftClose headerBackButtonProps={props} />
+          <CustomHeaderLeftClose
+            headerBackButtonProps={props}
+            observationId={observationId}
+          />
         ),
     });
-  }, [navigation, currentPreset, handleGoBack]);
+  }, [navigation, currentPreset, handleGoBack, observationId]);
 
   return (
     <View style={styles.container} testID="MAIN.categories-scrn">

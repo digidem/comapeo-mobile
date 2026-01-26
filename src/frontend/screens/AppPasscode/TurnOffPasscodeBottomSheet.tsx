@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import {RED} from '../../lib/styles';
 import ErrorIcon from '../../images/Error.svg';
@@ -33,11 +34,19 @@ export const TurnOffPasscodeBottomSheet = ({
 }: NativeRootNavigationProps<'TurnOffPasscodeBottomSheet'>) => {
   const {formatMessage: t} = useIntl();
   const {setPasscode} = useSecurityActions();
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  async function unsetAppPasscode() {
-    await setPasscode(null);
-    // Popping 4 removes the bottom sheet, DisablePasscode, EnterPassToTurnOff, and lands on Security
-    navigation.pop(4);
+  function unsetAppPasscode() {
+    setIsLoading(true);
+    setPasscode(null)
+      .then(() => {
+        setIsLoading(false);
+        navigation.pop(4);
+      })
+      .catch(() => {
+        setIsLoading(false);
+        navigation.navigate('ErrorBottomSheet');
+      });
   }
 
   return (
@@ -51,18 +60,22 @@ export const TurnOffPasscodeBottomSheet = ({
           {t(m.turnOffConfirmation)}
         </HeaderText>
 
-        <View style={styles.buttonsContainer}>
-          <DestructiveButton
-            fullSize
-            text={t(m.turnOff)}
-            onPress={unsetAppPasscode}
-          />
-          <SecondaryButton
-            fullSize
-            text={t(m.cancel)}
-            onPress={() => navigation.goBack()}
-          />
-        </View>
+        {isLoading ? (
+          <UIActivityIndicator size={30} />
+        ) : (
+          <View style={styles.buttonsContainer}>
+            <DestructiveButton
+              fullSize
+              text={t(m.turnOff)}
+              onPress={unsetAppPasscode}
+            />
+            <SecondaryButton
+              fullSize
+              text={t(m.cancel)}
+              onPress={() => navigation.goBack()}
+            />
+          </View>
+        )}
       </View>
     </BottomSheetWrapper>
   );

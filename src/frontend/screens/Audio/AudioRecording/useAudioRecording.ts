@@ -2,13 +2,12 @@ import {useState, useCallback} from 'react';
 import {
   useAudioRecorder,
   useAudioRecorderState,
-  RecordingOptions,
   RecordingPresets,
 } from 'expo-audio';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../../hooks/useDraftObservation';
 
-const RECORDING_OPTIONS: RecordingOptions = RecordingPresets.HIGH_QUALITY;
+const RECORDING_OPTIONS = RecordingPresets.HIGH_QUALITY!;
 
 export function useAudioRecording() {
   const recorder = useAudioRecorder(RECORDING_OPTIONS);

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {BLACK} from '../lib/styles';
 import {FormattedMessage, defineMessages} from 'react-intl';
-import LocationIcon from '../../images/Location.svg';
+import LocationIcon from '../images/Location.svg';
 import {FormattedCoords} from './FormattedData';
 import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
 

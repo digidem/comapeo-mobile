@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
-import SimpleTrackIcon from '../../images/SimpleTrack.svg';
+import SimpleTrackIcon from '../images/SimpleTrack.svg';
 import {millisecondsToHHMMSS} from '../lib/millisecondsToFormattedTime';
 import {BLUE_GREY} from '../lib/styles';
 import {BodyText} from './Text/BodyText';

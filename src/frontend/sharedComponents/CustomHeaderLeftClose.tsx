@@ -7,47 +7,11 @@ import isEqual from 'lodash.isequal';
 import {CloseIcon} from './icons';
 import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../hooks/useDraftObservation';
-import {defineMessages, useIntl} from 'react-intl';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
 import {ClientGeneratedObservation} from '../sharedTypes';
 import {Observation} from '@comapeo/schema';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
-import {
-  CommonActions,
-  useFocusEffect,
-  useNavigation,
-} from '@react-navigation/native';
-import {
-  BottomSheetModalContent,
-  BottomSheetModal,
-  useBottomSheetModal,
-} from './BottomSheetModal';
-
-import ErrorIcon from '../images/Error.svg';
-import DiscardIcon from '../images/delete.svg';
-
-const m = defineMessages({
-  discardChangesTitle: {
-    id: 'AppContainer.EditHeader.discardChangesTitle',
-    defaultMessage: 'Discard changes?',
-    description: 'Title of dialog that shows when cancelling observation edits',
-  },
-  discardChangesDescription: {
-    id: 'AppContainer.EditHeader.discardChangesDescription',
-    defaultMessage: 'Your changes will not be saved. This cannot be undone. ',
-  },
-  discardCancel: {
-    id: 'AppContainer.EditHeader.discardCancel',
-    defaultMessage: 'Continue editing',
-    description: 'Button on dialog to keep editing (cancelling close action)',
-  },
-  discardChangesButton: {
-    id: 'AppContainer.EditHeader.discardChangesButton',
-    defaultMessage: 'Discard changes',
-    description: 'Title of dialog that shows when cancelling observation edits',
-  },
-});
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 // We use a slightly larger back icon, to improve accessibility
 // TODO iOS: This should probably be a chevron not an arrow
@@ -70,60 +34,31 @@ export const CustomHeaderLeftClose = ({
   headerBackButtonProps,
   observationId,
 }: CustomHeaderLeftCloseProps) => {
-  const {isOpen, sheetRef, closeSheet, openSheet} = useBottomSheetModal({
-    openOnMount: false,
-  });
-  const {formatMessage} = useIntl();
-  const {clearDraft} = useDraftObservation();
   const navigation = useNavigationFromRoot();
 
-  const handleDiscard = React.useCallback(() => {
-    clearDraft();
-    navigation.dispatch(
-      CommonActions.reset({index: 0, routes: [{name: 'Home'}]}),
-    );
-  }, [clearDraft, navigation]);
+  const openBottomSheet = React.useCallback(() => {
+    if (observationId) {
+      navigation.navigate('ConfirmDiscardObservationEditBottomSheet', {
+        observationId,
+      });
+    } else {
+      navigation.navigate('ConfirmDiscardObservationBottomSheet');
+    }
+  }, [navigation, observationId]);
 
-  return (
-    <>
-      {observationId ? (
-        <HeaderBackEditObservation
-          tintColor={tintColor}
-          headerBackButtonProps={headerBackButtonProps}
-          observationId={observationId}
-          openBottomSheet={openSheet}
-        />
-      ) : (
-        <HeaderBackNewObservation
-          tintColor={tintColor}
-          headerBackButtonProps={headerBackButtonProps}
-          openBottomSheet={() =>
-            navigation.navigate('ConfirmDiscardObservationBottomSheet')
-          }
-        />
-      )}
-      <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
-        <BottomSheetModalContent
-          title={formatMessage(m.discardChangesTitle)}
-          description={formatMessage(m.discardChangesDescription)}
-          buttonConfigs={[
-            {
-              variation: 'filled',
-              dangerous: true,
-              onPress: handleDiscard,
-              text: formatMessage(m.discardChangesButton),
-              icon: <DiscardIcon />,
-            },
-            {
-              onPress: closeSheet,
-              text: formatMessage(m.discardCancel),
-              variation: 'outlined',
-            },
-          ]}
-          icon={<ErrorIcon width={60} height={60} />}
-        />
-      </BottomSheetModal>
-    </>
+  return observationId ? (
+    <HeaderBackEditObservation
+      tintColor={tintColor}
+      headerBackButtonProps={headerBackButtonProps}
+      observationId={observationId}
+      openBottomSheet={openBottomSheet}
+    />
+  ) : (
+    <HeaderBackNewObservation
+      tintColor={tintColor}
+      headerBackButtonProps={headerBackButtonProps}
+      openBottomSheet={openBottomSheet}
+    />
   );
 };
 

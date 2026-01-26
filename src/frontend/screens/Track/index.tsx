@@ -22,7 +22,7 @@ import {
   getLocationHistoryFromTrack,
   getTrackDurationAndDistance,
 } from '../../utils/trackMetrics';
-import {TrackStats} from '../../sharedComponents/Editor/TrackStats.tsx';
+import {TrackStats} from '../../sharedComponents/TrackStats.tsx';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 
 const m = defineMessages({

@@ -14,12 +14,12 @@ import {getTrackDurationAndDistance} from '../../utils/trackMetrics';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {LIGHT_GREY} from '../../lib/styles';
-import {PresetView} from '../../sharedComponents/Editor/PresetView';
+import {PresetView} from '../../sharedComponents/PresetView';
 import {Divider} from '../../sharedComponents/Divider';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {TrackStats} from '../../sharedComponents/Editor/TrackStats';
+import {TrackStats} from '../../sharedComponents/TrackStats';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();

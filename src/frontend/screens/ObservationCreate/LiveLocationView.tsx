@@ -1,6 +1,6 @@
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {Divider} from '../../sharedComponents/Divider';
-import {LocationView} from '../../sharedComponents/Editor/LocationView';
+import {LocationView} from '../../sharedComponents/LocationView';
 import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 
 export const LiveLocationView = () => {

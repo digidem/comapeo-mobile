@@ -13,8 +13,8 @@ import {StyleSheet, View} from 'react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {PresetView} from '../../sharedComponents/Editor/PresetView';
-import {DescriptionField} from '../../sharedComponents/Editor/DescriptionField';
+import {PresetView} from '../../sharedComponents/PresetView';
+import {DescriptionField} from '../../sharedComponents/DescriptionField';
 import {HorizontalScrollView} from '../../sharedComponents/HorizontalScrollView';
 import {
   GAP,

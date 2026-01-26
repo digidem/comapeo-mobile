@@ -12,7 +12,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {LIGHT_GREY, RED, WHITE} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
-import {LocationView} from '../../sharedComponents/Editor/LocationView';
+import {LocationView} from '../../sharedComponents/LocationView';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Text} from '../../sharedComponents/Text';
 import type {Metadata} from '../../sharedTypes';

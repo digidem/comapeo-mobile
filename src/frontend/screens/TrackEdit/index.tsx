@@ -13,8 +13,8 @@ import {StyleSheet, View} from 'react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {PresetView} from '../../sharedComponents/Editor/PresetView';
-import {DescriptionField} from '../../sharedComponents/Editor/DescriptionField';
+import {PresetView} from '../../sharedComponents/PresetView';
+import {DescriptionField} from '../../sharedComponents/DescriptionField';
 import {LIGHT_GREY} from '../../lib/styles';
 import TrackIcon from '../../images/Track.svg';
 import {useForm, Controller} from 'react-hook-form';
@@ -24,7 +24,7 @@ import {
   getTrackDurationAndDistance,
 } from '../../utils/trackMetrics';
 import {Divider} from '../../sharedComponents/Divider';
-import {TrackStats} from '../../sharedComponents/Editor/TrackStats';
+import {TrackStats} from '../../sharedComponents/TrackStats';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const m = defineMessages({

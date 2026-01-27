@@ -53,14 +53,28 @@ export function convertPosition(
 
 export function createDraftObservationStore({persist}: {persist: boolean}) {
   let nextAttachmentId = 0;
+  // Abort controller cannot be serialized, and thereofore cannot be saved to persisted state
+  // We create an abortController in memory which allows us to abort photos being processed
+  const abortControllers = new Map<number, AbortController>();
   let instance: StoreApi<DraftState>;
 
   if (persist) {
-    instance = createStore(
-      createPersistedState(createEmptyStoreState, {
+    instance = createStore<DraftState>()(
+      createPersistedState(createEmptyStoreState as () => DraftState, {
         name: '@MapeoDraft',
         storage: createJSONStorage(() => MMKVStoreInitializer),
         version: 0,
+        onRehydrateStorage: () => state => {
+          if (!state?.unsavedAttachments) return;
+          for (const attachment of state.unsavedAttachments) {
+            if (
+              attachment.type === 'photo' &&
+              hasIncompleteProcessing(attachment)
+            ) {
+              processPhoto(attachment);
+            }
+          }
+        },
       }),
     );
   } else {
@@ -134,6 +148,95 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     }
   }
 
+  /**
+   * Process a photo attachment: rotate original, create thumbnail and preview.
+   * Can be called on initial capture or to restart interrupted processing.
+   * Only processes steps that are not already complete.
+   */
+  async function processPhoto(attachment: UnsavedPhotoAttachment) {
+    const {id, raw, original, thumbnail, preview, accelerometer} = attachment;
+
+    if (raw.processingState !== 'complete' || !raw.uri) {
+      throw new Error('Cannot process photo without raw image');
+    }
+
+    const controller = new AbortController();
+    abortControllers.set(id, controller);
+    const {signal} = controller;
+
+    // The photos could be have to be processed more than once (eg, the user closes the app mid process).
+    // So we want to check if they have already been processed before re-processing it
+    try {
+      // Get or create the original (rotated) image
+      let originalUri: string;
+      let width: number;
+      let height: number;
+
+      if (original.processingState === 'complete' && original.uri) {
+        // Original already processed, use existing URI
+        // We need dimensions for thumbnail/preview, so fetch from the image
+        const result = await manipulateAsync(original.uri, []);
+        originalUri = result.uri;
+        width = result.width;
+        height = result.height;
+      } else {
+        // TODO: Previously, rotation of the original photo could fail on older
+        // devices with low memory, so we would skip rotation and save the raw
+        // image as the original, and then rotate the preview and thumbnail, which
+        // would work. However hopefully the expo image manipulator does not fail
+        // in the same way, so we will not need that workaround. If we do get
+        // failures reported, then we should consider adding it back in.
+        const result = await _processPhotoAttachment({
+          id,
+          outputKey: 'original',
+          processPromise: manipulateAsync(
+            raw.uri,
+            [{rotate: getPhotoRotation(accelerometer)}],
+            {compress: ORIGINAL_COMPRESSION},
+          ),
+        });
+        originalUri = result.uri;
+        width = result.width;
+        height = result.height;
+      }
+      throwIfAborted(signal);
+
+      if (thumbnail.processingState !== 'complete') {
+        const thumbnailDimensions =
+          width > height ? {width: THUMBNAIL_SIZE} : {height: THUMBNAIL_SIZE};
+        await _processPhotoAttachment({
+          id,
+          outputKey: 'thumbnail',
+          processPromise: manipulateAsync(
+            originalUri,
+            [{resize: thumbnailDimensions}],
+            {compress: THUMBNAIL_COMPRESSION},
+          ),
+        });
+        throwIfAborted(signal);
+      }
+
+      if (preview.processingState !== 'complete') {
+        const previewDimensions =
+          width > height ? {width: PREVIEW_SIZE} : {height: PREVIEW_SIZE};
+        await _processPhotoAttachment({
+          id,
+          outputKey: 'preview',
+          processPromise: manipulateAsync(
+            originalUri,
+            [{resize: previewDimensions}],
+            {compress: PREVIEW_COMPRESSION},
+          ),
+        });
+        throwIfAborted(signal);
+      }
+    } catch (reason) {
+      Sentry.captureException(reason);
+    } finally {
+      abortControllers.delete(id);
+    }
+  }
+
   async function addPhoto(
     picture: CameraCapturedPicture,
     metadata: PhotoMetadata,
@@ -143,62 +246,8 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
       metadata,
       picture,
     });
-    const {
-      abortController: {signal},
-      id,
-    } = newAttachment;
     _addAttachment(newAttachment);
-
-    try {
-      // TODO: Previously, rotation of the original photo could fail on older
-      // devices with low memory, so we would skip rotation and save the raw
-      // image as the original, and then rotate the preview and thumbnail, which
-      // would work. However hopefully the expo image manipulator does not fail
-      // in the same way, so we will not need that workaround. If we do get
-      // failures reported, then we should consider adding it back in.
-      const {
-        uri: originalUri,
-        width,
-        height,
-      } = await _processPhotoAttachment({
-        id,
-        outputKey: 'original',
-        processPromise: manipulateAsync(
-          picture.uri,
-          [{rotate: getPhotoRotation(metadata.accelerometer)}],
-          {compress: ORIGINAL_COMPRESSION},
-        ),
-      });
-      throwIfAborted(signal);
-
-      const thumbnailDimensions =
-        width > height ? {width: THUMBNAIL_SIZE} : {height: THUMBNAIL_SIZE};
-      await _processPhotoAttachment({
-        id,
-        outputKey: 'thumbnail',
-        processPromise: manipulateAsync(
-          originalUri,
-          [{resize: thumbnailDimensions}],
-          {compress: THUMBNAIL_COMPRESSION},
-        ),
-      });
-      throwIfAborted(signal);
-
-      const previewDimensions =
-        width > height ? {width: PREVIEW_SIZE} : {height: PREVIEW_SIZE};
-      await _processPhotoAttachment({
-        id,
-        outputKey: 'preview',
-        processPromise: manipulateAsync(
-          originalUri,
-          [{resize: previewDimensions}],
-          {compress: PREVIEW_COMPRESSION},
-        ),
-      });
-      throwIfAborted(signal);
-    } catch (reason) {
-      Sentry.captureException(reason);
-    }
+    await processPhoto(newAttachment);
   }
 
   /**
@@ -220,13 +269,14 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
       original: {uri, processingState: 'complete'},
       timestamp: createdAt,
       duration,
-      abortController: new AbortController(),
     };
     _addAttachment(newAttachment);
     return newAttachment.id;
   }
 
   function deleteUnsavedAttachment(id: number) {
+    abortControllers.get(id)?.abort();
+    abortControllers.delete(id);
     setAssertDraft(prev => {
       const newAttachments = prev.unsavedAttachments.filter(a => a.id !== id);
       return {unsavedAttachments: newAttachments};
@@ -234,6 +284,8 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
   }
 
   function clearDraft() {
+    abortControllers.forEach(controller => controller.abort());
+    abortControllers.clear();
     instance.setState(createEmptyStoreState(), true);
   }
 
@@ -391,7 +443,6 @@ export type UnsavedPhotoAttachment = {
   accelerometer?: AccelerometerMeasurement;
   location?: LocationObject;
   timestamp: number;
-  abortController: AbortController;
   photoExif?: Extract<Attachment, {type: 'photo'}>['photoExif'];
 };
 
@@ -412,7 +463,6 @@ export type UnsavedAudioAttachment = {
   id: number;
   original: UnsavedAttachmentBlob;
   type: 'audio';
-  abortController: AbortController;
   timestamp: number;
   duration: number;
 };
@@ -479,7 +529,7 @@ function createNewPhotoAttachment({
   id: number;
   metadata: PhotoMetadata;
   picture: CameraCapturedPicture;
-}): UnsavedAttachment {
+}): UnsavedPhotoAttachment {
   return {
     id,
     type: 'photo',
@@ -487,7 +537,6 @@ function createNewPhotoAttachment({
     original: {uri: null, processingState: 'pending'},
     thumbnail: {uri: null, processingState: 'pending'},
     preview: {uri: null, processingState: 'pending'},
-    abortController: new AbortController(),
     photoExif:
       'exif' in picture ? parse(PhotoEXIFSchema, picture.exif) : undefined,
     ...metadata,
@@ -545,4 +594,12 @@ function valueOf<T extends MapeoDoc>(doc: T & {forks?: string[]}) {
     'updatedAt',
     'deleted',
   ]);
+}
+
+function hasIncompleteProcessing(attachment: UnsavedPhotoAttachment): boolean {
+  return (
+    attachment.original.processingState !== 'complete' ||
+    attachment.thumbnail.processingState !== 'complete' ||
+    attachment.preview.processingState !== 'complete'
+  );
 }

@@ -15,7 +15,6 @@ import {
 import {UIActivityIndicator} from 'react-native-indicators';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {getRecordingPermissionsAsync, PermissionResponse} from 'expo-audio';
 
 const m = defineMessages({
   lessThan5: {
@@ -39,8 +38,6 @@ export function AudioRecording({
   const {startRecording, stopRecording, status} = useAudioRecording();
   const timeElapsed = status?.durationMillis || 0;
   const [isLoading, setIsLoading] = React.useState(true);
-  const [audioPermission, setAudioPermission] =
-    React.useState<PermissionResponse | null>(null);
 
   const {formatMessage} = useIntl();
 
@@ -49,21 +46,12 @@ export function AudioRecording({
   });
 
   React.useEffect(() => {
-    getRecordingPermissionsAsync().then(setAudioPermission);
-  }, []);
-
-  React.useEffect(() => {
     const start = async () => {
-      if (!audioPermission) return;
-      if (!audioPermission.granted) {
-        navigation.replace('AudioAskPermissionBottomSheet', {audioPermission});
-        return;
-      }
       await startRecording();
       setIsLoading(false);
     };
     start();
-  }, [startRecording, audioPermission, navigation]);
+  }, [startRecording]);
 
   const finishRecording = React.useCallback(async () => {
     setIsLoading(true);

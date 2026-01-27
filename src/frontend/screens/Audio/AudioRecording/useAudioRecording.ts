@@ -1,4 +1,4 @@
-import {useState, useCallback} from 'react';
+import {useCallback} from 'react';
 import {
   useAudioRecorder,
   useAudioRecorderState,
@@ -12,7 +12,6 @@ const RECORDING_OPTIONS = RecordingPresets.HIGH_QUALITY!;
 export function useAudioRecording() {
   const recorder = useAudioRecorder(RECORDING_OPTIONS);
   const status = useAudioRecorderState(recorder, 100);
-  const [isRecording, setIsRecording] = useState(false);
   const {navigate} = useNavigationFromRoot();
   const {addAudio} = useDraftObservation();
 
@@ -34,11 +33,10 @@ export function useAudioRecording() {
     }
 
     recorder.record();
-    setIsRecording(true);
   }, [recorder, navigate]);
 
   const stopRecording = useCallback(async () => {
-    if (!recorder || !isRecording) {
+    if (!recorder || status.isRecording === false) {
       navigate('ErrorBottomSheet');
       return;
     }
@@ -61,9 +59,8 @@ export function useAudioRecording() {
     const createdAt = Date.now();
 
     addAudio({uri, duration, createdAt});
-    setIsRecording(false);
     return {uri, createdAt, duration};
-  }, [recorder, isRecording, status.durationMillis, addAudio, navigate]);
+  }, [recorder, status.isRecording, status.durationMillis, addAudio, navigate]);
 
   return {startRecording, stopRecording, status};
 }

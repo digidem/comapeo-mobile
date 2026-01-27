@@ -41,7 +41,17 @@ export const DraftObservationProvider = ({
   draftObservationStore,
 }: DraftObservationProviderProps) => {
   const locationStore = useLocationContext();
-  createDraftObservationLocationUpdator({draftObservationStore, locationStore});
+
+  React.useEffect(() => {
+    const cleanup = createDraftObservationLocationUpdator({
+      draftObservationStore,
+      locationStore,
+    });
+
+    return () => cleanup();
+    // these stores are stable and will not cause re-renders
+  }, [draftObservationStore, locationStore]);
+
   return (
     <DraftObservationContext value={draftObservationStore}>
       {children}
@@ -85,15 +95,20 @@ function createDraftObservationLocationUpdator({
   );
   let locationStoreSubscriber: (() => void) | null = null;
 
-  AppState.addEventListener('change', async nextAppState => {
-    appState = nextAppState;
-    watchPositionIfNeeded();
-  });
+  const appStateSubscription = AppState.addEventListener(
+    'change',
+    async nextAppState => {
+      appState = nextAppState;
+      watchPositionIfNeeded();
+    },
+  );
 
-  draftObservationStore.instance.subscribe(storeState => {
-    isNewlyCreatedDraftInStore = isNewlyCreatedDraft(storeState);
-    watchPositionIfNeeded();
-  });
+  const draftObservationStoreSub = draftObservationStore.instance.subscribe(
+    storeState => {
+      isNewlyCreatedDraftInStore = isNewlyCreatedDraft(storeState);
+      watchPositionIfNeeded();
+    },
+  );
 
   async function watchPositionIfNeeded() {
     const shouldBeWatchingPosition =
@@ -159,6 +174,15 @@ function createDraftObservationLocationUpdator({
       positionProvider: locationStore.getState().providerStatus,
     });
   }
+
+  return function cleanup() {
+    appStateSubscription.remove();
+    draftObservationStoreSub();
+    if (locationStoreSubscriber) {
+      locationStoreSubscriber();
+      locationStoreSubscriber = null;
+    }
+  };
 }
 
 function isNewlyCreatedDraft(storeState: DraftState) {

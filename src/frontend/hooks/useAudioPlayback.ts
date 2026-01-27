@@ -10,10 +10,11 @@ export const useAudioPlayback = (recordingUri: string) => {
   const startPlayback = useCallback(async () => {
     if (!player || status.playing) return;
 
-    const duration = status.duration || 0;
-    const currentTime = status.currentTime || 0;
-
-    if (currentTime >= duration && duration > 0) {
+    if (
+      status.currentTime &&
+      status.duration &&
+      status.currentTime >= status.duration
+    ) {
       player.seekTo(0);
     }
 

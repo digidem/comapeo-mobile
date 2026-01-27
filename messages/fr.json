@@ -3,17 +3,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Continuer la modification"
   },
-  "AppContainer.EditHeader.discardChangesButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Annuler les modifications"
-  },
-  "AppContainer.EditHeader.discardChangesDescription": {
-    "message": "Vos modifications ne seront pas enregistrées. Cela ne peut pas être annulé."
-  },
-  "AppContainer.EditHeader.discardChangesTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Annuler les modifications ?"
-  },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Ignorer l’observation"
@@ -29,10 +18,10 @@
     "message": "Terminé"
   },
   "ExportSuccess.obs": {
-    "message": "<bold>All observations</bold> have been downloaded to your device."
+    "message": "<bold>Toutes les observations</bold> ont été téléchargées sur votre appareil."
   },
   "ExportSuccess.obsMedia": {
-    "message": "<bold>All observations with media</bold> have been downloaded to your device."
+    "message": "<bold>Toutes les observations avec le média</bold> ont été téléchargées sur votre appareil."
   },
   "ExportSuccess.title": {
     "message": "Succès !"
@@ -108,7 +97,7 @@
     "message": "Continuer la modification"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
+    "description": "Button to confirm discarding the observation edits",
     "message": "Annuler les modifications"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
@@ -364,7 +353,7 @@
     "message": "Libérer de l'espace"
   },
   "Storage.MenuAlert.onlyLeft": {
-    "message": "Only {free}mb left on your device"
+    "message": "Seulement {free}mb restants sur votre appareil"
   },
   "Storage.MenuAlert.subtitle": {
     "message": "Certaines fonctionnalités peuvent ne plus fonctionner."
@@ -477,6 +466,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Sélectionnez l'appareil à inviter"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
+    "message": "Sélectionner un appareil"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "En tant que coordinateur, cet appareil peut inviter et supprimer des utilisateurs, et gérer les détails du projet."
   },
@@ -522,10 +514,6 @@
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "Modèle du téléphone"
-  },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Aperçu"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -613,7 +601,7 @@
     "message": "Le code d'accès de l'application vous permet d'ajouter une couche de sécurité supplémentaire en exigeant que vous saisissiez un code d'accès pour ouvrir l'application CoMapeo. Vous pouvez définir votre propre code d'accès à 5 chiffres en activant la fonction ci-dessous."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
+    "message": "<bold>Veuillez noter que les mots de passe oubliés ne peuvent pas être récupérés !</bold> Une fois cette fonctionnalité activée, si vous oubliez ou perdez votre code d'accès, vous ne serez pas en mesure d'ouvrir CoMapeo et perdrez l'accès aux données CoMapeo qui n'ont pas été échanger avec les autres participants au projet."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Annuler"
@@ -1014,11 +1002,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Les statistiques du projet sont partagées"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Aller à la carte"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Aller à la synchronisation"
+  "screens.InviteSuccess.done": {
+    "message": "Terminé"
   },
   "screens.InviteSuccess.success": {
     "message": "Succès"
@@ -1037,14 +1022,41 @@
   "screens.LeaveProject.cancel": {
     "message": "Annuler"
   },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "Cet appareil ne sera plus affiché ou ne contribuera plus à ce projet"
+  "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
+    "message": "L'appareil ne sera plus en mesure de voir, de contribuer ou d'ajuster ce projet."
+  },
+  "screens.LeaveProject.leaveProjectDescriptionParticipant": {
+    "message": "L'appareil ne sera plus en mesure de voir ou de contribuer à ce projet."
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "Quitter {projectName}?"
   },
   "screens.LeaveProject.yesLeave": {
     "message": "Oui, quitter"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Annuler"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Continuer"
+  },
+  "screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "Avant de partir, exportez des données importantes."
+  },
+  "screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "Pour éviter cela, invitez un nouvel appareil en tant que coordinateur."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "Si cet appareil quitte, alors aucun autre appareil ne peut ajouter ou supprimer des périphériques, ajuster les informations du projet, ou mettre à jour les catégories définies."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "L'appareil est le dernier coordinator."
+  },
+  "screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "Si cet appareil quitte, toutes les données de ce projet seront perdues."
+  },
+  "screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "L'appareil est le dernier appareil."
   },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Ouvrir {deviceName}"
@@ -1384,7 +1396,7 @@
     "message": "Que se passe-t-il ici?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Modifier l'observation"
   },
   "screens.ObservationEdit.observation": {
@@ -1520,7 +1532,7 @@
     "message": "Attaché par {name}"
   },
   "screens.PhotoPreviewModal.distanceFromObs": {
-    "message": "Attached {distance} from observation"
+    "message": "Attaché à {distance} de l'observation"
   },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Supprimer la photo"
@@ -1677,6 +1689,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Statistiques du projet | OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Raison : {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "CET APPAREIL SUPPRIMER DE…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Que se passe-t-il ici?"
@@ -1737,14 +1758,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Terminé"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> fait maintenant partie de votre projet."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Voir l'équipe"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Revoir l'invitation"
@@ -1759,7 +1780,7 @@
     "message": "Annuler l'invitation"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage": {
-    "message": "Invite sent {seconds}s ago"
+    "message": "Invitation envoyée il y a {seconds}s"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
     "message": "En attente d'acceptation de l'invitation de l'appareil"
@@ -1872,14 +1893,17 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Rejoindre un projet"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Les types de fichiers acceptés sont .smp"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Choisir un fichier"
+  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
+    "message": "Ajouté le {date}"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Cela ne peut pas être annulé."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "Choisir un fichier"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "Fermer"
@@ -1914,23 +1938,20 @@
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Erreur d'importation"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Supprimer la carte"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Supprimer le fichier de carte"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"
   },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Date d'ajout"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Nom de carte"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Supprimer la carte"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
+  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
+    "message": "Envoyer la carte"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invitez des appareils à un nouveau projet avec toutes vos observations."
@@ -2108,7 +2129,7 @@
     "message": "Arrêter les pistes"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Vous êtes actuellement en train d'enregistrer une piste. Pour rejoindre le projet, arrêtez l'enregistrement"
+    "message": "Les pistes sont en cours d'enregistrement. Arrêtez les pistes pour continuer."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Appareil supprimé."
@@ -2201,11 +2222,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Chaque projet est unique et séparé."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coordonnateur"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Participant"
   }
 }

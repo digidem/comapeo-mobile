@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
-import {BLACK, COMAPEO_BLUE} from '../../lib/styles';
+import {BLACK, COMAPEO_BLUE} from '../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
 
 const m = defineMessages({

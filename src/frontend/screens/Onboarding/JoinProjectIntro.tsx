@@ -2,7 +2,7 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
-import {Ionicons} from '@expo/vector-icons';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';

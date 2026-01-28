@@ -187,22 +187,21 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         width = result.width;
         height = result.height;
       } else {
-        // TODO: Previously, rotation of the original photo could fail on older
-        // devices with low memory, so we would skip rotation and save the raw
-        // image as the original, and then rotate the preview and thumbnail, which
-        // would work. However hopefully the expo image manipulator does not fail
-        // in the same way, so we will not need that workaround. If we do get
-        // failures reported, then we should consider adding it back in.
-        // Use EXIF orientation if available (more reliable), fall back to accelerometer
-        const rotation =
-          getRotationFromExifOrientation(photoExif?.Orientation) ??
-          getPhotoRotation(accelerometer);
         const result = await _processPhotoAttachment({
           id,
           outputKey: 'original',
-          processPromise: manipulateAsync(raw.uri, [{rotate: rotation}], {
-            compress: ORIGINAL_COMPRESSION,
-          }),
+          processPromise: manipulateAsync(
+            raw.uri,
+            [
+              {
+                rotate:
+                  getRotationFromExifOrientation(photoExif?.Orientation) ?? 0,
+              },
+            ],
+            {
+              compress: ORIGINAL_COMPRESSION,
+            },
+          ),
         });
         originalUri = result.uri;
         width = result.width;
@@ -562,8 +561,6 @@ function reasonToError(reason: unknown): Error {
   return new Error('Unknown error');
 }
 
-const ACC_AT_45_DEG = Math.sin(Math.PI / 4);
-
 /**
  * Get rotation angle from EXIF Orientation tag value.
  * See: https://exiftool.org/TagNames/EXIF.html ("Orientation" tag)
@@ -591,33 +588,6 @@ function getRotationFromExifOrientation(orientation?: number): number | null {
     default:
       return null;
   }
-}
-
-function getPhotoRotation(acc?: AccelerometerMeasurement) {
-  if (!acc) return 0;
-  const {x, y, z} = acc;
-  let rotation = 0;
-  if (z < -ACC_AT_45_DEG || z > ACC_AT_45_DEG) {
-    // camera is pointing up or down
-    if (Math.abs(y) > Math.abs(x)) {
-      // camera is vertical
-      if (y <= 0) rotation = 180;
-      else rotation = 0;
-    } else {
-      // camera is horizontal
-      if (x >= 0) rotation = -90;
-      else rotation = 90;
-    }
-  } else if (x > -ACC_AT_45_DEG && x < ACC_AT_45_DEG) {
-    // camera is vertical
-    if (y <= 0) rotation = 180;
-    else rotation = 0;
-  } else {
-    // camera is horizontal
-    if (x >= 0) rotation = -90;
-    else rotation = 90;
-  }
-  return rotation;
 }
 
 // TODO: Move this to @mapeo/schema - the current version is not flexible enough

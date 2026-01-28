@@ -68,8 +68,6 @@ export const ObservationCreate = ({
     store => store.unsavedAttachments,
   );
 
-  console.log({attachments});
-
   const notes = useDraftObservationState(store => store.value?.tags.notes);
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);

@@ -39,14 +39,6 @@ export function isSavedPhoto(attachment: unknown): attachment is SavedPhoto {
   return isCoMapeoCoreAttachment(attachment) && attachment.type === 'photo';
 }
 
-function isAbortController(value: unknown): value is AbortController {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    value instanceof AbortController
-  );
-}
-
 function isError(err: unknown): err is Error {
   return (
     typeof err === 'object' &&
@@ -119,7 +111,6 @@ export function isUnsavedPhotoAttachment(
     typeof candidate.id !== 'number' ||
     candidate.type !== 'photo' ||
     typeof candidate.timestamp !== 'number' ||
-    !isAbortController(candidate.abortController) ||
     !isUnsavedAttachmentBlob(candidate.raw) ||
     !isUnsavedAttachmentBlob(candidate.original) ||
     !isUnsavedAttachmentBlob(candidate.thumbnail) ||
@@ -166,7 +157,6 @@ export function isUnsavedAudioAttachment(
   return (
     typeof candidate.id === 'number' &&
     candidate.type === 'audio' &&
-    isAbortController(candidate.abortController) &&
     isUnsavedAttachmentBlob(candidate.original)
   );
 }

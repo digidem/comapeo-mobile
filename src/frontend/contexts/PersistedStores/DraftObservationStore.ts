@@ -174,7 +174,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     const {signal} = controller;
 
     // The photos could be have to be processed more than once (eg, the user closes the app mid process).
-    // So we want to check if they have already been processed before re-processing it
+    // So we want to check if they have already been processed and COMPLETED before re-processing it
     try {
       // Get or create the original (rotated) image
       let originalUri: string;

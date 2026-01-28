@@ -187,6 +187,7 @@ export type RootStackParamsList = {
   DeleteCustomMapBottomSheet: undefined;
   WhatsIncludedBottomSheet: undefined;
   ConfirmDiscardObservationBottomSheet: undefined;
+  ConfirmDiscardObservationEditBottomSheet: {observationId: string};
   ConfirmDiscardTrackBottomSheet: undefined;
 };
 

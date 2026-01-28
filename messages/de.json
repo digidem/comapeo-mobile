@@ -3,17 +3,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Bearbeitung fortsetzen"
   },
-  "AppContainer.EditHeader.discardChangesButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Änderungen verwerfen"
-  },
-  "AppContainer.EditHeader.discardChangesDescription": {
-    "message": "Ihre Änderungen werden nicht gespeichert. Dies kann nicht rückgängig gemacht werden."
-  },
-  "AppContainer.EditHeader.discardChangesTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Änderungen verwerfen?"
-  },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Beobachtung verwerfen"
@@ -108,7 +97,7 @@
     "message": "Bearbeitung fortsetzen"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
+    "description": "Button to confirm discarding the observation edits",
     "message": "Änderungen verwerfen"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
@@ -477,6 +466,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Gerät zum Laden auswählen"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
+    "message": "Gerät auswählen"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "Als Koordinator kann dieses Gerät Benutzer einladen und entfernen und Projektdetails verwalten."
   },
@@ -522,10 +514,6 @@
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "Handy Modell"
-  },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Vorschau"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -1014,11 +1002,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Projektstatistiken werden geteilt"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Zur Karte"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Gehe zu Sync"
+  "screens.InviteSuccess.done": {
+    "message": "Fertig"
   },
   "screens.InviteSuccess.success": {
     "message": "Erfolg"
@@ -1037,14 +1022,41 @@
   "screens.LeaveProject.cancel": {
     "message": "Abbrechen"
   },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "Dieses Gerät wird dieses Projekt nicht mehr sehen oder zu ihm beitragen"
+  "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
+    "message": "Das Gerät kann dieses Projekt nicht mehr sehen oder anpassen."
+  },
+  "screens.LeaveProject.leaveProjectDescriptionParticipant": {
+    "message": "Das Gerät wird nicht mehr in der Lage sein, dieses Projekt zu sehen oder zu unterstützen."
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "{projectName} verlassen ?"
   },
   "screens.LeaveProject.yesLeave": {
     "message": "Ja, verlassen"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Abbrechen"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Fortsetzen"
+  },
+  "screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "Exportieren Sie vor dem Verlassen wichtige Daten."
+  },
+  "screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "Um dies zu vermeiden, laden Sie ein neues Gerät als Koordinator."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "Wenn dieses Gerät verlässt, kann kein anderes Gerät Geräte hinzufügen oder entfernen, Projektinformationen anpassen oder die gesetzten Kategorien aktualisieren."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "Gerät ist der letzte Coordinator."
+  },
+  "screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "Wenn dieses Gerät verlässt, gehen alle Daten zu diesem Projekt verloren."
+  },
+  "screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "Gerät ist das letzte Gerät."
   },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "{deviceName} öffnen"
@@ -1384,7 +1396,7 @@
     "message": "Was passiert hier?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Beobachtung bearbeiten"
   },
   "screens.ObservationEdit.observation": {
@@ -1677,6 +1689,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Projektstatistik | AUS"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Grund: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "DIESE GERÄT VON… ENTFERNT"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Was passiert hier?"
@@ -1737,14 +1758,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Fertig"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> ist jetzt Teil Ihres Projekts."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Team ansehen"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Einladung prüfen"
@@ -1872,14 +1893,17 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Einem Projekt beitreten"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Akzeptierte Dateitypen sind .smp"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Datei auswählen"
+  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
+    "message": "Hinzugefügt am {date}"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Dies kann nicht rückgängig gemacht werden."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "Datei auswählen"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "Schließen"
@@ -1914,23 +1938,20 @@
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Fehler beim Importieren"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Karte entfernen"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Kartendatei entfernen"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"
   },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Hinzugefügt am"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Kartenname"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Karte entfernen"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
+  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
+    "message": "Karte senden"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Lade Geräte in ein neues Projekt mit all deinen Beobachtungen ein."
@@ -2108,7 +2129,7 @@
     "message": "Tracks stoppen"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Sie nehmen gerade einen Track auf. Um dem Projekt beizutreten, stoppen Sie die Aufnahme"
+    "message": "Tracks werden aufgenommen. Stoppe Tracks um fortzufahren."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Gerät entfernt."
@@ -2201,11 +2222,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Jedes Projekt ist einzigartig und separat."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Koordinator"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Teilnehmer"
   }
 }

@@ -1,7 +1,7 @@
 import {useDraftObservationState} from '../../contexts/DraftObservationContext';
 
 import {Divider} from '../../sharedComponents/Divider';
-import {LocationView} from '../../sharedComponents/Editor/LocationView';
+import {LocationView} from '../../sharedComponents/LocationView';
 
 export const LiveLocationView = () => {
   const lat = useDraftObservationState(store => store.value?.lat);

@@ -160,8 +160,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
    * Only processes steps that are not already complete.
    */
   async function processPhoto(attachment: UnsavedPhotoAttachment) {
-    const {id, raw, original, thumbnail, preview, accelerometer, photoExif} =
-      attachment;
+    const {id, raw, original, thumbnail, preview, photoExif} = attachment;
 
     if (raw.processingState !== 'complete' || !raw.uri) {
       throw new Error('Cannot process photo without raw image');

@@ -66,6 +66,15 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         version: 0,
         onRehydrateStorage: () => state => {
           if (!state?.unsavedAttachments) return;
+
+          // Initialize nextAttachmentId to be higher than any existing ID
+          // to prevent duplicate IDs when adding new attachments
+          for (const attachment of state.unsavedAttachments) {
+            if (attachment.id >= nextAttachmentId) {
+              nextAttachmentId = attachment.id + 1;
+            }
+          }
+
           for (const attachment of state.unsavedAttachments) {
             if (
               attachment.type === 'photo' &&

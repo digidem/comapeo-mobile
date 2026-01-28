@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {BLUE_GREY, DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';

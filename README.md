@@ -11,13 +11,10 @@ The next version of Mapeo Mobile
    ```
 
 2. Set up the development environment
-
    1. Install [Node](https://nodejs.org), ideally through a proper node version manager such as [nvm](https://github.com/nvm-sh/nvm), [fnm](https://github.com/Schniz/fnm), [asdf](https://asdf-vm.com/), or [mise](https://mise.jdx.dev/)
-
-      - This project uses **Node v20** with **npm v10**
+      - This project uses **Node v20.19.5+** with **npm v10** (minimum Node v20.19.4 required)
 
    2. Follow the React Native instructions for setting up the development environment: https://reactnative.dev/docs/environment-setup
-
       - Note that **Java 17** is the minimum version required for this project.
 
       - When setting up the Android-specific tooling, you will also need to install the [Android NDK](https://developer.android.com/ndk/). This can be installed using Android Studio by going to the `SDK Tools` tab in the `SDK Manager`. This project uses **NDK 26.1.10909125**.
@@ -34,11 +31,8 @@ The next version of Mapeo Mobile
 3. To enable Sentry source map uploads from the backend when developing locally, create a file `.env.sentry-build-plugin` with a `SENTRY_AUTH_TOKEN`. This is only necessary when trying to debug source map uploads.
 
 4. Run the app locally
-
    1. Install dependencies
-
       - This project requires the following system dependencies. Make sure they are available on your `PATH`.
-
         - curl
         - tar
 
@@ -49,7 +43,6 @@ The next version of Mapeo Mobile
         ```
 
    2. Generate the native code
-
       - This project uses [Expo Prebuild](https://docs.expo.dev/workflow/prebuild/) for generating the relevant native code. If you update [`app.json`](./app.json) or [`app.config.js`](./app.config.js), or install/update any dependencies that provide native code, you should run the following command to make sure the project is up-to-date:
 
       ```sh
@@ -67,7 +60,6 @@ The next version of Mapeo Mobile
       Leave this running in a separate terminal window.
 
    4. Build and run the app (Android)
-
       - For this project, using a physical device is more convenient and reliable to work with. It is recommended that you follow React Native's [setup instructions](https://reactnative.dev/docs/running-on-device) for running an app on a device.
 
       - Run the following command to build the backend and then build and run the Android app:

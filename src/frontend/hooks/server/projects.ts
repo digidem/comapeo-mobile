@@ -12,7 +12,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {MEMBER_ROLE_ID} from '../../sharedTypes';
 import {saveDocuments} from '@react-native-documents/picker';
 import {Exports} from '../../screens/ExportObservations';
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 import {useAppLanguageTag} from '../useAppLanguageTag';
 import {useIntl} from 'react-intl';
 import noop from '../../lib/noop';

@@ -98,21 +98,29 @@ async function patchMainApplication(androidRoot, androidPackage) {
     }
   }
 
-  // We need to call `packages.add(FlagSecurePackage())`.
-  // For Kotlin, that means "packages.add(FlagSecurePackage())"
-  const packageLine = 'packages.add(FlagSecurePackage())';
+  // We need to call `add(FlagSecurePackage())` inside the packages.apply block.
+  // This adds the FlagSecurePackage to the list of React Native packages.
+  const packageLine = 'add(FlagSecurePackage())';
   if (!contents.includes(packageLine)) {
-    const match = 'val packages = PackageList(this).packages';
-    if (contents.includes(match)) {
+    const applyPattern = /PackageList\(this\)\.packages\.apply\s*\{/;
+    if (applyPattern.test(contents)) {
       contents = contents.replace(
-        'return packages',
-        `${packageLine}\n    return packages`,
+        /(\/\/ add\(MyReactNativePackage\(\)\))/,
+        `$1\n              ${packageLine}`,
       );
     } else {
-      contents = contents.replace(
-        /(return packages[\s;]+)/,
-        `${packageLine}\n    $1`,
-      );
+      const match = 'val packages = PackageList(this).packages';
+      if (contents.includes(match)) {
+        contents = contents.replace(
+          'return packages',
+          `packages.${packageLine}\n    return packages`,
+        );
+      } else {
+        contents = contents.replace(
+          /(return packages[\s;]+)/,
+          `packages.${packageLine}\n    $1`,
+        );
+      }
     }
   }
 

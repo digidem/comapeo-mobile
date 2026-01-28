@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {MapScreen} from '../../screens/MapScreen';
 import {ObservationsList} from '../../screens/ObservationsList';
@@ -19,7 +20,7 @@ export const HomeTabs = () => {
   const [drawerOpen, setDrawerOpen] = useOpenDrawer();
 
   return (
-    <>
+    <SafeAreaView edges={['top']} style={{flex: 1, backgroundColor: WHITE}}>
       <ProjectRemovalListener />
       <Drawer
         open={drawerOpen}
@@ -80,6 +81,6 @@ export const HomeTabs = () => {
           <Tab.Screen name="Camera" component={CameraScreen} />
         </Tab.Navigator>
       </Drawer>
-    </>
+    </SafeAreaView>
   );
 };

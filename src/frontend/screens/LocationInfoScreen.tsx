@@ -141,6 +141,7 @@ export function createNavigationOptions({
       headerTitle: intl(m.gpsHeader),
       headerStyle: {backgroundColor: GPS_MODAL_TEXT},
       headerTintColor: WHITE,
+      statusBarStyle: 'light',
       headerLeft: props => (
         <CustomHeaderLeft headerBackButtonProps={props} tintColor={WHITE} />
       ),

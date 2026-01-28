@@ -1,6 +1,6 @@
 import {captureException} from '@sentry/react-native';
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, StatusBar} from 'react-native';
 import {CameraView as ExpoCameraView, useCameraPermissions} from 'expo-camera';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 import {parse} from 'valibot';
@@ -124,6 +124,7 @@ export const CameraView = ({onAddPress}: Props) => {
 
   return (
     <View style={styles.container} testID="MAIN.camera-scrn">
+      <StatusBar barStyle="light-content" />
       {!permissionGranted ? (
         <View style={styles.noPermissionContainer}>
           <Text style={{marginBottom: 10}}>

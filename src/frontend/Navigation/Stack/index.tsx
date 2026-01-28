@@ -32,6 +32,7 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   headerTitleStyle: {fontFamily: 'Rubik_500Medium'},
   headerLeft: props => <CustomHeaderLeft headerBackButtonProps={props} />,
   headerBackVisible: false,
+  statusBarStyle: 'dark',
 };
 
 function getInitialRoute(

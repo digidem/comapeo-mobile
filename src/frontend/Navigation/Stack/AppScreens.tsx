@@ -434,7 +434,7 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="AudioRecording"
         component={AudioRecording}
-        options={{headerShown: false}}
+        options={{headerShown: false, statusBarStyle: 'light'}}
       />
       <RootStack.Screen
         name="AudioDraftPlaybackScreen"

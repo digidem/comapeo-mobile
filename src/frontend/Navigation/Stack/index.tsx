@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {StatusBar} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -62,7 +61,6 @@ export const RootStackNavigator = () => {
     <SafeAreaView
       edges={['bottom']}
       style={{flex: 1, backgroundColor: MEDIUM_GREY}}>
-      <StatusBar barStyle="dark-content" />
       <React.Suspense fallback={<Loading />}>
         <PendingInvitesListener
           currentRouteName={state.routes[state.index]?.name}

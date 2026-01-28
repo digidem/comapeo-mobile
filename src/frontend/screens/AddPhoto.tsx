@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Text} from '../sharedComponents/Text';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {CameraView} from '../sharedComponents/CameraView';
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
   cancel: {
@@ -36,9 +36,9 @@ export const AddPhotoScreen = ({
         <CameraView onAddPress={handleAddPress} />
         <TouchableNativeFeedback onPress={handleCancelPress}>
           <View style={styles.cancelButton}>
-            <Text style={styles.cancelButtonLabel}>
+            <HeaderText variant="header3" style={styles.cancelButtonLabel}>
               <FormattedMessage {...m.cancel} />
-            </Text>
+            </HeaderText>
           </View>
         </TouchableNativeFeedback>
       </View>
@@ -60,7 +60,5 @@ const styles = StyleSheet.create({
   },
   cancelButtonLabel: {
     color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
   },
 });

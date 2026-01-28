@@ -132,8 +132,17 @@ function createDraftObservationLocationUpdator({
   }
 
   function onPositionUpdate(location: Location.LocationObject) {
+    // set initial position if not already set
+    draftObservationStore.instance.setState(prev => {
+      if (prev.initialPosition || !prev.value) {
+        return prev;
+      }
+      return {...prev, initialPosition: convertPosition(location)};
+    });
+
     const {value: currentDraft, initialPosition} =
       draftObservationStore.instance.getState();
+
     if (!currentDraft) return;
 
     const isManualLocation = !!currentDraft.metadata?.manualLocation;
@@ -142,11 +151,6 @@ function createDraftObservationLocationUpdator({
     const isStale =
       Date.now() - location.timestamp > STALE_LOCATION_THRESHOLD_MS;
     if (isStale) return;
-
-    draftObservationStore.instance.setState(prev => {
-      if (prev.initialPosition || !prev.value) return prev;
-      return {...prev, initialPosition: convertPosition(location)};
-    });
 
     const initialAccuracy = initialPosition?.coords.accuracy;
     const movedAwayThreshold = initialAccuracy

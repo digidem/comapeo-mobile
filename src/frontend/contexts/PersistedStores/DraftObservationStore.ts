@@ -160,7 +160,8 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
    * Only processes steps that are not already complete.
    */
   async function processPhoto(attachment: UnsavedPhotoAttachment) {
-    const {id, raw, original, thumbnail, preview, accelerometer} = attachment;
+    const {id, raw, original, thumbnail, preview, accelerometer, photoExif} =
+      attachment;
 
     if (raw.processingState !== 'complete' || !raw.uri) {
       throw new Error('Cannot process photo without raw image');
@@ -192,14 +193,16 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         // would work. However hopefully the expo image manipulator does not fail
         // in the same way, so we will not need that workaround. If we do get
         // failures reported, then we should consider adding it back in.
+        // Use EXIF orientation if available (more reliable), fall back to accelerometer
+        const rotation =
+          getRotationFromExifOrientation(photoExif?.Orientation) ??
+          getPhotoRotation(accelerometer);
         const result = await _processPhotoAttachment({
           id,
           outputKey: 'original',
-          processPromise: manipulateAsync(
-            raw.uri,
-            [{rotate: getPhotoRotation(accelerometer)}],
-            {compress: ORIGINAL_COMPRESSION},
-          ),
+          processPromise: manipulateAsync(raw.uri, [{rotate: rotation}], {
+            compress: ORIGINAL_COMPRESSION,
+          }),
         });
         originalUri = result.uri;
         width = result.width;
@@ -560,6 +563,35 @@ function reasonToError(reason: unknown): Error {
 }
 
 const ACC_AT_45_DEG = Math.sin(Math.PI / 4);
+
+/**
+ * Get rotation angle from EXIF Orientation tag value.
+ * See: https://exiftool.org/TagNames/EXIF.html ("Orientation" tag)
+ *
+ * EXIF orientation values 1-8 describe how the image is stored vs how it should be displayed.
+ * Values 2, 4, 5, 7 include flips which we ignore (only handle rotation).
+ *
+ * @param orientation EXIF Orientation tag value (1-8)
+ * @returns Rotation angle in degrees for manipulateAsync (positive = counter-clockwise)
+ */
+function getRotationFromExifOrientation(orientation?: number): number | null {
+  switch (orientation) {
+    case 1: // Normal
+    case 2: // Horizontal flip (no rotation needed)
+      return 0;
+    case 3: // Rotate 180°
+    case 4: // Vertical flip (equivalent to horizontal flip + 180°)
+      return 180;
+    case 5: // Transpose (rotate 90° CW + horizontal flip)
+    case 6: // Rotate 90° CW
+      return -90;
+    case 7: // Transverse (rotate 90° CCW + horizontal flip)
+    case 8: // Rotate 90° CCW
+      return 90;
+    default:
+      return null;
+  }
+}
 
 function getPhotoRotation(acc?: AccelerometerMeasurement) {
   if (!acc) return 0;

@@ -199,6 +199,6 @@ function distanceBetweenCoords(
   a: {latitude: number; longitude: number},
   b: {latitude: number; longitude: number},
 ) {
-  const ruler = new CheapRuler(a.latitude);
+  const ruler = new CheapRuler(a.latitude, 'meters');
   return ruler.distance([a.longitude, a.latitude], [b.longitude, b.latitude]);
 }

@@ -4,7 +4,6 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {PhotoPromiseProvider} from './PhotoPromiseContext';
 import {AuthProvider} from './AuthContext';
 import {
   LocalDiscoveryProvider,
@@ -105,19 +104,15 @@ export const AppProviders = ({
                                 <ActiveProjectIdStoreProvider
                                   store={activeProjectIdStore}>
                                   <BottomSheetModalProvider>
-                                    <PhotoPromiseProvider>
-                                      <DraftObservationProvider
-                                        draftObservationStore={
-                                          persistedDrafObservationStore
-                                        }>
-                                        <EarlyAccessStoreProvider
-                                          value={earlyAccessStore}>
-                                          <AuthProvider>
-                                            {children}
-                                          </AuthProvider>
-                                        </EarlyAccessStoreProvider>
-                                      </DraftObservationProvider>
-                                    </PhotoPromiseProvider>
+                                    <DraftObservationProvider
+                                      draftObservationStore={
+                                        persistedDrafObservationStore
+                                      }>
+                                      <EarlyAccessStoreProvider
+                                        value={earlyAccessStore}>
+                                        <AuthProvider>{children}</AuthProvider>
+                                      </EarlyAccessStoreProvider>
+                                    </DraftObservationProvider>
                                   </BottomSheetModalProvider>
                                 </ActiveProjectIdStoreProvider>
                               </ClientApiProvider>

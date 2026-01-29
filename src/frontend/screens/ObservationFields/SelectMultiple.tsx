@@ -10,9 +10,11 @@ import {QuestionLabel} from './QuestionLabel';
 import type {QuestionProps} from './Question';
 import {SelectMultipleField} from '../../sharedTypes/PresetTypes';
 import {ViewStyleProp} from '../../sharedTypes';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {Observation} from '@comapeo/schema';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 interface Props extends QuestionProps {
   field: SelectMultipleField;
@@ -40,9 +42,9 @@ const CheckItem = ({checked, onPress, label, style}: CheckItemProps) => (
 );
 
 export const SelectMultiple = React.memo<Props>(({field}) => {
-  const tags = usePersistedDraftObservation(val => val.value?.tags);
+  const tags = useDraftObservationState(val => val.value?.tags);
   const valueAsArray = toArray(tags ? tags[field.tagKey] : undefined);
-  const {updateTags} = useDraftObservation();
+  const {updateTag} = useDraftObservationActions();
 
   const handleChange = (
     itemValue: SelectMultipleField['options'][0]['value'],
@@ -50,7 +52,7 @@ export const SelectMultiple = React.memo<Props>(({field}) => {
     const updatedValue = valueAsArray.includes(itemValue)
       ? valueAsArray.filter(d => d !== itemValue)
       : [...valueAsArray, itemValue];
-    updateTags(field.tagKey, updatedValue);
+    updateTag(field.tagKey, updatedValue);
   };
 
   return (

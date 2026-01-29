@@ -29,13 +29,15 @@ const m = defineMessages({
 });
 
 export function DraftPhotoPreviewModal({
-  route,
+  route: {
+    params: {photoMetadata, photoExif, uri},
+  },
 }: NativeRootNavigationProps<'DraftPhotoPreviewModal'>) {
-  const {photo} = route.params;
+  // const {photo} = route.params;
   const {formatMessage} = useIntl();
 
   const {imageLoadInfo, onImageLoad} = useImageLoadInfo();
-  const photoInfo = getDraftPhotoInfo(photo);
+  const photoInfo = getDraftPhotoInfo({photoMetadata, photoExif});
 
   const deviceDetailsText = getDeviceDetailsText({
     make: photoInfo.make,
@@ -65,10 +67,7 @@ export function DraftPhotoPreviewModal({
     <ScrollView contentContainerStyle={sharedStyles.container}>
       <View>
         <View style={sharedStyles.imageContainer}>
-          <ImageWithErrorFallback
-            source={photo.originalUri}
-            onLoad={onImageLoad}
-          />
+          <ImageWithErrorFallback source={uri} onLoad={onImageLoad} />
         </View>
       </View>
       <View style={{gap: 20}}>
@@ -104,13 +103,13 @@ export function DraftPhotoPreviewModalNavOptions({
     return {
       ...sharedPhotoPreviewNavOptions({intl}),
       headerRight: () => {
-        const {photo} = route.params;
+        const {photoId} = route.params;
 
         return (
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('ConfirmDeletePhoto', {
-                photo,
+                photoId,
                 onSuccess: () => {
                   navigation.goBack();
                 },

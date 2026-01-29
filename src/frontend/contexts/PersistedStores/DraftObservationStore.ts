@@ -5,14 +5,21 @@ import {
   type Preset,
 } from '@comapeo/schema';
 import {createStore, type StoreApi} from 'zustand';
-import {persist as createPersistedState} from 'zustand/middleware';
+import {
+  persist as createPersistedState,
+  createJSONStorage,
+} from 'zustand/middleware';
 import type {LocationObject, LocationProviderStatus} from 'expo-location';
 import type {AccelerometerMeasurement} from 'expo-sensors';
 import type {CameraCapturedPicture} from 'expo-camera';
 import {manipulateAsync} from 'expo-image-manipulator';
 import {excludeKeys} from 'filter-obj';
-import type {Position} from '../../sharedTypes/index.ts';
+import type {Attachment, Position} from '../../sharedTypes/index.ts';
 import {throwIfAborted} from '../../lib/throwIfAborted.ts';
+import {parse} from 'valibot';
+import {PhotoEXIFSchema} from '../../lib/exif.ts';
+import * as Sentry from '@sentry/react-native';
+import {MMKVStoreInitializer} from '../../hooks/persistedState/createPersistedState';
 
 export type DraftObservationStore = ReturnType<
   typeof createDraftObservationStore
@@ -46,11 +53,35 @@ export function convertPosition(
 
 export function createDraftObservationStore({persist}: {persist: boolean}) {
   let nextAttachmentId = 0;
+  // Abort controller cannot be serialized, and thereofore cannot be saved to persisted state
+  // We create an abortController in memory which allows us to abort photos being processed
+  const abortControllers = new Map<number, AbortController>();
   let instance: StoreApi<DraftState>;
 
   if (persist) {
-    instance = createStore(
-      createPersistedState(createEmptyStoreState, {name: '@MapeoDraft'}),
+    instance = createStore<DraftState>()(
+      createPersistedState(createEmptyStoreState as () => DraftState, {
+        name: '@MapeoDraftStore',
+        storage: createJSONStorage(() => MMKVStoreInitializer),
+        version: 0,
+        onRehydrateStorage: () => state => {
+          if (!state?.unsavedAttachments) return;
+
+          for (const attachment of state.unsavedAttachments) {
+            // Initialize nextAttachmentId to be higher than any existing ID
+            // to prevent duplicate IDs when adding new attachments
+            if (attachment.id >= nextAttachmentId) {
+              nextAttachmentId = attachment.id + 1;
+            }
+            if (
+              attachment.type === 'photo' &&
+              hasIncompleteProcessing(attachment)
+            ) {
+              processPhoto(attachment);
+            }
+          }
+        },
+      }),
     );
   } else {
     instance = createStore(createEmptyStoreState);
@@ -71,10 +102,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
   function _addAttachment(attachment: UnsavedAttachment): void {
     setAssertDraft(prev => {
       return {
-        unsavedAttachments: new Map(prev.unsavedAttachments).set(
-          attachment.id,
-          attachment,
-        ),
+        unsavedAttachments: [...prev.unsavedAttachments, attachment],
       };
     });
   }
@@ -85,17 +113,18 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     partial: Partial<Extract<UnsavedAttachment, {type: T}>>,
   ): void {
     setAssertDraft(prev => {
-      const attachment = prev.unsavedAttachments.get(id);
-      if (!attachment) return prev;
-      if (attachment.type !== type) {
-        throw new Error(`Attachment with id ${id} is not of type ${type}`);
-      }
+      const updatedAttachments = prev.unsavedAttachments.map(att => {
+        if (att.id === id) {
+          if (att.type !== type) {
+            throw new Error(`Attachment with id ${id} is not of type ${type}`);
+          }
+          return {...att, ...partial};
+        }
+        return att;
+      });
 
       return {
-        unsavedAttachments: new Map(prev.unsavedAttachments).set(id, {
-          ...attachment,
-          ...partial,
-        }),
+        unsavedAttachments: updatedAttachments,
       };
     });
   }
@@ -114,6 +143,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
       _updateAttachment('photo', id, {
         [outputKey]: {uri: processResult.uri, processingState: 'complete'},
       });
+
       return processResult;
     } catch (reason) {
       const error = reasonToError(reason);
@@ -124,102 +154,145 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     }
   }
 
-  async function addPhoto(
-    capturePromise: Promise<CameraCapturedPicture>,
-    metadata: PhotoMetadata,
-  ) {
-    const newAttachment = createNewPhotoAttachment(
-      nextAttachmentId++,
-      metadata,
-    );
-    const {
-      abortController: {signal},
-      id,
-    } = newAttachment;
-    _addAttachment(newAttachment);
+  /**
+   * Process a photo attachment: rotate original, create thumbnail and preview.
+   * Can be called on initial capture or to restart interrupted processing.
+   * Only processes steps that are not already complete.
+   */
+  async function processPhoto(attachment: UnsavedPhotoAttachment) {
+    const {id, raw, original, thumbnail, preview, photoExif} = attachment;
 
+    if (raw.processingState !== 'complete' || !raw.uri) {
+      throw new Error('Cannot process photo without raw image');
+    }
+
+    const controller = new AbortController();
+    abortControllers.set(id, controller);
+    const {signal} = controller;
+
+    // The photos could be have to be processed more than once (eg, the user closes the app mid process).
+    // So we want to check if they have already been processed and COMPLETED before re-processing it
     try {
-      const {uri: rawUri} = await _processPhotoAttachment({
-        id,
-        outputKey: 'raw',
-        processPromise: capturePromise,
-      });
-      throwIfAborted(signal);
+      // Get or create the original (rotated) image
+      let originalUri: string;
+      let width: number;
+      let height: number;
 
-      // TODO: Previously, rotation of the original photo could fail on older
-      // devices with low memory, so we would skip rotation and save the raw
-      // image as the original, and then rotate the preview and thumbnail, which
-      // would work. However hopefully the expo image manipulator does not fail
-      // in the same way, so we will not need that workaround. If we do get
-      // failures reported, then we should consider adding it back in.
-      const {
-        uri: originalUri,
-        width,
-        height,
-      } = await _processPhotoAttachment({
-        id,
-        outputKey: 'original',
-        processPromise: manipulateAsync(
-          rawUri,
-          [{rotate: getPhotoRotation(metadata.accelerometer)}],
-          {compress: ORIGINAL_COMPRESSION},
-        ),
-      });
-      throwIfAborted(signal);
-
-      const thumbnailDimensions =
-        width > height ? {width: THUMBNAIL_SIZE} : {height: THUMBNAIL_SIZE};
-      await _processPhotoAttachment({
-        id,
-        outputKey: 'thumbnail',
-        processPromise: manipulateAsync(
-          originalUri,
-          [{resize: thumbnailDimensions}],
-          {compress: THUMBNAIL_COMPRESSION},
-        ),
-      });
-      throwIfAborted(signal);
-
-      const previewDimensions =
-        width > height ? {width: PREVIEW_SIZE} : {height: PREVIEW_SIZE};
-      await _processPhotoAttachment({
-        id,
-        outputKey: 'preview',
-        processPromise: manipulateAsync(
-          originalUri,
-          [{resize: previewDimensions}],
-          {compress: PREVIEW_COMPRESSION},
-        ),
-      });
-      throwIfAborted(signal);
-    } catch (reason) {
-      if (reason instanceof Error && reason.name === 'AbortError') {
-        // TODO: Remove attachment from state
+      if (original.processingState === 'complete' && original.uri) {
+        // Original already processed, use existing URI
+        // We need dimensions for thumbnail/preview, so fetch from the image
+        const result = await manipulateAsync(original.uri, []);
+        originalUri = result.uri;
+        width = result.width;
+        height = result.height;
+      } else {
+        const result = await _processPhotoAttachment({
+          id,
+          outputKey: 'original',
+          processPromise: manipulateAsync(
+            raw.uri,
+            [
+              {
+                rotate:
+                  getRotationFromExifOrientation(photoExif?.Orientation) ?? 0,
+              },
+            ],
+            {
+              compress: ORIGINAL_COMPRESSION,
+            },
+          ),
+        });
+        originalUri = result.uri;
+        width = result.width;
+        height = result.height;
       }
-      // TODO: Report other errors to Sentry
+      throwIfAborted(signal);
+
+      if (thumbnail.processingState !== 'complete') {
+        const thumbnailDimensions =
+          width > height ? {width: THUMBNAIL_SIZE} : {height: THUMBNAIL_SIZE};
+        await _processPhotoAttachment({
+          id,
+          outputKey: 'thumbnail',
+          processPromise: manipulateAsync(
+            originalUri,
+            [{resize: thumbnailDimensions}],
+            {compress: THUMBNAIL_COMPRESSION},
+          ),
+        });
+        throwIfAborted(signal);
+      }
+
+      if (preview.processingState !== 'complete') {
+        const previewDimensions =
+          width > height ? {width: PREVIEW_SIZE} : {height: PREVIEW_SIZE};
+        await _processPhotoAttachment({
+          id,
+          outputKey: 'preview',
+          processPromise: manipulateAsync(
+            originalUri,
+            [{resize: previewDimensions}],
+            {compress: PREVIEW_COMPRESSION},
+          ),
+        });
+        throwIfAborted(signal);
+      }
+    } catch (reason) {
+      Sentry.captureException(reason);
+    } finally {
+      abortControllers.delete(id);
     }
   }
 
-  function addAudio(uri: string) {
+  async function addPhoto(
+    picture: CameraCapturedPicture,
+    metadata: PhotoMetadata,
+  ) {
+    const newAttachment = createNewPhotoAttachment({
+      id: nextAttachmentId++,
+      metadata,
+      picture,
+    });
+    _addAttachment(newAttachment);
+    await processPhoto(newAttachment);
+  }
+
+  /**
+   *
+   * @returns audio attachment ID
+   */
+  function addAudio({
+    uri,
+    duration,
+    createdAt,
+  }: {
+    uri: string;
+    duration: number;
+    createdAt: number;
+  }) {
     const newAttachment: UnsavedAudioAttachment = {
       id: nextAttachmentId++,
       type: 'audio',
       original: {uri, processingState: 'complete'},
-      abortController: new AbortController(),
+      timestamp: createdAt,
+      duration,
     };
     _addAttachment(newAttachment);
+    return newAttachment.id;
   }
 
   function deleteUnsavedAttachment(id: number) {
+    abortControllers.get(id)?.abort();
+    abortControllers.delete(id);
     setAssertDraft(prev => {
-      if (!prev.unsavedAttachments.has(id)) return prev;
-      const attachments = new Map(prev.unsavedAttachments);
-      attachments.delete(id);
-      return {unsavedAttachments: attachments};
+      const newAttachments = prev.unsavedAttachments.filter(a => a.id !== id);
+      return {unsavedAttachments: newAttachments};
     });
   }
 
   function clearDraft() {
+    abortControllers.forEach(controller => controller.abort());
+    abortControllers.clear();
     instance.setState(createEmptyStoreState(), true);
   }
 
@@ -229,7 +302,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         {
           value: valueOf(observation),
           id: {docId: observation.docId, versionId: observation.versionId},
-          unsavedAttachments: new Map(),
+          unsavedAttachments: [],
           initialPosition: null,
         },
         true,
@@ -239,7 +312,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         {
           value: createEmptyObservationValue(),
           id: null,
-          unsavedAttachments: new Map(),
+          unsavedAttachments: [],
           initialPosition: null,
         },
         true,
@@ -351,7 +424,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
 
 type ObservationTagValue = Observation['tags'][number];
 
-type UnsavedAttachmentBlob =
+export type UnsavedAttachmentBlob =
   | {
       uri: string;
       processingState: 'complete';
@@ -366,7 +439,7 @@ type UnsavedAttachmentBlob =
       processingState: 'error';
     };
 
-type UnsavedPhotoAttachment = {
+export type UnsavedPhotoAttachment = {
   id: number;
   type: 'photo';
   // Represents unprocessed blob (i.e. not resized or rotated)
@@ -377,7 +450,7 @@ type UnsavedPhotoAttachment = {
   accelerometer?: AccelerometerMeasurement;
   location?: LocationObject;
   timestamp: number;
-  abortController: AbortController;
+  photoExif?: Extract<Attachment, {type: 'photo'}>['photoExif'];
 };
 
 export type PhotoMetadata = Pick<
@@ -393,11 +466,12 @@ type ManualPosition = {
   };
 };
 
-type UnsavedAudioAttachment = {
+export type UnsavedAudioAttachment = {
   id: number;
   original: UnsavedAttachmentBlob;
   type: 'audio';
-  abortController: AbortController;
+  timestamp: number;
+  duration: number;
 };
 
 type UnsavedAttachment = UnsavedPhotoAttachment | UnsavedAudioAttachment;
@@ -420,7 +494,7 @@ type ObservationValueWithPreset = Exclude<ObservationValue, 'presetRef'> & {
 type DraftStatePopulated = {
   value: ObservationValueWithPreset;
   id: {docId: string; versionId: string} | null;
-  unsavedAttachments: Map<number, UnsavedAttachment>;
+  unsavedAttachments: UnsavedAttachment[];
   /** Initial (first) position of an observation. Not currently persisted, but
    * used for checking if the user moves away from the original location */
   initialPosition: Position | null;
@@ -454,18 +528,24 @@ function createEmptyObservationValue(): ObservationValueWithPreset {
   };
 }
 
-function createNewPhotoAttachment(
-  id: number,
-  metadata: PhotoMetadata,
-): UnsavedAttachment {
+function createNewPhotoAttachment({
+  id,
+  metadata,
+  picture,
+}: {
+  id: number;
+  metadata: PhotoMetadata;
+  picture: CameraCapturedPicture;
+}): UnsavedPhotoAttachment {
   return {
     id,
     type: 'photo',
-    raw: {uri: null, processingState: 'pending'},
+    raw: {uri: picture.uri, processingState: 'complete'},
     original: {uri: null, processingState: 'pending'},
     thumbnail: {uri: null, processingState: 'pending'},
     preview: {uri: null, processingState: 'pending'},
-    abortController: new AbortController(),
+    photoExif:
+      'exif' in picture ? parse(PhotoEXIFSchema, picture.exif) : undefined,
     ...metadata,
   };
 }
@@ -480,33 +560,33 @@ function reasonToError(reason: unknown): Error {
   return new Error('Unknown error');
 }
 
-const ACC_AT_45_DEG = Math.sin(Math.PI / 4);
-
-function getPhotoRotation(acc?: AccelerometerMeasurement) {
-  if (!acc) return 0;
-  const {x, y, z} = acc;
-  let rotation = 0;
-  if (z < -ACC_AT_45_DEG || z > ACC_AT_45_DEG) {
-    // camera is pointing up or down
-    if (Math.abs(y) > Math.abs(x)) {
-      // camera is vertical
-      if (y <= 0) rotation = 180;
-      else rotation = 0;
-    } else {
-      // camera is horizontal
-      if (x >= 0) rotation = -90;
-      else rotation = 90;
-    }
-  } else if (x > -ACC_AT_45_DEG && x < ACC_AT_45_DEG) {
-    // camera is vertical
-    if (y <= 0) rotation = 180;
-    else rotation = 0;
-  } else {
-    // camera is horizontal
-    if (x >= 0) rotation = -90;
-    else rotation = 90;
+/**
+ * Get rotation angle from EXIF Orientation tag value.
+ * See: https://exiftool.org/TagNames/EXIF.html ("Orientation" tag)
+ *
+ * EXIF orientation values 1-8 describe how the image is stored vs how it should be displayed.
+ * Values 2, 4, 5, 7 include flips which we ignore (only handle rotation).
+ *
+ * @param orientation EXIF Orientation tag value (1-8)
+ * @returns Rotation angle in degrees for manipulateAsync (positive = counter-clockwise)
+ */
+function getRotationFromExifOrientation(orientation?: number): number | null {
+  switch (orientation) {
+    case 1: // Normal
+    case 2: // Horizontal flip (no rotation needed)
+      return 0;
+    case 3: // Rotate 180°
+    case 4: // Vertical flip (equivalent to horizontal flip + 180°)
+      return 180;
+    case 5: // Transpose (rotate 90° CW + horizontal flip)
+    case 6: // Rotate 90° CW
+      return -90;
+    case 7: // Transverse (rotate 90° CCW + horizontal flip)
+    case 8: // Rotate 90° CCW
+      return 90;
+    default:
+      return null;
   }
-  return rotation;
 }
 
 // TODO: Move this to @mapeo/schema - the current version is not flexible enough
@@ -521,4 +601,12 @@ function valueOf<T extends MapeoDoc>(doc: T & {forks?: string[]}) {
     'updatedAt',
     'deleted',
   ]);
+}
+
+function hasIncompleteProcessing(attachment: UnsavedPhotoAttachment): boolean {
+  return (
+    attachment.original.processingState !== 'complete' ||
+    attachment.thumbnail.processingState !== 'complete' ||
+    attachment.preview.processingState !== 'complete'
+  );
 }

@@ -5,7 +5,6 @@ import {
   RecordingPresets,
 } from 'expo-audio';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../../../hooks/useDraftObservation';
 
 const RECORDING_OPTIONS = RecordingPresets.HIGH_QUALITY!;
 
@@ -13,7 +12,6 @@ export function useAudioRecording() {
   const recorder = useAudioRecorder(RECORDING_OPTIONS);
   const status = useAudioRecorderState(recorder, 100);
   const {navigate} = useNavigationFromRoot();
-  const {addAudio} = useDraftObservation();
 
   const startRecording = useCallback(async () => {
     if (!recorder) {
@@ -58,9 +56,8 @@ export function useAudioRecording() {
 
     const createdAt = Date.now();
 
-    addAudio({uri, duration, createdAt});
     return {uri, createdAt, duration};
-  }, [recorder, status.isRecording, status.durationMillis, addAudio, navigate]);
+  }, [recorder, status.isRecording, status.durationMillis, navigate]);
 
   return {startRecording, stopRecording, status};
 }

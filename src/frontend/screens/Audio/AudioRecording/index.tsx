@@ -15,6 +15,7 @@ import {
 import {UIActivityIndicator} from 'react-native-indicators';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {useDraftObservationActions} from '../../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   lessThan5: {
@@ -38,6 +39,7 @@ export function AudioRecording({
   const {startRecording, stopRecording, status} = useAudioRecording();
   const timeElapsed = status?.durationMillis || 0;
   const [isLoading, setIsLoading] = React.useState(true);
+  const {addAudio} = useDraftObservationActions();
 
   const {formatMessage} = useIntl();
 
@@ -57,19 +59,26 @@ export function AudioRecording({
     setIsLoading(true);
     try {
       const result = await stopRecording();
-      if (!result?.uri || !result.createdAt) {
+
+      if (!result?.uri || !result.createdAt || !result.duration) {
         navigation.replace('ErrorBottomSheet');
         return;
       }
+      const audioId = addAudio({
+        uri: result.uri,
+        createdAt: result.createdAt,
+        duration: result.duration,
+      });
       navigation.replace('AudioDraftPlaybackScreen', {
         uri: result.uri,
         createdAt: result.createdAt,
         showRecordingSavedText: true,
+        audioId,
       });
     } finally {
       setIsLoading(false);
     }
-  }, [stopRecording, navigation]);
+  }, [stopRecording, navigation, addAudio]);
 
   React.useEffect(() => {
     if (timeElapsed >= MAX_RECORDING_DURATION_MS && !isLoading) {

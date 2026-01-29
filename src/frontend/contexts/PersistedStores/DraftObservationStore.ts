@@ -61,7 +61,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
   if (persist) {
     instance = createStore<DraftState>()(
       createPersistedState(createEmptyStoreState as () => DraftState, {
-        name: '@MapeoDraft',
+        name: '@MapeoDraftStore',
         storage: createJSONStorage(() => MMKVStoreInitializer),
         version: 0,
         onRehydrateStorage: () => state => {

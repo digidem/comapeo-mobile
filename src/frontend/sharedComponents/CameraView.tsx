@@ -1,19 +1,19 @@
-import {captureException} from '@sentry/react-native';
 import React from 'react';
 import {View, StyleSheet, Text, StatusBar} from 'react-native';
-import {CameraView as ExpoCameraView, useCameraPermissions} from 'expo-camera';
+import {
+  CameraCapturedPicture,
+  CameraView as ExpoCameraView,
+  useCameraPermissions,
+} from 'expo-camera';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
-import {parse} from 'valibot';
 
 import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
-import {
-  MediaMetadata,
-  PhotoPromiseWithMetadata,
-} from '../contexts/PhotoPromiseContext/types';
-import {PhotoEXIFSchema} from '../lib/exif';
 import {useLocationState} from '../contexts/LocationContext';
+import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
+import * as Sentry from '@sentry/react-native';
+import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -28,7 +28,10 @@ const m = defineMessages({
 
 type Props = {
   // Called when the user takes a picture.
-  onAddPress: (capture: PhotoPromiseWithMetadata) => void;
+  onAddPress: (photo: {
+    photo: CameraCapturedPicture;
+    metadata: PhotoMetadata;
+  }) => void;
 };
 
 export const CameraView = ({onAddPress}: Props) => {
@@ -39,6 +42,7 @@ export const CameraView = ({onAddPress}: Props) => {
     React.useRef<AccelerometerMeasurement | null>(null);
   const [permissionsResponse] = useCameraPermissions();
   const location = useLocationState(store => store.location);
+  const navigation = useNavigationFromRoot();
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -84,40 +88,24 @@ export const CameraView = ({onAddPress}: Props) => {
         quality: 0.75,
         imageType: 'jpg',
       })
-      .then(pic => {
-        if (!pic) return;
-
-        let mediaMetadata: MediaMetadata = {
-          location,
-          timestamp: Date.now(),
-        };
-
-        if (pic.exif) {
-          try {
-            const extractedExif = parse(PhotoEXIFSchema, pic.exif);
-
-            mediaMetadata = {
-              ...mediaMetadata,
-              photoExif: extractedExif,
-            };
-          } catch (err) {
-            captureException(err);
-          }
-        }
-
+      .then(photo => {
         onAddPress({
-          capturePromise: Promise.resolve({uri: pic.uri}),
-          mediaMetadata,
+          photo,
+          metadata: {
+            location,
+            accelerometer: accelerometerMeasurement.current || undefined,
+            timestamp: Date.now(),
+          },
         });
       })
       .catch(err => {
-        captureException(err);
-        setCapturing(false);
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet');
       })
       .finally(() => {
         setCapturing(false);
       });
-  }, [capturing, setCapturing, onAddPress, location]);
+  }, [capturing, setCapturing, onAddPress, location, navigation]);
 
   const disableButton = capturing || !cameraReady;
   const permissionGranted = permissionsResponse?.status === 'granted';

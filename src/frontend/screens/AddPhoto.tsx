@@ -3,9 +3,10 @@ import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {CameraView} from '../sharedComponents/CameraView';
-import {useDraftObservation} from '../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
+import {useDraftObservationActions} from '../contexts/DraftObservationContext';
+import {CameraCapturedPicture} from 'expo-camera';
+import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
@@ -18,10 +19,13 @@ const m = defineMessages({
 export const AddPhotoScreen = ({
   navigation,
 }: NativeRootNavigationProps<'AddPhoto'>) => {
-  const {addPhoto} = useDraftObservation();
+  const {addPhoto} = useDraftObservationActions();
 
-  const handleAddPress = (capture: PhotoPromiseWithMetadata) => {
-    addPhoto(capture);
+  const handleAddPress = (capture: {
+    photo: CameraCapturedPicture;
+    metadata: PhotoMetadata;
+  }) => {
+    addPhoto(capture.photo, capture.metadata);
     navigation.pop();
   };
 

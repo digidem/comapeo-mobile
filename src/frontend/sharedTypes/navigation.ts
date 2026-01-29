@@ -5,13 +5,10 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {DeviceRoleForNewInvite, DeviceType} from '.';
-import {
-  ProcessedDraftPhoto,
-  SavedPhoto,
-} from '../contexts/PhotoPromiseContext/types';
+import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
 import {Audio} from 'expo-av';
 import {Exports} from '../screens/ExportObservations';
+import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 
 export interface TabBarIconProps {
   size: number;
@@ -60,17 +57,18 @@ export type RootStackParamsList = {
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
   DraftPhotoPreviewModal: {
-    photo: ProcessedDraftPhoto;
+    photoMetadata: PhotoMetadata;
+    photoExif?: PhotoEXIF;
+    uri: string;
+    photoId: number;
   };
   AttachedPhotoPreviewModal: {
-    photo: SavedPhoto;
+    photo: Extract<Attachment, {type: 'photo'}>;
     observationDocId: string;
   };
   ConfirmDeletePhoto: {
     onSuccess?: () => void;
-    // We currently only support deleting processed draft photos
-    // but we will eventually support deleting saved photos as well.
-    photo: ProcessedDraftPhoto;
+    photoId: number;
   };
   TrackCategoryChooser:
     | {trackAction: 'saveNew'}
@@ -133,12 +131,13 @@ export type RootStackParamsList = {
     uri: string;
     createdAt: number;
     showRecordingSavedText: boolean;
+    audioId: number;
   };
   AudioAttachmentPlaybackScreen: {
     driveDiscoveryId: string;
     name: string;
     type: 'audio';
-    createdAt: string;
+    createdAt?: string;
   };
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};
@@ -190,6 +189,7 @@ export type RootStackParamsList = {
   ConfirmDiscardObservationBottomSheet: undefined;
   ConfirmDiscardObservationEditBottomSheet: {observationId: string};
   ConfirmDiscardTrackBottomSheet: undefined;
+  TurnOffPasscodeBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

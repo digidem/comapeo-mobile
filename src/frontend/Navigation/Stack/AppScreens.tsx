@@ -10,6 +10,7 @@ import {AppPasscode} from '../../screens/AppPasscode';
 import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
 import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
 import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
+import {TurnOffPasscodeBottomSheet} from '../../screens/AppPasscode/TurnOffPasscodeBottomSheet';
 import {Security} from '../../screens/Security';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {ObservationCategoryChooser} from '../../screens/PresetChooser/ObservationCategoryChooser.tsx';
@@ -583,6 +584,10 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ConfirmPasscodeSheet"
         component={ConfirmPasscodeBottomSheet}
+      />
+      <RootStack.Screen
+        name="TurnOffPasscodeBottomSheet"
+        component={TurnOffPasscodeBottomSheet}
       />
       <RootStack.Screen
         name="ExportSuccess"

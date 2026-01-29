@@ -9,9 +9,11 @@ import {QuestionLabel} from './QuestionLabel';
 
 import type {QuestionProps} from './Question';
 import {ViewStyleProp} from '../../sharedTypes';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {SelectOneField} from '../../sharedTypes/PresetTypes';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 interface Props extends QuestionProps {
   field: SelectOneField;
@@ -39,8 +41,8 @@ const RadioItem = ({checked, onPress, label, style}: RadioItemProps) => (
 );
 
 export const SelectOne = React.memo<Props>(({field}) => {
-  const {updateTags} = useDraftObservation();
-  const tags = usePersistedDraftObservation(store => store.value?.tags);
+  const {updateTag} = useDraftObservationActions();
+  const tags = useDraftObservationState(state => state.value?.tags);
 
   return (
     <>
@@ -48,7 +50,7 @@ export const SelectOne = React.memo<Props>(({field}) => {
       {field.options.map((item, index) => (
         <RadioItem
           key={item.label}
-          onPress={() => updateTags(field.tagKey, item.value)}
+          onPress={() => updateTag(field.tagKey, item.value)}
           checked={tags && item.value === tags[field.tagKey] ? true : false}
           label={item.label}
           style={[styles.radioContainer, index === 0 ? styles.noBorder : {}]}

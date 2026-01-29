@@ -1,21 +1,11 @@
 import {useUpdateDocument} from '@comapeo/core-react';
 import {
-  usePersistedDraftObservation,
-  usePreset,
-} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {
   useCreatePhotoAttachment,
   useCreateAudioAttachment,
 } from '../../hooks/server/media';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {STORAGE_QUERY_KEY} from '../../hooks/useStorageReadingQuery';
 import SaveCheck from '../../images/CheckMark.svg';
-import {
-  isAudioAttachment,
-  isProcessedDraftPhoto,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
@@ -23,15 +13,26 @@ import * as Sentry from '@sentry/react-native';
 import {View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useQueryClient} from '@tanstack/react-query';
-import {AudioAttachment} from '../../sharedTypes/audio';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
+import {Attachment} from '../../sharedTypes';
+import {
+  isUnsavedAudioAttachment,
+  isUnsavedPhotoAttachment,
+} from '../../lib/attachmentTypeChecks';
 
 export const ObservationEditSaveButton = () => {
-  const value = usePersistedDraftObservation(store => store.value);
-  const attachments = usePersistedDraftObservation(store => store.attachments);
-  const {clearDraft} = useDraftObservation();
+  const value = useDraftObservationState(store => store.value);
+  const versionId = useDraftObservationState(store => store.id?.versionId);
+  const attachments = useDraftObservationState(
+    store => store.unsavedAttachments,
+  );
+  const {clearDraft} = useDraftObservationActions();
   const navigation = useNavigationFromRoot();
   const {projectId} = useActiveProject();
-  const preset = usePreset();
+  const preset = value?.presetRef;
   const queryClient = useQueryClient();
 
   const {
@@ -59,70 +60,50 @@ export const ObservationEditSaveButton = () => {
     if (!value) {
       throw new Error('no observation saved in persisted state');
     }
-    if (!('versionId' in value)) {
+    if (!versionId) {
       throw new Error('Cannot update a unsaved observation (must create one)');
     }
 
-    const newPhotos = attachments.filter(isProcessedDraftPhoto);
-
-    const removedAudioAttachments = attachments.filter(
-      (attachment): attachment is AudioAttachment =>
-        isAudioAttachment(attachment) && attachment.deleted === true,
-    );
-
-    const newAudioRecordings = attachments.filter(isUnsavedAudio);
-
-    const attachmentsChanged =
-      newPhotos.length > 0 ||
-      newAudioRecordings.length > 0 ||
-      removedAudioAttachments.length > 0;
-
-    if (!attachmentsChanged) {
-      updateObservationAsync({
-        versionId: value.versionId,
-        value: {
-          ...value,
-          presetRef: preset
-            ? {docId: preset.docId, versionId: preset.versionId}
-            : undefined,
-        },
-      })
-        .then(() => {
-          handleSaveSuccess();
-        })
-        .catch(err => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
-        });
-
-      return;
-    }
+    let newAttachments: Attachment[] = [];
 
     try {
-      const newAttachments = await Promise.all([
-        ...newPhotos.map(p => {
-          return createPhotoAttachmentAsync(p);
-        }),
-        ...newAudioRecordings.map(a => {
-          return createAudioAttachmentAsync(a);
-        }),
-      ]);
+      if (attachments) {
+        const photoAttachments = attachments.filter(att =>
+          isUnsavedPhotoAttachment(att),
+        );
 
-      const updatedAttachments = [
-        ...value.attachments.filter(
-          attachment =>
-            !removedAudioAttachments.some(
-              removed => removed.name === attachment.name,
-            ),
-        ),
-        ...newAttachments,
-      ];
+        const audioAttachments = attachments.filter(att =>
+          isUnsavedAudioAttachment(att),
+        );
+
+        if (photoAttachments.length > 0) {
+          const photoPromises = photoAttachments.map(photo => {
+            return createPhotoAttachmentAsync(photo);
+          });
+
+          newAttachments = [
+            ...newAttachments,
+            ...(await Promise.all(photoPromises)),
+          ];
+        }
+
+        if (audioAttachments.length > 0) {
+          const audioPromises = audioAttachments.map(audio => {
+            return createAudioAttachmentAsync(audio);
+          });
+
+          newAttachments = [
+            ...newAttachments,
+            ...(await Promise.all(audioPromises)),
+          ];
+        }
+      }
 
       await updateObservationAsync({
-        versionId: value.versionId,
+        versionId: versionId,
         value: {
           ...value,
-          attachments: updatedAttachments,
+          attachments: [...value.attachments, ...newAttachments],
           presetRef: preset
             ? {docId: preset.docId, versionId: preset.versionId}
             : undefined,

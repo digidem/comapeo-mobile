@@ -7,6 +7,12 @@ export enum Accuracy {
   BestForNavigation = 6,
 }
 
+export enum PermissionStatus {
+  GRANTED = 'granted',
+  UNDETERMINED = 'undetermined',
+  DENIED = 'denied',
+}
+
 export const getForegroundPermissionsAsync = () =>
   Promise.resolve({
     status: 'granted' as const,

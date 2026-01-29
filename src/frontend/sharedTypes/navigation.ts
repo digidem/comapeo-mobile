@@ -189,6 +189,7 @@ export type RootStackParamsList = {
   ConfirmDiscardObservationBottomSheet: undefined;
   ConfirmDiscardObservationEditBottomSheet: {observationId: string};
   ConfirmDiscardTrackBottomSheet: undefined;
+  TurnOffPasscodeBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

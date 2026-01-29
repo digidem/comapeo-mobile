@@ -10,7 +10,6 @@ import {
   createLocalDiscoveryController,
 } from './LocalDiscoveryContext';
 import {type MapeoClientApi} from '@comapeo/ipc';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {DraftObservationProvider} from './DraftObservationContext';
 import {DraftObservationStore} from './PersistedStores/DraftObservationStore';
 import {type TrackStore, TrackStoreProvider} from './TrackStoreContext';
@@ -103,17 +102,15 @@ export const AppProviders = ({
                               <ClientApiProvider clientApi={mapeoApi}>
                                 <ActiveProjectIdStoreProvider
                                   store={activeProjectIdStore}>
-                                  <BottomSheetModalProvider>
-                                    <DraftObservationProvider
-                                      draftObservationStore={
-                                        persistedDrafObservationStore
-                                      }>
-                                      <EarlyAccessStoreProvider
-                                        value={earlyAccessStore}>
-                                        <AuthProvider>{children}</AuthProvider>
-                                      </EarlyAccessStoreProvider>
-                                    </DraftObservationProvider>
-                                  </BottomSheetModalProvider>
+                                  <DraftObservationProvider
+                                    draftObservationStore={
+                                      persistedDrafObservationStore
+                                    }>
+                                    <EarlyAccessStoreProvider
+                                      value={earlyAccessStore}>
+                                      <AuthProvider>{children}</AuthProvider>
+                                    </EarlyAccessStoreProvider>
+                                  </DraftObservationProvider>
                                 </ActiveProjectIdStoreProvider>
                               </ClientApiProvider>
                             </LocalDiscoveryProvider>

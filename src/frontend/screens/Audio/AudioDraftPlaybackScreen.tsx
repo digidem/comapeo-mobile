@@ -7,7 +7,7 @@ import {
   DestructiveButton,
   SecondaryButton,
 } from '../../sharedComponents/Buttons';
-import {useAudioPlayback} from '../../hooks/useAudioPlayback';
+import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {Bar} from 'react-native-progress';
 import {COMAPEO_BLUE, WHITE, VERY_LIGHT_GREY, BLACK} from '../../lib/styles';
@@ -40,17 +40,24 @@ export const AudioDraftPlaybackScreen = ({
   route,
 }: NativeRootNavigationProps<'AudioDraftPlaybackScreen'>) => {
   const {uri, createdAt, showRecordingSavedText, audioId} = route.params;
-  const {duration, currentPosition, isPlaying, startPlayback, stopPlayback} =
-    useAudioPlayback(uri);
+  const player = useAudioPlayer({uri});
+  const status = useAudioPlayerStatus(player);
   const {formatMessage} = useIntl();
   const {deleteUnsavedAttachment} = useDraftObservationActions();
+
+  const duration = status.duration * 1000;
+  const currentPosition = status.currentTime * 1000;
+  const isPlaying = status.playing;
 
   const handlePlayPause = () => {
     try {
       if (isPlaying) {
-        stopPlayback();
+        player.pause();
       } else {
-        startPlayback();
+        if (status.currentTime >= status.duration) {
+          player.seekTo(0);
+        }
+        player.play();
       }
     } catch {
       navigation.navigate('ErrorBottomSheet');

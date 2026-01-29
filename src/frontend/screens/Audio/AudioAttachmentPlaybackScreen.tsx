@@ -3,7 +3,7 @@ import {StyleSheet, View, TouchableOpacity, Pressable} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {useAudioPlayback} from '../../hooks/useAudioPlayback';
+import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {Bar} from 'react-native-progress';
 import {
@@ -55,18 +55,25 @@ export const AudioAttachmentPlaybackScreen = ({
       variant: 'original',
     },
   });
-  const {duration, currentPosition, isPlaying, startPlayback, stopPlayback} =
-    useAudioPlayback(uri);
+  const player = useAudioPlayer({uri});
+  const status = useAudioPlayerStatus(player);
   const {formatMessage} = useIntl();
   const [localUri, setLocalUri] = React.useState<string | null>(null);
   const [shareLoading, setShareLoading] = React.useState(false);
 
+  const duration = status.duration * 1000;
+  const currentPosition = status.currentTime * 1000;
+  const isPlaying = status.playing;
+
   const handlePlayPause = () => {
     try {
       if (isPlaying) {
-        stopPlayback();
+        player.pause();
       } else {
-        startPlayback();
+        if (status.currentTime >= status.duration) {
+          player.seekTo(0);
+        }
+        player.play();
       }
     } catch {
       navigation.navigate('ErrorBottomSheet');

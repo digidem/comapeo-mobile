@@ -45,6 +45,18 @@ export const AudioDraftPlaybackScreen = ({
   const {formatMessage} = useIntl();
   const {deleteUnsavedAttachment} = useDraftObservationActions();
 
+  const handlePlayPause = () => {
+    try {
+      if (isPlaying) {
+        stopPlayback();
+      } else {
+        startPlayback();
+      }
+    } catch {
+      navigation.navigate('ErrorBottomSheet');
+    }
+  };
+
   const progress = duration ? currentPosition / duration : 0;
 
   return (
@@ -80,7 +92,7 @@ export const AudioDraftPlaybackScreen = ({
       </View>
       <View style={audioStyles.audioBox}>
         <TouchableOpacity
-          onPress={() => (isPlaying ? stopPlayback() : startPlayback())}
+          onPress={handlePlayPause}
           style={{
             flex: 1,
             justifyContent: 'flex-end',

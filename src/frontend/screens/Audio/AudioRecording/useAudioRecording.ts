@@ -4,60 +4,32 @@ import {
   useAudioRecorderState,
   RecordingPresets,
 } from 'expo-audio';
-import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 
 const RECORDING_OPTIONS = RecordingPresets.HIGH_QUALITY!;
 
 export function useAudioRecording() {
   const recorder = useAudioRecorder(RECORDING_OPTIONS);
   const status = useAudioRecorderState(recorder, 100);
-  const {navigate} = useNavigationFromRoot();
 
   const startRecording = useCallback(async () => {
-    if (!recorder) {
-      navigate('ErrorBottomSheet');
-      return;
-    }
-
-    try {
-      await recorder.prepareToRecordAsync();
-    } catch {
-      try {
-        await recorder.prepareToRecordAsync();
-      } catch {
-        navigate('ErrorBottomSheet');
-        return;
-      }
-    }
-
+    await recorder.prepareToRecordAsync();
     recorder.record();
-  }, [recorder, navigate]);
+  }, [recorder]);
 
   const stopRecording = useCallback(async () => {
-    if (!recorder || status.isRecording === false) {
-      navigate('ErrorBottomSheet');
-      return;
-    }
-
-    try {
-      await recorder.stop();
-    } catch {
-      navigate('ErrorBottomSheet');
-      return;
-    }
+    await recorder.stop();
 
     const uri = recorder.uri;
-    const duration = status.durationMillis || 0;
+    const duration = status.durationMillis;
 
     if (!uri || !duration) {
-      navigate('ErrorBottomSheet');
-      return;
+      throw new Error('Recording failed. No URI or duration');
     }
 
     const createdAt = Date.now();
 
     return {uri, createdAt, duration};
-  }, [recorder, status.isRecording, status.durationMillis, navigate]);
+  }, [recorder, status.durationMillis]);
 
   return {startRecording, stopRecording, status};
 }

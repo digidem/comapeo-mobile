@@ -49,21 +49,22 @@ export function AudioRecording({
 
   React.useEffect(() => {
     const start = async () => {
-      await startRecording();
-      setIsLoading(false);
+      try {
+        await startRecording();
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Failed to start recording:', error);
+        navigation.replace('ErrorBottomSheet');
+      }
     };
     start();
-  }, [startRecording]);
+  }, [startRecording, navigation]);
 
   const finishRecording = React.useCallback(async () => {
     setIsLoading(true);
     try {
       const result = await stopRecording();
 
-      if (!result?.uri || !result.createdAt || !result.duration) {
-        navigation.replace('ErrorBottomSheet');
-        return;
-      }
       const audioId = addAudio({
         uri: result.uri,
         createdAt: result.createdAt,
@@ -75,6 +76,8 @@ export function AudioRecording({
         showRecordingSavedText: true,
         audioId,
       });
+    } catch {
+      navigation.replace('ErrorBottomSheet');
     } finally {
       setIsLoading(false);
     }

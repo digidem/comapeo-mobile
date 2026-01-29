@@ -61,6 +61,18 @@ export const AudioAttachmentPlaybackScreen = ({
   const [localUri, setLocalUri] = React.useState<string | null>(null);
   const [shareLoading, setShareLoading] = React.useState(false);
 
+  const handlePlayPause = () => {
+    try {
+      if (isPlaying) {
+        stopPlayback();
+      } else {
+        startPlayback();
+      }
+    } catch {
+      navigation.navigate('ErrorBottomSheet');
+    }
+  };
+
   const progress = duration ? currentPosition / duration : 0;
 
   const handleShare = React.useCallback(async () => {
@@ -133,7 +145,7 @@ export const AudioAttachmentPlaybackScreen = ({
       <View style={audioStyles.audioBox}>
         <TouchableOpacity
           testID="audio-play-toggle"
-          onPress={() => (isPlaying ? stopPlayback() : startPlayback())}
+          onPress={handlePlayPause}
           style={styles.playButton}>
           {isPlaying ? <StopIcon size={60} color={BLACK} /> : <PlayArrow />}
         </TouchableOpacity>

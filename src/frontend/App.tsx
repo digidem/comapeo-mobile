@@ -42,6 +42,7 @@ import PostHog from 'posthog-react-native';
 import {Suspense} from 'react';
 import {Loading} from './sharedComponents/Loading.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
+import {FatalError} from './screens/FatalError.tsx';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -220,37 +221,39 @@ const App = () => {
   }, []);
 
   return (
-    <LocaleStoreProvider value={persistedLocaleStore}>
-      <IntlProvider>
-        {/* ServerLoading requires internationalization to be set up */}
-        <ServerLoading serverStateStore={serverStateStore}>
-          <Suspense fallback={<Loading />}>
-            <AppProviders
-              queryClient={queryClient}
-              localDiscoveryController={localDiscoveryController}
-              mapeoApi={mapeoApi}
-              persistedDrafObservationStore={persistedDraftObservationStore}
-              trackStore={persistedTrackStore}
-              securityStore={persistedSecurityStore}
-              coordinateFormatStore={persistedCoordinateFormatStore}
-              manualEntryCoordinateFormatStore={
-                persistedManualEntryCoordinateFormatStore
-              }
-              savedLocationStore={savedLocationStore}
-              activeProjectIdStore={persistedActiveProjectIdStore}
-              metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-              appUsageStatsStore={appUsagePromptStore}
-              lowStorageBannerStore={lowStorageBannerStore}
-              earlyAccessStore={earlyAccessStore}>
-              <AppNavigator
-                permissionAsked={permissionsAsked}
-                navigationIntegration={navigationIntegration}
-              />
-            </AppProviders>
-          </Suspense>
-        </ServerLoading>
-      </IntlProvider>
-    </LocaleStoreProvider>
+    <Sentry.ErrorBoundary fallback={<FatalError />}>
+      <LocaleStoreProvider value={persistedLocaleStore}>
+        <IntlProvider>
+          {/* ServerLoading requires internationalization to be set up */}
+          <ServerLoading serverStateStore={serverStateStore}>
+            <Suspense fallback={<Loading />}>
+              <AppProviders
+                queryClient={queryClient}
+                localDiscoveryController={localDiscoveryController}
+                mapeoApi={mapeoApi}
+                persistedDrafObservationStore={persistedDraftObservationStore}
+                trackStore={persistedTrackStore}
+                securityStore={persistedSecurityStore}
+                coordinateFormatStore={persistedCoordinateFormatStore}
+                manualEntryCoordinateFormatStore={
+                  persistedManualEntryCoordinateFormatStore
+                }
+                savedLocationStore={savedLocationStore}
+                activeProjectIdStore={persistedActiveProjectIdStore}
+                metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+                appUsageStatsStore={appUsagePromptStore}
+                lowStorageBannerStore={lowStorageBannerStore}
+                earlyAccessStore={earlyAccessStore}>
+                <AppNavigator
+                  permissionAsked={permissionsAsked}
+                  navigationIntegration={navigationIntegration}
+                />
+              </AppProviders>
+            </Suspense>
+          </ServerLoading>
+        </IntlProvider>
+      </LocaleStoreProvider>
+    </Sentry.ErrorBoundary>
   );
 };
 

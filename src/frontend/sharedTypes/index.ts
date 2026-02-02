@@ -45,3 +45,7 @@ export const NO_ROLE_ID = '08e4251e36f6e7ed';
 export type PhotoEXIF = NonNullable<
   Extract<Observation['attachments'][number], {type: 'photo'}>['photoExif']
 >;
+
+export type SavedPhoto = Extract<Attachment, {type: 'photo'}> & {
+  deleted?: boolean;
+};

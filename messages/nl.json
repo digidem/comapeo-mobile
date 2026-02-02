@@ -3,17 +3,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Doorgaan met bewerken"
   },
-  "AppContainer.EditHeader.discardChangesButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Wijzigingen annuleren"
-  },
-  "AppContainer.EditHeader.discardChangesDescription": {
-    "message": "Uw wijzigingen worden niet opgeslagen. Dit kan niet ongedaan worden gemaakt."
-  },
-  "AppContainer.EditHeader.discardChangesTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Wijzigingen annuleren?"
-  },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Waarneming weggooien"
@@ -108,7 +97,7 @@
     "message": "Doorgaan met bewerken"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
+    "description": "Button to confirm discarding the observation edits",
     "message": "Wijzigingen annuleren"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
@@ -477,6 +466,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Selecteer apparaat om uit te nodigen"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
+    "message": "Selecteer apparaat"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "Als coördinator kan dit apparaat gebruikers uitnodigen en verwijderen en projectdetails beheren."
   },
@@ -522,10 +514,6 @@
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "Telefoon model"
-  },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Voorvertoning"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -1014,11 +1002,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "Projectstatistieken worden gedeeld"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "Ga naar de kaart"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "Ga naar Sync"
+  "screens.InviteSuccess.done": {
+    "message": "Voltooid"
   },
   "screens.InviteSuccess.success": {
     "message": "Geslaagd"
@@ -1037,14 +1022,41 @@
   "screens.LeaveProject.cancel": {
     "message": "Annuleren"
   },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "Dit apparaat zal niet langer bekijken of bijdragen aan dit project"
+  "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
+    "message": "Apparaat zal niet langer in staat zijn om dit project te bekijken, bij te dragen of aan te passen."
+  },
+  "screens.LeaveProject.leaveProjectDescriptionParticipant": {
+    "message": "Apparaat zal niet langer in staat zijn om dit project te bekijken of bij te dragen."
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "Verlaat {projectName}?"
   },
   "screens.LeaveProject.yesLeave": {
     "message": "Ja, verlaat"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Annuleren"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Doorgaan"
+  },
+  "screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "Voordat je vertrekt, exporteer je belangrijke gegevens."
+  },
+  "screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "Nodig een nieuw apparaat uit als coördinator om dit te voorkomen."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "Als dit apparaat weggaat, kan geen ander apparaat apparaten toevoegen of verwijderen, projectinformatie aanpassen of de ingestelde categorieën bijwerken."
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "Apparaat is laatste coördinator."
+  },
+  "screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "Als dit apparaat vertrekt, zullen alle gegevens van dit project verloren gaan."
+  },
+  "screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "Apparaat is laatste apparaat."
   },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Open {deviceName}"
@@ -1384,7 +1396,7 @@
     "message": "Wat gebeurt er hier?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "Waarneming wijzigen"
   },
   "screens.ObservationEdit.observation": {
@@ -1677,6 +1689,15 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "Project Statistieken Instrument UIT"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Reden: {reason}"
+  },
+  "screens.RemovedFromProjectBottomSheet.title": {
+    "message": "DEZE APPARAAT VERWIJDEREN VAN…"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Wat gebeurt er hier?"
@@ -1737,14 +1758,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Voltooid"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is nu onderdeel van uw project."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "Bekijk team"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Uitnodiging bekijken"
@@ -1872,14 +1893,17 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Deelnemen aan een project"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Geaccepteerde bestandstypen zijn .smp"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Bestand kiezen"
+  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
+    "message": "Toegevoegd op {date}"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Dit kan niet ongedaan worden gemaakt."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "Bestand kiezen"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "Afsluiten"
@@ -1914,23 +1938,20 @@
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Fout bij importeren"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Kaart verwijderen"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Kaartbestand verwijderen"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"
   },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Datum toegevoegd"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Kaart naam"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Kaart verwijderen"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
+  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
+    "message": "Kaart verzenden"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Nodig apparaten uit voor een nieuw project met al je waarnemingen."
@@ -2108,7 +2129,7 @@
     "message": "Stop tracks"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "Je neemt momenteel een nummer op. Om deel te nemen aan het project stop je opname"
+    "message": "Nummers worden opgenomen. Stop tracks om door te gaan."
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Apparaat verwijderd."
@@ -2201,11 +2222,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Elk project is uniek en scheidt."
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coördinator"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "Deelnemer"
   }
 }

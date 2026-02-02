@@ -5,6 +5,7 @@ import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useCreateDocument} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import type {Position} from '@comapeo/schema/dist/schema/track';
 
 export const SaveTrackButton: FC = () => {
   const navigation = useNavigationFromRoot();
@@ -34,7 +35,7 @@ export const SaveTrackButton: FC = () => {
             },
             mocked: false,
             timestamp: new Date(loc.timestamp).toISOString()!,
-          })),
+          })) as [Position, Position, ...Position[]],
           ...(preset
             ? {
                 presetRef: {

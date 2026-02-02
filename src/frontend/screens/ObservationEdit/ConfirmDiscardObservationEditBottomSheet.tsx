@@ -11,40 +11,43 @@ import {
   DestructiveButton,
   SecondaryButton,
 } from '../../sharedComponents/Buttons';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   discardTitle: {
-    id: 'AppContainer.EditHeader.discardTitle',
-    defaultMessage: 'Discard observation?',
-    description: 'Title of dialog that shows when cancelling a new observation',
+    id: 'ObservationEdit.HeaderLeft.discardTitle',
+    defaultMessage: 'Discard changes?',
+    description: 'Title of dialog that shows when cancelling observation edits',
   },
   discardObservationDescription: {
-    id: 'AppContainer.EditHeader.discardObservationDescription',
-    defaultMessage:
-      'Your Observation will not be saved. This cannot be undone.',
+    id: 'ObservationEdit.HeaderLeft.discardObservationDescription',
+    defaultMessage: 'Your changes will not be saved. This cannot be undone.',
   },
   discardCancel: {
-    id: 'AppContainer.EditHeader.discardCancel',
+    id: 'ObservationEdit.HeaderLeft.discardCancel',
     defaultMessage: 'Continue editing',
     description: 'Button on dialog to keep editing (cancelling close action)',
   },
   discardObservationButton: {
-    id: 'AppContainer.EditHeader.discardObservationButton',
-    defaultMessage: 'Discard Observation',
-    description: 'Title of dialog that shows when cancelling observation edits',
+    id: 'ObservationEdit.HeaderLeft.discardObservationButton',
+    defaultMessage: 'Discard changes',
+    description: 'Button to confirm discarding the observation edits',
   },
 });
 
-export const ConfirmDiscardObservationBottomSheet = () => {
+export const ConfirmDiscardObservationEditBottomSheet = ({
+  navigation,
+  route,
+}: NativeRootNavigationProps<'ConfirmDiscardObservationEditBottomSheet'>) => {
   const {formatMessage: t} = useIntl();
-  const navigation = useNavigationFromRoot();
   const {clearDraft} = useDraftObservationActions();
 
   function handleDiscard() {
     clearDraft();
-    navigation.popTo('Home', {screen: 'Map'});
+    navigation.popTo('Observation', {
+      observationId: route.params.observationId,
+    });
   }
 
   return (

@@ -144,9 +144,11 @@ export const AudioAttachmentPlaybackScreen = ({
           {millisecondsToMMSS(currentPosition)} / {millisecondsToMMSS(duration)}
         </HeaderText>
 
-        <BodyText variant="smallMeta" style={audioStyles.textStyle}>
-          <FormattedObservationDate createdDate={createdAt} variant="long" />
-        </BodyText>
+        {createdAt && (
+          <BodyText variant="smallMeta" style={audioStyles.textStyle}>
+            <FormattedObservationDate createdDate={createdAt} variant="long" />
+          </BodyText>
+        )}
       </View>
     </ScreenContentWithDock>
   );

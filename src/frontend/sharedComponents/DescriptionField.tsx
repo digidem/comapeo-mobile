@@ -1,8 +1,8 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
-import {useKeyboardListener} from '../../hooks/useKeyboardListener';
+import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../lib/styles';
+import {useKeyboardListener} from '../hooks/useKeyboardListener';
 
 const m = defineMessages({
   descriptionPlaceholder: {

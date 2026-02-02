@@ -1,9 +1,9 @@
 import React from 'react';
 import {Image} from 'react-native';
 import {AlertIcon} from '../icons';
-import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {useAttachmentUrlQuery} from '../../hooks/server/media';
 import {ThumbnailContainer} from './ThumbnailContainer';
+import {Attachment} from '../../sharedTypes';
 
 export const ThumbnailImage = ({error, uri}: {error?: Error; uri: string}) => {
   const [nativeImageError, setNativeImageError] = React.useState(false);
@@ -31,7 +31,7 @@ export const SavedPhotoThumbnailImage = ({
   size,
 }: {
   onPress?: () => void;
-  photo: SavedPhoto;
+  photo: Attachment;
   size: number;
 }) => {
   const image = useAttachmentUrlQuery(photo, 'thumbnail');

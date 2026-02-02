@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
@@ -13,8 +11,8 @@ import {StyleSheet, View} from 'react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {PresetView} from '../../sharedComponents/Editor/PresetView';
-import {DescriptionField} from '../../sharedComponents/Editor/DescriptionField';
+import {PresetView} from '../../sharedComponents/PresetView';
+import {DescriptionField} from '../../sharedComponents/DescriptionField';
 import {HorizontalScrollView} from '../../sharedComponents/HorizontalScrollView';
 import {
   GAP,
@@ -22,11 +20,6 @@ import {
   ThumbnailContainer,
   ThumbnailLoader,
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer';
-import {
-  isDraftPhoto,
-  isUnprocessedDraftPhoto,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
 import {ThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail';
 import {COMAPEO_BLUE, DARK_GREY, LIGHT_GREY, WHITE} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -34,6 +27,14 @@ import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import {DateDistance} from '../../sharedComponents/DateDistance';
 import PlayArrow from '../../images/PlayArrow.svg';
 import {LiveLocationView} from './LiveLocationView';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
+import {
+  isUnsavedAudioAttachment,
+  isUnsavedPhotoAttachment,
+} from '../../lib/attachmentTypeChecks';
 
 const m = defineMessages({
   observation: {
@@ -61,14 +62,16 @@ export const ObservationCreate = ({
   navigation,
 }: NativeRootNavigationProps<'ObservationCreate'>) => {
   const {formatMessage} = useIntl();
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
+  const preset = useDraftObservationState(state => state.value?.presetRef);
 
-  const attachments = usePersistedDraftObservation(store => store.attachments);
-  const notes = usePersistedDraftObservation(store => store.value?.tags.notes);
+  const attachments = useDraftObservationState(
+    store => store.unsavedAttachments,
+  );
+
+  const notes = useDraftObservationState(store => store.value?.tags.notes);
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
-  const {updateTags} = useDraftObservation();
+  const {updateTag} = useDraftObservationActions();
 
   const presetName = preset ? preset.name : formatMessage(m.observation);
 
@@ -110,10 +113,10 @@ export const ObservationCreate = ({
       <DescriptionField
         notes={typeof notes !== 'string' ? '' : notes}
         updateNotes={newVal => {
-          updateTags('notes', newVal);
+          updateTag('notes', newVal);
         }}
       />
-      {attachments && attachments.length > 0 && (
+      {attachments && (
         <HorizontalScrollView
           shouldShowLastItems={true}
           minItemWidth={MIN_WIDTH}
@@ -121,34 +124,52 @@ export const ObservationCreate = ({
           renderChildren={size => (
             <>
               {attachments.map(att => {
-                if (isUnprocessedDraftPhoto(att)) {
-                  return <ThumbnailLoader size={size} key={att.draftPhotoId} />;
-                }
-                if (isDraftPhoto(att)) {
-                  return (
-                    <ThumbnailContainer
-                      key={att.draftPhotoId}
-                      accessibilityLabel="View draft photo."
-                      size={size}
-                      onPress={() =>
-                        navigation.navigate('DraftPhotoPreviewModal', {
-                          photo: att,
-                        })
-                      }>
-                      <ThumbnailImage uri={att.thumbnailUri} />
-                    </ThumbnailContainer>
-                  );
+                if (isUnsavedPhotoAttachment(att)) {
+                  // if the preview and thumbnail are not ready, show loader
+                  if (
+                    att.original.uri === null ||
+                    att.preview.processingState !== 'complete' ||
+                    att.thumbnail.processingState !== 'complete'
+                  ) {
+                    return <ThumbnailLoader size={size} key={att.id} />;
+                  } else {
+                    return (
+                      <ThumbnailContainer
+                        key={att.id}
+                        accessibilityLabel="View draft photo."
+                        size={size}
+                        onPress={() =>
+                          navigation.navigate('DraftPhotoPreviewModal', {
+                            photoId: att.id,
+                            photoExif: att.photoExif,
+                            // We check for null above, so here it is safe to assert non-null
+                            uri: att.original.uri!,
+                            photoMetadata: {
+                              timestamp: att.timestamp,
+                              location: att.location,
+                              accelerometer: att.accelerometer,
+                            },
+                          })
+                        }>
+                        <ThumbnailImage uri={att.preview.uri} />
+                      </ThumbnailContainer>
+                    );
+                  }
                 }
 
-                if (isUnsavedAudio(att)) {
+                if (
+                  isUnsavedAudioAttachment(att) &&
+                  att.original.uri !== null
+                ) {
                   return (
                     <ThumbnailContainer
-                      key={att.uri}
+                      key={att.id}
                       size={size}
                       onPress={() =>
                         navigation.navigate('AudioDraftPlaybackScreen', {
-                          uri: att.uri,
-                          createdAt: att.createdAt,
+                          uri: att.original.uri!,
+                          audioId: att.id,
+                          createdAt: att.timestamp,
                           showRecordingSavedText: false,
                         })
                       }
@@ -164,7 +185,7 @@ export const ObservationCreate = ({
                         {millisecondsToMMSS(att.duration)}
                       </BodyText>
                       <DateDistance
-                        date={new Date(att.createdAt)}
+                        date={new Date(att.timestamp)}
                         style={{
                           fontSize: 12,
                           fontWeight: '400',

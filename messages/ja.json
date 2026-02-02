@@ -3,17 +3,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "編集を続ける"
   },
-  "AppContainer.EditHeader.discardChangesButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "変更を破棄"
-  },
-  "AppContainer.EditHeader.discardChangesDescription": {
-    "message": "変更は保存されません。元に戻すことはできません。"
-  },
-  "AppContainer.EditHeader.discardChangesTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "変更を破棄してよろしいですか？"
-  },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "観察記録を破棄"
@@ -54,9 +43,6 @@
   },
   "Modal.GPSEnable.button.default": {
     "message": "トラックの開始"
-  },
-  "Modal.GPSEnable.button.loading": {
-    "message": "Loading…"
   },
   "Modal.GPSEnable.button.stop": {
     "message": "トラックを停止"
@@ -108,7 +94,7 @@
     "message": "編集を続ける"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
+    "description": "Button to confirm discarding the observation edits",
     "message": "変更を破棄"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
@@ -477,6 +463,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "招待するデバイスを選択"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
+    "message": "デバイスを選択"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "コーディネーターとして、このデバイスはユーザーの招待と削除、およびプロジェクトの詳細を管理することができます。"
   },
@@ -522,10 +511,6 @@
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "携帯電話の機種"
-  },
-  "screens.AboutSettings.releaseName": {
-    "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "プレビュー"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -611,9 +596,6 @@
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "App Passcodeを使用すると、CoMapeoアプリを開くためにパスコードを入力することで、追加のセキュリティ層を追加することができます。 以下の機能をオンにすることで、独自の5桁のパスコードを定義できます。"
-  },
-  "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "取消"
@@ -1014,11 +996,8 @@
   "screens.InviteReceived.sharedStats": {
     "message": "プロジェクトの統計情報が共有されています"
   },
-  "screens.InviteSuccess.goToMap": {
-    "message": "マップに移動"
-  },
-  "screens.InviteSuccess.goToSync": {
-    "message": "同期へ"
+  "screens.InviteSuccess.done": {
+    "message": "完了"
   },
   "screens.InviteSuccess.success": {
     "message": "成功"
@@ -1037,14 +1016,41 @@
   "screens.LeaveProject.cancel": {
     "message": "取消"
   },
-  "screens.LeaveProject.leaveProjectDescription": {
-    "message": "このデバイスは、このプロジェクトを表示または貢献しません。"
+  "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
+    "message": "デバイスはこのプロジェクトを表示、貢献、調整することができなくなります。"
+  },
+  "screens.LeaveProject.leaveProjectDescriptionParticipant": {
+    "message": "デバイスは、このプロジェクトを表示または貢献することができなくなります。"
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "{projectName} を離れますか？"
   },
   "screens.LeaveProject.yesLeave": {
     "message": "はい、退出します"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "取消"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "続ける"
+  },
+  "screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "出発する前に、重要なデータをエクスポートしてください。"
+  },
+  "screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "これを回避するには、新しいデバイスをコーディネーターとして招待してください。"
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "このデバイスが離れている場合、他のデバイスはデバイスを追加または削除できません。プロジェクト情報を調整したり、カテゴリセットを更新したりできません。"
+  },
+  "screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "デバイスは最後のコーディネーターです。"
+  },
+  "screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "このデバイスを離れると、このプロジェクト上のすべてのデータが失われます。"
+  },
+  "screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "デバイスは最後のデバイスです。"
   },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "{deviceName} を開く"
@@ -1384,7 +1390,7 @@
     "message": "何がここで起こっているか?"
   },
   "screens.ObservationEdit.navTitle": {
-    "description": "screen title for new observation screen",
+    "description": "screen title for edit observation screen",
     "message": "観察記録を編集"
   },
   "screens.ObservationEdit.observation": {
@@ -1467,10 +1473,6 @@
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
     "message": "観察記録の読み込み中にエラーが発生しました。CoMapeoを終了して再起動してください。"
-  },
-  "screens.ObservationsList.loading": {
-    "description": "message shown whilst observations are loading",
-    "message": "Loading… this can take a while after synchronizing with a new device"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
     "message": "Open Settings"
@@ -1677,6 +1679,12 @@
   "screens.ProjectStatisticsTurnedOff.title": {
     "message": "プロジェクト統計情報|OFF"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "理由: {reason}"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "何がここで起こっているか?"
@@ -1737,14 +1745,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "完了"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> がプロジェクトの一部になりました。"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "チームを表示"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "招待状を確認"
@@ -1872,14 +1880,17 @@
   "screens.Settings.JoinAProject.title": {
     "message": "プロジェクトに参加"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+  "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "受け入れられるファイルの種類は .smp です"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "ファイルを選択"
+  "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
+    "message": "{date} に追加"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "この操作は元に戻せません。"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "ファイルを選択"
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "閉じる"
@@ -1914,23 +1925,20 @@
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "インポートエラー"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "地図を削除"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "地図ファイルを削除"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"
   },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "追加日"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "地図名"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "地図を削除"
-  },
-  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
-    "message": "{value} MB"
+  "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
+    "message": "地図を送信"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "すべての観察記録を持つ新しいプロジェクトにデバイスを招待します。"
@@ -2108,7 +2116,7 @@
     "message": "トラックを停止"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "現在トラックを録音しています。プロジェクトに参加するには、録音を停止してください。"
+    "message": "トラックが記録されています。トラックを停止して続行してください。"
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "デバイスを削除しました。"
@@ -2201,11 +2209,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "それぞれのプロジェクトは一意であり、それぞれ独立しています。"
-  },
-  "useProjectRoleAndDetails.coordinator": {
-    "message": "Coordinator"
-  },
-  "useProjectRoleAndDetails.participant": {
-    "message": "参加者"
   }
 }

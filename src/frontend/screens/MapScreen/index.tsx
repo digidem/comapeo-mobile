@@ -9,9 +9,6 @@ import {
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
@@ -21,7 +18,6 @@ import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
-import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {GPSPill} from '../../sharedComponents/GPSPill';
@@ -43,6 +39,10 @@ import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner'
 import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
 import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
 import {useTrackState} from '../../contexts/TrackStoreContext';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -68,8 +68,7 @@ export const MapScreen = ({
   const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
     React.useState(false);
   const {dimensions, mapKey, onLayout} = useResetMapLayout();
-
-  const {newDraft} = useDraftObservation();
+  const {createDraft} = useDraftObservationActions();
   const {navigate} = useNavigationFromHomeTabs();
   const {isTracking} = useTracking();
   const location = useLocationState(store =>
@@ -115,7 +114,7 @@ export const MapScreen = ({
   );
 
   const handleAddPress = () => {
-    newDraft();
+    createDraft();
     navigate('ObservationCategoryChooser');
   };
 
@@ -234,11 +233,8 @@ function useCheckDraftObservationAndNavigate({
 }: {
   authState: AuthState;
 }) {
-  const {data: presets} = usePresetsQuery();
   const {navigate} = useNavigationFromHomeTabs();
-  const existingObservation = usePersistedDraftObservation(
-    store => store.value,
-  );
+  const existingObservation = useDraftObservationState(store => store.value);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -247,7 +243,7 @@ function useCheckDraftObservationAndNavigate({
         return;
       }
       // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
-      if (!matchPreset(existingObservation.tags, presets)) {
+      if (!existingObservation.presetRef) {
         navigate('ObservationCategoryChooser');
 
         // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
@@ -256,7 +252,7 @@ function useCheckDraftObservationAndNavigate({
       } else {
         navigate('ObservationCreate');
       }
-    }, [existingObservation, navigate, presets, authState]),
+    }, [existingObservation, navigate, authState]),
   );
 }
 

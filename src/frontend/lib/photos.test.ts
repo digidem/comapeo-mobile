@@ -153,7 +153,7 @@ test('getDraftPhotoInfo()', () => {
   expect(
     getDraftPhotoInfo({
       ...baseDraftPhotoFields,
-      mediaMetadata: {
+      photoMetadata: {
         timestamp: now,
       },
     }),
@@ -169,7 +169,7 @@ test('getDraftPhotoInfo()', () => {
   expect(
     getDraftPhotoInfo({
       ...baseDraftPhotoFields,
-      mediaMetadata: {
+      photoMetadata: {
         timestamp: now,
         location: {
           timestamp: now + 1000,
@@ -199,16 +199,16 @@ test('getDraftPhotoInfo()', () => {
   expect(
     getDraftPhotoInfo({
       ...baseDraftPhotoFields,
-      mediaMetadata: {
+      photoMetadata: {
         timestamp: now,
-        photoExif: {
-          Make: 'Google',
-          Model: 'Pixel 2',
-          FNumber: 1.85,
-          Orientation: 1,
-          ImageLength: 100,
-          ImageWidth: 200,
-        },
+      },
+      photoExif: {
+        Make: 'Google',
+        Model: 'Pixel 2',
+        FNumber: 1.85,
+        Orientation: 1,
+        ImageLength: 100,
+        ImageWidth: 200,
       },
     }),
   ).toStrictEqual({
@@ -227,16 +227,16 @@ test('getDraftPhotoInfo()', () => {
   expect(
     getDraftPhotoInfo({
       ...baseDraftPhotoFields,
-      mediaMetadata: {
+      photoMetadata: {
         timestamp: now,
-        photoExif: {
-          Make: 'Samsung',
-          Model: 'Galaxy S25',
-          FNumber: 2.5,
-          Orientation: 8,
-          ImageLength: 200,
-          ImageWidth: 100,
-        },
+      },
+      photoExif: {
+        Make: 'Samsung',
+        Model: 'Galaxy S25',
+        FNumber: 2.5,
+        Orientation: 8,
+        ImageLength: 200,
+        ImageWidth: 100,
       },
     }),
   ).toStrictEqual({

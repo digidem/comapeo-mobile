@@ -221,10 +221,10 @@ const App = () => {
   }, []);
 
   return (
-    <Sentry.ErrorBoundary fallback={<FatalError />}>
-      <LocaleStoreProvider value={persistedLocaleStore}>
-        <IntlProvider>
-          {/* ServerLoading requires internationalization to be set up */}
+    <LocaleStoreProvider value={persistedLocaleStore}>
+      <IntlProvider>
+        {/* ServerLoading requires internationalization to be set up */}
+        <Sentry.ErrorBoundary fallback={<FatalError />}>
           <ServerLoading serverStateStore={serverStateStore}>
             <Suspense fallback={<Loading />}>
               <AppProviders
@@ -251,9 +251,9 @@ const App = () => {
               </AppProviders>
             </Suspense>
           </ServerLoading>
-        </IntlProvider>
-      </LocaleStoreProvider>
-    </Sentry.ErrorBoundary>
+        </Sentry.ErrorBoundary>
+      </IntlProvider>
+    </LocaleStoreProvider>
   );
 };
 

@@ -47,7 +47,6 @@ export const DidNotMoveBottomSheet = ({
           icon={<ErrorIcon width="60" height={60} />}
           title={formatMessage(m.noTrackRecorded)}
           description={formatMessage(m.didNotMove)}
-          gap={10}
         />
 
         <View style={styles.buttonContainer}>

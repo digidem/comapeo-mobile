@@ -41,7 +41,6 @@ export const GPSBackgroundPermissionDisabled = ({
         }
         title={formatMessage(m.useLocation)}
         description={formatMessage(m.collectsLocation)}
-        gap={10}
         style={styles.messageStack}
       />
       <PrimaryButton

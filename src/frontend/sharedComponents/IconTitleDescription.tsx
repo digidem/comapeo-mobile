@@ -5,14 +5,6 @@ import {ViewStyleProp} from '../sharedTypes';
 import {BodyText} from './Text/BodyText';
 import {HeaderText} from './Text/HeaderText';
 
-type HeaderVariant =
-  | 'header1'
-  | 'header2'
-  | 'header3'
-  | 'header4'
-  | 'header5'
-  | 'header6';
-
 /**
  * IconTitleDescription is a styled component for displaying an icon
  * with a centered title and optional description below it.
@@ -28,21 +20,17 @@ export const IconTitleDescription = ({
   icon,
   title,
   description,
-  headerVariant = 'header2',
-  gap = 20,
   style,
 }: {
   icon: React.ReactNode;
   title: string;
   description?: string;
-  headerVariant?: HeaderVariant;
-  gap?: number;
   style?: ViewStyleProp;
 }) => {
   return (
-    <View style={[styles.container, {gap}, style]}>
+    <View style={[styles.container, style]}>
       {icon}
-      <HeaderText style={styles.title} variant={headerVariant}>
+      <HeaderText style={styles.title} variant="header2">
         {title}
       </HeaderText>
       {description && (
@@ -55,6 +43,7 @@ export const IconTitleDescription = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    gap: 20,
   },
   title: {
     textAlign: 'center',

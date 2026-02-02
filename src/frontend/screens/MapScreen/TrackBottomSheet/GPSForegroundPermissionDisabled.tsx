@@ -39,7 +39,6 @@ export const GPSForegroundPermissionDisabled = ({
         }
         title={formatMessage(m.gpsDisabledTitle)}
         description={formatMessage(m.gpsDisabledDescription)}
-        gap={10}
         style={styles.messageStack}
       />
       <PrimaryButton

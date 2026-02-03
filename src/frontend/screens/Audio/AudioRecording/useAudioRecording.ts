@@ -12,15 +12,16 @@ export function useAudioRecording() {
   const status = useAudioRecorderState(recorder, 100);
 
   const startRecording = useCallback(async () => {
-    try {
-      await recorder.prepareToRecordAsync();
-    } catch {
-      // this extra try is necessary during enabling of audio permissions
+    await recorder.prepareToRecordAsync();
+
+    // If not ready to record after first prepare, try once more
+    // This is necessary during enabling of audio permissions
+    if (!status.canRecord) {
       await recorder.prepareToRecordAsync();
     }
 
     recorder.record();
-  }, [recorder]);
+  }, [recorder, status.canRecord]);
 
   const stopRecording = useCallback(async () => {
     await recorder.stop();

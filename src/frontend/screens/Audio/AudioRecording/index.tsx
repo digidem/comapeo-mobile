@@ -16,6 +16,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {useDraftObservationActions} from '../../../contexts/DraftObservationContext';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   lessThan5: {
@@ -37,7 +38,7 @@ export function AudioRecording({
 }: NativeRootNavigationProps<'AudioRecording'>) {
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const {startRecording, stopRecording, status} = useAudioRecording();
-  const timeElapsed = status?.durationMillis || 0;
+  const timeElapsed = status.durationMillis;
   const [isLoading, setIsLoading] = React.useState(true);
   const {addAudio} = useDraftObservationActions();
 
@@ -49,16 +50,11 @@ export function AudioRecording({
 
   React.useEffect(() => {
     const start = async () => {
-      try {
-        await startRecording();
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Failed to start recording:', error);
-        navigation.replace('ErrorBottomSheet');
-      }
+      await startRecording();
+      setIsLoading(false);
     };
     start();
-  }, [startRecording, navigation]);
+  }, [startRecording]);
 
   const finishRecording = React.useCallback(async () => {
     setIsLoading(true);
@@ -76,7 +72,8 @@ export function AudioRecording({
         showRecordingSavedText: true,
         audioId,
       });
-    } catch {
+    } catch (error) {
+      Sentry.captureException(error);
       navigation.replace('ErrorBottomSheet');
     } finally {
       setIsLoading(false);

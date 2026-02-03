@@ -12,12 +12,25 @@ export function useAudioRecording() {
   const status = useAudioRecorderState(recorder, 100);
 
   const startRecording = useCallback(async () => {
-    await recorder.prepareToRecordAsync();
+    try {
+      await recorder.prepareToRecordAsync();
+    } catch {
+      try {
+        await recorder.prepareToRecordAsync();
+      } catch {
+        throw new Error('Failed to prepare recorder');
+      }
+    }
+
     recorder.record();
   }, [recorder]);
 
   const stopRecording = useCallback(async () => {
-    await recorder.stop();
+    try {
+      await recorder.stop();
+    } catch {
+      throw new Error('Failed to stop recorder');
+    }
 
     const uri = recorder.uri;
     const duration = status.durationMillis;

@@ -75,7 +75,8 @@ export const AudioAttachmentPlaybackScreen = ({
         }
         player.play();
       }
-    } catch {
+    } catch (error) {
+      Sentry.captureException(error);
       navigation.navigate('ErrorBottomSheet');
     }
   };
@@ -85,10 +86,10 @@ export const AudioAttachmentPlaybackScreen = ({
   const handleShare = React.useCallback(async () => {
     setShareLoading(true);
 
-    let fileUri = localUri;
+    try {
+      let fileUri = localUri;
 
-    if (!fileUri) {
-      try {
+      if (!fileUri) {
         const tempFileName = `audio_${Date.now()}.m4a`;
         const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
         const {uri: downloadedUri} = await FileSystem.downloadAsync(
@@ -98,22 +99,15 @@ export const AudioAttachmentPlaybackScreen = ({
 
         fileUri = downloadedUri;
         setLocalUri(downloadedUri);
-      } catch (err) {
-        navigation.navigate('ErrorBottomSheet');
-        Sentry.captureException(err);
-        setShareLoading(false);
-        return;
       }
-    }
 
-    try {
       await Share.open({url: fileUri, failOnCancel: false});
     } catch (err) {
-      navigation.navigate('ErrorBottomSheet');
       Sentry.captureException(err);
+      navigation.navigate('ErrorBottomSheet');
+    } finally {
+      setShareLoading(false);
     }
-
-    setShareLoading(false);
   }, [uri, localUri, navigation]);
 
   React.useEffect(() => {

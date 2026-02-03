@@ -19,6 +19,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {audioStyles} from './shared';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   recordingSaved: {
@@ -59,7 +60,8 @@ export const AudioDraftPlaybackScreen = ({
         }
         player.play();
       }
-    } catch {
+    } catch (error) {
+      Sentry.captureException(error);
       navigation.navigate('ErrorBottomSheet');
     }
   };

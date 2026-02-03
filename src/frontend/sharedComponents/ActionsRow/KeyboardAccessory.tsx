@@ -34,10 +34,10 @@ export const KeyboardAccessory: FC<KeyboardAccessory> = ({onPress, items}) => {
         </Text>
       </View>
       <View style={styles.flexRow}>
-        {items.map((item, idx) => (
+        {items.map(item => (
           <Pressable
             onPress={onPress}
-            key={idx}
+            key={item.testID || item.label}
             style={styles.accessoryIcon}
             testID={`${item.testID}-keyboard`}>
             {item.icon}

@@ -51,10 +51,14 @@ export const InputPasscode = ({
     cellCount: CELL_COUNT,
   });
 
-  if (error) {
-    inputRef.current?.focus();
-    if (inputValue.length === 5) setInputValue('');
-  }
+  React.useEffect(() => {
+    if (error) {
+      inputRef.current?.focus();
+      if (inputValue.length === 5) {
+        setInputValue('');
+      }
+    }
+  }, [error, inputValue.length, inputRef]);
 
   function updateInput(newVal: string) {
     if (error) hideError();

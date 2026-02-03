@@ -1,4 +1,4 @@
-import {createContext, use} from 'react';
+import {createContext, use, useEffect} from 'react';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
@@ -112,10 +112,13 @@ export const AppUsageStatsProvider = ({
   children: React.ReactNode;
   value: AppUsageStatsStore;
 }) => {
-  const optInStartedAt = value.instance.getState().optInStartedAt;
-  if (optInStartedAt && Date.now() - optInStartedAt > ONE_YEAR_MS) {
-    value.actions.resetOptInAndTimer();
-  }
+  useEffect(() => {
+    const optInStartedAt = value.instance.getState().optInStartedAt;
+    if (optInStartedAt && Date.now() - optInStartedAt > ONE_YEAR_MS) {
+      value.actions.resetOptInAndTimer();
+    }
+  }, [value]);
+
   return <AppUsageStatsContext value={value}>{children}</AppUsageStatsContext>;
 };
 

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo} from 'react';
 import {
   useSecurityActions,
   useSecurityState,
@@ -17,23 +17,22 @@ const m = defineMessages({
 export function usePasscodeLockout() {
   const {lockUntil} = useSecurityState();
   const {setLockUntil} = useSecurityActions();
-  const [minutes, setMinutes] = useState(0);
   const {formatMessage} = useIntl();
 
-  useEffect(() => {
-    let timeout: NodeJS.Timeout | null = null;
-    if (lockUntil) {
-      const calcMinutes = getRemainingLockoutMinutes(lockUntil);
-      setMinutes(calcMinutes);
-      timeout = setTimeout(() => {
-        setLockUntil(0);
-      }, calcMinutes * 60_000);
-    }
+  const minutes = useMemo(() => {
+    if (!lockUntil) return 0;
+    return getRemainingLockoutMinutes(lockUntil);
+  }, [lockUntil]);
 
-    return () => {
-      if (timeout) clearTimeout(timeout);
-    };
-  }, [lockUntil, setLockUntil]);
+  useEffect(() => {
+    if (!lockUntil || minutes === 0) return;
+
+    const timeout = setTimeout(() => {
+      setLockUntil(0);
+    }, minutes * 60_000);
+
+    return () => clearTimeout(timeout);
+  }, [lockUntil, minutes, setLockUntil]);
 
   return {
     isLockedOut: !!lockUntil,

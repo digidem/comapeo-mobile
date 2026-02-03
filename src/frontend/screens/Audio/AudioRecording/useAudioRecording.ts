@@ -15,22 +15,15 @@ export function useAudioRecording() {
     try {
       await recorder.prepareToRecordAsync();
     } catch {
-      try {
-        await recorder.prepareToRecordAsync();
-      } catch {
-        throw new Error('Failed to prepare recorder');
-      }
+      // this extra try is necessary during enabling of audio permissions
+      await recorder.prepareToRecordAsync();
     }
 
     recorder.record();
   }, [recorder]);
 
   const stopRecording = useCallback(async () => {
-    try {
-      await recorder.stop();
-    } catch {
-      throw new Error('Failed to stop recorder');
-    }
+    await recorder.stop();
 
     const uri = recorder.uri;
     const duration = status.durationMillis;

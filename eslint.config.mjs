@@ -118,7 +118,10 @@ const frontendConfig = pluginTs.config(
   },
   {
     name: 'tests',
-    files: ['src/frontend/**/*.test.{js,jsx,mts,ts,tsx}'],
+    files: [
+      'src/frontend/**/*.test.{js,jsx,mts,ts,tsx}',
+      'src/frontend/**/__mocks__/**',
+    ],
     extends: [
       pluginJest.configs['flat/recommended'],
       pluginTestingLibrary.configs['flat/react'],
@@ -126,6 +129,8 @@ const frontendConfig = pluginTs.config(
     rules: {
       // Mostly conventional and doesn't have significant impact on how tests work
       'testing-library/render-result-naming-convention': 'off',
+      '@eslint-react/hooks-extra/no-unnecessary-use-prefix': 'off',
+      '@eslint-react/hooks-extra/no-useless-custom-hooks': 'off',
     },
   },
 );

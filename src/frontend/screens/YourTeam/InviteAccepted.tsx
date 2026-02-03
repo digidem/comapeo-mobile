@@ -1,6 +1,6 @@
 import {BackHandler, StyleSheet, View} from 'react-native';
 import GreenCheck from '../../images/Success.svg';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import React from 'react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {SecondaryButton, PrimaryButton} from '../../sharedComponents/Buttons';
@@ -54,9 +54,17 @@ export const InviteAccepted = ({
           {t(m.inviteAccepted)}
         </HeaderText>
         <BodyText style={{textAlign: 'center', paddingHorizontal: 40}}>
-          {t(m.partOfProject, {
-            deviceName: name,
-          })}
+          <FormattedMessage
+            {...m.partOfProject}
+            values={{
+              deviceName: name,
+              bold: (chunks: React.ReactNode) => (
+                <BodyText key="bold" style={{fontWeight: 'bold'}}>
+                  {chunks}
+                </BodyText>
+              ),
+            }}
+          />
         </BodyText>
       </View>
       <View style={{alignItems: 'center', gap: 12}}>

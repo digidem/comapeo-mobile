@@ -4,10 +4,10 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Button} from '../../sharedComponents/Button';
 import GreenCheck from '../../images/Success.svg';
-import {StyleSheet, View} from 'react-native';
 import {MEDIUM_GREY} from '../../lib/styles';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
   archiveAdded: {
@@ -44,15 +44,11 @@ export const SuccessfullyAddedArchive = ({
         </Button>
       }
       contentContainerStyle={{marginTop: 80}}>
-      <View style={{alignItems: 'center'}}>
-        <GreenCheck />
-        <HeaderText variant="header2" style={styles.centerText}>
-          {formatMessage(m.archiveAdded)}
-        </HeaderText>
-        <BodyText style={styles.centerText}>
-          {formatMessage(m.canSyncOnInternet)}
-        </BodyText>
-      </View>
+      <IconTitleDescription
+        icon={<GreenCheck />}
+        title={formatMessage(m.archiveAdded)}
+        description={formatMessage(m.canSyncOnInternet)}
+      />
       <HeaderText variant="header5" style={{marginTop: 40}}>
         {archiveName}
       </HeaderText>
@@ -62,7 +58,3 @@ export const SuccessfullyAddedArchive = ({
     </ScreenContentWithDock>
   );
 };
-
-const styles = StyleSheet.create({
-  centerText: {textAlign: 'center', marginTop: 20},
-});

@@ -3,13 +3,12 @@ import * as Sentry from '@sentry/react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {View} from 'react-native';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-
-import {usePersistedDraftObservationActions} from '../hooks/persistedState/usePersistedDraftObservation';
 import Error from '../images/Error.svg';
 import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
 import {DestructiveButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {useDraftObservationActions} from '../contexts/DraftObservationContext';
 
 const m = defineMessages({
   title: {
@@ -30,11 +29,11 @@ export function ConfirmDeletePhoto({
   navigation,
   route,
 }: NativeRootNavigationProps<'ConfirmDeletePhoto'>) {
-  const {onSuccess, photo} = route.params;
+  const {onSuccess, photoId} = route.params;
 
   const {formatMessage: t} = useIntl();
 
-  const {deletePhoto} = usePersistedDraftObservationActions();
+  const {deleteUnsavedAttachment} = useDraftObservationActions();
 
   return (
     <BottomSheetWrapper>
@@ -59,7 +58,7 @@ export function ConfirmDeletePhoto({
             )}
             onPress={() => {
               try {
-                deletePhoto(photo.originalUri);
+                deleteUnsavedAttachment(photoId);
               } catch (reason) {
                 Sentry.captureException(reason);
                 navigation.navigate('ErrorBottomSheet');

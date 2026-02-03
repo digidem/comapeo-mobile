@@ -4,7 +4,7 @@ import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useFocusEffect} from '@react-navigation/native';
 import {BackHandler} from 'react-native';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {useDraftObservationState} from '../../contexts/DraftObservationContext';
 
 type HeaderLeftProps = {
   headerBackButtonProps: HeaderBackButtonProps;
@@ -12,14 +12,12 @@ type HeaderLeftProps = {
 
 export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   const navigation = useNavigationFromRoot();
-  const observationId = usePersistedDraftObservation(
-    store => store.observationId,
-  );
+  const observationId = useDraftObservationState(val => val.id);
 
   const handlePress = React.useCallback(() => {
     if (!observationId) return;
     navigation.navigate('ConfirmDiscardObservationEditBottomSheet', {
-      observationId,
+      observationId: observationId.docId,
     });
   }, [navigation, observationId]);
 

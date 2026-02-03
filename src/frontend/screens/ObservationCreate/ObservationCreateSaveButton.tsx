@@ -2,21 +2,12 @@ import {useCreateDocument} from '@comapeo/core-react';
 import {Observation} from '@comapeo/schema';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {
-  usePersistedDraftObservation,
-  usePreset,
-} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {
   useCreatePhotoAttachment,
   useCreateAudioAttachment,
 } from '../../hooks/server/media';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {STORAGE_QUERY_KEY} from '../../hooks/useStorageReadingQuery';
 import SaveCheck from '../../images/CheckMark.svg';
-import {
-  isProcessedDraftPhoto,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {
@@ -30,6 +21,14 @@ import {Alert, AlertButton, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useQueryClient} from '@tanstack/react-query';
 import {defineMessages, useIntl} from 'react-intl';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
+import {
+  isUnsavedAudioAttachment,
+  isUnsavedPhotoAttachment,
+} from '../../lib/attachmentTypeChecks';
 
 const MAXIMUM_ACCURACY = 10;
 
@@ -75,14 +74,16 @@ const m = defineMessages({
 });
 
 export const ObservationCreateSaveButton = () => {
-  const value = usePersistedDraftObservation(store => store.value);
-  const attachments = usePersistedDraftObservation(store => store.attachments);
+  const value = useDraftObservationState(store => store.value);
+  const attachments = useDraftObservationState(
+    store => store.unsavedAttachments,
+  );
+  const preset = useDraftObservationState(store => store.value?.presetRef);
   const {authState} = useAuthContext();
-  const {clearDraft} = useDraftObservation();
+  const {clearDraft} = useDraftObservationActions();
   const navigation = useNavigationFromRoot();
   const {projectId} = useActiveProject();
   const isTracking = useTrackState(state => state.isTracking);
-  const preset = usePreset();
   const queryClient = useQueryClient();
   const {formatMessage} = useIntl();
 
@@ -157,23 +158,38 @@ export const ObservationCreateSaveButton = () => {
       return;
     }
 
-    const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
-    const unsavedAudio = attachments.filter(isUnsavedAudio);
-
+    let newAttachments: Attachment[] = [];
     try {
-      let newAttachments: Attachment[] = [];
+      if (attachments) {
+        const photoAttachments = attachments.filter(att =>
+          isUnsavedPhotoAttachment(att),
+        );
 
-      if (unsavedPhotos.length > 0 || unsavedAudio.length > 0) {
-        const photoPromises = unsavedPhotos.map(p =>
-          createPhotoAttachmentAsync(p),
+        const audioAttachments = attachments.filter(att =>
+          isUnsavedAudioAttachment(att),
         );
-        const audioPromises = unsavedAudio.map(a =>
-          createAudioAttachmentAsync(a),
-        );
-        newAttachments = await Promise.all([
-          ...photoPromises,
-          ...audioPromises,
-        ]);
+
+        if (photoAttachments.length > 0) {
+          const photoPromises = photoAttachments.map(photo => {
+            return createPhotoAttachmentAsync(photo);
+          });
+
+          newAttachments = [
+            ...newAttachments,
+            ...(await Promise.all(photoPromises)),
+          ];
+        }
+
+        if (audioAttachments.length > 0) {
+          const audioPromises = audioAttachments.map(audio => {
+            return createAudioAttachmentAsync(audio);
+          });
+
+          newAttachments = [
+            ...newAttachments,
+            ...(await Promise.all(audioPromises)),
+          ];
+        }
       }
 
       const createdObservation = await createObservationAsync({

@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
@@ -21,13 +19,6 @@ import {
   ThumbnailLoader,
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer';
 import {
-  isAudioAttachment,
-  isDraftPhoto,
-  isSavedPhoto,
-  isUnprocessedDraftPhoto,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
-import {
   SavedPhotoThumbnailImage,
   ThumbnailImage,
 } from '../../sharedComponents/Thumbnails/PhotoThumbnail';
@@ -36,9 +27,16 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import {DateDistance} from '../../sharedComponents/DateDistance';
 import PlayArrow from '../../images/PlayArrow.svg';
-import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioSavedThumbnail';
 import {HeaderLeft} from './HeaderLeft';
 import {ObservationEditSaveButton} from './ObservationEditSaveButton';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
+import {
+  isUnsavedAudioAttachment,
+  isUnsavedPhotoAttachment,
+} from '../../lib/attachmentTypeChecks';
 
 const m = defineMessages({
   observation: {
@@ -66,18 +64,17 @@ export const ObservationEdit = ({
   navigation,
 }: NativeRootNavigationProps<'ObservationEdit'>) => {
   const {formatMessage} = useIntl();
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
-
-  const attachments = usePersistedDraftObservation(store => store.attachments);
-  const notes = usePersistedDraftObservation(store => store.value?.tags.notes);
-
-  const observationId = usePersistedDraftObservation(
-    store => store.observationId,
-  );
+  const observationId = useDraftObservationState(store => store.id);
+  const observation = useDraftObservationState(store => store.value);
+  const notes = observation?.tags.notes;
+  const preset = observation?.presetRef;
+  const savedAttachments = observation?.attachments;
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
-  const {updateTags} = useDraftObservation();
+  const {updateTag} = useDraftObservationActions();
+  const attachments = useDraftObservationState(
+    store => store.unsavedAttachments,
+  );
 
   const presetName = preset ? preset.name : formatMessage(m.observation);
 
@@ -117,100 +114,142 @@ export const ObservationEdit = ({
       <DescriptionField
         notes={typeof notes !== 'string' ? '' : notes}
         updateNotes={newVal => {
-          updateTags('notes', newVal);
+          updateTag('notes', newVal);
         }}
       />
-      {attachments && attachments.length > 0 && (
+      {(savedAttachments || attachments) && (
         <HorizontalScrollView
           shouldShowLastItems={true}
           minItemWidth={MIN_WIDTH}
           gap={GAP}
           renderChildren={size => (
             <>
-              {attachments.map(att => {
-                if (isUnprocessedDraftPhoto(att)) {
-                  return <ThumbnailLoader size={size} key={att.draftPhotoId} />;
-                }
-                if (isDraftPhoto(att)) {
-                  return (
-                    <ThumbnailContainer
-                      key={att.draftPhotoId}
-                      accessibilityLabel="View draft photo."
-                      size={size}
-                      onPress={() =>
-                        navigation.navigate('DraftPhotoPreviewModal', {
-                          photo: att,
-                        })
-                      }>
-                      <ThumbnailImage uri={att.thumbnailUri} />
-                    </ThumbnailContainer>
-                  );
-                }
-                // observationId must exist if there is a saved photo
-                if (isSavedPhoto(att) && observationId) {
-                  return (
-                    <React.Suspense
-                      key={att.driveDiscoveryId + att.hash + att.type}
-                      fallback={<ThumbnailLoader size={size} />}>
-                      <SavedPhotoThumbnailImage
-                        size={size}
-                        photo={att}
-                        onPress={() => {
-                          navigation.navigate('AttachedPhotoPreviewModal', {
-                            photo: att,
-                            observationDocId: observationId,
-                          });
-                        }}
-                      />
-                    </React.Suspense>
-                  );
-                }
+              {savedAttachments &&
+                savedAttachments.map(att => {
+                  if (observationId && att.type === 'photo') {
+                    return (
+                      <React.Suspense
+                        key={att.driveDiscoveryId + att.hash + att.type}
+                        fallback={<ThumbnailLoader size={size} />}>
+                        <SavedPhotoThumbnailImage
+                          size={size}
+                          photo={att}
+                          onPress={() => {
+                            navigation.navigate('AttachedPhotoPreviewModal', {
+                              photo: att,
+                              observationDocId: observationId.docId,
+                            });
+                          }}
+                        />
+                      </React.Suspense>
+                    );
+                  }
 
-                if (isAudioAttachment(att) && observationId) {
-                  return (
-                    <AudioSavedThumbnail
-                      size={size}
-                      key={att.driveDiscoveryId + att.hash + att.type}
-                      audio={att}
-                      observationId={observationId}
-                    />
-                  );
-                }
-                if (isUnsavedAudio(att)) {
-                  return (
-                    <ThumbnailContainer
-                      key={att.uri}
-                      size={size}
-                      onPress={() =>
-                        navigation.navigate('AudioDraftPlaybackScreen', {
-                          uri: att.uri,
-                          createdAt: att.createdAt,
-                          showRecordingSavedText: false,
-                        })
-                      }
-                      containerStyle={{
-                        backgroundColor: WHITE,
-                        borderColor: COMAPEO_BLUE,
-                        borderWidth: 2,
-                        paddingVertical: 8,
-                      }}
-                      accessibilityLabel="Play audio recording.">
-                      <PlayArrow width={48} height={48} />
-                      <BodyText variant="tinyMeta" style={{fontWeight: '500'}}>
-                        {millisecondsToMMSS(att.duration)}
-                      </BodyText>
-                      <DateDistance
-                        date={new Date(att.createdAt)}
-                        style={{
-                          fontSize: 12,
-                          fontWeight: '400',
-                          color: DARK_GREY,
+                  if (att.type === 'audio' && observationId) {
+                    return (
+                      <ThumbnailContainer
+                        key={att.hash}
+                        size={size}
+                        onPress={() =>
+                          navigation.navigate('AudioAttachmentPlaybackScreen', {
+                            driveDiscoveryId: att.driveDiscoveryId,
+                            name: att.name,
+                            type: 'audio',
+                            createdAt: att.createdAt,
+                          })
+                        }
+                        containerStyle={styles.container}
+                        accessibilityLabel="Play audio recording.">
+                        <PlayArrow width={48} height={48} />
+                        {att.createdAt && (
+                          <DateDistance
+                            date={new Date(att.createdAt)}
+                            style={{
+                              fontSize: 12,
+                              fontWeight: 400,
+                              color: DARK_GREY,
+                            }}
+                          />
+                        )}
+                      </ThumbnailContainer>
+                    );
+                  }
+                })}
+              {attachments &&
+                attachments.map(att => {
+                  if (isUnsavedPhotoAttachment(att)) {
+                    // if the original and thumbnail are not ready, show loader
+                    if (
+                      att.original.processingState !== 'complete' ||
+                      att.thumbnail.processingState !== 'complete'
+                    ) {
+                      return <ThumbnailLoader size={size} key={att.id} />;
+                    } else {
+                      return (
+                        <ThumbnailContainer
+                          key={att.id}
+                          accessibilityLabel="View draft photo."
+                          size={size}
+                          onPress={() =>
+                            navigation.navigate('DraftPhotoPreviewModal', {
+                              photoId: att.id,
+                              photoExif: att.photoExif,
+                              // We check for null above, so here it is safe to assert non-null
+                              uri: att.original.uri!,
+                              photoMetadata: {
+                                timestamp: att.timestamp,
+                                location: att.location,
+                                accelerometer: att.accelerometer,
+                              },
+                            })
+                          }>
+                          <ThumbnailImage uri={att.thumbnail.uri} />
+                        </ThumbnailContainer>
+                      );
+                    }
+                  }
+
+                  if (
+                    isUnsavedAudioAttachment(att) &&
+                    att.original.uri !== null
+                  ) {
+                    return (
+                      <ThumbnailContainer
+                        key={att.id}
+                        size={size}
+                        onPress={() =>
+                          navigation.navigate('AudioDraftPlaybackScreen', {
+                            uri: att.original.uri!,
+                            audioId: att.id,
+                            createdAt: att.timestamp,
+                            showRecordingSavedText: false,
+                          })
+                        }
+                        containerStyle={{
+                          backgroundColor: WHITE,
+                          borderColor: COMAPEO_BLUE,
+                          borderWidth: 2,
+                          paddingVertical: 8,
                         }}
-                      />
-                    </ThumbnailContainer>
-                  );
-                }
-              })}
+                        accessibilityLabel="Play audio recording.">
+                        <PlayArrow width={48} height={48} />
+                        <BodyText
+                          variant="tinyMeta"
+                          style={{fontWeight: '500'}}>
+                          {millisecondsToMMSS(att.duration)}
+                        </BodyText>
+                        <DateDistance
+                          date={new Date(att.timestamp)}
+                          style={{
+                            fontSize: 12,
+                            fontWeight: '400',
+                            color: DARK_GREY,
+                          }}
+                        />
+                      </ThumbnailContainer>
+                    );
+                  }
+                })}
             </>
           )}
         />

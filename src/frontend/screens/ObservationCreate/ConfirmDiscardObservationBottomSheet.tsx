@@ -12,7 +12,7 @@ import {
   SecondaryButton,
 } from '../../sharedComponents/Buttons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   discardTitle: {
@@ -40,7 +40,7 @@ const m = defineMessages({
 export const ConfirmDiscardObservationBottomSheet = () => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const {clearDraft} = useDraftObservation();
+  const {clearDraft} = useDraftObservationActions();
 
   function handleDiscard() {
     clearDraft();

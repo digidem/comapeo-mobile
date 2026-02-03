@@ -11,10 +11,13 @@ import {InsetMapView} from './InsetMapView';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {useManyDocs} from '@comapeo/core-react';
-import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
+
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
-import {isSavedPhoto, isAudioAttachment} from '../../lib/attachmentTypeChecks';
+import {
+  isSavedPhoto,
+  isAudioAttachment,
+} from '../../lib/attachmentTypeChecks.ts';
 import {TrackAccordian} from './TrackAccordian.tsx';
 import {Divider} from '../../sharedComponents/Divider.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
@@ -32,8 +35,9 @@ import {
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
 import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
 import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioSavedThumbnail.tsx';
-import {useDraftObservation} from '../../hooks/useDraftObservation.ts';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
+import {useDraftObservationActions} from '../../contexts/DraftObservationContext.tsx';
+import {SavedPhoto} from '../../sharedTypes/index.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -56,7 +60,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {observationId} = route.params;
   const {projectId} = useActiveProject();
   const {observation, preset} = useObservationWithPreset(observationId);
-  const {existingObservationToDraft} = useDraftObservation();
+  const {createDraft} = useDraftObservationActions();
 
   const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
   const {lat, lon, metadata} = observation;
@@ -82,7 +86,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             <ObservationHeaderRight
               canEdit={canEdit}
               setObservationToStoreAndNavigateToEdit={() => {
-                existingObservationToDraft(observation, preset);
+                createDraft({...observation, presetRef: preset});
                 navigation.navigate('ObservationEdit');
               }}
             />
@@ -92,7 +96,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         return <ObservationHeaderRight canEdit={canEdit} />;
       },
     });
-  }, [canEdit, navigation, observation, existingObservationToDraft, preset]);
+  }, [canEdit, navigation, observation, createDraft, preset]);
 
   return (
     <ScrollView

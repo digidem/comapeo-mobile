@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
-import {FatalError} from './screens/FatalError';
 import type {ServerStateStore} from './lib/ServerStateStore.js';
 
 export const ServerLoading = ({
@@ -23,7 +22,7 @@ export const ServerLoading = ({
 
   if (serverState.value === 'ERROR') {
     SplashScreen.hide();
-    return <FatalError />;
+    throw new Error('Server not loading');
   }
 
   return <>{children}</>;

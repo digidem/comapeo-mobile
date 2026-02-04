@@ -1,13 +1,11 @@
-import {View} from 'react-native';
 import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
-import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
-import {BodyText} from '../sharedComponents/Text/BodyText';
 import {DestructiveButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import Error from '../images/Error.svg';
 import {useTracking} from '../hooks/useTracking';
 import {useTrackState} from '../contexts/TrackStoreContext';
+import {IconTitleDescription} from '../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
   recordingTracks: {
@@ -48,17 +46,11 @@ export const TrackRecordingActive = ({
 
   return (
     <BottomSheetWrapper>
-      <View style={{alignItems: 'center'}}>
-        <Error />
-        <HeaderText
-          style={{textAlign: 'center', marginTop: 20}}
-          variant="header2">
-          {formatMessage(m.recordingTracks)}
-        </HeaderText>
-        <BodyText style={{textAlign: 'center', marginTop: 20}}>
-          {formatMessage(m.warningMessage)}
-        </BodyText>
-      </View>
+      <IconTitleDescription
+        icon={<Error />}
+        title={formatMessage(m.recordingTracks)}
+        description={formatMessage(m.warningMessage)}
+      />
       <DestructiveButton
         fullSize={true}
         onPress={handleStopTracks}

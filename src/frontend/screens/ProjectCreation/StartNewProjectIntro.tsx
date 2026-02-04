@@ -2,12 +2,11 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {DARK_ORANGE} from '../../lib/styles';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import ProjectCoordinator from '../../images/ProjectCoordinator.svg';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
   title: {
@@ -36,13 +35,13 @@ export const StartNewProjectIntro: NativeNavigationComponent<
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <ProjectCoordinator width={70} height={60} color={DARK_ORANGE} />
-        <HeaderText variant="header2" style={styles.heading}>
-          {formatMessage(m.heading)}
-        </HeaderText>
-        <BodyText style={styles.description}>
-          {formatMessage(m.description)}
-        </BodyText>
+        <IconTitleDescription
+          icon={
+            <ProjectCoordinator width={70} height={60} color={DARK_ORANGE} />
+          }
+          title={formatMessage(m.heading)}
+          description={formatMessage(m.description)}
+        />
       </View>
       <View style={styles.buttonContainer}>
         <PrimaryButton
@@ -76,16 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 20,
     paddingVertical: 40,
-  },
-  heading: {
-    textAlign: 'center',
-    paddingHorizontal: 10,
-  },
-  description: {
-    textAlign: 'center',
-    paddingHorizontal: 10,
   },
   buttonContainer: {
     alignItems: 'center',

@@ -3,9 +3,8 @@ import {StyleSheet, View} from 'react-native';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
 import SuccessCheck from '../../images/Success.svg';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
   done: {
@@ -30,17 +29,13 @@ export const InviteSuccessfullyAccepted = ({
 
   return (
     <BottomSheetWrapper>
-      <SuccessCheck style={{alignSelf: 'center'}} />
-      <HeaderText
-        style={{textAlign: 'center', marginTop: 20}}
-        variant="header2">
-        {formatMessage(m.success)}
-      </HeaderText>
-      <BodyText style={{textAlign: 'center', marginTop: 20}}>
-        {formatMessage(m.youHaveJoined, {
+      <IconTitleDescription
+        icon={<SuccessCheck />}
+        title={formatMessage(m.success)}
+        description={formatMessage(m.youHaveJoined, {
           projectName: route.params.projectName,
         })}
-      </BodyText>
+      />
       <View style={styles.buttonContainer}>
         <>
           <SecondaryButton

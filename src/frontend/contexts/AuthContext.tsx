@@ -6,6 +6,7 @@ import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE, verifyPasscode} from '../lib/security';
 import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
 import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
+import {useIsFileSelectionOpen} from '../hooks/files';
 import {getLockoutThreshold} from '../lib/security';
 import {useShallow} from 'zustand/react/shallow';
 
@@ -28,6 +29,16 @@ export const useAuthContext = () => {
   return value;
 };
 
+/** Checks if the app should bypass passcode due to system dialogs being open
+ * for system operations like file selection, sharing, or permissions. */
+function useAuthBypassCheck() {
+  const shareDialogIsOpen = useIsShareDialogOpen();
+  const isAudioPermissionModalOpen = useIsAudioPermissionModalOpen();
+  const isFileSelectionOpen = useIsFileSelectionOpen();
+
+  return shareDialogIsOpen || isAudioPermissionModalOpen || isFileSelectionOpen;
+}
+
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState(
     useShallow(state => ({
@@ -43,8 +54,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   );
   // If E2E test mode is enabled, disable FlagSecure to allow screen recordings on BrowserStack
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
-  const shareDialogIsOpen = useIsShareDialogOpen();
-  const isAudioPermissionModalOpen = useIsAudioPermissionModalOpen();
+  const shouldBypassAuth = useAuthBypassCheck();
 
   React.useEffect(() => {
     if (passcode !== null && !isE2E) {
@@ -58,8 +68,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     const appStateListener = AppState.addEventListener(
       'change',
       (nextAppState: AppStateStatus) => {
-        // If the app state changes due to opening a share dialog or the in app Audio Permissions, do not unauthenticate
-        if (shareDialogIsOpen || isAudioPermissionModalOpen) return;
+        if (shouldBypassAuth) return;
         if (passcode !== null) {
           if (
             nextAppState === 'active' ||
@@ -73,7 +82,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     );
 
     return () => appStateListener.remove();
-  }, [passcode, shareDialogIsOpen, isAudioPermissionModalOpen]);
+  }, [passcode, shouldBypassAuth]);
 
   const authenticate: AuthContextType['authenticate'] = React.useCallback(
     async passcodeValue => {

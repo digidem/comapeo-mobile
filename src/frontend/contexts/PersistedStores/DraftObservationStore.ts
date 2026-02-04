@@ -160,7 +160,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
    * Only processes steps that are not already complete.
    */
   async function processPhoto(attachment: UnsavedPhotoAttachment) {
-    const {id, raw, original, thumbnail, preview, photoExif} = attachment;
+    const {id, raw, original, thumbnail, preview} = attachment;
 
     if (raw.processingState !== 'complete' || !raw.uri) {
       throw new Error('Cannot process photo without raw image');
@@ -186,21 +186,14 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         width = result.width;
         height = result.height;
       } else {
+        // Note: Expo Camera with skipProcessing: false automatically rotates photos
+        // to the correct orientation; no further rotation needed.
         const result = await _processPhotoAttachment({
           id,
           outputKey: 'original',
-          processPromise: manipulateAsync(
-            raw.uri,
-            [
-              {
-                rotate:
-                  getRotationFromExifOrientation(photoExif?.Orientation) ?? 0,
-              },
-            ],
-            {
-              compress: ORIGINAL_COMPRESSION,
-            },
-          ),
+          processPromise: manipulateAsync(raw.uri, [{rotate: 0}], {
+            compress: ORIGINAL_COMPRESSION,
+          }),
         });
         originalUri = result.uri;
         width = result.width;
@@ -558,35 +551,6 @@ function reasonToError(reason: unknown): Error {
     return new Error(reason);
   }
   return new Error('Unknown error');
-}
-
-/**
- * Get rotation angle from EXIF Orientation tag value.
- * See: https://exiftool.org/TagNames/EXIF.html ("Orientation" tag)
- *
- * EXIF orientation values 1-8 describe how the image is stored vs how it should be displayed.
- * Values 2, 4, 5, 7 include flips which we ignore (only handle rotation).
- *
- * @param orientation EXIF Orientation tag value (1-8)
- * @returns Rotation angle in degrees for manipulateAsync (positive = counter-clockwise)
- */
-function getRotationFromExifOrientation(orientation?: number): number | null {
-  switch (orientation) {
-    case 1: // Normal
-    case 2: // Horizontal flip (no rotation needed)
-      return 0;
-    case 3: // Rotate 180°
-    case 4: // Vertical flip (equivalent to horizontal flip + 180°)
-      return 180;
-    case 5: // Transpose (rotate 90° CW + horizontal flip)
-    case 6: // Rotate 90° CW
-      return -90;
-    case 7: // Transverse (rotate 90° CCW + horizontal flip)
-    case 8: // Rotate 90° CCW
-      return 90;
-    default:
-      return null;
-  }
 }
 
 // TODO: Move this to @mapeo/schema - the current version is not flexible enough

@@ -3,35 +3,20 @@ import {StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import RNRestart from 'react-native-restart';
 import {WHITE} from '../lib/styles';
-import {defineMessages, useIntl} from 'react-intl';
 import {MapPinErrorIcon} from '../sharedComponents/MapPinErrorIcon';
 import {PrimaryButton} from '../sharedComponents/Buttons';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 
-const m = defineMessages({
-  somethingWrong: {
-    id: 'screens.FatalError.somethingWrong',
-    defaultMessage: 'Something Went Wrong',
-  },
-  restart: {
-    id: 'screens.FatalError.restart',
-    defaultMessage: 'Restart App',
-  },
-});
-
-export const FatalError = () => {
-  const {formatMessage} = useIntl();
+export const FatalErrorUntranslated = () => {
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <MapPinErrorIcon />
-        <HeaderText style={styles.text}>
-          {formatMessage(m.somethingWrong)}
-        </HeaderText>
+        <HeaderText style={styles.text}>Something Went Wrong</HeaderText>
       </View>
       <PrimaryButton
         fullSize
-        text={formatMessage(m.restart)}
+        text="Restart App"
         renderIcon={({size, color}) => {
           return <MaterialIcon size={size} name="refresh" color={color} />;
         }}
@@ -55,5 +40,6 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 20,
+    textAlign: 'center',
   },
 });

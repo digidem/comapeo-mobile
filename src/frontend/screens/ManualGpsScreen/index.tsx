@@ -14,7 +14,6 @@ import {
 } from 'react-intl';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {BLACK} from '../../lib/styles';
 import {IconButton} from '../../sharedComponents/IconButton';
 import SaveCheck from '../../images/CheckMark.svg';
@@ -30,12 +29,15 @@ import {
 import {DdForm} from './DdForm';
 import {DmsForm} from './DmsForm';
 import {UtmForm} from './UtmForm';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {
   useManualEntryCoordinateFormatActions,
   useManualEntryCoordinateFormat,
 } from '../../contexts/ManualEntryCoordinateFormatStoreContext';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   title: {
@@ -83,14 +85,12 @@ export const ManualGpsScreen = ({
     [t],
   );
 
-  const observationValue = usePersistedDraftObservation(
-    observationValueSelector,
-  );
+  const observationValue = useDraftObservationState(observationValueSelector);
 
   const entryCoordinateFormat = useManualEntryCoordinateFormat();
 
   const {setFormat} = useManualEntryCoordinateFormatActions();
-  const {updateObservationPosition} = useDraftObservation();
+  const {updatePosition} = useDraftObservationActions();
 
   React.useEffect(() => {
     function handleSavePress() {
@@ -115,7 +115,7 @@ export const ManualGpsScreen = ({
         );
       }
 
-      updateObservationPosition({
+      updatePosition({
         manualLocation: true,
         position: {
           coords: {
@@ -135,7 +135,7 @@ export const ManualGpsScreen = ({
         </IconButton>
       ),
     });
-  }, [navigation, convertedData, updateObservationPosition, t]);
+  }, [navigation, convertedData, updatePosition, t]);
 
   const locationCoordinates =
     observationValue &&
@@ -212,7 +212,7 @@ export function createNavigationOptions({
 }
 
 function observationValueSelector(
-  state: Parameters<Parameters<typeof usePersistedDraftObservation>[0]>[0],
+  state: Parameters<Parameters<typeof useDraftObservationState>[0]>[0],
 ) {
   return state.value;
 }

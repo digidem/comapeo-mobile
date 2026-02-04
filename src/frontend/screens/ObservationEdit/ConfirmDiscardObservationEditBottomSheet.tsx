@@ -11,8 +11,8 @@ import {
   DestructiveButton,
   SecondaryButton,
 } from '../../sharedComponents/Buttons';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   discardTitle: {
@@ -41,7 +41,7 @@ export const ConfirmDiscardObservationEditBottomSheet = ({
   route,
 }: NativeRootNavigationProps<'ConfirmDiscardObservationEditBottomSheet'>) => {
   const {formatMessage: t} = useIntl();
-  const {clearDraft} = useDraftObservation();
+  const {clearDraft} = useDraftObservationActions();
 
   function handleDiscard() {
     clearDraft();

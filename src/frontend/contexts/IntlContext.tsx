@@ -30,16 +30,19 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
   const systemLocales = useLocales();
 
   const messagesToUse = React.useMemo(() => {
-    const languageCode = extractLanguageCode(languageTag);
+    // A list of languages in order of preference - regional variants first over general language codes
+    const languages: string[] = [];
     const systemLanguageTags = systemLocales.map(l => l.languageTag);
+    for (const tag of [languageTag, ...systemLanguageTags]) {
+      languages.push(tag);
+      const languageCode = extractLanguageCode(tag);
+      if (languageCode !== tag) {
+        languages.push(languageCode);
+      }
+    }
     const merged = {};
-
     // Merge messages in order of priority: specific system locales, app language code, full app language tag
-    for (const tag of [
-      ...systemLanguageTags.reverse(),
-      languageCode,
-      languageTag,
-    ]) {
+    for (const tag of languages.reverse()) {
       Object.assign(merged, messages[tag as TranslatedLanguageTag] || {});
     }
 

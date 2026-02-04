@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {BLUE_GREY, DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
@@ -77,49 +76,47 @@ export const TrackScreen = ({
   }
 
   return (
-    <SafeAreaView style={styles.root}>
-      <ScreenContentWithDock
-        contentContainerStyle={{padding: 0}}
-        dockContainerStyle={{padding: 0}}
-        dockContent={
-          <ActionButtons
-            handleDelete={deleteTrack}
-            canDelete={canDelete}
-            deleteMessage={m.deleteTitle}
-          />
-        }>
-        <View>
-          <MapPreview
-            locationHistory={track.locations.map(({timestamp, coords}) => ({
-              latitude: coords.latitude,
-              longitude: coords.longitude,
-              timestamp: parseInt(timestamp, 10),
-            }))}
-            observations={trackObservations}
-          />
-          <TrackStats
-            distance={distance}
-            durationMs={durationMs}
-            backgroundColor={VERY_LIGHT_GREY}
-            center
-          />
-          <View style={styles.trackTitleWrapper}>
-            {preset ? (
-              <PresetCircleIcon iconId={preset.iconRef?.docId} size="medium" />
-            ) : (
-              <TrackIcon />
-            )}
-            <Text style={styles.trackTitle}>
-              {preset ? preset.name : <FormattedMessage {...m.tracks} />}
-            </Text>
-          </View>
-          <View style={styles.divider} />
-          <ObservationList observations={trackObservations} />
-          <View style={styles.divider} />
-          <Text style={styles.text}>{track.tags.notes}</Text>
+    <ScreenContentWithDock
+      contentContainerStyle={{padding: 0}}
+      dockContainerStyle={{padding: 0}}
+      dockContent={
+        <ActionButtons
+          handleDelete={deleteTrack}
+          canDelete={canDelete}
+          deleteMessage={m.deleteTitle}
+        />
+      }>
+      <View>
+        <MapPreview
+          locationHistory={track.locations.map(({timestamp, coords}) => ({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            timestamp: parseInt(timestamp, 10),
+          }))}
+          observations={trackObservations}
+        />
+        <TrackStats
+          distance={distance}
+          durationMs={durationMs}
+          backgroundColor={VERY_LIGHT_GREY}
+          center
+        />
+        <View style={styles.trackTitleWrapper}>
+          {preset ? (
+            <PresetCircleIcon iconId={preset.iconRef?.docId} size="medium" />
+          ) : (
+            <TrackIcon />
+          )}
+          <Text style={styles.trackTitle}>
+            {preset ? preset.name : <FormattedMessage {...m.tracks} />}
+          </Text>
         </View>
-      </ScreenContentWithDock>
-    </SafeAreaView>
+        <View style={styles.divider} />
+        <ObservationList observations={trackObservations} />
+        <View style={styles.divider} />
+        <Text style={styles.text}>{track.tags.notes}</Text>
+      </View>
+    </ScreenContentWithDock>
   );
 };
 export function createNavigationOptions({
@@ -138,11 +135,6 @@ export function createNavigationOptions({
 }
 
 export const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
   divider: {borderBottomColor: BLUE_GREY, borderBottomWidth: 1},
   trackTitleWrapper: {
     marginVertical: 10,

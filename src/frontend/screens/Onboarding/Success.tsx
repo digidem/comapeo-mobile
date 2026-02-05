@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
+import Ionicons from '@react-native-vector-icons/ionicons';
 
 import DeviceIcon from '../../images/Device.svg';
 import ProjectParticipantIcon from '../../images/ProjectParticipant.svg';

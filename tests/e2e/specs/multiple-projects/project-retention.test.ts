@@ -17,7 +17,6 @@ describe('Multiple Projects - Project Data Retention', () => {
 
     await $('~Add Observation').click();
     const caveCategory = await $(byTextMatches('Cave'));
-    await caveCategory.scrollIntoView();
     await caveCategory.click();
     const descriptionInput = await $(byResourceId('OBS.description-inp'));
     await descriptionInput.click();

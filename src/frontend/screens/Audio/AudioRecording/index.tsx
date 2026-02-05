@@ -50,16 +50,14 @@ export function AudioRecording({
 
   React.useEffect(() => {
     const start = async () => {
-      try {
-        await startRecording();
-      } catch (error) {
-        Sentry.captureException(error);
-        navigation.replace('ErrorBottomSheet');
-      } finally {
-        setIsLoading(false);
-      }
+      await startRecording();
+      setIsLoading(false);
     };
-    start();
+    try {
+      start();
+    } catch {
+      navigation.navigate('ErrorBottomSheet');
+    }
   }, [startRecording, navigation]);
 
   const finishRecording = React.useCallback(async () => {

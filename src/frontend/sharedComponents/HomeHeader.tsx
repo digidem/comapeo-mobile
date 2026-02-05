@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import IonIcon from '@react-native-vector-icons/ionicons';
 
 import {HeaderText} from './Text/HeaderText';
@@ -26,6 +27,7 @@ export function HomeHeader({
   const projectDetails = useProjectRoleAndDetails(projectId);
   const {data} = useStorageReadingQuery();
   const isLow = isLowStorage(data.freeBytes);
+  const insets = useSafeAreaInsets();
 
   return (
     <View
@@ -35,6 +37,7 @@ export function HomeHeader({
           backgroundColor,
           borderBottomWidth: showBottomBorder ? 1 : 0,
           borderBottomColor: showBottomBorder ? BLUE_GREY : 'transparent',
+          paddingTop: insets.top,
         },
       ]}>
       <View style={styles.headerRow}>

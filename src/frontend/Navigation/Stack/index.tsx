@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {WHITE} from '../../lib/styles';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {WHITE, MEDIUM_GREY} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
@@ -31,6 +32,7 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   headerTitleStyle: {fontFamily: 'Rubik_500Medium'},
   headerLeft: props => <CustomHeaderLeft headerBackButtonProps={props} />,
   headerBackVisible: false,
+  statusBarStyle: 'dark',
 };
 
 function getInitialRoute(
@@ -57,15 +59,19 @@ export const RootStackNavigator = () => {
   const {formatMessage} = useIntl();
 
   const layout: NavigatorLayout = ({children, state, navigation}) => (
-    <React.Suspense fallback={<Loading />}>
-      <PendingInvitesListener
-        currentRouteName={state.routes[state.index]?.name}
-        navigateToInviteScreen={inviteId =>
-          navigation.navigate('InviteReceived', {inviteId})
-        }
-      />
-      {children}
-    </React.Suspense>
+    <SafeAreaView
+      edges={['bottom']}
+      style={{flex: 1, backgroundColor: MEDIUM_GREY}}>
+      <React.Suspense fallback={<Loading />}>
+        <PendingInvitesListener
+          currentRouteName={state.routes[state.index]?.name}
+          navigateToInviteScreen={inviteId =>
+            navigation.navigate('InviteReceived', {inviteId})
+          }
+        />
+        {children}
+      </React.Suspense>
+    </SafeAreaView>
   );
 
   const screenLayout: NavigatorScreenLayout = ({children}) => (

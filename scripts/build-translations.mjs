@@ -37,7 +37,8 @@ async function run() {
  * @returns {Promise<{ [lang: string]: unknown }>}
  */
 async function loadMessages() {
-  const files = fs.readdirSync(path.join(PROJECT_ROOT_DIR_PATH, 'messages'), {
+  const messagesDir = path.join(PROJECT_ROOT_DIR_PATH, 'messages');
+  const files = fs.readdirSync(messagesDir, {
     withFileTypes: true,
   });
 
@@ -45,7 +46,7 @@ async function loadMessages() {
   const loadedMessages = await Promise.all(
     files.map(async file => {
       const lang = path.parse(file.name).name;
-      const msgs = JSON.parse(await readFile(path.join(file.path, file.name)));
+      const msgs = JSON.parse(await readFile(path.join(messagesDir, file.name)));
       return [lang, msgs];
     }),
   );

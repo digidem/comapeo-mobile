@@ -31,7 +31,7 @@ export function formatCoords({
   }
 }
 
-function toDegreesMinutesAndSeconds(coordinate: number) {
+export function toDegreesMinutesAndSeconds(coordinate: number) {
   const absolute = Math.abs(coordinate);
   const degrees = Math.floor(absolute);
   const minutesNotTruncated = (absolute - degrees) * 60;

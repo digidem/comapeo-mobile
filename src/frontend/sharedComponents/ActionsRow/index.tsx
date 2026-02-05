@@ -33,7 +33,7 @@ const m = defineMessages({
 });
 
 export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
-  const {keyboardVisible} = useKeyboardListener();
+  const {keyboardVisible, keyboardHeight} = useKeyboardListener();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const [audioPermission, setAudioPermission] =
@@ -97,6 +97,7 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
         <KeyboardAccessory
           items={bottomSheetItems}
           onPress={() => Keyboard.dismiss()}
+          keyboardHeight={keyboardHeight}
         />
       ) : (
         <View style={[styles.container, styles.containerPadding]}>

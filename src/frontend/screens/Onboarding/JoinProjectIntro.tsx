@@ -2,7 +2,7 @@ import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
-import {Ionicons} from '@expo/vector-icons';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';

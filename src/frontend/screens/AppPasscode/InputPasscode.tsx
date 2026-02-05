@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {KeyboardAvoidingView} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
@@ -54,9 +55,7 @@ export const InputPasscode = ({
   React.useEffect(() => {
     if (error) {
       inputRef.current?.focus();
-      if (inputValue.length === 5) {
-        setInputValue('');
-      }
+      if (inputValue.length === 5) setInputValue('');
     }
   }, [error, inputValue.length, inputRef]);
 
@@ -69,7 +68,10 @@ export const InputPasscode = ({
   const {popTo, navigate} = useNavigationFromRoot();
 
   return (
-    <>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior="padding"
+      keyboardVerticalOffset={100}>
       <ScreenContentWithDock
         contentContainerStyle={styles.contentContainer}
         dockContent={
@@ -117,7 +119,7 @@ export const InputPasscode = ({
           </HeaderText>
         )}
       </ScreenContentWithDock>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 

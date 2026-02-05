@@ -2,6 +2,7 @@ import {useMutation} from '@tanstack/react-query';
 
 import {selectFile} from '../lib/file-system';
 
+// 'background' key prefix prevents passcode prompt during file selection (see AuthContext.tsx)
 const FILE_SELECT_MUTATION_KEY = ['background', 'file', 'select'] as const;
 
 export function useSelectFile() {

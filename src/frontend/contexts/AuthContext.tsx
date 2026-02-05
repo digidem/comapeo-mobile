@@ -58,6 +58,8 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       (nextAppState: AppStateStatus) => {
         if (passcode !== null) {
           if (nextAppState === 'background' || nextAppState === 'inactive') {
+            // Check if any system dialogs are open (file picker, share, permissions)
+            // Finds the 'background' key prefix in mutations for the above
             const backgroundMutations = queryClient.getMutationCache().findAll({
               mutationKey: ['background'],
               status: 'pending',

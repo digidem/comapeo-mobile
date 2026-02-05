@@ -21,6 +21,7 @@ export function sharedPhotoPreviewNavOptions({
     headerTitleStyle: {color: WHITE},
     headerStyle: {backgroundColor: BLACK},
     contentStyle: {backgroundColor: BLACK},
+    statusBarStyle: 'light',
     headerLeft: props => (
       <CustomHeaderLeft tintColor={WHITE} headerBackButtonProps={props} />
     ),

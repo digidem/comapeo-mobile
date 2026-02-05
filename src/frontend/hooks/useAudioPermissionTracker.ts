@@ -1,6 +1,11 @@
-import {useMutation, useIsMutating} from '@tanstack/react-query';
+import {useMutation} from '@tanstack/react-query';
 
-const AUDIO_PERMISSION_MODAL_KEY = ['audio', 'permission', 'modal'] as const;
+const AUDIO_PERMISSION_MODAL_KEY = [
+  'background',
+  'audio',
+  'permission',
+  'modal',
+] as const;
 
 export function useAudioPermissionModalMutation<T>(fn: () => Promise<T>) {
   return useMutation({
@@ -8,13 +13,4 @@ export function useAudioPermissionModalMutation<T>(fn: () => Promise<T>) {
     mutationFn: fn,
     networkMode: 'always',
   });
-}
-
-export function useIsAudioPermissionModalOpen(): boolean {
-  return (
-    useIsMutating({
-      mutationKey: AUDIO_PERMISSION_MODAL_KEY,
-      status: 'pending',
-    }) > 0
-  );
 }

@@ -1,8 +1,8 @@
-import {useMutation, useIsMutating} from '@tanstack/react-query';
+import {useMutation} from '@tanstack/react-query';
 
 import {selectFile} from '../lib/file-system';
 
-const FILE_SELECT_MUTATION_KEY = ['file', 'select'] as const;
+const FILE_SELECT_MUTATION_KEY = ['background', 'file', 'select'] as const;
 
 export function useSelectFile() {
   return useMutation({
@@ -11,13 +11,4 @@ export function useSelectFile() {
       return selectFile(opts);
     },
   });
-}
-
-export function useIsFileSelectionOpen(): boolean {
-  return (
-    useIsMutating({
-      mutationKey: FILE_SELECT_MUTATION_KEY,
-      status: 'pending',
-    }) > 0
-  );
 }

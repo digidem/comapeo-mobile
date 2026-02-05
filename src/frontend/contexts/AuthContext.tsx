@@ -2,13 +2,11 @@ import * as React from 'react';
 import {AppState, AppStateStatus, NativeModules} from 'react-native';
 const {FlagSecureModule} = NativeModules;
 
-import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE, verifyPasscode} from '../lib/security';
 import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
-import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
-import {useIsFileSelectionOpen} from '../hooks/files';
 import {getLockoutThreshold} from '../lib/security';
 import {useShallow} from 'zustand/react/shallow';
+import {useQueryClient} from '@tanstack/react-query';
 
 export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
@@ -29,16 +27,6 @@ export const useAuthContext = () => {
   return value;
 };
 
-/** Checks if the app should bypass passcode due to system dialogs being open
- * for system operations like file selection, sharing, or permissions. */
-function useAuthBypassCheck() {
-  const shareDialogIsOpen = useIsShareDialogOpen();
-  const isAudioPermissionModalOpen = useIsAudioPermissionModalOpen();
-  const isFileSelectionOpen = useIsFileSelectionOpen();
-
-  return shareDialogIsOpen || isAudioPermissionModalOpen || isFileSelectionOpen;
-}
-
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState(
     useShallow(state => ({
@@ -54,7 +42,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   );
   // If E2E test mode is enabled, disable FlagSecure to allow screen recordings on BrowserStack
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
-  const shouldBypassAuth = useAuthBypassCheck();
+  const queryClient = useQueryClient();
 
   React.useEffect(() => {
     if (passcode !== null && !isE2E) {
@@ -68,13 +56,15 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     const appStateListener = AppState.addEventListener(
       'change',
       (nextAppState: AppStateStatus) => {
-        if (shouldBypassAuth) return;
         if (passcode !== null) {
-          if (
-            nextAppState === 'active' ||
-            nextAppState === 'background' ||
-            nextAppState === 'inactive'
-          ) {
+          if (nextAppState === 'background' || nextAppState === 'inactive') {
+            const backgroundMutations = queryClient.getMutationCache().findAll({
+              mutationKey: ['background'],
+              status: 'pending',
+            });
+
+            if (backgroundMutations.length > 0) return;
+
             setAuthState('unauthenticated');
           }
         }
@@ -82,7 +72,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     );
 
     return () => appStateListener.remove();
-  }, [passcode, shouldBypassAuth]);
+  }, [passcode, queryClient]);
 
   const authenticate: AuthContextType['authenticate'] = React.useCallback(
     async passcodeValue => {

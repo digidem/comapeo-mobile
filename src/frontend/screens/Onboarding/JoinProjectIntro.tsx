@@ -1,15 +1,14 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
 import {Ionicons} from '@expo/vector-icons';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import ProjectParticipantIcon from '../../images/ProjectParticipant.svg';
 import {DARK_ORANGE, COMAPEO_BLUE} from '../../lib/styles';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
   title: {
@@ -52,32 +51,25 @@ export const JoinProjectIntro = ({
           }}
         />
       }>
-      <View style={styles.contentContainer}>
-        <ProjectParticipantIcon
-          width={80}
-          height={60}
-          color={DARK_ORANGE}
-          fill={DARK_ORANGE}
-        />
-        <HeaderText variant="header2" style={styles.title}>
-          {t(m.title)}
-        </HeaderText>
-        <BodyText style={styles.description}>{t(m.description)}</BodyText>
-      </View>
+      <IconTitleDescription
+        icon={
+          <ProjectParticipantIcon
+            width={80}
+            height={60}
+            color={DARK_ORANGE}
+            fill={DARK_ORANGE}
+          />
+        }
+        title={t(m.title)}
+        description={t(m.description)}
+        style={styles.contentContainer}
+      />
     </ScreenContentWithDock>
   );
 };
 
 const styles = StyleSheet.create({
   contentContainer: {
-    alignItems: 'center',
-    gap: 20,
     paddingTop: 65,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  description: {
-    textAlign: 'center',
   },
 });

@@ -2,10 +2,9 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {DARK_ORANGE} from '../../lib/styles';
 import ProjectParticipant from '../../images/ProjectParticipant.svg';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
   title: {
@@ -28,11 +27,11 @@ export const JoinAProject: NativeNavigationComponent<'JoinAProject'> = () => {
 
   return (
     <View style={styles.container}>
-      <ProjectParticipant width={80} height={60} color={DARK_ORANGE} />
-      <HeaderText variant="header2" style={styles.heading}>
-        {t(m.heading)}
-      </HeaderText>
-      <BodyText style={styles.description}>{t(m.description)}</BodyText>
+      <IconTitleDescription
+        icon={<ProjectParticipant width={80} height={60} color={DARK_ORANGE} />}
+        title={t(m.heading)}
+        description={t(m.description)}
+      />
     </View>
   );
 };
@@ -45,14 +44,5 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 20,
-  },
-  heading: {
-    textAlign: 'center',
-    paddingHorizontal: 50,
-  },
-  description: {
-    textAlign: 'center',
-    paddingHorizontal: 10,
   },
 });

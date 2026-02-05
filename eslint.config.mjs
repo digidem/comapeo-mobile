@@ -93,11 +93,6 @@ const frontendConfig = pluginTs.config(
       'react-hooks/exhaustive-deps': 'error',
       // We want to strictly adhere
       'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/set-state-in-effect': 'error',
-      'react-hooks/purity': 'error',
-      'react-hooks/refs': 'error',
-      'react-hooks/globals': 'error',
-      'react-hooks/immutability': 'error',
       'react-hooks/incompatible-library': 'warn',
       // used in test mocks
       '@eslint-react/hooks-extra/no-useless-custom-hooks': 'warn',

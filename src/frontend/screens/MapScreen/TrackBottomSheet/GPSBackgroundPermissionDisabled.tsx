@@ -2,10 +2,9 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {PrimaryButton} from '../../../sharedComponents/Buttons';
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import LocationNoFollowAlert from '../../../images/LocationNoFollow.svg';
 import {Circle} from '../../../sharedComponents/icons/Circle';
+import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
   useLocation: {
@@ -34,15 +33,16 @@ export const GPSBackgroundPermissionDisabled = ({
 
   return (
     <View style={styles.container}>
-      <Circle radius={30} style={{marginBottom: 20, overflow: 'visible'}}>
-        <LocationNoFollowAlert width={70} height={70} />
-      </Circle>
-      <HeaderText variant="header2" style={styles.title}>
-        {formatMessage(m.useLocation)}
-      </HeaderText>
-      <BodyText style={styles.description}>
-        {formatMessage(m.collectsLocation)}
-      </BodyText>
+      <IconTitleDescription
+        icon={
+          <Circle radius={30} style={{marginBottom: 20, overflow: 'visible'}}>
+            <LocationNoFollowAlert width={70} height={70} />
+          </Circle>
+        }
+        title={formatMessage(m.useLocation)}
+        description={formatMessage(m.collectsLocation)}
+        style={styles.messageStack}
+      />
       <PrimaryButton
         fullSize
         onPress={askBackgroundLocationPermission}
@@ -58,12 +58,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
   },
-  title: {
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  description: {
-    textAlign: 'center',
+  messageStack: {
     marginBottom: 30,
   },
 });

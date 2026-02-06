@@ -11,6 +11,7 @@ import pluginJest from 'eslint-plugin-jest';
 import pluginReactNative from 'eslint-plugin-react-native';
 import pluginTestingLibrary from 'eslint-plugin-testing-library';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
+import pluginReactCompiler from 'eslint-plugin-react-compiler';
 import globals from 'globals';
 import pluginTs from 'typescript-eslint';
 
@@ -76,6 +77,15 @@ const frontendConfig = pluginTs.config(
           }),
         },
         rules: pluginReactNative.configs.all.rules,
+      },
+      {
+        name: 'eslint-plugin-react-compiler',
+        plugins: {
+          'react-compiler': pluginReactCompiler,
+        },
+        rules: {
+          'react-compiler/react-compiler': 'warn',
+        },
       },
     ],
     rules: {

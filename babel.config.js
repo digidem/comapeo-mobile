@@ -18,7 +18,19 @@ module.exports = function (api) {
   return {
     //https://github.com/babel/babel/discussions/13676#discussioncomment-1183149
     compact: true,
-    presets: ['babel-preset-expo'],
+    presets: [
+      [
+        'babel-preset-expo',
+        {
+          'react-compiler': {
+            sources: filename => {
+              // Only compile frontend code, exclude backend and node_modules
+              return filename.includes('src/frontend/');
+            },
+          },
+        },
+      ],
+    ],
     plugins: [
       ['transform-inline-environment-variables', {include: requiredEnvVars}],
       // react-native-reanimated/plugin has to be last

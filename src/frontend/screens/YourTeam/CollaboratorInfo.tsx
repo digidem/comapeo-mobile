@@ -95,7 +95,9 @@ export const CollaboratorInfo: NativeNavigationComponent<
   });
   const isLastMember = useIsLastMember({deviceId: route.params.deviceId});
 
-  const canShowActionButton = !isArchiveServer && !isDesktop;
+  const canAct = !isArchiveServer && !isDesktop && !isCoordinator;
+  const showLeaveButton = canAct && isOwnDevice;
+  const showRemoveButton = canAct && !isOwnDevice && ownRoleIsCoordinator;
 
   return (
     <View style={styles.container}>
@@ -131,53 +133,53 @@ export const CollaboratorInfo: NativeNavigationComponent<
           })}
         </BodyText>
       </View>
-      {canShowActionButton &&
-        (isOwnDevice ? (
-          <SecondaryDestructiveButton
-            text={formatMessage(m.leaveProject)}
-            fullSize={true}
-            style={styles.buttonStyle}
-            renderIcon={({size, color}) => (
-              <MaterialDesignIcons size={size} color={color} name="export" />
-            )}
-            onPress={() => {
-              if (isLastMember) {
-                navigation.navigate('LeaveProjectWarning', {
-                  memberType: route.params.memberType,
-                  warningType: 'lastDevice',
-                  deviceType,
-                });
-                return;
-              }
-              if (isLastCoordinator) {
-                navigation.navigate('LeaveProjectWarning', {
-                  memberType: route.params.memberType,
-                  warningType: 'lastCoordinator',
-                  deviceType,
-                });
-                return;
-              }
-              navigation.navigate('LeaveProject', {
+      {showLeaveButton && (
+        <SecondaryDestructiveButton
+          text={formatMessage(m.leaveProject)}
+          fullSize={true}
+          style={styles.buttonStyle}
+          renderIcon={({size, color}) => (
+            <MaterialDesignIcons size={size} color={color} name="export" />
+          )}
+          onPress={() => {
+            if (isLastMember) {
+              navigation.navigate('LeaveProjectWarning', {
                 memberType: route.params.memberType,
+                warningType: 'lastDevice',
+                deviceType,
               });
-            }}
-          />
-        ) : ownRoleIsCoordinator ? (
-          <SecondaryDestructiveButton
-            text={formatMessage(m.removeDevice)}
-            fullSize={true}
-            style={styles.buttonStyle}
-            renderIcon={({size, color}) => (
-              <MaterialIcon size={size} color={color} name="person-remove" />
-            )}
-            onPress={() => {
-              navigation.navigate('RemoveDevice', {
-                deviceId: route.params.deviceId,
-                deviceName: name || '',
+              return;
+            }
+            if (isLastCoordinator) {
+              navigation.navigate('LeaveProjectWarning', {
+                memberType: route.params.memberType,
+                warningType: 'lastCoordinator',
+                deviceType,
               });
-            }}
-          />
-        ) : null)}
+              return;
+            }
+            navigation.navigate('LeaveProject', {
+              memberType: route.params.memberType,
+            });
+          }}
+        />
+      )}
+      {showRemoveButton && (
+        <SecondaryDestructiveButton
+          text={formatMessage(m.removeDevice)}
+          fullSize={true}
+          style={styles.buttonStyle}
+          renderIcon={({size, color}) => (
+            <MaterialIcon size={size} color={color} name="person-remove" />
+          )}
+          onPress={() => {
+            navigation.navigate('RemoveDevice', {
+              deviceId: route.params.deviceId,
+              deviceName: name || '',
+            });
+          }}
+        />
+      )}
     </View>
   );
 };

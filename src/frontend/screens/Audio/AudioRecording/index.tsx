@@ -55,8 +55,9 @@ export function AudioRecording({
     };
     try {
       start();
-    } catch {
-      navigation.navigate('ErrorBottomSheet');
+    } catch (error) {
+      Sentry.captureException(error);
+      navigation.replace('ErrorBottomSheet');
     }
   }, [startRecording, navigation]);
 

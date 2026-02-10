@@ -5,7 +5,11 @@ import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {Audio} from 'expo-av';
+import {
+  getRecordingPermissionsAsync,
+  requestRecordingPermissionsAsync,
+  PermissionResponse,
+} from 'expo-audio';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
@@ -48,7 +52,7 @@ export const AudioAskPermissionBottomSheet = ({
 }: NativeRootNavigationProps<'AudioAskPermissionBottomSheet'>) => {
   const {formatMessage} = useIntl();
   const {goBack, replace} = navigation;
-  const [permission, setPermission] = React.useState<Audio.PermissionResponse>(
+  const [permission, setPermission] = React.useState<PermissionResponse>(
     route.params.audioPermission,
   );
   const hasNavigatedRef = React.useRef(false);
@@ -57,7 +61,7 @@ export const AudioAskPermissionBottomSheet = ({
   // Re-check microphone permission in case it was granted via system settings,
   // and navigate to AudioRecording if so.
   const checkAndNavigateIfGranted = React.useCallback(() => {
-    Audio.getPermissionsAsync().then(newPermission => {
+    getRecordingPermissionsAsync().then((newPermission: PermissionResponse) => {
       setPermission(newPermission);
       if (newPermission.status === 'granted' && !hasNavigatedRef.current) {
         hasNavigatedRef.current = true;
@@ -94,7 +98,7 @@ export const AudioAskPermissionBottomSheet = ({
   }, [checkAndNavigateIfGranted, passcode]);
 
   const askPermissionMutation = useAudioPermissionModalMutation(async () => {
-    const response = await Audio.requestPermissionsAsync();
+    const response = await requestRecordingPermissionsAsync();
     setPermission(response);
     if (response.granted) {
       replace('AudioRecording');

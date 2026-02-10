@@ -6,7 +6,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
-import {Audio} from 'expo-av';
+import {PermissionResponse} from 'expo-audio';
 import {Exports} from '../screens/ExportObservations';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 
@@ -124,7 +124,7 @@ export type RootStackParamsList = {
   BackgroundMaps: undefined;
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
-    audioPermission: Audio.PermissionResponse;
+    audioPermission: PermissionResponse;
   };
   AudioRecording: undefined;
   AudioDraftPlaybackScreen: {

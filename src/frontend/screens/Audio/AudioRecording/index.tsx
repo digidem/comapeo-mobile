@@ -15,8 +15,8 @@ import {
 import {UIActivityIndicator} from 'react-native-indicators';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {Audio} from 'expo-av';
 import {useDraftObservationActions} from '../../../contexts/DraftObservationContext';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   lessThan5: {
@@ -38,9 +38,8 @@ export function AudioRecording({
 }: NativeRootNavigationProps<'AudioRecording'>) {
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const {startRecording, stopRecording, status} = useAudioRecording();
-  const timeElapsed = status?.durationMillis || 0;
+  const timeElapsed = status.durationMillis;
   const [isLoading, setIsLoading] = React.useState(true);
-  const [audioPermission] = Audio.usePermissions();
   const {addAudio} = useDraftObservationActions();
 
   const {formatMessage} = useIntl();
@@ -51,26 +50,22 @@ export function AudioRecording({
 
   React.useEffect(() => {
     const start = async () => {
-      if (!audioPermission) return;
-      if (!audioPermission.granted) {
-        navigation.replace('AudioAskPermissionBottomSheet', {audioPermission});
-        return;
-      }
       await startRecording();
       setIsLoading(false);
     };
-    start();
-  }, [startRecording, audioPermission, navigation]);
+    try {
+      start();
+    } catch (error) {
+      Sentry.captureException(error);
+      navigation.replace('ErrorBottomSheet');
+    }
+  }, [startRecording, navigation]);
 
   const finishRecording = React.useCallback(async () => {
     setIsLoading(true);
     try {
       const result = await stopRecording();
 
-      if (!result?.uri || !result.createdAt || !result.duration) {
-        navigation.replace('ErrorBottomSheet');
-        return;
-      }
       const audioId = addAudio({
         uri: result.uri,
         createdAt: result.createdAt,
@@ -82,6 +77,9 @@ export function AudioRecording({
         showRecordingSavedText: true,
         audioId,
       });
+    } catch (error) {
+      Sentry.captureException(error);
+      navigation.replace('ErrorBottomSheet');
     } finally {
       setIsLoading(false);
     }

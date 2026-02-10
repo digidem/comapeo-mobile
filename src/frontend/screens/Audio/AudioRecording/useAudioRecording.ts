@@ -1,49 +1,35 @@
-import {useState, useCallback} from 'react';
-import {Audio} from 'expo-av';
-import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
+import {useCallback} from 'react';
+import {
+  useAudioRecorder,
+  useAudioRecorderState,
+  RecordingPresets,
+} from 'expo-audio';
+
+const RECORDING_OPTIONS = RecordingPresets.HIGH_QUALITY!;
 
 export function useAudioRecording() {
-  const [recordingInstance, setRecordingInstance] =
-    useState<Audio.Recording | null>(null);
-  const [status, setStatus] = useState<Audio.RecordingStatus | null>(null);
-  const {navigate} = useNavigationFromRoot();
+  const recorder = useAudioRecorder(RECORDING_OPTIONS);
+  const status = useAudioRecorderState(recorder, 100);
 
   const startRecording = useCallback(async () => {
-    try {
-      const {recording} = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY,
-        stat => setStatus(stat),
-      );
-      setRecordingInstance(recording);
-    } catch {
-      try {
-        const {recording} = await Audio.Recording.createAsync(
-          Audio.RecordingOptionsPresets.HIGH_QUALITY,
-          stat => setStatus(stat),
-        );
-        setRecordingInstance(recording);
-      } catch {
-        navigate('ErrorBottomSheet');
-      }
-    }
-  }, [navigate]);
+    await recorder.prepareToRecordAsync();
+    recorder.record();
+  }, [recorder]);
 
   const stopRecording = useCallback(async () => {
-    if (!recordingInstance) throw new Error('No active recording to stop');
-    try {
-      await recordingInstance.stopAndUnloadAsync();
-      const uri = recordingInstance.getURI();
-      const duration =
-        status?.durationMillis ?? recordingInstance._finalDurationMillis;
+    await recorder.stop();
 
-      if (!uri || !duration) throw new Error('Missing URI or duration');
-      const createdAt = Date.now();
+    const uri = recorder.uri;
+    const duration = status.durationMillis;
 
-      return {uri, createdAt, duration};
-    } catch {
-      navigate('ErrorBottomSheet');
+    if (!uri || !duration) {
+      throw new Error('Recording failed. No URI or duration');
     }
-  }, [navigate, recordingInstance, status]);
+
+    const createdAt = Date.now();
+
+    return {uri, createdAt, duration};
+  }, [recorder, status.durationMillis]);
 
   return {startRecording, stopRecording, status};
 }

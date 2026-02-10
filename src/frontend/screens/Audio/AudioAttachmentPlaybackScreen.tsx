@@ -3,7 +3,7 @@ import {StyleSheet, View, TouchableOpacity, Pressable} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {useAudioPlayback} from '../../hooks/useAudioPlayback';
+import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {Bar} from 'react-native-progress';
 import {
@@ -55,16 +55,37 @@ export const AudioAttachmentPlaybackScreen = ({
       variant: 'original',
     },
   });
-  const {duration, currentPosition, isPlaying, startPlayback, stopPlayback} =
-    useAudioPlayback(uri);
+  const player = useAudioPlayer({uri});
+  const status = useAudioPlayerStatus(player);
   const {formatMessage} = useIntl();
   const [localUri, setLocalUri] = React.useState<string | null>(null);
   const [shareLoading, setShareLoading] = React.useState(false);
+
+  const duration = status.duration * 1000;
+  const currentPosition = status.currentTime * 1000;
+  const isPlaying = status.playing;
+
+  const handlePlayPause = () => {
+    try {
+      if (isPlaying) {
+        player.pause();
+      } else {
+        if (status.currentTime >= status.duration) {
+          player.seekTo(0);
+        }
+        player.play();
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+      navigation.navigate('ErrorBottomSheet');
+    }
+  };
 
   const progress = duration ? currentPosition / duration : 0;
 
   const handleShare = React.useCallback(async () => {
     setShareLoading(true);
+
     try {
       let fileUri = localUri;
 
@@ -82,8 +103,8 @@ export const AudioAttachmentPlaybackScreen = ({
 
       await Share.open({url: fileUri, failOnCancel: false});
     } catch (err) {
-      navigation.navigate('ErrorBottomSheet');
       Sentry.captureException(err);
+      navigation.navigate('ErrorBottomSheet');
     } finally {
       setShareLoading(false);
     }
@@ -125,7 +146,7 @@ export const AudioAttachmentPlaybackScreen = ({
       <View style={audioStyles.audioBox}>
         <TouchableOpacity
           testID="audio-play-toggle"
-          onPress={() => (isPlaying ? stopPlayback() : startPlayback())}
+          onPress={handlePlayPause}
           style={styles.playButton}>
           {isPlaying ? <StopIcon size={60} color={BLACK} /> : <PlayArrow />}
         </TouchableOpacity>

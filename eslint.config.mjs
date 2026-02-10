@@ -93,9 +93,6 @@ const frontendConfig = pluginTs.config(
       'react-hooks/exhaustive-deps': 'error',
       // We want to strictly adhere
       'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/incompatible-library': 'warn',
-      // used in test mocks
-      '@eslint-react/hooks-extra/no-useless-custom-hooks': 'warn',
       // Doesn't work well with custom components that wrap Text component
       'react-native/no-raw-text': 'off',
       // We only work on Android for now

@@ -1,42 +1,38 @@
-import {useEffect, useState} from 'react';
-import {
-  useSecurityActions,
-  useSecurityState,
-} from '../contexts/SecurityStoreContext';
+import {useEffect, useRef, useState} from 'react';
 import {getRemainingLockoutMinutes} from '../lib/security';
-import {defineMessages, useIntl} from 'react-intl';
 
-const m = defineMessages({
-  lockoutMessage: {
-    id: 'hooks.usePasscodeLockout.lockoutMessage',
-    defaultMessage:
-      'Try again in {minutes, plural, one {# minute} other {# minutes}}',
-  },
-});
-
-export function usePasscodeLockout() {
-  const {lockUntil} = useSecurityState();
-  const {setLockUntil} = useSecurityActions();
-  const [minutes, setMinutes] = useState(0);
-  const {formatMessage} = useIntl();
+export function usePasscodeLockout({
+  lockUntil,
+  clearError,
+}: {
+  lockUntil: number;
+  clearError: () => void;
+}): number {
+  const [minutes, setMinutes] = useState(() =>
+    getRemainingLockoutMinutes(lockUntil),
+  );
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout | null = null;
-    if (lockUntil) {
-      const calcMinutes = getRemainingLockoutMinutes(lockUntil);
-      setMinutes(calcMinutes);
-      timeout = setTimeout(() => {
-        setLockUntil(0);
-      }, calcMinutes * 60_000);
-    }
-
-    return () => {
-      if (timeout) clearTimeout(timeout);
+    const update = () => {
+      const mins = getRemainingLockoutMinutes(lockUntil);
+      setMinutes(mins);
+      if (!mins && intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+        clearError();
+      }
     };
-  }, [lockUntil, setLockUntil]);
 
-  return {
-    isLockedOut: !!lockUntil,
-    message: formatMessage(m.lockoutMessage, {minutes}),
-  };
+    update();
+
+    if (!getRemainingLockoutMinutes(lockUntil)) return;
+
+    intervalRef.current = setInterval(update, 15_000);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [lockUntil, clearError]);
+
+  return minutes;
 }

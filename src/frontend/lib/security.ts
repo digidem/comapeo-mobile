@@ -18,9 +18,8 @@ export const StoredPasscodeSchema = pipe(
 );
 
 export function getRemainingLockoutMinutes(lockUntil: number): number {
-  if (!lockUntil) return 0;
-  const msRemaining = lockUntil - Date.now();
-  return msRemaining > 0 ? Math.ceil(msRemaining / 60000) : 0;
+  const remaining = Math.ceil((lockUntil - Date.now()) / 60_000);
+  return remaining > 0 ? remaining : 0;
 }
 
 export function getLockoutThreshold(attempts: number): number | null {

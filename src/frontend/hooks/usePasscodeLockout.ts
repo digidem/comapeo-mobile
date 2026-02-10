@@ -1,9 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-
-function calcMinutes(lockUntil: number): number {
-  const remaining = Math.ceil((lockUntil - Date.now()) / 60_000);
-  return remaining > 0 ? remaining : 0;
-}
+import {getRemainingLockoutMinutes} from '../lib/security';
 
 export function usePasscodeLockout({
   lockUntil,
@@ -12,12 +8,14 @@ export function usePasscodeLockout({
   lockUntil: number;
   clearError: () => void;
 }): number {
-  const [minutes, setMinutes] = useState(() => calcMinutes(lockUntil));
+  const [minutes, setMinutes] = useState(() =>
+    getRemainingLockoutMinutes(lockUntil),
+  );
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const update = () => {
-      const mins = calcMinutes(lockUntil);
+      const mins = getRemainingLockoutMinutes(lockUntil);
       setMinutes(mins);
       if (!mins && intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -28,7 +26,7 @@ export function usePasscodeLockout({
 
     update();
 
-    if (!calcMinutes(lockUntil)) return;
+    if (!getRemainingLockoutMinutes(lockUntil)) return;
 
     intervalRef.current = setInterval(update, 15_000);
     return () => {

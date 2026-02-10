@@ -13,6 +13,7 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {usePasscodeLockout} from '../hooks/usePasscodeLockout';
+import {useSecurityState} from '../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   enterPass: {
@@ -23,6 +24,11 @@ const m = defineMessages({
     id: 'screens.EnterPassword.wrongPass',
     defaultMessage: 'Incorrect Passcode ',
   },
+  lockoutMessage: {
+    id: 'screens.EnterPassword.lockoutMessage',
+    defaultMessage:
+      'Try again in {minutes, plural, one {# minute} other {# minutes}}',
+  },
 });
 
 export const AuthScreen = () => {
@@ -30,9 +36,13 @@ export const AuthScreen = () => {
   const [error, setError] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const {authenticate} = useAuthContext();
+  const lockUntil = useSecurityState(store => store.lockUntil);
   const [inputtedPass, setInputtedPass] = React.useState('');
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const {isLockedOut, message: lockoutMessage} = usePasscodeLockout();
+  const lockedOutMinutes = usePasscodeLockout({
+    lockUntil,
+    clearError: () => setError(false),
+  });
 
   if (error) {
     if (inputtedPass.length === 5) setInputtedPass('');
@@ -74,10 +84,12 @@ export const AuthScreen = () => {
       {process.env.EXPO_PUBLIC_E2E_TEST !== 'true' && (
         <CoMapeoLogoSvg style={{height: window.height / 3, aspectRatio: 1}} />
       )}
-      {isLockedOut ? (
+      {lockedOutMinutes > 0 ? (
         <View style={styles.lockoutContainer}>
           <ClockIcon width={20} height={20} />
-          <BodyText style={styles.lockoutText}>{lockoutMessage}</BodyText>
+          <BodyText style={styles.lockoutText}>
+            {t(m.lockoutMessage, {minutes: lockedOutMinutes})}
+          </BodyText>
         </View>
       ) : (
         <BodyText>{t(m.enterPass)}</BodyText>
@@ -92,7 +104,7 @@ export const AuthScreen = () => {
           error={error}
           inputValue={inputtedPass}
           onChangeTextWithValidation={setInputWithValidation}
-          editable={!isLockedOut}
+          editable={lockedOutMinutes <= 0}
         />
       )}
     </ScreenContentWithDock>

@@ -1,41 +1,38 @@
-import {useEffect, useMemo} from 'react';
-import {
-  useSecurityActions,
-  useSecurityState,
-} from '../contexts/SecurityStoreContext';
+import {useEffect, useRef, useState} from 'react';
 import {getRemainingLockoutMinutes} from '../lib/security';
-import {defineMessages, useIntl} from 'react-intl';
 
-const m = defineMessages({
-  lockoutMessage: {
-    id: 'hooks.usePasscodeLockout.lockoutMessage',
-    defaultMessage:
-      'Try again in {minutes, plural, one {# minute} other {# minutes}}',
-  },
-});
-
-export function usePasscodeLockout() {
-  const {lockUntil} = useSecurityState();
-  const {setLockUntil} = useSecurityActions();
-  const {formatMessage} = useIntl();
-
-  const minutes = useMemo(() => {
-    if (!lockUntil) return 0;
-    return getRemainingLockoutMinutes(lockUntil);
-  }, [lockUntil]);
+export function usePasscodeLockout({
+  lockUntil,
+  clearError,
+}: {
+  lockUntil: number;
+  clearError: () => void;
+}): number {
+  const [minutes, setMinutes] = useState(() =>
+    getRemainingLockoutMinutes(lockUntil),
+  );
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (!lockUntil || minutes === 0) return;
+    const update = () => {
+      const mins = getRemainingLockoutMinutes(lockUntil);
+      setMinutes(mins);
+      if (!mins && intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+        clearError();
+      }
+    };
 
-    const timeout = setTimeout(() => {
-      setLockUntil(0);
-    }, minutes * 60_000);
+    update();
 
-    return () => clearTimeout(timeout);
-  }, [lockUntil, minutes, setLockUntil]);
+    if (!getRemainingLockoutMinutes(lockUntil)) return;
 
-  return {
-    isLockedOut: !!lockUntil,
-    message: formatMessage(m.lockoutMessage, {minutes}),
-  };
+    intervalRef.current = setInterval(update, 15_000);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [lockUntil, clearError]);
+
+  return minutes;
 }

@@ -38,16 +38,13 @@ const m = defineMessages({
 
 export const ConfirmDiscardObservationEditBottomSheet = ({
   navigation,
-  route,
 }: NativeRootNavigationProps<'ConfirmDiscardObservationEditBottomSheet'>) => {
   const {formatMessage: t} = useIntl();
   const {clearDraft} = useDraftObservationActions();
 
   function handleDiscard() {
     clearDraft();
-    navigation.popTo('Observation', {
-      observationId: route.params.observationId,
-    });
+    navigation.pop(2);
   }
 
   return (

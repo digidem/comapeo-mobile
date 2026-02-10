@@ -38,9 +38,7 @@ export const CustomHeaderLeftClose = ({
 
   const openBottomSheet = React.useCallback(() => {
     if (observationId) {
-      navigation.navigate('ConfirmDiscardObservationEditBottomSheet', {
-        observationId,
-      });
+      navigation.navigate('ConfirmDiscardObservationEditBottomSheet');
     } else {
       navigation.navigate('ConfirmDiscardObservationBottomSheet');
     }

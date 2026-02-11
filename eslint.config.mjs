@@ -11,6 +11,7 @@ import pluginJest from 'eslint-plugin-jest';
 import pluginReactNative from 'eslint-plugin-react-native';
 import pluginTestingLibrary from 'eslint-plugin-testing-library';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
+import pluginReactCompiler from 'eslint-plugin-react-compiler';
 import globals from 'globals';
 import pluginTs from 'typescript-eslint';
 
@@ -65,6 +66,7 @@ const frontendConfig = pluginTs.config(
       pluginQuery.configs['flat/recommended'],
       pluginReact.configs['recommended-typescript'],
       pluginReact.configs['disable-dom'],
+      pluginReactCompiler.configs['recommended'],
       pluginReactHooks.configs.flat['recommended-latest'],
       // https://github.com/facebook/react-native/issues/42996#issuecomment-2275994981
       {

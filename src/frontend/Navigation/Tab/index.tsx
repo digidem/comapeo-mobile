@@ -39,7 +39,7 @@ export const HomeTabs = () => {
           />
         )}>
         <Tab.Navigator
-          tabBar={TabBar}
+          tabBar={props => <TabBar {...props} />}
           screenOptions={{
             tabBarShowLabel: false,
             headerTransparent: true,

@@ -11,6 +11,9 @@
     "updates": {
       "enabled": false
     },
+    "experiments": {
+      "reactCompiler": true
+    },
     "plugins": [
       "expo-audio",
       "expo-localization",

@@ -10,7 +10,6 @@ export const getLocales: typeof _getLocales = () => {
   return [createBaseLocale('en-US')];
 };
 
-// eslint-disable-next-line @eslint-react/hooks-extra/no-useless-custom-hooks
 export const useLocales: typeof _useLocales = () => {
   return [createBaseLocale('en-US')];
 };

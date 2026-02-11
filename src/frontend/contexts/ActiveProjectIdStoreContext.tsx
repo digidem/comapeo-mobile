@@ -66,27 +66,22 @@ export const ActiveProjectIdStoreProvider = ({
   store: ActiveProjectIdStore;
 }) => {
   const {listProjects} = useClientApi();
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(() =>
+    Boolean(store.instance.getState().projectId),
+  );
 
   useEffect(() => {
     if (isInitialized) return;
-    if (store.instance.getState().projectId) {
-      setIsInitialized(true);
-      return;
-    }
+
     listProjects()
       .then(projects => {
         if (!projects || projects.length === 0) {
-          setIsInitialized(true);
           return;
         }
 
         const fallbackProjectId = projects[0]?.projectId;
-
         if (fallbackProjectId) {
           store.actions.setActiveProjectId(fallbackProjectId);
-          setIsInitialized(true);
-          return;
         }
       })
       .finally(() => {

@@ -23,11 +23,11 @@ export const SelectOne = <T,>({
   color,
 }: SelectOneProps<T>) => (
   <List>
-    {options.map((item, index) => {
+    {options.map(item => {
       const isSelected = item.value === value;
       return (
         <ListItem
-          key={`${item.label}-${index}`}
+          key={item.label}
           testID={
             isSelected ? `${item.value}Button-selected` : `${item.value}Button`
           }

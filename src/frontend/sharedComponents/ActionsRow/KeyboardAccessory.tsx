@@ -47,7 +47,7 @@ export const KeyboardAccessory: FC<KeyboardAccessory> = ({
         {items.map(item => (
           <Pressable
             onPress={onPress}
-            key={item.testID}
+            key={item.testID || item.label}
             style={styles.accessoryIcon}
             testID={`${item.testID}-keyboard`}>
             {item.icon}

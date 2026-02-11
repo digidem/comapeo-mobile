@@ -7,7 +7,7 @@ import {Circle} from '../../../sharedComponents/icons/Circle';
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
-  useLocation: {
+  appUseLocation: {
     id: 'screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation',
     defaultMessage: 'Use Location?',
   },
@@ -39,7 +39,7 @@ export const GPSBackgroundPermissionDisabled = ({
             <LocationNoFollowAlert width={70} height={70} />
           </Circle>
         }
-        title={formatMessage(m.useLocation)}
+        title={formatMessage(m.appUseLocation)}
         description={formatMessage(m.collectsLocation)}
         style={styles.messageStack}
       />

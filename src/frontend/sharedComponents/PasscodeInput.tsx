@@ -21,85 +21,79 @@ interface PasscodeInputProps {
   error: boolean;
   testID?: string;
   editable?: boolean;
+  ref?: React.Ref<TextInput | null>;
 }
 
-export const PasscodeInput = React.forwardRef<
-  TextInput | null,
-  PasscodeInputProps
->(
-  (
-    {
-      stylesProps,
-      inputValue,
-      onChangeTextWithValidation,
-      maskValues = true,
-      error,
-      testID,
-      editable,
-    },
-    inputRef,
-  ) => {
-    const [codeFieldProps, getCellOnLayoutHandler] = useClearByFocusCell({
-      value: inputValue,
-      setValue: onChangeTextWithValidation,
-    });
+export const PasscodeInput = ({
+  stylesProps,
+  inputValue,
+  onChangeTextWithValidation,
+  maskValues = true,
+  error,
+  testID,
+  editable,
+  ref: inputRef,
+}: PasscodeInputProps) => {
+  const [codeFieldProps, getCellOnLayoutHandler] = useClearByFocusCell({
+    value: inputValue,
+    setValue: onChangeTextWithValidation,
+  });
 
-    function validateAndSetInput(text: string) {
-      if (!text) onChangeTextWithValidation('');
-      if (onlyNumRegEx.test(text)) {
-        onChangeTextWithValidation(text);
-      }
+  function validateAndSetInput(text: string) {
+    if (!text) onChangeTextWithValidation('');
+    if (onlyNumRegEx.test(text)) {
+      onChangeTextWithValidation(text);
     }
+  }
 
-    function renderCell({index, symbol, isFocused}: RenderCellOptions) {
-      let textChild;
+  function renderCell({index, symbol, isFocused}: RenderCellOptions) {
+    let textChild;
 
-      if (symbol) {
-        textChild = maskValues ? (
-          <MaskSymbol
-            maskSymbol="*"
-            isLastFilledCell={isLastFilledCell(inputValue, index)}>
-            {symbol}
-          </MaskSymbol>
-        ) : (
-          symbol
-        );
-      } else if (isFocused) {
-        textChild = '|';
-      }
-
-      return (
-        <Text
-          key={index}
-          style={[
-            styles.cell,
-            isFocused && styles.focusCell,
-            error ? {borderColor: RED} : undefined,
-          ]}
-          onLayout={getCellOnLayoutHandler(index)}>
-          {textChild}
-        </Text>
+    if (symbol) {
+      textChild = maskValues ? (
+        <MaskSymbol
+          maskSymbol="*"
+          isLastFilledCell={isLastFilledCell(inputValue, index)}>
+          {symbol}
+        </MaskSymbol>
+      ) : (
+        symbol
       );
+    } else if (isFocused) {
+      textChild = '|';
     }
 
     return (
-      <CodeField
-        {...codeFieldProps}
-        testID={testID}
-        ref={inputRef}
-        autoFocus={true}
-        value={inputValue}
-        onChangeText={validateAndSetInput}
-        cellCount={CELL_COUNT}
-        rootStyle={[styles.codeFieldRoot, stylesProps]}
-        keyboardType="numeric"
-        textContentType="oneTimeCode"
-        renderCell={renderCell}
-        editable={editable !== false}
-      />
+      <Text
+        key={index}
+        style={[
+          styles.cell,
+          isFocused && styles.focusCell,
+          error ? {borderColor: RED} : undefined,
+        ]}
+        onLayout={getCellOnLayoutHandler(index)}>
+        {textChild}
+      </Text>
     );
-  },
-);
+  }
+
+  return (
+    <CodeField
+      {...codeFieldProps}
+      testID={testID}
+      ref={inputRef}
+      autoFocus={true}
+      value={inputValue}
+      onChangeText={validateAndSetInput}
+      cellCount={CELL_COUNT}
+      rootStyle={[styles.codeFieldRoot, stylesProps]}
+      keyboardType="numeric"
+      textContentType="oneTimeCode"
+      renderCell={renderCell}
+      editable={editable !== false}
+    />
+  );
+};
 
 const FONT_SIZE = 24;
 

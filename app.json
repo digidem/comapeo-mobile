@@ -12,6 +12,7 @@
       "enabled": false
     },
     "plugins": [
+      "expo-audio",
       "expo-localization",
       "expo-secure-store",
       "expo-document-picker",

@@ -96,14 +96,18 @@ export function createAppUsageStatsStore({
     },
   };
 
+  const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
+  const optInStartedAt = store.getState().optInStartedAt;
+  if (optInStartedAt && Date.now() - optInStartedAt > ONE_YEAR_MS) {
+    actions.resetOptInAndTimer();
+  }
+
   return {instance: store, actions};
 }
 
 export type AppUsageStatsStore = ReturnType<typeof createAppUsageStatsStore>;
 
 const AppUsageStatsContext = createContext<AppUsageStatsStore | null>(null);
-
-const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000;
 
 export const AppUsageStatsProvider = ({
   value,
@@ -112,10 +116,6 @@ export const AppUsageStatsProvider = ({
   children: React.ReactNode;
   value: AppUsageStatsStore;
 }) => {
-  const optInStartedAt = value.instance.getState().optInStartedAt;
-  if (optInStartedAt && Date.now() - optInStartedAt > ONE_YEAR_MS) {
-    value.actions.resetOptInAndTimer();
-  }
   return <AppUsageStatsContext value={value}>{children}</AppUsageStatsContext>;
 };
 

@@ -3,6 +3,7 @@ import {Text} from './Text';
 import {FormattedRelativeTime, FormattedDate} from 'react-intl';
 import {useAppState} from '@react-native-community/hooks';
 
+import {useCurrentTime} from '../hooks/useCurrentTime';
 import type {TextStyleProp} from '../sharedTypes';
 
 type Props = {
@@ -18,9 +19,10 @@ const HOUR = 60 * 60;
 const DAY = 60 * 60 * 24;
 
 export const DateDistance = ({date, style}: Props) => {
+  const now = useCurrentTime(10000);
   // Round distance to nearest 10 seconds
   const distanceInSeconds =
-    Math.floor((Date.now() - date.getTime()) / 10000) * 10;
+    Math.floor((now.getTime() - date.getTime()) / 10000) * 10;
   const currentAppState = useAppState();
 
   const absValue = Math.abs(distanceInSeconds);

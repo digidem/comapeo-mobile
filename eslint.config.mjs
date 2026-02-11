@@ -95,22 +95,14 @@ const frontendConfig = pluginTs.config(
       '@eslint-react/web-api/no-leaked-event-listener': 'off',
       // Not relevant for React Native
       '@eslint-react/web-api/no-leaked-resize-observer': 'off',
-      // useContext is still valid 
-      '@eslint-react/no-use-context':'off',
+      // useContext is still valid
+      '@eslint-react/no-use-context': 'off',
       // There are some cases in app code when it's needed
       '@typescript-eslint/no-require-imports': 'off',
       // We want to strictly adhere
       'react-hooks/exhaustive-deps': 'error',
       // We want to strictly adhere
       'react-hooks/rules-of-hooks': 'error',
-      // Downgrade new stricter rules to warnings for now (from react-hooks v7)
-      'react-hooks/set-state-in-effect': 'warn',
-      'react-hooks/purity': 'warn',
-      'react-hooks/incompatible-library': 'warn',
-      'react-hooks/immutability': 'warn',
-      'react-hooks/refs': 'warn',
-      'react-hooks/globals': 'warn',
-      '@eslint-react/hooks-extra/no-useless-custom-hooks': 'warn',
       // Doesn't work well with custom components that wrap Text component
       'react-native/no-raw-text': 'off',
       // We only work on Android for now
@@ -128,7 +120,10 @@ const frontendConfig = pluginTs.config(
   },
   {
     name: 'tests',
-    files: ['src/frontend/**/*.test.{js,jsx,mts,ts,tsx}'],
+    files: [
+      'src/frontend/**/*.test.{js,jsx,mts,ts,tsx}',
+      'src/frontend/**/__mocks__/**',
+    ],
     extends: [
       pluginJest.configs['flat/recommended'],
       pluginTestingLibrary.configs['flat/react'],
@@ -136,6 +131,8 @@ const frontendConfig = pluginTs.config(
     rules: {
       // Mostly conventional and doesn't have significant impact on how tests work
       'testing-library/render-result-naming-convention': 'off',
+      '@eslint-react/hooks-extra/no-unnecessary-use-prefix': 'off',
+      '@eslint-react/hooks-extra/no-useless-custom-hooks': 'off',
     },
   },
 );

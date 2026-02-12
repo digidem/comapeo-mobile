@@ -3,7 +3,9 @@ import { join } from 'path'
 import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
 import { MapeoManager } from '@comapeo/core'
-import { createMapeoServer } from '@comapeo/ipc/server.js'
+import { createMapeoServer, createAppRpcServer } from '@comapeo/ipc/server.js'
+import { createServer as createMapServer } from '@comapeo/map-server'
+import { KeyManager } from '@mapeo/crypto'
 import Fastify from 'fastify'
 import * as Sentry from '@sentry/node'
 
@@ -11,6 +13,8 @@ import MessagePortLike from './message-port-like.js'
 import { ServerStatus } from './status.js'
 
 const require = createRequire(import.meta.url)
+export const DEFAULT_FALLBACK_MAP_FILE_PATH =
+  require.resolve('@comapeo/fallback-smp')
 
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
@@ -89,6 +93,16 @@ export async function init({
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
     customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
   })
+  const { publicKey, secretKey } = new KeyManager(rootKey).getIdentityKeypair()
+  const mapServer = createMapServer({
+    defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
+    fallbackMapPath: DEFAULT_FALLBACK_MAP_FILE_PATH,
+    customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
+    keyPair: {
+      publicKey: new Uint8Array(publicKey),
+      secretKey: new Uint8Array(secretKey),
+    },
+  })
 
   // Don't await, methods that use the server will await this internally
   // Server is listening on loopback only, so will not be accessible from other devices on the network
@@ -142,6 +156,7 @@ export async function init({
       )
     },
   })
+  createAppRpcServer({ mapServer }, messagePort)
   messagePort.start()
   serverStatus.setState('STARTED')
 

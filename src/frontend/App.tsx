@@ -44,6 +44,7 @@ import {Loading} from './sharedComponents/Loading.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
+import {createAppRpc} from './lib/createAppRpc.ts';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -108,6 +109,7 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const serverStateStore = createServerStateStore();
 const mapeoApi = createMapeoApi({serverStateStore});
+const appRpc = createAppRpc({serverStateStore});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 
@@ -233,6 +235,7 @@ const App = () => {
                   queryClient={queryClient}
                   localDiscoveryController={localDiscoveryController}
                   mapeoApi={mapeoApi}
+                  appRpc={appRpc}
                   persistedDrafObservationStore={persistedDraftObservationStore}
                   trackStore={persistedTrackStore}
                   securityStore={persistedSecurityStore}

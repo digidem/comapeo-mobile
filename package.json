@@ -34,9 +34,8 @@
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "3.0.11",
-    "@comapeo/core-react": "file:comapeo-core-react-7.2.0.tgz",
-    "@comapeo/ipc": "6.0.2",
-    "@comapeo/map-server": "^1.0.0-pre.6",
+    "@comapeo/core-react": "file:comapeo-core-react-7.3.0-pre.2-MAP-SHARING.tgz",
+    "@comapeo/ipc": "file:comapeo-ipc-6.1.0-pre.0.tgz",
     "@comapeo/nodejs-mobile-react-native": "18.20.4-2",
     "@expo-google-fonts/rubik": "0.4.2",
     "@formatjs/intl-getcanonicallocales": "2.5.6",

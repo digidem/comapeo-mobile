@@ -4,7 +4,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import nodejs from '@comapeo/nodejs-mobile-react-native';
+import {fetch} from 'expo/fetch';
 import {AuthProvider} from './AuthContext';
 import {
   LocalDiscoveryProvider,
@@ -48,11 +48,13 @@ import {
   EarlyAccessStoreProvider,
   type EarlyAccessStore,
 } from './EarlyAccessContext';
+import type {AppRpcApi} from '@comapeo/ipc/client.js';
 
 type AppProvidersProps = {
   children: React.ReactNode;
   localDiscoveryController: ReturnType<typeof createLocalDiscoveryController>;
   mapeoApi: MapeoClientApi;
+  appRpc: AppRpcApi;
   persistedDrafObservationStore: DraftObservationStore;
   trackStore: TrackStore;
   securityStore: SecurityStore;
@@ -71,6 +73,7 @@ export const AppProviders = ({
   children,
   localDiscoveryController,
   mapeoApi,
+  appRpc,
   persistedDrafObservationStore,
   trackStore,
   securityStore,
@@ -84,22 +87,11 @@ export const AppProviders = ({
   earlyAccessStore,
   appUsageStatsStore,
 }: AppProvidersProps) => {
-  const [mapServerPort, setMapServerPort] = React.useState<number | null>(null);
-
-  React.useEffect(() => {
-    const subscription = nodejs.channel.addListener(
-      'map-server:port',
-      (data: {port: number}) => {
-        setMapServerPort(data.port);
-      },
-    );
-
-    return () => {
-      // @ts-expect-error - nodejs-mobile-react-native types are incorrect
-      subscription.remove();
-    };
-  }, []);
-
+  const mapServerListenPromise = appRpc.mapServer.listen();
+  const getMapServerBaseUrl = async () => {
+    const {localPort} = await mapServerListenPromise;
+    return new URL(`http://127.0.0.1:${localPort}/`);
+  };
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
       <AppUsageStatsProvider value={appUsageStatsStore}>
@@ -118,16 +110,8 @@ export const AppProviders = ({
                               value={localDiscoveryController}>
                               <ClientApiProvider clientApi={mapeoApi}>
                                 <MapServerProvider
-                                  getBaseUrl={async () => {
-                                    if (mapServerPort === null) {
-                                      throw new Error(
-                                        'Map server port not yet available',
-                                      );
-                                    }
-                                    return new URL(
-                                      `http://localhost:${mapServerPort}/`,
-                                    );
-                                  }}>
+                                  getBaseUrl={getMapServerBaseUrl}
+                                  fetch={fetch}>
                                   <ActiveProjectIdStoreProvider
                                     store={activeProjectIdStore}>
                                     <DraftObservationProvider

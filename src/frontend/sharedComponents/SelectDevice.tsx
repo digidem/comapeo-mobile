@@ -115,17 +115,16 @@ export const SelectDevice = ({
               sendMapShare(
                 {projectId, receiverDeviceId: deviceId, mapId: 'custom'},
                 {
+                  onSuccess: result => {
+                    Promise.resolve(result).then(mapShare => {
+                      navigation.navigate('WaitingForMapAccept', {
+                        shareId: mapShare.shareId,
+                      });
+                    });
+                  },
                   onError: (err: Error) => {
                     Sentry.captureException(err);
                     navigation.navigate('ErrorBottomSheet');
-                  },
-                  onSuccess: async (
-                    resultPromise: Promise<SentMapShareState>,
-                  ) => {
-                    const result = await resultPromise;
-                    navigation.navigate('WaitingForMapAccept', {
-                      shareId: result.shareId,
-                    });
                   },
                 },
               );

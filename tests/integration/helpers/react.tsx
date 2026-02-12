@@ -1,4 +1,5 @@
 import {type MapeoClientApi} from '@comapeo/ipc';
+import type {AppRpcApi} from '@comapeo/ipc/client.js';
 import {getLocales} from 'expo-localization';
 import {Component, type ComponentPropsWithoutRef, type ReactNode} from 'react';
 
@@ -170,6 +171,13 @@ export function createAppProvidersWrapper({
     appUsageMetricsOptOut: () => {},
   });
 
+  const mockAppRpc = {
+    mapServer: {
+      listen: jest.fn(() => Promise.resolve({localPort: 9999})),
+      close: jest.fn(() => Promise.resolve()),
+    },
+  } as unknown as AppRpcApi;
+
   if (activeProjectId) {
     persistedActiveProjectIdStore.instance.setState({
       projectId: activeProjectId,
@@ -183,6 +191,7 @@ export function createAppProvidersWrapper({
         <AppProviders
           queryClient={queryClient}
           mapeoApi={mapeoApi}
+          appRpc={mockAppRpc}
           localDiscoveryController={localDiscoveryController}
           activeProjectIdStore={persistedActiveProjectIdStore}
           persistedDrafObservationStore={persistedDraftObservationStore}

@@ -119,7 +119,10 @@ export const SelectDevice = ({
                     Sentry.captureException(err);
                     navigation.navigate('ErrorBottomSheet');
                   },
-                  onSuccess: (result: SentMapShareState) => {
+                  onSuccess: async (
+                    resultPromise: Promise<SentMapShareState>,
+                  ) => {
+                    const result = await resultPromise;
                     navigation.navigate('WaitingForMapAccept', {
                       shareId: result.shareId,
                     });

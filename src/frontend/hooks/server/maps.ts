@@ -23,8 +23,7 @@ const DEFAULT_CUSTOM_MAP_FILE_PATH = CUSTOM_MAPS_DIRECTORY + '/default.smp';
 
 const CustomMapInfoSchema = v.object({
   created: v.pipe(
-    v.string(),
-    v.isoTimestamp(),
+    v.number(),
     v.transform(input => new Date(input)),
   ),
   name: v.string(),
@@ -132,7 +131,9 @@ export function useGetCustomMapInfo() {
       }
 
       if (!response.ok) {
-        throw new Error(`Cannot get custom map info: ${response.statusText}`);
+        throw new Error(
+          `Cannot get custom map info: ${response.statusText} (${response.status})`,
+        );
       }
 
       return v.parse(CustomMapInfoSchema, await response.json());
@@ -140,7 +141,12 @@ export function useGetCustomMapInfo() {
   });
 }
 
-async function fetchCustomMapInfo(baseUrl: string) {
+async function fetchCustomMapInfo(styleUrl: string) {
+  // styleUrl is like http://localhost:9090/maps/custom/style.json
+  // We need to extract the base URL (http://localhost:9090) to construct the info endpoint
+  const url = new URL(styleUrl);
+  const baseUrl = `${url.protocol}//${url.host}`;
   const infoUrl = new URL('/maps/custom/info', baseUrl).href;
+
   return fetch(infoUrl);
 }

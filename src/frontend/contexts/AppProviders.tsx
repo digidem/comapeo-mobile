@@ -87,11 +87,15 @@ export const AppProviders = ({
   earlyAccessStore,
   appUsageStatsStore,
 }: AppProvidersProps) => {
-  const mapServerListenPromise = appRpc.mapServer.listen();
-  const getMapServerBaseUrl = async () => {
+  const mapServerListenPromise = React.useMemo(
+    () => appRpc.mapServer.listen({}),
+    [appRpc],
+  );
+  const getMapServerBaseUrl = React.useCallback(async () => {
     const {localPort} = await mapServerListenPromise;
     return new URL(`http://127.0.0.1:${localPort}/`);
-  };
+  }, [mapServerListenPromise]);
+
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
       <AppUsageStatsProvider value={appUsageStatsStore}>

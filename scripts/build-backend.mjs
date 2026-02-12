@@ -71,10 +71,6 @@ console.group('[BUILD]');
 
 console.log('Installing deps...');
 
-await $$({
-  cwd: nodejsAssetsBackendDirectory,
-})`node --version`;
-
 // The install / postinstall scripts for backend dependencies are currently all
 // for generating / downloading builds of native modules.
 // We don't need to run these scripts since we pull prebuilds in a later step.

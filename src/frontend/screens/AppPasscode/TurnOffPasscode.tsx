@@ -18,7 +18,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
-  usePasscode: {
+  appUsePasscode: {
     id: 'screens.AppPasscode.TurnOffPasscode.usePasscode',
     defaultMessage: 'Use App Passcode',
   },
@@ -92,7 +92,7 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
           onPress={openTurnOffPasscodeSheet}>
           <ListItemText
             style={styles.text}
-            primary={<FormattedMessage {...m.usePasscode} />}
+            primary={<FormattedMessage {...m.appUsePasscode} />}
           />
           <TouchableOpacity onPress={openTurnOffPasscodeSheet}>
             <MaterialIcon

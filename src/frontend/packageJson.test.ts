@@ -39,6 +39,8 @@ describe('frontend package.json', () => {
 
   it('all front end dependencies use exact version', () => {
     for (const version of Object.values(allFrontendDependencies)) {
+      // Skip file: dependencies (local tarballs for pre-release versions)
+      if (version.startsWith('file:')) continue;
       const isExact = semver.valid(version) !== null;
       expect(isExact).toBe(true);
     }

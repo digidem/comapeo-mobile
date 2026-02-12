@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {ClientApiProvider} from '@comapeo/core-react';
+import {ClientApiProvider, MapServerProvider} from '@comapeo/core-react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {fetch} from 'expo/fetch';
 import {AuthProvider} from './AuthContext';
 import {
   LocalDiscoveryProvider,
@@ -47,11 +48,13 @@ import {
   EarlyAccessStoreProvider,
   type EarlyAccessStore,
 } from './EarlyAccessContext';
+import type {AppRpcApi} from '@comapeo/ipc/client.js';
 
 type AppProvidersProps = {
   children: React.ReactNode;
   localDiscoveryController: ReturnType<typeof createLocalDiscoveryController>;
   mapeoApi: MapeoClientApi;
+  appRpc: AppRpcApi;
   persistedDrafObservationStore: DraftObservationStore;
   trackStore: TrackStore;
   securityStore: SecurityStore;
@@ -70,6 +73,7 @@ export const AppProviders = ({
   children,
   localDiscoveryController,
   mapeoApi,
+  appRpc,
   persistedDrafObservationStore,
   trackStore,
   securityStore,
@@ -83,6 +87,11 @@ export const AppProviders = ({
   earlyAccessStore,
   appUsageStatsStore,
 }: AppProvidersProps) => {
+  const mapServerListenPromise = appRpc.mapServer.listen();
+  const getMapServerBaseUrl = async () => {
+    const {localPort} = await mapServerListenPromise;
+    return new URL(`http://127.0.0.1:${localPort}/`);
+  };
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
       <AppUsageStatsProvider value={appUsageStatsStore}>
@@ -100,18 +109,22 @@ export const AppProviders = ({
                             <LocalDiscoveryProvider
                               value={localDiscoveryController}>
                               <ClientApiProvider clientApi={mapeoApi}>
-                                <ActiveProjectIdStoreProvider
-                                  store={activeProjectIdStore}>
-                                  <DraftObservationProvider
-                                    draftObservationStore={
-                                      persistedDrafObservationStore
-                                    }>
-                                    <EarlyAccessStoreProvider
-                                      value={earlyAccessStore}>
-                                      <AuthProvider>{children}</AuthProvider>
-                                    </EarlyAccessStoreProvider>
-                                  </DraftObservationProvider>
-                                </ActiveProjectIdStoreProvider>
+                                <MapServerProvider
+                                  getBaseUrl={getMapServerBaseUrl}
+                                  fetch={fetch}>
+                                  <ActiveProjectIdStoreProvider
+                                    store={activeProjectIdStore}>
+                                    <DraftObservationProvider
+                                      draftObservationStore={
+                                        persistedDrafObservationStore
+                                      }>
+                                      <EarlyAccessStoreProvider
+                                        value={earlyAccessStore}>
+                                        <AuthProvider>{children}</AuthProvider>
+                                      </EarlyAccessStoreProvider>
+                                    </DraftObservationProvider>
+                                  </ActiveProjectIdStoreProvider>
+                                </MapServerProvider>
                               </ClientApiProvider>
                             </LocalDiscoveryProvider>
                           </LocationProvider>

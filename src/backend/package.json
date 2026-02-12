@@ -13,7 +13,7 @@
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@comapeo/core": "5.2.1",
+    "@comapeo/core": "5.4.1",
     "@comapeo/default-categories": "1.0.0",
     "@comapeo/fallback-smp": "1.0.0",
     "@comapeo/ipc": "file:../../comapeo-ipc-6.1.0-pre.0.tgz",
@@ -44,5 +44,8 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "overrides": {
+    "@hyperswarm/secret-stream": "6.7.1"
   }
 }

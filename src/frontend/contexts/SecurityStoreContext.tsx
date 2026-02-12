@@ -186,9 +186,9 @@ export const SecurityStoreProvider = ({
   const hasHydrated = useStore(value.instance, state => state._hasHydrated);
 
   return (
-    <SecurityStoreContext.Provider value={value}>
+    <SecurityStoreContext value={value}>
       {!hasHydrated ? <Loading /> : children}
-    </SecurityStoreContext.Provider>
+    </SecurityStoreContext>
   );
 };
 

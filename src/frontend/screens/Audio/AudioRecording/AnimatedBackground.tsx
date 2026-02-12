@@ -10,7 +10,7 @@ import {MAX_RECORDING_DURATION_MS} from '../shared';
 import {COMAPEO_BLUE} from '../../../lib/styles';
 
 export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
-  const {top} = useSafeAreaInsets();
+  const {top, bottom} = useSafeAreaInsets();
   const {height} = Dimensions.get('window');
 
   const elapsedTimeValue = useDerivedValue(() => {
@@ -19,7 +19,7 @@ export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
 
   const animatedStyles = useAnimatedStyle(() => ({
     height:
-      (height + top) *
+      (height + top + bottom) *
       (elapsedTimeValue.value * (1 / MAX_RECORDING_DURATION_MS)),
     backgroundColor: COMAPEO_BLUE,
   }));

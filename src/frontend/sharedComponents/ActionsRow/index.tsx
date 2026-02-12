@@ -4,7 +4,7 @@ import {Divider} from '../Divider';
 import {KeyboardAccessory} from './KeyboardAccessory';
 import {useKeyboardListener} from '../../hooks/useKeyboardListener';
 import {defineMessages, useIntl} from 'react-intl';
-import {Audio} from 'expo-av';
+import {getRecordingPermissionsAsync, PermissionResponse} from 'expo-audio';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import PhotoIcon from '../../images/observationEdit/Photo.svg';
 import AudioIcon from '../../images/observationEdit/Audio.svg';
@@ -33,11 +33,11 @@ const m = defineMessages({
 });
 
 export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
-  const {keyboardVisible} = useKeyboardListener();
+  const {keyboardVisible, keyboardHeight} = useKeyboardListener();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const [audioPermission, setAudioPermission] =
-    React.useState<Audio.PermissionResponse | null>(null);
+    React.useState<PermissionResponse | null>(null);
 
   // Audio permissions are granted on a different page. Since this page stays in the navigation stack,
   // it does not remount when permissions change, leading to stale permission data.
@@ -45,7 +45,7 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
-        const permission = await Audio.getPermissionsAsync();
+        const permission = await getRecordingPermissionsAsync();
         setAudioPermission(permission);
       })();
     }, []),
@@ -97,6 +97,7 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
         <KeyboardAccessory
           items={bottomSheetItems}
           onPress={() => Keyboard.dismiss()}
+          keyboardHeight={keyboardHeight}
         />
       ) : (
         <View style={[styles.container, styles.containerPadding]}>

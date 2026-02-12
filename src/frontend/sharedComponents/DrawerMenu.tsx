@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import IonIcon from '@react-native-vector-icons/ionicons';
 import Octicons from '@react-native-vector-icons/octicons';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -96,9 +97,10 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   const percentUsed = calcUsedPercentage(freeBytes, totalBytes);
 
   const isEarly = useEarlyAccessState(s => s.isEarlyAccessEnabled);
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: insets.top}]}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {isLow && (
           <MenuLowStorageAlert

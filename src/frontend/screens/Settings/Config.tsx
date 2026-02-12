@@ -1,4 +1,4 @@
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {useImportProjectCategories} from '@comapeo/core-react';

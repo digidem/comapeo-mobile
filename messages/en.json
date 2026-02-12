@@ -418,9 +418,6 @@
   "constants.red": {
     "message": "Red"
   },
-  "hooks.usePasscodeLockout.lockoutMessage": {
-    "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
-  },
   "projectInfoCard.coordinator": {
     "message": "You are a coordinator on this project."
   },
@@ -872,6 +869,9 @@
   },
   "screens.EnterPassword.enterPass": {
     "message": "Enter your passcode"
+  },
+  "screens.EnterPassword.lockoutMessage": {
+    "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect Passcode"

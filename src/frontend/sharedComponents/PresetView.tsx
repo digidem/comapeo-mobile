@@ -29,7 +29,7 @@ export const PresetView = ({
       disabled={presetDisabled}
       onPress={presetDisabled ? undefined : onPressPreset}
       style={styles.preset}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
         {PresetIcon}
         <Text style={styles.categoryName}>{presetName}</Text>
       </View>
@@ -58,5 +58,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 10,
     fontWeight: 'bold',
+    flexShrink: 1,
   },
 });

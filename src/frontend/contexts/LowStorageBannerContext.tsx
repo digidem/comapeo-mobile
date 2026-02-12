@@ -43,9 +43,9 @@ export function LowStorageBannerStoreProvider({
   children: React.ReactNode;
 }) {
   return (
-    <LowStorageBannerStoreContext.Provider value={value}>
+    <LowStorageBannerStoreContext value={value}>
       {children}
-    </LowStorageBannerStoreContext.Provider>
+    </LowStorageBannerStoreContext>
   );
 }
 

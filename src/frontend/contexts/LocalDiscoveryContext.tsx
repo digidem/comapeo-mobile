@@ -54,9 +54,7 @@ export const LocalDiscoveryProvider = ({
   children,
 }: LocalDiscoveryProviderProps) => {
   return (
-    <LocalDiscoveryContext.Provider value={value}>
-      {children}
-    </LocalDiscoveryContext.Provider>
+    <LocalDiscoveryContext value={value}>{children}</LocalDiscoveryContext>
   );
 };
 

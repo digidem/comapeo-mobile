@@ -163,11 +163,7 @@ function LocationProviderInitialized({
     };
   }, [store]);
 
-  return (
-    <LocationContext.Provider value={store}>
-      {children}
-    </LocationContext.Provider>
-  );
+  return <LocationContext value={store}>{children}</LocationContext>;
 }
 
 export function useLocationContext() {

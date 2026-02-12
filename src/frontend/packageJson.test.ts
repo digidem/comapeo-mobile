@@ -33,6 +33,22 @@ describe('frontend package.json', () => {
     )) {
       const backendVersion = backendMapeoDependencies[dependency];
       if (!backendVersion) continue;
+      // For file: dependencies, compare just the filename (paths may differ)
+      if (
+        frontendVersion.startsWith('file:') ||
+        backendVersion.startsWith('file:')
+      ) {
+        const frontendFilename = frontendVersion
+          .replace('file:', '')
+          .split('/')
+          .pop();
+        const backendFilename = backendVersion
+          .replace('file:', '')
+          .split('/')
+          .pop();
+        expect(frontendFilename).toBe(backendFilename);
+        continue;
+      }
       expect(semver.satisfies(frontendVersion, backendVersion)).toBe(true);
     }
   });

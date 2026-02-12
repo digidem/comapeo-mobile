@@ -122,6 +122,9 @@ export type RootStackParamsList = {
   SettingsPrivacyPolicy: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   BackgroundMaps: undefined;
+  WaitingForMapAccept: {
+    shareId: string;
+  };
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: PermissionResponse;

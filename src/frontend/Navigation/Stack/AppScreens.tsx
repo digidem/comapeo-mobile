@@ -141,6 +141,7 @@ import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsInclude
 import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
+import {WaitingForMapAccept} from '../../screens/BackgroundMaps/WaitingForMapAccept.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -398,6 +399,11 @@ export const createAppScreens = ({
         name="BackgroundMaps"
         component={BackgroundMapsScreen}
         options={createBackgroundMapsNavigationOptions({intl})}
+      />
+      <RootStack.Screen
+        name="WaitingForMapAccept"
+        component={WaitingForMapAccept}
+        options={{headerShown: false}}
       />
 
       {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (

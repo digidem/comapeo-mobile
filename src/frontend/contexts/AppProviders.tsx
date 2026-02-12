@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {ClientApiProvider} from '@comapeo/core-react';
+import {ClientApiProvider, MapServerProvider} from '@comapeo/core-react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import nodejs from '@comapeo/nodejs-mobile-react-native';
 import {AuthProvider} from './AuthContext';
 import {
   LocalDiscoveryProvider,
@@ -83,6 +84,22 @@ export const AppProviders = ({
   earlyAccessStore,
   appUsageStatsStore,
 }: AppProvidersProps) => {
+  const [mapServerPort, setMapServerPort] = React.useState<number | null>(null);
+
+  React.useEffect(() => {
+    const subscription = nodejs.channel.addListener(
+      'map-server:port',
+      (data: {port: number}) => {
+        setMapServerPort(data.port);
+      },
+    );
+
+    return () => {
+      // @ts-expect-error - nodejs-mobile-react-native types are incorrect
+      subscription.remove();
+    };
+  }, []);
+
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
       <AppUsageStatsProvider value={appUsageStatsStore}>
@@ -100,18 +117,30 @@ export const AppProviders = ({
                             <LocalDiscoveryProvider
                               value={localDiscoveryController}>
                               <ClientApiProvider clientApi={mapeoApi}>
-                                <ActiveProjectIdStoreProvider
-                                  store={activeProjectIdStore}>
-                                  <DraftObservationProvider
-                                    draftObservationStore={
-                                      persistedDrafObservationStore
-                                    }>
-                                    <EarlyAccessStoreProvider
-                                      value={earlyAccessStore}>
-                                      <AuthProvider>{children}</AuthProvider>
-                                    </EarlyAccessStoreProvider>
-                                  </DraftObservationProvider>
-                                </ActiveProjectIdStoreProvider>
+                                <MapServerProvider
+                                  getBaseUrl={async () => {
+                                    if (mapServerPort === null) {
+                                      throw new Error(
+                                        'Map server port not yet available',
+                                      );
+                                    }
+                                    return new URL(
+                                      `http://localhost:${mapServerPort}/`,
+                                    );
+                                  }}>
+                                  <ActiveProjectIdStoreProvider
+                                    store={activeProjectIdStore}>
+                                    <DraftObservationProvider
+                                      draftObservationStore={
+                                        persistedDrafObservationStore
+                                      }>
+                                      <EarlyAccessStoreProvider
+                                        value={earlyAccessStore}>
+                                        <AuthProvider>{children}</AuthProvider>
+                                      </EarlyAccessStoreProvider>
+                                    </DraftObservationProvider>
+                                  </ActiveProjectIdStoreProvider>
+                                </MapServerProvider>
                               </ClientApiProvider>
                             </LocalDiscoveryProvider>
                           </LocationProvider>

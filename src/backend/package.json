@@ -13,9 +13,10 @@
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@comapeo/core": "5.2.1",
+    "@comapeo/core": "5.4.0",
     "@comapeo/default-categories": "1.0.0",
     "@comapeo/ipc": "6.0.2",
+    "@comapeo/map-server": "1.0.0-pre.6",
     "@sentry/node": "9.28.0",
     "@sentry/rollup-plugin": "^3.5.0",
     "debug": "^4.3.4",

@@ -283,6 +283,7 @@ function MapInfoScreen({
   onRemoveMap: () => void;
 }) {
   const {formatMessage: t} = useIntl();
+  const {navigate} = useNavigationFromRoot();
 
   const calculatedSize = customMapInfo.size
     ? bytesToMegabytes(customMapInfo.size).toFixed(0)
@@ -329,7 +330,7 @@ function MapInfoScreen({
           fullSize
           text={t(m.sendMap)}
           onPress={() => {
-            // navigate('SelectMapShareDevice');
+            navigate('SelectMapShareDevice');
           }}
           renderIcon={({color, size}) => (
             <MaterialIcon name="send" size={size} color={color} />

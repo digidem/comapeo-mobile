@@ -1953,6 +1953,15 @@
   "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
     "message": "Send Map"
   },
+  "screens.Settings.MapManagement.WaitingForMapToAccept.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Settings.MapManagement.WaitingForMapToAccept.timerMessage": {
+    "message": "Map sent {time}s ago"
+  },
+  "screens.Settings.MapManagement.WaitingForMapToAccept.waitingMessage": {
+    "message": "Waiting for Device to Accept Map"
+  },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invite devices to a new project with all your observations."
   },

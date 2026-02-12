@@ -1,8 +1,13 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
+import * as Sentry from '@sentry/react-native';
 
-import {useManyMembers} from '@comapeo/core-react';
+import {
+  useManyMembers,
+  useSendMapShare,
+  type SentMapShareState,
+} from '@comapeo/core-react';
 import {type MemberInfo} from '@comapeo/core/dist/member-api';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {useLocalDiscoveryState} from '../hooks/useLocalDiscoveryState';
@@ -60,8 +65,9 @@ export const SelectDevice = ({
   const {formatMessage: t} = useIntl();
 
   const availablePeers = useInitiallyConnectedPeers();
-  const projectId = useActiveProject();
-  const projectMembersQuery = useManyMembers(projectId);
+  const {projectId} = useActiveProject();
+  const projectMembersQuery = useManyMembers({projectId});
+  const {mutate: sendMapShare} = useSendMapShare({projectId});
 
   const selectionMode: SelectionMode =
     route.name === 'SelectMapShareDevice' ? 'shareMap' : 'invites';
@@ -106,8 +112,20 @@ export const SelectDevice = ({
 
           const handlePress = () => {
             if (selectionMode === 'shareMap') {
-              // TODO: Navigate to map sharing in subsequent PR
-              console.log('Share map with device:', deviceId);
+              sendMapShare(
+                {projectId, receiverDeviceId: deviceId, mapId: 'custom'},
+                {
+                  onError: (err: Error) => {
+                    Sentry.captureException(err);
+                    navigation.navigate('ErrorBottomSheet');
+                  },
+                  onSuccess: (result: SentMapShareState) => {
+                    navigation.navigate('WaitingForMapAccept', {
+                      shareId: result.shareId,
+                    });
+                  },
+                },
+              );
             } else {
               navigation.navigate('SelectInviteeRole', {
                 name: name || '',

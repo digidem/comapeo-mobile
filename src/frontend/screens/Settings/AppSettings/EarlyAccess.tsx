@@ -28,7 +28,7 @@ const m = defineMessages({
     defaultMessage:
       "Data from Early Access won't be visible to collaborators who haven't opted in.",
   },
-  useEarlyAccess: {
+  appUseEarlyAccess: {
     id: 'screens.EarlyAccess.useEarlyAccess',
     defaultMessage: 'Use Early Access Features',
   },
@@ -88,7 +88,7 @@ export const EarlyAccess = ({
 
       <View style={styles.toggleRow} testID="EA.toggle-row">
         <BodyText style={styles.toggleLabel}>
-          {formatMessage(m.useEarlyAccess)}
+          {formatMessage(m.appUseEarlyAccess)}
         </BodyText>
         <Checkbox
           testID={isEarlyEnabled ? 'EA.checkbox-on' : 'EA.checkbox-off'}

@@ -34,22 +34,24 @@ describe('frontend package.json', () => {
       const backendVersion = backendMapeoDependencies[dependency];
       if (!backendVersion) continue;
       // For file: dependencies, compare just the filename (paths may differ)
-      if (
+      const isFileVersion =
         frontendVersion.startsWith('file:') ||
-        backendVersion.startsWith('file:')
-      ) {
-        const frontendFilename = frontendVersion
-          .replace('file:', '')
-          .split('/')
-          .pop();
-        const backendFilename = backendVersion
-          .replace('file:', '')
-          .split('/')
-          .pop();
+        backendVersion.startsWith('file:');
+
+      const frontendFilename = isFileVersion
+        ? frontendVersion.replace('file:', '').split('/').pop()
+        : frontendVersion;
+      const backendFilename = isFileVersion
+        ? backendVersion.replace('file:', '').split('/').pop()
+        : backendVersion;
+
+      if (isFileVersion) {
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(frontendFilename).toBe(backendFilename);
-        continue;
+      } else {
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(semver.satisfies(frontendVersion, backendVersion)).toBe(true);
       }
-      expect(semver.satisfies(frontendVersion, backendVersion)).toBe(true);
     }
   });
 

@@ -3,11 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import * as Sentry from '@sentry/react-native';
 
-import {
-  useManyMembers,
-  useSendMapShare,
-  type SentMapShareState,
-} from '@comapeo/core-react';
+import {useManyMembers, useSendMapShare} from '@comapeo/core-react';
 import {type MemberInfo} from '@comapeo/core/dist/member-api';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {useLocalDiscoveryState} from '../hooks/useLocalDiscoveryState';

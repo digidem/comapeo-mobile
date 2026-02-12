@@ -141,7 +141,6 @@ import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsInclude
 import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
-import {MapSharing} from '../../screens/MapSharing.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -160,7 +159,6 @@ export const createAppScreens = ({
         options={{headerShown: false}}
         component={HomeTabs}
       />
-      <RootStack.Screen name="MapSharing" component={MapSharing} />
       <RootStack.Screen
         name="ObservationEdit"
         component={ObservationEdit}

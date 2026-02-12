@@ -50,7 +50,6 @@ export type EarlyOnlyParam = {readonly isEarlyAdopter: true};
 
 export type RootStackParamsList = {
   Home: NavigatorScreenParams<HomeTabsParamsList>;
-  MapSharing: undefined;
   GpsModal: undefined;
   Settings: undefined;
   Config: undefined;

@@ -63,7 +63,7 @@ export const ProjectStatistics = ({
         },
         onError: err => {
           Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
+          navigation.navigate('ErrorBottomSheet', {error: err});
         },
       },
     );

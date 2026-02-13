@@ -20,6 +20,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {audioStyles} from './shared';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 import * as Sentry from '@sentry/react-native';
+import {toError} from '../../utils/errors';
 
 const m = defineMessages({
   recordingSaved: {
@@ -62,7 +63,9 @@ export const AudioDraftPlaybackScreen = ({
       }
     } catch (error) {
       Sentry.captureException(error);
-      navigation.navigate('ErrorBottomSheet');
+      navigation.navigate('ErrorBottomSheet', {
+        error: toError(error, 'Audio playback failed'),
+      });
     }
   };
 

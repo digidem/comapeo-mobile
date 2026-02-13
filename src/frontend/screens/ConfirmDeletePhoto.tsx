@@ -9,6 +9,7 @@ import {DestructiveButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {useDraftObservationActions} from '../contexts/DraftObservationContext';
+import {toError} from '../utils/errors';
 
 const m = defineMessages({
   title: {
@@ -61,7 +62,9 @@ export function ConfirmDeletePhoto({
                 deleteUnsavedAttachment(photoId);
               } catch (reason) {
                 Sentry.captureException(reason);
-                navigation.navigate('ErrorBottomSheet');
+                navigation.navigate('ErrorBottomSheet', {
+                  error: toError(reason, 'Error deleting photo'),
+                });
                 return;
               }
 

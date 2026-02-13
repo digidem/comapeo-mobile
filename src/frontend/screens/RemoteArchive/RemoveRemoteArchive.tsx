@@ -78,7 +78,7 @@ export function RemoveRemoteArchive({
                     {
                       onError: err => {
                         Sentry.captureException(err);
-                        navigation.navigate('ErrorBottomSheet');
+                        navigation.navigate('ErrorBottomSheet', {error: err});
                       },
                       onSuccess: () => {
                         navigation.goBack();

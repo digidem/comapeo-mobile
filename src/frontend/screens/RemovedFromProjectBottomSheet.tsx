@@ -16,6 +16,7 @@ import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ColorCard} from '../sharedComponents/ColorCard';
 import {DEFAULT_PROJECT_COLOR} from '../constants';
+import {toError} from '../utils/errors';
 
 const m = defineMessages({
   close: {
@@ -85,7 +86,7 @@ export const RemovedFromProjectBottomSheet = ({
                       if (!defaultProject) {
                         // The user should ALWAYS have a default (solo) project. This was not implemented until after v6. So this creates one if it does not exist
                         createProject.mutate(undefined, {
-                          onError: () => {
+                          onError: err => {
                             const firstProject = projects[0];
                             //if there is a project just open that project
                             if (firstProject) {
@@ -93,7 +94,12 @@ export const RemovedFromProjectBottomSheet = ({
                               navigation.popToTop();
                               return;
                             }
-                            navigation.navigate('ErrorBottomSheet');
+                            navigation.navigate('ErrorBottomSheet', {
+                              error: toError(
+                                err,
+                                'Error creating default project',
+                              ),
+                            });
                           },
                           onSuccess: newDefaultProjectId => {
                             setActiveProjectId(newDefaultProjectId);

@@ -16,6 +16,7 @@ import {useProjectSettings} from '../../hooks/server/projects';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {toError} from '../../utils/errors';
 
 const m = defineMessages({
   leaveProjectTitle: {
@@ -70,12 +71,14 @@ export const LeaveProject = ({
             }
           } catch (err) {
             Sentry.captureException(err);
-            navigation.replace('ErrorBottomSheet');
+            navigation.replace('ErrorBottomSheet', {
+              error: toError(err, 'Error updating active project'),
+            });
           }
         },
         onError: err => {
           Sentry.captureException(err);
-          navigation.replace('ErrorBottomSheet');
+          navigation.replace('ErrorBottomSheet', {error: err});
         },
       },
     );

@@ -6,10 +6,10 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {useSelectFile} from '../../hooks/files';
 import {
-  useGetCustomMapInfo,
   useImportCustomMapFile,
+  useGetCustomMapInfo,
   useRemoveCustomMapFile,
-} from '../../hooks/server/maps';
+} from '@comapeo/core-react';
 import StackSvg from '../../images/Stack.svg';
 import {
   RED,
@@ -147,7 +147,9 @@ export function BackgroundMapsScreen() {
   const selectFileMutation = useSelectFile();
   const importCustomMapMutation = useImportCustomMapFile();
   const removeCustomMapMutation = useRemoveCustomMapFile();
-  const customMapInfoQuery = useGetCustomMapInfo();
+  const {data, isRefetching, error} = useGetCustomMapInfo();
+
+  const customMapInfo = data as CustomMapInfo | null | undefined;
 
   const handleChooseFile = () => {
     selectFileMutation.mutate(
@@ -159,10 +161,13 @@ export function BackgroundMapsScreen() {
         onSuccess: asset => {
           if (!asset) return;
 
+          const file = {
+            ...asset,
+            exists: true,
+          } as any;
+
           importCustomMapMutation.mutate(
-            {
-              uri: asset.uri,
-            },
+            {file},
             {
               onSuccess: () => {
                 navigate('MapAddedBottomSheet');
@@ -195,16 +200,16 @@ export function BackgroundMapsScreen() {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-        {customMapInfoQuery.isPending ? (
+        {isRefetching ? (
           <Loading size={10} />
-        ) : customMapInfoQuery.data ? (
+        ) : customMapInfo ? (
           <MapInfoScreen
-            customMapInfo={customMapInfoQuery.data}
+            customMapInfo={customMapInfo}
             onRemoveMap={handleRemoveMap}
           />
         ) : (
           <NoMapScreen
-            error={customMapInfoQuery.error}
+            error={error}
             onChooseFile={handleChooseFile}
             onRemoveMapFile={() => {
               removeCustomMapMutation.mutate(undefined, {
@@ -275,11 +280,17 @@ function NoMapScreen({
   );
 }
 
+type CustomMapInfo = {
+  name: string;
+  size: number;
+  created: Date;
+};
+
 function MapInfoScreen({
   customMapInfo,
   onRemoveMap,
 }: {
-  customMapInfo: NonNullable<ReturnType<typeof useGetCustomMapInfo>['data']>;
+  customMapInfo: CustomMapInfo;
   onRemoveMap: () => void;
 }) {
   const {formatMessage: t} = useIntl();

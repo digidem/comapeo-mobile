@@ -63,7 +63,7 @@ export const SelectDevice = ({
   const availablePeers = useInitiallyConnectedPeers();
   const {projectId} = useActiveProject();
   const projectMembersQuery = useManyMembers({projectId});
-  const {mutate: sendMapShare} = useSendMapShare({projectId});
+  const {mutateAsync: sendMapShare} = useSendMapShare({projectId});
 
   const selectionMode: SelectionMode =
     route.name === 'SelectMapShareDevice' ? 'shareMap' : 'invites';
@@ -106,24 +106,21 @@ export const SelectDevice = ({
               throw new ExhaustivenessError(status);
           }
 
-          const handlePress = () => {
+          const handlePress = async () => {
             if (selectionMode === 'shareMap') {
-              sendMapShare(
-                {projectId, receiverDeviceId: deviceId, mapId: 'custom'},
-                {
-                  onSuccess: result => {
-                    Promise.resolve(result).then(mapShare => {
-                      navigation.navigate('WaitingForMapAccept', {
-                        shareId: mapShare.shareId,
-                      });
-                    });
-                  },
-                  onError: (err: Error) => {
-                    Sentry.captureException(err);
-                    navigation.navigate('ErrorBottomSheet');
-                  },
-                },
-              );
+              try {
+                const mapShare = await sendMapShare({
+                  projectId,
+                  receiverDeviceId: deviceId,
+                  mapId: 'custom',
+                });
+                navigation.navigate('WaitingForMapAccept', {
+                  shareId: mapShare.shareId,
+                });
+              } catch (err) {
+                Sentry.captureException(err);
+                navigation.navigate('ErrorBottomSheet');
+              }
             } else {
               navigation.navigate('SelectInviteeRole', {
                 name: name || '',

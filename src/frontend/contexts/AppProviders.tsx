@@ -4,17 +4,8 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {fetch} from 'expo/fetch';
 import {AuthProvider} from './AuthContext';
-
-// Use expo/fetch in production, global fetch in tests (Jest environment)
-// expo/fetch doesn't work in Jest because it uses native modules
-let fetchImpl: typeof fetch;
-if (process.env.NODE_ENV === 'test') {
-  fetchImpl = globalThis.fetch;
-} else {
-  const expoFetch = require('expo/fetch');
-  fetchImpl = expoFetch.fetch;
-}
 import {
   LocalDiscoveryProvider,
   createLocalDiscoveryController,
@@ -124,7 +115,7 @@ export const AppProviders = ({
                               <ClientApiProvider clientApi={mapeoApi}>
                                 <MapServerProvider
                                   getBaseUrl={getMapServerBaseUrl}
-                                  fetch={fetchImpl}>
+                                  fetch={fetch}>
                                   <ActiveProjectIdStoreProvider
                                     store={activeProjectIdStore}>
                                     <DraftObservationProvider

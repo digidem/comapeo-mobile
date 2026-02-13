@@ -46,6 +46,10 @@ const DISCONNECTED_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   wifiLinkSpeed: null,
 };
 
+jest.mock('expo/fetch', () => ({
+  fetch: globalThis.fetch,
+}));
+
 export function createMinimalWrapper() {
   const localeStore = createLocaleStore({persist: false});
 

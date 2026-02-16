@@ -65,6 +65,7 @@ export const ConfirmDiscardObservationEditBottomSheet = ({
         <View style={styles.buttonsContainer}>
           <DestructiveButton
             fullSize
+            testID="OBS.discard-obs-btn"
             text={t(m.discardObservationButton)}
             renderIcon={() => <DiscardIcon />}
             onPress={handleDiscard}

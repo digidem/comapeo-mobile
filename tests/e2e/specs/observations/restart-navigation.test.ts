@@ -76,4 +76,22 @@ describe('MAIN - Observation Navigation Flow', () => {
 
     await expect($(byTextMatches('Edit Observation'))).toBeDisplayed();
   });
+
+  it('should navigate back to map screen after discarding observarion', async () => {
+    const closeBtn = await $(byResourceId('OBS.header-left-close'));
+    await closeBtn.click();
+
+    await expect($(byTextMatches('Discard changes?'))).toBeDisplayed();
+
+    const discardBtn = await $(byResourceId('OBS.discard-obs-btn'));
+    await discardBtn.click();
+
+    await expect($(byTextMatches('Observation'))).toBeDisplayed();
+
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
+
+    const mapsScreen = await $(byResourceId('MAIN.mapbox-map-view'));
+    await expect(mapsScreen).toBeDisplayed();
+  });
 });

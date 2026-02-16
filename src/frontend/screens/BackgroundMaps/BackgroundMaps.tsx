@@ -169,6 +169,12 @@ export function BackgroundMapsScreen() {
         navigate('MapAddedBottomSheet');
       },
       onError: err => {
+        if (
+          err instanceof Error &&
+          err.message.includes('cancelled by the user')
+        ) {
+          return;
+        }
         Sentry.captureException(err);
         navigate('BackgroundMapErrorBottomSheet', {
           title: t(m.importErrorTitle),
@@ -247,7 +253,7 @@ function NoMapScreen({
           {t(m.acceptedFileTypes)}
         </BodyText>
       </View>
-      {error && (
+      {error && !error.message?.includes('Map not found') && (
         <View style={{marginTop: 40}}>
           <BodyText variant="large" style={styles.infoLoadErrorText}>
             {t(m.customMapInfoLoadError)}

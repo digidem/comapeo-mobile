@@ -18,6 +18,7 @@ export const HeaderLeftClose = ({
   return (
     <HeaderBackButton
       {...headerBackButtonProps}
+      testID="OBS.header-left-close"
       style={{marginLeft: 0, marginRight: 15}}
       onPress={onPress}
       backImage={() => <HeaderCloseIcon tintColor={tintColor || BLACK} />}

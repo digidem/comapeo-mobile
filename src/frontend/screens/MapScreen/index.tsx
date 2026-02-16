@@ -235,6 +235,7 @@ function useCheckDraftObservationAndNavigate({
 }) {
   const {navigate} = useNavigationFromHomeTabs();
   const existingObservation = useDraftObservationState(store => store.value);
+  const id = useDraftObservationState(store => store.id);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -247,12 +248,12 @@ function useCheckDraftObservationAndNavigate({
         navigate('ObservationCategoryChooser');
 
         // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
-      } else if ('docId' in existingObservation) {
+      } else if (id?.docId) {
         navigate('ObservationEdit');
       } else {
         navigate('ObservationCreate');
       }
-    }, [existingObservation, navigate, authState]),
+    }, [existingObservation, navigate, authState, id]),
   );
 }
 

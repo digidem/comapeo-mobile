@@ -38,16 +38,14 @@ const m = defineMessages({
 
 export const ConfirmDiscardObservationEditBottomSheet = ({
   navigation,
-  route,
 }: NativeRootNavigationProps<'ConfirmDiscardObservationEditBottomSheet'>) => {
   const {formatMessage: t} = useIntl();
   const {clearDraft} = useDraftObservationActions();
 
   function handleDiscard() {
     clearDraft();
-    navigation.popTo('Observation', {
-      observationId: route.params.observationId,
-    });
+    // We are trying to just goBack(), but we need to close 2 screens, the bottom sheet and ObservationEdit.
+    navigation.pop(2);
   }
 
   return (
@@ -68,6 +66,7 @@ export const ConfirmDiscardObservationEditBottomSheet = ({
         <View style={styles.buttonsContainer}>
           <DestructiveButton
             fullSize
+            testID="OBS.discard-obs-btn"
             text={t(m.discardObservationButton)}
             renderIcon={() => <DiscardIcon />}
             onPress={handleDiscard}

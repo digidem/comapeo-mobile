@@ -418,9 +418,6 @@
   "constants.red": {
     "message": "Rojo"
   },
-  "hooks.usePasscodeLockout.lockoutMessage": {
-    "message": "¡Prueba de nuevo en {minutes, plural, one {# minuto} other {¡# minutos}}"
-  },
   "projectInfoCard.coordinator": {
     "message": "Este dispositivo es coordinador de este proyecto."
   },
@@ -872,6 +869,9 @@
   },
   "screens.EnterPassword.enterPass": {
     "message": "Introduzca su contraseña"
+  },
+  "screens.EnterPassword.lockoutMessage": {
+    "message": "¡Prueba de nuevo en {minutes, plural, one {# minuto} other {¡# minutos}}"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Contraseña incorrecta, inténtelo de nuevo"

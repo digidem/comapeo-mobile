@@ -45,7 +45,7 @@
     "@osm_borders/maritime_10000m": "1.1.0",
     "@react-native-community/hooks": "100.1.0",
     "@react-native-community/netinfo": "12.0.1",
-    "@react-native-documents/picker": "11.0.0",
+    "@react-native-documents/picker": "12.0.1",
     "@react-native-picker/picker": "2.11.4",
     "@react-native-vector-icons/ant-design": "12.4.0",
     "@react-native-vector-icons/fontawesome": "12.4.0",

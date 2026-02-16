@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "3.0.11",
-    "@comapeo/core-react": "file:comapeo-core-react-7.3.0-pre.3-MAP-SHARING.tgz",
+    "@comapeo/core-react": "file:comapeo-core-react-7.3.0-pre.4-MAP-SHARING.tgz",
     "@comapeo/ipc": "file:comapeo-ipc-6.1.0-pre.0.tgz",
     "@comapeo/nodejs-mobile-react-native": "18.20.4-2",
     "@expo-google-fonts/rubik": "0.4.2",
@@ -65,7 +65,7 @@
     "buffer": "6.0.3",
     "cheap-ruler": "4.0.0",
     "eventemitter3": "5.0.1",
-    "expo": "54.0.31",
+    "expo": "54.0.33",
     "expo-application": "7.0.8",
     "expo-asset": "12.0.12",
     "expo-audio": "1.1.1",

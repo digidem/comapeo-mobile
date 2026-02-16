@@ -3,8 +3,9 @@ import React from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
+import {File} from 'expo-file-system';
 
-import {useSelectFile} from '../../hooks/files';
+import {FILE_SELECT_MUTATION_KEY, useSelectFile} from '../../hooks/files';
 import {
   useImportCustomMapFile,
   useGetCustomMapInfo,
@@ -32,6 +33,7 @@ import {
 import {bytesToMegabytes} from '../../lib/bytesToMegabytes';
 import {Button} from '../../sharedComponents/Button';
 import {DownloadIcon} from '../../sharedComponents/icons';
+import {useMutation} from '@tanstack/react-query';
 
 const m = defineMessages({
   screenTitle: {
@@ -144,7 +146,17 @@ export function BackgroundMapsScreen() {
   const {formatMessage: t} = useIntl();
   const {navigate} = useNavigationFromRoot();
 
-  const selectFileMutation = useSelectFile();
+  const selectFileMutation = useMutation({
+    mutationKey: FILE_SELECT_MUTATION_KEY,
+    mutationFn: async () => {
+      const result = await File.pickFileAsync(undefined, 'application/*');
+      const file = Array.isArray(result) ? result[0] : result;
+      if (!file) {
+        throw new Error('No file selected');
+      }
+      await importCustomMapMutation.mutateAsync({file});
+    },
+  });
   const importCustomMapMutation = useImportCustomMapFile();
   const removeCustomMapMutation = useRemoveCustomMapFile();
   const {data, isRefetching, error} = useGetCustomMapInfo();
@@ -152,45 +164,18 @@ export function BackgroundMapsScreen() {
   const customMapInfo = data as CustomMapInfo | null | undefined;
 
   const handleChooseFile = () => {
-    selectFileMutation.mutate(
-      {
-        copyToCacheDirectory: false,
-        allowedExtensions: ['smp'],
+    selectFileMutation.mutate(undefined, {
+      onSuccess: () => {
+        navigate('MapAddedBottomSheet');
       },
-      {
-        onSuccess: asset => {
-          if (!asset) return;
-
-          const file = {
-            ...asset,
-            exists: true,
-          } as any;
-
-          importCustomMapMutation.mutate(
-            {file},
-            {
-              onSuccess: () => {
-                navigate('MapAddedBottomSheet');
-              },
-              onError: err => {
-                Sentry.captureException(err);
-                navigate('BackgroundMapErrorBottomSheet', {
-                  title: t(m.importErrorTitle),
-                  description: t(m.importErrorDesciption),
-                });
-              },
-            },
-          );
-        },
-        onError: err => {
-          Sentry.captureException(err);
-          navigate('BackgroundMapErrorBottomSheet', {
-            title: t(m.importErrorTitle),
-            description: t(m.importErrorDesciption),
-          });
-        },
+      onError: err => {
+        Sentry.captureException(err);
+        navigate('BackgroundMapErrorBottomSheet', {
+          title: t(m.importErrorTitle),
+          description: t(m.importErrorDesciption),
+        });
       },
-    );
+    });
   };
 
   const handleRemoveMap = () => {
@@ -202,12 +187,7 @@ export function BackgroundMapsScreen() {
       <ScrollView contentContainerStyle={styles.container}>
         {isRefetching ? (
           <Loading size={10} />
-        ) : customMapInfo ? (
-          <MapInfoScreen
-            customMapInfo={customMapInfo}
-            onRemoveMap={handleRemoveMap}
-          />
-        ) : (
+        ) : error || !customMapInfo ? (
           <NoMapScreen
             error={error}
             onChooseFile={handleChooseFile}
@@ -219,6 +199,11 @@ export function BackgroundMapsScreen() {
                 },
               });
             }}
+          />
+        ) : (
+          <MapInfoScreen
+            customMapInfo={customMapInfo}
+            onRemoveMap={handleRemoveMap}
           />
         )}
       </ScrollView>

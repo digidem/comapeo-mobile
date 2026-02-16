@@ -1,5 +1,4 @@
 import {useMapStyleUrl} from '@comapeo/core-react';
-import {useQuery} from '@tanstack/react-query';
 
 export function useMapStyleJsonUrl() {
   const {data, error, isRefetching} = useMapStyleUrl();

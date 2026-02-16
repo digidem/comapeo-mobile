@@ -5,7 +5,7 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {File} from 'expo-file-system';
 
-import {FILE_SELECT_MUTATION_KEY, useSelectFile} from '../../hooks/files';
+import {FILE_SELECT_MUTATION_KEY} from '../../hooks/files';
 import {
   useImportCustomMapFile,
   useGetCustomMapInfo,

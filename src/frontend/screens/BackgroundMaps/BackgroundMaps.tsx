@@ -154,6 +154,7 @@ export function BackgroundMapsScreen() {
       if (!file) {
         throw new Error('No file selected');
       }
+      // @ts-expect-error - TODO: Remove once @comapeo/core-react file type is fixed
       await importCustomMapMutation.mutateAsync({file});
     },
   });

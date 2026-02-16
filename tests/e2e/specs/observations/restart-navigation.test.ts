@@ -71,10 +71,16 @@ describe('MAIN - Observation Navigation Flow', () => {
     await expect($(byTextMatches('Change'))).toBeDisplayed();
     await expect($(byResourceId('OBS.description-inp'))).toBeDisplayed();
 
+    const descriptionInput = await $(byResourceId('OBS.description-inp'));
+    await descriptionInput.click();
+    await descriptionInput.setValue('Updated description');
+
     await driver.terminateApp('com.comapeo.rc');
     await driver.activateApp('com.comapeo.rc');
 
     await expect($(byTextMatches('Edit Observation'))).toBeDisplayed();
+    //updated description should still be present
+    await expect($(byTextMatches('Updated description'))).toBeDisplayed();
   });
 
   it('should navigate back to map screen after discarding observarion', async () => {
@@ -86,11 +92,8 @@ describe('MAIN - Observation Navigation Flow', () => {
     const discardBtn = await $(byResourceId('OBS.discard-obs-btn'));
     await discardBtn.click();
 
-    await expect($(byTextMatches('Observation'))).toBeDisplayed();
-
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-
+    // should not go back to the observation screen since the app was restarted
+    await expect($(byTextMatches('Observation'))).not.toBeDisplayed();
     const mapsScreen = await $(byResourceId('MAIN.mapbox-map-view'));
     await expect(mapsScreen).toBeDisplayed();
   });

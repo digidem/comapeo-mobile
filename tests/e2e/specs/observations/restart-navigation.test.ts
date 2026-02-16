@@ -1,6 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('MAIN - Observation Navigation Flow', () => {
   it('should start on the Map screen if no observation exists', async () => {
@@ -46,5 +47,33 @@ describe('MAIN - Observation Navigation Flow', () => {
     await discardObs.click();
 
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
+  });
+
+  it('should create an observation, then edit, the reopen to edit screen when restarting app', async () => {
+    const addObsBtn = await $('~Add Observation');
+    await addObsBtn.click();
+    const animalCategory = await $(byTextMatches('Animal'));
+    await animalCategory.click();
+    const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
+    await saveBtn.click();
+    await driver.pause(1000);
+    await handleGPSAlert();
+    const obervationsList = await $('~Go to observations list.');
+    await obervationsList.click();
+
+    const animalObs = await $(byTextMatches('Animal'));
+    await animalObs.click();
+
+    const editBtn = await $(byResourceId('editButton'));
+    await editBtn.click();
+
+    await expect($(byTextMatches('Edit Observation'))).toBeDisplayed();
+    await expect($(byTextMatches('Change'))).toBeDisplayed();
+    await expect($(byResourceId('OBS.description-inp'))).toBeDisplayed();
+
+    await driver.terminateApp('com.comapeo.rc');
+    await driver.activateApp('com.comapeo.rc');
+
+    await expect($(byTextMatches('Edit Observation'))).toBeDisplayed();
   });
 });

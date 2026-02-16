@@ -44,6 +44,7 @@ export const ConfirmDiscardObservationEditBottomSheet = ({
 
   function handleDiscard() {
     clearDraft();
+    // We are trying to just goBack(), but we need to close 2 screens, the bottom sheet and ObservationEdit.
     navigation.pop(2);
   }
 

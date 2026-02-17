@@ -7,7 +7,7 @@ import {
   DestructiveButton,
   SecondaryButton,
 } from '../../sharedComponents/Buttons';
-import {useAudioPlayback} from '../../hooks/useAudioPlayback';
+import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {Bar} from 'react-native-progress';
 import {COMAPEO_BLUE, WHITE, VERY_LIGHT_GREY, BLACK} from '../../lib/styles';
@@ -15,10 +15,11 @@ import {StopIcon} from '../../sharedComponents/icons';
 import PlayArrow from '../../images/PlayArrow.svg';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import {DateDistance} from '../../sharedComponents/DateDistance';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {audioStyles} from './shared';
+import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   recordingSaved: {
@@ -39,11 +40,31 @@ export const AudioDraftPlaybackScreen = ({
   navigation,
   route,
 }: NativeRootNavigationProps<'AudioDraftPlaybackScreen'>) => {
-  const {uri, createdAt, showRecordingSavedText} = route.params;
-  const {duration, currentPosition, isPlaying, startPlayback, stopPlayback} =
-    useAudioPlayback(uri);
+  const {uri, createdAt, showRecordingSavedText, audioId} = route.params;
+  const player = useAudioPlayer({uri});
+  const status = useAudioPlayerStatus(player);
   const {formatMessage} = useIntl();
-  const {deleteAudio} = useDraftObservation();
+  const {deleteUnsavedAttachment} = useDraftObservationActions();
+
+  const duration = status.duration * 1000;
+  const currentPosition = status.currentTime * 1000;
+  const isPlaying = status.playing;
+
+  const handlePlayPause = () => {
+    try {
+      if (isPlaying) {
+        player.pause();
+      } else {
+        if (status.currentTime >= status.duration) {
+          player.seekTo(0);
+        }
+        player.play();
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+      navigation.navigate('ErrorBottomSheet');
+    }
+  };
 
   const progress = duration ? currentPosition / duration : 0;
 
@@ -62,7 +83,7 @@ export const AudioDraftPlaybackScreen = ({
             fullSize
             text={formatMessage(m.delete)}
             onPress={() => {
-              deleteAudio(uri, false);
+              deleteUnsavedAttachment(audioId);
               navigation.goBack();
             }}
             renderIcon={({color, size}) => (
@@ -80,7 +101,7 @@ export const AudioDraftPlaybackScreen = ({
       </View>
       <View style={audioStyles.audioBox}>
         <TouchableOpacity
-          onPress={() => (isPlaying ? stopPlayback() : startPlayback())}
+          onPress={handlePlayPause}
           style={{
             flex: 1,
             justifyContent: 'flex-end',
@@ -98,7 +119,9 @@ export const AudioDraftPlaybackScreen = ({
         />
         <View>
           <HeaderText style={{textAlign: 'center'}} variant="header3">
-            {millisecondsToMMSS(isPlaying ? currentPosition : duration)}
+            {millisecondsToMMSS(
+              currentPosition > 0 ? currentPosition : duration,
+            )}
           </HeaderText>
           <DateDistance
             date={new Date(createdAt)}

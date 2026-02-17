@@ -3,9 +3,12 @@ import {
   useSingleDocByDocId,
   useUpdateDocument,
   useDeleteDocument,
+  usePresetsSelection,
 } from '@comapeo/core-react';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useAppLanguageTag} from '../useAppLanguageTag';
+import {usePresetsQuery} from './presets';
 
 export function useTracks() {
   const {projectId} = useActiveProject();
@@ -40,9 +43,19 @@ export function useDeleteTrackMutation() {
   });
 }
 
-export function useGetPresetById(presetRefId: string | undefined) {
+export function useTrackPresets() {
   const {projectId} = useActiveProject();
-  const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
+  const lang = useAppLanguageTag();
+  const tracks = usePresetsSelection({
+    projectId: projectId,
+    dataType: 'track',
+    lang,
+  });
+  return tracks.filter(p => p.geometry.includes('line'));
+}
+
+export function useGetPresetById(presetRefId: string | undefined) {
+  const {data: allPresets} = usePresetsQuery();
 
   if (!presetRefId || !allPresets) return null;
 

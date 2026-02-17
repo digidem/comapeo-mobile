@@ -8,11 +8,11 @@
     "base": {
       "android": {
         "image": "latest",
-        "node": "20.17.0"
+        "node": "24.13.0"
       },
       "ios": {
         "image": "latest",
-        "node": "20.17.0"
+        "node": "24.13.0"
       }
     },
     "development": {

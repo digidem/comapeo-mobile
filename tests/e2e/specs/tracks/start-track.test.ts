@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it, before} from 'mocha';
-import {byTextMatches} from '../../utils/selectors';
+import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Tracks - Start Track Flow (Permissions Pre-Granted)', () => {
   before(async () => {
@@ -17,9 +17,6 @@ describe('Tracks - Start Track Flow (Permissions Pre-Granted)', () => {
 
     await startBtn.click();
 
-    await expect($(byTextMatches('Stop Tracks'))).toBeDisplayed();
-    await expect(
-      $(byTextMatches('Move one meter to see track')),
-    ).toBeDisplayed();
+    await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
   });
 });

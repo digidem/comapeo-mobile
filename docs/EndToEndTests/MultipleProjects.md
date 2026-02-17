@@ -5,17 +5,17 @@
 - [Multiple Projects](#multiple-projects)
   - [Overview](#overview)
 - [Create and Switch Between Projects](#create-and-switch-between-projects)
-  - [Test Objectives](#test-objectives)
-  - [Special Considerations](#special-considerations)
+    - [Test Objectives](#test-objectives)
+    - [Special Considerations](#special-considerations)
 - [Project Data Retention](#project-data-retention)
-  - [Test Objectives](#test-objectives-1)
-  - [Special Considerations](#special-considerations-1)
+    - [Test Objectives](#test-objectives-1)
+    - [Special Considerations](#special-considerations-1)
 - [All Projects Screen](#all-projects-screen)
-  - [Test Objectives](#test-objectives-2)
-  - [Special Considerations](#special-considerations-2)
+    - [Test Objectives](#test-objectives-2)
+    - [Special Considerations](#special-considerations-2)
 - [Edit Project Details](#edit-project-details)
-  - [Test Objectives](#test-objectives-3)
-  - [Special Considerations](#special-considerations-3)
+    - [Test Objectives](#test-objectives-3)
+    - [Special Considerations](#special-considerations-3)
 
 ## Multiple Projects
 
@@ -36,7 +36,7 @@ This test validates the core flow of creating a second project and switching bet
 
 #### Special Considerations
 
-- Assumes the original project ("My Solo Project") exists before this test begins.
+- Assumes the original project (named with the device name) exists before this test begins.
 - Depends on predictable project names from `output.names`.
 
 ## Project Data Retention
@@ -63,7 +63,7 @@ This test validates the All Projects UI, including role labels and sort order.
 - Confirm that the correct role ("coordinator") is shown for each.
 - Ensure that “mapping on your own” and “participant” roles are not displayed if not expected.
 - Validate that the projects appear in the expected order:
-  1. Original project
+  1. My Solo Project
   2. Second project
   3. Third project
 

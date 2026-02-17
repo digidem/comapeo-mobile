@@ -1,59 +1,25 @@
 import * as React from 'react';
 import {HeaderLeftClose} from '../../sharedComponents/HeaderLeftClose';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
-import {
-  BottomSheetModal,
-  useBottomSheetModal,
-} from '../../sharedComponents/BottomSheetModal';
-import {ConfirmDiscardBottomSheetContent} from '../../sharedComponents/ConfirmDiscardBottomSheetContent';
-import {defineMessages, useIntl} from 'react-intl';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useFocusEffect} from '@react-navigation/native';
 import {BackHandler} from 'react-native';
 
-const m = defineMessages({
-  discardTitle: {
-    id: 'ObservationEdit.HeaderLeft.discardTitle',
-    defaultMessage: 'Discard changes?',
-    description: 'Title of dialog that shows when cancelling observation edits',
-  },
-  discardObservationDescription: {
-    id: 'ObservationEdit.HeaderLeft.discardObservationDescription',
-    defaultMessage: 'Your changes will not be saved. This cannot be undone. ',
-  },
-  discardCancel: {
-    id: 'ObservationEdit.HeaderLeft.discardCancel',
-    defaultMessage: 'Continue editing',
-    description: 'Button on dialog to keep editing (cancelling close action)',
-  },
-  discardObservationButton: {
-    id: 'ObservationEdit.HeaderLeft.discardObservationButton',
-    defaultMessage: 'Discard changes',
-    description: 'Title of dialog that shows when cancelling observation edits',
-  },
-});
-
 type HeaderLeftProps = {
   headerBackButtonProps: HeaderBackButtonProps;
-  observationId: string;
 };
 
-export const HeaderLeft = ({
-  headerBackButtonProps,
-  observationId,
-}: HeaderLeftProps) => {
-  const {closeSheet, openSheet, isOpen, sheetRef} = useBottomSheetModal({
-    openOnMount: false,
-  });
-  const {formatMessage} = useIntl();
-  const {clearDraft} = useDraftObservation();
+export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   const navigation = useNavigationFromRoot();
+
+  const handlePress = React.useCallback(() => {
+    navigation.navigate('ConfirmDiscardObservationEditBottomSheet');
+  }, [navigation]);
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        openSheet();
+        handlePress();
         return true;
       };
 
@@ -63,31 +29,13 @@ export const HeaderLeft = ({
       );
 
       return () => subscription.remove();
-    }, [openSheet]),
+    }, [handlePress]),
   );
 
-  function handleDiscard() {
-    clearDraft();
-    closeSheet();
-    navigation.popTo('Observation', {observationId});
-  }
-
   return (
-    <>
-      <HeaderLeftClose
-        onPress={openSheet}
-        headerBackButtonProps={headerBackButtonProps}
-      />
-      <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
-        <ConfirmDiscardBottomSheetContent
-          closeSheet={closeSheet}
-          handleDiscard={handleDiscard}
-          header={formatMessage(m.discardTitle)}
-          subHeader={formatMessage(m.discardObservationDescription)}
-          discardButtonText={formatMessage(m.discardObservationButton)}
-          discardButtonCancel={formatMessage(m.discardCancel)}
-        />
-      </BottomSheetModal>
-    </>
+    <HeaderLeftClose
+      onPress={handlePress}
+      headerBackButtonProps={headerBackButtonProps}
+    />
   );
 };

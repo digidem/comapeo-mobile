@@ -4,20 +4,21 @@ import {lengthToDegrees} from '@turf/helpers';
 import {randomPosition} from '@turf/random';
 import {LocationObject} from 'expo-location';
 import {type BBox} from 'geojson';
-import React, {forwardRef} from 'react';
+import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {LIGHT_GREY, RED, WHITE} from '../../lib/styles';
-import {Button} from '../../sharedComponents/Button';
-import {LocationView} from '../../sharedComponents/Editor/LocationView';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {LocationView} from '../../sharedComponents/LocationView';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {Text} from '../../sharedComponents/Text';
 import type {Metadata} from '../../sharedTypes';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import {useLocationState} from '../../contexts/LocationContext';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const DISTANCE_BUFFER_KM = 50;
 
@@ -42,51 +43,53 @@ export function CreateTestDataScreen() {
     <ScreenContentWithDock
       contentContainerStyle={styles.contentContainer}
       dockContent={
-        <Button
-          fullWidth
-          disabled={createFakeObservations.status === 'pending'}
-          onPress={handleSubmit(data => {
-            if (data.count === undefined) return;
-            if (!location) {
-              ToastAndroid.show('Waiting for location', ToastAndroid.SHORT);
-              return;
-            }
+        createFakeObservations.status === 'pending' ? (
+          <View style={styles.loadingContainer}>
+            <UIActivityIndicator size={30} color={WHITE} />
+          </View>
+        ) : (
+          <PrimaryButton
+            fullSize
+            text="Create"
+            onPress={handleSubmit(data => {
+              if (data.count === undefined) return;
+              if (!location) {
+                ToastAndroid.show('Waiting for location', ToastAndroid.SHORT);
+                return;
+              }
 
-            createFakeObservations.mutate(
-              {
-                count: data.count,
-                location: location,
-                distance:
-                  data.distance === undefined
-                    ? DISTANCE_BUFFER_KM
-                    : data.distance,
-              },
-              {
-                onSuccess: () => {
-                  ToastAndroid.show('Observations created', ToastAndroid.SHORT);
+              createFakeObservations.mutate(
+                {
+                  count: data.count,
+                  location: location,
+                  distance:
+                    data.distance === undefined
+                      ? DISTANCE_BUFFER_KM
+                      : data.distance,
                 },
-                onError: () => {
-                  ToastAndroid.show(
-                    'Failed to create observations',
-                    ToastAndroid.SHORT,
-                  );
+                {
+                  onSuccess: () => {
+                    ToastAndroid.show(
+                      'Observations created',
+                      ToastAndroid.SHORT,
+                    );
+                  },
+                  onError: () => {
+                    ToastAndroid.show(
+                      'Failed to create observations',
+                      ToastAndroid.SHORT,
+                    );
+                  },
                 },
-              },
-            );
-          })}>
-          {createFakeObservations.status === 'pending' ? (
-            <UIActivityIndicator
-              size={30}
-              color={WHITE}
-              style={{paddingVertical: 12}}
-            />
-          ) : (
-            'Create'
-          )}
-        </Button>
+              );
+            })}
+          />
+        )
       }>
       <View style={styles.field}>
-        <Text style={styles.labelText}>Number of observations (required):</Text>
+        <HeaderText variant="header3">
+          Number of observations (required):
+        </HeaderText>
         <Controller
           name="count"
           control={control}
@@ -111,21 +114,21 @@ export function CreateTestDataScreen() {
         />
         <View>
           {errors.count?.type === 'required' && (
-            <Text style={styles.errorText}>Required</Text>
+            <BodyText style={styles.errorText}>Required</BodyText>
           )}
           {errors.count?.type === 'min' && (
-            <Text style={styles.errorText}>Must be greater than 0</Text>
+            <BodyText style={styles.errorText}>Must be greater than 0</BodyText>
           )}
         </View>
       </View>
 
       <View style={styles.field}>
-        <Text style={styles.labelText}>
+        <HeaderText variant="header3">
           Maximum bounded distance in kilometers (optional, default is{' '}
           {DISTANCE_BUFFER_KM}):
-        </Text>
+        </HeaderText>
         <View>
-          <Text>Current location: </Text>
+          <BodyText>Current location: </BodyText>
           {location ? (
             <LocationView
               lat={location.coords.latitude}
@@ -157,7 +160,7 @@ export function CreateTestDataScreen() {
         />
         <View>
           {errors.distance?.type === 'min' && (
-            <Text style={styles.errorText}>Must be greater than 0</Text>
+            <BodyText style={styles.errorText}>Must be greater than 0</BodyText>
           )}
         </View>
       </View>
@@ -165,16 +168,21 @@ export function CreateTestDataScreen() {
   );
 }
 
-const NumberInput = forwardRef<
-  TextInput,
-  {
-    error?: boolean;
-    numberOfLines?: number;
-    onBlur?: () => void;
-    onChange?: (value: number | undefined) => void;
-    value?: number;
-  }
->(({error, numberOfLines = 1, onChange, onBlur, value}, ref) => {
+const NumberInput = ({
+  error,
+  numberOfLines = 1,
+  onChange,
+  onBlur,
+  value,
+  ref,
+}: {
+  error?: boolean;
+  numberOfLines?: number;
+  onBlur?: () => void;
+  onChange?: (value: number | undefined) => void;
+  value?: number;
+  ref?: React.Ref<TextInput>;
+}) => {
   return (
     <TextInput
       ref={ref}
@@ -193,7 +201,7 @@ const NumberInput = forwardRef<
       value={value === undefined ? '' : value.toString(10)}
     />
   );
-});
+};
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -201,10 +209,6 @@ const styles = StyleSheet.create({
   },
   field: {
     gap: 12,
-  },
-  labelText: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
   input: {
     flex: 1,
@@ -215,6 +219,14 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: RED,
+  },
+  loadingContainer: {
+    minHeight: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: LIGHT_GREY,
+    borderRadius: 30,
+    width: 280,
   },
 });
 

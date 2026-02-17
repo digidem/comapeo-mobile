@@ -8,8 +8,10 @@ describe('Settings - About CoMapeo Flow', () => {
     await mapTab.click();
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
+    const appSettingsOption = await $('~Go to app settings screen.');
+    await appSettingsOption.click();
 
-    const aboutComapeoOption = await $('~Go to about CoMapeo screen.');
+    const aboutComapeoOption = await $(byResourceId('aboutSettingsButton'));
     await aboutComapeoOption.click();
   });
 
@@ -22,13 +24,17 @@ describe('Settings - About CoMapeo Flow', () => {
     await expect($(byTextMatches('Android version'))).toBeDisplayed();
     await expect($(byTextMatches('Android build number'))).toBeDisplayed();
     await expect($(byTextMatches('Phone model'))).toBeDisplayed();
+    await expect($(byTextMatches('Emojis source'))).toBeDisplayed();
+    await expect($(byTextMatches('Release name'))).toBeDisplayed();
+    await expect($(byTextMatches('CoMapeo Website'))).toBeDisplayed();
   });
 
   it('should navigate back to map screen', async () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await $('~Close Menu').click();
-
+    const backBtnAgain = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtnAgain.click();
+    await $(byResourceId('MAIN.map-screen')).click();
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

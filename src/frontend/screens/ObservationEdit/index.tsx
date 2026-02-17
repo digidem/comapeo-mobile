@@ -1,32 +1,42 @@
 import * as React from 'react';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
-import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {
-  NativeNavigationComponent,
-  NativeRootNavigationProps,
-} from '../../sharedTypes/navigation';
-import {useUpdateDocument} from '@comapeo/core-react';
-import {
-  useCreateAudioAttachment,
-  useCreatePhotoAttachment,
-} from '../../hooks/server/media';
-import {SaveButton} from '../../sharedComponents/SaveButton';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {StyleSheet, View} from 'react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {Loading} from '../../sharedComponents/Loading';
-import {HeaderLeft} from './HeaderLeft';
-import {matchPreset} from '../../lib/utils.ts';
-import {AudioAttachment} from '../../sharedTypes/audio.ts';
+import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {PresetView} from '../../sharedComponents/PresetView';
+import {DescriptionField} from '../../sharedComponents/DescriptionField';
+import {HorizontalScrollView} from '../../sharedComponents/HorizontalScrollView';
 import {
-  isProcessedDraftPhoto,
-  isAudioAttachment,
-  isUnsavedAudio,
+  GAP,
+  MIN_WIDTH,
+  ThumbnailContainer,
+  ThumbnailLoader,
+} from '../../sharedComponents/Thumbnails/ThumbnailContainer';
+import {
+  SavedPhotoThumbnailImage,
+  ThumbnailImage,
+} from '../../sharedComponents/Thumbnails/PhotoThumbnail';
+import {COMAPEO_BLUE, DARK_GREY, LIGHT_GREY, WHITE} from '../../lib/styles';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
+import {DateDistance} from '../../sharedComponents/DateDistance';
+import PlayArrow from '../../images/PlayArrow.svg';
+import {HeaderLeft} from './HeaderLeft';
+import {ObservationEditSaveButton} from './ObservationEditSaveButton';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
+import {
+  isUnsavedAudioAttachment,
+  isUnsavedPhotoAttachment,
 } from '../../lib/attachmentTypeChecks';
-import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   observation: {
@@ -37,7 +47,7 @@ const m = defineMessages({
   navTitle: {
     id: 'screens.ObservationEdit.navTitle',
     defaultMessage: 'Edit Observation',
-    description: 'screen title for new observation screen',
+    description: 'screen title for edit observation screen',
   },
   changePreset: {
     id: 'screens.ObservationEdit.changePreset',
@@ -50,235 +60,222 @@ const m = defineMessages({
   },
 });
 
-export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
+export const ObservationEdit = ({
   navigation,
-  route,
-}) => {
+}: NativeRootNavigationProps<'ObservationEdit'>) => {
   const {formatMessage} = useIntl();
-  const {projectApi, projectId} = useActiveProject();
+  const observationId = useDraftObservationState(store => store.id);
+  const observation = useDraftObservationState(store => store.value);
+  const notes = observation?.tags.notes;
+  const preset = observation?.presetRef;
+  const savedAttachments = observation?.attachments;
+  const {projectId} = useActiveProject();
+  const projectDetails = useProjectRoleAndDetails(projectId);
+  const {updateTag} = useDraftObservationActions();
+  const attachments = useDraftObservationState(
+    store => store.unsavedAttachments,
+  );
 
-  const value = usePersistedDraftObservation(store => store.value);
-  const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
-    useDraftObservation();
-  const preset = usePreset();
-  const {mutateAsync: updateObservationAsync, status} = useUpdateDocument({
-    docType: 'observation',
-    projectId,
-  });
-  const attachments = usePersistedDraftObservation(store => store.attachments);
-  const {mutateAsync: createPhotoAttachmentAsync} = useCreatePhotoAttachment({
-    projectId,
-  });
-  const {mutateAsync: createAudioAttachmentAsync} = useCreateAudioAttachment({
-    projectId,
-  });
+  const presetName = preset ? preset.name : formatMessage(m.observation);
 
-  const notes = value?.tags.notes;
-  const presetName = preset
-    ? formatMessage({
-        id: `presets.${preset.docId}.name`,
-        defaultMessage: preset.name,
-      })
-    : formatMessage(m.observation);
-
-  // TODO: This shouldn't be an effect, the logic should happen when the user
-  // presses the edit button.
-  React.useEffect(() => {
-    let cancelled = false;
-    if (value) return;
-
-    async function createDraftFromExistingObservation(docId: string) {
-      const observation = await projectApi.observation.getByDocId(docId);
-      if (cancelled) return;
-      const presets = await projectApi.preset.getMany();
-      if (cancelled) return;
-      let matchingPreset;
-      if (observation.presetRef) {
-        matchingPreset = presets.find(
-          p => p.docId === observation.presetRef?.docId,
-        );
-      }
-      if (!matchingPreset) {
-        matchingPreset = matchPreset(observation.tags, presets);
-      }
-      existingObservationToDraft(observation, matchingPreset);
-    }
-
-    createDraftFromExistingObservation(route.params?.observationId);
-
-    return () => {
-      cancelled = true;
-    };
-  }, [
-    value,
-    existingObservationToDraft,
-    route.params?.observationId,
-    projectApi.observation,
-    projectApi.preset,
-    navigation,
-  ]);
-
-  const handleNavigationSuccess = React.useCallback(() => {
-    clearDraft();
-    navigation.popTo('Observation', {
-      observationId: route.params.observationId,
-    });
-  }, [clearDraft, route.params.observationId, navigation]);
-
-  const editObservation = React.useCallback(() => {
-    if (!value) {
-      throw new Error('no observation saved in persisted state');
-    }
-
-    if (!('versionId' in value)) {
-      throw new Error('Cannot update a unsaved observation (must create one)');
-    }
-
-    const newPhotos = attachments.filter(isProcessedDraftPhoto);
-
-    const removedAudioAttachments = attachments.filter(
-      (attachment): attachment is AudioAttachment =>
-        isAudioAttachment(attachment) && attachment.deleted === true,
-    );
-
-    const newAudioRecordings = attachments.filter(isUnsavedAudio);
-
-    const attachmentsChanged =
-      newPhotos.length > 0 ||
-      newAudioRecordings.length > 0 ||
-      removedAudioAttachments.length > 0;
-
-    if (!attachmentsChanged) {
-      updateObservationAsync({
-        versionId: value.versionId,
-        value: {
-          ...value,
-          presetRef: preset
-            ? {docId: preset.docId, versionId: preset.versionId}
-            : undefined,
-        },
-      })
-        .then(() => {
-          handleNavigationSuccess();
-        })
-        .catch(err => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
-        });
-
-      return;
-    }
-
-    (async () => {
-      try {
-        const newAttachments = await Promise.all([
-          ...newPhotos.map(p => {
-            return createPhotoAttachmentAsync(p);
-          }),
-          ...newAudioRecordings.map(a => {
-            return createAudioAttachmentAsync(a);
-          }),
-        ]);
-
-        const updatedAttachments = [
-          ...value.attachments.filter(
-            attachment =>
-              !removedAudioAttachments.some(
-                removed => removed.name === attachment.name,
-              ),
-          ),
-          ...newAttachments,
-        ];
-
-        await updateObservationAsync({
-          versionId: value.versionId,
-          value: {
-            ...value,
-            attachments: updatedAttachments,
-            presetRef: preset
-              ? {docId: preset.docId, versionId: preset.versionId}
-              : undefined,
-          },
-        });
-      } catch (err) {
-        Sentry.captureException(err);
-        navigation.navigate('ErrorBottomSheet');
-        return;
-      }
-
-      handleNavigationSuccess();
-    })();
-  }, [
-    preset,
-    value,
-    updateObservationAsync,
-    createAudioAttachmentAsync,
-    createPhotoAttachmentAsync,
-    attachments,
-    handleNavigationSuccess,
-    navigation,
-  ]);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <SaveButton
-          onPress={editObservation}
-          isLoading={status === 'pending'}
+  return (
+    <ScreenContentWithDock
+      dockContainerStyle={{padding: 0}}
+      dockContent={<ActionsRow fieldRefs={preset?.fieldRefs} />}>
+      <View style={styles.container}>
+        <View
+          style={{
+            backgroundColor: projectDetails.projectColor,
+            paddingVertical: 10,
+            // without this the parent container border does not properly show
+            borderTopLeftRadius: 12,
+            borderTopRightRadius: 12,
+            paddingHorizontal: 20,
+          }}>
+          <HeaderText variant="header6">
+            {projectDetails.projectHeader}
+          </HeaderText>
+        </View>
+        <PresetView
+          onPressPreset={() =>
+            navigation.navigate('ObservationCategoryChooser')
+          }
+          PresetIcon={
+            <PresetCircleIcon
+              size="medium"
+              iconId={preset?.iconRef?.docId}
+              testID={`OBS.${preset?.name}-icon`}
+              color={preset?.color}
+            />
+          }
+          presetName={presetName}
         />
-      ),
-      headerLeft: props => (
-        <HeaderLeft
-          headerBackButtonProps={props}
-          observationId={route.params?.observationId}
-        />
-      ),
-    });
-  }, [editObservation, status, navigation, route.params?.observationId]);
+      </View>
+      <DescriptionField
+        notes={typeof notes !== 'string' ? '' : notes}
+        updateNotes={newVal => {
+          updateTag('notes', newVal);
+        }}
+      />
+      {(savedAttachments || attachments) && (
+        <HorizontalScrollView
+          shouldShowLastItems={true}
+          minItemWidth={MIN_WIDTH}
+          gap={GAP}
+          renderChildren={size => (
+            <>
+              {savedAttachments &&
+                savedAttachments.map(att => {
+                  if (observationId && att.type === 'photo') {
+                    return (
+                      <React.Suspense
+                        key={att.driveDiscoveryId + att.hash + att.type}
+                        fallback={<ThumbnailLoader size={size} />}>
+                        <SavedPhotoThumbnailImage
+                          size={size}
+                          photo={att}
+                          onPress={() => {
+                            navigation.navigate('AttachedPhotoPreviewModal', {
+                              photo: att,
+                              observationDocId: observationId.docId,
+                            });
+                          }}
+                        />
+                      </React.Suspense>
+                    );
+                  }
 
-  return !value ? (
-    <Loading />
-  ) : (
-    <Editor
-      presetName={presetName}
-      PresetIcon={
-        <PresetCircleIcon
-          size="medium"
-          iconId={preset?.iconRef?.docId}
-          testID={`OBS.${preset?.name}-icon`}
-          color={preset?.color}
+                  if (att.type === 'audio' && observationId) {
+                    return (
+                      <ThumbnailContainer
+                        key={att.hash}
+                        size={size}
+                        onPress={() =>
+                          navigation.navigate('AudioAttachmentPlaybackScreen', {
+                            driveDiscoveryId: att.driveDiscoveryId,
+                            name: att.name,
+                            type: 'audio',
+                            createdAt: att.createdAt,
+                          })
+                        }
+                        containerStyle={styles.container}
+                        accessibilityLabel="Play audio recording.">
+                        <PlayArrow width={48} height={48} />
+                        {att.createdAt && (
+                          <DateDistance
+                            date={new Date(att.createdAt)}
+                            style={{
+                              fontSize: 12,
+                              fontWeight: 400,
+                              color: DARK_GREY,
+                            }}
+                          />
+                        )}
+                      </ThumbnailContainer>
+                    );
+                  }
+                })}
+              {attachments &&
+                attachments.map(att => {
+                  if (isUnsavedPhotoAttachment(att)) {
+                    // if the original and thumbnail are not ready, show loader
+                    if (
+                      att.original.processingState !== 'complete' ||
+                      att.thumbnail.processingState !== 'complete'
+                    ) {
+                      return <ThumbnailLoader size={size} key={att.id} />;
+                    } else {
+                      return (
+                        <ThumbnailContainer
+                          key={att.id}
+                          accessibilityLabel="View draft photo."
+                          size={size}
+                          onPress={() =>
+                            navigation.navigate('DraftPhotoPreviewModal', {
+                              photoId: att.id,
+                              photoExif: att.photoExif,
+                              // We check for null above, so here it is safe to assert non-null
+                              uri: att.original.uri!,
+                              photoMetadata: {
+                                timestamp: att.timestamp,
+                                location: att.location,
+                                accelerometer: att.accelerometer,
+                              },
+                            })
+                          }>
+                          <ThumbnailImage uri={att.thumbnail.uri} />
+                        </ThumbnailContainer>
+                      );
+                    }
+                  }
+
+                  if (
+                    isUnsavedAudioAttachment(att) &&
+                    att.original.uri !== null
+                  ) {
+                    return (
+                      <ThumbnailContainer
+                        key={att.id}
+                        size={size}
+                        onPress={() =>
+                          navigation.navigate('AudioDraftPlaybackScreen', {
+                            uri: att.original.uri!,
+                            audioId: att.id,
+                            createdAt: att.timestamp,
+                            showRecordingSavedText: false,
+                          })
+                        }
+                        containerStyle={{
+                          backgroundColor: WHITE,
+                          borderColor: COMAPEO_BLUE,
+                          borderWidth: 2,
+                          paddingVertical: 8,
+                        }}
+                        accessibilityLabel="Play audio recording.">
+                        <PlayArrow width={48} height={48} />
+                        <BodyText
+                          variant="tinyMeta"
+                          style={{fontWeight: '500'}}>
+                          {millisecondsToMMSS(att.duration)}
+                        </BodyText>
+                        <DateDistance
+                          date={new Date(att.timestamp)}
+                          style={{
+                            fontSize: 12,
+                            fontWeight: '400',
+                            color: DARK_GREY,
+                          }}
+                        />
+                      </ThumbnailContainer>
+                    );
+                  }
+                })}
+            </>
+          )}
         />
-      }
-      onPressPreset={() => navigation.navigate('ObservationCategoryChooser')}
-      notes={typeof notes !== 'string' ? '' : notes}
-      updateNotes={newVal => {
-        updateTags('notes', newVal);
-      }}
-      attachments={attachments}
-      actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
-    />
+      )}
+    </ScreenContentWithDock>
   );
 };
 
-ObservationEdit.navTitle = m.navTitle;
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: LIGHT_GREY,
+  },
+});
 
 export function createNavigationOptions({
   intl,
 }: {
   intl: (title: MessageDescriptor) => string;
 }) {
-  return ({
-    route,
-  }: NativeRootNavigationProps<'ObservationEdit'>): NativeStackNavigationOptions => {
+  return (): NativeStackNavigationOptions => {
     return {
       headerTitle: intl(m.navTitle),
-      headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
-      headerLeft: props => (
-        <HeaderLeft
-          headerBackButtonProps={props}
-          observationId={route.params?.observationId} // Pass observationId here
-        />
-      ),
+      headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
+      headerRight: () => <ObservationEditSaveButton />,
     };
   };
 }

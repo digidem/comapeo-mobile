@@ -45,12 +45,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ env.TRUNK_BRANCH }}
+          fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
 
       - name: Parse version
         id: version
@@ -68,6 +69,18 @@ jobs:
           git config --global user.email '${{ vars.RELEASE_BOT_USER_ID }}+awana-release-bot[bot]@users.noreply.github.com'
           git branch ${{ steps.branches.outputs.release }}
           git checkout -b ${{ steps.branches.outputs.rc }}
+
+      - name: Generate release notes
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          ./scripts/generate-release-notes.sh
+
+          # Format the release notes
+          npx prettier --write release-notes/**/*.md
+
+          git add release-notes/
+          git commit -m "docs: add release notes for v${{ steps.version.outputs.releaseShort }}"
 
       - name: Set target release version in package.json
         run: |
@@ -104,6 +117,15 @@ jobs:
             :cherries: All changes to this branch should be cherry-picked from `${{ env.TRUNK_BRANCH}}`.
 
             :warning: Only add bug fixes, copy edits and translation updates during the QA process.
+
+            :globe_with_meridians: **Reminder:** Please ensure this release branch is synced with [Crowdin GitHub Integration](https://crowdin.com/project/comapeo-mobile/integrations/system/github) **before triggering a build**.   
+
+            **To sync this branch:**  
+            1. Open the [Crowdin GitHub Integration settings](https://crowdin.com/project/comapeo-mobile/integrations/system/github).    
+            2. Click **Edit** on the Github integration screen.  
+            3. In the **Select Branches for Translation** section, make sure this release branch is listed and selected.  
+            4. Click **Save** to confirm.  
+            5. After saving, click the **three dots** next to the branch and select **Sync branch** to immediately create a PR with the translations.  
 
             :test_tube: Create a new Release Candidate build by commenting on this PR with the `${{ vars.BUILD_COMMENT_TRIGGER || '/build-rc' }}` command.
 

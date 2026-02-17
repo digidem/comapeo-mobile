@@ -33,8 +33,8 @@ function mockLocale(languageTag: string): Locale {
   return {
     languageTag,
     languageCode: null,
-    langageCurrencyCode: null,
-    langageCurrencySymbol: null,
+    languageCurrencyCode: null,
+    languageCurrencySymbol: null,
     languageRegionCode: null,
     regionCode: null,
     currencyCode: null,
@@ -44,6 +44,7 @@ function mockLocale(languageTag: string): Locale {
     textDirection: null,
     measurementSystem: null,
     temperatureUnit: null,
+    languageScriptCode: null,
   };
 }
 

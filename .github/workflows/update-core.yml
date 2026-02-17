@@ -1,0 +1,114 @@
+name: Update @comapeo/core
+
+env:
+  BRANCH_NAME_PREFIX: 'chore/update-core-v'
+  COMMIT_MESSAGE_PREFIX: 'chore: update @comapeo/core to v'
+  PR_COMMENT_IDENTIFIER: '<!-- update-core -->'
+
+on:
+  # To allow manual triggering of the workflow
+  workflow_dispatch:
+  repository_dispatch:
+    # This event type is sent by the update-app.yml workflow in digidem/comapeo-core
+    # (https://github.com/digidem/comapeo-core/blob/main/.github/workflows/update-app.yml)
+    # Whenever a new version of @comapeo/core is released
+    types: [update-core]
+
+permissions:
+  contents: write
+
+jobs:
+  update-core:
+    runs-on: ubuntu-latest
+    name: Update @comapeo/core
+    steps:
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.PR_BOT_APP_ID }}
+          private-key: ${{ secrets.PR_BOT_PRIVATE_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 1
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Get installed version of @comapeo/core
+        # We assume that the backend version is the same as the frontend version
+        id: current-version
+        run: |
+          current=$(npm list @comapeo/core --json --package-lock-only | jq -r '.dependencies["@comapeo/core"].version')
+          echo "current_version=$current" >> $GITHUB_OUTPUT
+
+      - name: Get latest version of @comapeo/core
+        id: latest-version
+        run: |
+          latest=$(npm show @comapeo/core version)
+          echo "latest_version=$latest" >> $GITHUB_OUTPUT
+
+      - name: Fail if no update is needed
+        id: check-update
+        run: |
+          if [ "$current_version" != "$latest_version" ]; then
+            echo "Update needed: $current_version -> $latest_version"
+          else
+            echo "No update needed. Current version: $current_version, Latest version: $latest_version"
+            exit 1
+          fi
+        env:
+          current_version: ${{ steps.current-version.outputs.current_version }}
+          latest_version: ${{ steps.latest-version.outputs.latest_version }}
+
+      - name: Update @comapeo/core in frontend
+        run: npm install --save-exact --save-dev @comapeo/core@latest
+
+      - name: Update @comapeo/core in backend
+        working-directory: ./src/backend
+        run: npm install --save-exact @comapeo/core@latest
+
+      - name: Commit changes
+        id: commit-changes
+        run: |
+          git config --global user.name 'awana-release-bot[bot]'
+          git config --global user.email '${{ vars.RELEASE_BOT_USER_ID }}+awana-release-bot[bot]@users.noreply.github.com'
+          git checkout -b "$BRANCH_NAME"
+          git commit -am "$COMMIT_MESSAGE"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "commit_message=$COMMIT_MESSAGE" >> $GITHUB_OUTPUT
+        env:
+          BRANCH_NAME: ${{ env.BRANCH_NAME_PREFIX }}${{ steps.latest-version.outputs.latest_version }}
+          COMMIT_MESSAGE: ${{ env.COMMIT_MESSAGE_PREFIX }}${{ steps.latest-version.outputs.latest_version }}
+
+      - name: Push changes
+        run: git push origin ${{ steps.commit-changes.outputs.branch_name }}
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+
+      - name: Create Pull Request
+        run: |
+          url=$(gh pr create --title "$PR_TITLE" --body "$PR_BODY")
+          echo "pr_url=$url" >> $GITHUB_OUTPUT
+        id: create-pr
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_TITLE: ${{ steps.commit-changes.outputs.commit_message }}
+          PR_BODY: |
+            ${{ env.PR_COMMENT_IDENTIFIER }}
+            Update @comapeo/core to v${{ steps.latest-version.outputs.latest_version }}
+
+      - name: Close stale pull requests
+        run: |
+          gh pr list --state open --json body,number,url \
+            --jq 'map(select((.body | contains("${{ env.PR_COMMENT_IDENTIFIER }}")) and .url != "${{ steps.create-pr.outputs.pr_url }}") | .number)[]' | \
+            xargs -I {} gh pr close {} --comment "$CLOSE_COMMENT" --delete-branch
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          CLOSE_COMMENT: 'Closed in favor of ${{ steps.create-pr.outputs.pr_url }}.'

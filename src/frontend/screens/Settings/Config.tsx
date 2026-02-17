@@ -1,7 +1,7 @@
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {useImportProjectConfig} from '@comapeo/core-react';
+import {useImportProjectCategories} from '@comapeo/core-react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {useSelectFile} from '../../hooks/files';
 import {useProjectSettings, useGetOwnRole} from '../../hooks/server/projects';
@@ -55,7 +55,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   const {data: deviceRole} = useGetOwnRole();
 
   const selectFileMutation = useSelectFile();
-  const importProjectConfigMutation = useImportProjectConfig({projectId});
+  const importProjectConfigMutation = useImportProjectCategories({projectId});
 
   const isCoordinator =
     deviceRole.roleId === COORDINATOR_ROLE_ID ||
@@ -92,7 +92,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
         onSuccess: selected => {
           if (!selected) return;
           importProjectConfigMutation.mutate(
-            {configPath: convertFileUriToPosixPath(selected.uri)},
+            {filePath: convertFileUriToPosixPath(selected.uri)},
             {
               onSettled: () => {
                 FileSystem.deleteAsync(selected.uri, {idempotent: true}).catch(

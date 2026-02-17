@@ -13,12 +13,13 @@
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@comapeo/core": "4.1.0",
-    "@comapeo/ipc": "4.0.0",
-    "@mapeo/default-config": "5.0.0",
+    "@comapeo/core": "5.2.1",
+    "@comapeo/default-categories": "1.0.0",
+    "@comapeo/ipc": "6.0.2",
     "@sentry/node": "9.28.0",
     "@sentry/rollup-plugin": "^3.5.0",
-    "debug": "^4.3.4"
+    "debug": "^4.3.4",
+    "sentry-offline-transport-better-sqlite": "^1.1.2"
   },
   "devDependencies": {
     "@digidem/types": "~2.1.0",
@@ -28,6 +29,7 @@
     "@rollup/plugin-json": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@tsconfig/node16": "^16.1.1",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/debug": "^4.1.7",
     "@types/node": "^20.5.0",
     "magic-string": "^0.30.5",

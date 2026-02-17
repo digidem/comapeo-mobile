@@ -29,10 +29,10 @@ describe('Settings - Coordinates Settings Flow', () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
 
-    await expect($(byTextMatches('App Settings'))).toBeDisplayed();
+    await expect($(byTextMatches('CoMapeo Settings'))).toBeDisplayed();
 
     await backBtn.click();
-    await $('~Close Menu').click();
+    await $(byResourceId('MAIN.map-screen')).click();
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

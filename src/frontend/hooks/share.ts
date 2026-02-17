@@ -1,7 +1,8 @@
-import {useIsMutating, useMutation} from '@tanstack/react-query';
+import {useMutation} from '@tanstack/react-query';
 import Share, {type ShareOptions} from 'react-native-share';
 
-const SHARE_OPEN_MUTATION_KEY = ['share', 'open'] as const;
+// 'background' key prefix prevents passcode prompt during share dialog (see AuthContext.tsx)
+const SHARE_OPEN_MUTATION_KEY = ['background', 'share', 'open'] as const;
 
 export function useOpenShareDialog() {
   return useMutation({
@@ -12,13 +13,4 @@ export function useOpenShareDialog() {
       return Share.open(options);
     },
   });
-}
-
-export function useIsShareDialogOpen() {
-  return (
-    useIsMutating({
-      mutationKey: SHARE_OPEN_MUTATION_KEY,
-      status: 'pending',
-    }) > 0
-  );
 }

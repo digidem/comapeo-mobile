@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import RNRestart from 'react-native-restart';
-import {Text} from '../sharedComponents/Text';
-import {Button} from '../sharedComponents/Button';
 import {WHITE} from '../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
 import {MapPinErrorIcon} from '../sharedComponents/MapPinErrorIcon';
+import {PrimaryButton} from '../sharedComponents/Buttons';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
   somethingWrong: {
@@ -25,28 +25,20 @@ export const FatalError = () => {
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <MapPinErrorIcon />
-        <Text style={styles.text}>{formatMessage(m.somethingWrong)}</Text>
+        <HeaderText style={styles.text}>
+          {formatMessage(m.somethingWrong)}
+        </HeaderText>
       </View>
-      <Button
-        fullWidth
+      <PrimaryButton
+        fullSize
+        text={formatMessage(m.restart)}
+        renderIcon={({size, color}) => {
+          return <MaterialIcon size={size} name="refresh" color={color} />;
+        }}
         onPress={() => {
           RNRestart.restart();
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <MaterialIcon
-            style={{marginRight: 10}}
-            size={30}
-            name="refresh"
-            color={WHITE}
-          />
-          <Text style={{color: WHITE}}>{formatMessage(m.restart)}</Text>
-        </View>
-      </Button>
+        }}
+      />
     </View>
   );
 };
@@ -62,9 +54,6 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
   text: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
     marginTop: 20,
   },
 });

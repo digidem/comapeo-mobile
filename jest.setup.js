@@ -1,6 +1,5 @@
 import {jest, afterAll} from '@jest/globals';
 import 'react-native-gesture-handler/jestSetup';
-import mockBottomSheet from '@gorhom/bottom-sheet/mock';
 import mockNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
@@ -14,7 +13,16 @@ import {setUpTests} from 'react-native-reanimated';
 
 setUpTests();
 
-jest.mock('@gorhom/bottom-sheet', () => mockBottomSheet);
+// Module resolution error when using expo/winter. See: https://github.com/expo/expo/issues/36831#issuecomment-3107047371
+jest.mock('expo/src/winter/ImportMetaRegistry', () => ({
+  ImportMetaRegistry: {
+    get url() {
+      return null;
+    },
+  },
+}));
+
+jest.mock('react-native-nitro-modules', () => {});
 
 jest.mock('@react-native-community/netinfo', () => mockNetInfo);
 

@@ -3,20 +3,16 @@ import {defineMessages} from 'react-intl';
 export const m = defineMessages({
   dataPrivacyTitle: {
     id: 'screens.DataPrivacy.title',
-    defaultMessage: 'Data & Privacy',
+    defaultMessage: 'CoMapeo is private by default.',
   },
-  dataPrivacyDescription: {
-    id: 'screens.DataPrivacy.description',
-    defaultMessage:
-      'CoMapeo allows you and your collaborators to map offline without needing servers.',
+  dataPrivacyIntro: {
+    id: 'screens.DataPrivacy.intro',
+    defaultMessage: 'A few important things to keep in mind:',
   },
   dataPrivacyStays: {
     id: 'screens.DataPrivacy.stays',
-    defaultMessage: 'Your data stays on your devices.',
-  },
-  dataPrivacyEncrypted: {
-    id: 'screens.DataPrivacy.encrypted',
-    defaultMessage: 'All data stays fully encrypted',
+    defaultMessage:
+      'Your data stays on your devices—fully encrypted and in your control.',
   },
   dataPrivacyManageAndControl: {
     id: 'screens.DataPrivacy.manageAndControl',
@@ -25,7 +21,7 @@ export const m = defineMessages({
   dataPrivacyDiagnostic: {
     id: 'screens.DataPrivacy.diagnostic',
     defaultMessage:
-      'Private by default — diagnostic information is fully anonymized and you can opt-out any time.',
+      'Diagnostic information is fully anonymized—opt-out any time.',
   },
   learnMore: {
     id: 'screens.DataPrivacy.learnMore',

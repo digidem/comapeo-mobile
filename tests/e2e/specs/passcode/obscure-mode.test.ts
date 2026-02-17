@@ -3,12 +3,24 @@ import {describe, it} from 'mocha';
 import {byText, byTextMatches, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 import {checkForElementGone} from '../../utils/checkForGone';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Passcode - Obscure Passcode Mode', () => {
+  it('should show an observations before going into obscure mode', async () => {
+    await $('~Add Observation').click();
+    const communityCategory = await $(byText('Community'));
+    await communityCategory.click();
+    await driver.pause(1000);
+    const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
+    await saveBtn.click();
+    await handleGPSAlert();
+
+    await $('~Go to observations list.').click();
+    const community = await $(byText('Community'));
+    await expect(community).toBeDisplayed();
+  });
+
   it('should show a blank Observations screen after entering obscure passcode', async () => {
-    const obsListTab = await $('~Go to observations list.');
-    await obsListTab.click();
-    await expect($(byTextMatches('Lake'))).toBeDisplayed();
     await driver.terminateApp('com.comapeo.rc');
     await driver.activateApp('com.comapeo.rc');
     if (await driver.isLocked()) await driver.unlock();
@@ -17,7 +29,8 @@ describe('Passcode - Obscure Passcode Mode', () => {
     await passcodeField.click();
     await driver.keys(output.obscurepasscode.split(''));
     await driver.hideKeyboard();
-
+    const obsListTab = await $('~Go to observations list.');
+    await obsListTab.waitForDisplayed();
     await obsListTab.click();
     const emptyStateText = await $(
       byTextMatches(
@@ -35,17 +48,10 @@ describe('Passcode - Obscure Passcode Mode', () => {
 
     const animalCategory = await $(byTextMatches('Animal'));
     await animalCategory.click();
-
+    await driver.pause(1000);
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {buttonLabel: 'SAVE'});
-      }
-    } catch {
-      console.log('No RN Alert dialog was found.');
-    }
+    await handleGPSAlert();
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     const emptyStateText = await $(
@@ -55,6 +61,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     );
     await expect(emptyStateText).toBeDisplayed();
   });
+
   it('should not show security after entering obscure passcode', async () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
@@ -76,7 +83,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
 
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
-    await expect($(byTextMatches('Lake'))).toBeDisplayed();
+    await expect($(byTextMatches('Community'))).toBeDisplayed();
     checkForElementGone(byText('Animal'));
   });
 });

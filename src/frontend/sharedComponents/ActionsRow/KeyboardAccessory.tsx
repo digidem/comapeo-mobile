@@ -22,11 +22,21 @@ type ActionTabItems = {
 interface KeyboardAccessory {
   items: ActionTabItems[];
   onPress: () => unknown;
+  keyboardHeight: number;
 }
 
-export const KeyboardAccessory: FC<KeyboardAccessory> = ({onPress, items}) => {
+export const KeyboardAccessory: FC<KeyboardAccessory> = ({
+  onPress,
+  items,
+  keyboardHeight,
+}) => {
   return (
-    <View style={[styles.containerPadding, styles.flexRow]}>
+    <View
+      style={[
+        styles.containerPadding,
+        styles.flexRow,
+        {marginBottom: keyboardHeight},
+      ]}>
       <View style={[styles.flexRow, styles.accessoryMainWrapper]}>
         <Plus style={{marginRight: 10}} />
         <Text style={styles.text} numberOfLines={1}>
@@ -34,10 +44,10 @@ export const KeyboardAccessory: FC<KeyboardAccessory> = ({onPress, items}) => {
         </Text>
       </View>
       <View style={styles.flexRow}>
-        {items.map((item, idx) => (
+        {items.map(item => (
           <Pressable
             onPress={onPress}
-            key={idx}
+            key={item.testID || item.label}
             style={styles.accessoryIcon}
             testID={`${item.testID}-keyboard`}>
             {item.icon}

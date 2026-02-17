@@ -3,32 +3,15 @@ import {View, StyleSheet} from 'react-native';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useSingleDocByDocId} from '@comapeo/core-react';
-import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
-import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 
-interface ObservationHeaderRightProps {
-  observationId: string;
-}
+type ObservationHeaderRightProps =
+  | {canEdit: false}
+  | {canEdit: true; setObservationToStoreAndNavigateToEdit: () => void};
 
-export const ObservationHeaderRight = ({
-  observationId,
-}: ObservationHeaderRightProps) => {
-  const {projectId} = useActiveProject();
-  const {data: observation} = useSingleDocByDocId({
-    projectId: projectId,
-    docType: 'observation',
-    docId: observationId,
-  });
-
-  const navigation = useNavigationFromRoot();
-
-  const canEdit = useCanEditOrDelete(observation.originalVersionId);
-
-  return canEdit ? (
+export const ObservationHeaderRight = (props: ObservationHeaderRightProps) => {
+  return props.canEdit ? (
     <IconButton
-      onPress={() => navigation.navigate('ObservationEdit', {observationId})}
+      onPress={props.setObservationToStoreAndNavigateToEdit}
       testID="editButton">
       <EditIcon />
     </IconButton>

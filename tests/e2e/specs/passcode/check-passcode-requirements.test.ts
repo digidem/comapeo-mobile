@@ -4,6 +4,26 @@ import {byTextMatches, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
 describe('Passcode - Check Passcode Requirements Flow', () => {
+  it('should allow user into app with correct passcode when app has been background but not terminated', async () => {
+    // presses the home button
+    await driver.pressKeyCode(3);
+    // activates the calendar app
+    await driver.pressKeyCode(208);
+    await driver.pause(1000);
+    // presses Back
+    await driver.pressKeyCode(4);
+    await driver.pressKeyCode(3);
+    await driver.activateApp('com.comapeo.rc');
+
+    await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();
+
+    await driver.keys(output.passcode.split(''));
+
+    await expect($(byTextMatches('Enter your passcode'))).not.toBeDisplayed();
+
+    await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
+  });
+
   it('should relaunch app and see Passcode entry screen', async () => {
     await driver.terminateApp('com.comapeo.rc');
     await driver.activateApp('com.comapeo.rc');

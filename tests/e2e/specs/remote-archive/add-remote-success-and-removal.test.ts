@@ -1,13 +1,17 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
-import {getTodayFormattedDate} from '../../utils/date';
+import {getDeviceTimezone, getShortFormattedDate} from '../../utils/date';
 import {output} from '../../utils/naming';
 
 let archiveAdded = false;
 let cleanupNeeded = false;
+let deviceTimezone: string;
 
 describe('Remote Archive - Add Success Flow', () => {
+  before(async () => {
+    deviceTimezone = await getDeviceTimezone();
+  });
   it('navigates to Remote Archive screen', async () => {
     await expect($(byTextMatches('Remote Archive \\| OFF'))).toBeDisplayed();
     await $(byText('View Details')).click();
@@ -51,6 +55,7 @@ describe('Remote Archive - Add Success Flow', () => {
       console.warn('🛑 Remote Archive addition failed — restarting app');
       await driver.terminateApp('com.comapeo.rc');
       await driver.activateApp('com.comapeo.rc');
+      await driver.pause(15000);
       return;
     }
     await expect($(byText('Remote Archive Added'))).toBeDisplayed();
@@ -61,7 +66,7 @@ describe('Remote Archive - Add Success Flow', () => {
     await expect($(byResourceId('RA.archive-name'))).toHaveText(
       output.remoteServer,
     );
-    const today = getTodayFormattedDate();
+    const today = getShortFormattedDate(deviceTimezone);
     await expect($(byText(today))).toBeDisplayed();
     await expect($(byTextMatches('Remove Server'))).toBeDisplayed();
   });
@@ -72,7 +77,7 @@ describe('Remote Archive - Add Success Flow', () => {
     const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
 
-    await expect($(byText('Project Settings'))).toBeDisplayed();
+    await expect($(byText('Coordinator Tools'))).toBeDisplayed();
     await expect($(byTextMatches('Remote Archive \\| ON'))).toBeDisplayed();
   });
 
@@ -104,7 +109,7 @@ describe('Remote Archive - Add Success Flow', () => {
       console.warn('🛑 Remote Archive removal failed — restarting app');
       await driver.terminateApp('com.comapeo.rc');
       await driver.activateApp('com.comapeo.rc');
-      await driver.pause(1000);
+      await driver.pause(15000);
       return;
     }
 
@@ -119,7 +124,7 @@ describe('Remote Archive - Add Success Flow', () => {
     if (cleanupNeeded) {
       const backButton = await $(byResourceId('MAIN.header-back-btn'));
       await backButton.click();
-      await $('~Close Menu').click();
+      await $(byResourceId('MAIN.map-screen')).click();
     }
   });
 });

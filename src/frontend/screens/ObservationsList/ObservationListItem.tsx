@@ -9,8 +9,6 @@ import {
   FormattedPresetName,
 } from '../../sharedComponents/FormattedData';
 import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
-import {useManyDocs} from '@comapeo/core-react';
-import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {matchPreset} from '../../lib/utils';
 import {sharedStyles} from './SharedStyle.ts';
@@ -18,6 +16,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {usePresetsQuery} from '../../hooks/server/presets.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -64,8 +63,7 @@ function ObservationListItemInner({
   style?: ViewStyleProp;
   observation: Observation;
 }) {
-  const {projectId} = useActiveProject();
-  const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
+  const {data: allPresets} = usePresetsQuery();
   const preset = matchPreset(observation.tags, allPresets);
   const photos = observation.attachments.filter(isSavedPhoto);
   const isMine = useIsMyDocument(observation.originalVersionId);
@@ -89,6 +87,7 @@ function ObservationListItemInner({
           <View style={styles.smallIconContainer}>
             <PresetCircleIcon
               iconId={preset?.iconRef?.docId}
+              testID={`OBS.${preset?.name}-list-icon`}
               size="small"
               color={preset?.color}
             />

@@ -1,15 +1,19 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {usePresetsQuery} from '../../hooks/server/presets';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {usePresetsSelection} from '@comapeo/core-react';
 import {CategoryGrid} from './CategoryGrid';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 import {Preset} from '@comapeo/schema';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   title: {
@@ -21,21 +25,25 @@ const m = defineMessages({
 export const ObservationCategoryChooser: NativeNavigationComponent<
   'ObservationCategoryChooser'
 > = ({navigation}) => {
-  const {data: presets} = usePresetsQuery();
-  const {updatePreset, usePreset} = useDraftObservation();
-  const observationId = usePersistedDraftObservation(
-    state => state.observationId,
-  );
-  const currentPreset = usePreset();
+  const {projectId} = useActiveProject();
+  const languageTag = useAppLanguageTag();
+  const presets = usePresetsSelection({
+    projectId: projectId,
+    dataType: 'observation',
+    lang: languageTag,
+  });
+  const preset = useDraftObservationState(state => state.value?.presetRef);
+  const {updatePreset} = useDraftObservationActions();
+  const observationId = useDraftObservationState(state => state.id?.docId);
 
-  const filteredPresets = Array.from(presets)
-    .filter(p => p.geometry.includes('point'))
-    .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+  const filteredPresets = Array.from(presets).filter(p =>
+    p.geometry.includes('point'),
+  );
 
   const handleSelect = (preset: Preset) => {
     updatePreset(preset);
     if (observationId) {
-      navigation.navigate('ObservationEdit', {observationId});
+      navigation.popTo('ObservationEdit');
     } else {
       navigation.navigate('ObservationCreate');
     }
@@ -49,16 +57,19 @@ export const ObservationCategoryChooser: NativeNavigationComponent<
     navigation.setOptions({
       title: m.title.defaultMessage,
       headerLeft: props =>
-        currentPreset ? (
+        preset ? (
           <CustomHeaderLeft
             onPress={handleGoBack}
             headerBackButtonProps={props}
           />
         ) : (
-          <CustomHeaderLeftClose headerBackButtonProps={props} />
+          <CustomHeaderLeftClose
+            headerBackButtonProps={props}
+            observationId={observationId}
+          />
         ),
     });
-  }, [navigation, currentPreset, handleGoBack]);
+  }, [navigation, handleGoBack, observationId, preset]);
 
   return (
     <View style={styles.container} testID="MAIN.categories-scrn">

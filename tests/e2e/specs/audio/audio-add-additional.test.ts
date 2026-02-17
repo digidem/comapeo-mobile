@@ -1,11 +1,13 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Audio - Two Recordings Show in Thumbnails', () => {
   it('creates observation and records first audio', async () => {
     await $('~Add Observation').click();
-    await $(byTextMatches('Community')).click();
+    const community = await $(byTextMatches('Community'));
+    await community.click();
     await $(byResourceId('OBS.add-audio-btn')).click();
     await driver.pause(3000);
     await $('~Stop recording audio.').click();
@@ -41,17 +43,7 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
   it('saves edited observation (handles GPS alert)', async () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch (err) {
-      console.log('No RN Alert dialog was found.');
-    }
+    await handleGPSAlert();
   });
   it('confirms audio recordings appear in a saved observation', async () => {
     const obsListTab = await $('~Go to observations list.');

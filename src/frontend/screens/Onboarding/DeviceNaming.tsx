@@ -1,33 +1,51 @@
 import * as React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import CoMapeoText from '../../images/CoMapeoTextBlue.svg';
 import {
-  StyleSheet,
-  View,
-  TextInput,
-  KeyboardAvoidingView,
   Keyboard,
+  KeyboardAvoidingView,
+  StyleSheet,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+  StyleSheet as RNStyleSheet,
 } from 'react-native';
-import {BLACK, LIGHT_GREY, MEDIUM_GREY, RED} from '../../lib/styles';
-import {Text} from '../../sharedComponents/Text';
-import {Button} from '../../sharedComponents/Button';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {defineMessages, useIntl} from 'react-intl';
+import Ionicons from '@react-native-vector-icons/ionicons';
+import {deviceType} from 'expo-device';
+import DeviceIcon from '../../images/Device.svg';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {
+  BLACK,
+  BLUE_GREY,
+  LIGHT_GREY,
+  NEW_DARK_GREY,
+  RED,
+  VERY_LIGHT_GREY,
+} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
+import {useSetOwnDeviceInfo} from '@comapeo/core-react';
+import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   header: {
     id: 'screens.DeviceNaming.header',
-    defaultMessage: 'Name your device',
+    defaultMessage: 'Name Your Device',
   },
   description: {
     id: 'screens.DeviceNaming.description',
     defaultMessage:
-      'Distinct, memorable names help collaborators recognize you.',
+      'Distinct names help collaborators using CoMapeo to recognize you.',
   },
-  addName: {
-    id: 'screens.DeviceNaming.addName',
-    defaultMessage: 'Add Name',
+  save: {
+    id: 'screens.DeviceNaming.save',
+    defaultMessage: 'Save',
+  },
+  placeholder: {
+    id: 'screens.DeviceNaming.placeholder',
+    defaultMessage: 'Device Name',
   },
 });
 
@@ -37,6 +55,7 @@ export const DeviceNaming = ({
   const [name, setName] = React.useState('');
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const {formatMessage: t} = useIntl();
+  const {mutate, status} = useSetOwnDeviceInfo();
 
   function setNameWithValidation(nameValue: string) {
     if (nameValue.length > 60) {
@@ -46,57 +65,83 @@ export const DeviceNaming = ({
     setName(nameValue);
   }
 
-  function handleAddNamePress() {
+  function handleSavePress() {
     const trimmedName = name.trim();
     if (trimmedName.length === 0 || trimmedName.length > 60) {
       setErrorTimeout();
       return;
     }
 
-    navigation.navigate('Success', {deviceName: trimmedName});
+    mutate(
+      {
+        name: trimmedName,
+        deviceType: expoToCoreDeviceType(deviceType),
+      },
+      {
+        onSuccess: () => {
+          navigation.replace('Success');
+        },
+      },
+    );
   }
+
   return (
     <KeyboardAvoidingView style={{width: '100%', height: '100%'}}>
-      <TouchableWithoutFeedback
-        style={styles.container}
-        onPress={Keyboard.dismiss}>
-        <View>
-          <CoMapeoText style={{alignSelf: 'center'}} />
-
-          <View
-            style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
-            <Text style={{fontWeight: '500'}}>{t(m.header)}</Text>
-            <Text style={{color: RED}}>*</Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View style={styles.headerArea}>
+            <DeviceIcon width={39} height={60} />
+            <HeaderText variant="header2" style={styles.title}>
+              {t(m.header)}
+            </HeaderText>
+            <View style={styles.nameForm}>
+              <TextInput
+                testID="ONBOARDING.device-name-inp"
+                style={[
+                  styles.textInput,
+                  {borderColor: errorTimeout ? RED : LIGHT_GREY},
+                ]}
+                value={name}
+                onChangeText={setNameWithValidation}
+                placeholderTextColor={LIGHT_GREY}
+                placeholder={t(m.placeholder)}
+              />
+              <BodyText
+                variant="smallMeta"
+                style={RNStyleSheet.flatten([
+                  styles.counterText,
+                  {color: errorTimeout ? RED : NEW_DARK_GREY},
+                ])}>
+                {`${name.length}/60`}
+              </BodyText>
+              <View style={styles.infoBox}>
+                <BodyText variant="smallMeta" style={styles.infoText}>
+                  {t(m.description)}
+                </BodyText>
+              </View>
+            </View>
           </View>
-          <TextInput
-            testID="ONBOARDING.device-name-inp"
-            style={[
-              styles.textInput,
-              {borderColor: !errorTimeout ? LIGHT_GREY : RED},
-            ]}
-            value={name}
-            onChangeText={setNameWithValidation}
-            placeholderTextColor={LIGHT_GREY}
-            placeholder="Device Name"
-          />
-          <Text
-            style={{
-              alignSelf: 'flex-end',
-              color: errorTimeout ? RED : MEDIUM_GREY,
-            }}>
-            {`${name.length}/60`}
-          </Text>
-          <View style={styles.greyBox}>
-            <Text>{t(m.description)}</Text>
+          <View style={styles.buttonContainer}>
+            {status === 'pending' ? (
+              <UIActivityIndicator size={30} style={{flex: 0}} />
+            ) : (
+              <PrimaryButton
+                testID="ONBOARDING.add-name-btn"
+                fullSize
+                onPress={handleSavePress}
+                text={t(m.save)}
+                iconPosition="right"
+                renderIcon={({color, size}) => (
+                  <Ionicons
+                    name="checkmark-circle-outline"
+                    color={color}
+                    size={size}
+                  />
+                )}
+              />
+            )}
           </View>
         </View>
-
-        <Button
-          testID="ONBOARDING.add-name-btn"
-          fullWidth
-          onPress={handleAddNamePress}>
-          {t(m.addName)}
-        </Button>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
@@ -104,7 +149,7 @@ export const DeviceNaming = ({
 
 function useTemporaryError() {
   const [errorTimeout, setErrorTimeout] = React.useState(false);
-  const timer = React.useRef<NodeJS.Timeout | undefined>();
+  const timer = React.useRef<NodeJS.Timeout | undefined>(undefined);
 
   React.useEffect(() => {
     if (errorTimeout && !timer.current) {
@@ -130,27 +175,47 @@ function useTemporaryError() {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
-    padding: 20,
-    paddingTop: 80,
+    flex: 1,
+    paddingTop: 60,
+    paddingHorizontal: 20,
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  headerArea: {
+    alignItems: 'center',
+    gap: 10,
+    width: 280,
+  },
+  title: {
+    textAlign: 'center',
+  },
+  nameForm: {
+    gap: 10,
+    width: '100%',
   },
   textInput: {
-    borderWidth: 1.5,
-    borderRadius: 5,
+    borderWidth: 1,
+    borderRadius: 4,
     color: BLACK,
     fontSize: 16,
-    marginTop: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingHorizontal: 16,
   },
-  greyBox: {
-    borderRadius: 10,
-    backgroundColor: LIGHT_GREY,
-    marginTop: 20,
-    padding: 20,
-    fontSize: 20,
-    marginBottom: 40,
+  counterText: {
+    alignSelf: 'flex-end',
+  },
+  infoBox: {
+    backgroundColor: VERY_LIGHT_GREY,
+    borderColor: BLUE_GREY,
+    borderWidth: 1,
+    borderRadius: 6,
+    padding: 12,
+    alignItems: 'center',
+  },
+  infoText: {
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    paddingVertical: 20,
+    alignItems: 'center',
   },
 });

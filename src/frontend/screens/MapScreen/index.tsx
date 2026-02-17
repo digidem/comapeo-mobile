@@ -9,10 +9,8 @@ import {
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
@@ -20,7 +18,6 @@ import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
-import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {GPSPill} from '../../sharedComponents/GPSPill';
@@ -32,6 +29,20 @@ import {useTracking} from '../../hooks/useTracking';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
 import {useResetMapLayout} from '../../hooks/useResetMapLayout';
+import {
+  useLowStorageBannerActions,
+  useLowStorageBannerState,
+} from '../../contexts/LowStorageBannerContext';
+import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
+import {isLowStorage} from '../../lib/storage';
+import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
+import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
+import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
+import {useTrackState} from '../../contexts/TrackStoreContext';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -57,25 +68,40 @@ export const MapScreen = ({
   const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
     React.useState(false);
   const {dimensions, mapKey, onLayout} = useResetMapLayout();
-
-  const {newDraft} = useDraftObservation();
+  const {createDraft} = useDraftObservationActions();
   const {navigate} = useNavigationFromHomeTabs();
-  const location = useLocationState(store => store.throttledMapLocation);
+  const {isTracking} = useTracking();
+  const location = useLocationState(store =>
+    isTracking ? store.location : store.throttledMapLocation,
+  );
   const coords = location && getCoords(location);
   const [following, setFollowing] = React.useState(true);
-  const {isTracking} = useTracking();
+  const appUsageStore = useAppUsageStatsStore();
+
   const {data: styleUrl} = useMapStyleJsonUrl();
 
   const {authState} = useAuthContext();
   const {savedLocation} = useNonReactiveSavedLocation();
   const initialPositionSet = React.useRef(false);
+  const dismissedMapBannerSession = useLowStorageBannerState(
+    s => s.dismissedMapBannerSession,
+  );
+  const {setDismissedMapBannerSession} = useLowStorageBannerActions();
+  const {data} = useStorageReadingQuery();
+  const isLow = isLowStorage(data.freeBytes);
+  const insets = useSafeAreaInsets();
+  const BANNER_TOP = insets.top + 75;
 
   useCheckDraftObservationAndNavigate({authState});
+  useCheckUnsavedTrackAndNavigate({authState});
 
-  const handleAddPress = () => {
-    newDraft();
-    navigate('ObservationCategoryChooser');
-  };
+  useShouldShowAppUsagePrompt();
+
+  // if the user is on the map screen onboarding is not completed, record that they have completed it (this is because the app usage stats was added after the user already onboarded)
+  //using the store as this value does not need to be reactive
+  if (!appUsageStore.instance.getState().completedOnboardingAt) {
+    appUsageStore.actions.recordCompleteOnboarding();
+  }
 
   // This closes the track bottom sheet whenever the user is navigated away.
   // This prevents the closing animation from happening when the map screen is being reopened
@@ -87,6 +113,11 @@ export const MapScreen = ({
     }, [navigation]),
   );
 
+  const handleAddPress = () => {
+    createDraft();
+    navigate('ObservationCategoryChooser');
+  };
+
   function handleLocationPress() {
     setZoom(DEFAULT_ZOOM);
     setFollowing(prev => !prev);
@@ -97,7 +128,17 @@ export const MapScreen = ({
   }
 
   return (
-    <View style={{flex: 1}} onLayout={onLayout}>
+    <View style={{flex: 1}} onLayout={onLayout} testID="MAIN.map-screen">
+      <View
+        pointerEvents="box-none"
+        style={[styles.lowStorageBanner, {top: BANNER_TOP}]}>
+        {isLow && !dismissedMapBannerSession && (
+          <LowStorageBanner
+            onDismiss={() => setDismissedMapBannerSession(true)}
+            testID="MAP:low-storage-banner"
+          />
+        )}
+      </View>
       {dimensions && (
         <Mapbox.MapView
           key={mapKey}
@@ -146,12 +187,8 @@ export const MapScreen = ({
           {isFinishedLoadingStyle && authState !== 'obscured' && (
             <>
               <RemoteDetectionAlertsMapLayer />
-              {isTracking && (
-                <>
-                  <CurrentTrackMapLayer />
-                  <UserTooltipMarker />
-                </>
-              )}
+              <CurrentTrackMapLayer location={location} />
+              {isTracking && <UserTooltipMarker />}
               <TracksMapLayer />
               <ObservationMapLayer />
             </>
@@ -196,11 +233,9 @@ function useCheckDraftObservationAndNavigate({
 }: {
   authState: AuthState;
 }) {
-  const {data: presets} = usePresetsQuery();
   const {navigate} = useNavigationFromHomeTabs();
-  const existingObservation = usePersistedDraftObservation(
-    store => store.value,
-  );
+  const existingObservation = useDraftObservationState(store => store.value);
+  const id = useDraftObservationState(store => store.id);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -209,16 +244,41 @@ function useCheckDraftObservationAndNavigate({
         return;
       }
       // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
-      if (!matchPreset(existingObservation.tags, presets)) {
+      if (!existingObservation.presetRef) {
         navigate('ObservationCategoryChooser');
 
         // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
-      } else if ('docId' in existingObservation) {
-        navigate('ObservationEdit', {observationId: existingObservation.docId});
+      } else if (id?.docId) {
+        navigate('ObservationEdit');
       } else {
         navigate('ObservationCreate');
       }
-    }, [existingObservation, navigate, presets, authState]),
+    }, [existingObservation, navigate, authState, id]),
+  );
+}
+
+function useCheckUnsavedTrackAndNavigate({authState}: {authState: AuthState}) {
+  const {navigate} = useNavigationFromHomeTabs();
+  const hasUnsavedTrack = useTrackState(
+    state => !state.isTracking && state.locationHistory.length > 0,
+  );
+  const trackPreset = useTrackState(state => state.preset);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // if no unsaved track or auth is obscured, stay home
+      if (!hasUnsavedTrack || authState === 'obscured') {
+        return;
+      }
+
+      // if no preset chosen, navigate to category chooser
+      if (!trackPreset) {
+        navigate('TrackCategoryChooser', {trackAction: 'saveNew'});
+      } else {
+        // if preset chosen, navigate to save track screen
+        navigate('SaveTrack');
+      }
+    }, [hasUnsavedTrack, trackPreset, navigate, authState]),
   );
 }
 
@@ -230,5 +290,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 25,
     width: '100%',
+  },
+  lowStorageBanner: {
+    position: 'absolute',
+    left: 20,
+    right: 20,
+    zIndex: 2,
+    elevation: 2,
   },
 });

@@ -1,0 +1,59 @@
+// @ts-check
+const path = require('path');
+
+/** @type {WebdriverIO.Config} */
+
+const config = {
+  runner: 'local',
+  specs: [
+    path.resolve(__dirname, 'tests/e2e/specs/passcode/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/audio/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/exchange/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/multiple-projects/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/observations/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/onboarding/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/settings/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/solo-project/index.tsx'),
+    path.resolve(__dirname, 'tests/e2e/specs/team/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/tracks/index.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/menu/index.test.ts'),
+    //temporarily removing as remote archive seems to be down
+    //path.resolve(__dirname, 'tests/e2e/specs/remote-archive/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/photos/index.test.ts'),
+  ],
+  maxInstances: 1,
+  capabilities: [
+    {
+      platformName: 'android',
+      'appium:platformVersion': '', // Add your Android device's platformVersion (e.g., '13.0'),
+      'appium:deviceName': '', // Add your device name/ device ID (from adb devices),
+      'appium:automationName': 'UIAutomator2',
+      'appium:app': 'build/Comapeo-e2e.apk',
+      'appium:autoGrantPermissions': true,
+    },
+  ],
+  hostname:'127.0.0.1', // Use local Appium (This is what it comes back for me when I start Appium... Just check this is how you see it), 
+  port: 4723, // see above
+  logLevel: 'error',
+  waitforTimeout: 5000,
+  connectionRetryTimeout: 90000,
+  connectionRetryCount: 2,
+  framework: 'mocha',
+  mochaOpts: {
+    ui: 'bdd',
+    timeout: 300000,
+  },
+  reporters: [
+    [
+      'spec',
+      {
+        addConsoleLogs: true,
+      },
+    ],
+  ],
+  outputDir: './test-results',
+};
+
+module.exports = {
+  config,
+};

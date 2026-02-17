@@ -7,6 +7,8 @@ import {
   useAcceptInvite,
   useRejectInvite,
   useSingleInvite,
+  useCreateProject,
+  useManyProjects,
 } from '@comapeo/core-react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -16,6 +18,7 @@ import * as Sentry from '@sentry/react-native';
 import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
 import {useTracking} from '../../hooks/useTracking';
+import GraphIcon from '../../images/Graph.svg';
 
 const m = defineMessages({
   joinProject: {
@@ -42,6 +45,10 @@ const m = defineMessages({
     id: 'screens.InviteReceived.participantRole',
     defaultMessage: 'participant',
   },
+  sharedStats: {
+    id: 'screens.InviteReceived.sharedStats',
+    defaultMessage: 'Project statistics are being shared',
+  },
 });
 
 export const InviteReceived = ({
@@ -59,9 +66,14 @@ export const InviteReceived = ({
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
   const {setActiveProjectId} = useActiveProjectIdActions();
+  const createProject = useCreateProject();
   const {isTracking} = useTracking();
+  const {data: allProjects} = useManyProjects();
+
+  const hasDefaultProject = allProjects.some(proj => !proj.name);
 
   const projectColor = invite.projectColor;
+  const statsShared = invite.sendStats;
 
   useListenToInviteCancel(inviteId);
 
@@ -76,6 +88,15 @@ export const InviteReceived = ({
       {
         onSuccess: projectId => {
           setActiveProjectId(projectId);
+
+          if (!hasDefaultProject) {
+            createProject.mutate(undefined, {
+              onError: err => {
+                Sentry.captureException(err);
+              },
+            });
+          }
+
           navigation.replace('InviteSuccessfullyAccepted', {
             projectName: invite.projectName,
           });
@@ -122,6 +143,13 @@ export const InviteReceived = ({
             {formatMessage(m.joinAsRole, {role: translatedRole})}
           </BodyText>
         </View>
+
+        {statsShared ? (
+          <View style={styles.sharedRow}>
+            <GraphIcon width={20} height={20} color={NEW_DARK_GREY} />
+            <BodyText>{formatMessage(m.sharedStats)}</BodyText>
+          </View>
+        ) : null}
 
         <View style={styles.buttonContainer}>
           {acceptInvite.status === 'pending' ||
@@ -185,5 +213,12 @@ const styles = StyleSheet.create({
     gap: 20,
     alignItems: 'center',
     alignSelf: 'stretch',
+  },
+  sharedRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    alignSelf: 'center',
+    paddingTop: 10,
   },
 });

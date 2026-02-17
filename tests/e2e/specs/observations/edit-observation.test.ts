@@ -3,12 +3,13 @@ import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 import {tapAboveElement} from '../../utils/touchActions';
 import {checkForElementGone} from '../../utils/checkForGone';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Observations - Edit Observation Flow', () => {
   it('should open editable observation and navigate to edit screen', async () => {
-    const lakeItem = await $(byTextMatches('Lake'));
-    await lakeItem.click();
-    await expect($(byTextMatches('Lake'))).toBeDisplayed();
+    const caveItem = await $(byTextMatches('Cave'));
+    await caveItem.click();
+    await expect($(byTextMatches('Cave'))).toBeDisplayed();
 
     const editBtn = await $(byResourceId('editButton'));
     await editBtn.click();
@@ -34,27 +35,17 @@ describe('Observations - Edit Observation Flow', () => {
 
     const detailInput = await $(byResourceId('OBS.details-inp'));
     await detailInput.setValue('New detail');
-    const doneBtn = await $(byTextMatches('Done'));
-    await doneBtn.click();
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
   });
 
   it('should save updated observation and return to view screen', async () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     await driver.pause(1000);
+    await handleGPSAlert();
 
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch (e) {
-      console.log('No alert found');
-    }
-
-    await expect($(byTextMatches('Lake'))).toBeDisplayed();
+    await expect($(byTextMatches('Cave'))).toBeDisplayed();
     await expect($(byTextMatches('Updated description'))).toBeDisplayed();
     await expect($(byTextMatches('New detail'))).toBeDisplayed();
     await $(byResourceId('MAIN.header-back-btn')).click();

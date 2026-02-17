@@ -11,12 +11,39 @@ import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton'
  *
  * When pushing a bottom sheet ontop of another bottom sheet use `navigation.replace`, to close the original bottom sheet first.
  */
-export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
+export const BottomSheetWrapper = ({
+  children,
+  closeOnBackButtonPress,
+}: {
+  children: React.ReactNode;
+  closeOnBackButtonPress?: boolean;
+}) => {
+  if (!closeOnBackButtonPress) {
+    return (
+      <BottomSheetWrapperPreventBack>{children}</BottomSheetWrapperPreventBack>
+    );
+  }
+
+  return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
+};
+
+const BottomSheetWrapperPreventBack = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  usePreventAndroidBackButton();
+  return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
+};
+
+const AnimateBottomSheetContainer = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const navigation = useNavigation();
 
   const [displayContent, setDisplayContent] = React.useState(true);
-
-  usePreventAndroidBackButton();
 
   // This effect is used to prevent the bottom sheet from being removed before the animation is complete
   React.useEffect(() => {
@@ -48,6 +75,7 @@ export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
             paddingTop: 40,
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
+            flexShrink: 1,
           }}
           entering={SlideInDown.duration(150)}
           exiting={SlideOutDown.duration(150)}>

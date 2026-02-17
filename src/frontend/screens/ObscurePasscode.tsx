@@ -2,7 +2,7 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {OBSCURE_PASSCODE} from '../constants';
 import {LIGHT_GREY} from '../lib/styles';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';

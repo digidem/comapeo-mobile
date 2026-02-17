@@ -1,62 +1,29 @@
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {WHITE} from '../../lib/styles';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {WHITE, MEDIUM_GREY} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
-import {useIntl} from 'react-intl';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {Loading} from '../../sharedComponents/Loading';
-import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
+import {createAppScreens} from './AppScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
+import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
+import {AuthScreen} from '../../screens/AuthScreen';
+import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
+import {useIntl} from 'react-intl';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
-export const RootStackNavigator = () => {
-  const {formatMessage} = useIntl();
-  const security = useAuthContext();
-  const {navigate} = useNavigationFromRoot();
-
-  const {data: deviceInfo} = useOwnDeviceInfo();
-
-  React.useEffect(() => {
-    if (security.authState === 'unauthenticated') {
-      navigate('AuthScreen');
-    }
-  }, [security.authState, navigate]);
-
-  return (
-    <RootStack.Navigator
-      layout={({children, state, navigation}) => {
-        return (
-          <React.Suspense fallback={<Loading />}>
-            <PendingInvitesListener
-              currentRouteName={state.routes[state.index]?.name}
-              navigateToInviteScreen={inviteId =>
-                navigation.navigate('InviteReceived', {inviteId})
-              }
-            />
-            {children}
-          </React.Suspense>
-        );
-      }}
-      screenLayout={({children}) => {
-        return (
-          <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
-        );
-      }}
-      screenOptions={NavigatorScreenOptions}>
-      {deviceInfo.name
-        ? createDefaultScreenGroup({
-            intl: formatMessage,
-          })
-        : createOnboardingScreens({intl: formatMessage})}
-    </RootStack.Navigator>
-  );
-};
+export type NavigatorLayout = NonNullable<
+  React.ComponentProps<typeof RootStack.Navigator>['layout']
+>;
+export type NavigatorScreenLayout = NonNullable<
+  React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
+>;
 
 const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
@@ -64,7 +31,95 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   headerStyle: {backgroundColor: WHITE},
   headerTitleStyle: {fontFamily: 'Rubik_500Medium'},
   headerLeft: props => <CustomHeaderLeft headerBackButtonProps={props} />,
-  // This only hides the DEFAULT back button. We render a custom one in headerLeft, so the default one should always be hidden.
-  // This **might** cause a problem for IOS
   headerBackVisible: false,
+  statusBarStyle: 'dark',
+};
+
+function getInitialRoute(
+  authState: 'authenticated' | 'unauthenticated' | 'obscured',
+  deviceName: string | undefined,
+  projectId: string | undefined,
+): keyof AppStackParamsList {
+  if (authState === 'unauthenticated') {
+    return 'AuthScreen';
+  }
+  if (!deviceName) {
+    return 'IntroToCoMapeo';
+  }
+  if (!projectId) {
+    return 'Success';
+  }
+  return 'Success';
+}
+
+export const RootStackNavigator = () => {
+  const security = useAuthContext();
+  const {data: deviceInfo} = useOwnDeviceInfo();
+  const activeProjectId = useActiveProjectId();
+  const {formatMessage} = useIntl();
+
+  const layout: NavigatorLayout = ({children, state, navigation}) => (
+    <SafeAreaView
+      edges={['bottom']}
+      style={{flex: 1, backgroundColor: MEDIUM_GREY}}>
+      <React.Suspense fallback={<Loading />}>
+        <PendingInvitesListener
+          currentRouteName={state.routes[state.index]?.name}
+          navigateToInviteScreen={inviteId =>
+            navigation.navigate('InviteReceived', {inviteId})
+          }
+        />
+        {children}
+      </React.Suspense>
+    </SafeAreaView>
+  );
+
+  const screenLayout: NavigatorScreenLayout = ({children}) => (
+    <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+  );
+
+  const commonNavigatorProps = {
+    layout,
+    screenLayout,
+    screenOptions: NavigatorScreenOptions,
+  } as const;
+
+  if (
+    security.authState === 'unauthenticated' ||
+    !deviceInfo.name ||
+    !activeProjectId
+  ) {
+    const initialRouteName = getInitialRoute(
+      security.authState,
+      deviceInfo.name,
+      activeProjectId,
+    );
+
+    return (
+      <RootStack.Navigator
+        {...commonNavigatorProps}
+        initialRouteName={initialRouteName}>
+        {security.authState === 'unauthenticated' ? (
+          <RootStack.Screen
+            name="AuthScreen"
+            component={AuthScreen}
+            options={{
+              headerShown: false,
+              animation: 'fade',
+            }}
+          />
+        ) : (
+          createOnboardingScreens({intl: formatMessage})
+        )}
+      </RootStack.Navigator>
+    );
+  }
+
+  return (
+    <ActiveProjectProvider activeProjectId={activeProjectId}>
+      <RootStack.Navigator {...commonNavigatorProps}>
+        {createAppScreens({intl: formatMessage})}
+      </RootStack.Navigator>
+    </ActiveProjectProvider>
+  );
 };

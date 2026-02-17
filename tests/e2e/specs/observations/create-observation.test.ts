@@ -3,13 +3,15 @@ import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 import {tapAboveElement} from '../../utils/touchActions';
 import {checkForElementGone} from '../../utils/checkForGone';
+import {handleGPSAlert} from '../../utils/alerts';
 
 describe('Observations - Create Observation Flow', () => {
   it('should set location and open create observation screen', async () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
     await expect($(byTextMatches('Choose a category'))).toBeDisplayed();
-    await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
+    const animalCategory = await $(byTextMatches('Animal'));
+    await expect(animalCategory).toBeDisplayed();
   });
 
   it('should discard observation and return to the map screen', async () => {
@@ -29,12 +31,12 @@ describe('Observations - Create Observation Flow', () => {
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 
-  it('should pick House category and display New Observation screen', async () => {
+  it('should pick Tree category and display New Observation screen', async () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
 
-    const houseCategory = await $(byTextMatches('House'));
-    await houseCategory.click();
+    const treeCategory = await $(byTextMatches('Tree'));
+    await treeCategory.click();
 
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();
     await expect($(byResourceId('close-icon'))).toBeDisplayed();
@@ -52,18 +54,17 @@ describe('Observations - Create Observation Flow', () => {
       await expect($(byTextMatches('Searching'))).toBeDisplayed();
     }
 
-    await expect($(byResourceId('OBS.House-icon'))).toBeDisplayed();
-    await expect(houseCategory).toBeDisplayed();
+    await expect($(byResourceId('OBS.Tree-icon'))).toBeDisplayed();
+    await expect(treeCategory).toBeDisplayed();
   });
 
-  it('should change category to Threat and add a description', async () => {
+  it('should change category to Fungi and add a description', async () => {
     const changeBtn = await $(byTextMatches('Change'));
     await changeBtn.click();
     await expect($(byResourceId('MAIN.categories-scrn'))).toBeDisplayed();
 
-    const threatOption = await $(byTextMatches('Threat'));
-    await threatOption.scrollIntoView();
-    await threatOption.click();
+    const fungiOption = await $(byTextMatches('Fungi'));
+    await fungiOption.click();
 
     const descriptionInput = await $(byResourceId('OBS.description-inp'));
     await descriptionInput.click();
@@ -87,16 +88,7 @@ describe('Observations - Create Observation Flow', () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     await driver.pause(1000);
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch (err) {
-      console.log('No RN Alert dialog was found.');
-    }
+    await handleGPSAlert();
     const mapBtn = await $('~Go to map.');
     await mapBtn.click();
   });

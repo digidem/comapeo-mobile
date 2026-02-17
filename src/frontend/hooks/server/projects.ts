@@ -10,10 +10,21 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {MEMBER_ROLE_ID} from '../../sharedTypes';
-import {useOpenShareDialog} from '../share';
+import {saveDocuments} from '@react-native-documents/picker';
 import {Exports} from '../../screens/ExportObservations';
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 import {useAppLanguageTag} from '../useAppLanguageTag';
+import {useIntl} from 'react-intl';
+import noop from '../../lib/noop';
+
+export function isUserCancelled(err: unknown): boolean {
+  return (
+    typeof err === 'object' &&
+    err !== null &&
+    'message' in err &&
+    (err as {message?: string}).message === 'user canceled the document picker'
+  );
+}
 
 export function useProjectSettings() {
   const {projectId} = useActiveProject();
@@ -32,7 +43,7 @@ export type ArchiveServerMemberInfo = MemberInfo & {
 };
 
 // TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
-function isActiveArchiveServerMember(
+export function isActiveArchiveServerMember(
   member: MemberInfo,
 ): member is ArchiveServerMemberInfo {
   if (member.deviceType !== 'selfHostedServer') return false;
@@ -82,15 +93,11 @@ export function useFindRemoteArchive({url}: {url?: string}) {
   });
 }
 
-export function useExportObservationsAndShare({
-  projectId,
-}: {
-  projectId: string;
-}) {
+export function useExportObservations({projectId}: {projectId: string}) {
   const exportNoMedia = useExportGeoJSON({projectId});
   const exportWithMedia = useExportZipFile({projectId});
-  const openShare = useOpenShareDialog();
   const lang = useAppLanguageTag();
+  const {formatDate} = useIntl();
 
   return useMutation({
     retry: false,
@@ -102,29 +109,61 @@ export function useExportObservationsAndShare({
       if (!exportDirectory.exists) {
         await FileSystem.makeDirectoryAsync(exportDir);
       }
+
+      const fileName = `CoMapeo_Obsvns_${formatDate(Date.now())}`;
+
       if (exportType === 'Observation' || exportType === 'Tracks') {
-        return exportNoMedia.mutateAsync({
+        return exportNoMedia
+          .mutateAsync({
+            path: normalizeFilePath(exportDir),
+            exportOptions: {
+              lang,
+              observations: exportType === 'Observation',
+              tracks: exportType === 'Tracks',
+            },
+          })
+          .then(async path => {
+            const filepath = `file://${path}`;
+            const results = await saveDocuments({
+              sourceUris: [filepath],
+              mimeType: 'application/geo+json',
+              fileName: `${fileName}.geojson`,
+            });
+
+            FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
+              //do nothing as it is a temp file system that will eventually delete itself
+              noop();
+            });
+
+            return results;
+          });
+      }
+
+      return await exportWithMedia
+        .mutateAsync({
           path: normalizeFilePath(exportDir),
           exportOptions: {
             lang,
-            observations: exportType === 'Observation',
-            tracks: exportType === 'Tracks',
+            observations: true,
+            tracks: false,
+            attachments: true,
           },
-        });
-      }
+        })
+        .then(async path => {
+          const filepath = `file://${path}`;
+          const results = await saveDocuments({
+            sourceUris: [filepath],
+            mimeType: 'application/zip',
+            fileName: `${fileName}.zip`,
+          });
 
-      return exportWithMedia.mutateAsync({
-        path: normalizeFilePath(exportDir),
-        exportOptions: {
-          lang,
-          observations: true,
-          tracks: false,
-          attachments: true,
-        },
-      });
-    },
-    onSuccess: async path => {
-      await openShare.mutateAsync({url: `file://${path}`, failOnCancel: false});
+          FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
+            //do nothing as it is a temp file system that will eventually delete itself
+            noop();
+          });
+
+          return results;
+        });
     },
   });
 }

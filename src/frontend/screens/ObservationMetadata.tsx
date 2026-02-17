@@ -12,9 +12,9 @@ import {VERY_LIGHT_GREY, NEW_DARK_GREY, WHITE, BLUE_GREY} from '../lib/styles';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
-import Octicons from 'react-native-vector-icons/Octicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Octicons from '@react-native-vector-icons/octicons';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
+import MaterialCommunityIcons from '@react-native-vector-icons/material-design-icons';
 import UnverifiedBadge from '../images/UnverifiedBadge.svg';
 import {useProjectSettings} from '@comapeo/core-react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
@@ -66,7 +66,7 @@ const m = defineMessages({
   },
   sentFrom: {
     id: 'screens.ObservationMetadataVerified.sentFrom',
-    defaultMessage: 'CoMapeo Data sent from',
+    defaultMessage: 'CoMapeo Metadata sent from',
   },
   fallbackPresetName: {
     id: 'screens.Observation.fallbackPresetName',
@@ -74,9 +74,9 @@ const m = defineMessages({
     description:
       'Fallback name used when category name cannot be determined for observation',
   },
-  coMapeoData: {
-    id: 'screens.ObservationMetadataVerified.coMapeoData',
-    defaultMessage: 'CoMapeo Data',
+  coMapeoMetadata: {
+    id: 'screens.ObservationMetadataVerified.coMapeoMetadata',
+    defaultMessage: 'CoMapeo Metadata',
   },
   date: {
     id: 'screens.ObservationMetadataVerified.date',
@@ -130,7 +130,7 @@ export const ObservationMetadata: NativeNavigationComponent<
     {
       latitude: {
         label: formatMessage(m.latitude),
-        value: lat,
+        value: lat != null ? Number(lat).toFixed(5) : undefined,
         unit: '°',
         icon: (
           <MaterialCommunityIcons
@@ -144,7 +144,7 @@ export const ObservationMetadata: NativeNavigationComponent<
     {
       longitude: {
         label: formatMessage(m.longitude),
-        value: lon,
+        value: lon != null ? Number(lon).toFixed(5) : undefined,
         unit: '°',
         icon: (
           <MaterialCommunityIcons
@@ -158,9 +158,10 @@ export const ObservationMetadata: NativeNavigationComponent<
     {
       accuracy: {
         label: formatMessage(m.accuracy),
-        value: metadata?.position?.coords.accuracy
-          ? '± ' + metadata.position.coords.accuracy
-          : undefined,
+        value:
+          metadata?.position?.coords.accuracy != null
+            ? `± ${Number(metadata.position.coords.accuracy).toFixed(0)}`
+            : undefined,
         unit: 'm',
         icon: (
           <MaterialCommunityIcons
@@ -174,7 +175,10 @@ export const ObservationMetadata: NativeNavigationComponent<
     {
       altitude: {
         label: formatMessage(m.altitude),
-        value: metadata?.position?.coords.altitude,
+        value:
+          metadata?.position?.coords.altitude != null
+            ? Number(metadata.position.coords.altitude).toFixed(0)
+            : undefined,
         unit: 'm',
         icon: (
           <MaterialCommunityIcons
@@ -188,9 +192,10 @@ export const ObservationMetadata: NativeNavigationComponent<
     {
       altitudeAccuracy: {
         label: formatMessage(m.altitudeAccuracy),
-        value: metadata?.position?.coords.altitudeAccuracy
-          ? '± ' + metadata.position.coords.altitudeAccuracy
-          : undefined,
+        value:
+          metadata?.position?.coords.altitudeAccuracy != null
+            ? `± ${Number(metadata.position.coords.altitudeAccuracy).toFixed(0)}`
+            : undefined,
         unit: 'm',
         icon: (
           <MaterialCommunityIcons
@@ -204,7 +209,10 @@ export const ObservationMetadata: NativeNavigationComponent<
     {
       speed: {
         label: formatMessage(m.speed),
-        value: metadata?.position?.coords.speed,
+        value:
+          metadata?.position?.coords.speed != null
+            ? Number(metadata.position.coords.speed).toFixed(2)
+            : undefined,
         unit: 'm/s',
         icon: (
           <MaterialIcons name="speed" color={NEW_DARK_GREY} size={ICON_SIZE} />
@@ -231,6 +239,15 @@ export const ObservationMetadata: NativeNavigationComponent<
     },
   );
 
+  function roundUtmInLocationLine(
+    locationLine: string,
+    coordinateFormat: unknown,
+  ): string {
+    return String(coordinateFormat) === 'utm'
+      ? locationLine.replace(/-?\d+\.\d+/g, m => String(Math.round(Number(m))))
+      : locationLine;
+  }
+
   async function handlePressShare() {
     const metadataAsFormattedString = filteredListData
       .map(item => {
@@ -245,7 +262,7 @@ export const ObservationMetadata: NativeNavigationComponent<
       : `-${formatMessage(m.locationManuallyEntered)}-\n-${formatMessage(m.sentByComapeo)}-`;
 
     const projectName = !name
-      ? formatMessage(m.coMapeoData)
+      ? formatMessage(m.coMapeoMetadata)
       : formatMessage(m.sentFrom) + ' ' + name;
 
     const categoryName = preset
@@ -256,13 +273,17 @@ export const ObservationMetadata: NativeNavigationComponent<
 
     const time = formatTime(createdAt, {timeStyle: 'medium'});
 
-    const formattedLocation =
+    const baseLocation =
       lat === undefined || lon === undefined
         ? ''
         : `${formatMessage(m.location)}: ${formatCoords({lat, lon, format: coordinateFormat})}`;
 
+    const formattedLocation = baseLocation
+      ? roundUtmInLocationLine(baseLocation, coordinateFormat)
+      : '';
+
     await openShare.mutateAsync({
-      subject: `${projectName} - ${formatDate(createdAt, {format: 'long'})} - ${categoryName}`,
+      subject: `${projectName}, ${categoryName}, ${formatDate(createdAt, {dateStyle: 'long'})}`,
       message: `${projectName} - ${categoryName}\n${date}\n${time}\n${formattedLocation}\n${metadataAsFormattedString}\n\n${footer}`,
       failOnCancel: false,
     });

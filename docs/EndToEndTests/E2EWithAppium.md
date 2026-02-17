@@ -6,63 +6,60 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
 
 ## Prerequisites
 
-- **Appium** installed globally (`npm i -g appium`) or run via `npx appium`
 - **UiAutomator2** installed `npx appium driver install uiautomator2`
-- A running emulator or device
-- (Optional) A [BrowserStack](https://www.browserstack.com/) account to test there
+- An Android emulator or device
+- An `.env` file according to [.env.template](../../.env.template) at the root of the project. The `.env` file must have `MAPBOX_ACCESS_TOKEN`, `COMAPEO_METRICS_URL`, and `COMAPEO_METRICS_API_KEY`
+- A `wdio.local.config` file according to [wdio.local.config.js.template](../../wdio.local.config.js.template]) at the root of the project
+- (Optional) To use [BrowserStack](https://www.browserstack.com/), you must have an account
 
 ---
 
 ## Local Setup & Testing
 
-1. **Build an APK**
-
-   - `eas build --platform android --profile test --local --clear-cache`
-   - Note the path to the `.apk` (build number, etc)
-
-2. **Start the Emulator/ Device**
-
-   - Get the device name with: `adb devices`.
-
-3. **Start Appium Server** (in one terminal)
-
-   ```bash
-   appium --log-level debug
-   ```
-
-   or
+1. **Start Appium Server**
 
    ```bash
    npx appium
    ```
 
-4. **Run Tests** (in another terminal)
-   - Update your `wdio.config.js` to run locally and point to the local `.apk`:
-     ```js
-     const config = {
-     runner: 'local',
-     specs: [path.resolve(__dirname, 'tests/e2e/specs/flow.test.ts')],
-     maxInstances: 1,
-      capabilities: [
+2. **Get host name and port from appium terminal**
+   - Appium will return a url with the following format `http://${hostName}:${port}/`.
+   - For example: `http://127.0.0.1:4723/`, where `hostName===127.0.0.1` and `port===4723`
+
+3. **Fill in host name and port in wdio config**
+   - Updates the `wdio.local.config.js` to the hostName and port as determined in step above.
+
+4. **Build App and Run Tests**
+
+   ```bash
+   npm run test:e2e:build
+   ```
+
+   You can skip the build step if the apk has already been built into the build folder:
+
+   ```bash
+   npm run test:e2e:nobuild
+   ```
+
+**Running e2e tests on a dev build**
+E2e can be run on the expo dev build. The advantage to this is that any updates to the code means that the APK does not need to be rebuilt again, as those changes are automatically reflected in the dev build.
+
+You can run e2e tests on this build by adding the following properties to your config:
+
+```js
+   capabilities: [
       {
-      platformName: 'Android',
-      'appium:deviceName': 'emulator-5554', // Replace with your device name/ device ID (from adb devices)
-      'appium:platformVersion': '13.0', // Replace with your platformVersion
-      'appium:automationName': 'UIAutomator2',
-      'appium:app': 'build-1741119529300.apk', // Replace with relative path of where your apk is and what your apk is
-      'appium:autoGrantPermissions': true,
+         'appium:noReset':true,
+         'appium:fullReset': false, // if set to true, it will uninstall the app before each test
+         'appium:appPackage': 'com.comapeo.dev',
+         'appium:appActivity': 'com.comapeo.dev.MainActivity'
+         // remove appium:app
       },
-      ],
-      hostname: '127.0.0.1', // Use local Appium (This is what it comes back for me when I start Appium... Just check this is how you see it)
-      port: 4723, // see above
-     ```
+   ],
 
-- Then in another terminal run:
-  ```bash
-  npm run test:e2e
-  ```
+```
 
----
+One caveat is that e2e in CI rely on a fresh install of the app when running e2e test. Since the dev build may already have data, the tests may have different results when run on CI vs locally on a dev build. For example, all the tests in CI rely on the onboarding to set up the tests. If the dev build has already gone through the onboarding, those same tests will fail.
 
 ## Testing on BrowserStack (Locally)
 
@@ -77,7 +74,6 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
    You’ll get an `app_url` (e.g. `bs://<some_id>`).
 
 2. **Use the BrowserStack config** (example below).
-
    - The `services` block and `capabilities` define the device, OS version, etc.
    - Reference the `app_url` you got from the upload.
 
@@ -132,18 +128,18 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
 
 ## Adding Tests
 
-1. **Create a New Spec**
+Tests are divided by feature. Each feature that is being tested has a folder in `tests/e2e/specs`. Tests should be able to run independently, and should require minimal interactions from other tests.
 
-   - Add a new `.ts` file in `tests/e2e/specs`.
-   - Create a folder for it if it makes sense.
-   - Write your tests using the same style/pattern as existing specs.
-   - Be sure to add the folder name at the beginning of the describe block within the test to make the test easy to find if there are issues.
-   - See guidelines below in Additional Notes.
+In CI, all tests are executed from a fresh install of the app, and require the onboarding flow to be completed. Use the tests from `tests/e2e/specs/onboarding/helper/minimal-onboarding-setup.test.ts` to run the onboarding to setup your tests.
 
-2. **Reference in Flow**
+Some tests also require a project to be initialized, run `tests/e2e/specs/solo-project/helper/minimal-project-creation.test.ts` before hand to initialize a project.
 
-   - Our test runner executes `flow.test.ts`, which imports other spec files in a specific sequence.
-   - Update or reference your new spec in `flow.test.ts` so that it can be added to the order.
+1. **Create a New Test Folder and Create Tests**
+   - Create a folder, and add test files using the same style/pattern as existing specs.
+   - Add an `index.test.ts`, which runs all the tests in the folder. The `minimal-onboarding-setup.test.ts` and `minimal-project-creation.test.ts` can be used in this file to setup the tests as needed.
+
+2. **Add to config `specs`**
+   - Our test runner executes all the files found in the config's `specs` array. Add the file path of your the test folder's `index.test.ts`
 
 3. **Shared Utilities**
    - Any common functions or custom commands go in `tests/e2e/utils`.
@@ -158,6 +154,7 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
 - **Selector Strategies**: In WebdriverIO, you can use [`$(`android=...`)`](https://webdriver.io/docs/selectors#android-uiautomator) or standard Xpath/ID locators. From [Browserstack check out this page for guidelines](https://www.browserstack.com/docs/app-automate/appium/getting-started/nodejs/webdriverio/local-testing)
 - **Driver**: We rely on [UIAutomator2](https://github.com/appium/appium-uiautomator2-driver) for Android tests.
 - **Logging**: For debugging, set `logLevel: 'trace'` and use `--log-level debug` when starting Appium.
+- **MaxInstances**: in the config files, the maxInstances allows us to run several tests in parallel. When running locally, you should make sure `maxInstance` is set to 1 as you are only running on one device.
 
 ---
 

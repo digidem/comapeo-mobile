@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byTextMatches} from '../../utils/selectors';
+import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 
 describe('Settings - Language Settings Flow', () => {
   it('should open the Language list from App Settings', async () => {
@@ -12,49 +12,51 @@ describe('Settings - Language Settings Flow', () => {
 
     const languageOption = await $(byTextMatches('Language'));
     await languageOption.click();
+  });
 
-    // TODO: Add assertion about the initially selected option on this screen
+  it('should have "Follow system preferences" option initially selected', async () => {
+    const followSystemPreferences = await $(
+      byTextMatches('Follow system preferences'),
+    );
+    await expect(followSystemPreferences).toBeDisplayed();
+    await expect($(byResourceId('nullButton-selected'))).toBeDisplayed();
   });
 
   it('should scroll to Spanish, select it, and confirm language change', async () => {
     await $(byTextMatches('Spanish')).scrollIntoView();
     await $(byTextMatches('Spanish')).click();
 
-    await expect($(byTextMatches('Idioma'))).toBeDisplayed();
+    const idiomaOption = await $(byTextMatches('Idioma'));
+    await expect(idiomaOption).toBeDisplayed();
+    await idiomaOption.click();
+    await $(byTextMatches('Español')).scrollIntoView();
+    await expect($(byResourceId('esButton-selected'))).toBeDisplayed();
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await $('~Close Menu').click();
+    await backBtn.click();
+    await $(byResourceId('MAIN.map-screen')).click();
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
-    await expect(
-      $(
-        byTextMatches(
-          'hace\\s+(?:[1-5]?\\d|60)\\s+(?:minuto|minutos|segundos)',
-        ),
-      ),
-    ).toBeDisplayed();
+    await expect($(byText('Añadir observaciones'))).toBeDisplayed();
   });
 
   it('should switch back to English and confirm language revert', async () => {
-    const drawerIcon = await $(byResourceId('drawer-icon-home'));
+    const drawerIcon = await $(byResourceId('HOME.header-button'));
     if (await drawerIcon.isDisplayed()) {
       await drawerIcon.click();
     }
 
-    //const settingsInSpanish = await $(byTextMatches('Ajustes de la'));
-    // commenting out until translation done
-    const settingsInEnglish = await $(byTextMatches('Settings'));
-    await settingsInEnglish.click();
+    const settingsInSpanish = $(byTextMatches('Ajustes de'));
+    await settingsInSpanish.click();
 
     const idiomaOption = await $(byTextMatches('Idioma'));
     await idiomaOption.click();
-
     const englishElem = await $(byTextMatches('English'));
     await englishElem.click();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await $('~Close Menu').click();
+    await $(byResourceId('observationsEmptyView')).click();
   });
 });

@@ -23,32 +23,35 @@ export const SelectOne = <T,>({
   color,
 }: SelectOneProps<T>) => (
   <List>
-    {options.map((item, index) => (
-      <ListItem
-        key={
-          typeof item.value === 'string' || typeof item.value === 'number'
-            ? item.value
-            : index
-        }
-        testID={`${item.value}LanguageButton`}
-        onPress={() => value !== item.value && onChange(item.value)}
-        style={radioButtonPosition === 'right' ? styles.rowReverse : undefined}>
-        <ListItemIcon
-          iconName={
-            item.value === value
-              ? 'radio-button-checked'
-              : 'radio-button-unchecked'
+    {options.map(item => {
+      const isSelected = item.value === value;
+      return (
+        <ListItem
+          key={item.label}
+          testID={
+            isSelected ? `${item.value}Button-selected` : `${item.value}Button`
           }
+          onPress={() => !isSelected && onChange(item.value)}
           style={
-            radioButtonPosition === 'right'
-              ? styles.alignRight
-              : styles.alignLeft
-          }
-          color={color}
-        />
-        <ListItemText primary={item.label} secondary={item.hint}></ListItemText>
-      </ListItem>
-    ))}
+            radioButtonPosition === 'right' ? styles.rowReverse : undefined
+          }>
+          <ListItemIcon
+            iconName={
+              isSelected ? 'radio-button-checked' : 'radio-button-unchecked'
+            }
+            style={
+              radioButtonPosition === 'right'
+                ? styles.alignRight
+                : styles.alignLeft
+            }
+            color={color}
+          />
+          <ListItemText
+            primary={item.label}
+            secondary={item.hint}></ListItemText>
+        </ListItem>
+      );
+    })}
   </List>
 );
 

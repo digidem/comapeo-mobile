@@ -10,7 +10,8 @@ import * as tsParser from '@typescript-eslint/parser';
 import pluginJest from 'eslint-plugin-jest';
 import pluginReactNative from 'eslint-plugin-react-native';
 import pluginTestingLibrary from 'eslint-plugin-testing-library';
-import * as pluginReactHooks from 'eslint-plugin-react-hooks';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
+import pluginReactCompiler from 'eslint-plugin-react-compiler';
 import globals from 'globals';
 import pluginTs from 'typescript-eslint';
 
@@ -65,7 +66,8 @@ const frontendConfig = pluginTs.config(
       pluginQuery.configs['flat/recommended'],
       pluginReact.configs['recommended-typescript'],
       pluginReact.configs['disable-dom'],
-      pluginReactHooks.configs['recommended-latest'],
+      pluginReactCompiler.configs['recommended'],
+      pluginReactHooks.configs.flat['recommended-latest'],
       // https://github.com/facebook/react-native/issues/42996#issuecomment-2275994981
       {
         name: 'eslint-plugin-react-native',
@@ -85,6 +87,8 @@ const frontendConfig = pluginTs.config(
       '@eslint-react/web-api/no-leaked-event-listener': 'off',
       // Not relevant for React Native
       '@eslint-react/web-api/no-leaked-resize-observer': 'off',
+      // useContext is still valid
+      '@eslint-react/no-use-context': 'off',
       // There are some cases in app code when it's needed
       '@typescript-eslint/no-require-imports': 'off',
       // We want to strictly adhere
@@ -108,7 +112,10 @@ const frontendConfig = pluginTs.config(
   },
   {
     name: 'tests',
-    files: ['src/frontend/**/*.test.{js,jsx,mts,ts,tsx}'],
+    files: [
+      'src/frontend/**/*.test.{js,jsx,mts,ts,tsx}',
+      'src/frontend/**/__mocks__/**',
+    ],
     extends: [
       pluginJest.configs['flat/recommended'],
       pluginTestingLibrary.configs['flat/react'],
@@ -116,6 +123,8 @@ const frontendConfig = pluginTs.config(
     rules: {
       // Mostly conventional and doesn't have significant impact on how tests work
       'testing-library/render-result-naming-convention': 'off',
+      '@eslint-react/hooks-extra/no-unnecessary-use-prefix': 'off',
+      '@eslint-react/hooks-extra/no-useless-custom-hooks': 'off',
     },
   },
 );

@@ -56,12 +56,6 @@ export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
 
           fs.unlinkSync(path.join(targetDir, artifactInfo.name));
 
-          // better-sqlite3 includes an additional native module for testing purposes
-          // removing since it's not needed and also causes issues with nodejs-mobile-react-native
-          if (name === 'better-sqlite3') {
-            fs.unlinkSync(path.join(targetDir, 'test_extension.node'));
-          }
-
           if (verbose) {
             console.log(`${name}: prebuild done (${target})`);
           }
@@ -78,7 +72,7 @@ export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
 function getNodeJsMobileNodeVersions() {
   const nodeVersionFilePath = new URL(
     'android/libnode/include/node/node_version.h',
-    new URL(import.meta.resolve('nodejs-mobile-react-native')),
+    new URL(import.meta.resolve('@comapeo/nodejs-mobile-react-native')),
   ).pathname;
 
   const content = fs.readFileSync(nodeVersionFilePath, 'utf-8');
@@ -104,7 +98,10 @@ function getArtifactInfo({name, version, target, nodeAbi}) {
   const assetName = nodeAbi
     ? `${name}-${version}-node-${nodeAbi}-${target}.tar.gz`
     : `${name}-${version}-${target}.tar.gz`;
-
+  if (name === 'better-sqlite3') {
+    // We currently use this release suffix for better-sqlite3 prebuilds
+    version += '-bare-make';
+  }
   return {
     name,
     url: `https://github.com/digidem/${name}-nodejs-mobile/releases/download/${version}/${assetName}`,

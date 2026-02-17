@@ -1,10 +1,10 @@
 import React from 'react';
-import {Image} from 'react-native';
+import {Image} from 'expo-image';
 import {Circle} from './Circle';
 import {type IconSize} from '../../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useProjectIconUrl} from '../../hooks/server/icons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 interface PresetIconProps {
   iconId?: string;
   size: IconSize;
@@ -30,8 +30,13 @@ const LoadedPresetIcon = ({
   testID,
 }: PresetIconProps & {iconId: string}) => {
   const iconSize = iconSizes[size];
+  const [iconType, setIconType] = React.useState<'svg' | 'png'>('svg');
 
-  const {data: iconUrl, error, isRefetching} = useProjectIconUrl(iconId, size);
+  const {
+    data: iconUrl,
+    error,
+    isRefetching,
+  } = useProjectIconUrl(iconId, iconType);
 
   if (isRefetching) {
     return <UIActivityIndicator size={iconSize} />;
@@ -45,8 +50,14 @@ const LoadedPresetIcon = ({
     <Image
       style={{width: iconSize, height: iconSize}}
       resizeMode="contain"
-      source={{uri: iconUrl}}
+      source={iconUrl}
       testID={testID}
+      onError={() => {
+        if (iconType === 'svg') {
+          // Retry as PNG if SVG fails to load
+          setIconType('png');
+        }
+      }}
     />
   );
 };

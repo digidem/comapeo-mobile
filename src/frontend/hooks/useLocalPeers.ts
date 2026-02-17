@@ -12,6 +12,7 @@ let localPeerState: ReturnType<typeof createLocalPeerState> | undefined;
 export function useLocalPeers(): LocalPeer[] {
   const api = useClientApi();
   if (!localPeerState) {
+    // eslint-disable-next-line react-hooks/globals, react-compiler/react-compiler -- Intentional singleton pattern for peer state management
     localPeerState = createLocalPeerState(api);
   }
   const {subscribe, getSnapshot} = localPeerState;

@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {useIntl} from 'react-intl';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {TouchableNativeFeedback} from '../../sharedComponents/Touchables';
 import {VERY_LIGHT_BLUE} from '../../lib/styles';
@@ -10,9 +9,11 @@ import {QuestionLabel} from './QuestionLabel';
 
 import type {QuestionProps} from './Question';
 import {ViewStyleProp} from '../../sharedTypes';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {SelectOneField} from '../../sharedTypes/PresetTypes';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 interface Props extends QuestionProps {
   field: SelectOneField;
@@ -40,10 +41,8 @@ const RadioItem = ({checked, onPress, label, style}: RadioItemProps) => (
 );
 
 export const SelectOne = React.memo<Props>(({field}) => {
-  const {formatMessage: t} = useIntl();
-
-  const {updateTags} = useDraftObservation();
-  const tags = usePersistedDraftObservation(store => store.value?.tags);
+  const {updateTag} = useDraftObservationActions();
+  const tags = useDraftObservationState(state => state.value?.tags);
 
   return (
     <>
@@ -51,12 +50,9 @@ export const SelectOne = React.memo<Props>(({field}) => {
       {field.options.map((item, index) => (
         <RadioItem
           key={item.label}
-          onPress={() => updateTags(field.tagKey, item.value)}
+          onPress={() => updateTag(field.tagKey, item.value)}
           checked={tags && item.value === tags[field.tagKey] ? true : false}
-          label={t({
-            id: `fields.${field.docId}.options.${JSON.stringify(item.value)}`,
-            defaultMessage: item.label,
-          })}
+          label={item.label}
           style={[styles.radioContainer, index === 0 ? styles.noBorder : {}]}
         />
       ))}

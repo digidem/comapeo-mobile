@@ -1,17 +1,15 @@
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
 import {StyleSheet, View} from 'react-native';
-import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {CommonActions, useNavigation} from '@react-navigation/native';
 import SuccessCheck from '../../images/Success.svg';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
-  goToMap: {
-    id: 'screens.InviteSuccess.goToMap',
-    defaultMessage: 'Go To Map',
+  done: {
+    id: 'screens.InviteSuccess.done',
+    defaultMessage: 'Done',
   },
   success: {
     id: 'screens.InviteSuccess.success',
@@ -21,10 +19,6 @@ const m = defineMessages({
     id: 'screens.InviteSuccess.youHaveJoined',
     defaultMessage: 'You have joined {projectName}',
   },
-  goToSync: {
-    id: 'screens.InviteSuccess.goToSync',
-    defaultMessage: 'Go To Sync',
-  },
 });
 
 export const InviteSuccessfullyAccepted = ({
@@ -32,39 +26,22 @@ export const InviteSuccessfullyAccepted = ({
   navigation,
 }: NativeRootNavigationProps<'InviteSuccessfullyAccepted'>) => {
   const {formatMessage} = useIntl();
-  const {dispatch} = useNavigation();
-
-  function handleGoToSync() {
-    dispatch(
-      CommonActions.reset({index: 1, routes: [{name: 'Home'}, {name: 'Sync'}]}),
-    );
-  }
 
   return (
     <BottomSheetWrapper>
-      <SuccessCheck style={{alignSelf: 'center'}} />
-      <HeaderText
-        style={{textAlign: 'center', marginTop: 20}}
-        variant="header2">
-        {formatMessage(m.success)}
-      </HeaderText>
-      <BodyText style={{textAlign: 'center', marginTop: 20}}>
-        {formatMessage(m.youHaveJoined, {
+      <IconTitleDescription
+        icon={<SuccessCheck />}
+        title={formatMessage(m.success)}
+        description={formatMessage(m.youHaveJoined, {
           projectName: route.params.projectName,
         })}
-      </BodyText>
+      />
       <View style={styles.buttonContainer}>
         <>
           <SecondaryButton
             fullSize
             onPress={() => navigation.popTo('Home', {screen: 'Map'})}
-            text={formatMessage(m.goToMap)}
-          />
-          <PrimaryButton
-            fullSize
-            style={{marginTop: 10}}
-            onPress={handleGoToSync}
-            text={formatMessage(m.goToSync)}
+            text={formatMessage(m.done)}
           />
         </>
       </View>

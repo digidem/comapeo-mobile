@@ -6,7 +6,7 @@ import {
 } from 'zustand/middleware';
 import * as v from 'valibot';
 
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
 import {LocationHistoryPoint} from '../sharedTypes/location';
 import {calculateTotalDistance} from '../utils/distance';
 import {Preset} from '@comapeo/schema';
@@ -82,7 +82,20 @@ export function createTrackStore({persist} = {persist: false}) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => MMKVStoreInitializer, {
+          // When deserializing from JSON, convert trackingSince back to a Date object
+          // This handles app reloads, crashes, updates, and any scenario where persisted state is restored
+          reviver: (key, value) => {
+            if (
+              key === 'trackingSince' &&
+              value !== null &&
+              (typeof value === 'string' || typeof value === 'number')
+            ) {
+              return new Date(value);
+            }
+            return value;
+          },
+        }),
         version: 1,
         migrate: (persistedState, version): TrackState => {
           const newState = createInitialState();
@@ -129,30 +142,11 @@ export function createTrackStore({persist} = {persist: false}) {
     },
     addNewLocations: (data: Array<LocationHistoryPoint>) => {
       store.setState(prev => {
-        if (data.length > 1) {
-          return {
-            locationHistory: [...prev.locationHistory, ...data],
-            distance: prev.distance + calculateTotalDistance(data),
-          };
-        }
-
-        if (prev.locationHistory.length < 1) {
-          return {
-            locationHistory: [...prev.locationHistory, ...data],
-          };
-        }
-
-        const lastLocation =
-          prev.locationHistory[prev.locationHistory.length - 1];
-
-        if (!lastLocation) {
-          throw Error('No lastLocation for state.locationHistory.length > 1');
-        }
-
+        const lastLocation = prev.locationHistory.at(-1);
+        const pointsToMeasure = lastLocation ? [lastLocation, ...data] : data;
         return {
           locationHistory: [...prev.locationHistory, ...data],
-          distance:
-            prev.distance + calculateTotalDistance([lastLocation, ...data]),
+          distance: prev.distance + calculateTotalDistance(pointsToMeasure),
         };
       });
     },

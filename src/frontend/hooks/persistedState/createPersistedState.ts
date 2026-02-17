@@ -5,13 +5,13 @@ import {
   createJSONStorage,
   PersistOptions,
 } from 'zustand/middleware';
-import {MMKV} from 'react-native-mmkv';
+import {createMMKV} from 'react-native-mmkv';
 
-export const storage = new MMKV();
+export const storage = createMMKV();
 
 type PersistedStoreKey = '@MapeoDraft';
 
-export const MMKVZustandStorage: StateStorage = {
+export const MMKVStoreInitializer: StateStorage = {
   setItem: (name, value) => {
     return storage.set(name, value);
   },
@@ -20,7 +20,7 @@ export const MMKVZustandStorage: StateStorage = {
     return value ?? null;
   },
   removeItem: name => {
-    return storage.delete(name);
+    return storage.remove(name);
   },
 };
 
@@ -51,7 +51,7 @@ function createPersistMiddleware<State>(
 ) {
   return persist(slice, {
     name: persistedStoreKey,
-    storage: createJSONStorage(() => MMKVZustandStorage),
+    storage: createJSONStorage(() => MMKVStoreInitializer),
     version: migrationOpt?.version,
     partialize: state => {
       if (typeof state === 'object' && state && 'actions' in state) {

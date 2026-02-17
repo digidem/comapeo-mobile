@@ -3,19 +3,21 @@ import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 import {checkForElementGone} from '../../utils/checkForGone';
+import {handleGPSAlert} from '../../utils/alerts';
 
-const UNIQUE_DESCRIPTION = 'Airstrip test obs for second project';
+const UNIQUE_DESCRIPTION = 'Cave test obs for second project';
 
 describe('Multiple Projects - Project Data Retention', () => {
   it('should create an observation in the second project', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
+    await driver.pause(1000);
+    await $(byText('Switch Project')).click();
     await $(byText(output.names.secondProject)).click();
-    await $('~Close Menu').click();
+    await $(byResourceId('MAIN.map-screen')).click();
 
-    await $('~Go to map.').click();
     await $('~Add Observation').click();
-    await $(byTextMatches('Airstrip')).click();
+    const caveCategory = await $(byTextMatches('Cave'));
+    await caveCategory.click();
     const descriptionInput = await $(byResourceId('OBS.description-inp'));
     await descriptionInput.click();
     await descriptionInput.setValue(UNIQUE_DESCRIPTION);
@@ -23,22 +25,12 @@ describe('Multiple Projects - Project Data Retention', () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     await driver.pause(1000);
-
-    try {
-      const text = await driver.getAlertText();
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
-      }
-    } catch {
-      console.log('No alert found');
-    }
+    await handleGPSAlert();
 
     await $('~Go to observations list.').click();
-    const airstrip = await $(byText('Airstrip'));
-    await expect(airstrip).toBeDisplayed();
-    await airstrip.click();
+    const cave = await $(byText('Cave'));
+    await expect(cave).toBeDisplayed();
+    await cave.click();
 
     const description = await $(byText(UNIQUE_DESCRIPTION));
     await expect(description).toBeDisplayed();
@@ -48,33 +40,45 @@ describe('Multiple Projects - Project Data Retention', () => {
 
   it('should create a third project and not carry over the observation', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
-    await $(byText('Start new project')).click();
-    await $(byText('Start')).click();
+    await $(byText('Switch Project')).click();
+    await $(byText('New Collaboration')).click();
+    await $(byText('Start New Project')).click();
+    await $(byText('Next')).click();
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.thirdProject);
     await $(byResourceId('PROJECT.create-btn')).click();
-
-    const mapBtn = await $(byText('Start Mapping'));
-    await mapBtn.click();
+    await $(byTextMatches('No, Skip for Now')).click();
+    await browser.waitUntil(
+      async () => {
+        const btn = await $(byText('Done'));
+        return !!btn;
+      },
+      {
+        timeout: 10000,
+      },
+    );
+    const doneBtn = await $(byText('Done'));
+    await doneBtn.click();
+    await driver.back();
+    await $('~Go to observations list.').click();
+    await $(byResourceId('observationsEmptyView')).click();
 
     const header = await $(byResourceId('HOME.header-title'));
     await expect(header).toHaveText(output.names.thirdProject);
-
-    await $('~Go to observations list.').click();
-    checkForElementGone(byText('Airstrip'));
+    checkForElementGone(byText('Cave'));
   });
 
   it('should confirm the observation still exists in the second project', async () => {
     await $('~Open Menu').click();
-    await $(byText('All Projects')).click();
+    await $(byText('Switch Project')).click();
     await $(byTextMatches(output.names.secondProject)).click();
-    await $('~Close Menu').click();
+    await driver.back();
+    await $('~Go to observations list.').click();
 
-    const airstrip = await $(byText('Airstrip'));
-    await expect(airstrip).toBeDisplayed();
-    await airstrip.click();
+    const cave = await $(byText('Cave'));
+    await expect(cave).toBeDisplayed();
+    await cave.click();
 
     const description = await $(byText(UNIQUE_DESCRIPTION));
     await expect(description).toBeDisplayed();

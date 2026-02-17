@@ -5,12 +5,10 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {DeviceRoleForNewInvite, DeviceType} from '.';
-import {
-  ProcessedDraftPhoto,
-  SavedPhoto,
-} from '../contexts/PhotoPromiseContext/types';
-import {Audio} from 'expo-av';
+import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
+import {PermissionResponse} from 'expo-audio';
+import {Exports} from '../screens/ExportObservations';
+import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 
 export interface TabBarIconProps {
   size: number;
@@ -33,6 +31,23 @@ export type HomeTabsParamsList = {
 
 export type TabName = keyof HomeTabsParamsList;
 
+// --- Early Access routing pattern -----------------------------------------
+// Require { isEarlyAdopter: true } (literal true, not boolean) for any *early-access-only* screen.
+//
+// Example usage when you add the first early-only screen:
+//
+// type RootStackParamList = {
+//   ProjectInviteDefault: { projectId: string };
+//   // Early-access-only route (uncomment when needed):
+//   // ProjectInviteQRCodeEarly: { projectId: string } & EarlyOnlyParam;
+// };
+//
+// When the feature is fully adopted to the app, remove EarlyOnlyParam from the route to let TS
+// surface all call sites for cleanup.
+// ---------------------------------------------------------------------------
+
+export type EarlyOnlyParam = {readonly isEarlyAdopter: true};
+
 export type RootStackParamsList = {
   Home: NavigatorScreenParams<HomeTabsParamsList>;
   GpsModal: undefined;
@@ -41,36 +56,34 @@ export type RootStackParamsList = {
   AboutSettings: undefined;
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
-  Experiments: undefined;
-  PhotoPreviewModal: {
-    observationDocId?: string;
-    photo: SavedPhoto | ProcessedDraftPhoto;
+  DraftPhotoPreviewModal: {
+    photoMetadata: PhotoMetadata;
+    photoExif?: PhotoEXIF;
+    uri: string;
+    photoId: number;
+  };
+  AttachedPhotoPreviewModal: {
+    photo: Extract<Attachment, {type: 'photo'}>;
+    observationDocId: string;
   };
   ConfirmDeletePhoto: {
     onSuccess?: () => void;
-    // We currently only support deleting processed draft photos
-    // but we will eventually support deleting saved photos as well.
-    photo: ProcessedDraftPhoto;
+    photoId: number;
   };
-  TrackCategoryChooser: undefined;
+  TrackCategoryChooser:
+    | {trackAction: 'saveNew'}
+    | {trackAction: 'editExisting'; trackId: string};
   ObservationCategoryChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
-  ObservationEdit: {observationId: string};
+  ObservationEdit: undefined;
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
-  AddToProjectScreen: undefined;
-  UnableToLinkScreen: undefined;
-  ConnectingToDeviceScreen: {task: () => Promise<void>};
-  ConfirmLeavePracticeModeScreen: {projectAction: 'join' | 'create'};
   CreateProject: undefined;
   NameSoloProject: undefined;
   Security: undefined;
-  DirectionalArrow: undefined;
-  P2pUpgrade: undefined;
   ObservationFields: {question: number};
   ObservationCreate: undefined;
-  BGMapsSettings: undefined;
   AuthScreen: undefined;
   AppPasscode: undefined;
   ObscurePasscode: undefined;
@@ -80,55 +93,59 @@ export type RootStackParamsList = {
   EnterPassToTurnOff: undefined;
   AppSettings: undefined;
   ProjectSettings: undefined;
-  CreateOrJoinProject: undefined;
-  ProjectCreatedNewProject: {name: string};
-  ProjectCreatedNewSolo: {name: string};
-  JoinExistingProject: undefined;
+  Collaborate: undefined;
+  JoinAProject: undefined;
+  StartNewProjectIntro: undefined;
+  NameDefaultProjectIntro: undefined;
+  ProjectCreated: {
+    name: string;
+    statsShared: boolean;
+  };
   YourTeam: undefined;
   SelectDevice: undefined;
+  SelectMapShareDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;
   InviteAccepted: {name: string};
   InviteDeclined: InviteProps;
+  RemoveDevice: {deviceId: string; deviceName: string};
+  DeviceRemovedSuccess: {deviceName: string; projectName: string};
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
   Sync: undefined;
   Track: {trackId: string};
-  TrackEdit: {trackId: string};
+  TrackEdit: {trackId: string; newPresetId?: string};
   CreateTestData: undefined;
-  MediaSyncSettings: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
-  MapManagement: undefined;
   BackgroundMaps: undefined;
-  SyncPreviewsBottomSheet: undefined;
-  SyncEverythingBottomSheet: undefined;
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
-    audioPermission: Audio.PermissionResponse;
+    audioPermission: PermissionResponse;
   };
   AudioRecording: undefined;
   AudioDraftPlaybackScreen: {
     uri: string;
     createdAt: number;
     showRecordingSavedText: boolean;
+    audioId: number;
   };
   AudioAttachmentPlaybackScreen: {
     driveDiscoveryId: string;
     name: string;
     type: 'audio';
-    createdAt: string;
+    createdAt?: string;
   };
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};
   InviteCanceled: {projectName: string};
+  RemovedFromProjectBottomSheet: {projectId: string};
   ObservationMetadata: {observationId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
-  Menu: undefined;
   AllProjects: undefined;
   InviteCollaborators: undefined;
   StartNewProject: undefined;
@@ -143,6 +160,36 @@ export type RootStackParamsList = {
   };
   ExportObservations: undefined;
   DidNotMoveBottomSheet: undefined;
+  ShareProjectStats: {projectName: string};
+  AppUsagePromptInterstitial: undefined;
+  AppUsageSharingSuccess: undefined;
+  ExportSuccess: {exportType: Exports};
+  ProjectStatistics: undefined;
+  ProjectStatsTurnedOff: undefined;
+  EarlyAccess: undefined;
+  EarlyAccessOff: undefined;
+  LeaveProjectWarning: {
+    memberType: 'coordinator' | 'participant';
+    warningType: 'lastCoordinator' | 'lastDevice';
+    deviceType: DeviceType;
+  };
+  LeaveProject: {
+    memberType: 'coordinator' | 'participant';
+  };
+  LeftProjectConfirmation: undefined;
+  CollaboratorInfo: {
+    deviceId: string;
+    isOwnDevice: boolean;
+    memberType: 'coordinator' | 'participant';
+  };
+  ConfirmTrackDiscardBottomSheet: {trackId: string};
+  MapAddedBottomSheet: undefined;
+  DeleteCustomMapBottomSheet: undefined;
+  WhatsIncludedBottomSheet: undefined;
+  ConfirmDiscardObservationBottomSheet: undefined;
+  ConfirmDiscardObservationEditBottomSheet: undefined;
+  ConfirmDiscardTrackBottomSheet: undefined;
+  TurnOffPasscodeBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {
@@ -150,7 +197,10 @@ export type OnboardingParamsList = {
   DataPrivacy: undefined;
   DeviceNaming: undefined;
   OnboardingPrivacyPolicy: undefined;
-  Success: {deviceName: string};
+  Success: undefined;
+  JoinProjectIntro: undefined;
+  MapOnYourOwnIntro: undefined;
+  ErrorBottomSheet: undefined;
 };
 
 export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;

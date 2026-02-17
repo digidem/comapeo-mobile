@@ -145,6 +145,7 @@ import {WaitingForMapAccept} from '../../screens/BackgroundMaps/WaitingForMapAcc
 import {MapDeclineScreen} from '../../screens/BackgroundMaps/MapDeclineScreen.tsx';
 import {SendingMap} from '../../screens/BackgroundMaps/SendingMap.tsx';
 import {MapSent} from '../../screens/BackgroundMaps/MapSent.tsx';
+import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -664,6 +665,10 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ConfirmDiscardTrackBottomSheet"
         component={ConfirmDiscardTrackBottomSheet}
+      />
+      <RootStack.Screen
+        name="MapReceivedBottomSheet"
+        component={MapReceivedBottomSheet}
       />
     </RootStack.Group>
   </>

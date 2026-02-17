@@ -122,6 +122,9 @@ export type RootStackParamsList = {
   SettingsPrivacyPolicy: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   BackgroundMaps: undefined;
+  MapReceivedBottomSheet: {
+    shareId: string;
+  };
   WaitingForMapAccept: {
     shareId: string;
   };

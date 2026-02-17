@@ -13,6 +13,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {TextButton} from '../../sharedComponents/TextButton';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   waitingMessage: {
@@ -74,9 +75,7 @@ export function WaitingForMapAccept({
     if (mapShare.status === 'pending') return;
 
     if (mapShare.status === 'downloading' || mapShare.status === 'completed') {
-      // TODO: Navigate to SendingMap screen once that PR is ready
-      // navigation.replace('SendingMap', {shareId});
-      navigation.popTo('BackgroundMaps');
+      navigation.replace('SendingMap', {shareId: shareId});
     } else if (mapShare.status === 'declined') {
       navigation.navigate('MapDeclineScreen', {
         reason: (mapShare as {reason: string}).reason,
@@ -84,7 +83,7 @@ export function WaitingForMapAccept({
     } else if (mapShare.status === 'canceled') {
       navigation.popTo('BackgroundMaps');
     }
-  }, [mapShare, navigation]);
+  }, [mapShare, navigation, shareId]);
 
   React.useEffect(() => {
     const interval = setInterval(() => setTime(prev => prev + 1), 1000);
@@ -101,6 +100,19 @@ export function WaitingForMapAccept({
       <BodyText style={{marginTop: 20}}>
         {t(m.timerMessage, {time: formatElapsed(time)})}
       </BodyText>
+      {/* TODO: Remove these temporary test buttons before merging */}
+      <View style={{gap: 10, paddingHorizontal: 20}}>
+        <SecondaryButton
+          fullSize
+          text="[Test] Sending Map Screen"
+          onPress={() => navigation.replace('SendingMap', {shareId})}
+        />
+        <SecondaryButton
+          fullSize
+          text="[Test] Map Sent Screen"
+          onPress={() => navigation.navigate('MapSent')}
+        />
+      </View>
 
       <TextButton title={t(m.cancel)} onPress={cancelShare} />
     </View>

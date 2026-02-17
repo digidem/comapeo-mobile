@@ -77,7 +77,7 @@ export function WaitingForMapAccept({
     if (mapShare.status === 'downloading' || mapShare.status === 'completed') {
       navigation.replace('SendingMap', {shareId: shareId});
     } else if (mapShare.status === 'declined') {
-      navigation.navigate('MapDeclineScreen', {
+      navigation.replace('MapDeclineScreen', {
         reason: (mapShare as {reason: string}).reason,
       });
     } else if (mapShare.status === 'canceled') {

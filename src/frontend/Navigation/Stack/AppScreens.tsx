@@ -142,6 +142,7 @@ import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSh
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
 import {WaitingForMapAccept} from '../../screens/BackgroundMaps/WaitingForMapAccept.tsx';
+import {MapDeclineScreen} from '../../screens/BackgroundMaps/MapDeclineScreen.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -403,6 +404,11 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="WaitingForMapAccept"
         component={WaitingForMapAccept}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="MapDeclineScreen"
+        component={MapDeclineScreen}
         options={{headerShown: false}}
       />
 

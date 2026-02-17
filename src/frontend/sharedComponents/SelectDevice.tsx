@@ -23,6 +23,7 @@ import {
   LEFT_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
+import {SecondaryButton} from './Buttons';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
@@ -149,6 +150,28 @@ export const SelectDevice = ({
           );
         })}
       </View>
+
+      {/* TODO: Remove these temporary test buttons before merging */}
+      {selectionMode === 'shareMap' && (
+        <View style={{gap: 10, marginTop: 20, paddingHorizontal: 20}}>
+          <SecondaryButton
+            fullSize
+            text="Map Declined Test"
+            onPress={() => {
+              navigation.navigate('MapDeclineScreen', {
+                reason: 'user_rejected',
+              });
+            }}
+          />
+          <SecondaryButton
+            fullSize
+            text="Device No Space Test"
+            onPress={() => {
+              navigation.navigate('MapDeclineScreen', {reason: 'disk_full'});
+            }}
+          />
+        </View>
+      )}
     </ScrollView>
   );
 };

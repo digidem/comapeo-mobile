@@ -78,9 +78,9 @@ export function WaitingForMapAccept({
       // navigation.replace('SendingMap', {shareId});
       navigation.popTo('BackgroundMaps');
     } else if (mapShare.status === 'declined') {
-      // TODO: Navigate to MapDeclineScreen when that PR is ready
-      // navigation.navigate('MapDeclineScreen', {reason: mapShare.reason});
-      navigation.popTo('BackgroundMaps');
+      navigation.navigate('MapDeclineScreen', {
+        reason: (mapShare as {reason: string}).reason,
+      });
     } else if (mapShare.status === 'canceled') {
       navigation.popTo('BackgroundMaps');
     }

@@ -27,6 +27,7 @@ import {
   useSingleReceivedMapShare,
 } from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
+import {toError} from '../../utils/errors';
 
 const m = defineMessages({
   sharingDevice: {
@@ -72,7 +73,7 @@ export function MapReceivedBottomSheet({
   const mapShare = useSingleReceivedMapShare({shareId});
 
   React.useEffect(() => {
-    if (mapShare.status === 'canceled') {
+    if (mapShare.status === 'canceled' || mapShare.status === 'error') {
       navigation.goBack();
     }
   }, [mapShare.status, navigation]);
@@ -145,9 +146,10 @@ export function MapReceivedBottomSheet({
         onSuccess: () => {
           navigation.goBack();
         },
-        onError: (err: Error) => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet', {error: err});
+        onError: (err: unknown) => {
+          const error = toError(err, 'Failed to decline map share');
+          Sentry.captureException(error);
+          navigation.navigate('ErrorBottomSheet', {error});
         },
       },
     );

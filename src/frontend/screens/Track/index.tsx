@@ -69,7 +69,7 @@ export const TrackScreen = ({
         },
         onError: err => {
           Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
+          navigation.navigate('ErrorBottomSheet', {error: err});
         },
       },
     );

@@ -210,7 +210,7 @@ export function BackgroundMapsScreen() {
               removeCustomMapMutation.mutate(undefined, {
                 onError: err => {
                   Sentry.captureException(err);
-                  navigate('ErrorBottomSheet');
+                  navigate('ErrorBottomSheet', {error: err});
                 },
               });
             }}

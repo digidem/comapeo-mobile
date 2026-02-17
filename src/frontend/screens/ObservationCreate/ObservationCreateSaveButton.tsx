@@ -25,6 +25,7 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
+import {toError} from '../../utils/errors';
 import {
   isUnsavedAudioAttachment,
   isUnsavedPhotoAttachment,
@@ -209,7 +210,9 @@ export const ObservationCreateSaveButton = () => {
       finalizeSave();
     } catch (err) {
       Sentry.captureException(err);
-      navigation.navigate('ErrorBottomSheet');
+      navigation.navigate('ErrorBottomSheet', {
+        error: toError(err, 'Error creating an observation'),
+      });
     }
   }
 

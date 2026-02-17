@@ -19,6 +19,7 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {useActiveProjectIdActions} from '../../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {useActiveProject} from '../../../contexts/ActiveProjectContext';
+import {toError} from '../../../utils/errors';
 import UniqueProjectIcon from '../../../images/IndexPointingUp.svg';
 import NameMismatchIcon from '../../../images/WarningYellow.svg';
 import SpeechBubbleIcon from '../../../images/SpeechBubble.svg';
@@ -119,7 +120,9 @@ export const CreateOrNameSoloProject = ({
 
     const onError = (err: unknown) => {
       Sentry.captureException(err);
-      navigation.navigate('ErrorBottomSheet');
+      navigation.navigate('ErrorBottomSheet', {
+        error: toError(err, 'Error creating or naming project'),
+      });
     };
 
     if (isSolo) {

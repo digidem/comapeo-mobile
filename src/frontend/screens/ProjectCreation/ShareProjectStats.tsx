@@ -15,6 +15,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
+import {toError} from '../../utils/errors';
 
 const m = defineMessages({
   shareProjectStats: {
@@ -78,13 +79,15 @@ export const ShareProjectStats = ({
           onSuccess: () => goToSuccess(true),
           onError: err => {
             Sentry.captureException(err);
-            navigation.navigate('ErrorBottomSheet');
+            navigation.navigate('ErrorBottomSheet', {error: err});
           },
         },
       );
     } catch (err) {
       Sentry.captureException(err);
-      navigation.navigate('ErrorBottomSheet');
+      navigation.navigate('ErrorBottomSheet', {
+        error: toError(err, 'Error updating sharing settings'),
+      });
     }
   }
   const isSubmitting = updateSettings.status === 'pending';

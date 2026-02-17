@@ -3,12 +3,13 @@ import * as Sentry from '@sentry/react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {View} from 'react-native';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import Error from '../images/Error.svg';
+import ErrorIcon from '../images/Error.svg';
 import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
 import {DestructiveButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {useDraftObservationActions} from '../contexts/DraftObservationContext';
+import {toError} from '../utils/errors';
 
 const m = defineMessages({
   title: {
@@ -39,7 +40,7 @@ export function ConfirmDeletePhoto({
     <BottomSheetWrapper>
       <View style={{alignItems: 'center', gap: 40}}>
         <View style={{alignItems: 'center', gap: 20}}>
-          <Error />
+          <ErrorIcon />
           <HeaderText
             selectable
             variant="header2"
@@ -61,7 +62,9 @@ export function ConfirmDeletePhoto({
                 deleteUnsavedAttachment(photoId);
               } catch (reason) {
                 Sentry.captureException(reason);
-                navigation.navigate('ErrorBottomSheet');
+                navigation.navigate('ErrorBottomSheet', {
+                  error: toError(reason, 'Error deleting photo'),
+                });
                 return;
               }
 

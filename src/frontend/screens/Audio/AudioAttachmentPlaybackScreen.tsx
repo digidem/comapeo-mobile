@@ -23,6 +23,7 @@ import {audioStyles, SIDE_ICON_BUTTON_WIDTH} from '../../screens/Audio/shared';
 import * as Sentry from '@sentry/react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {toError} from '../../utils/errors';
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {useAttachmentUrl} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -77,7 +78,9 @@ export const AudioAttachmentPlaybackScreen = ({
       }
     } catch (error) {
       Sentry.captureException(error);
-      navigation.navigate('ErrorBottomSheet');
+      navigation.navigate('ErrorBottomSheet', {
+        error: toError(error, 'Audio playback failed'),
+      });
     }
   };
 
@@ -104,7 +107,9 @@ export const AudioAttachmentPlaybackScreen = ({
       await Share.open({url: fileUri, failOnCancel: false});
     } catch (err) {
       Sentry.captureException(err);
-      navigation.navigate('ErrorBottomSheet');
+      navigation.navigate('ErrorBottomSheet', {
+        error: toError(err, 'Error sharing audio'),
+      });
     } finally {
       setShareLoading(false);
     }

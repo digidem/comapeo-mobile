@@ -101,7 +101,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
               },
               onError: err => {
                 Sentry.captureException(err);
-                navigation.navigate('ErrorBottomSheet');
+                navigation.navigate('ErrorBottomSheet', {error: err});
               },
               onSuccess: () => {
                 Alert.alert(
@@ -115,7 +115,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
         },
         onError: err => {
           Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
+          navigation.navigate('ErrorBottomSheet', {error: err});
         },
       },
     );

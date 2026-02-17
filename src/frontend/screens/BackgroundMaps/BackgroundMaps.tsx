@@ -150,11 +150,11 @@ export function BackgroundMapsScreen() {
     mutationKey: FILE_SELECT_MUTATION_KEY,
     mutationFn: async () => {
       const result = await File.pickFileAsync(undefined, 'application/*');
-      const file = Array.isArray(result) ? result[0] : result;
+      // The return type of `File.pickFileAsync()` is incorrect. See https://github.com/expo/expo/issues/43201
+      const file = (Array.isArray(result) ? result[0] : result) as File;
       if (!file) {
         throw new Error('No file selected');
       }
-      // @ts-expect-error - TODO: Remove once @comapeo/core-react file type is fixed
       await importCustomMapMutation.mutateAsync({file});
     },
   });

@@ -14,6 +14,7 @@ import {useLocationState} from '../contexts/LocationContext';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import * as Sentry from '@sentry/react-native';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {toError} from '../utils/errors';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -100,7 +101,9 @@ export const CameraView = ({onAddPress}: Props) => {
       })
       .catch(err => {
         Sentry.captureException(err);
-        navigation.navigate('ErrorBottomSheet');
+        navigation.navigate('ErrorBottomSheet', {
+          error: toError(err, 'Error taking picture'),
+        });
       })
       .finally(() => {
         setCapturing(false);

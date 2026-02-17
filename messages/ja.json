@@ -415,9 +415,6 @@
   "constants.red": {
     "message": "赤"
   },
-  "hooks.usePasscodeLockout.lockoutMessage": {
-    "message": "{minutes, plural, one {# 分} other {# 分}}"
-  },
   "projectInfoCard.coordinator": {
     "message": "あなたはこのプロジェクトのコーディネーターです。"
   },
@@ -866,6 +863,9 @@
   },
   "screens.EnterPassword.enterPass": {
     "message": "パスコードを入力してください"
+  },
+  "screens.EnterPassword.lockoutMessage": {
+    "message": "{minutes, plural, one {# 分} other {# 分}}"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"

@@ -756,6 +756,9 @@
   "screens.TrackRecordingActive.cancel": {
     "message": "අවලංගු කරන්න"
   },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "You’re currently recording a track. To join project, stop recording"
+  },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "සම්බන්ද තාවයක් නැත"
   },

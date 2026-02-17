@@ -11,14 +11,12 @@ export class MessagePortLike extends EventEmitter {
   #channelSubscription: EventSubscription;
   #unsubscribeServerState: () => void;
   #state: MessagePortState = 'idle';
-  #serverState: ServerState = {value: 'STARTING'};
   #incomingQueue: unknown[] = [];
   #outgoingQueue: unknown[] = [];
   #handleChannelMessage;
 
-  #handleServerStateChange = () => {
-    this.#serverState = this.#serverStateStore.getSnapshot();
-    if (this.#serverState.value === 'STARTED') {
+  #handleServerStateChange = (serverState: ServerState) => {
+    if (serverState.value === 'STARTED') {
       let message;
       while ((message = this.#outgoingQueue.shift())) {
         this.postMessage(message);
@@ -54,7 +52,8 @@ export class MessagePortLike extends EventEmitter {
   }
 
   postMessage(message: unknown) {
-    switch (this.#serverState.value) {
+    const serverState = this.#serverStateStore.getState();
+    switch (serverState.value) {
       case 'STARTING':
         this.#outgoingQueue.push(message);
         break;
@@ -62,9 +61,9 @@ export class MessagePortLike extends EventEmitter {
         nodejs.channel.post(this.#API_EVENT_NAME, message);
         break;
       case 'ERROR':
-        throw new Error(this.#serverState.error || 'Unknown server error');
+        throw new Error(serverState.error || 'Unknown server error');
       default:
-        throw new ExhaustivenessError(this.#serverState.value);
+        throw new ExhaustivenessError(serverState.value);
     }
   }
 

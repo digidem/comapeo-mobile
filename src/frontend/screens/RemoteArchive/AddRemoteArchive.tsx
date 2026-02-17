@@ -194,7 +194,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
         },
         onError: err => {
           Sentry.captureException(err);
-          navigate('ErrorBottomSheet');
+          navigate('ErrorBottomSheet', {error: err});
         },
       },
     );

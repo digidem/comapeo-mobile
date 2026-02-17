@@ -1962,6 +1962,30 @@
   "screens.Settings.MapManagement.MapDeclineScreen.mapDeclined": {
     "message": "Map declined."
   },
+  "screens.Settings.MapManagement.MapReceived.accept": {
+    "message": "Accept"
+  },
+  "screens.Settings.MapManagement.MapReceived.decline": {
+    "message": "Decline"
+  },
+  "screens.Settings.MapManagement.MapReceived.kmAway": {
+    "message": "{distance} km away"
+  },
+  "screens.Settings.MapManagement.MapReceived.locationNotCovered": {
+    "message": "Current location not covered!"
+  },
+  "screens.Settings.MapManagement.MapReceived.mbNeeded": {
+    "message": "{size} MB needed"
+  },
+  "screens.Settings.MapManagement.MapReceived.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.MapReceived.notEnoughSpace": {
+    "message": "Not enough free space!"
+  },
+  "screens.Settings.MapManagement.MapReceived.sharingDevice": {
+    "message": "{deviceName} wants to share..."
+  },
   "screens.Settings.MapManagement.MapSent.done": {
     "message": "Done"
   },

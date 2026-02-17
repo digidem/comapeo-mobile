@@ -48,13 +48,12 @@ import {
   EarlyAccessStoreProvider,
   type EarlyAccessStore,
 } from './EarlyAccessContext';
-import type {AppRpcApi} from '@comapeo/ipc/client.js';
 
 type AppProvidersProps = {
   children: React.ReactNode;
   localDiscoveryController: ReturnType<typeof createLocalDiscoveryController>;
   mapeoApi: MapeoClientApi;
-  appRpc: AppRpcApi;
+  mapServerApi: {getBaseUrl: () => Promise<URL>};
   persistedDrafObservationStore: DraftObservationStore;
   trackStore: TrackStore;
   securityStore: SecurityStore;
@@ -73,7 +72,7 @@ export const AppProviders = ({
   children,
   localDiscoveryController,
   mapeoApi,
-  appRpc,
+  mapServerApi,
   persistedDrafObservationStore,
   trackStore,
   securityStore,
@@ -87,15 +86,6 @@ export const AppProviders = ({
   earlyAccessStore,
   appUsageStatsStore,
 }: AppProvidersProps) => {
-  const mapServerListenPromise = React.useMemo(
-    () => appRpc.mapServer.listen({}),
-    [appRpc],
-  );
-  const getMapServerBaseUrl = React.useCallback(async () => {
-    const {localPort} = await mapServerListenPromise;
-    return new URL(`http://127.0.0.1:${localPort}/`);
-  }, [mapServerListenPromise]);
-
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
       <AppUsageStatsProvider value={appUsageStatsStore}>
@@ -114,7 +104,7 @@ export const AppProviders = ({
                               value={localDiscoveryController}>
                               <ClientApiProvider clientApi={mapeoApi}>
                                 <MapServerProvider
-                                  getBaseUrl={getMapServerBaseUrl}
+                                  getBaseUrl={mapServerApi.getBaseUrl}
                                   fetch={fetch}>
                                   <ActiveProjectIdStoreProvider
                                     store={activeProjectIdStore}>

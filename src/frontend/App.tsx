@@ -110,6 +110,13 @@ const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const serverStateStore = createServerStateStore();
 const mapeoApi = createMapeoApi({serverStateStore});
 const appRpc = createAppRpc({serverStateStore});
+const mapServerListenPromise = appRpc.mapServer.listen({});
+const mapServerApi = {
+  async getBaseUrl() {
+    const {localPort} = await mapServerListenPromise;
+    return new URL(`http://127.0.0.1:${localPort}`);
+  },
+};
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 
@@ -235,7 +242,7 @@ const App = () => {
                   queryClient={queryClient}
                   localDiscoveryController={localDiscoveryController}
                   mapeoApi={mapeoApi}
-                  appRpc={appRpc}
+                  mapServerApi={mapServerApi}
                   persistedDrafObservationStore={persistedDraftObservationStore}
                   trackStore={persistedTrackStore}
                   securityStore={persistedSecurityStore}

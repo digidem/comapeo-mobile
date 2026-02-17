@@ -16,7 +16,7 @@
     "@comapeo/core": "5.4.1",
     "@comapeo/default-categories": "1.0.0",
     "@comapeo/fallback-smp": "1.0.0",
-    "@comapeo/ipc": "file:../../comapeo-ipc-6.1.0-pre.0.tgz",
+    "@comapeo/ipc": "file:../../comapeo-ipc-6.1.0-pre.1.tgz",
     "@comapeo/map-server": "1.0.0-pre.6",
     "@sentry/node": "9.28.0",
     "@sentry/rollup-plugin": "^3.5.0",

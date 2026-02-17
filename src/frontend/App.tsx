@@ -110,7 +110,7 @@ const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const serverStateStore = createServerStateStore();
 const mapeoApi = createMapeoApi({serverStateStore});
 const appRpc = createAppRpc({serverStateStore});
-const mapServerListenPromise = appRpc.mapServer.listen({});
+const mapServerListenPromise = appRpc.mapServer.listen();
 const mapServerApi = {
   async getBaseUrl() {
     const {localPort} = await mapServerListenPromise;

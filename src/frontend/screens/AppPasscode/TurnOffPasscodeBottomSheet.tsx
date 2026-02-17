@@ -8,6 +8,7 @@ import ErrorIcon from '../../images/Error.svg';
 import {useSecurityActions} from '../../contexts/SecurityStoreContext';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {toError} from '../../utils/errors';
 import {
   DestructiveButton,
   SecondaryButton,
@@ -43,9 +44,11 @@ export const TurnOffPasscodeBottomSheet = ({
         setIsLoading(false);
         navigation.pop(4);
       })
-      .catch(() => {
+      .catch(err => {
         setIsLoading(false);
-        navigation.navigate('ErrorBottomSheet');
+        navigation.navigate('ErrorBottomSheet', {
+          error: toError(err, 'Failed to turn off passcode'),
+        });
       });
   }
 

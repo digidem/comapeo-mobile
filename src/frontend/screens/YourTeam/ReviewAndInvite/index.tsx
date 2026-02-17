@@ -7,6 +7,7 @@ import {useSendInvite, useRequestCancelInvite} from '@comapeo/core-react';
 import {useActiveProject} from '../../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
 import {resetToYourTeam} from '../../../lib/resetToYourTeam';
+import {toError} from '../../../utils/errors';
 
 const m = defineMessages({
   title: {
@@ -53,7 +54,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
         },
         onError(error) {
           Sentry.captureException(error);
-          navigation.navigate('ErrorBottomSheet');
+          navigation.navigate('ErrorBottomSheet', {error});
         },
       },
     );
@@ -68,7 +69,9 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
         },
         onError: err => {
           Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
+          navigation.navigate('ErrorBottomSheet', {
+            error: toError(err, 'Error canceling invitation'),
+          });
         },
       },
     );

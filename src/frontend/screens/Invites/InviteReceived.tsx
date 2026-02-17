@@ -103,7 +103,7 @@ export const InviteReceived = ({
         },
         onError: err => {
           Sentry.captureException(err);
-          navigation.replace('ErrorBottomSheet');
+          navigation.replace('ErrorBottomSheet', {error: err});
         },
       },
     );
@@ -118,7 +118,7 @@ export const InviteReceived = ({
         },
         onError: err => {
           Sentry.captureException(err);
-          navigation.replace('ErrorBottomSheet');
+          navigation.replace('ErrorBottomSheet', {error: err});
         },
       },
     );

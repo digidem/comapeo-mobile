@@ -20,8 +20,10 @@ const m = defineMessages({
 
 export const ErrorBottomSheet = ({
   navigation,
+  route, // eslint-disable-line @typescript-eslint/no-unused-vars
 }: NativeRootNavigationProps<'ErrorBottomSheet'>) => {
   const {formatMessage} = useIntl();
+  // For future use, an error is now available via route.params.error
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>

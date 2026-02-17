@@ -66,7 +66,7 @@ export const RemoveDevice: NativeNavigationComponent<'RemoveDevice'> = ({
         },
         onError: error => {
           Sentry.captureException(error);
-          navigation.navigate('ErrorBottomSheet');
+          navigation.navigate('ErrorBottomSheet', {error});
         },
       },
     );

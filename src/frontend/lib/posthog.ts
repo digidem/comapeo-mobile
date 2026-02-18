@@ -1,8 +1,6 @@
 import PostHog from 'posthog-react-native';
 import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
-import {getAppVariant} from './appVariant';
-
-const APP_VARIANT = getAppVariant();
+import {APP_VARIANT} from './appVariant';
 
 export const postHog = new PostHog(
   'phc_cr3WAkAaM5rsbiTUF36fzlu8HTrfzL8nOy5elccBdpq',

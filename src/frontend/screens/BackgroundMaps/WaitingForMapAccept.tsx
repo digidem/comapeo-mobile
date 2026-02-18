@@ -13,7 +13,6 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {TextButton} from '../../sharedComponents/TextButton';
-import {SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   waitingMessage: {
@@ -100,20 +99,6 @@ export function WaitingForMapAccept({
       <BodyText style={{marginTop: 20}}>
         {t(m.timerMessage, {time: formatElapsed(time)})}
       </BodyText>
-      {/* TODO: Remove these temporary test buttons before merging */}
-      <View style={{gap: 10, paddingHorizontal: 20}}>
-        <SecondaryButton
-          fullSize
-          text="[Test] Sending Map Screen"
-          onPress={() => navigation.replace('SendingMap', {shareId})}
-        />
-        <SecondaryButton
-          fullSize
-          text="[Test] Map Sent Screen"
-          onPress={() => navigation.navigate('MapSent')}
-        />
-      </View>
-
       <TextButton title={t(m.cancel)} onPress={cancelShare} />
     </View>
   );

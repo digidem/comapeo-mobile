@@ -25,6 +25,7 @@ import {
 import {
   useDeclineReceivedMapShare,
   useDownloadReceivedMapShare,
+  useGetCustomMapInfo,
   useSingleReceivedMapShare,
 } from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
@@ -130,16 +131,20 @@ export function MapReceivedBottomSheet({
     currentLocation,
   ]);
 
+  const {data: customMapInfo} = useGetCustomMapInfo();
   const {mutate: declineMapShare} = useDeclineReceivedMapShare();
   const {mutate: downloadMapShare} = useDownloadReceivedMapShare();
 
   const handleAccept = () => {
+    if (customMapInfo) {
+      navigation.replace('ReplaceBackgroundMap', {shareId});
+      return;
+    }
     downloadMapShare(
       {shareId},
       {
         onSuccess: () => {
-          // TODO: Navigate to ReplaceBackgroundMapScreen when it's created
-          navigation.goBack();
+          navigation.replace('UpdatingBackgroundMap', {shareId});
         },
         onError: (err: unknown) => {
           const error = toError(err, 'Failed to start map download');

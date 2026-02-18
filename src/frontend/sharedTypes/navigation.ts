@@ -125,6 +125,13 @@ export type RootStackParamsList = {
   MapReceivedBottomSheet: {
     shareId: string;
   };
+  ReplaceBackgroundMap: {
+    shareId: string;
+  };
+  UpdatingBackgroundMap: {
+    shareId: string;
+  };
+  BackgroundMapUpdated: undefined;
   WaitingForMapAccept: {
     shareId: string;
   };

@@ -12,10 +12,7 @@ import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
 import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
-import {
-  MMKVStoreInitializer,
-  storage,
-} from './hooks/persistedState/createPersistedState';
+import {storage} from './hooks/persistedState/createPersistedState';
 import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
@@ -38,12 +35,12 @@ import {createServerStateStore} from './lib/ServerStateStore.ts';
 import {createMapeoApi} from './lib/createMapeoApi.ts';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
-import PostHog from 'posthog-react-native';
 import {Suspense} from 'react';
 import {Loading} from './sharedComponents/Loading.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
+import {postHog} from './lib/posthog.ts';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -69,7 +66,7 @@ Sentry.init({
   tracesSampleRate: appMetricsOptIn ? 1.0 : 0, // Only enable tracing once we have user consent
   enableUserInteractionTracing: appMetricsOptIn, // Only enable user interaction tracing once we have user consent
   environment: sentryEnvironment,
-  debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+  debug: false, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
   initialScope: {user: {id: sentryUserId}},
   enableMetrics: false,
 });
@@ -186,18 +183,18 @@ TaskManager.defineTask(
   },
 );
 
-export const postHog = new PostHog(
-  'phc_cr3WAkAaM5rsbiTUF36fzlu8HTrfzL8nOy5elccBdpq',
-  {
-    host: 'https://us.i.posthog.com',
-    //@ts-expect-error - this is the zustand typing, which is he same as posthog's customStorage typing. But zustand typing is less strict, but its quite a ts workaround to make it work, this is the simplest solution.
-    customStorage: MMKVStoreInitializer,
-    defaultOptIn: false,
-    // disable for dev mode and e2e tests
-    disabled:
-      process.env.EXPO_PUBLIC_E2E_TEST === 'true' || devMode || testMode,
-  },
-);
+// export const postHog = new PostHog(
+//   'phc_cr3WAkAaM5rsbiTUF36fzlu8HTrfzL8nOy5elccBdpq',
+//   {
+//     host: 'https://us.i.posthog.com',
+//     //@ts-expect-error - this is the zustand typing, which is he same as posthog's customStorage typing. But zustand typing is less strict, but its quite a ts workaround to make it work, this is the simplest solution.
+//     customStorage: MMKVStoreInitializer,
+//     defaultOptIn: false,
+//     // disable for dev mode and e2e tests
+//     disabled:
+//       process.env.EXPO_PUBLIC_E2E_TEST === 'true' || devMode || testMode,
+//   },
+// );
 
 const appUsagePromptStore = createAppUsageStatsStore({
   persist: true,

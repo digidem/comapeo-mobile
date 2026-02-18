@@ -10,7 +10,7 @@ import {useSetUpInvitesListeners} from '@comapeo/core-react';
 import {RootStackNavigator} from './Navigation/Stack';
 import type Sentry from '@sentry/react-native';
 import {PostHogProvider} from 'posthog-react-native';
-import {postHog} from './App';
+import {postHog} from './lib/posthog';
 
 export const AppNavigator = ({
   permissionAsked,

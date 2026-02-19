@@ -7,8 +7,14 @@ const semverParse = require('semver/functions/parse');
 
 const EAS_PROJECT_ID = '2d5b8137-12ec-45aa-9c23-56b6a1c522b7';
 const EAS_UPDATES_URL = 'https://u.expo.dev/' + EAS_PROJECT_ID;
+
 const VALID_APP_VARIANTS = /** @satisfies {readonly AppVariant[]} */ (
-  /** @type {const} */ (['development', 'production', 'rc', 'preRelease'])
+  /** @type {const} */ ([
+    'development',
+    'production',
+    'releaseCandidate',
+    'preRelease',
+  ])
 );
 
 const APP_VARIANT = process.env.APP_VARIANT || 'development';
@@ -26,7 +32,7 @@ const VARIANT_TO_APP_ID_SUFFIX =
   /** @satisfies {Record<AppVariant, string>} */ ({
     development: '.dev',
     production: '',
-    rc: '.rc',
+    releaseCandidate: '.rc',
     preRelease: '.pre',
   });
 const APP_NAME_BASE = 'CoMapeo';
@@ -34,14 +40,14 @@ const VARIANT_TO_APP_NAME_SUFFIX =
   /** @satisfies {Record<AppVariant, string>} */ ({
     development: ' Dev',
     production: '',
-    rc: ' RC',
+    releaseCandidate: ' RC',
     preRelease: ' Pre',
   });
 const VARIANT_TO_VERSION_PRE_RELEASE =
   /** @satisfies {Record<AppVariant, string>} */ ({
     development: '-dev',
     production: '',
-    rc: '-rc',
+    releaseCandidate: '-rc',
     preRelease: '-pre',
   });
 const APP_ID = /** @type {const} */ (

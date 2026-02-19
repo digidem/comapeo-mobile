@@ -45,7 +45,7 @@ import {APP_VARIANT} from './lib/appVariant.ts';
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
 const sentryEnvironment: SentryEnvironment =
-  APP_VARIANT === 'rc'
+  APP_VARIANT === 'releaseCandidate'
     ? 'qa'
     : APP_VARIANT === 'production'
       ? 'production'

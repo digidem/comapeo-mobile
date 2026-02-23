@@ -774,6 +774,9 @@
   "screens.TrackRecordingActive.cancel": {
     "message": "Hủy"
   },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "You’re currently recording a track. To join project, stop recording"
+  },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Ngừng kết nối"
   },

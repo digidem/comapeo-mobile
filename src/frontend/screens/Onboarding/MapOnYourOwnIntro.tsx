@@ -63,8 +63,8 @@ export const MapOnYourOwnIntro = ({
 
   function handleGoToMap() {
     createProject(undefined, {
-      onError: () => {
-        navigation.navigate('ErrorBottomSheet');
+      onError: err => {
+        navigation.navigate('ErrorBottomSheet', {error: err});
       },
       onSuccess: projectId => {
         setActiveProjectId(projectId);

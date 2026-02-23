@@ -8,6 +8,7 @@ import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
 import {useNavigation} from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import {useLocationContext} from '../contexts/LocationContext';
+import {toError} from '../utils/errors';
 
 export function useTracking() {
   const {setTracking, addNewLocations, clearCurrentTrack} = useTrackActions();
@@ -30,7 +31,9 @@ export function useTracking() {
       Sentry.captureException(err);
       setTracking(false);
       // @ts-expect-error - this is a typing issue, we are using the non-strongly typed hook as this can technically be used in any screen. But regardless of the screen, we want to show the error bottom sheet.
-      navigation.navigate('ErrorBottomSheet');
+      navigation.navigate('ErrorBottomSheet', {
+        error: toError(err, 'Tracking failed'),
+      });
     });
   }, [isTracking, setTracking, navigation]);
 

@@ -14,6 +14,7 @@ import {useObservations} from '../hooks/server/observations';
 import {useTracks} from '../hooks/server/track';
 import * as Sentry from '@sentry/react-native';
 import {isUserCancelled, useExportObservations} from '../hooks/server/projects';
+import {toError} from '../utils/errors';
 
 const m = defineMessages({
   close: {
@@ -83,7 +84,9 @@ export const ExportObservations = ({
             return;
           }
           Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
+          navigation.navigate('ErrorBottomSheet', {
+            error: toError(err, 'Error on export'),
+          });
         },
       },
     );

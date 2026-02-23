@@ -60,7 +60,7 @@ export const ExchangeSettingsBottomSheet = () => {
         },
         onError: error => {
           Sentry.captureException(error);
-          navigate('ErrorBottomSheet');
+          navigate('ErrorBottomSheet', {error});
         },
       },
     );

@@ -17,6 +17,7 @@ import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {useDraftObservationActions} from '../../../contexts/DraftObservationContext';
 import * as Sentry from '@sentry/react-native';
+import {toError} from '../../../utils/errors';
 
 const m = defineMessages({
   lessThan5: {
@@ -57,7 +58,9 @@ export function AudioRecording({
       start();
     } catch (error) {
       Sentry.captureException(error);
-      navigation.replace('ErrorBottomSheet');
+      navigation.replace('ErrorBottomSheet', {
+        error: toError(error, 'Error starting recording'),
+      });
     }
   }, [startRecording, navigation]);
 
@@ -79,7 +82,9 @@ export function AudioRecording({
       });
     } catch (error) {
       Sentry.captureException(error);
-      navigation.replace('ErrorBottomSheet');
+      navigation.replace('ErrorBottomSheet', {
+        error: toError(error, 'Error finishing recording'),
+      });
     } finally {
       setIsLoading(false);
     }

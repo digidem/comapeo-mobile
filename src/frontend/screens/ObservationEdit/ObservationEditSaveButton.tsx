@@ -22,6 +22,7 @@ import {
   isUnsavedAudioAttachment,
   isUnsavedPhotoAttachment,
 } from '../../lib/attachmentTypeChecks';
+import {toError} from '../../utils/errors';
 
 export const ObservationEditSaveButton = () => {
   const value = useDraftObservationState(store => store.value);
@@ -114,7 +115,9 @@ export const ObservationEditSaveButton = () => {
       });
     } catch (err) {
       Sentry.captureException(err);
-      navigation.navigate('ErrorBottomSheet');
+      navigation.navigate('ErrorBottomSheet', {
+        error: toError(err, 'Error saving edited observation'),
+      });
       return;
     }
   }

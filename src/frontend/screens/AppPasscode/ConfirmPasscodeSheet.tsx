@@ -11,6 +11,7 @@ import * as Sentry from '@sentry/react-native';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {toError} from '../../utils/errors';
 
 const m = defineMessages({
   title: {
@@ -55,7 +56,9 @@ export const ConfirmPasscodeBottomSheet = ({
       navigation.popTo('Security');
     } catch (e) {
       Sentry.captureException(e);
-      navigation.navigate('ErrorBottomSheet');
+      navigation.navigate('ErrorBottomSheet', {
+        error: toError(e, 'Error setting passcode'),
+      });
     } finally {
       setLoading(false);
     }

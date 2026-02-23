@@ -519,6 +519,9 @@
   "screens.TrackRecordingActive.cancel": {
     "message": "បោះបង់"
   },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "You’re currently recording a track. To join project, stop recording"
+  },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "បាន​ផ្ដាច់"
   },

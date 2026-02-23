@@ -147,7 +147,7 @@ export type RootStackParamsList = {
   InviteCanceled: {projectName: string};
   RemovedFromProjectBottomSheet: {projectId: string};
   ObservationMetadata: {observationId: string};
-  ErrorBottomSheet: undefined;
+  ErrorBottomSheet: {error: Error};
   BackgroundMapErrorBottomSheet: {title: string; description: string};
   AllProjects: undefined;
   InviteCollaborators: undefined;
@@ -190,7 +190,7 @@ export type RootStackParamsList = {
   DeleteCustomMapBottomSheet: undefined;
   WhatsIncludedBottomSheet: undefined;
   ConfirmDiscardObservationBottomSheet: undefined;
-  ConfirmDiscardObservationEditBottomSheet: {observationId: string};
+  ConfirmDiscardObservationEditBottomSheet: undefined;
   ConfirmDiscardTrackBottomSheet: undefined;
   TurnOffPasscodeBottomSheet: undefined;
 };
@@ -203,7 +203,7 @@ export type OnboardingParamsList = {
   Success: undefined;
   JoinProjectIntro: undefined;
   MapOnYourOwnIntro: undefined;
-  ErrorBottomSheet: undefined;
+  ErrorBottomSheet: {error: Error};
 };
 
 export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;

@@ -708,6 +708,9 @@
   "screens.TrackRecordingActive.cancel": {
     "message": "ரத்து செய்க"
   },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "You’re currently recording a track. To join project, stop recording"
+  },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "துண்டிக்கப்பட்டது"
   },

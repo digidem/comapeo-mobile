@@ -189,6 +189,8 @@ export function BackgroundMapsScreen() {
     navigate('DeleteCustomMapBottomSheet');
   };
 
+  const isUploading = selectFileMutation.isPending;
+
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
@@ -198,6 +200,7 @@ export function BackgroundMapsScreen() {
           <NoMapScreen
             error={error}
             onChooseFile={handleChooseFile}
+            isUploading={isUploading}
             onRemoveMapFile={() => {
               removeCustomMapMutation.mutate(undefined, {
                 onError: err => {
@@ -221,10 +224,12 @@ export function BackgroundMapsScreen() {
 function NoMapScreen({
   error,
   onChooseFile,
+  isUploading,
   onRemoveMapFile,
 }: {
   error: Error | null;
   onChooseFile: () => void;
+  isUploading: boolean;
   onRemoveMapFile: () => void;
 }) {
   const {formatMessage: t} = useIntl();
@@ -236,20 +241,28 @@ function NoMapScreen({
         <BodyText>{t(m.description2)}</BodyText>
       </View>
       <View style={{gap: 20, marginTop: 40}}>
-        <Button fullWidth variant="outlined" onPress={onChooseFile}>
-          <View style={styles.buttonContentContainer}>
-            <DownloadIcon size={24} />
-            <View>
-              <HeaderText variant="header5" style={styles.buttonTextBase}>
-                {t(m.chooseFile)}
-                <HeaderText variant="header5" style={styles.asteriskText}>
-                  {' '}
-                  *
+        {isUploading ? (
+          <Loading size={6} />
+        ) : (
+          <Button
+            fullWidth
+            variant="outlined"
+            onPress={onChooseFile}
+            disabled={isUploading}>
+            <View style={styles.buttonContentContainer}>
+              <DownloadIcon size={24} />
+              <View>
+                <HeaderText variant="header5" style={styles.buttonTextBase}>
+                  {t(m.chooseFile)}
+                  <HeaderText variant="header5" style={styles.asteriskText}>
+                    {' '}
+                    *
+                  </HeaderText>
                 </HeaderText>
-              </HeaderText>
+              </View>
             </View>
-          </View>
-        </Button>
+          </Button>
+        )}
         <BodyText variant="smallMeta" style={styles.fileTypeText}>
           {t(m.acceptedFileTypes)}
         </BodyText>

@@ -4,6 +4,7 @@ import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import * as Sentry from '@sentry/react-native';
 
 import {useManyMembers, useSendMapShare} from '@comapeo/core-react';
+import {toError} from '../utils/errors';
 import {type MemberInfo} from '@comapeo/core/dist/member-api';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {useLocalDiscoveryState} from '../hooks/useLocalDiscoveryState';
@@ -119,7 +120,9 @@ export const SelectDevice = ({
                 });
               } catch (err) {
                 Sentry.captureException(err);
-                navigation.navigate('ErrorBottomSheet');
+                navigation.navigate('ErrorBottomSheet', {
+                  error: toError(err, 'Failed to send map share'),
+                });
               }
             } else {
               navigation.navigate('SelectInviteeRole', {

@@ -51,7 +51,7 @@ export function WaitingForMapAccept({
         },
         onError: (err: Error) => {
           Sentry.captureException(err);
-          navigation.replace('ErrorBottomSheet');
+          navigation.replace('ErrorBottomSheet', {error: err});
         },
       },
     );

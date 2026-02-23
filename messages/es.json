@@ -54,7 +54,7 @@
     "message": "Ajustes de CoMapeo"
   },
   "Navigation.Menu.bgMap": {
-    "message": "Background Maps"
+    "message": "Mapas de fondo"
   },
   "Navigation.Menu.collaborate": {
     "message": "Colaborar"
@@ -63,7 +63,7 @@
     "message": "Persona Coordinadora"
   },
   "Navigation.Menu.coordinatorTools": {
-    "message": "Herramientas Coordinator"
+    "message": "Herramientas Coordinador"
   },
   "Navigation.Menu.currentProject": {
     "message": "Proyecto actual"

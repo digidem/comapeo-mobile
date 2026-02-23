@@ -13,6 +13,7 @@ import StackSvg from '../../images/Stack.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {toError} from '../../utils/errors';
+import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {
   VERY_LIGHT_GREY,
   NEW_DARK_GREY,
@@ -39,6 +40,8 @@ export function SendingMap({
   const {shareId} = route.params;
   const mapShare = useSingleSentMapShare({shareId});
   const {mutate: cancelMapShare} = useCancelSentMapShare();
+
+  usePreventAndroidBackButton();
 
   React.useEffect(() => {
     if (!mapShare) return;
@@ -92,7 +95,7 @@ export function SendingMap({
         );
         setDisplayProgress(progress);
       }
-    }, 2000);
+    }, 500);
 
     return () => clearInterval(interval);
   }, [isDownloading, mapShare]);

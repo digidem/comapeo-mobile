@@ -13,6 +13,7 @@ import StackSvg from '../../images/Stack.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {toError} from '../../utils/errors';
+import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {
   VERY_LIGHT_GREY,
   NEW_DARK_GREY,
@@ -39,6 +40,8 @@ export function UpdatingBackgroundMap({
   const {shareId} = route.params;
   const {mutate: abortDownload} = useAbortReceivedMapShareDownload();
   const mapShare = useSingleReceivedMapShare({shareId});
+
+  usePreventAndroidBackButton();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({headerShown: false});
@@ -93,7 +96,7 @@ export function UpdatingBackgroundMap({
         );
         setDisplayProgress(progress);
       }
-    }, 2000);
+    }, 500);
 
     return () => clearInterval(interval);
   }, [isDownloading, mapShare]);

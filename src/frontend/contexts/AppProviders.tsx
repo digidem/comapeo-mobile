@@ -105,8 +105,7 @@ export const AppProviders = ({
                               <ClientApiProvider clientApi={mapeoApi}>
                                 <MapServerProvider
                                   getBaseUrl={mapServerApi.getBaseUrl}
-                                  fetch={fetch}
-                                  queryClient={queryClient}>
+                                  fetch={fetch}>
                                   <ActiveProjectIdStoreProvider
                                     store={activeProjectIdStore}>
                                     <DraftObservationProvider

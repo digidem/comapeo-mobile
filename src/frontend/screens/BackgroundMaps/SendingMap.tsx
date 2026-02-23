@@ -7,7 +7,6 @@ import * as Sentry from '@sentry/react-native';
 
 import {
   useCancelSentMapShare,
-  useGetCustomMapInfo,
   useSingleSentMapShare,
 } from '@comapeo/core-react';
 import StackSvg from '../../images/Stack.svg';
@@ -40,22 +39,21 @@ export function SendingMap({
   const {shareId} = route.params;
   const mapShare = useSingleSentMapShare({shareId});
   const {mutate: cancelMapShare} = useCancelSentMapShare();
-  const {data: mapInfoData} = useGetCustomMapInfo();
-  const mapInfo = mapInfoData as
-    | {estimatedSizeBytes: number}
-    | null
-    | undefined;
 
   React.useEffect(() => {
     if (!mapShare) return;
     if (mapShare.status === 'completed') {
       navigation.replace('MapSent');
-    } else if (mapShare.status === 'canceled') {
+    } else if (
+      mapShare.status === 'canceled' ||
+      mapShare.status === 'aborted'
+    ) {
       navigation.popTo('BackgroundMaps');
     } else if (mapShare.status === 'error') {
-      const err = new Error('Map share failed');
-      Sentry.captureException(err);
-      navigation.replace('ErrorBottomSheet', {error: err});
+      Sentry.captureException(mapShare.error);
+      navigation.replace('ErrorBottomSheet', {
+        error: toError(mapShare.error, 'Map share failed'),
+      });
     }
   }, [mapShare, navigation]);
 
@@ -76,16 +74,28 @@ export function SendingMap({
     );
   };
 
-  const downloadProgress = React.useMemo(() => {
-    if (
-      !mapShare ||
-      mapShare.status !== 'downloading' ||
-      !mapInfo?.estimatedSizeBytes
-    ) {
-      return 0;
+  const isDownloading = mapShare?.status === 'downloading';
+
+  const [displayProgress, setDisplayProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!isDownloading || !mapShare) {
+      setDisplayProgress(0);
+      return;
     }
-    return Math.min(mapShare.bytesDownloaded / mapInfo.estimatedSizeBytes, 1);
-  }, [mapShare, mapInfo]);
+
+    const interval = setInterval(() => {
+      if (mapShare?.status === 'downloading') {
+        const progress = Math.min(
+          mapShare.bytesDownloaded / mapShare.estimatedSizeBytes,
+          1,
+        );
+        setDisplayProgress(progress);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [isDownloading, mapShare]);
 
   return (
     <View style={styles.container}>
@@ -104,16 +114,15 @@ export function SendingMap({
             style={styles.syncIcon}
           />
           <ProgressBar
-            progress={downloadProgress > 0 ? downloadProgress : undefined}
-            indeterminate={downloadProgress === 0}
-            indeterminateAnimationDuration={2000}
+            {...(isDownloading
+              ? {progress: displayProgress, indeterminate: false}
+              : {indeterminate: true, indeterminateAnimationDuration: 2000})}
             width={250}
             height={8}
             borderRadius={0}
             color={COMAPEO_BLUE}
             unfilledColor={VERY_LIGHT_GREY}
             borderWidth={0}
-            animationType="spring"
             borderColor={WHITE}
           />
         </View>

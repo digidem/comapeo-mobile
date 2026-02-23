@@ -45,17 +45,17 @@ export function UpdatingBackgroundMap({
   }, [navigation]);
 
   React.useEffect(() => {
-    if (!mapShare) return;
-
+    if (!mapShare) {
+      return;
+    }
     if (mapShare.status === 'completed') {
       navigation.replace('BackgroundMapUpdated');
     } else if (mapShare.status === 'error') {
-      const error = toError(
-        (mapShare as {error?: unknown}).error,
-        'Map download failed',
-      );
-      Sentry.captureException(error);
+      const error = toError(mapShare.error, 'Map download failed');
+      Sentry.captureException(mapShare.error);
       navigation.replace('ErrorBottomSheet', {error});
+    } else if (mapShare.status === 'canceled') {
+      navigation.popTo('BackgroundMaps');
     }
   }, [mapShare, navigation]);
 
@@ -75,15 +75,28 @@ export function UpdatingBackgroundMap({
     );
   };
 
-  const downloadProgress = React.useMemo(() => {
-    if (!mapShare || mapShare.status !== 'downloading') {
-      return 0;
-    }
-    const progress = mapShare.bytesDownloaded / mapShare.estimatedSizeBytes;
-    return Math.min(progress, 1);
-  }, [mapShare]);
-
   const isDownloading = mapShare?.status === 'downloading';
+
+  const [displayProgress, setDisplayProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!isDownloading || !mapShare) {
+      setDisplayProgress(0);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      if (mapShare?.status === 'downloading') {
+        const progress = Math.min(
+          mapShare.bytesDownloaded / mapShare.estimatedSizeBytes,
+          1,
+        );
+        setDisplayProgress(progress);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [isDownloading, mapShare]);
 
   return (
     <View style={styles.container}>
@@ -102,16 +115,15 @@ export function UpdatingBackgroundMap({
             style={styles.syncIcon}
           />
           <ProgressBar
-            progress={isDownloading ? downloadProgress : undefined}
-            indeterminate={!isDownloading}
-            indeterminateAnimationDuration={2000}
+            {...(isDownloading
+              ? {progress: displayProgress, indeterminate: false}
+              : {indeterminate: true, indeterminateAnimationDuration: 2000})}
             width={250}
             height={8}
             borderRadius={0}
             color={COMAPEO_BLUE}
             unfilledColor={VERY_LIGHT_GREY}
             borderWidth={0}
-            animationType="spring"
             borderColor={WHITE}
           />
         </View>

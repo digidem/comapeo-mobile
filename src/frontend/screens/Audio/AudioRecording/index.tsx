@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, AppState, Text} from 'react-native';
+import {useKeepAwake} from 'expo-keep-awake';
 import {BLUE_GREY, DARK_GREY, WHITE} from '../../../lib/styles';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {AnimatedBackground} from './AnimatedBackground';
@@ -38,6 +39,7 @@ export function AudioRecording({
   navigation,
 }: NativeRootNavigationProps<'AudioRecording'>) {
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
+  useKeepAwake();
   const {startRecording, stopRecording, status} = useAudioRecording();
   const timeElapsed = status.durationMillis;
   const [isLoading, setIsLoading] = React.useState(true);
@@ -85,7 +87,6 @@ export function AudioRecording({
       navigation.replace('ErrorBottomSheet', {
         error: toError(error, 'Error finishing recording'),
       });
-    } finally {
       setIsLoading(false);
     }
   }, [stopRecording, navigation, addAudio]);

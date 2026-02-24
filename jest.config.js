@@ -13,6 +13,10 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   '@comapeo/',
   '@mapeo/',
   'rpc-reflector',
+  // Intl modules distributed as ESM
+  'react-intl',
+  '@formatjs/',
+  'intl-messageformat',
   // Helper modules distributed as ESM
   '@sindresorhus/merge-streams',
   'bcp-47',

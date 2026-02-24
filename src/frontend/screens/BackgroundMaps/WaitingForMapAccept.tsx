@@ -74,12 +74,10 @@ export function WaitingForMapAccept({
     if (mapShare.status === 'pending') return;
 
     if (mapShare.status === 'downloading' || mapShare.status === 'completed') {
-      // TODO: Navigate to SendingMap screen once that PR is ready
-      // navigation.replace('SendingMap', {shareId});
+      // TODO: Show sending map UI while downloading
       navigation.popTo('BackgroundMaps');
     } else if (mapShare.status === 'declined') {
-      // TODO: Navigate to MapDeclineScreen when that PR is ready
-      // navigation.navigate('MapDeclineScreen', {reason: mapShare.reason});
+      // TODO: Show the map decline UI with the reason for decline
       navigation.popTo('BackgroundMaps');
     } else if (mapShare.status === 'canceled') {
       navigation.popTo('BackgroundMaps');

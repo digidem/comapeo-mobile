@@ -1,19 +1,33 @@
 import * as React from 'react';
-import {AppState, StyleSheet, View} from 'react-native';
+import {AppState, StyleSheet, View, Pressable} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
+import {Bar as ProgressBar} from 'react-native-progress';
 
 import {
   useCancelSentMapShare,
   useSingleSentMapShare,
 } from '@comapeo/core-react';
 import InviteSent from '../../images/InviteSent.svg';
+import StackSvg from '../../images/Stack.svg';
+import SuccessIcon from '../../images/Success.svg';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {TextButton} from '../../sharedComponents/TextButton';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
+import {toError} from '../../utils/errors';
+import {
+  VERY_LIGHT_GREY,
+  RED,
+  NEW_DARK_GREY,
+  BLACK,
+  COMAPEO_BLUE,
+  WHITE,
+} from '../../lib/styles';
 
 const m = defineMessages({
   waitingMessage: {
@@ -27,6 +41,30 @@ const m = defineMessages({
   cancel: {
     id: 'screens.Settings.MapManagement.WaitingForMapToAccept.cancel',
     defaultMessage: 'Cancel',
+  },
+  mapDeclined: {
+    id: 'screens.Settings.MapManagement.MapDeclineScreen.mapDeclined',
+    defaultMessage: 'Map declined.',
+  },
+  deviceNoSpace: {
+    id: 'screens.Settings.MapManagement.MapDeclineScreen.deviceNoSpace',
+    defaultMessage: 'Device does not have enough space.',
+  },
+  close: {
+    id: 'screens.Settings.MapManagement.MapDeclineScreen.close',
+    defaultMessage: 'Close',
+  },
+  sending: {
+    id: 'screens.Settings.MapManagement.SendingMap.sending',
+    defaultMessage: 'Sending...',
+  },
+  mapSent: {
+    id: 'screens.Settings.MapManagement.MapSent.mapSent',
+    defaultMessage: 'Map sent!',
+  },
+  done: {
+    id: 'screens.Settings.MapManagement.MapSent.done',
+    defaultMessage: 'Done',
   },
 });
 
@@ -71,25 +109,37 @@ export function WaitingForMapAccept({
   React.useEffect(() => {
     if (!mapShare) return;
 
-    // Stay on screen while pending - waiting for recipient to accept
-    if (mapShare.status === 'pending') return;
-
-    if (mapShare.status === 'downloading' || mapShare.status === 'completed') {
-      navigation.replace('SendingMap', {shareId: shareId});
-    } else if (mapShare.status === 'declined') {
-      navigation.replace('MapDeclineScreen', {
-        reason: (mapShare as {reason: string}).reason,
+    if (mapShare.status === 'error') {
+      Sentry.captureException(mapShare.error);
+      navigation.replace('ErrorBottomSheet', {
+        error: toError(mapShare.error, 'Map share failed'),
       });
     } else if (mapShare.status === 'canceled') {
       navigation.popTo('BackgroundMaps');
     }
-  }, [mapShare, navigation, shareId]);
+  }, [mapShare, navigation]);
 
   React.useEffect(() => {
     const interval = setInterval(() => setTime(prev => prev + 1), 1000);
-
     return () => clearInterval(interval);
   }, []);
+
+  const handleClose = () => {
+    navigation.popTo('BackgroundMaps');
+  };
+
+  if (mapShare?.status === 'declined') {
+    const reason = (mapShare as {reason?: string}).reason;
+    return <MapDeclined reason={reason} onClose={handleClose} />;
+  }
+
+  if (mapShare?.status === 'downloading') {
+    return <SendingMap mapShare={mapShare} onCancel={cancelShare} />;
+  }
+
+  if (mapShare?.status === 'completed') {
+    return <MapSent onDone={handleClose} />;
+  }
 
   return (
     <View style={styles.container}>
@@ -100,21 +150,118 @@ export function WaitingForMapAccept({
       <BodyText style={{marginTop: 20}}>
         {t(m.timerMessage, {time: formatElapsed(time)})}
       </BodyText>
-      {/* TODO: Remove these temporary test buttons before merging */}
-      <View style={{gap: 10, paddingHorizontal: 20}}>
-        <SecondaryButton
-          fullSize
-          text="[Test] Sending Map Screen"
-          onPress={() => navigation.replace('SendingMap', {shareId})}
-        />
-        <SecondaryButton
-          fullSize
-          text="[Test] Map Sent Screen"
-          onPress={() => navigation.navigate('MapSent')}
-        />
-      </View>
 
       <TextButton title={t(m.cancel)} onPress={cancelShare} />
+    </View>
+  );
+}
+
+function MapDeclined({
+  reason,
+  onClose,
+}: {
+  reason?: string;
+  onClose: () => void;
+}) {
+  const {formatMessage: t} = useIntl();
+  const isDiskSpaceIssue = reason === 'disk_full';
+  const headerText = isDiskSpaceIssue ? t(m.deviceNoSpace) : t(m.mapDeclined);
+
+  return (
+    <View style={styles.baseContainer}>
+      <View style={styles.centeredContent}>
+        <View>
+          <View style={styles.iconBackground}>
+            <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
+          </View>
+          <View style={styles.warningBadge}>
+            <MaterialIcon name="error" size={30} color={RED} />
+          </View>
+        </View>
+
+        <HeaderText variant="header2" style={styles.declinedHeaderText}>
+          {headerText}
+        </HeaderText>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
+      </View>
+    </View>
+  );
+}
+
+function SendingMap({
+  mapShare,
+  onCancel,
+}: {
+  mapShare: {
+    status: 'downloading';
+    bytesDownloaded: number;
+    estimatedSizeBytes: number;
+  };
+  onCancel: () => void;
+}) {
+  const {formatMessage: t} = useIntl();
+
+  const downloadProgress = Math.min(
+    mapShare.bytesDownloaded / mapShare.estimatedSizeBytes,
+    1,
+  );
+
+  return (
+    <View style={[styles.baseContainer, {alignItems: 'center'}]}>
+      <View style={styles.sendingTopSection}>
+        <View style={styles.iconBackground}>
+          <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
+        </View>
+
+        <HeaderText variant="header2">{t(m.sending)}</HeaderText>
+
+        <View style={styles.progressContainer}>
+          <MaterialIcon
+            name="sync"
+            size={24}
+            color={COMAPEO_BLUE}
+            style={styles.syncIcon}
+          />
+          <ProgressBar
+            {...(downloadProgress > 0
+              ? {progress: downloadProgress, indeterminate: false}
+              : {indeterminate: true, indeterminateAnimationDuration: 2000})}
+            width={250}
+            height={8}
+            borderRadius={0}
+            color={COMAPEO_BLUE}
+            unfilledColor={VERY_LIGHT_GREY}
+            borderWidth={0}
+            borderColor={WHITE}
+          />
+        </View>
+      </View>
+
+      <Pressable onPress={onCancel} style={styles.cancelButton}>
+        <HeaderText variant="header4" style={styles.cancelText}>
+          {t(m.cancel)}
+        </HeaderText>
+      </Pressable>
+    </View>
+  );
+}
+
+function MapSent({onDone}: {onDone: () => void}) {
+  const {formatMessage: t} = useIntl();
+
+  return (
+    <View style={[styles.baseContainer, {justifyContent: 'space-between'}]}>
+      <IconTitleDescription
+        style={styles.sentContent}
+        icon={<SuccessIcon />}
+        title={t(m.mapSent)}
+      />
+      <View style={styles.buttonContainer}>
+        <SecondaryButton fullSize text={t(m.done)} onPress={onDone} />
+      </View>
     </View>
   );
 }
@@ -129,10 +276,60 @@ function formatElapsed(totalSeconds: number) {
 }
 
 const styles = StyleSheet.create({
+  baseContainer: {
+    flex: 1,
+    padding: 20,
+  },
   container: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 35,
+  },
+  centeredContent: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 30,
+  },
+  iconBackground: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: VERY_LIGHT_GREY,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  warningBadge: {
+    position: 'absolute',
+    right: -5,
+    bottom: -5,
+  },
+  declinedHeaderText: {
+    textAlign: 'center',
+    color: BLACK,
+  },
+  sendingTopSection: {
+    alignItems: 'center',
+    gap: 20,
+    marginTop: 120,
+  },
+  progressContainer: {
+    gap: 15,
+  },
+  syncIcon: {
+    alignSelf: 'flex-start',
+  },
+  buttonContainer: {
+    alignItems: 'center',
+  },
+  cancelButton: {
+    marginTop: 80,
+  },
+  cancelText: {
+    color: COMAPEO_BLUE,
+  },
+  sentContent: {
+    paddingTop: 180,
   },
 });

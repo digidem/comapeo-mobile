@@ -125,13 +125,6 @@ export type RootStackParamsList = {
   WaitingForMapAccept: {
     shareId: string;
   };
-  SendingMap: {
-    shareId: string;
-  };
-  MapSent: undefined;
-  MapDeclineScreen: {
-    reason: string;
-  };
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: PermissionResponse;

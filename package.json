@@ -33,7 +33,6 @@
     "test:e2e:build": "npm run build:android:e2e && npm run test:e2e:nobuild"
   },
   "dependencies": {
-    "@bam.tech/react-native-image-resizer": "3.0.11",
     "@comapeo/core-react": "7.2.0",
     "@comapeo/ipc": "6.0.2",
     "@comapeo/nodejs-mobile-react-native": "18.20.4-2",
@@ -91,8 +90,6 @@
     "geojson": "0.5.0",
     "geojson-geometries-lookup": "0.5.0",
     "lodash.isequal": "4.5.0",
-    "map-obj": "6.0.0",
-    "nanoid": "5.1.6",
     "p-timeout": "7.0.1",
     "posthog-react-native": "4.34.0",
     "promise": "8.3.0",

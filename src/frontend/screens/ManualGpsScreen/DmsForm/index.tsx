@@ -10,20 +10,15 @@ import {
   parseNumber,
 } from '../shared';
 import {DmsInputGroup} from './DmsInputGroup';
+import {type DmsData, type DmsUnit} from './types';
+
+export type {DmsData, DmsUnit} from './types';
 
 const INITIAL_UNIT_VALUES = {
   degrees: '',
   minutes: '',
   seconds: '',
 };
-
-export type DmsData = {
-  degrees: string;
-  minutes: string;
-  seconds: string;
-};
-
-export type DmsUnit = keyof DmsData;
 
 const m = defineMessages({
   invalidCoordinates: {

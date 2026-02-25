@@ -1,8 +1,8 @@
 // Mapping of language tags to corresponding translated messages used in app
 import MESSAGES from '../../../translations/messages.json';
-import {LocaleState} from '../contexts/LocaleStoreContext';
 // Mapping of language tag to corresponding native and english names
 import LANGUAGES from '../languages.json';
+import {type LocaleState} from '../sharedTypes/locale';
 
 // Language tag that has corresponding translations
 export type TranslatedLanguageTag = keyof typeof MESSAGES;

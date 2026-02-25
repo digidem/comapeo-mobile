@@ -1,17 +1,21 @@
+// @ts-check
 const {execSync} = require('child_process');
 const semverParse = require('semver/functions/parse');
 
 /** @import {ExpoConfig} from '@expo/config-types' */
-/** @typedef {typeof VALID_APP_VARIANTS[number]} AppVariant */
+/** @import {AppVariant} from './src/frontend/lib/appVariant' */
 
 const EAS_PROJECT_ID = '2d5b8137-12ec-45aa-9c23-56b6a1c522b7';
 const EAS_UPDATES_URL = 'https://u.expo.dev/' + EAS_PROJECT_ID;
-const VALID_APP_VARIANTS = /** @type (const) */ ([
-  'development',
-  'production',
-  'releaseCandidate',
-  'preRelease',
-]);
+
+const VALID_APP_VARIANTS = /** @satisfies {readonly AppVariant[]} */ (
+  /** @type {const} */ ([
+    'development',
+    'production',
+    'releaseCandidate',
+    'preRelease',
+  ])
+);
 
 const APP_VARIANT = process.env.APP_VARIANT || 'development';
 validateAppVariant(APP_VARIANT);
@@ -57,7 +61,7 @@ const VERSION_PRE_RELEASE_SUFFIX = /** @type {const} */ (
 );
 // --- END: App name, ID, and versioning ---
 
-/** @type {({config}: {config: ExpoConfig}): ExpoConfig} */
+/** @type {({config}: {config: ExpoConfig})=> ExpoConfig} */
 module.exports = ({config}) => {
   const versionName = APP_VERSION || generateVersionName();
 

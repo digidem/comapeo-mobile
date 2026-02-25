@@ -4,7 +4,7 @@ import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
-import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {Exports, NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {DARK_GREY, LIGHT_GREY, WARNING_RED} from '../lib/styles';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {useState} from 'react';
@@ -54,8 +54,6 @@ const m = defineMessages({
     defaultMessage: 'Choose an option',
   },
 });
-
-export type Exports = 'Observation' | 'Tracks' | 'ObservationsWithMedia';
 
 export const ExportObservations = ({
   navigation,

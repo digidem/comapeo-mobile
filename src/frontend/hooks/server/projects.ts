@@ -11,7 +11,7 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {MEMBER_ROLE_ID} from '../../sharedTypes';
 import {saveDocuments} from '@react-native-documents/picker';
-import {Exports} from '../../screens/ExportObservations';
+import {Exports} from '../../sharedTypes/navigation';
 import * as FileSystem from 'expo-file-system/legacy';
 import {useAppLanguageTag} from '../useAppLanguageTag';
 import {useIntl} from 'react-intl';

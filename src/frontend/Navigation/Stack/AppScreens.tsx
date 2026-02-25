@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {RootStack} from '.';
 import {MessageDescriptor} from 'react-intl';
 import {
   ObservationEdit,
@@ -145,6 +144,7 @@ import {SendingBackgroundMap} from '../../screens/BackgroundMaps/SendingBackgrou
 import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
 import {ReplaceBackgroundMap} from '../../screens/BackgroundMaps/ReplaceBackgroundMap.tsx';
 import {ReceivingBackgroundMap} from '../../screens/BackgroundMaps/ReceivingBackgroundMap.tsx';
+import {RootStack} from './RootStack.ts';
 
 export const TAB_BAR_HEIGHT = 70;
 

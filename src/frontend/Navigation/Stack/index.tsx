@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {WHITE, MEDIUM_GREY} from '../../lib/styles';
@@ -16,8 +15,7 @@ import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 import {useIntl} from 'react-intl';
-
-export const RootStack = createNativeStackNavigator<AppStackParamsList>();
+import {RootStack} from './RootStack';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']

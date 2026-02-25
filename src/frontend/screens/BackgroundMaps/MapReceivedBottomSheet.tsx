@@ -75,10 +75,14 @@ export function MapReceivedBottomSheet({
   const mapShare = useSingleReceivedMapShare({shareId});
 
   React.useEffect(() => {
-    if (mapShare.status === 'canceled' || mapShare.status === 'error') {
+    if (
+      !mapShare ||
+      mapShare.status === 'canceled' ||
+      mapShare.status === 'error'
+    ) {
       navigation.goBack();
     }
-  }, [mapShare.status, navigation]);
+  }, [mapShare, navigation]);
 
   const {data: storageData} = useStorageReadingQuery();
   const {freeBytes} = storageData;
@@ -149,6 +153,7 @@ export function MapReceivedBottomSheet({
         onError: (err: unknown) => {
           const error = toError(err, 'Failed to start map download');
           Sentry.captureException(error);
+          navigation.goBack();
           navigation.navigate('ErrorBottomSheet', {error});
         },
       },
@@ -164,10 +169,8 @@ export function MapReceivedBottomSheet({
         onSuccess: () => {
           navigation.goBack();
         },
-        onError: (err: unknown) => {
-          const error = toError(err, 'Failed to decline map share');
-          Sentry.captureException(error);
-          navigation.navigate('ErrorBottomSheet', {error});
+        onError: () => {
+          navigation.goBack();
         },
       },
     );

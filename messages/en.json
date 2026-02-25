@@ -2010,9 +2010,6 @@
   "screens.Settings.MapManagement.ReplaceBackgroundMap.yesReplace": {
     "message": "Yes, Replace"
   },
-  "screens.Settings.MapManagement.SendingMap.cancel": {
-    "message": "Cancel"
-  },
   "screens.Settings.MapManagement.SendingMap.sending": {
     "message": "Sending..."
   },

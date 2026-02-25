@@ -106,15 +106,18 @@ export function SendingBackgroundMap({
   }, [cancelShare]);
 
   React.useEffect(() => {
-    if (!mapShare) return;
-
+    if (
+      !mapShare ||
+      mapShare.status === 'canceled' ||
+      mapShare.status === 'aborted'
+    ) {
+      navigation.popTo('BackgroundMaps');
+    }
     if (mapShare.status === 'error') {
       Sentry.captureException(mapShare.error);
       navigation.replace('ErrorBottomSheet', {
         error: toError(mapShare.error, 'Map share failed'),
       });
-    } else if (mapShare.status === 'canceled') {
-      navigation.popTo('BackgroundMaps');
     }
   }, [mapShare, navigation]);
 

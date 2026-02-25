@@ -144,6 +144,7 @@ import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDis
 import {WaitingForMapAccept} from '../../screens/BackgroundMaps/WaitingForMapAccept.tsx';
 import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
 import {ReplaceBackgroundMap} from '../../screens/BackgroundMaps/ReplaceBackgroundMap.tsx';
+import {UpdatingBackgroundMap} from '../../screens/BackgroundMaps/UpdatingBackgroundMap.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -410,6 +411,11 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ReplaceBackgroundMap"
         component={ReplaceBackgroundMap}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="UpdatingBackgroundMap"
+        component={UpdatingBackgroundMap}
         options={{headerShown: false}}
       />
 

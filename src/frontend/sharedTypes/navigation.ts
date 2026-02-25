@@ -131,7 +131,6 @@ export type RootStackParamsList = {
   UpdatingBackgroundMap: {
     shareId: string;
   };
-  BackgroundMapUpdated: undefined;
   WaitingForMapAccept: {
     shareId: string;
   };

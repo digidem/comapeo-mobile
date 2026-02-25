@@ -1,7 +1,6 @@
 # Summary:
 #
-# Creates a production build of the app that is eventually submitted for distribution.
-# This workflow DOES NOT automatically perform the submission - that must still be handled manually.
+# Creates a production build of the app that is submitted for distribution.
 #
 # Triggers:
 #
@@ -54,7 +53,7 @@ jobs:
         env:
           EAS_PROJECT_URL: ${{ vars.EAS_PROJECT_URL }}
         run: |
-          build_id=$( eas build --platform android --profile production --json --non-interactive --no-wait | jq '.[0].id' --raw-output )
+          build_id=$( eas build --platform android --profile production --json --non-interactive | jq '.[0].id' --raw-output )
           if [ -z "$build_id" ]; then
             echo "Unable to get build ID"
             exit 1
@@ -62,6 +61,11 @@ jobs:
           echo "Build ID: $build_id"
           eas_build_url="$EAS_PROJECT_URL/builds/$build_id"
           echo "eas_build_url=$eas_build_url" >> $GITHUB_OUTPUT
+          echo "build_id=$build_id" >> $GITHUB_OUTPUT
+
+      - name: Submit to Play Store
+        run: |
+          eas submit --platform android --profile production --id ${{ steps.build.outputs.build_id }} --non-interactive
 
   comment:
     name: Comment

@@ -80,7 +80,11 @@ export function MapReceivedBottomSheet({
       mapShare.status === 'canceled' ||
       mapShare.status === 'error'
     ) {
-      navigation.goBack();
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      } else {
+        navigation.replace('BackgroundMaps');
+      }
     }
   }, [mapShare, navigation]);
 
@@ -153,7 +157,6 @@ export function MapReceivedBottomSheet({
         onError: (err: unknown) => {
           const error = toError(err, 'Failed to start map download');
           Sentry.captureException(error);
-          navigation.goBack();
           navigation.navigate('ErrorBottomSheet', {error});
         },
       },
@@ -171,7 +174,11 @@ export function MapReceivedBottomSheet({
         },
         onError: (err: unknown) => {
           Sentry.captureException(err);
-          navigation.goBack();
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.replace('BackgroundMaps');
+          }
         },
       },
     );

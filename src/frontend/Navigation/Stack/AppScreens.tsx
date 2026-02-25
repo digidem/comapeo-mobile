@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {RootStack} from '.';
 import {MessageDescriptor} from 'react-intl';
 import {
   ObservationEdit,
@@ -143,6 +142,8 @@ import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCus
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
 import {WaitingForMapAccept} from '../../screens/BackgroundMaps/WaitingForMapAccept.tsx';
 import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
+import {RootStack} from './RootStack.ts';
+
 export const TAB_BAR_HEIGHT = 70;
 
 // **NOTE**: No hooks allowed here (this is not a component, it is a function

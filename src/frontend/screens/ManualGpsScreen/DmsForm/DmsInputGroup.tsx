@@ -12,7 +12,7 @@ import {Text} from '../../../sharedComponents/Text';
 import {Select} from '../../../sharedComponents/Select';
 import {BLACK, LIGHT_GREY} from '../../../lib/styles';
 import {INTEGER_REGEX, parseNumber} from '../shared';
-import {DmsData, DmsUnit} from './index';
+import {DmsData, DmsUnit} from './types';
 
 const m = defineMessages({
   degrees: {

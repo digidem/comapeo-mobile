@@ -7,8 +7,9 @@ import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
 import {PermissionResponse} from 'expo-audio';
-import {Exports} from '../screens/ExportObservations';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
+
+export type Exports = 'Observation' | 'Tracks' | 'ObservationsWithMedia';
 
 export interface TabBarIconProps {
   size: number;

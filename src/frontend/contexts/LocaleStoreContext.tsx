@@ -1,5 +1,4 @@
 import {createContext, useContext} from 'react';
-import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
   createJSONStorage,
@@ -7,31 +6,11 @@ import {
 } from 'zustand/middleware';
 
 import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
-import {isSupportedLanguageTag, SupportedLanguageTag} from '../lib/intl';
+import {SupportedLanguageTag} from '../lib/intl';
+import {type LocaleState} from '../sharedTypes/locale';
 
 // Do not change!
 export const STORAGE_KEY = 'locale' as const;
-
-export const LocaleStateSchema = v.variant('languageTag', [
-  v.object({
-    languageTag: v.null(),
-    useSystemPreferences: v.literal(true),
-  }),
-  v.object({
-    languageTag: v.pipe(
-      v.string(),
-      v.transform((value): SupportedLanguageTag => {
-        if (!isSupportedLanguageTag(value)) {
-          throw new Error(`Value is not a supported language tag: ${value}`);
-        }
-        return value;
-      }),
-    ),
-    useSystemPreferences: v.literal(false),
-  }),
-]);
-
-export type LocaleState = v.InferOutput<typeof LocaleStateSchema>;
 
 function createInitialState(): LocaleState {
   return {

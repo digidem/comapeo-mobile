@@ -5,9 +5,11 @@ import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {SecondaryButton} from '../sharedComponents/Buttons';
 import SuccessIcon from '../images/Success.svg';
-import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {
+  type Exports,
+  type NativeRootNavigationProps,
+} from '../sharedTypes/navigation';
 import {BLACK, NEW_DARK_GREY} from '../lib/styles';
-import {type Exports} from './ExportObservations';
 
 const m = defineMessages({
   title: {id: 'ExportSuccess.title', defaultMessage: 'Success!'},

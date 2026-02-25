@@ -33,7 +33,7 @@
     "test:e2e:build": "npm run build:android:e2e && npm run test:e2e:nobuild"
   },
   "dependencies": {
-    "@comapeo/core-react": "file:comapeo-core-react-7.3.0-pre.5-MAP-SHARING.tgz",
+    "@comapeo/core-react": "file:comapeo-core-react-7.3.0-pre.7-MAP-SHARING.tgz",
     "@comapeo/ipc": "file:comapeo-ipc-6.1.0-pre.1.tgz",
     "@comapeo/nodejs-mobile-react-native": "18.20.4-2",
     "@expo-google-fonts/rubik": "0.4.2",

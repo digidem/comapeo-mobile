@@ -1,12 +1,18 @@
 #!/usr/bin/env node
 
 import fs from 'node:fs';
-
-import {supportedLocales as relativeTimeFormatSupportedLocales} from '@formatjs/intl-relativetimeformat/supported-locales.generated.js';
-import {supportedLocales as pluralRulesSupportedLocales} from '@formatjs/intl-pluralrules/supported-locales.generated.js';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
 
 import languages from '../src/frontend/languages.json' with {type: 'json'};
 import messages from '../translations/messages.json' with {type: 'json'};
+
+const relativeTimeFormatSupportedLocales = getSupportedLocalesFromDir(
+  path.dirname(fileURLToPath(import.meta.resolve('@formatjs/intl-relativetimeformat/polyfill-force.js'))),
+);
+const pluralRulesSupportedLocales = getSupportedLocalesFromDir(
+  path.dirname(fileURLToPath(import.meta.resolve('@formatjs/intl-pluralrules/polyfill-force.js'))),
+);
 
 build();
 
@@ -67,19 +73,19 @@ function writePolyfillFile(locales, outputPath) {
 
   // Write lines to load base polyfills
   writer.write(
-    createImportStatement('@formatjs/intl-getcanonicallocales/polyfill-force'),
+    createImportStatement('@formatjs/intl-getcanonicallocales/polyfill-force.js'),
   );
-  writer.write(createImportStatement('@formatjs/intl-locale/polyfill-force'));
+  writer.write(createImportStatement('@formatjs/intl-locale/polyfill-force.js'));
 
   writer.write('\n');
 
   // Write lines to load plural rules polyfill
   writer.write(
-    createImportStatement('@formatjs/intl-pluralrules/polyfill-force'),
+    createImportStatement('@formatjs/intl-pluralrules/polyfill-force.js'),
   );
   for (const locale of locales) {
     writer.write(
-      createImportStatement(`@formatjs/intl-pluralrules/locale-data/${locale}`),
+      createImportStatement(`@formatjs/intl-pluralrules/locale-data/${locale}.js`),
     );
   }
 
@@ -87,12 +93,12 @@ function writePolyfillFile(locales, outputPath) {
 
   // Write lines to load relative time format polyfill
   writer.write(
-    createImportStatement('@formatjs/intl-relativetimeformat/polyfill-force'),
+    createImportStatement('@formatjs/intl-relativetimeformat/polyfill-force.js'),
   );
   for (const locale of locales) {
     writer.write(
       createImportStatement(
-        `@formatjs/intl-relativetimeformat/locale-data/${locale}`,
+        `@formatjs/intl-relativetimeformat/locale-data/${locale}.js`,
       ),
     );
   }
@@ -117,4 +123,17 @@ function isFullySupportedLocale(locale) {
  */
 function createImportStatement(module) {
   return `import "${module}";\n`;
+}
+
+/**
+ * Get supported locales by listing .js files in the locale-data directory
+ * @param {string} packageDir
+ * @returns {Array<string>}
+ */
+function getSupportedLocalesFromDir(packageDir) {
+  const localeDataDir = path.join(packageDir, 'locale-data');
+  return fs
+    .readdirSync(localeDataDir)
+    .filter(f => f.endsWith('.js'))
+    .map(f => f.replace(/\.js$/, ''));
 }

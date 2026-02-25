@@ -10,12 +10,8 @@ import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
-import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
-import {
-  MMKVStoreInitializer,
-  storage,
-} from './hooks/persistedState/createPersistedState';
+import {storage} from './hooks/persistedState/createPersistedState';
 import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
@@ -38,27 +34,24 @@ import {createServerStateStore} from './lib/ServerStateStore.ts';
 import {createMapeoApi} from './lib/createMapeoApi.ts';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
-import PostHog from 'posthog-react-native';
 import {Suspense} from 'react';
 import {Loading} from './sharedComponents/Loading.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {createAppRpc} from './lib/createAppRpc.ts';
+import {postHog} from './lib/posthog.ts';
+import {APP_VARIANT} from './lib/appVariant.ts';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
-const devMode = applicationId?.endsWith('.dev');
-const testMode = applicationId?.endsWith('.pre');
+const sentryEnvironment: SentryEnvironment =
+  APP_VARIANT === 'releaseCandidate'
+    ? 'qa'
+    : APP_VARIANT === 'production'
+      ? 'production'
+      : 'development';
 
-let sentryEnvironment: SentryEnvironment = 'production';
-if (devMode || testMode) {
-  sentryEnvironment = 'development';
-} else if (applicationId?.endsWith('.rc')) {
-  sentryEnvironment = 'qa';
-}
-
-const sentryDebug = applicationId?.endsWith('.dev');
 const appMetricsOptIn = sentryEnvironment !== 'production';
 let navigationIntegration:
   | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
@@ -70,7 +63,7 @@ Sentry.init({
   tracesSampleRate: appMetricsOptIn ? 1.0 : 0, // Only enable tracing once we have user consent
   enableUserInteractionTracing: appMetricsOptIn, // Only enable user interaction tracing once we have user consent
   environment: sentryEnvironment,
-  debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+  debug: false, // this added alot of unneccesary noise to the console.
   initialScope: {user: {id: sentryUserId}},
   enableMetrics: false,
 });
@@ -192,19 +185,6 @@ TaskManager.defineTask(
         })),
       );
     }
-  },
-);
-
-export const postHog = new PostHog(
-  'phc_cr3WAkAaM5rsbiTUF36fzlu8HTrfzL8nOy5elccBdpq',
-  {
-    host: 'https://us.i.posthog.com',
-    //@ts-expect-error - this is the zustand typing, which is he same as posthog's customStorage typing. But zustand typing is less strict, but its quite a ts workaround to make it work, this is the simplest solution.
-    customStorage: MMKVStoreInitializer,
-    defaultOptIn: false,
-    // disable for dev mode and e2e tests
-    disabled:
-      process.env.EXPO_PUBLIC_E2E_TEST === 'true' || devMode || testMode,
   },
 );
 

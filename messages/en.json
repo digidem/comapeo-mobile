@@ -1968,9 +1968,6 @@
   "screens.Settings.MapManagement.MapSent.mapSent": {
     "message": "Map sent!"
   },
-  "screens.Settings.MapManagement.SendingMap.cancel": {
-    "message": "Cancel"
-  },
   "screens.Settings.MapManagement.SendingMap.sending": {
     "message": "Sending..."
   },

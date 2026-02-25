@@ -3,7 +3,6 @@ import {AppState, StyleSheet, View, Pressable} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
-import {Bar as ProgressBar} from 'react-native-progress';
 
 import {
   useCancelSentMapShare,
@@ -20,13 +19,13 @@ import {TextButton} from '../../sharedComponents/TextButton';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {toError} from '../../utils/errors';
+import {SendingMapProgressBar} from './SendingMapProgressBar';
 import {
   VERY_LIGHT_GREY,
   RED,
   NEW_DARK_GREY,
   BLACK,
   COMAPEO_BLUE,
-  WHITE,
 } from '../../lib/styles';
 
 const m = defineMessages({
@@ -68,10 +67,10 @@ const m = defineMessages({
   },
 });
 
-export function WaitingForMapAccept({
+export function SendingBackgroundMap({
   route,
   navigation,
-}: NativeRootNavigationProps<'WaitingForMapAccept'>) {
+}: NativeRootNavigationProps<'SendingBackgroundMap'>) {
   const {formatMessage: t} = useIntl();
   const {shareId} = route.params;
 
@@ -134,7 +133,7 @@ export function WaitingForMapAccept({
   }
 
   if (mapShare?.status === 'downloading') {
-    return <SendingMap mapShare={mapShare} onCancel={cancelShare} />;
+    return <SendingMap shareId={shareId} onCancel={cancelShare} />;
   }
 
   if (mapShare?.status === 'completed') {
@@ -191,22 +190,13 @@ function MapDeclined({
 }
 
 function SendingMap({
-  mapShare,
+  shareId,
   onCancel,
 }: {
-  mapShare: {
-    status: 'downloading';
-    bytesDownloaded: number;
-    estimatedSizeBytes: number;
-  };
+  shareId: string;
   onCancel: () => void;
 }) {
   const {formatMessage: t} = useIntl();
-
-  const downloadProgress = Math.min(
-    mapShare.bytesDownloaded / mapShare.estimatedSizeBytes,
-    1,
-  );
 
   return (
     <View style={[styles.baseContainer, {alignItems: 'center'}]}>
@@ -224,18 +214,7 @@ function SendingMap({
             color={COMAPEO_BLUE}
             style={styles.syncIcon}
           />
-          <ProgressBar
-            {...(downloadProgress > 0
-              ? {progress: downloadProgress, indeterminate: false}
-              : {indeterminate: true, indeterminateAnimationDuration: 2000})}
-            width={250}
-            height={8}
-            borderRadius={0}
-            color={COMAPEO_BLUE}
-            unfilledColor={VERY_LIGHT_GREY}
-            borderWidth={0}
-            borderColor={WHITE}
-          />
+          <SendingMapProgressBar shareId={shareId} />
         </View>
       </View>
 

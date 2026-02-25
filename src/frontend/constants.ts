@@ -60,8 +60,8 @@ export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [
 export const MAP_SHARE_SCREEN_NAMES: (keyof AppStackParamsList)[] = [
   'MapReceivedBottomSheet',
   'ReplaceBackgroundMap',
-  'UpdatingBackgroundMap',
-  'BackgroundMapUpdated',
+  'ReceivingBackgroundMap',
+  'SendingBackgroundMap',
 ];
 
 // Replicates the root query key from comapeo/core-react v3.3.0

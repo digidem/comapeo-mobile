@@ -148,7 +148,7 @@ export function MapReceivedBottomSheet({
       {shareId},
       {
         onSuccess: () => {
-          navigation.replace('UpdatingBackgroundMap', {shareId});
+          navigation.replace('ReceivingBackgroundMap', {shareId});
         },
         onError: (err: unknown) => {
           const error = toError(err, 'Failed to start map download');
@@ -169,7 +169,8 @@ export function MapReceivedBottomSheet({
         onSuccess: () => {
           navigation.goBack();
         },
-        onError: () => {
+        onError: (err: unknown) => {
+          Sentry.captureException(err);
           navigation.goBack();
         },
       },

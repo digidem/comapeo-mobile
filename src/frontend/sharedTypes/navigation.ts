@@ -128,10 +128,10 @@ export type RootStackParamsList = {
   ReplaceBackgroundMap: {
     shareId: string;
   };
-  UpdatingBackgroundMap: {
+  ReceivingBackgroundMap: {
     shareId: string;
   };
-  WaitingForMapAccept: {
+  SendingBackgroundMap: {
     shareId: string;
   };
   ExchangeSettingsBottomSheet: undefined;

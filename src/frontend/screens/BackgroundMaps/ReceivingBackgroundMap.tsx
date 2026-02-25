@@ -2,7 +2,6 @@ import * as React from 'react';
 import {StyleSheet, View, Pressable} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
-import {Bar as ProgressBar} from 'react-native-progress';
 import * as Sentry from '@sentry/react-native';
 
 import {
@@ -10,16 +9,15 @@ import {
   useSingleReceivedMapShare,
 } from '@comapeo/core-react';
 import StackSvg from '../../images/Stack.svg';
+import SuccessIcon from '../../images/Success.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {toError} from '../../utils/errors';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
-import {
-  VERY_LIGHT_GREY,
-  NEW_DARK_GREY,
-  COMAPEO_BLUE,
-  WHITE,
-} from '../../lib/styles';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
+import {ReceivingMapProgressBar} from './ReceivingMapProgressBar';
+import {VERY_LIGHT_GREY, NEW_DARK_GREY, COMAPEO_BLUE} from '../../lib/styles';
 
 const m = defineMessages({
   updating: {
@@ -30,12 +28,20 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.UpdatingBackgroundMap.cancel',
     defaultMessage: 'Cancel',
   },
+  mapUpdated: {
+    id: 'screens.Settings.MapManagement.BackgroundMapUpdated.mapUpdated',
+    defaultMessage: 'Background map updated.',
+  },
+  done: {
+    id: 'screens.Settings.MapManagement.BackgroundMapUpdated.done',
+    defaultMessage: 'Done',
+  },
 });
 
-export function UpdatingBackgroundMap({
+export function ReceivingBackgroundMap({
   route,
   navigation,
-}: NativeRootNavigationProps<'UpdatingBackgroundMap'>) {
+}: NativeRootNavigationProps<'ReceivingBackgroundMap'>) {
   const {formatMessage: t} = useIntl();
   const {shareId} = route.params;
   const {mutate: abortDownload} = useAbortReceivedMapShareDownload();
@@ -43,22 +49,13 @@ export function UpdatingBackgroundMap({
 
   usePreventAndroidBackButton();
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({headerShown: false});
-  }, [navigation]);
-
   React.useEffect(() => {
-    if (!mapShare) {
-      return;
-    }
-    if (mapShare.status === 'completed') {
-      navigation.replace('BackgroundMapUpdated');
-    } else if (mapShare.status === 'error') {
+    if (mapShare.status === 'error') {
       const error = toError(mapShare.error, 'Map download failed');
       Sentry.captureException(mapShare.error);
       navigation.replace('ErrorBottomSheet', {error});
-    } else if (mapShare.status === 'canceled') {
-      navigation.popTo('BackgroundMaps');
+    } else if (!mapShare || mapShare.status === 'canceled') {
+      navigation.goBack();
     }
   }, [mapShare, navigation]);
 
@@ -78,28 +75,13 @@ export function UpdatingBackgroundMap({
     );
   };
 
-  const isDownloading = mapShare?.status === 'downloading';
+  const handleDone = () => {
+    navigation.popTo('BackgroundMaps');
+  };
 
-  const [displayProgress, setDisplayProgress] = React.useState(0);
-
-  React.useEffect(() => {
-    if (!isDownloading || !mapShare) {
-      setDisplayProgress(0);
-      return;
-    }
-
-    const interval = setInterval(() => {
-      if (mapShare?.status === 'downloading') {
-        const progress = Math.min(
-          mapShare.bytesDownloaded / mapShare.estimatedSizeBytes,
-          1,
-        );
-        setDisplayProgress(progress);
-      }
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, [isDownloading, mapShare]);
+  if (mapShare?.status === 'completed') {
+    return <MapUpdated onDone={handleDone} />;
+  }
 
   return (
     <View style={styles.container}>
@@ -117,18 +99,7 @@ export function UpdatingBackgroundMap({
             color={COMAPEO_BLUE}
             style={styles.syncIcon}
           />
-          <ProgressBar
-            {...(isDownloading
-              ? {progress: displayProgress, indeterminate: false}
-              : {indeterminate: true, indeterminateAnimationDuration: 2000})}
-            width={250}
-            height={8}
-            borderRadius={0}
-            color={COMAPEO_BLUE}
-            unfilledColor={VERY_LIGHT_GREY}
-            borderWidth={0}
-            borderColor={WHITE}
-          />
+          <ReceivingMapProgressBar shareId={shareId} />
         </View>
       </View>
 
@@ -137,6 +108,21 @@ export function UpdatingBackgroundMap({
           {t(m.cancel)}
         </HeaderText>
       </Pressable>
+    </View>
+  );
+}
+
+function MapUpdated({onDone}: {onDone: () => void}) {
+  const {formatMessage: t} = useIntl();
+
+  return (
+    <View style={styles.successContainer}>
+      <View style={styles.successContent}>
+        <IconTitleDescription icon={<SuccessIcon />} title={t(m.mapUpdated)} />
+      </View>
+      <View style={styles.buttonContainer}>
+        <SecondaryButton fullSize text={t(m.done)} onPress={onDone} />
+      </View>
     </View>
   );
 }
@@ -171,5 +157,17 @@ const styles = StyleSheet.create({
   },
   cancelText: {
     color: COMAPEO_BLUE,
+  },
+  successContainer: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'space-between',
+  },
+  successContent: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  buttonContainer: {
+    alignItems: 'center',
   },
 });

@@ -52,7 +52,7 @@ export function ReplaceBackgroundMap({
       {shareId},
       {
         onSuccess: () => {
-          navigation.replace('UpdatingBackgroundMap', {shareId});
+          navigation.replace('ReceivingBackgroundMap', {shareId});
         },
         onError: (err: unknown) => {
           const error = toError(err, 'Failed to start map download');

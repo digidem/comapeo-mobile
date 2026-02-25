@@ -142,11 +142,7 @@ import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSh
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
 import {WaitingForMapAccept} from '../../screens/BackgroundMaps/WaitingForMapAccept.tsx';
-import {MapDeclineScreen} from '../../screens/BackgroundMaps/MapDeclineScreen.tsx';
-import {SendingMap} from '../../screens/BackgroundMaps/SendingMap.tsx';
-import {MapSent} from '../../screens/BackgroundMaps/MapSent.tsx';
 import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
-
 export const TAB_BAR_HEIGHT = 70;
 
 // **NOTE**: No hooks allowed here (this is not a component, it is a function
@@ -407,21 +403,6 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="WaitingForMapAccept"
         component={WaitingForMapAccept}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="SendingMap"
-        component={SendingMap}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="MapSent"
-        component={MapSent}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="MapDeclineScreen"
-        component={MapDeclineScreen}
         options={{headerShown: false}}
       />
 

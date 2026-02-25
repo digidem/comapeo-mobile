@@ -1998,6 +1998,12 @@
   "screens.Settings.MapManagement.MapSent.mapSent": {
     "message": "Map sent!"
   },
+  "screens.Settings.MapManagement.MapShareCanceled.close": {
+    "message": "Close"
+  },
+  "screens.Settings.MapManagement.MapShareCanceled.message": {
+    "message": "Background map sharing canceled without completing."
+  },
   "screens.Settings.MapManagement.ReplaceBackgroundMap.cancel": {
     "message": "Cancel"
   },

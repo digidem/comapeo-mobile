@@ -50,12 +50,18 @@ export function ReceivingBackgroundMap({
   usePreventAndroidBackButton();
 
   React.useEffect(() => {
+    if (!mapShare) {
+      navigation.goBack();
+      return;
+    }
+    if (mapShare.status === 'canceled') {
+      navigation.replace('MapShareCanceledBottomSheet');
+      return;
+    }
     if (mapShare.status === 'error') {
       const error = toError(mapShare.error, 'Map download failed');
       Sentry.captureException(mapShare.error);
       navigation.replace('ErrorBottomSheet', {error});
-    } else if (!mapShare || mapShare.status === 'canceled') {
-      navigation.goBack();
     }
   }, [mapShare, navigation]);
 

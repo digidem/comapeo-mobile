@@ -144,6 +144,7 @@ import {SendingBackgroundMap} from '../../screens/BackgroundMaps/SendingBackgrou
 import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
 import {ReplaceBackgroundMap} from '../../screens/BackgroundMaps/ReplaceBackgroundMap.tsx';
 import {ReceivingBackgroundMap} from '../../screens/BackgroundMaps/ReceivingBackgroundMap.tsx';
+import {MapShareCanceledBottomSheet} from '../../screens/BackgroundMaps/MapShareCanceledBottomSheet.tsx';
 import {RootStack} from './RootStack.ts';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -417,6 +418,15 @@ export const createAppScreens = ({
         name="ReceivingBackgroundMap"
         component={ReceivingBackgroundMap}
         options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="MapShareCanceledBottomSheet"
+        component={MapShareCanceledBottomSheet}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+          animation: 'fade',
+        }}
       />
 
       {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (

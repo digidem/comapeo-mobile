@@ -135,6 +135,7 @@ export type RootStackParamsList = {
   SendingBackgroundMap: {
     shareId: string;
   };
+  MapShareCanceledBottomSheet: undefined;
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: PermissionResponse;

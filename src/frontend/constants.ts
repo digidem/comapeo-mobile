@@ -62,6 +62,7 @@ export const MAP_SHARE_SCREEN_NAMES: (keyof AppStackParamsList)[] = [
   'ReplaceBackgroundMap',
   'ReceivingBackgroundMap',
   'SendingBackgroundMap',
+  'MapShareCanceledBottomSheet',
 ];
 
 // Replicates the root query key from comapeo/core-react v3.3.0

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {RootStack} from '.';
 import {IntroToCoMapeo} from '../../screens/Onboarding/IntroToCoMapeo';
 import {DataPrivacy} from '../../screens/Onboarding/DataPrivacy';
 import {OnboardingPrivacyPolicy} from '../../screens/Onboarding/OnboardingPrivacyPolicy';
@@ -12,6 +11,7 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
+import {RootStack} from './RootStack';
 
 export const createOnboardingScreens = ({
   intl,

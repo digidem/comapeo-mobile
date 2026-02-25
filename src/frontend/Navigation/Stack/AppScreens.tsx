@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {RootStack} from '.';
 import {MessageDescriptor} from 'react-intl';
 import {
   ObservationEdit,
@@ -141,6 +140,7 @@ import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsInclude
 import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
+import {RootStack} from './RootStack.ts';
 
 export const TAB_BAR_HEIGHT = 70;
 

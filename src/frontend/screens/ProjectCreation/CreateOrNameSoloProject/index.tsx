@@ -173,7 +173,7 @@ export const CreateOrNameSoloProject = ({
                   testID="PROJECT.name-inp"
                   control={control}
                   name="projectName"
-                  rules={{maxLength: 100, required: true, minLength: 1}}
+                  rules={{maxLength: 60, required: true, minLength: 1}}
                   showCharacterCount
                 />
               </View>

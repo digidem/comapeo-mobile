@@ -2,15 +2,19 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import ErrorIcon from '../../images/Error.svg';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
+  title: {
+    id: 'screens.Settings.MapManagement.MapShareCanceled.title',
+    defaultMessage: 'Sharing Canceled',
+  },
   message: {
     id: 'screens.Settings.MapManagement.MapShareCanceled.message',
-    defaultMessage: 'Background map sharing canceled without completing.',
+    defaultMessage: 'Collaborator canceled sharing before completing.',
   },
   close: {
     id: 'screens.Settings.MapManagement.MapShareCanceled.close',
@@ -31,15 +35,13 @@ export function MapShareCanceledBottomSheet({
     <BottomSheetWrapper>
       <View style={styles.container}>
         <View style={styles.contentContainer}>
-          <ErrorIcon width={160} height={160} style={styles.icon} />
-          <BodyText style={styles.message}>{t(m.message)}</BodyText>
+          <IconTitleDescription
+            icon={<ErrorIcon width={100} height={100} />}
+            title={t(m.title)}
+            description={t(m.message)}
+          />
         </View>
-        <SecondaryButton
-          style={styles.button}
-          fullSize
-          text={t(m.close)}
-          onPress={handleClose}
-        />
+        <SecondaryButton fullSize text={t(m.close)} onPress={handleClose} />
       </View>
     </BottomSheetWrapper>
   );
@@ -49,19 +51,10 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   contentContainer: {
+    flex: 1,
     alignItems: 'center',
-  },
-  icon: {
-    marginTop: 40,
-    marginBottom: 30,
-  },
-  message: {
-    textAlign: 'center',
-  },
-  button: {
-    alignSelf: 'center',
+    justifyContent: 'center',
   },
 });

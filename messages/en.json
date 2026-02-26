@@ -2002,7 +2002,10 @@
     "message": "Close"
   },
   "screens.Settings.MapManagement.MapShareCanceled.message": {
-    "message": "Background map sharing canceled without completing."
+    "message": "Collaborator canceled sharing before completing."
+  },
+  "screens.Settings.MapManagement.MapShareCanceled.title": {
+    "message": "Sharing Canceled"
   },
   "screens.Settings.MapManagement.ReplaceBackgroundMap.cancel": {
     "message": "Cancel"

@@ -33,7 +33,7 @@
     "test:e2e:build": "npm run build:android:e2e && npm run test:e2e:nobuild"
   },
   "dependencies": {
-    "@comapeo/core-react": "7.2.0",
+    "@comapeo/core-react": "8.0.0",
     "@comapeo/ipc": "6.0.2",
     "@comapeo/nodejs-mobile-react-native": "18.20.4-2",
     "@expo-google-fonts/rubik": "0.4.2",

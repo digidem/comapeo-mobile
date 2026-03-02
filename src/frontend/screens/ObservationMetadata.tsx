@@ -271,7 +271,7 @@ export const ObservationMetadata: NativeNavigationComponent<
 
     const date = `${formatMessage(m.date)}: ${formatDate(createdAt, {dateStyle: 'full'})}`;
 
-    const time = formatTime(createdAt, {timeStyle: 'medium'});
+    const time = formatTime(createdAt, {timeZoneName: 'short'});
 
     const baseLocation =
       lat === undefined || lon === undefined
@@ -308,7 +308,7 @@ export const ObservationMetadata: NativeNavigationComponent<
                 <FormattedDate value={createdAt} dateStyle="full" />
               </BodyText>
               <BodyText style={{color: NEW_DARK_GREY}} variant="smallMeta">
-                <FormattedTime value={createdAt} timeStyle="short" />
+                <FormattedTime value={createdAt} timeZoneName="short" />
               </BodyText>
             </View>
           </View>

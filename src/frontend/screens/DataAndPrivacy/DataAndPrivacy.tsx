@@ -70,6 +70,7 @@ const m = defineMessages({
     id: 'screens.DataAndPrivacy.ipAddress',
     defaultMessage: 'CoMapeo never stores IP addresses.',
   },
+  // primary-string
   shareAppUsage: {
     id: 'screens.DataAndPrivacy.shareAppUsage',
     defaultMessage: 'Share App Usage',

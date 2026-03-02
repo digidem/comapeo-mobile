@@ -12,6 +12,7 @@ import InviteDevices from '../../images/AddPerson.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {useTracking} from '../../hooks/useTracking';
 
+// primary-string ENTIRE SCREEN
 const m = defineMessages({
   title: {
     id: 'screens.Settings.Collaborate.title',

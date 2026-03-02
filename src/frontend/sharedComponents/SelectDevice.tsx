@@ -27,6 +27,7 @@ type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
 >[number];
 
+// primary-string ENTIRE
 const m = defineMessages({
   title: {
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.title',

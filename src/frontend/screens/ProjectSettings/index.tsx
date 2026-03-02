@@ -24,6 +24,7 @@ import {
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
+  // primary-string
   title: {
     id: 'Screens.ProjectSettings.title',
     defaultMessage: 'Coordinator Tools',
@@ -36,6 +37,7 @@ const m = defineMessages({
     id: 'Screens.ProjectSettings.invite',
     defaultMessage: 'Invite Collaborators',
   },
+  // primary-string
   configTitle: {
     id: 'Screens.ProjectSettings.configTitle',
     defaultMessage: 'Project Categories',
@@ -48,10 +50,12 @@ const m = defineMessages({
     id: 'Screens.ProjectSettings.editInfo',
     defaultMessage: 'Edit Info',
   },
+  // primary-string
   remoteArchiveOn: {
     id: 'Screens.ProjectSettings.remoteArchiveOn',
     defaultMessage: 'Remote Archive  |  ON',
   },
+  // primary-string
   remoteArchiveOff: {
     id: 'Screens.ProjectSettings.remoteArchiveOff',
     defaultMessage: 'Remote Archive  |  OFF',
@@ -65,10 +69,12 @@ const m = defineMessages({
     id: 'Screens.ProjectSettings.viewDetails',
     defaultMessage: 'View Details',
   },
+  // primary-string
   projectStatsOn: {
     id: 'Screens.ProjectSettings.projectStatsOn',
     defaultMessage: 'Project Statistics  |  ON',
   },
+  // primary-string
   projectStatsOff: {
     id: 'Screens.ProjectSettings.projectStatsOff',
     defaultMessage: 'Project Statistics  |  OFF',

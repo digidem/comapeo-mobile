@@ -7,10 +7,12 @@ import SuccessCheck from '../../images/Success.svg';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
+  // primary-string
   done: {
     id: 'screens.InviteSuccess.done',
     defaultMessage: 'Done',
   },
+  // primary-string
   success: {
     id: 'screens.InviteSuccess.success',
     defaultMessage: 'Success',

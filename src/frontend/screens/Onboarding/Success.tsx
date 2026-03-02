@@ -36,7 +36,7 @@ const m = defineMessages({
     defaultMessage: 'Map On Your Own',
   },
 });
-
+// primary-string ENTIRE
 export const Success = ({
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'Success'>) => {

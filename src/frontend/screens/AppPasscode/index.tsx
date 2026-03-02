@@ -9,6 +9,7 @@ import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 
+// primary-string ENTIRE SCREEN
 const m = defineMessages({
   navTitle: {
     id: 'screens.AppPasscode',

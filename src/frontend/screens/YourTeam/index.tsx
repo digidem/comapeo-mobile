@@ -21,18 +21,22 @@ import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
 const m = defineMessages({
+  // primary-string
   title: {
     id: 'screens.Setting.ProjectSettings.YourTeam.title',
     defaultMessage: 'Team',
   },
+  // primary-string
   inviteDevice: {
     id: 'screens.Setting.ProjectSettings.YourTeam.inviteDevice',
     defaultMessage: 'Invite Device',
   },
+  // primary-string
   coordinators: {
     id: 'screens.Setting.ProjectSettings.YourTeam.coordinators',
     defaultMessage: 'Coordinators',
   },
+  // primary-string
   participants: {
     id: 'screens.Setting.ProjectSettings.YourTeam.participants',
     defaultMessage: 'Participants',
@@ -47,6 +51,7 @@ const m = defineMessages({
     defaultMessage:
       'Can take and share observations but not manage users or project details.',
   },
+  // primary-string
   pastCollaborators: {
     id: 'screens.Setting.ProjectSettings.YourTeam.pastCollaborators',
     defaultMessage: 'Past Collaborators',

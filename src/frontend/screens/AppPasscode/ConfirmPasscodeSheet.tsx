@@ -12,7 +12,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {toError} from '../../utils/errors';
-
+// primary-string ENTIRE SCREEN
 const m = defineMessages({
   title: {
     id: 'screens.AppPasscode.ConfirmPasscodeSheet.title',

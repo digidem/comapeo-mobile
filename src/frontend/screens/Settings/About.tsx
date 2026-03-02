@@ -13,6 +13,7 @@ import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
+  // primary-string
   aboutCoMapeoTitle: {
     id: 'screens.AboutSettings.title',
     defaultMessage: 'About CoMapeo',
@@ -64,6 +65,7 @@ const m = defineMessages({
     defaultMessage: 'Release name',
     description: 'Label for the release name',
   },
+  // primary-string
   seeUpdates: {
     id: 'screens.AboutSettings.seeUpdates',
     defaultMessage: 'See CoMapeo Updates',

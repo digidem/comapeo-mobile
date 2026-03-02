@@ -22,6 +22,7 @@ const m = defineMessages({
   },
 });
 
+// primary-string ENTIRE
 export const JoinAProject: NativeNavigationComponent<'JoinAProject'> = () => {
   const {formatMessage: t} = useIntl();
 

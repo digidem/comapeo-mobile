@@ -47,10 +47,12 @@ const m = defineMessages({
     defaultMessage: 'New Observation',
     description: 'screen title for new observation screen',
   },
+  // primary-string
   changePreset: {
     id: 'screens.ObservationCreate.changePreset',
     defaultMessage: 'Change',
   },
+  // primary-string
   descriptionPlaceholder: {
     id: 'screens.ObservationCreate.descriptionPlaceholder',
     defaultMessage: 'What is happening here?',

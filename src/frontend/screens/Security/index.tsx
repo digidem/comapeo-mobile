@@ -8,6 +8,7 @@ import {useSecurityState} from '../../contexts/SecurityStoreContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {MEDIUM_GREY, RED} from '../../lib/styles';
 
+// primary-string ENTIRE
 const m = defineMessages({
   title: {
     id: 'screens.Security.title',

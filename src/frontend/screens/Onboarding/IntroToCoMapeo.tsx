@@ -41,7 +41,7 @@ const m = defineMessages({
       'Co-designed with and for Indigenous territory mappers & monitors.',
   },
 });
-
+// primary-string ENTIRE SCREEN
 export const IntroToCoMapeo = ({
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'IntroToCoMapeo'>) => {

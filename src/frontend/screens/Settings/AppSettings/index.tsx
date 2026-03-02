@@ -7,6 +7,8 @@ import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem'
 import BlackShieldIcon from '../../../images/BlackShield.svg';
 import {useEarlyAccessState} from '../../../contexts/EarlyAccessContext';
 
+// primary-string ENTIRE SCREEN
+
 const m = defineMessages({
   title: {
     id: 'Screens.Settings.AppSettings.title',

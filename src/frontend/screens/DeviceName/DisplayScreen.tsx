@@ -9,7 +9,7 @@ import {Text} from '../../sharedComponents/Text';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {EditIcon} from '../../sharedComponents/icons';
 import {FieldRow} from './FieldRow';
-
+// primary-string ENTIRE
 const m = defineMessages({
   title: {
     id: 'screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title',

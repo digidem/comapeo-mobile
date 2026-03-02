@@ -7,6 +7,7 @@ import {Circle} from '../../../sharedComponents/icons/Circle';
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
+  // primary-string
   appUseLocation: {
     id: 'screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation',
     defaultMessage: 'Use Location?',
@@ -16,6 +17,7 @@ const m = defineMessages({
     defaultMessage:
       'Use Location? Tracks location even when closed. Data remains on device only.',
   },
+  // primary-string
   turnOn: {
     id: 'screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn',
     defaultMessage: 'Turn On Location',

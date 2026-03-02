@@ -17,6 +17,7 @@ import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
 
+// primary-string ENTIRE SCREEN
 const m = defineMessages({
   appUsePasscode: {
     id: 'screens.AppPasscode.TurnOffPasscode.usePasscode',

@@ -17,6 +17,7 @@ import {useAudioPermissionModalMutation} from '../../hooks/useAudioPermissionTra
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
+  // primary-string
   title: {
     id: 'screens.AudioPermission.title',
     defaultMessage: 'Recording Audio with CoMapeo',
@@ -28,11 +29,13 @@ const m = defineMessages({
       'To record audio while using the app and in the background CoMapeo needs to access your microphone. Please enable microphone permissions in your app settings.',
     description: 'Screen description for audio permission screen',
   },
+  // primary-string
   notNowButtonText: {
     id: 'screens.AudioPermission.Button.notNow',
     defaultMessage: 'Not Now',
     description: 'Screen button text for not granting audio permission',
   },
+  // primary-string
   allowButtonText: {
     id: 'screens.AudioPermission.Button.allow',
     defaultMessage: 'Allow',

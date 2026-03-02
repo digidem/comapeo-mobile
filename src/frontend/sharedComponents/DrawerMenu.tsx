@@ -81,7 +81,7 @@ const m = defineMessages({
     defaultMessage: 'Collaborate',
   },
 });
-
+// primary-string ENTIRE
 export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();

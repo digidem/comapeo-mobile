@@ -19,14 +19,17 @@ const m = defineMessages({
     id: 'screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.youAreInviting',
     defaultMessage: 'You are inviting:',
   },
+  // primary-string
   coordinator: {
     id: 'screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator',
     defaultMessage: 'Coordinator',
   },
+  // primary-string
   participant: {
     id: 'screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant',
     defaultMessage: 'Participant',
   },
+  // primary-string
   sendInvite: {
     id: 'screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite',
     defaultMessage: 'Send Invite',

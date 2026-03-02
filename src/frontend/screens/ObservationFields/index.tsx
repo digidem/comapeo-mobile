@@ -25,6 +25,7 @@ const m = defineMessages({
     defaultMessage: 'Done',
     description: 'Button text when all questions are complete',
   },
+  // primary-string
   title: {
     id: 'screens.ObservationDetails.title',
     defaultMessage: 'Question {current} of {total}',

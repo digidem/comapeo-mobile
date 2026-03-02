@@ -22,6 +22,7 @@ import {sharedPhotoPreviewNavOptions} from './sharedNavOptions.tsx';
 import {sharedStyles} from './sharedStyles.ts';
 
 const m = defineMessages({
+  // primary-string
   headerDeleteButtonText: {
     id: 'screens.PhotoPreviewModal.headerButtonText',
     defaultMessage: 'Delete Photo',

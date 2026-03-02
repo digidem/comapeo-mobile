@@ -19,6 +19,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {toError} from '../../utils/errors';
 
 const m = defineMessages({
+  // primary-string
   leaveProjectTitle: {
     id: 'screens.LeaveProject.leaveProjectTitle',
     defaultMessage: 'Leave {projectName}?',
@@ -33,10 +34,12 @@ const m = defineMessages({
     defaultMessage:
       'Device will no longer be able to view or contribute to this project.',
   },
+  // primary-string
   yesLeave: {
     id: 'screens.LeaveProject.yesLeave',
     defaultMessage: 'Yes, Leave',
   },
+  // primary-string
   cancel: {
     id: 'screens.LeaveProject.cancel',
     defaultMessage: 'Cancel',

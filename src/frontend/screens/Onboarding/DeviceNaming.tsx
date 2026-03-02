@@ -29,6 +29,7 @@ import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {UIActivityIndicator} from 'react-native-indicators';
 
+// primary-string ENTIRE
 const m = defineMessages({
   header: {
     id: 'screens.DeviceNaming.header',

@@ -16,6 +16,7 @@ import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {deviceType} from 'expo-device';
 import * as Sentry from '@sentry/react-native';
 
+// primary-string ENTIRE SCREEN
 const m = defineMessages({
   title: {
     id: 'screens.Setting.ProjectSettings.DeviceName.EditScreen.title',

@@ -16,6 +16,7 @@ const m = defineMessages({
   },
 });
 
+// primary-string ENTIRE COMPONENT
 export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
   const {formatMessage} = useIntl();
   const isEnabled = useMetricsDiagnosticsEnabled();

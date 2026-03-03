@@ -9,5 +9,388 @@
   },
   "ExportSuccess.done": {
     "message": "ပြီးသွားပြီ"
+  },
+  "MapManagement.ErrorBottomSheet.goBack": {
+    "message": "နောက်သို့ ပြန်သွား"
+  },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "Navigation.Menu.bgMap": {
+    "message": "Background Maps"
+  },
+  "ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "ဆက်လက်ပြင်ဆင်ခြင်း"
+  },
+  "ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ပစ်မှာလား?"
+  },
+  "SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "ဆက်လက်ပြင်ဆင်ခြင်း"
+  },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
+    "description": "Text for cancel action button.",
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "SharedComponents.ActionButtons.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "SharedComponents.ActionButtons.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "ဟုတ်ကဲ့၊ ပယ်ဖျက်မည်"
+  },
+  "SharedComponents.ActionButtons.delete": {
+    "description": "Button to delete an observation",
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "SharedComponents.ActionButtons.share": {
+    "description": "Button to share an observation",
+    "message": "မျှဝေခြင်း"
+  },
+  "TrackEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "ဆက်လက်ပြင်ဆင်ခြင်း"
+  },
+  "TrackEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ပစ်မှာလား?"
+  },
+  "TrackEdit.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း"
+  },
+  "allProjects.close": {
+    "message": "Open Settings"
+  },
+  "screens.AboutSettings.androidBuild": {
+    "description": "Label for Android build number",
+    "message": "အန့်ဒရိုက် Android တည်ဆောက် နံပါတ်"
+  },
+  "screens.AboutSettings.androidVersion": {
+    "description": "Label for Android version",
+    "message": "အန့်ဒရိုက် Android ဘားရှင်း"
+  },
+  "screens.AboutSettings.phoneModel": {
+    "description": "Label for phone model",
+    "message": "ဖုန်းမော်ဒယ်"
+  },
+  "screens.AboutSettings.unknownValue": {
+    "description": "Shown when a device info (e.g. version number) is unknown",
+    "message": "မသိသော"
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "နောက်ထပ်"
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.AppUsageSharingSuccess.done": {
+    "message": "ပြီးသွားပြီ"
+  },
+  "screens.AudioAttachmentPlayback.share": {
+    "message": "မျှဝေခြင်း"
+  },
+  "screens.AudioPlaybackNew.delete": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.ConfirmDeletePhoto.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.CoordinateFormat.dd": {
+    "description": "Decimal Degrees coordinate format",
+    "message": "ဒသမ ဒီဂရီ"
+  },
+  "screens.CoordinateFormat.dms": {
+    "description": "Degrees/Minutes/Seconds coordinate format",
+    "message": "ဒီဂရီ/ မိနစ်/ စက္ကန့်"
+  },
+  "screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "ကိုဩဒိနိတ် ပုံစံ"
+  },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "UTM (Universal Transverse Mercator)"
+  },
+  "screens.DataPrivacy.next": {
+    "message": "နောက်ထပ်"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Incorrect passcode, please try again"
+  },
+  "screens.ExchangeSoloScreen.goBack": {
+    "message": "နောက်သို့ ပြန်သွား"
+  },
+  "screens.LeaveProject.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.ManualGpsScreen.DdForm.east": {
+    "message": "အရှေ့"
+  },
+  "screens.ManualGpsScreen.DdForm.north": {
+    "message": "မြောက်"
+  },
+  "screens.ManualGpsScreen.DmsForm.east": {
+    "message": "အရှေ့"
+  },
+  "screens.ManualGpsScreen.DmsForm.north": {
+    "message": "မြောက်"
+  },
+  "screens.ManualGpsScreen.coordinateFormat": {
+    "message": "ကိုဩဒိနိတ် ပုံစံ"
+  },
+  "screens.ManualGpsScreen.decimalDegrees": {
+    "message": "ဒသမ ဒီဂရီ"
+  },
+  "screens.ManualGpsScreen.degreesMinutesSeconds": {
+    "message": "ဒီဂရီ/ မိနစ်/ စက္ကန့်"
+  },
+  "screens.ManualGpsScreen.easting": {
+    "message": "အရှေ့"
+  },
+  "screens.ManualGpsScreen.northing": {
+    "message": "မြောက်"
+  },
+  "screens.ManualGpsScreen.title": {
+    "description": "title of manual GPS screen",
+    "message": "ကိုဩဒိနိတ်အမှတ်များ ရိုက်ထည့်ပါ"
+  },
+  "screens.ManualGpsScreen.universalTransverseMercator": {
+    "message": "UTM (Universal Transverse Mercator)"
+  },
+  "screens.ManualGpsScreen.zoneNumber": {
+    "message": "ဇုန်နံပါတ်"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
+    "message": "Turn On"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
+    "message": "Use Your Location"
+  },
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "အဖြေမရှိပါ"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  },
+  "screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "မျှဝေခြင်း"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.Observation.comapeoAlert": {
+    "message": "CoMapeo Alert"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "ဟုတ်ကဲ့၊ ပယ်ဖျက်မည်"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "လေ့လာထားရှိမှုများကို ဖျက်ပစ်မှာလား?"
+  },
+  "screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  },
+  "screens.Observation.fallbackPresetName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  },
+  "screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  },
+  "screens.ObservationCreate.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "ဆက်လက် စောင့်နေခြင်း"
+  },
+  "screens.ObservationCreate.changePreset": {
+    "message": "ပြောင်းလဲသည်"
+  },
+  "screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
+  },
+  "screens.ObservationCreate.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  },
+  "screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "ပြီးသွားပြီ"
+  },
+  "screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "နောက်ထပ်"
+  },
+  "screens.ObservationDetails.title": {
+    "description": "Title of observation details screen showing question number and total",
+    "message": "{စုစုပေါင်း} မှ {လက်ရှိ} မေးခွန်း"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
+  },
+  "screens.ObservationEdit.changePreset": {
+    "message": "ပြောင်းလဲသည်"
+  },
+  "screens.ObservationEdit.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
+  },
+  "screens.ObservationEdit.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  },
+  "screens.Onboarding.JoinProjectIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.ProjectStatisticsTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ပစ်မှာလား?"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
+    "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "ကိရိယာများကို ဖိတ်ခေါ်ပါ"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.Config.navTitle": {
+    "message": "Configuration"
+  },
+  "screens.Settings.Config.okButton": {
+    "message": "အိုကေ"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "ပြီးသွားပြီ"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
+    "message": "Invite Device"
+  },
+  "screens.Settings.CreateOrJoinProject.createProjectButton": {
+    "message": "Create Project"
+  },
+  "screens.Settings.CreateOrJoinProject.enterName": {
+    "message": "Enter a name for the Project"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
+    "message": "Background Maps"
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "နောက်ထပ်"
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "နောက်ထပ်"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
+  },
+  "screens.Sync.NoWifiDisplay.buttonText": {
+    "message": "Open Settings"
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.NoWifiDisplay.title": {
+    "message": "No WiFi"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesFound": {
+    "message": "Devices found"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
+    "message": "Complete! You're up to date"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
+  },
+  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
+    "message": "Waiting for devices"
+  },
+  "screens.Track.ObservationList.observation": {
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  },
+  "screens.TrackRecordingActive.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "You’re currently recording a track. To join project, stop recording"
+  },
+  "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "ရှာဖွေခြင်း…"
+  },
+  "sharedComponents.Editor.PresetView.Change": {
+    "message": "ပြောင်းလဲသည်"
+  },
+  "sharedComponents.ErrorBottomSheet.goBack": {
+    "message": "နောက်သို့ ပြန်သွား"
+  },
+  "soloProject.inviteCollaborators.goBack": {
+    "message": "နောက်သို့ ပြန်သွား"
+  },
+  "soloProject.startNewProject.goBack": {
+    "message": "နောက်သို့ ပြန်သွား"
   }
 }

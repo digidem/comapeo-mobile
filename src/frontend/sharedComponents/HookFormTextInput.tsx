@@ -10,7 +10,7 @@ import {
   UseControllerProps,
 } from 'react-hook-form';
 import {TextInput as RNTextInput, StyleSheet, View} from 'react-native';
-import {BLACK, LIGHT_GREY, NEW_DARK_GREY, RED} from '../lib/styles';
+import {BLACK, NEW_DARK_GREY, RED, LIGHT_GREY} from '../lib/styles';
 import {ErrorIcon} from './icons';
 import {ViewStyleProp} from '../sharedTypes';
 import {Text} from './Text';
@@ -69,6 +69,7 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
           render={({field: {value, onChange, onBlur}}) => (
             <RNTextInput
               testID={testID}
+              placeholderTextColor={NEW_DARK_GREY}
               style={{
                 flex: 1,
                 color: BLACK,

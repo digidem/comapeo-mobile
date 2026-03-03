@@ -92,5 +92,1989 @@
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Doorgaan met bewerken"
+  },
+  "ObservationEdit.HeaderLeft.discardObservationDescription": {
+    "message": "Uw wijzigingen worden niet opgeslagen. Dit kan niet ongedaan worden gemaakt."
+  },
+  "ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Wijzigingen annuleren?"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
+    "message": "Wanneer projectdeelnemers hun gegevens synchroniseren, worden ze ook gearchiveerd op het internet. Uw projectgegevens synchroniseren naar het archief via het internet naar de veilige, versleutelde server hieronder. De eigenaar van de server kan de gegevens bekijken."
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
+    "message": "Ongeldige URL"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.looking": {
+    "message": "Zoeken naar extern archief..."
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle": {
+    "message": "Extern archief toevoegen"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
+    "message": "Alleen een projectcoördinator kan extern archief uitschakelen."
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
+    "message": "URL"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded": {
+    "message": "Zie wat er in zit"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
+    "message": "U voegt toe:"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive": {
+    "message": "Extern archief toevoegen"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOff.dataNotShared": {
+    "message": "De data in je project wordt niet gedeeld via internet. Alleen mensen in je project kunnen je gegevens zien."
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOff.experimentalFeature": {
+    "message": "Dit is een experimentele functie. U heeft een URL van het Extern Archief nodig om het Extern Archief in te schakelen."
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOff.noServers": {
+    "message": "Er zijn geen servers aan dit project toegevoegd"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff": {
+    "message": "Extern archief staat uit"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.coordinatorCanTurnOff": {
+    "message": "Alleen een projectcoördinator kan extern archief uitschakelen."
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.dateAdded": {
+    "message": "Datum toegevoegd"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.deviceNames": {
+    "message": "Namen van apparaten"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
+    "message": "Extern archief"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.observations": {
+    "message": "Waarnemingen (inclusief foto's en audio)"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.projectSettings": {
+    "message": "Projectinstellingen (categorieën, vragen)"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
+    "message": "Extern archief staat aan"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.remove": {
+    "message": "Verwijder de server om het externe archief te stoppen."
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.removeServer": {
+    "message": "Server verwijderen"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.serverName": {
+    "message": "Server Naam"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.syncWithInternet": {
+    "message": "Uw projectgegevens synchroniseren naar het archief via het internet naar de veilige, versleutelde server hieronder. De eigenaar van de server kan de gegevens bekijken."
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.thisIncludes": {
+    "message": "Dit omvat:"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.tracks": {
+    "message": "Nummers"
+  },
+  "ProjectSettings.RemoteArchive.Success.archiveAdded": {
+    "message": "Extern archief toegevoegd"
+  },
+  "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
+    "message": "Alle projectapparaten kunnen synchroniseren met dit archief, gegevens delen via het internet."
+  },
+  "ProjectSettings.RemoteArchive.Success.close": {
+    "message": "Afsluiten"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
+    "message": "Afsluiten"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
+    "message": "Namen van apparaten"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.observations": {
+    "message": "Waarnemingen (inclusief foto's en audio)"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.projectSettings": {
+    "message": "Projectinstellingen (categorieën, vragen)"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.title": {
+    "message": "Wat is inbegrepen"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.tracks": {
+    "message": "Nummers"
+  },
+  "ProjectSettings.RemoteArchive.navTitle": {
+    "message": "Extern archief"
+  },
+  "SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Doorgaan met bewerken"
+  },
+  "SaveTrack.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "Tracking verwijderen?"
+  },
+  "SaveTrack.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "Track weggooien"
+  },
+  "SaveTrack.HeaderLeft.discardTrackDescription": {
+    "message": "Uw track wordt niet opgeslagen. Dit kan niet ongedaan worden gemaakt."
+  },
+  "Screens.ProjectSettings.configTitle": {
+    "message": "Project Categorieën"
+  },
+  "Screens.ProjectSettings.editInfo": {
+    "message": "Info bewerken"
+  },
+  "Screens.ProjectSettings.invite": {
+    "message": "Nodig samenwerkers uit"
+  },
+  "Screens.ProjectSettings.projectStatsOff": {
+    "message": "Project Statistieken Instrument UIT"
+  },
+  "Screens.ProjectSettings.projectStatsOffDesc": {
+    "message": "Projectstatistieken worden niet gedeeld."
+  },
+  "Screens.ProjectSettings.projectStatsOn": {
+    "message": "Project Statistieken +unnamed@@0 AAN"
+  },
+  "Screens.ProjectSettings.projectStatsOnDesc": {
+    "message": "Dit project deelt anonieme statistieken."
+  },
+  "Screens.ProjectSettings.remoteArchiveDesc": {
+    "message": "Deel met een veilige, gekleurde server. URL is nodig om toegang te krijgen."
+  },
+  "Screens.ProjectSettings.remoteArchiveOff": {
+    "message": "Extern archiveren UIT"
+  },
+  "Screens.ProjectSettings.remoteArchiveOn": {
+    "message": "Extern archiveren AAN"
+  },
+  "Screens.ProjectSettings.soloDescription": {
+    "message": "Je bent alleen aan het mappen."
+  },
+  "Screens.ProjectSettings.title": {
+    "message": "Coördinator Tools"
+  },
+  "Screens.ProjectSettings.update": {
+    "message": "Updaten"
+  },
+  "Screens.ProjectSettings.updateCategories": {
+    "message": "Set bijwerken"
+  },
+  "Screens.ProjectSettings.view": {
+    "message": "Toon"
+  },
+  "Screens.ProjectSettings.viewDetails": {
+    "message": "Details bekijken"
+  },
+  "Screens.Settings.AppSettings.Drawer.security": {
+    "message": "Beveiliging"
+  },
+  "Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "Over CoMapeo"
+  },
+  "Screens.Settings.AppSettings.coordinateSystem": {
+    "message": "Coördinaat systeem"
+  },
+  "Screens.Settings.AppSettings.deviceName": {
+    "message": "Apparaat Naam"
+  },
+  "Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Vroegtijdige toegangsmodus"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.off": {
+    "message": "Vroegtijdige toegang is UIT"
+  },
+  "Screens.Settings.AppSettings.earlyAccess.on": {
+    "message": "Vroegtijdige toegang is AAN"
+  },
+  "Screens.Settings.AppSettings.language": {
+    "message": "Taal"
+  },
+  "Screens.Settings.AppSettings.languageDesc": {
+    "message": "Taal voor app weergeven"
+  },
+  "Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Gegevens & Privacy"
+  },
+  "Screens.Settings.AppSettings.title": {
+    "message": "CoMapeo instellingen"
+  },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
+    "description": "Text for cancel action button.",
+    "message": "Annuleren"
+  },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
+    "description": "Explanation for consequences of removing archive server.",
+    "message": "Dit zal stoppen met het archiveren van nieuwe gegevens voor dit project. Bestaande gearchiveerde gegevens worden niet verwijderd."
+  },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.removeArchive": {
+    "description": "Text for destructive action button.",
+    "message": "Verwijder archief"
+  },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.title": {
+    "description": "Text for title that asks about confirming archive server removal.",
+    "message": "{name} uit het project verwijderen?"
+  },
+  "SharedComponents.ActionButtons.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Annuleren"
+  },
+  "SharedComponents.ActionButtons.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Ja, verwijderen"
+  },
+  "SharedComponents.ActionButtons.delete": {
+    "description": "Button to delete an observation",
+    "message": "Verwijderen"
+  },
+  "SharedComponents.ActionButtons.share": {
+    "description": "Button to share an observation",
+    "message": "Delen"
+  },
+  "Storage.MapBanner.title": {
+    "message": "Uw apparaat heeft een lage opslag."
+  },
+  "Storage.MenuAlert.cta": {
+    "message": "Maak ruimte vrij"
+  },
+  "Storage.MenuAlert.onlyLeft": {
+    "message": "Alleen {free}mb over op je apparaat"
+  },
+  "Storage.MenuAlert.subtitle": {
+    "message": "Sommige functies werken mogelijk niet meer."
+  },
+  "Storage.MenuAlert.title": {
+    "message": "Uw apparaat heeft een lage opslag."
+  },
+  "TrackBottomSheet.DidNotMove.delete": {
+    "message": "Tracks afsluiten"
+  },
+  "TrackBottomSheet.DidNotMove.didNotMove": {
+    "message": "Je bent niet verder gegaan dan één meter."
+  },
+  "TrackBottomSheet.DidNotMove.keepRecording": {
+    "message": "Doorgaan met opnemen"
+  },
+  "TrackBottomSheet.DidNotMove.noTrackRecorded": {
+    "message": "Geen nummer opgenomen"
+  },
+  "TrackBottomSheet.StartStopTrack.readyToRecord": {
+    "message": "Klaar om nieuw nummer op te nemen?"
+  },
+  "TrackBottomSheet.StartStopTrack.trackingRequirement": {
+    "message": "Verplaats één meter om het nummer te zien."
+  },
+  "TrackEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Doorgaan met bewerken"
+  },
+  "TrackEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "Wijzigingen annuleren?"
+  },
+  "TrackEdit.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "Wijzigingen annuleren"
+  },
+  "TrackEdit.HeaderLeft.discardTrackDescription": {
+    "message": "Uw wijzigingen worden niet opgeslagen. Dit kan niet ongedaan worden gemaakt."
+  },
+  "allProjects.close": {
+    "message": "Open Settings"
+  },
+  "allProjects.newCollab": {
+    "message": "Nieuwe samenwerking"
+  },
+  "constants.blue": {
+    "message": "Blauw"
+  },
+  "constants.green": {
+    "message": "Groen"
+  },
+  "constants.grey": {
+    "message": "Grijs"
+  },
+  "constants.orange": {
+    "message": "Oranje"
+  },
+  "constants.red": {
+    "message": "Rood"
+  },
+  "projectInfoCard.coordinator": {
+    "message": "Je bent een coördinator voor dit project."
+  },
+  "projectInfoCard.mappingOnOwn": {
+    "message": "Je maakt zelf een mapping uit."
+  },
+  "projectInfoCard.participant": {
+    "message": "U bent een deelnemer in dit project."
+  },
+  "screen.EditProjectDetails.descriptionPlaceholder": {
+    "message": "Korte omschrijving van het Project, minder dan 60 tekens."
+  },
+  "screen.EditProjectDetails.navTitle": {
+    "message": "Info bewerken"
+  },
+  "screen.EditProjectDetails.projectColors": {
+    "message": "Kleuren projectkaart"
+  },
+  "screen.EditProjectDetails.projectDescription": {
+    "message": "Project beschrijving"
+  },
+  "screen.EditProjectDetails.projectName": {
+    "message": "Project Naam"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
+    "message": "Coördinator"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
+    "message": "Deelnemer"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
+    "message": "Uitnodiging sturen"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice": {
+    "message": "Geen apparaat gezien?"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
+    "message": "Zorg ervoor dat beide apparaten op dezelfde versie van CoMapeo staan"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
+    "message": "Zorg ervoor dat beide apparaten op hetzelfde wifi-netwerk zitten"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
+    "message": "Selecteer apparaat om uit te nodigen"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
+    "message": "Als coördinator kan dit apparaat gebruikers uitnodigen en verwijderen en projectdetails beheren."
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.participantDescription": {
+    "message": "Als deelnemer kan dit apparaat waarnemingen aannemen en delen. Ze kunnen geen gebruikers of projectgegevens beheren."
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice": {
+    "message": "U selecteert een rol voor dit apparaat:"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
+    "message": "Selecteer een rol"
+  },
+  "screens.AboutSettings.CoMapeoBuild": {
+    "description": "Label for CoMapeo build number",
+    "message": "CoMapeo maken"
+  },
+  "screens.AboutSettings.CoMapeoVersion": {
+    "description": "Label for CoMapeo version",
+    "message": "CoMapeo versie"
+  },
+  "screens.AboutSettings.androidBuild": {
+    "description": "Label for Android build number",
+    "message": "Android build nummer"
+  },
+  "screens.AboutSettings.androidVersion": {
+    "description": "Label for Android version",
+    "message": "Android versie"
+  },
+  "screens.AboutSettings.comapeoWebsiteLabel": {
+    "message": "CoMapeo website"
+  },
+  "screens.AboutSettings.earlyAccessBanner": {
+    "message": "U bent in de Vroegtijdige toegangsmodus."
+  },
+  "screens.AboutSettings.emojiSource": {
+    "description": "Label for the source of emojis used in CoMapeo",
+    "message": "Emojis bron"
+  },
+  "screens.AboutSettings.phoneModel": {
+    "description": "Label for phone model",
+    "message": "Telefoon model"
+  },
+  "screens.AboutSettings.releaseNameLabel": {
+    "description": "Label for the release name",
+    "message": "Release naam"
+  },
+  "screens.AboutSettings.seeUpdates": {
+    "message": "Zie CoMapeo updates"
+  },
+  "screens.AboutSettings.title": {
+    "description": "Title of 'About CoMapeo' screen",
+    "message": "Over CoMapeo"
+  },
+  "screens.AboutSettings.unknownValue": {
+    "description": "Shown when a device info (e.g. version number) is unknown",
+    "message": "Onbekend"
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "Annuleren"
+  },
+  "screens.AppPasscode": {
+    "message": "App toegangscode"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Annuleren"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
+    "description": "used to indicate to the user what the new passcode will be.",
+    "message": "Toegangscode: {passcode}"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "Wachtwoord voor opslaan"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
+    "message": "Let op dat je toegangscode op een beveiligde locatie is voordat je opslaat."
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.title": {
+    "message": "App-toegangscodes kunnen nooit hersteld worden als ze verloren of vergeten zijn!"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
+    "message": "Voer wachtwoord in"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
+    "message": "Voer wachtwoord in"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "Annuleren"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "Wachtwoord opnieuw invoeren"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "Stel App toegangscode in"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "Volgende"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "Wachtwoord moet 5 cijfers zijn"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "Kan niet gebruikt worden als een toegangscode"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "Wachtwoord komt niet overeen"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
+    "message": "Deze toegangscode is vereist om de CoMapeo App te openen"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
+    "message": "Bevestig wachtwoord"
+  },
+  "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
+    "message": "Stel wachtwoord in"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Doorgaan"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "Wat is App Passcode?"
+  },
+  "screens.AppPasscode.PasscodeIntro.description": {
+    "message": "App toegangscode stelt u in staat een extra beveiligingslaag toe te voegen door u een toegangscode in te voeren om de CoMapeo app te openen. Je kunt je eigen 5-cijferige toegangscode definiëren door de onderstaande functie in te schakelen."
+  },
+  "screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "<bold>Houd er rekening mee dat vergeten toegangscodes niet kunnen worden hersteld!</bold> Zodra deze functie is ingeschakeld, als u uw wachtwoord vergeet of verliest. u kunt geen CoMapeo openen en verliest toegang tot CoMapeo gegevens die niet zijn gesynchroniseerd met andere deelnemers aan het project."
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "Annuleren"
+  },
+  "screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "Verander App toegangscode"
+  },
+  "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
+    "message": "U gebruikt momenteel App Passcode. Zie hieronder om te stoppen met het gebruiken of wijzigen van uw toegangscode."
+  },
+  "screens.AppPasscode.TurnOffPasscode.description": {
+    "message": "App toegangscode voegt een extra beveiligingslaag toe doordat u een toegangscode moet invoeren om de CoMapeo app te openen."
+  },
+  "screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "App toegangscode"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOff": {
+    "message": "Zet uit"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
+    "message": "App toegangscode uitschakelen?"
+  },
+  "screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "Gebruik App toegangscode"
+  },
+  "screens.AppUsagePrompt.countIn": {
+    "message": "Ja, tel me in"
+  },
+  "screens.AppUsagePrompt.idsScrambled": {
+    "message": "ID's worden willekeurig gecodeerd en elke maand veranderd."
+  },
+  "screens.AppUsagePrompt.introText": {
+    "message": "Deel hoe je CoMapeo—alle gedeelde gegevens kunnen niet worden gebruikt om je te volgen."
+  },
+  "screens.AppUsagePrompt.neverStores": {
+    "message": "CoMapeo slaat nooit IP-adressen op."
+  },
+  "screens.AppUsagePrompt.notNow": {
+    "message": "Nee, nu niet"
+  },
+  "screens.AppUsagePrompt.screenTitle": {
+    "message": "Help uw ervaring te verbeteren."
+  },
+  "screens.AppUsagePrompt.turnOffAnytime": {
+    "message": "Schakel op elk moment uit."
+  },
+  "screens.AppUsageSharingSuccess.done": {
+    "message": "Voltooid"
+  },
+  "screens.AppUsageSharingSuccess.nowSharing": {
+    "message": "deelt nu hoe u CoMapeo gebruikt met Awana Digital."
+  },
+  "screens.AppUsageSharingSuccess.removeAnytime": {
+    "message": "Verander dit op elk gewenst moment door te navigeren naar gegevens en privacy in het Menu."
+  },
+  "screens.AppUsageSharingSuccess.success": {
+    "message": "Voltooid!"
+  },
+  "screens.AudioAttachmentPlayback.navTitle": {
+    "message": "Audio opnemen"
+  },
+  "screens.AudioAttachmentPlayback.share": {
+    "message": "Delen"
+  },
+  "screens.AudioPermission.Button.allow": {
+    "description": "Screen button text for granting the audio permission",
+    "message": "Toestaan"
+  },
+  "screens.AudioPermission.Button.goToSettings": {
+    "description": "Screen button text for navigating the user to settings when audio permission is denied",
+    "message": "Ga naar Instellingen"
+  },
+  "screens.AudioPermission.Button.notNow": {
+    "description": "Screen button text for not granting audio permission",
+    "message": "Niet nu"
+  },
+  "screens.AudioPermission.description": {
+    "description": "Screen description for audio permission screen",
+    "message": "Om audio op te nemen tijdens het gebruik van de app en op de achtergrond heeft CoMapeo toegang nodig tot uw microfoon. Schakel permissies voor microfoon in in uw app-instellingen."
+  },
+  "screens.AudioPermission.title": {
+    "description": "Screen title for audio permission screen",
+    "message": "Audio opnemen met CoMapeo"
+  },
+  "screens.AudioPlaybackNew.backToEditing": {
+    "message": "Terug naar Bewerken"
+  },
+  "screens.AudioPlaybackNew.delete": {
+    "message": "Verwijderen"
+  },
+  "screens.AudioPlaybackNew.recordingSaved": {
+    "message": "Opname opgeslagen!"
+  },
+  "screens.AudioRecording.lessThan1": {
+    "message": "Nog minder dan een minuut resterend"
+  },
+  "screens.AudioRecording.lessThan5": {
+    "message": "Nog minder dan 5 minuten over"
+  },
+  "screens.AudioRecording.nowRecording": {
+    "message": "Nu opnemen..."
+  },
+  "screens.CameraScreen.goToSettings": {
+    "message": "Ga naar Instellingen"
+  },
+  "screens.CameraScreen.noCameraAccess": {
+    "message": "Geen toegang tot camera. Geef toegang in instellingen"
+  },
+  "screens.CollaboratorInfo.addedOn": {
+    "message": "Toegevoegd op {date}"
+  },
+  "screens.CollaboratorInfo.coordinator": {
+    "message": "Coördinator"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "Project verlaten"
+  },
+  "screens.CollaboratorInfo.navTitle": {
+    "message": "Medewerker Info"
+  },
+  "screens.CollaboratorInfo.participant": {
+    "message": "Deelnemer"
+  },
+  "screens.CollaboratorInfo.removeDevice": {
+    "message": "Apparaat verwijderen"
+  },
+  "screens.CollaboratorInfo.thisDevice": {
+    "message": "Dit apparaat"
+  },
+  "screens.ConfirmDeletePhoto.cancel": {
+    "message": "Annuleren"
+  },
+  "screens.ConfirmDeletePhoto.deletePhoto": {
+    "message": "Foto verwijderen"
+  },
+  "screens.ConfirmDeletePhoto.title": {
+    "message": "Deze foto verwijderen?"
+  },
+  "screens.CoordinateFormat.dd": {
+    "description": "Decimal Degrees coordinate format",
+    "message": "Decimale graden (DD)"
+  },
+  "screens.CoordinateFormat.dms": {
+    "description": "Degrees/Minutes/Seconds coordinate format",
+    "message": "Graden/Minuten/Seconden (DMS)"
+  },
+  "screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "Coördinaat formaat"
+  },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "Universal Transverse Mercator (UTM)"
+  },
+  "screens.DataAndPrivacy.appUsageId": {
+    "message": "ID-nummers worden willekeurig gecodeerd en elke maand veranderd."
+  },
+  "screens.DataAndPrivacy.appUsageText": {
+    "message": "Deel hoe u CoMapeo gebruikt met Awana Digital—er kan geen informatie gebruikt worden om u te volgen."
+  },
+  "screens.DataAndPrivacy.appUsageTitle": {
+    "message": "App gebruik"
+  },
+  "screens.DataAndPrivacy.diagnosticInfoText": {
+    "message": "Geanonimiseerde informatie over uw apparaat, app crasht, fouten en prestaties helpt Awana Digital om de app te verbeteren en fouten op te lossen."
+  },
+  "screens.DataAndPrivacy.diagnosticInfoTitle": {
+    "message": "Diagnostische informatie"
+  },
+  "screens.DataAndPrivacy.ipAddress": {
+    "message": "CoMapeo slaat nooit IP-adressen op."
+  },
+  "screens.DataAndPrivacy.learnMore": {
+    "message": "Meer informatie"
+  },
+  "screens.DataAndPrivacy.navTitle": {
+    "message": "Gegevens & Privacy"
+  },
+  "screens.DataAndPrivacy.noPII": {
+    "message": "Dit bevat nooit enige van je gegevens of persoonlijke informatie."
+  },
+  "screens.DataAndPrivacy.optOut": {
+    "message": "U kunt diagnostische informatie op elk moment niet delen."
+  },
+  "screens.DataAndPrivacy.respectsPrivacy": {
+    "message": "CoMapeo Respecteert uw Privacy & Autonomie"
+  },
+  "screens.DataAndPrivacy.shareAppUsage": {
+    "message": "Deel App Gebruik"
+  },
+  "screens.DataPrivacy.diagnostic": {
+    "message": "Diagnostische informatie is volledig geanonimiseerd—opt-out op elk moment."
+  },
+  "screens.DataPrivacy.intro": {
+    "message": "Een paar belangrijke dingen die we in gedachten moeten houden:"
+  },
+  "screens.DataPrivacy.learnMore": {
+    "message": "Meer informatie"
+  },
+  "screens.DataPrivacy.manageAndControl": {
+    "message": "Gemakkelijk beheren en beheren van delen en samenwerken."
+  },
+  "screens.DataPrivacy.next": {
+    "message": "Volgende"
+  },
+  "screens.DataPrivacy.stays": {
+    "message": "Je gegevens blijven op je toestellen — volledig versleuteld en in je besturing."
+  },
+  "screens.DataPrivacy.title": {
+    "message": "CoMapeo is standaard privé."
+  },
+  "screens.DeviceNaming.Success.chooseProject": {
+    "message": "Kies uit de onderkant om je eerste project te starten."
+  },
+  "screens.DeviceNaming.Success.deviceReady": {
+    "message": "{deviceName} is klaar!"
+  },
+  "screens.DeviceNaming.Success.joinProject": {
+    "message": "Deelnemen aan een project"
+  },
+  "screens.DeviceNaming.Success.mapOnYourOwn": {
+    "message": "Kaart op uw eigen"
+  },
+  "screens.DeviceNaming.Success.success": {
+    "message": "Voltooid!"
+  },
+  "screens.DeviceNaming.description": {
+    "message": "Verschillende namen helpen medewerkers om CoMapeo te herkennen."
+  },
+  "screens.DeviceNaming.header": {
+    "message": "Benoem uw apparaat"
+  },
+  "screens.DeviceNaming.placeholder": {
+    "message": "Apparaat Naam"
+  },
+  "screens.DeviceNaming.save": {
+    "message": "Opslaan"
+  },
+  "screens.EarlyAccess.feedbackLink": {
+    "message": "Deel het hier"
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "Heeft u feedback?"
+  },
+  "screens.EarlyAccess.infoBox": {
+    "message": "Gegevens uit Vroegtijdige Toegang zullen niet zichtbaar zijn voor medewerkers die niet hebben gekozen."
+  },
+  "screens.EarlyAccess.intro": {
+    "message": "Schakel over naar Vroegtijdige Toegang om aankomende functies te testen. U kunt op elk moment terugschakelen. Sommige gegevens kunnen worden verborgen wanneer ze zijn uitgeschakeld, maar zijn altijd veilig."
+  },
+  "screens.EarlyAccess.navTitle": {
+    "message": "Vroegtijdige toegangsmodus"
+  },
+  "screens.EarlyAccess.updates": {
+    "message": "Zie CoMapeo updates"
+  },
+  "screens.EarlyAccess.useEarlyAccess": {
+    "message": "Gebruik Vroegtijdige Toegang Functies"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EarlyAccessTurnedOff.desc": {
+    "message": "Gegevens van Vroegtijdige Toegang worden verborgen na het uitschakelen van de toegang, maar zijn nog steeds opgeslagen. Schakel op elk moment terug om het te zien."
+  },
+  "screens.EarlyAccessTurnedOff.title": {
+    "message": "Gegevens voor vroegtijdige toegang"
+  },
+  "screens.EnterPassword.enterPass": {
+    "message": "Voer uw toegangscode in"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Incorrect passcode, please try again"
+  },
+  "screens.ExchangeSettingsBottomSheet.close": {
+    "message": "Afsluiten"
+  },
+  "screens.ExchangeSettingsBottomSheet.everythingDesc": {
+    "message": "Foto's op volledige grootte en audio. Gebruikt meer opslag."
+  },
+  "screens.ExchangeSettingsBottomSheet.everythingTitle": {
+    "message": "Wissel Alles"
+  },
+  "screens.ExchangeSettingsBottomSheet.previewsDesc": {
+    "message": "Verminderde formaat foto's. Geen audio inbegrepen."
+  },
+  "screens.ExchangeSettingsBottomSheet.previewsTitle": {
+    "message": "Uitwisselen van alleen voorvertoningen"
+  },
+  "screens.ExchangeSettingsBottomSheet.save": {
+    "message": "Opslaan"
+  },
+  "screens.ExchangeSettingsCard.changeSettings": {
+    "message": "Instellingen wijzigen"
+  },
+  "screens.ExchangeSoloScreen.dataSecure": {
+    "message": "Je gegevens blijven beveiligd tijdens het wisselen tussen vertrouwde apparaten."
+  },
+  "screens.ExchangeSoloScreen.getStarted": {
+    "message": "Aan de slag op twee eenvoudige manieren:"
+  },
+  "screens.ExchangeSoloScreen.goBack": {
+    "message": "Ga terug"
+  },
+  "screens.ExchangeSoloScreen.inviteCollaborators": {
+    "message": "Nodig medewerkers uit voor uw project via het hoofdmenu"
+  },
+  "screens.ExchangeSoloScreen.joinExisting": {
+    "message": "Word lid van een bestaand project door een uitnodiging te accepteren"
+  },
+  "screens.ExchangeSoloScreen.securelyShare": {
+    "message": "Deel veilig waarnemingen tussen aangesloten apparaten."
+  },
+  "screens.ExchangeSoloScreen.title": {
+    "message": "Ruil"
+  },
+  "screens.ExportObservations.allObservations": {
+    "message": "Alle waarnemingen"
+  },
+  "screens.ExportObservations.allObservationsAndMedia": {
+    "message": "Alle waarnemingen met media"
+  },
+  "screens.ExportObservations.allObservationsAndMediaDescription": {
+    "message": "Afbeeldingen en audio in het zip-bestand"
+  },
+  "screens.ExportObservations.allObservationsDescription": {
+    "message": "Alleen tekst als een GeoJSON-bestand"
+  },
+  "screens.ExportObservations.close": {
+    "message": "Afsluiten"
+  },
+  "screens.ExportObservations.download": {
+    "message": "Downloaden"
+  },
+  "screens.ExportObservations.errorMessage": {
+    "message": "Kies een optie"
+  },
+  "screens.ExportObservations.tracks": {
+    "message": "Nummers"
+  },
+  "screens.ExportObservations.tracksDescription": {
+    "message": "Trackt alleen als een GeoJSON-bestand"
+  },
+  "screens.FatalError.restart": {
+    "message": "App herstarten"
+  },
+  "screens.FatalError.somethingWrong": {
+    "message": "Er is iets misgegaan"
+  },
+  "screens.IntroToCoMapeo.collaborate": {
+    "message": "Deel veilig met medewerkers"
+  },
+  "screens.IntroToCoMapeo.designedFor": {
+    "message": "Co-ontworpen met en voor inheemse grondstoffenmappers & -monitors."
+  },
+  "screens.IntroToCoMapeo.getStarted": {
+    "message": "Nu inschrijven"
+  },
+  "screens.IntroToCoMapeo.mapAnywhere": {
+    "message": "Kaart overal en overal"
+  },
+  "screens.IntroToCoMapeo.mapWorldTogether": {
+    "message": "Verbind je wereld samen."
+  },
+  "screens.IntroToCoMapeo.ownData": {
+    "message": "Altijd de eigenaar en controle van je gegevens"
+  },
+  "screens.InviteCancelled.canceled": {
+    "message": "Uitnodiging geannuleerd"
+  },
+  "screens.InviteCancelled.close": {
+    "message": "Afsluiten"
+  },
+  "screens.InviteCancelled.projectInviteCanceled": {
+    "message": "Uw uitnodiging aan {projectName} is geannuleerd."
+  },
+  "screens.InviteReceived.coordinatorRole": {
+    "message": "coördinator"
+  },
+  "screens.InviteReceived.declineInvite": {
+    "message": "Uitnodiging afwijzen"
+  },
+  "screens.InviteReceived.invitedToJoin": {
+    "message": "Je bent uitgenodigd voor..."
+  },
+  "screens.InviteReceived.joinAsRole": {
+    "message": "Deelnemen als een {role}?"
+  },
+  "screens.InviteReceived.joinProject": {
+    "message": "Deelnemen aan project"
+  },
+  "screens.InviteReceived.participantRole": {
+    "message": "deelnemer"
+  },
+  "screens.InviteReceived.sharedStats": {
+    "message": "Projectstatistieken worden gedeeld"
+  },
+  "screens.InviteSuccess.success": {
+    "message": "Geslaagd"
+  },
+  "screens.InviteSuccess.youHaveJoined": {
+    "message": "Je bent toegetreden tot {projectName}"
+  },
+  "screens.LanguageSettings.followSystemPreferences": {
+    "description": "Label for language option to follow system preferences",
+    "message": "Volg systeemvoorkeuren"
+  },
+  "screens.LanguageSettings.title": {
+    "description": "Title language settings screen",
+    "message": "Taal"
+  },
+  "screens.LeaveProject.cancel": {
+    "message": "Annuleren"
+  },
+  "screens.LeaveProject.leaveProjectTitle": {
+    "message": "Verlaat {projectName}?"
+  },
+  "screens.LeaveProject.yesLeave": {
+    "message": "Ja, verlaat"
+  },
+  "screens.LeftProjectConfirmation.youveLeftProject": {
+    "message": "Je hebt het project verlaten."
+  },
+  "screens.LocationInfoScreen.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "Huidige GPS locatie"
+  },
+  "screens.LocationInfoScreen.lastUpdate": {
+    "description": "Section title for time of last GPS update",
+    "message": "Laatste update"
+  },
+  "screens.LocationInfoScreen.locationDD": {
+    "description": "Section title for DD coordinates",
+    "message": "Coördinaten Decimale Graden"
+  },
+  "screens.LocationInfoScreen.locationDMS": {
+    "description": "Section title for DMS coordinates",
+    "message": "DMS coördinaten"
+  },
+  "screens.LocationInfoScreen.locationSensors": {
+    "description": "Heading for section about location sensor status",
+    "message": "Status van de sensor"
+  },
+  "screens.LocationInfoScreen.locationUTM": {
+    "description": "Section title for UTM coordinates",
+    "message": "UTM coördinaten"
+  },
+  "screens.LocationInfoScreen.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Nee"
+  },
+  "screens.LocationInfoScreen.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Ja"
+  },
+  "screens.ManualGpsScreen.DdForm.east": {
+    "message": "Oost"
+  },
+  "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
+    "message": "Ongeldige coördinaten"
+  },
+  "screens.ManualGpsScreen.DdForm.latInputLabel": {
+    "message": "Breedtegraad waarde"
+  },
+  "screens.ManualGpsScreen.DdForm.latitude": {
+    "message": "Breedtegraad"
+  },
+  "screens.ManualGpsScreen.DdForm.lonInputLabel": {
+    "message": "Lengtegraad waarde"
+  },
+  "screens.ManualGpsScreen.DdForm.longitude": {
+    "message": "Lengtegraad"
+  },
+  "screens.ManualGpsScreen.DdForm.north": {
+    "message": "Noord"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
+    "message": "Selecteer latitude cardinaliteit"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
+    "message": "Selecteer lengtegraad kardinaliteit"
+  },
+  "screens.ManualGpsScreen.DdForm.south": {
+    "message": "Zuiden"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
+    "message": "{field} minuten invoer"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
+    "message": "{field} seconden invoer"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
+    "message": "Graden"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
+    "message": "{field} graden ingang"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
+    "message": "Richting"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
+    "message": "minuten"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
+    "message": "seconden"
+  },
+  "screens.ManualGpsScreen.DmsForm.east": {
+    "message": "Oost"
+  },
+  "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
+    "message": "Ongeldige coördinaten"
+  },
+  "screens.ManualGpsScreen.DmsForm.latitude": {
+    "message": "Breedtegraad"
+  },
+  "screens.ManualGpsScreen.DmsForm.longitude": {
+    "message": "Lengtegraad"
+  },
+  "screens.ManualGpsScreen.DmsForm.north": {
+    "message": "Noord"
+  },
+  "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
+    "message": "Selecteer latitude cardinaliteit"
+  },
+  "screens.ManualGpsScreen.DmsForm.south": {
+    "message": "Zuiden"
+  },
+  "screens.ManualGpsScreen.coordinateFormat": {
+    "message": "Coördinaat formaat"
+  },
+  "screens.ManualGpsScreen.decimalDegrees": {
+    "message": "Decimale graden (DD)"
+  },
+  "screens.ManualGpsScreen.degreesMinutesSeconds": {
+    "message": "Graden/Minuten/Seconden (DMS)"
+  },
+  "screens.ManualGpsScreen.easting": {
+    "message": "Oost"
+  },
+  "screens.ManualGpsScreen.eastingSuffix": {
+    "message": "mE"
+  },
+  "screens.ManualGpsScreen.invalidCoordinates": {
+    "message": "Ongeldige coördinaten. Breedtegraad moet tussen -90 en 90 zijn. Lengte moet tussen -180 en 180 zijn"
+  },
+  "screens.ManualGpsScreen.northing": {
+    "message": "Noord"
+  },
+  "screens.ManualGpsScreen.northingSuffix": {
+    "message": "mN"
+  },
+  "screens.ManualGpsScreen.title": {
+    "description": "title of manual GPS screen",
+    "message": "Coördinaten invoeren"
+  },
+  "screens.ManualGpsScreen.zoneLetter": {
+    "message": "Zone letter"
+  },
+  "screens.ManualGpsScreen.zoneNumber": {
+    "message": "Zone nummer"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
+    "message": "Turn On"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
+    "message": "Use Your Location"
+  },
+  "screens.ObscurePasscode.description": {
+    "message": "Obscure Passcode is een beveiligingsfunctie waarmee je CoMapeo kunt openen in een decoy modus die al je gegevens verbergt. Het invoeren van de Obscure toegangscode op het intro scherm geeft een lege versie van CoMapeo weer die u in staat stelt demonstratie-waarnemingen te maken die niet in de CoMapeo database zijn opgeslagen."
+  },
+  "screens.ObscurePasscode.instructions": {
+    "message": "Voer de bovenstaande code in om uw gegevens in CoMapeo te verbergen"
+  },
+  "screens.ObscurePasscode.toggleMessage": {
+    "message": "Gebruik Obscure wachtwoord"
+  },
+  "screens.ObscurePasscode.whatIsObscure": {
+    "message": "Wat is Obscure Passcode?"
+  },
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Verwijderen"
+  },
+  "screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "Geen antwoord"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Waarneming"
+  },
+  "screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "Delen"
+  },
+  "screens.Observation.TrackList.track": {
+    "message": "Bijhouden"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Annuleren"
+  },
+  "screens.Observation.comapeoAlert": {
+    "message": "CoMapeo Alert"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Ja, verwijderen"
+  },
+  "screens.Observation.defaultProjectName": {
+    "message": "Mijn project"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Waarneming verwijderen?"
+  },
+  "screens.Observation.description": {
+    "message": "Beschrijving:"
+  },
+  "screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Waarneming"
+  },
+  "screens.Observation.fallbackPresetName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Waarneming"
+  },
+  "screens.Observation.location": {
+    "message": "Locatie:"
+  },
+  "screens.Observation.precision": {
+    "message": "Nauwkeurigheid:"
+  },
+  "screens.Observation.shareMediaTitle": {
+    "description": "Title of dialog to share an observation with media",
+    "message": "Afbeelding voor delen"
+  },
+  "screens.Observation.shareMessageFooter": {
+    "message": "Verzonden vanuit CoMapeo"
+  },
+  "screens.Observation.shareTextTitle": {
+    "description": "Title of dialog to share an observation without media",
+    "message": "Tekst delen"
+  },
+  "screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Waarneming"
+  },
+  "screens.ObservationCategoryChooser.title": {
+    "message": "Kies een categorie"
+  },
+  "screens.ObservationCreate.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Blijven wachten"
+  },
+  "screens.ObservationCreate.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Handmatige Coördinaten"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Deze waarneming heeft geen locatie. U kunt doorgaan met wachten op een GPS signaal, de waarneming opslaan zonder een locatie, of de coördinaten handmatig invoeren"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "Geen GPS signaal"
+  },
+  "screens.ObservationCreate.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Opslaan"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPS nauwkeurigheid is laag. U kunt blijven wachten op betere nauwkeurigheid, de waarneming opslaan met lage nauwkeurigheid, of handmatig de coördinaten invoeren"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "Zwak GPS signaal"
+  },
+  "screens.ObservationCreate.changePreset": {
+    "message": "Wijzigen"
+  },
+  "screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Wat gebeurt er hier?"
+  },
+  "screens.ObservationCreate.navTitle": {
+    "description": "screen title for new observation screen",
+    "message": "Nieuwe waarneming"
+  },
+  "screens.ObservationCreate.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Waarneming"
+  },
+  "screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "Voltooid"
+  },
+  "screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "Volgende"
+  },
+  "screens.ObservationDetails.title": {
+    "description": "Title of observation details screen showing question number and total",
+    "message": "Vraag {current} van {total}"
+  },
+  "screens.ObservationEdit.ObservationEditView.audioButton": {
+    "description": "Button label for adding audio",
+    "message": "Geluid"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Wat gebeurt er hier?"
+  },
+  "screens.ObservationEdit.ObservationEditView.photoButton": {
+    "description": "Button label for adding photo",
+    "message": "Foto"
+  },
+  "screens.ObservationEdit.changePreset": {
+    "message": "Wijzigen"
+  },
+  "screens.ObservationEdit.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Wat gebeurt er hier?"
+  },
+  "screens.ObservationEdit.navTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "Waarneming wijzigen"
+  },
+  "screens.ObservationEdit.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Waarneming"
+  },
+  "screens.ObservationList.TrackListItem.Track": {
+    "message": "Bijhouden"
+  },
+  "screens.ObservationList.downloadObservation": {
+    "message": "Waarnemingen downloaden"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Waarnemingen"
+  },
+  "screens.ObservationMetadataVerified.accuracy": {
+    "message": "Nauwkeurigheid"
+  },
+  "screens.ObservationMetadataVerified.altitude": {
+    "message": "Hoogte"
+  },
+  "screens.ObservationMetadataVerified.altitudeAccuracy": {
+    "message": "Hoogte Nauwkeurigheid"
+  },
+  "screens.ObservationMetadataVerified.dataEntered": {
+    "message": "Deze gegevens zijn handmatig ingevoerd."
+  },
+  "screens.ObservationMetadataVerified.date": {
+    "message": "Datum:"
+  },
+  "screens.ObservationMetadataVerified.howWeCheck": {
+    "message": "Hoe we valideren"
+  },
+  "screens.ObservationMetadataVerified.latitude": {
+    "message": "Breedtegraad"
+  },
+  "screens.ObservationMetadataVerified.location": {
+    "message": "Locatie"
+  },
+  "screens.ObservationMetadataVerified.locationManuallyEntered": {
+    "message": "Locatie is handmatig ingevoerd"
+  },
+  "screens.ObservationMetadataVerified.longitude": {
+    "message": "Lengtegraad"
+  },
+  "screens.ObservationMetadataVerified.manuallyEntered": {
+    "message": "Handmatig ingevoerd."
+  },
+  "screens.ObservationMetadataVerified.navTitle": {
+    "message": "Metadata waarneming"
+  },
+  "screens.ObservationMetadataVerified.sentByComapeo": {
+    "message": "Verzonden door CoMapeo"
+  },
+  "screens.ObservationMetadataVerified.sentFrom": {
+    "message": "CoMapeo metadata verzonden van"
+  },
+  "screens.ObservationMetadataVerified.speed": {
+    "message": "Snelheid"
+  },
+  "screens.ObservationMetadataVerified.validatedByCoMapeo": {
+    "message": "Verzonden en gevalideerd door CoMapeo"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "Ga naar de kaart"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "Begin van de kaart- of camera weergave om de eerste waarneming op te nemen."
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "Waarnemingen toevoegen"
+  },
+  "screens.ObservationsList.error": {
+    "description": "message shown when there is an unexpected error when loading observations",
+    "message": "Fout bij het laden van waarnemingen. Probeer CoMapeo te sluiten en opnieuw te starten."
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "Bezig te laden… dit kan even duren na het synchroniseren met een nieuw apparaat"
+  },
+  "screens.Onboarding.JoinProjectIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.JoinProjectIntro.description": {
+    "message": "Coördineer met je team om een projectuitnodiging te ontvangen."
+  },
+  "screens.Onboarding.JoinProjectIntro.title": {
+    "message": "Deelnemen aan een project"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.addAudio": {
+    "message": "Audio-opnamen toevoegen."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.description": {
+    "message": "Verken CoMapeo—nodig medewerkers op elk gewenst moment uit."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.goToMap": {
+    "message": "Ga naar Kaart"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
+    "message": "Houd foto's onderweg."
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.title": {
+    "message": "Kaart op uw eigen"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
+    "message": "Track paden lopen."
+  },
+  "screens.OnboardingPrivacyPolicy.navTitle": {
+    "message": "Privacy Beleid"
+  },
+  "screens.OnboardingPrivacyPolicy.permissionsTitle": {
+    "message": "Huidige permissies"
+  },
+  "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
+    "message": "Diagnostische informatie delen"
+  },
+  "screens.PhotoPreviewModal.attachedAtTime": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "Bijgevoegd op het moment van de waarneming"
+  },
+  "screens.PhotoPreviewModal.attachedBy": {
+    "description": "Label for the person who attached the photo to the observation",
+    "message": "Bijgevoegd door {name}"
+  },
+  "screens.PhotoPreviewModal.distanceFromObs": {
+    "message": "Bijgevoegd {distance} van waarneming"
+  },
+  "screens.PhotoPreviewModal.headerButtonText": {
+    "message": "Foto verwijderen"
+  },
+  "screens.PhotoPreviewModal.landscape": {
+    "description": "Describes image layout when taking photo horizontally",
+    "message": "Liggend"
+  },
+  "screens.PhotoPreviewModal.navTitle": {
+    "message": "Foto Info"
+  },
+  "screens.PhotoPreviewModal.portrait": {
+    "description": "Describes image layout when taking photo vertically",
+    "message": "Staand"
+  },
+  "screens.PhotoPreviewModal.timeAttached": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "{formattedNum} bijgevoegd na waarneming"
+  },
+  "screens.PhotoPreviewModal.validatedByCoMapeo": {
+    "message": "Gevalideerd door CoMapeo"
+  },
+  "screens.PhotoPreviewModal.verifiedOriginal": {
+    "description": "Text indicating that the photo is a verified original",
+    "message": "Dit is een ongecontroleerd origineel dat is geverifieerd."
+  },
+  "screens.PrivacyPolicy.aboutAwana": {
+    "message": "Over Awana Digitaal"
+  },
+  "screens.PrivacyPolicy.aboutAwanaContent": {
+    "message": "CoMapeo is ontwikkeld door Awana Digital, een 501c3 non-profitorganisatie geregistreerd in de Verenigde Staten. Awana Digital werkt solidair met frontlinie gemeenschappen om technologie te gebruiken om hun rechten te verdedigen en klimaatverandering te bestrijden."
+  },
+  "screens.PrivacyPolicy.appErrors": {
+    "message": "App Fouten"
+  },
+  "screens.PrivacyPolicy.appErrorsDescription": {
+    "message": "Informatie over interne fouten die leiden tot het functioneren van de app niet zoals verwacht"
+  },
+  "screens.PrivacyPolicy.appInfo": {
+    "message": "App informatie"
+  },
+  "screens.PrivacyPolicy.appInfoDescription": {
+    "message": "De versie en lokalisatie (taal) van CoMapeo"
+  },
+  "screens.PrivacyPolicy.appUsageTitle": {
+    "message": "App gebruik"
+  },
+  "screens.PrivacyPolicy.control": {
+    "message": "U bent de baas"
+  },
+  "screens.PrivacyPolicy.controlDescription": {
+    "message": "Je kunt je afmelden voor het verzenden van informatie naar Awana Digital. Je kiest waar je gegevens worden opgeslagen en met wie ze worden gedeeld. U kunt ervoor kiezen om geanonimiseerde, samengevatte gegevens te delen over hoe u CoMapeo gebruikt met Awana Digital. We zullen altijd transparant zijn over welke informatie je wilt delen om de app te verbeteren en deze informatie zal nooit foto's, video's, audio, tekst of precieze locaties bevatten die u hebt ingevoerd in CoMapeo."
+  },
+  "screens.PrivacyPolicy.crashData": {
+    "message": "Crash gegevens"
+  },
+  "screens.PrivacyPolicy.crashDataDescription": {
+    "message": "Informatie over wat de app onverwacht heeft afgesloten"
+  },
+  "screens.PrivacyPolicy.dataCollection": {
+    "message": "CoMapeo gegevens verzamelen"
+  },
+  "screens.PrivacyPolicy.deviceInfo": {
+    "message": "Apparaat Info"
+  },
+  "screens.PrivacyPolicy.deviceInfoDescription": {
+    "message": "Zoals model en fabrikant van uw apparaat; besturingssysteem van het apparaat; schermgrootte; locale apparaat (taal); geheugen van het apparaat."
+  },
+  "screens.PrivacyPolicy.diagnosticsTitle": {
+    "message": "Diagnose"
+  },
+  "screens.PrivacyPolicy.noPII": {
+    "message": "Geen persoonlijk identificeerbare informatie"
+  },
+  "screens.PrivacyPolicy.noPIIDescription": {
+    "message": "Het gebruik van CoMapeo vereist geen gebruikersaccount. Awana Digital verzamelt uw naam, e-mailadres of andere persoonlijke gegevens niet. Geen permanent gebruikers-id of apparaat-id wordt ooit gedeeld met Awana Digital, en we nemen extra maatregelen om ervoor te zorgen dat geen informatie die u deelt gebruikt kan worden om u bij te houden: ID's worden elke maand willekeurig geordend en geroteerd (gewijzigd) en we slaan geen IP-adressen op."
+  },
+  "screens.PrivacyPolicy.notCollected": {
+    "message": "Wat wordt niet verzameld?"
+  },
+  "screens.PrivacyPolicy.notCollectedDescription": {
+    "message": "We verzamelen geen persoonlijke gegevens of iets dat gebruikt kan worden om een gebruiker of apparaat te identificeren of te volgen. Apparaat-ID's die gebruikt worden om informatie samen te voegen zijn willekeurig, anoniem, en elke maand gewijzigd. Diagnostische informatie bevat geen gegevens over hoe je de app gebruikt. en het bevat nooit enige van de gegevens die u met de app hebt verzameld. We verzamelen uw precieze of grofste locatie niet, alleen het land waar u CoMapeo gebruikt."
+  },
+  "screens.PrivacyPolicy.openSource": {
+    "message": "Open Source en de \"Official\" versie"
+  },
+  "screens.PrivacyPolicy.openSourceContent": {
+    "message": "CoMapeo is een open-source applicatie. Dit betekent dat iedereen de code kan bekijken die ervoor zorgt dat de app werkt en de privacyverklaringen in dit document kan verifiëren. Het betekent ook dat iedereen de app kan aanpassen aan zijn eigen behoeften en een alternatieve versie kan vrijgeven. Dit document verwijst naar gegevens die zijn verzameld door de officiële releases van CoMapeo, digitaal ondertekend door Awana Digital, beschikbaar via de Google Play Store of de Awana Digital website. Onofficiële versies van CoMapeo verkregen van andere kanalen vallen buiten onze controle en kunnen aanvullende informatie delen met andere organisaties."
+  },
+  "screens.PrivacyPolicy.overview": {
+    "message": "Dit document beschrijft welke informatie (\"data\") wordt verzonden van CoMapeo naar de ontwikkelaar van de applicatie, Awana Digital, en hoe die informatie wordt gebruikt."
+  },
+  "screens.PrivacyPolicy.performanceData": {
+    "message": "Prestatie Data"
+  },
+  "screens.PrivacyPolicy.performanceDataDescription": {
+    "message": "Zoals lanceringstijd, energiegebruik, bevriezing van apps en reactievermogen"
+  },
+  "screens.PrivacyPolicy.privacyPolicyTitle": {
+    "message": "CoMapeo gegevens privacy"
+  },
+  "screens.PrivacyPolicy.privateByDefault": {
+    "message": "Standaard Privé"
+  },
+  "screens.PrivacyPolicy.privateByDefaultDescription": {
+    "message": "De gegevens die u verzamelt en maakt met CoMapeo (locaties, foto's, video, audio, tekst) wordt standaard alleen op je apparaat opgeslagen en wordt nergens anders opgeslagen of verzonden. Wanneer u gegevens deelt met medewerkers door deel te nemen aan een project met hen, wordt het versleuteld verzonden naar het apparaat van uw medewerkers. Dit betekent dat de gegevens niet worden verzonden via Awana Digital, noch door iemand anders, op weg naar uw medewerker. Awana Digitaal ziet nooit en heeft geen toegang tot de gegevens die u verzamelt met CoMapeo, tenzij u deze expliciet aan ons stuurt."
+  },
+  "screens.PrivacyPolicy.thirdParty": {
+    "message": "Toegang van derden tot gegevens"
+  },
+  "screens.PrivacyPolicy.thirdPartyDescription": {
+    "message": "Een \"derde partij\" is een andere organisatie dan Awana Digital."
+  },
+  "screens.PrivacyPolicy.userCount": {
+    "message": "Gebruiker tellingen"
+  },
+  "screens.PrivacyPolicy.userCountDescription": {
+    "message": "Het aantal gebruikers per land en per project. Geaggregeerd en geanonimiseerd"
+  },
+  "screens.PrivacyPolicy.whatIsCollected": {
+    "message": "Wat wordt verzameld?"
+  },
+  "screens.PrivacyPolicy.whatIsCollectedDescription": {
+    "message": "Standaard wordt geanonimiseerde diagnostische informatie over uw apparaat, app crashes, fouten en prestaties gedeeld met Awana Digital. Je kunt je op elk moment afmelden voor het delen van deze informatie. Deze diagnostische informatie is volledig geanonimiseerd en bevat nooit enige van uw gegevens (de gegevens die u hebt verzameld met CoMapeo)."
+  },
+  "screens.PrivacyPolicy.whyCollected": {
+    "message": "Waarom worden deze gegevens verzameld?"
+  },
+  "screens.PrivacyPolicy.whyCollectedDescription": {
+    "message": "Crashen van gegevens en app-fouten, samen met de informatie van het apparaat en app bieden Awana Digital de informatie die nodig is om fouten en fouten in de app op te lossen. De prestatiegegevens helpen ons bij het verbeteren van het reactievermogen van de app en het identificeren van fouten. Gebruikers tellen, waaronder totale gebruikers, gebruikers per land en gebruikers per project, rechtvaardigen voortdurende investeringen in de ontwikkeling van CoMapeo."
+  },
+  "screens.ProjectStatistics.navTitle": {
+    "message": "Project statistieken"
+  },
+  "screens.ProjectStatistics.shareLabel": {
+    "message": "Deel projectstatistieken"
+  },
+  "screens.ProjectStatistics.statisticsDescription": {
+    "message": "Geanonimiseerde informatie over je project, inclusief aantal waarnemingen, gebieden gedekt, statistieken over track afstand en tijd, statistieken over bijlagen en het aantal deelnemers."
+  },
+  "screens.ProjectStatistics.statsShared": {
+    "message": "Projectstatistieken worden gedeeld met Awana Digitaal"
+  },
+  "screens.ProjectStatisticsTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.ProjectStatisticsTurnedOff.desc": {
+    "message": "Deze wijziging zal de volgende keer dat u teamleden vervangt van kracht worden."
+  },
+  "screens.ProjectStatisticsTurnedOff.title": {
+    "message": "Project Statistieken Instrument UIT"
+  },
+  "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Wat gebeurt er hier?"
+  },
+  "screens.SaveTrack.TrackEditView.title": {
+    "description": "Title for new track screen",
+    "message": "Nieuwe track"
+  },
+  "screens.SaveTrack.track": {
+    "description": "Category title for new track screen",
+    "message": "Bijhouden"
+  },
+  "screens.Security.obscurePasscodeDescription": {
+    "message": "Schakel App Wachtwoord in om te gebruiken"
+  },
+  "screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "Bescherm uw apparaat tegen aanvallen"
+  },
+  "screens.Security.passDesriptionPassNotSet": {
+    "message": "Toegangscode niet ingesteld"
+  },
+  "screens.Security.passDesriptionPassSet": {
+    "message": "Wachtwoord is ingesteld"
+  },
+  "screens.Security.passcodeHeader": {
+    "message": "App toegangscode"
+  },
+  "screens.Security.securitySubheader": {
+    "message": "Apparaat beveiliging"
+  },
+  "screens.Security.title": {
+    "message": "Beveiliging"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel": {
+    "message": "Uw apparaatnaam"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title": {
+    "message": "Apparaat Naam"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.deviceNameLabel": {
+    "message": "Apparaatnaam bewerken"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertCancelText": {
+    "message": "Doorgaan met bewerken"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertConfirmText": {
+    "message": "Wijzigingen ongedaan maken"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "Wijzigingen annuleren?"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
+    "message": "Apparaat Naam"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
+    "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
+    "message": "<bold>{deviceName}</bold> is nu onderdeel van uw project."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
+    "message": "Uitnodiging bekijken"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.youAreInviting": {
+    "message": "U bent uitgenodigd:"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.title": {
+    "message": "Uitnodiging bekijken"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite": {
+    "message": "Annuleer uitnodiging"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage": {
+    "message": "Uitnodiging verzonden {seconds}s geleden"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
+    "message": "Wachten op apparaat om uitnodiging te accepteren"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
+    "message": "Kan apparaten, bewerken en verwijderen van gegevens, en projectdetails beheren."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.coordinators": {
+    "message": "Coördinatoren"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "Apparaat Uitnodigen"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
+    "message": "Kan waarnemingen opnemen en delen, maar gebruikers of projectdetails niet beheren."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.participants": {
+    "message": "Deelnemers"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
+    "message": "Vorige samenwerkers"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
+    "message": "De toestellen dragen niet meer bij aan dit project."
+  },
+  "screens.Settings.Collaborate.inviteDevices": {
+    "message": "Apparaten uitnodigen"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "Deelnemen aan een project"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Collaborate.title": {
+    "message": "Samenwerken"
+  },
+  "screens.Settings.Config.created": {
+    "message": "{date} aangemaakt op {time}"
+  },
+  "screens.Settings.Config.importCategories": {
+    "message": "Categorieën importeren"
+  },
+  "screens.Settings.Config.importSuccessTitle": {
+    "message": "Categorieën succesvol geïmporteerd:"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.Config.navTitle": {
+    "message": "Configuration"
+  },
+  "screens.Settings.Config.projectName": {
+    "message": "Project naam:"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
+    "message": "Benoem mijn project"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "Voltooid"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
+    "message": "Invite Device"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
+    "message": "{projectName} is nu klaar om apparaten uit te nodigen."
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.sharedLine": {
+    "message": "Projectstatistieken worden gedeeld met Awana Digitaal"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
+    "message": "Voltooid!"
+  },
+  "screens.Settings.CreateOrJoinProject.createProjectButton": {
+    "message": "Create Project"
+  },
+  "screens.Settings.CreateOrJoinProject.enterName": {
+    "message": "Enter a name for the Project"
+  },
+  "screens.Settings.CreateOrJoinProject.existingProjectName": {
+    "message": "Het gebruik van een bestaande projectnaam maakt ze niet hetzelfde project."
+  },
+  "screens.Settings.CreateOrJoinProject.keepInMind": {
+    "message": "Onthoud houden"
+  },
+  "screens.Settings.CreateOrJoinProject.projectUnique": {
+    "message": "Elk project is uniek en kan niet met een ander project uitwisselen."
+  },
+  "screens.Settings.CreateOrJoinProject.requestInvites": {
+    "message": "Verzoek uitnodigingen om deel te nemen aan bestaande projecten."
+  },
+  "screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "Opslaan"
+  },
+  "screens.Settings.JoinAProject.description": {
+    "message": "Vraag een projectcoördinator om een projectuitnodiging te ontvangen."
+  },
+  "screens.Settings.JoinAProject.heading": {
+    "message": "Coördineren met uw team."
+  },
+  "screens.Settings.JoinAProject.title": {
+    "message": "Deelnemen aan een project"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
+    "message": "Dit kan niet ongedaan worden gemaakt."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.close": {
+    "message": "Afsluiten"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
+    "message": "Je zult deze kaart zien wanneer je offline bent, maar je zult geen kaart zien buiten het gebied dat is gedefinieerd in je aangepaste kaart."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle": {
+    "message": "Aangepaste kaart toegevoegd"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.customMapInfoLoadError": {
+    "message": "Kan aangepaste kaartinformatie niet uit bestand ophalen. Verwijder het of kies een ander bestand."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription": {
+    "message": "Dit zal de kaart en de offline gebieden verwijderen. Geen verzamelde waarnemingsgegevens zullen worden verwijderd."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle": {
+    "message": "Aangepaste kaart verwijderen?"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
+    "message": "Kaart verwijderen"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
+    "message": "Kan het bestand niet importeren. Ga terug en probeer het opnieuw."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
+    "message": "Fout bij importeren"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
+    "message": "Kaartbestand verwijderen"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
+    "message": "Background Maps"
+  },
+  "screens.Settings.NameDefaultProjectIntro.description": {
+    "message": "Nodig apparaten uit voor een nieuw project met al je waarnemingen."
+  },
+  "screens.Settings.NameDefaultProjectIntro.heading": {
+    "message": "Start een nieuw project met mijn waarnemingen."
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "Volgende"
+  },
+  "screens.Settings.NameDefaultProjectIntro.title": {
+    "message": "Apparaten uitnodigen"
+  },
+  "screens.Settings.StartNewProjectIntro.description": {
+    "message": "Nodig apparaten uit voor een apart en leeg project."
+  },
+  "screens.Settings.StartNewProjectIntro.heading": {
+    "message": "Start een nieuw project zonder waarnemingen."
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Volgende"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.YourTeam.InviteDeclined": {
+    "message": "Uitnodiging geweigerd"
+  },
+  "screens.Settings.YourTeam.close": {
+    "message": "Afsluiten"
+  },
+  "screens.Settings.YourTeam.deviceHasJoined": {
+    "message": "Apparaat heeft zich aangesloten bij {projectName}"
+  },
+  "screens.Settings.YourTeam.inviteDeclinedDes": {
+    "message": "Dit apparaat heeft je uitnodiging geweigerd. Ze nemen geen deel aan het project."
+  },
+  "screens.Settings.YourTeam.unableToCancel": {
+    "message": "Kan uitnodiging niet annuleren"
+  },
+  "screens.SettingsPrivacyPolicy.navTitle": {
+    "message": "Privacy Beleid"
+  },
+  "screens.ShareProjectStats.description": {
+    "message": "Dit helpt ons gegevens te verzamelen over hoe CoMapeo wordt gebruikt en welke extra functies nodig zijn."
+  },
+  "screens.ShareProjectStats.fullyEncrypted": {
+    "message": "Uw project zal volledig versleuteld blijven"
+  },
+  "screens.ShareProjectStats.infoAnonymized": {
+    "message": "Gedeelde informatie zal volledig geanonimiseerd worden"
+  },
+  "screens.ShareProjectStats.shareProjectStats": {
+    "message": "Deel projectstatistieken"
+  },
+  "screens.ShareProjectStats.skip": {
+    "message": "Nee, nu overslaan"
+  },
+  "screens.ShareProjectStats.yesShare": {
+    "message": "Ja, deel statistieken"
+  },
+  "screens.Sync.NoWifiDisplay.buttonText": {
+    "message": "Open Settings"
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.NoWifiDisplay.title": {
+    "message": "No WiFi"
+  },
+  "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
+    "message": "Je bent allemaal verstrikt!"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.close": {
+    "message": "Afsluiten"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesFound": {
+    "message": "Devices found"
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeAction": {
+    "message": "Instellingen wijzigen"
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingMediaDescription": {
+    "message": "Foto's en audio op volledige grootte."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingStorageDescription": {
+    "message": "Gebruikt meer opslag."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingTitle": {
+    "message": "Ruil alles uit."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyAudioDescription": {
+    "message": "Geen audio inbegrepen."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyMediaDescription": {
+    "message": "Verminderde kleinere formaat foto's."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyTitle": {
+    "message": "Uitwisselen alleen van voorbeelden."
+  },
+  "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
+    "message": "Geen apparaten gevonden."
+  },
+  "screens.Sync.ProjectSyncDisplay.start": {
+    "message": "Beginnen"
+  },
+  "screens.Sync.ProjectSyncDisplay.stop": {
+    "message": "Stoppen"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
+    "message": "Voltooid! Wachten op andere apparaten"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
+    "message": "Complete! You're up to date"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
+  },
+  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
+    "message": "Waiting for devices"
+  },
+  "screens.Sync.headerTitle": {
+    "message": "Ruil"
+  },
+  "screens.Sync.remoteArchiveConnected": {
+    "message": "Verbinding met extern archief"
+  },
+  "screens.Track.ObservationList.observation": {
+    "message": "Waarneming"
+  },
+  "screens.Track.ObservationList.observations": {
+    "message": "Waarnemingen"
+  },
+  "screens.Track.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete a track",
+    "message": "Verwijder track?"
+  },
+  "screens.Track.title": {
+    "description": "Title of track screen showing (non-editable) view of observation with map",
+    "message": "Bijhouden"
+  },
+  "screens.Track.tracks": {
+    "message": "Nummers"
+  },
+  "screens.TrackCategoryChooser.title": {
+    "message": "Kies een categorie"
+  },
+  "screens.TrackEdit.title": {
+    "description": "Title for editing track screen",
+    "message": "Bewerk track"
+  },
+  "screens.TrackEdit.track": {
+    "description": "Preset title for new track screen",
+    "message": "Bijhouden"
+  },
+  "screens.TrackRecordingActive.cancel": {
+    "message": "Annuleren"
+  },
+  "screens.TrackRecordingActive.recordingTracks": {
+    "message": "Opname Tracks!"
+  },
+  "screens.TrackRecordingActive.stopTracks": {
+    "message": "Stop tracks"
+  },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "Je neemt momenteel een nummer op. Om deel te nemen aan het project stop je opname"
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
+    "message": "Apparaat verwijderd."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.notified": {
+    "message": "<boldDevice>{deviceName}</boldDevice> is verwittigd dat ze niet langer kunnen bekijken of bijdragen aan <boldProject>{projectName}</boldProject>."
+  },
+  "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
+    "message": "Terug naar Team"
+  },
+  "screens.YourTeam.RemoveDevice.reasonLabel": {
+    "message": "Reden voor verwijdering?"
+  },
+  "screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
+    "message": "Verwijderen & Melden"
+  },
+  "screens.YourTeam.RemoveDevice.title": {
+    "message": "Apparaat verwijderen"
+  },
+  "screens.YourTeam.TeamMemberCard.thisDevice": {
+    "message": "Dit apparaat"
+  },
+  "shareComponent.KeyboardAccessory.showOptions": {
+    "description": "title for observation options",
+    "message": "Toon opties"
+  },
+  "sharedComponents.DeviceIconWithName.Disconnected": {
+    "message": "Losgekoppeld"
+  },
+  "sharedComponents.DeviceIconWithName.thisDevice": {
+    "message": "Dit apparaat!"
+  },
+  "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Bezig te zoeken…"
+  },
+  "sharedComponents.Editor.PresetView.Change": {
+    "message": "Wijzigen"
+  },
+  "sharedComponents.ErrorBottomSheet.goBack": {
+    "message": "Ga terug"
+  },
+  "sharedComponents.ErrorBottomSheet.somethingWrong": {
+    "message": "Er is iets misgegaan"
+  },
+  "sharedComponents.RoleWithIcon.coordinator": {
+    "message": "Coördinator"
+  },
+  "sharedComponents.RoleWithIcon.participant": {
+    "message": "Deelnemer"
+  },
+  "soloProject.inviteCollaborators.goBack": {
+    "message": "Ga terug"
+  },
+  "soloProject.inviteCollaborators.introText": {
+    "message": "Deel waarnemingen met anderen met behulp van CoMapeo."
+  },
+  "soloProject.inviteCollaborators.inviteOnly": {
+    "message": "Alleen apparaten die voor dit project zijn uitgenodigd, kunnen bijdragen."
+  },
+  "soloProject.inviteCollaborators.manageControl": {
+    "message": "Beheer projectbijdragers en instellingen eenvoudig."
+  },
+  "soloProject.inviteCollaborators.nameProject": {
+    "message": "Benoem mijn project"
+  },
+  "soloProject.inviteCollaborators.nameProjectDescription": {
+    "message": "Noem uw project om samen te werken."
+  },
+  "soloProject.inviteCollaborators.title": {
+    "message": "Nodig samenwerkers uit"
+  },
+  "soloProject.startNewProject.goBack": {
+    "message": "Ga terug"
+  },
+  "soloProject.startNewProject.introText": {
+    "message": "Veilige en privé manier om te wisselen met medewerkers."
+  },
+  "soloProject.startNewProject.inviteOnly": {
+    "message": "Alleen apparaten die voor een project zijn uitgenodigd, kunnen bijdragen."
+  },
+  "soloProject.startNewProject.manageControl": {
+    "message": "Beheer projectbijdragers en instellingen eenvoudig."
+  },
+  "soloProject.startNewProject.start": {
+    "message": "Beginnen"
+  },
+  "soloProject.startNewProject.title": {
+    "message": "Nieuw project starten"
+  },
+  "soloProject.startNewProject.uniqueProject": {
+    "message": "Elk project is uniek en scheidt."
   }
 }

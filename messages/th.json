@@ -9,5 +9,721 @@
   },
   "ExportSuccess.done": {
     "message": "เสร็จสิ้น"
+  },
+  "ExportSuccess.title": {
+    "message": "เสร็จสมบูรณ์!"
+  },
+  "MapManagement.ErrorBottomSheet.goBack": {
+    "message": "ย้อนกลับ"
+  },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "Modal.GPSEnable.button.loading": {
+    "message": "กำลังโหลด…"
+  },
+  "Navigation.Menu.bgMap": {
+    "message": "Background Maps"
+  },
+  "ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "ทำการแก้ไขต่อ"
+  },
+  "ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "ยกเลิกการเปลี่ยนแปลงหรือไม่?"
+  },
+  "ProjectSettings.RemoteArchive.Success.close": {
+    "message": "ปิด"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
+    "message": "ปิด"
+  },
+  "SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "ทำการแก้ไขต่อ"
+  },
+  "Screens.ProjectSettings.update": {
+    "message": "อัปเดต"
+  },
+  "Screens.ProjectSettings.view": {
+    "message": "มุมมอง"
+  },
+  "Screens.Settings.AppSettings.Drawer.security": {
+    "message": "ความปลอดภัย"
+  },
+  "Screens.Settings.AppSettings.deviceName": {
+    "message": "ชื่ออุปกรณ์"
+  },
+  "Screens.Settings.AppSettings.language": {
+    "message": "ภาษา"
+  },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
+    "description": "Text for cancel action button.",
+    "message": "ยกเลิก"
+  },
+  "SharedComponents.ActionButtons.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "ยกเลิก"
+  },
+  "SharedComponents.ActionButtons.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "ใช่ ลบได้"
+  },
+  "SharedComponents.ActionButtons.delete": {
+    "description": "Button to delete an observation",
+    "message": "ลบ"
+  },
+  "SharedComponents.ActionButtons.share": {
+    "description": "Button to share an observation",
+    "message": "แบ่งปัน"
+  },
+  "TrackEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "ทำการแก้ไขต่อ"
+  },
+  "TrackEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "ยกเลิกการเปลี่ยนแปลงหรือไม่?"
+  },
+  "TrackEdit.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "ยกเลิกการเปลี่ยนแปลง"
+  },
+  "allProjects.close": {
+    "message": "Open Settings"
+  },
+  "screen.EditProjectDetails.projectName": {
+    "message": "ชื่อโครงการ"
+  },
+  "screens.AboutSettings.androidBuild": {
+    "description": "Label for Android build number",
+    "message": "รหัส Build Number บน Android"
+  },
+  "screens.AboutSettings.androidVersion": {
+    "description": "Label for Android version",
+    "message": "เวอร์ชันของแอนดรอยด์"
+  },
+  "screens.AboutSettings.phoneModel": {
+    "description": "Label for phone model",
+    "message": "รุ่นของโทรศัพท์"
+  },
+  "screens.AboutSettings.unknownValue": {
+    "description": "Shown when a device info (e.g. version number) is unknown",
+    "message": "ไม่มีข้อมูล"
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "ยกเลิก"
+  },
+  "screens.AppPasscode": {
+    "message": "รหัสผ่านแอป"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "ยกเลิก"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "ยกเลิก"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "ถัดไป"
+  },
+  "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
+    "message": "กำหนดรหัสผ่าน"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "ดำเนินการต่อ"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "รหัสผ่านแอป คืออะไร?"
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "ยกเลิก"
+  },
+  "screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "รหัสผ่านแอป"
+  },
+  "screens.AppUsageSharingSuccess.done": {
+    "message": "เสร็จสิ้น"
+  },
+  "screens.AppUsageSharingSuccess.success": {
+    "message": "เสร็จสมบูรณ์!"
+  },
+  "screens.AudioAttachmentPlayback.share": {
+    "message": "แบ่งปัน"
+  },
+  "screens.AudioPlaybackNew.delete": {
+    "message": "ลบ"
+  },
+  "screens.CollaboratorInfo.leaveProject": {
+    "message": "ออกจากโครงการ"
+  },
+  "screens.ConfirmDeletePhoto.cancel": {
+    "message": "ยกเลิก"
+  },
+  "screens.ConfirmDeletePhoto.title": {
+    "message": "ลบรูปนี้หรือไม่?"
+  },
+  "screens.CoordinateFormat.dd": {
+    "description": "Decimal Degrees coordinate format",
+    "message": "องศาทศนิยม (DD)"
+  },
+  "screens.CoordinateFormat.dms": {
+    "description": "Degrees/Minutes/Seconds coordinate format",
+    "message": "องศา ลิปดา ฟิลิปดา (DMS)"
+  },
+  "screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "รูปแบบพิกัด"
+  },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "ระบบพิกัดกริดแบบยูทีเอ็ม (Universal Transverse Mercator - UTM)"
+  },
+  "screens.DataPrivacy.next": {
+    "message": "ถัดไป"
+  },
+  "screens.DeviceNaming.Success.joinProject": {
+    "message": "เข้าร่วมโครงการ"
+  },
+  "screens.DeviceNaming.Success.success": {
+    "message": "เสร็จสมบูรณ์!"
+  },
+  "screens.DeviceNaming.placeholder": {
+    "message": "ชื่ออุปกรณ์"
+  },
+  "screens.DeviceNaming.save": {
+    "message": "บันทึก"
+  },
+  "screens.EarlyAccessTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Incorrect passcode, please try again"
+  },
+  "screens.ExchangeSettingsBottomSheet.close": {
+    "message": "ปิด"
+  },
+  "screens.ExchangeSettingsBottomSheet.save": {
+    "message": "บันทึก"
+  },
+  "screens.ExchangeSoloScreen.goBack": {
+    "message": "ย้อนกลับ"
+  },
+  "screens.ExportObservations.close": {
+    "message": "ปิด"
+  },
+  "screens.ExportObservations.download": {
+    "message": "ดาวน์โหลด"
+  },
+  "screens.InviteCancelled.close": {
+    "message": "ปิด"
+  },
+  "screens.InviteReceived.declineInvite": {
+    "message": "ปฏิเสธคำเชิญ"
+  },
+  "screens.InviteSuccess.success": {
+    "message": "สำเร็จ"
+  },
+  "screens.LanguageSettings.title": {
+    "description": "Title language settings screen",
+    "message": "ภาษา"
+  },
+  "screens.LeaveProject.cancel": {
+    "message": "ยกเลิก"
+  },
+  "screens.LocationInfoScreen.details": {
+    "description": "Section title for details about current position",
+    "message": "รายละเอียด"
+  },
+  "screens.LocationInfoScreen.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "ตำแหน่ง GPS ปัจจุบัน"
+  },
+  "screens.LocationInfoScreen.lastUpdate": {
+    "description": "Section title for time of last GPS update",
+    "message": "ปรับปรุงล่าสุด"
+  },
+  "screens.LocationInfoScreen.locationDD": {
+    "description": "Section title for DD coordinates",
+    "message": "ระบบพิกัดองศาทศนิยม (Decimal Degrees - DD)"
+  },
+  "screens.LocationInfoScreen.locationDMS": {
+    "description": "Section title for DMS coordinates",
+    "message": "ระบบพิกัดองศา ลิปดา ฟิลิปดา (DMS)"
+  },
+  "screens.LocationInfoScreen.locationSensors": {
+    "description": "Heading for section about location sensor status",
+    "message": "สถานะเซ็นเซอร์"
+  },
+  "screens.LocationInfoScreen.locationUTM": {
+    "description": "Section title for UTM coordinates",
+    "message": "ระบบพิกัด UTM"
+  },
+  "screens.LocationInfoScreen.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "ไม่ใช่"
+  },
+  "screens.LocationInfoScreen.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "ใช่"
+  },
+  "screens.ManualGpsScreen.DdForm.east": {
+    "message": "ตะวันออก"
+  },
+  "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
+    "message": "พิกัดไม่ถูกต้อง"
+  },
+  "screens.ManualGpsScreen.DdForm.latInputLabel": {
+    "message": "พิกัดละติจูด"
+  },
+  "screens.ManualGpsScreen.DdForm.latitude": {
+    "message": "ละติจูด"
+  },
+  "screens.ManualGpsScreen.DdForm.lonInputLabel": {
+    "message": "พิกัดลองจิจูด"
+  },
+  "screens.ManualGpsScreen.DdForm.longitude": {
+    "message": "ลองจิจูด"
+  },
+  "screens.ManualGpsScreen.DdForm.north": {
+    "message": "เหนือ"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
+    "message": "เลือกละติจูด"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
+    "message": "เลือกลองจิจูด"
+  },
+  "screens.ManualGpsScreen.DdForm.south": {
+    "message": "ใต้"
+  },
+  "screens.ManualGpsScreen.DdForm.west": {
+    "message": "ตะวันตก"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
+    "message": "ป้อน {field} ลิปดา"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
+    "message": "ป้อน {field} ฟิลิปดา"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
+    "message": "องศา"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
+    "message": "ป้อน {field} องศา"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
+    "message": "ทิศทาง"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
+    "message": "นาที"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
+    "message": "วินาที"
+  },
+  "screens.ManualGpsScreen.DmsForm.east": {
+    "message": "ตะวันออก"
+  },
+  "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
+    "message": "พิกัดไม่ถูกต้อง"
+  },
+  "screens.ManualGpsScreen.DmsForm.latitude": {
+    "message": "ละติจูด"
+  },
+  "screens.ManualGpsScreen.DmsForm.longitude": {
+    "message": "ลองจิจูด"
+  },
+  "screens.ManualGpsScreen.DmsForm.north": {
+    "message": "เหนือ"
+  },
+  "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
+    "message": "เลือกละติจูด"
+  },
+  "screens.ManualGpsScreen.DmsForm.south": {
+    "message": "ใต้"
+  },
+  "screens.ManualGpsScreen.DmsForm.west": {
+    "message": "ตะวันตก"
+  },
+  "screens.ManualGpsScreen.coordinateFormat": {
+    "message": "รูปแบบพิกัด"
+  },
+  "screens.ManualGpsScreen.decimalDegrees": {
+    "message": "องศาทศนิยม (DD)"
+  },
+  "screens.ManualGpsScreen.degreesMinutesSeconds": {
+    "message": "องศา ลิปดา ฟิลิปดา (DMS)"
+  },
+  "screens.ManualGpsScreen.easting": {
+    "message": "ตะวันออก"
+  },
+  "screens.ManualGpsScreen.eastingSuffix": {
+    "message": "mE"
+  },
+  "screens.ManualGpsScreen.northing": {
+    "message": "เหนือ"
+  },
+  "screens.ManualGpsScreen.northingSuffix": {
+    "message": "mN"
+  },
+  "screens.ManualGpsScreen.title": {
+    "description": "title of manual GPS screen",
+    "message": "ป้อนพิกัด"
+  },
+  "screens.ManualGpsScreen.universalTransverseMercator": {
+    "message": "ระบบพิกัดกริดแบบยูทีเอ็ม (Universal Transverse Mercator - UTM)"
+  },
+  "screens.ManualGpsScreen.zoneLetter": {
+    "message": "ตัวอักษรโซน"
+  },
+  "screens.ManualGpsScreen.zoneNumber": {
+    "message": "หมายเลขโซน"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
+    "message": "Turn On"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
+    "message": "Use Your Location"
+  },
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "ลบ"
+  },
+  "screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "ไม่มีการตอบรับ"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "การสังเกต"
+  },
+  "screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "แบ่งปัน"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "ยกเลิก"
+  },
+  "screens.Observation.comapeoAlert": {
+    "message": "CoMapeo Alert"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "ใช่ ลบได้"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "ยืนยันให้ลบการสังเกตนี้หรือไม่?"
+  },
+  "screens.Observation.description": {
+    "message": "รายละเอียด:"
+  },
+  "screens.Observation.details": {
+    "message": "รายละเอียด:"
+  },
+  "screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "การสังเกต"
+  },
+  "screens.Observation.fallbackPresetName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "การสังเกต"
+  },
+  "screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "การสังเกต"
+  },
+  "screens.ObservationCreate.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "กำลังรอ"
+  },
+  "screens.ObservationCreate.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "ป้อนพิกัดด้วยตัวเอง"
+  },
+  "screens.ObservationCreate.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "ข้อสังเกตนี้ไม่ปรากฎสถานที่ กรุณารอสัญญาณ GPS สักครู่ บันทึกข้อสังเกต โดยป้อนพิกัดด้วยตัวเอง "
+  },
+  "screens.ObservationCreate.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "ไม่มีสัญญาณ GPS"
+  },
+  "screens.ObservationCreate.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "บันทึก"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "ความแม่นยำของ GPS ต่ำ กรุณารอสักพักเพื่อความแม่นยำของสัญญาณ กรุณาบันทึกข้อสังเกต หรือป้อนพิกัดด้วยตัวเอง"
+  },
+  "screens.ObservationCreate.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "สัญญาณ GPS อ่อน"
+  },
+  "screens.ObservationCreate.changePreset": {
+    "message": "แก้ไข"
+  },
+  "screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "เกิดอะไรขึ้นที่นี่?"
+  },
+  "screens.ObservationCreate.navTitle": {
+    "description": "screen title for new observation screen",
+    "message": "การสังเกตใหม่"
+  },
+  "screens.ObservationCreate.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "การสังเกต"
+  },
+  "screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "เสร็จสิ้น"
+  },
+  "screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "ถัดไป"
+  },
+  "screens.ObservationDetails.title": {
+    "description": "Title of observation details screen showing question number and total",
+    "message": "คำถาม {current} ใน {total}"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "เกิดอะไรขึ้นที่นี่?"
+  },
+  "screens.ObservationEdit.ObservationEditView.detailsButton": {
+    "description": "Button label to add details",
+    "message": "รายละเอียด"
+  },
+  "screens.ObservationEdit.changePreset": {
+    "message": "แก้ไข"
+  },
+  "screens.ObservationEdit.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "เกิดอะไรขึ้นที่นี่?"
+  },
+  "screens.ObservationEdit.navTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "แก้ไขการสังเกต"
+  },
+  "screens.ObservationEdit.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "การสังเกต"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "การสังเกตต่าง ๆ "
+  },
+  "screens.ObservationMetadataVerified.latitude": {
+    "message": "ละติจูด"
+  },
+  "screens.ObservationMetadataVerified.location": {
+    "message": "สถานที่"
+  },
+  "screens.ObservationMetadataVerified.longitude": {
+    "message": "ลองจิจูด"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "เปิดแผนที่"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "เริ่มจากมุมมองแผนที่หรือกล้องเพื่อเริ่มบันทึกการสังเกตแรก"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "เพิ่มการสังเกต"
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "กำลังโหลดข้อมูล... การเชื่อมต่อกับอุปกรณ์ใหม่จะใช้เวลาสักครู่"
+  },
+  "screens.Onboarding.JoinProjectIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.Onboarding.JoinProjectIntro.title": {
+    "message": "เข้าร่วมโครงการ"
+  },
+  "screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Open Settings"
+  },
+  "screens.ProjectStatisticsTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "เกิดอะไรขึ้นที่นี่?"
+  },
+  "screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "ปกป้องอุปกรณ์ของคุณจากหน้าจอค้าง"
+  },
+  "screens.Security.passDesriptionPassNotSet": {
+    "message": "ยังไม่ได้ตั้งรหัสผ่าน"
+  },
+  "screens.Security.passDesriptionPassSet": {
+    "message": "ตั้งรหัสผ่านแล้ว"
+  },
+  "screens.Security.passcodeHeader": {
+    "message": "รหัสผ่านแอป"
+  },
+  "screens.Security.securitySubheader": {
+    "message": "ความปลอดภัยอุปกรณ์"
+  },
+  "screens.Security.title": {
+    "message": "ความปลอดภัย"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title": {
+    "message": "ชื่ออุปกรณ์"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "ยกเลิกการเปลี่ยนแปลงหรือไม่?"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
+    "message": "ชื่ออุปกรณ์"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
+    "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "ส่งคำเชิญไปยังอุปกรณ์"
+  },
+  "screens.Settings.Collaborate.joinProject": {
+    "message": "เข้าร่วมโครงการ"
+  },
+  "screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.Config.navTitle": {
+    "message": "Configuration"
+  },
+  "screens.Settings.Config.okButton": {
+    "message": "ตกลง"
+  },
+  "screens.Settings.Config.projectName": {
+    "message": "ชื่อโครงการ:"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "เสร็จสิ้น"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
+    "message": "Invite Device"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
+    "message": "เสร็จสมบูรณ์!"
+  },
+  "screens.Settings.CreateOrJoinProject.createProjectButton": {
+    "message": "Create Project"
+  },
+  "screens.Settings.CreateOrJoinProject.enterName": {
+    "message": "Enter a name for the Project"
+  },
+  "screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "บันทึก"
+  },
+  "screens.Settings.JoinAProject.title": {
+    "message": "เข้าร่วมโครงการ"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.close": {
+    "message": "ปิด"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
+    "message": "ข้อผิดพลาดในการนำเข้า"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
+    "message": "Background Maps"
+  },
+  "screens.Settings.NameDefaultProjectIntro.nextButton": {
+    "message": "ถัดไป"
+  },
+  "screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "ถัดไป"
+  },
+  "screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.YourTeam.close": {
+    "message": "ปิด"
+  },
+  "screens.Sync.NoWifiDisplay.buttonText": {
+    "message": "Open Settings"
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.NoWifiDisplay.title": {
+    "message": "No WiFi"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.close": {
+    "message": "ปิด"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesFound": {
+    "message": "Devices found"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
+    "message": "Complete! You're up to date"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
+  },
+  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
+    "message": "Waiting for devices"
+  },
+  "screens.Track.ObservationList.observation": {
+    "message": "การสังเกต"
+  },
+  "screens.Track.ObservationList.observations": {
+    "message": "การสังเกตต่าง ๆ "
+  },
+  "screens.TrackRecordingActive.cancel": {
+    "message": "ยกเลิก"
+  },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "You’re currently recording a track. To join project, stop recording"
+  },
+  "sharedComponents.DeviceIconWithName.Disconnected": {
+    "message": "ขาดการเชื่อมต่อ"
+  },
+  "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "กำลัง​ค้น​หา..."
+  },
+  "sharedComponents.Editor.PresetView.Change": {
+    "message": "แก้ไข"
+  },
+  "sharedComponents.ErrorBottomSheet.goBack": {
+    "message": "ย้อนกลับ"
+  },
+  "soloProject.inviteCollaborators.goBack": {
+    "message": "ย้อนกลับ"
+  },
+  "soloProject.startNewProject.goBack": {
+    "message": "ย้อนกลับ"
   }
 }

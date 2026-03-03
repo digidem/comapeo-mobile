@@ -14,6 +14,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import {HookFormTextInput} from '../../sharedComponents/HookFormTextInput';
 
 const m = defineMessages({
+  // primary-string
   title: {
     id: 'screens.YourTeam.RemoveDevice.title',
     defaultMessage: 'Remove Device',
@@ -22,6 +23,7 @@ const m = defineMessages({
     id: 'screens.YourTeam.RemoveDevice.reasonLabel',
     defaultMessage: 'Reason for removal?',
   },
+  // primary-string
   removeAndNotifyButton: {
     id: 'screens.YourTeam.RemoveDevice.removeAndNotifyButton',
     defaultMessage: 'Remove & Notify',

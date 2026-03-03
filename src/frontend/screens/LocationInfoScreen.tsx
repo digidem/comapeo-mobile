@@ -49,11 +49,13 @@ const m = defineMessages({
     defaultMessage: 'Details',
     description: 'Section title for details about current position',
   },
+  // primary-string
   yes: {
     id: 'screens.LocationInfoScreen.yes',
     defaultMessage: 'Yes',
     description: 'if a location sensor is active yes/no',
   },
+  // primary-string
   no: {
     id: 'screens.LocationInfoScreen.no',
     defaultMessage: 'No',

@@ -8,10 +8,12 @@ import {HeaderText} from './Text/HeaderText';
 import {SecondaryButton} from './Buttons';
 
 const m = defineMessages({
+  // primary-string
   somethingWrong: {
     id: 'sharedComponents.ErrorBottomSheet.somethingWrong',
     defaultMessage: 'Something\n Went Wrong',
   },
+  // primary-string
   goBack: {
     id: 'sharedComponents.ErrorBottomSheet.goBack',
     defaultMessage: 'Go Back',

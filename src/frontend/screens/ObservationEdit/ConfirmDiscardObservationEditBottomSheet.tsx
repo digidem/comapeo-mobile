@@ -14,6 +14,7 @@ import {
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 
+// primary-string ENTIRE
 const m = defineMessages({
   discardTitle: {
     id: 'ObservationEdit.HeaderLeft.discardTitle',

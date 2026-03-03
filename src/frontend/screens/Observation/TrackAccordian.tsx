@@ -11,6 +11,7 @@ import {LIGHT_GREY} from '../../lib/styles.ts';
 import {findAssociatedTrack} from './findAssociatedTrack.ts';
 
 const m = defineMessages({
+  // primary-string
   track: {
     id: 'screens.Observation.TrackList.track',
     defaultMessage: 'Track',

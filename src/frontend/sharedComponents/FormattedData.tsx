@@ -12,6 +12,7 @@ import {DateDistance} from './DateDistance';
 import {type CoordinateFormat} from '../lib/coordinateFormat';
 
 const m = defineMessages({
+  // primary-string
   noAnswer: {
     // Keep original id to avoid re-translation
     id: 'screens.Observation.ObservationView.noAnswer',

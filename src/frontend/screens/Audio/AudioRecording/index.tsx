@@ -29,6 +29,7 @@ const m = defineMessages({
     id: 'screens.AudioRecording.lessThan1',
     defaultMessage: 'Less than a minute left',
   },
+  // primary-string
   nowRecording: {
     id: 'screens.AudioRecording.nowRecording',
     defaultMessage: 'Now Recording...',

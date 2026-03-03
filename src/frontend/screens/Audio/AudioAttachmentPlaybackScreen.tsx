@@ -33,6 +33,7 @@ const m = defineMessages({
     id: 'screens.AudioAttachmentPlayback.navTitle',
     defaultMessage: 'Audio Recording',
   },
+  // primary-string
   share: {
     id: 'screens.AudioAttachmentPlayback.share',
     defaultMessage: 'Share',

@@ -15,14 +15,17 @@ import * as Sentry from '@sentry/react-native';
 import {useIsArchiveDevice, useSetIsArchiveDevice} from '@comapeo/core-react';
 
 const m = defineMessages({
+  // primary-string
   save: {
     id: 'screens.ExchangeSettingsBottomSheet.save',
     defaultMessage: 'Save',
   },
+  // primary-string
   close: {
     id: 'screens.ExchangeSettingsBottomSheet.close',
     defaultMessage: 'Close',
   },
+  // primary-string
   everythingTitle: {
     id: 'screens.ExchangeSettingsBottomSheet.everythingTitle',
     defaultMessage: 'Exchange Everything',
@@ -31,6 +34,7 @@ const m = defineMessages({
     id: 'screens.ExchangeSettingsBottomSheet.everythingDesc',
     defaultMessage: 'Full size photos and audio. Uses more storage.',
   },
+  // primary-string
   previewsTitle: {
     id: 'screens.ExchangeSettingsBottomSheet.previewsTitle',
     defaultMessage: 'Exchange Previews Only',

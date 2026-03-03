@@ -70,16 +70,19 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
             <RNTextInput
               testID={testID}
               placeholderTextColor={NEW_DARK_GREY}
-              style={{
-                flex: 1,
-                color: BLACK,
-                fontFamily: 'Rubik_500Medium',
-                fontSize: 16,
-              }}
               value={value}
               onBlur={onBlur}
               onChangeText={onChange}
               {...RNInputProp}
+              style={[
+                {
+                  flex: 1,
+                  color: BLACK,
+                  fontFamily: 'Rubik_500Medium',
+                  fontSize: 16,
+                },
+                RNInputProp.style,
+              ]}
             />
           )}
         />

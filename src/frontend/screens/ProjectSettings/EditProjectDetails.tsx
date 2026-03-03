@@ -5,7 +5,7 @@ import {HookFormTextInput} from '../../sharedComponents/HookFormTextInput';
 import {useForm} from 'react-hook-form';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {BLACK, COMAPEO_BLUE} from '../../lib/styles';
+import {COMAPEO_BLUE} from '../../lib/styles';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {HorizontalScrollView} from '../../sharedComponents/HorizontalScrollView';
@@ -99,7 +99,7 @@ export const EditProjectDetails: NativeNavigationComponent<
         </HeaderText>
         <HookFormTextInput
           rules={{maxLength: 60, required: true}}
-          style={{textAlignVertical: 'top', fontSize: 20, color: BLACK}}
+          style={{textAlignVertical: 'top', fontSize: 20}}
           control={control}
           showCharacterCount={true}
           name="projectName"
@@ -114,7 +114,7 @@ export const EditProjectDetails: NativeNavigationComponent<
           control={control}
           rules={{maxLength: 60, required: false}}
           multiline={true}
-          style={{textAlignVertical: 'top', fontSize: 20, color: BLACK}}
+          style={{textAlignVertical: 'top', fontSize: 20}}
           showCharacterCount={true}
           name="projectDescription"
           testID="edit-project-description"

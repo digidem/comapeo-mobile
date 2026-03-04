@@ -1953,22 +1953,22 @@
   "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
     "message": "Send Map"
   },
-  "screens.Settings.MapManagement.MapDeclineScreen.close": {
-    "message": "Close"
-  },
-  "screens.Settings.MapManagement.MapDeclineScreen.deviceNoSpace": {
-    "message": "Device does not have enough space."
-  },
-  "screens.Settings.MapManagement.MapDeclineScreen.mapDeclined": {
-    "message": "Map declined."
-  },
-  "screens.Settings.MapManagement.WaitingForMapToAccept.cancel": {
+  "screens.Settings.MapManagement.SendingBackgroundMap.cancel": {
     "message": "Cancel"
   },
-  "screens.Settings.MapManagement.WaitingForMapToAccept.timerMessage": {
+  "screens.Settings.MapManagement.SendingBackgroundMap.close": {
+    "message": "Close"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.deviceNoSpace": {
+    "message": "Device does not have enough space."
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.mapDeclined": {
+    "message": "Map declined."
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.timerMessage": {
     "message": "Map sent {time}s ago"
   },
-  "screens.Settings.MapManagement.WaitingForMapToAccept.waitingMessage": {
+  "screens.Settings.MapManagement.SendingBackgroundMap.waitingMessage": {
     "message": "Waiting for Device to Accept Map"
   },
   "screens.Settings.NameDefaultProjectIntro.description": {

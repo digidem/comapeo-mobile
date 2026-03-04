@@ -87,7 +87,6 @@ export const SelectDevice = ({
       <BodyText style={{marginLeft: 10}}>{`\u2022 ${t(m.sameWifi)}`}</BodyText>
       <BodyText
         style={{marginLeft: 10}}>{`\u2022 ${t(m.sameVersion)}`}</BodyText>
-      {/* Divider */}
       <View style={{marginTop: 20}} />
 
       <View style={styles.deviceListContainer}>
@@ -115,7 +114,7 @@ export const SelectDevice = ({
                   receiverDeviceId: deviceId,
                   mapId: 'custom',
                 });
-                navigation.navigate('WaitingForMapAccept', {
+                navigation.navigate('SendingBackgroundMap', {
                   shareId: mapShare.shareId,
                 });
               } catch (err) {

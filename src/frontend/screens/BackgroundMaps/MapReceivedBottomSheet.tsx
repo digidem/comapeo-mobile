@@ -79,7 +79,11 @@ export function MapReceivedBottomSheet({
       mapShare.status === 'canceled' ||
       mapShare.status === 'error'
     ) {
-      navigation.goBack();
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      } else {
+        navigation.replace('BackgroundMaps');
+      }
     }
   }, [mapShare, navigation]);
 
@@ -164,8 +168,13 @@ export function MapReceivedBottomSheet({
         onSuccess: () => {
           navigation.goBack();
         },
-        onError: () => {
-          navigation.goBack();
+        onError: (err: unknown) => {
+          Sentry.captureException(err);
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.replace('BackgroundMaps');
+          }
         },
       },
     );

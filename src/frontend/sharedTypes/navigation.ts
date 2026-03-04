@@ -126,7 +126,7 @@ export type RootStackParamsList = {
   MapReceivedBottomSheet: {
     shareId: string;
   };
-  WaitingForMapAccept: {
+  SendingBackgroundMap: {
     shareId: string;
   };
   ExchangeSettingsBottomSheet: undefined;

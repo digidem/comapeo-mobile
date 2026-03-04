@@ -139,12 +139,12 @@ export function MapReceivedBottomSheet({
     currentLocation,
   ]);
 
-  const {data: customMapInfo} = useGetCustomMapInfo();
+  const {data: customMapInfo, error: customMapError} = useGetCustomMapInfo();
   const {mutate: declineMapShare} = useDeclineReceivedMapShare();
   const {mutate: downloadMapShare} = useDownloadReceivedMapShare();
 
   const handleAccept = () => {
-    if (customMapInfo) {
+    if (customMapInfo && !customMapError) {
       navigation.replace('ReplaceBackgroundMap', {shareId});
       return;
     }

@@ -454,6 +454,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice": {
     "message": "Not seeing a Device?"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameProject": {
+    "message": "Make sure both devices have the same project open"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
     "message": "Make sure both devices are on the same version of CoMapeo"
   },

@@ -93,6 +93,9 @@ export function useFindRemoteArchive({url}: {url?: string}) {
   });
 }
 
+// 'background' key prefix prevents passcode prompt during permission dialog (see AuthContext.tsx)
+const EXPORT_MUTATION_KEY = ['background', 'export', 'observations'] as const;
+
 export function useExportObservations({projectId}: {projectId: string}) {
   const exportNoMedia = useExportGeoJSON({projectId});
   const exportWithMedia = useExportZipFile({projectId});
@@ -100,6 +103,7 @@ export function useExportObservations({projectId}: {projectId: string}) {
   const {formatDate} = useIntl();
 
   return useMutation({
+    mutationKey: EXPORT_MUTATION_KEY,
     retry: false,
     networkMode: 'always',
     mutationFn: async ({exportType}: {exportType: Exports}) => {

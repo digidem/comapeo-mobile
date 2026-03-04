@@ -17,38 +17,39 @@ import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {TextButton} from '../../sharedComponents/TextButton';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {VERY_LIGHT_GREY, RED, NEW_DARK_GREY, BLACK} from '../../lib/styles';
+import {toError} from '../../utils/errors';
 
 const m = defineMessages({
   waitingMessage: {
-    id: 'screens.Settings.MapManagement.WaitingForMapToAccept.waitingMessage',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.waitingMessage',
     defaultMessage: 'Waiting for Device to Accept Map',
   },
   timerMessage: {
-    id: 'screens.Settings.MapManagement.WaitingForMapToAccept.timerMessage',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.timerMessage',
     defaultMessage: 'Map sent {time}s ago',
   },
   cancel: {
-    id: 'screens.Settings.MapManagement.WaitingForMapToAccept.cancel',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.cancel',
     defaultMessage: 'Cancel',
   },
   mapDeclined: {
-    id: 'screens.Settings.MapManagement.MapDeclineScreen.mapDeclined',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.mapDeclined',
     defaultMessage: 'Map declined.',
   },
   deviceNoSpace: {
-    id: 'screens.Settings.MapManagement.MapDeclineScreen.deviceNoSpace',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.deviceNoSpace',
     defaultMessage: 'Device does not have enough space.',
   },
   close: {
-    id: 'screens.Settings.MapManagement.MapDeclineScreen.close',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.close',
     defaultMessage: 'Close',
   },
 });
 
-export function WaitingForMapAccept({
+export function SendingBackgroundMap({
   route,
   navigation,
-}: NativeRootNavigationProps<'WaitingForMapAccept'>) {
+}: NativeRootNavigationProps<'SendingBackgroundMap'>) {
   const {formatMessage: t} = useIntl();
   const {shareId} = route.params;
 
@@ -84,15 +85,22 @@ export function WaitingForMapAccept({
   }, [cancelShare]);
 
   React.useEffect(() => {
-    if (mapShare.status === 'pending') return;
-
-    if (mapShare.status === 'downloading' || mapShare.status === 'completed') {
-      // TODO: Show sending map UI while downloading
+    if (!mapShare) {
       navigation.popTo('BackgroundMaps');
-    } else if (mapShare.status === 'canceled') {
-      navigation.popTo('BackgroundMaps');
+      return;
     }
-  }, [mapShare?.status, navigation]);
+    if (mapShare.status === 'aborted') {
+      // TODO: Show map cancelled sheet when that exists
+      navigation.popTo('BackgroundMaps');
+      return;
+    }
+    if (mapShare.status === 'error') {
+      Sentry.captureException(mapShare.error);
+      navigation.replace('ErrorBottomSheet', {
+        error: toError(mapShare.error, 'Map share failed'),
+      });
+    }
+  }, [mapShare, navigation]);
 
   React.useEffect(() => {
     const interval = setInterval(() => setTime(prev => prev + 1), 1000);
@@ -136,8 +144,8 @@ function MapDeclined({
   const headerText = isDiskSpaceIssue ? t(m.deviceNoSpace) : t(m.mapDeclined);
 
   return (
-    <View style={styles.declinedContainer}>
-      <View style={styles.declinedContent}>
+    <View style={styles.baseContainer}>
+      <View style={styles.centeredContent}>
         <View>
           <View style={styles.iconBackground}>
             <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
@@ -169,17 +177,17 @@ function formatElapsed(totalSeconds: number) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 35,
-    flex: 1,
-  },
-  declinedContainer: {
+  baseContainer: {
     flex: 1,
     padding: 20,
   },
-  declinedContent: {
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 35,
+  },
+  centeredContent: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

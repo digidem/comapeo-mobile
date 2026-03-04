@@ -140,7 +140,7 @@ import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsInclude
 import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
-import {WaitingForMapAccept} from '../../screens/BackgroundMaps/WaitingForMapAccept.tsx';
+import {SendingBackgroundMap} from '../../screens/BackgroundMaps/SendingBackgroundMap.tsx';
 import {RootStack} from './RootStack.ts';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -401,8 +401,8 @@ export const createAppScreens = ({
         options={createBackgroundMapsNavigationOptions({intl})}
       />
       <RootStack.Screen
-        name="WaitingForMapAccept"
-        component={WaitingForMapAccept}
+        name="SendingBackgroundMap"
+        component={SendingBackgroundMap}
         options={{headerShown: false}}
       />
 

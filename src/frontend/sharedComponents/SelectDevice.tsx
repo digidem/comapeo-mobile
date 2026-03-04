@@ -26,7 +26,6 @@ import {
   CREATOR_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
-import {useSyncState} from '@comapeo/core-react';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>

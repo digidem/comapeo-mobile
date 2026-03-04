@@ -30,39 +30,39 @@ import {
 
 const m = defineMessages({
   waitingMessage: {
-    id: 'screens.Settings.MapManagement.WaitingForMapToAccept.waitingMessage',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.waitingMessage',
     defaultMessage: 'Waiting for Device to Accept Map',
   },
   timerMessage: {
-    id: 'screens.Settings.MapManagement.WaitingForMapToAccept.timerMessage',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.timerMessage',
     defaultMessage: 'Map sent {time}s ago',
   },
   cancel: {
-    id: 'screens.Settings.MapManagement.WaitingForMapToAccept.cancel',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.cancel',
     defaultMessage: 'Cancel',
   },
   mapDeclined: {
-    id: 'screens.Settings.MapManagement.MapDeclineScreen.mapDeclined',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.mapDeclined',
     defaultMessage: 'Map declined.',
   },
   deviceNoSpace: {
-    id: 'screens.Settings.MapManagement.MapDeclineScreen.deviceNoSpace',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.deviceNoSpace',
     defaultMessage: 'Device does not have enough space.',
   },
   close: {
-    id: 'screens.Settings.MapManagement.MapDeclineScreen.close',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.close',
     defaultMessage: 'Close',
   },
   sending: {
-    id: 'screens.Settings.MapManagement.SendingMap.sending',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.sending',
     defaultMessage: 'Sending...',
   },
   mapSent: {
-    id: 'screens.Settings.MapManagement.MapSent.mapSent',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.mapSent',
     defaultMessage: 'Map sent!',
   },
   done: {
-    id: 'screens.Settings.MapManagement.MapSent.done',
+    id: 'screens.Settings.MapManagement.SendingBackgroundMap.done',
     defaultMessage: 'Done',
   },
 });
@@ -130,6 +130,15 @@ export function SendingBackgroundMap({
   const handleClose = () => {
     navigation.popTo('BackgroundMaps');
   };
+
+  function formatElapsed(totalSeconds: number) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    return `${minutes.toString().padStart(2, '0')}:${seconds
+      .toString()
+      .padStart(2, '0')}`;
+  }
 
   if (mapShare?.status === 'declined') {
     const reason = (mapShare as {reason?: string}).reason;
@@ -246,15 +255,6 @@ function MapSent({onDone}: {onDone: () => void}) {
       </View>
     </View>
   );
-}
-
-function formatElapsed(totalSeconds: number) {
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-
-  return `${minutes.toString().padStart(2, '0')}:${seconds
-    .toString()
-    .padStart(2, '0')}`;
 }
 
 const styles = StyleSheet.create({

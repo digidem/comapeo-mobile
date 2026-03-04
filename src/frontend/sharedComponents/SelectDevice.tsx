@@ -3,7 +3,11 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import * as Sentry from '@sentry/react-native';
 
-import {useManyMembers, useSendMapShare} from '@comapeo/core-react';
+import {
+  useManyMembers,
+  useSendMapShare,
+  useSyncState,
+} from '@comapeo/core-react';
 import {toError} from '../utils/errors';
 import {type MemberInfo} from '@comapeo/core/dist/member-api';
 import {type MapeoClientApi} from '@comapeo/ipc';
@@ -49,6 +53,10 @@ const m = defineMessages({
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion',
     defaultMessage: 'Make sure both devices are on the same version of CoMapeo',
   },
+  sameProject: {
+    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameProject',
+    defaultMessage: 'Make sure both devices have the same project open',
+  },
 });
 
 type SelectionMode = 'invites' | 'shareMap';
@@ -88,6 +96,10 @@ export const SelectDevice = ({
       <BodyText style={{marginLeft: 10}}>{`\u2022 ${t(m.sameWifi)}`}</BodyText>
       <BodyText
         style={{marginLeft: 10}}>{`\u2022 ${t(m.sameVersion)}`}</BodyText>
+      {selectionMode === 'shareMap' && (
+        <BodyText
+          style={{marginLeft: 10}}>{`\u2022 ${t(m.sameProject)}`}</BodyText>
+      )}
       <View style={{marginTop: 20}} />
 
       <View style={styles.deviceListContainer}>

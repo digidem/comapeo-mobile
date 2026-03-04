@@ -19,14 +19,17 @@ import {DEFAULT_PROJECT_COLOR} from '../constants';
 import {toError} from '../utils/errors';
 
 const m = defineMessages({
+  // primary-string
   close: {
     id: 'screens.RemovedFromProjectBottomSheet.close',
     defaultMessage: 'Close',
   },
+  // primary-string
   title: {
     id: 'screens.RemovedFromProjectBottomSheet.title',
     defaultMessage: 'THIS DEVICE REMOVED FROM…',
   },
+  // primary-string
   reasonLabel: {
     id: 'screens.RemovedFromProjectBottomSheet.reasonLabel',
     defaultMessage: 'Reason: {reason}',

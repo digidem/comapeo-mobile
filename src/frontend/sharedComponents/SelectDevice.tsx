@@ -3,7 +3,11 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import * as Sentry from '@sentry/react-native';
 
-import {useManyMembers, useSendMapShare} from '@comapeo/core-react';
+import {
+  useManyMembers,
+  useSendMapShare,
+  useSyncState,
+} from '@comapeo/core-react';
 import {toError} from '../utils/errors';
 import {type MemberInfo} from '@comapeo/core/dist/member-api';
 import {type MapeoClientApi} from '@comapeo/ipc';
@@ -18,10 +22,8 @@ import {LIGHT_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {
-  BLOCKED_ROLE_ID,
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
-  LEFT_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
 
@@ -50,6 +52,10 @@ const m = defineMessages({
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion',
     defaultMessage: 'Make sure both devices are on the same version of CoMapeo',
   },
+  sameProject: {
+    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameProject',
+    defaultMessage: 'Make sure both devices have the same project open',
+  },
 });
 
 type SelectionMode = 'invites' | 'shareMap';
@@ -63,6 +69,7 @@ export const SelectDevice = ({
 
   const availablePeers = useInitiallyConnectedPeers();
   const {projectId} = useActiveProject();
+  const syncState = useSyncState({projectId});
   const projectMembersQuery = useManyMembers({projectId});
   const {mutateAsync: sendMapShare} = useSendMapShare({projectId});
 
@@ -73,6 +80,7 @@ export const SelectDevice = ({
     peers: availablePeers,
     projectMembers: projectMembersQuery.data,
     selectionMode,
+    syncState,
   });
 
   return (
@@ -87,6 +95,10 @@ export const SelectDevice = ({
       <BodyText style={{marginLeft: 10}}>{`\u2022 ${t(m.sameWifi)}`}</BodyText>
       <BodyText
         style={{marginLeft: 10}}>{`\u2022 ${t(m.sameVersion)}`}</BodyText>
+      {selectionMode === 'shareMap' && (
+        <BodyText
+          style={{marginLeft: 10}}>{`\u2022 ${t(m.sameProject)}`}</BodyText>
+      )}
       <View style={{marginTop: 20}} />
 
       <View style={styles.deviceListContainer}>
@@ -162,22 +174,22 @@ type GetSelectableDevicesParams = {
   peers: PublicPeerInfo[];
   projectMembers: MemberInfo[];
   selectionMode: SelectionMode;
+  syncState: ReturnType<typeof useSyncState>;
 };
 
 export function getSelectableDevices({
   peers,
   projectMembers,
   selectionMode,
+  syncState,
 }: GetSelectableDevicesParams): PublicPeerInfo[] {
   if (selectionMode === 'shareMap') {
+    if (!syncState) return [];
+
+    const connectedDeviceIds = Object.keys(syncState.remoteDeviceSyncState);
+
     return peers.filter(device => {
-      const isActiveProjectMember = projectMembers.some(
-        member =>
-          member.deviceId === device.deviceId &&
-          member.role.roleId !== BLOCKED_ROLE_ID &&
-          member.role.roleId !== LEFT_ROLE_ID,
-      );
-      return isActiveProjectMember;
+      return connectedDeviceIds.includes(device.deviceId);
     });
   }
 

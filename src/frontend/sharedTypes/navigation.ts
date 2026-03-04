@@ -123,7 +123,7 @@ export type RootStackParamsList = {
   SettingsPrivacyPolicy: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   BackgroundMaps: undefined;
-  WaitingForMapAccept: {
+  SendingBackgroundMap: {
     shareId: string;
   };
   ExchangeSettingsBottomSheet: undefined;

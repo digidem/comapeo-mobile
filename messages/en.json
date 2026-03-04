@@ -1983,12 +1983,6 @@
   "screens.Settings.MapManagement.MapReceived.sharingDevice": {
     "message": "{deviceName} wants to share..."
   },
-  "screens.Settings.MapManagement.MapSent.done": {
-    "message": "Done"
-  },
-  "screens.Settings.MapManagement.MapSent.mapSent": {
-    "message": "Map sent!"
-  },
   "screens.Settings.MapManagement.MapShareCanceled.close": {
     "message": "Close"
   },
@@ -2010,16 +2004,6 @@
   "screens.Settings.MapManagement.ReplaceBackgroundMap.yesReplace": {
     "message": "Yes, Replace"
   },
-  "screens.Settings.MapManagement.SendingMap.sending": {
-    "message": "Sending..."
-  },
-  "screens.Settings.MapManagement.UpdatingBackgroundMap.cancel": {
-    "message": "Cancel"
-  },
-  "screens.Settings.MapManagement.UpdatingBackgroundMap.updating": {
-    "message": "Updating..."
-  },
-  "screens.Settings.MapManagement.WaitingForMapToAccept.cancel": {
   "screens.Settings.MapManagement.SendingBackgroundMap.cancel": {
     "message": "Cancel"
   },
@@ -2046,6 +2030,12 @@
   },
   "screens.Settings.MapManagement.SendingBackgroundMap.waitingMessage": {
     "message": "Waiting for Device to Accept Map"
+  },
+  "screens.Settings.MapManagement.UpdatingBackgroundMap.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Settings.MapManagement.UpdatingBackgroundMap.updating": {
+    "message": "Updating..."
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invite devices to a new project with all your observations."

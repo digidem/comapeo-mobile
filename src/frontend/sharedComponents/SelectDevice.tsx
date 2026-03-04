@@ -18,12 +18,11 @@ import {LIGHT_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {
-  BLOCKED_ROLE_ID,
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
-  LEFT_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
+import {useSyncState} from '@comapeo/core-react';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
@@ -63,6 +62,7 @@ export const SelectDevice = ({
 
   const availablePeers = useInitiallyConnectedPeers();
   const {projectId} = useActiveProject();
+  const syncState = useSyncState({projectId});
   const projectMembersQuery = useManyMembers({projectId});
   const {mutateAsync: sendMapShare} = useSendMapShare({projectId});
 
@@ -73,6 +73,7 @@ export const SelectDevice = ({
     peers: availablePeers,
     projectMembers: projectMembersQuery.data,
     selectionMode,
+    syncState,
   });
 
   return (
@@ -119,6 +120,7 @@ export const SelectDevice = ({
                 });
               } catch (err) {
                 Sentry.captureException(err);
+                console.warn('Failed to send map share', err);
                 navigation.navigate('ErrorBottomSheet', {
                   error: toError(err, 'Failed to send map share'),
                 });
@@ -162,22 +164,22 @@ type GetSelectableDevicesParams = {
   peers: PublicPeerInfo[];
   projectMembers: MemberInfo[];
   selectionMode: SelectionMode;
+  syncState: ReturnType<typeof useSyncState>;
 };
 
 export function getSelectableDevices({
   peers,
   projectMembers,
   selectionMode,
+  syncState,
 }: GetSelectableDevicesParams): PublicPeerInfo[] {
   if (selectionMode === 'shareMap') {
+    if (!syncState) return [];
+
+    const connectedDeviceIds = Object.keys(syncState.remoteDeviceSyncState);
+
     return peers.filter(device => {
-      const isActiveProjectMember = projectMembers.some(
-        member =>
-          member.deviceId === device.deviceId &&
-          member.role.roleId !== BLOCKED_ROLE_ID &&
-          member.role.roleId !== LEFT_ROLE_ID,
-      );
-      return isActiveProjectMember;
+      return connectedDeviceIds.includes(device.deviceId);
     });
   }
 

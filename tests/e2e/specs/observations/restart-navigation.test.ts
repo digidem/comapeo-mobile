@@ -83,7 +83,7 @@ describe('MAIN - Observation Navigation Flow', () => {
     await expect($(byTextMatches('Updated description'))).toBeDisplayed();
   });
 
-  it('should navigate back to map screen after discarding observarion', async () => {
+  it('should navigate back to map screen after discarding observation', async () => {
     const closeBtn = await $(byResourceId('OBS.header-left-close'));
     await closeBtn.click();
 

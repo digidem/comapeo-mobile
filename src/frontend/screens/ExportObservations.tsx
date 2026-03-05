@@ -1,12 +1,12 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
 import {BodyText} from '../sharedComponents/Text/BodyText';
-import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
+import {PrimaryButton} from '../sharedComponents/Buttons';
 import {Exports, NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {DARK_GREY, LIGHT_GREY, WARNING_RED} from '../lib/styles';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
+import {DownloadIcon} from '../sharedComponents/icons';
 import {useState} from 'react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -24,6 +24,10 @@ const m = defineMessages({
   download: {
     id: 'screens.ExportObservations.download',
     defaultMessage: 'Download',
+  },
+  downloadObservations: {
+    id: 'screens.ExportObservations.downloadObservations',
+    defaultMessage: 'Download Observations',
   },
   allObservations: {
     id: 'screens.ExportObservations.allObservations',
@@ -91,81 +95,81 @@ export const ExportObservations = ({
   }
 
   return (
-    <BottomSheetWrapper>
-      <View style={{alignItems: 'center', gap: 10}}>
-        {observations.length > 0 && (
-          <>
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <View style={styles.optionsContainer}>
+          {observations.length > 0 && (
+            <>
+              <ExportOptionCard
+                title={formatMessage(m.allObservations)}
+                description={formatMessage(m.allObservationsDescription)}
+                isSelected={typeToExport === 'Observation'}
+                showError={showError && !typeToExport}
+                onPress={() => {
+                  setTypeToExport('Observation');
+                  if (showError) {
+                    setShowError(false);
+                  }
+                }}
+              />
+              <ExportOptionCard
+                title={formatMessage(m.allObservationsAndMedia)}
+                description={formatMessage(
+                  m.allObservationsAndMediaDescription,
+                )}
+                isSelected={typeToExport === 'ObservationsWithMedia'}
+                showError={showError && !typeToExport}
+                onPress={() => {
+                  setTypeToExport('ObservationsWithMedia');
+                  if (showError) {
+                    setShowError(false);
+                  }
+                }}
+              />
+            </>
+          )}
+          {tracks.length > 0 && (
             <ExportOptionCard
-              title={formatMessage(m.allObservations)}
-              description={formatMessage(m.allObservationsDescription)}
-              isSelected={typeToExport === 'Observation'}
+              title={formatMessage(m.tracks)}
+              description={formatMessage(m.tracksDescription)}
+              isSelected={typeToExport === 'Tracks'}
               showError={showError && !typeToExport}
               onPress={() => {
-                setTypeToExport('Observation');
+                setTypeToExport('Tracks');
                 if (showError) {
                   setShowError(false);
                 }
               }}
             />
-            <ExportOptionCard
-              title={formatMessage(m.allObservationsAndMedia)}
-              description={formatMessage(m.allObservationsAndMediaDescription)}
-              isSelected={typeToExport === 'ObservationsWithMedia'}
-              showError={showError && !typeToExport}
-              onPress={() => {
-                setTypeToExport('ObservationsWithMedia');
-                if (showError) {
-                  setShowError(false);
-                }
-              }}
-            />
-          </>
-        )}
-        {tracks.length > 0 && (
-          <ExportOptionCard
-            title={formatMessage(m.tracks)}
-            description={formatMessage(m.tracksDescription)}
-            isSelected={typeToExport === 'Tracks'}
-            showError={showError && !typeToExport}
-            onPress={() => {
-              setTypeToExport('Tracks');
-              if (showError) {
-                setShowError(false);
-              }
-            }}
-          />
+          )}
+        </View>
+        {showError && (
+          <HeaderText
+            variant="header5"
+            style={{
+              color: WARNING_RED,
+              marginTop: 20,
+              textAlign: 'center',
+            }}>
+            {formatMessage(m.errorMessage)}
+          </HeaderText>
         )}
       </View>
-      {showError && (
-        <HeaderText
-          variant="header5"
-          style={{
-            color: WARNING_RED,
-            marginTop: 20,
-            textAlign: 'center',
-          }}>
-          {formatMessage(m.errorMessage)}
-        </HeaderText>
-      )}
-      {!exportAndShare.isPending ? (
-        <>
+      <View style={styles.buttonContainer}>
+        {!exportAndShare.isPending ? (
           <PrimaryButton
             fullSize={true}
             onPress={handlePressDownload}
-            style={{marginTop: 20, alignSelf: 'center'}}
             text={formatMessage(m.download)}
+            renderIcon={({color, size}) => (
+              <DownloadIcon color={color} size={size} />
+            )}
           />
-          <SecondaryButton
-            fullSize={true}
-            onPress={() => navigation.goBack()}
-            style={{marginTop: 20, alignSelf: 'center'}}
-            text={formatMessage(m.close)}
-          />
-        </>
-      ) : (
-        <UIActivityIndicator style={{paddingTop: 60, paddingBottom: 40}} />
-      )}
-    </BottomSheetWrapper>
+        ) : (
+          <UIActivityIndicator />
+        )}
+      </View>
+    </View>
   );
 };
 
@@ -200,7 +204,25 @@ export const ExportOptionCard = ({
   );
 };
 
+ExportObservations.navTitle = m.downloadObservations;
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  content: {
+    flex: 1,
+    padding: 20,
+    gap: 20,
+  },
+  optionsContainer: {
+    gap: 15,
+  },
+  buttonContainer: {
+    padding: 20,
+    alignItems: 'center',
+  },
   cardButton: {
     alignItems: 'center',
     padding: 20,
@@ -209,5 +231,11 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: LIGHT_GREY,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 3,
   },
 });

@@ -939,6 +939,9 @@
   "screens.ExportObservations.download": {
     "message": "Download"
   },
+  "screens.ExportObservations.downloadObservations": {
+    "message": "Download Observations"
+  },
   "screens.ExportObservations.errorMessage": {
     "message": "Choose an option"
   },

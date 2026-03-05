@@ -27,6 +27,7 @@ import {
   COMAPEO_BLUE,
 } from '../../lib/styles';
 import {SendingMapProgressBar} from './SendingMapProgressBar';
+import {useCurrentTime} from '../../hooks/useCurrentTime';
 
 const m = defineMessages({
   waitingMessage: {
@@ -74,11 +75,15 @@ export function SendingBackgroundMap({
   const {formatMessage: t} = useIntl();
   const {shareId} = route.params;
 
-  const [time, setTime] = React.useState(0);
   const mapShare = useSingleSentMapShare({shareId});
   const {mutate: cancelMapShare} = useCancelSentMapShare();
+  const currentTime = useCurrentTime(1000);
 
   usePreventAndroidBackButton();
+
+  const elapsedSeconds = mapShare
+    ? Math.floor((currentTime.getTime() - mapShare.mapShareCreatedAt) / 1000)
+    : 0;
 
   const cancelShare = React.useCallback(() => {
     cancelMapShare(
@@ -123,11 +128,6 @@ export function SendingBackgroundMap({
     }
   }, [mapShare, navigation]);
 
-  React.useEffect(() => {
-    const interval = setInterval(() => setTime(prev => prev + 1), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   const handleClose = () => {
     navigation.popTo('BackgroundMaps');
   };
@@ -161,7 +161,7 @@ export function SendingBackgroundMap({
         {t(m.waitingMessage)}
       </HeaderText>
       <BodyText style={{marginTop: 20}}>
-        {t(m.timerMessage, {time: formatElapsed(time)})}
+        {t(m.timerMessage, {time: formatElapsed(elapsedSeconds)})}
       </BodyText>
       <TextButton title={t(m.cancel)} onPress={cancelShare} />
     </View>

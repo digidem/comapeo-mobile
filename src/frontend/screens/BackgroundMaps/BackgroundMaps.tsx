@@ -160,9 +160,7 @@ export function BackgroundMapsScreen() {
   });
   const importCustomMapMutation = useImportCustomMapFile();
   const removeCustomMapMutation = useRemoveCustomMapFile();
-  const {data, isRefetching, error} = useGetCustomMapInfo();
-
-  const customMapInfo = data as CustomMapInfo | null | undefined;
+  const {data: customMapInfo, isRefetching, error} = useGetCustomMapInfo();
 
   const handleChooseFile = () => {
     selectFileMutation.mutate(undefined, {
@@ -195,7 +193,7 @@ export function BackgroundMapsScreen() {
     <>
       <ScrollView contentContainerStyle={styles.container}>
         {isRefetching ? (
-          <Loading size={10} />
+          <Loading size={20} />
         ) : error || !customMapInfo ? (
           <NoMapScreen
             error={error}
@@ -212,7 +210,7 @@ export function BackgroundMapsScreen() {
           />
         ) : (
           <MapInfoScreen
-            customMapInfo={customMapInfo}
+            customMapInfo={customMapInfo as unknown as CustomMapInfo}
             onRemoveMap={handleRemoveMap}
           />
         )}
@@ -242,7 +240,7 @@ function NoMapScreen({
       </View>
       <View style={{gap: 20, marginTop: 40}}>
         {isUploading ? (
-          <Loading size={6} />
+          <Loading size={12} />
         ) : (
           <Button
             fullWidth
@@ -267,28 +265,33 @@ function NoMapScreen({
           {t(m.acceptedFileTypes)}
         </BodyText>
       </View>
-      {error && !error.message?.includes('Map not found') && (
-        <View style={{marginTop: 40}}>
-          <BodyText variant="large" style={styles.infoLoadErrorText}>
-            {t(m.customMapInfoLoadError)}
-          </BodyText>
-          <View style={{alignItems: 'center', marginTop: 20}}>
-            <SecondaryDestructiveButton
-              fullSize
-              text={t(m.removeMapFile)}
-              onPress={onRemoveMapFile}
-            />
+      {error &&
+        /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+        (error as any).code !== 'MAP_NOT_FOUND' && (
+          <View style={{marginTop: 40}}>
+            <BodyText variant="large" style={styles.infoLoadErrorText}>
+              {t(m.customMapInfoLoadError)}
+            </BodyText>
+            <View style={{alignItems: 'center', marginTop: 20}}>
+              <SecondaryDestructiveButton
+                fullSize
+                text={t(m.removeMapFile)}
+                onPress={onRemoveMapFile}
+              />
+            </View>
           </View>
-        </View>
-      )}
+        )}
     </View>
   );
 }
 
+// Note: The type definition in @comapeo/core-react v9.0.2 doesn't match the actual API response
+// API returns: {name, size, created} but types say: {mapName, estimatedSizeBytes, mapCreatedAt}
+// Using the actual API response structure here
 type CustomMapInfo = {
   name: string;
   size: number;
-  created: Date;
+  created: number;
 };
 
 function MapInfoScreen({

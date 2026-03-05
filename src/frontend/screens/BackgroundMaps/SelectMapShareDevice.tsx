@@ -39,23 +39,23 @@ export function getSelectableDevicesForMapShare({
 
 const m = defineMessages({
   title: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare',
+    id: 'screen.Settings.ProjectSettings.BackgroundMaps.SelectDevice.titleMapShare',
     defaultMessage: 'Select Device',
   },
   notSeeingDevice: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice',
+    id: 'screen.Settings.ProjectSettings.BackgroundMaps.SelectDevice.notSeeingDevice',
     defaultMessage: 'Not seeing a Device?',
   },
   sameWifi: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi',
+    id: 'screen.Settings.ProjectSettings.BackgroundMaps.SelectDevice.sameWifi',
     defaultMessage: 'Make sure both devices are on the same wifi network ',
   },
   sameVersion: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion',
+    id: 'screen.Settings.ProjectSettings.BackgroundMaps.SelectDevice.sameVersion',
     defaultMessage: 'Make sure both devices are on the same version of CoMapeo',
   },
   sameProject: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameProject',
+    id: 'screen.Settings.ProjectSettings.BackgroundMaps.SelectDevice.sameProject',
     defaultMessage: 'Make sure both devices have the same project open',
   },
 });

@@ -9,6 +9,7 @@ import {
 } from '@comapeo/core-react';
 import InviteSent from '../../images/InviteSent.svg';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
+import {useCurrentTime} from '../../hooks/useCurrentTime';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -36,11 +37,15 @@ export function WaitingForMapAccept({
   const {formatMessage: t} = useIntl();
   const {shareId} = route.params;
 
-  const [time, setTime] = React.useState(0);
   const mapShare = useSingleSentMapShare({shareId});
   const {mutate: cancelMapShare} = useCancelSentMapShare();
+  const currentTime = useCurrentTime(1000);
 
   usePreventAndroidBackButton();
+
+  const elapsedSeconds = mapShare
+    ? Math.floor((currentTime.getTime() - mapShare.mapShareCreatedAt) / 1000)
+    : 0;
 
   const cancelShare = React.useCallback(() => {
     cancelMapShare(
@@ -84,12 +89,6 @@ export function WaitingForMapAccept({
     }
   }, [mapShare, navigation]);
 
-  React.useEffect(() => {
-    const interval = setInterval(() => setTime(prev => prev + 1), 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <View style={styles.container}>
       <InviteSent />
@@ -97,7 +96,7 @@ export function WaitingForMapAccept({
         {t(m.waitingMessage)}
       </HeaderText>
       <BodyText style={{marginTop: 20}}>
-        {t(m.timerMessage, {time: formatElapsed(time)})}
+        {t(m.timerMessage, {time: formatElapsed(elapsedSeconds)})}
       </BodyText>
 
       <TextButton title={t(m.cancel)} onPress={cancelShare} />

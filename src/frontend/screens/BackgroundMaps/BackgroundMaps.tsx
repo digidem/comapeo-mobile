@@ -193,7 +193,7 @@ export function BackgroundMapsScreen() {
     <>
       <ScrollView contentContainerStyle={styles.container}>
         {isRefetching ? (
-          <Loading size={10} />
+          <Loading size={20} />
         ) : error || !customMapInfo ? (
           <NoMapScreen
             error={error}
@@ -240,7 +240,7 @@ function NoMapScreen({
       </View>
       <View style={{gap: 20, marginTop: 40}}>
         {isUploading ? (
-          <Loading size={6} />
+          <Loading size={12} />
         ) : (
           <Button
             fullWidth

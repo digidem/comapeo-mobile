@@ -50,4 +50,27 @@ describe('Observations - Edit Observation Flow', () => {
     await expect($(byTextMatches('New detail'))).toBeDisplayed();
     await $(byResourceId('MAIN.header-back-btn')).click();
   });
+
+  it('should discard changes when user chooses not to save', async () => {
+    const caveItem = await $(byTextMatches('Cave'));
+    await caveItem.click();
+    const editBtn = await $(byResourceId('editButton'));
+    await editBtn.click();
+
+    const descriptionInput = await $(byResourceId('OBS.description-inp'));
+    await descriptionInput.click();
+    await descriptionInput.setValue('This will be discarded');
+    await driver.hideKeyboard();
+
+    const closeIcon = await $(byResourceId('close-icon'));
+    await closeIcon.click();
+    const discardBtn = await $(byResourceId('OBS.discard-obs-btn'));
+    await discardBtn.click();
+
+    await expect($(byTextMatches('Updated description'))).toBeDisplayed();
+    await expect(
+      $(byTextMatches('This will be discarded')),
+    ).not.toBeDisplayed();
+    await $(byResourceId('MAIN.header-back-btn')).click();
+  });
 });

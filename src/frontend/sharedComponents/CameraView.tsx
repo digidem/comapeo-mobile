@@ -1,20 +1,21 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {View, StyleSheet, Text, StatusBar} from 'react-native';
-import {
-  CameraCapturedPicture,
-  CameraView as ExpoCameraView,
-  useCameraPermissions,
-} from 'expo-camera';
+import {CameraCapturedPicture} from 'expo-camera';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
+import {
+  Camera,
+  useCameraDevice,
+  useCameraPermission,
+} from 'react-native-vision-camera';
 
 import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
 import {useLocationState} from '../contexts/LocationContext';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
-import * as Sentry from '@sentry/react-native';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {toError} from '../utils/errors';
+// import * as Sentry from '@sentry/react-native';
+// import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+// import {toError} from '../utils/errors';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -37,13 +38,15 @@ type Props = {
 
 export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
-  const [cameraReady, setCameraReady] = React.useState(false);
-  const ref = React.useRef<ExpoCameraView>(null);
   const accelerometerMeasurement =
     React.useRef<AccelerometerMeasurement | null>(null);
-  const [permissionsResponse] = useCameraPermissions();
+  const {hasPermission} = useCameraPermission();
+  const camera = useRef<Camera>(null);
   const location = useLocationState(store => store.location);
-  const navigation = useNavigationFromRoot();
+  // const navigation = useNavigationFromRoot();
+  const device = useCameraDevice('back');
+
+  console.log({hasPermission, device});
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -68,8 +71,8 @@ export const CameraView = ({onAddPress}: Props) => {
     };
   }, []);
 
-  const handleAddPress = React.useCallback(() => {
-    if (!ref.current) {
+  function handleAddPress() {
+    if (!camera.current) {
       throw new Error('Camera Not Ready');
     }
 
@@ -80,57 +83,78 @@ export const CameraView = ({onAddPress}: Props) => {
 
     setCapturing(true);
 
-    ref.current
-      .takePictureAsync({
-        base64: false,
-        exif: true,
-        skipProcessing: false,
-        shutterSound: false,
-        quality: 0.75,
-        imageType: 'jpg',
-      })
-      .then(photo => {
-        onAddPress({
-          photo,
-          metadata: {
-            location,
-            accelerometer: accelerometerMeasurement.current || undefined,
-            timestamp: Date.now(),
-          },
-        });
-      })
-      .catch(err => {
-        Sentry.captureException(err);
-        navigation.navigate('ErrorBottomSheet', {
-          error: toError(err, 'Error taking picture'),
-        });
-      })
-      .finally(() => {
-        setCapturing(false);
+    camera.current.takePhoto({enableShutterSound: false}).then(photo => {
+      onAddPress({
+        photo: {...photo, uri: '', format: 'jpg'},
+        metadata: {
+          location,
+          accelerometer: accelerometerMeasurement.current || undefined,
+          timestamp: Date.now(),
+        },
       });
-  }, [capturing, setCapturing, onAddPress, location, navigation]);
+    });
+  }
 
-  const disableButton = capturing || !cameraReady;
-  const permissionGranted = permissionsResponse?.status === 'granted';
+  // const handleAddPress = React.useCallback(() => {
+  //   if (!camera.current) {
+  //     throw new Error('Camera Not Ready');
+  //   }
+
+  //   // if there is a double click of the button => ignore
+  //   if (capturing) {
+  //     return;
+  //   }
+
+  //   setCapturing(true);
+
+  //   camera.current
+  //     .takePictureAsync({
+  //       base64: false,
+  //       exif: true,
+  //       skipProcessing: false,
+  //       shutterSound: false,
+  //       quality: 0.75,
+  //       imageType: 'jpg',
+  //     })
+  //     .then(photo => {
+  //       onAddPress({
+  //         photo,
+  //         metadata: {
+  //           location,
+  //           accelerometer: accelerometerMeasurement.current || undefined,
+  //           timestamp: Date.now(),
+  //         },
+  //       });
+  //     })
+  //     .catch(err => {
+  //       Sentry.captureException(err);
+  //       navigation.navigate('ErrorBottomSheet', {
+  //         error: toError(err, 'Error taking picture'),
+  //       });
+  //     })
+  //     .finally(() => {
+  //       setCapturing(false);
+  //     });
+  // }, [capturing, setCapturing, onAddPress, location, navigation]);
+
+  const disableButton = capturing; //|| !cameraReady;
 
   return (
     <View style={styles.container} testID="MAIN.camera-scrn">
       <StatusBar barStyle="light-content" />
-      {!permissionGranted ? (
+      {!hasPermission || !device ? (
         <View style={styles.noPermissionContainer}>
           <Text style={{marginBottom: 10}}>
             <FormattedMessage {...m.noCameraAccess} />
           </Text>
         </View>
       ) : (
-        <ExpoCameraView
-          ref={ref}
-          onCameraReady={() => {
-            setCameraReady(true);
-          }}
+        <Camera
+          device={device}
+          ref={camera}
           style={{flex: 1}}
-          facing="back"
-          animateShutter={false}
+          isActive={true}
+          photo={true}
         />
       )}
 

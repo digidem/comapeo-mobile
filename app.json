@@ -19,6 +19,7 @@
       "expo-localization",
       "expo-secure-store",
       "expo-document-picker",
+      "react-native-vision-camera",
       [
         "@rnmapbox/maps",
         {

@@ -114,6 +114,7 @@
     "react-native-share": "12.1.0",
     "react-native-svg": "15.15.3",
     "react-native-url-polyfill": "3.0.0",
+    "react-native-vision-camera": "4.7.3",
     "react-native-zeroconf": "0.13.8",
     "start-stop-state-machine": "1.2.0",
     "tiny-typed-emitter": "2.1.0",

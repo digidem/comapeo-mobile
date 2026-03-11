@@ -17,13 +17,16 @@ const m = defineMessages({
   },
 });
 
-export function TrackAccordian({observationId}: {observationId: string}) {
+export function TrackAccordian({
+  observationId,
+  ownDeviceId,
+}: {
+  observationId: string;
+  ownDeviceId: string;
+}) {
   const navigation = useNavigationFromRoot();
   const {data: allTracks} = useTracks();
-  const track =
-    allTracks === undefined
-      ? undefined
-      : findAssociatedTrack({tracks: allTracks, observationId});
+  const track = findAssociatedTrack({tracks: allTracks, observationId});
   const {formatMessage} = useIntl();
 
   if (!track) return null;
@@ -52,6 +55,7 @@ export function TrackAccordian({observationId}: {observationId: string}) {
               navigation.push('Track', {trackId: track.docId});
             }}
             testID={`trackListItem:${track.docId}`}
+            isExchanged={track.createdBy !== ownDeviceId}
           />
         }
       />

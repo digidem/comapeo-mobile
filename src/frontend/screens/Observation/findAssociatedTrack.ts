@@ -1,10 +1,10 @@
 import {type Track} from '@comapeo/schema';
 
-export function findAssociatedTrack({
+export function findAssociatedTrack<T extends Track>({
   tracks,
   observationId,
 }: {
-  tracks: Track[];
+  tracks: T[];
   observationId: string;
 }) {
   return tracks.find(trackData =>

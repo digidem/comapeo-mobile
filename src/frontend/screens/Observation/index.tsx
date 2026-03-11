@@ -144,7 +144,10 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         <View style={styles.section}>
           <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
           <React.Suspense fallback={<Loading />}>
-            <TrackAccordian observationId={observationId} />
+            <TrackAccordian
+              observationId={observationId}
+              ownDeviceId={ownDeviceInfo.deviceId}
+            />
           </React.Suspense>
           {observation?.tags?.notes ? (
             <HeaderText variant="header3" style={styles.textNotes}>

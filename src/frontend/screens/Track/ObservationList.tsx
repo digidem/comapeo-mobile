@@ -9,7 +9,8 @@ import {Accordian} from '../../sharedComponents/Accordian.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 
 interface TrackObservation {
-  observations: Observation[];
+  observations: (Observation & {createdBy: string})[];
+  ownDeviceId: string;
 }
 
 const m = defineMessages({
@@ -23,7 +24,7 @@ const m = defineMessages({
   },
 });
 
-export function ObservationList({observations}: TrackObservation) {
+export function ObservationList({observations, ownDeviceId}: TrackObservation) {
   const navigation = useNavigationFromRoot();
   const {formatMessage} = useIntl();
   const numberOfObservations = observations.length;
@@ -52,6 +53,7 @@ export function ObservationList({observations}: TrackObservation) {
             });
           }}
           testID={'id' + index}
+          isExchanged={observation.createdBy !== ownDeviceId}
         />
       ))}
     />

@@ -122,7 +122,10 @@ export const TrackScreen = ({
           </Text>
         </View>
         <View style={styles.divider} />
-        <ObservationList observations={trackObservations} />
+        <ObservationList
+          observations={trackObservations}
+          ownDeviceId={ownDeviceInfo.deviceId}
+        />
         <View style={styles.divider} />
         <Text style={styles.text}>{track.tags.notes}</Text>
       </View>

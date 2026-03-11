@@ -5,7 +5,12 @@ import {DARK_GREY} from '../../lib/styles';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDeleteDocument, useProjectSettings} from '@comapeo/core-react';
+import {
+  useDeleteDocument,
+  useOwnDeviceInfo,
+  useOwnRoleInProject,
+  useProjectSettings,
+} from '@comapeo/core-react';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/coordinateFormat.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -17,7 +22,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {useOpenShareDialog} from '../../hooks/share.ts';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.ts';
-import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
+import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes/index.ts';
 
 const m = defineMessages({
   delete: {
@@ -123,7 +128,14 @@ export const ButtonFields = ({
       projectId: projectId,
     });
   const openShare = useOpenShareDialog();
-  const canDelete = useCanEditOrDelete(observation.originalVersionId);
+
+  const {data: role} = useOwnRoleInProject({projectId});
+  const {data: ownDeviceInfo} = useOwnDeviceInfo();
+
+  const canDelete =
+    observation.createdBy === ownDeviceInfo.deviceId ||
+    role.roleId === CREATOR_ROLE_ID ||
+    role.roleId === COORDINATOR_ROLE_ID;
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [

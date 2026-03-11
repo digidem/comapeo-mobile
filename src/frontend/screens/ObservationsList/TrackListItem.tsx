@@ -8,7 +8,6 @@ import TrackIcon from '../../images/Track.svg';
 import {sharedStyles} from './SharedStyle.ts';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
-import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePresetsQuery} from '../../hooks/server/presets.ts';
 
@@ -24,6 +23,7 @@ interface ObservationListItemProps {
   track: Track;
   testID: string;
   onPress: () => void;
+  isExchanged: boolean;
 }
 
 const TrackObservationItemNotMemoized = ({
@@ -31,9 +31,9 @@ const TrackObservationItemNotMemoized = ({
   track,
   testID,
   onPress,
+  isExchanged,
 }: ObservationListItemProps) => {
   const {formatMessage} = useIntl();
-  const isMine = useIsMyDocument(track.originalVersionId);
   const {data: allPresets} = usePresetsQuery();
   const matchedPreset =
     track.presetRef && allPresets.find(p => p.docId === track.presetRef?.docId);
@@ -48,7 +48,8 @@ const TrackObservationItemNotMemoized = ({
       onPress={onPress}
       testID={testID}
       style={styles.touchable}>
-      <View style={[styles.container, style, !isMine && sharedStyles.synced]}>
+      <View
+        style={[styles.container, style, isExchanged && sharedStyles.synced]}>
         <View style={styles.text}>
           <HeaderText variant="header4">{formatMessage(m.track)}</HeaderText>
           <BodyText>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
+import {useOwnDeviceInfo, useOwnRoleInProject} from '@comapeo/core-react';
 import {BLUE_GREY, DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
@@ -17,13 +18,14 @@ import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
 import {TrackHeaderRight} from './TrackHeaderRight';
 import * as Sentry from '@sentry/react-native';
-import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 import {
   getLocationHistoryFromTrack,
   getTrackDurationAndDistance,
 } from '../../utils/trackMetrics';
 import {TrackStats} from '../../sharedComponents/TrackStats.tsx';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
+import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
+import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes/index.ts';
 
 const m = defineMessages({
   title: {
@@ -55,7 +57,15 @@ export const TrackScreen = ({
     track.observationRefs.some(ref => ref.docId === observation.docId),
   );
   const {mutate: deleteTrackMutate} = useDeleteTrackMutation();
-  const canDelete = useCanEditOrDelete(track.originalVersionId);
+
+  const {projectId} = useActiveProject();
+  const {data: role} = useOwnRoleInProject({projectId});
+  const {data: ownDeviceInfo} = useOwnDeviceInfo();
+  const canDelete =
+    track.createdBy === ownDeviceInfo.deviceId ||
+    role.roleId === CREATOR_ROLE_ID ||
+    role.roleId === COORDINATOR_ROLE_ID;
+
   const locationHistory = getLocationHistoryFromTrack(track);
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
   const preset = useGetPresetById(track?.presetRef?.docId);

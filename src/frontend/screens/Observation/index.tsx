@@ -1,5 +1,9 @@
 import * as React from 'react';
-
+import {
+  useManyDocs,
+  useOwnDeviceInfo,
+  useOwnRoleInProject,
+} from '@comapeo/core-react';
 import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {WHITE, DARK_GREY, BLUE_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
@@ -10,7 +14,6 @@ import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {useManyDocs} from '@comapeo/core-react';
 
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
@@ -35,9 +38,12 @@ import {
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
 import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
 import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioSavedThumbnail.tsx';
-import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext.tsx';
-import {SavedPhoto} from '../../sharedTypes/index.ts';
+import {
+  COORDINATOR_ROLE_ID,
+  CREATOR_ROLE_ID,
+  type SavedPhoto,
+} from '../../sharedTypes/index.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -76,7 +82,13 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       isSavedPhoto(attachment) || isAudioAttachment(attachment),
   );
 
-  const canEdit = useCanEditOrDelete(observation.originalVersionId);
+  const {data: role} = useOwnRoleInProject({projectId});
+  const {data: ownDeviceInfo} = useOwnDeviceInfo();
+
+  const canEdit =
+    observation.createdBy === ownDeviceInfo.deviceId ||
+    role.roleId === CREATOR_ROLE_ID ||
+    role.roleId === COORDINATOR_ROLE_ID;
 
   React.useEffect(() => {
     navigation.setOptions({

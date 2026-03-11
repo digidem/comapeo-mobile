@@ -1,12 +1,16 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
+import {
+  useOwnDeviceInfo,
+  useOwnRoleInProject,
+  useSingleDocByDocId,
+} from '@comapeo/core-react';
 
 import {IconButton} from '../../sharedComponents/IconButton';
-import {useSingleDocByDocId} from '@comapeo/core-react';
 import {EditIcon} from '../../sharedComponents/icons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
-import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
+import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes/index.ts';
 
 export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
   const {projectId} = useActiveProject();
@@ -18,7 +22,13 @@ export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
 
   const navigation = useNavigationFromRoot();
 
-  const canEdit = useCanEditOrDelete(track.originalVersionId);
+  const {data: role} = useOwnRoleInProject({projectId});
+  const {data: ownDeviceInfo} = useOwnDeviceInfo();
+
+  const canEdit =
+    track.createdBy === ownDeviceInfo.deviceId ||
+    role.roleId === CREATOR_ROLE_ID ||
+    role.roleId === COORDINATOR_ROLE_ID;
 
   return canEdit ? (
     <IconButton

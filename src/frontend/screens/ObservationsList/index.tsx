@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {ObservationListItem} from './ObservationListItem';
@@ -58,6 +59,7 @@ export const ObservationsList: React.FC<
   const {data: tracks} = useTracks();
   const {authState} = useAuthContext();
   const {formatMessage} = useIntl();
+  const {data: ownDeviceInfo} = useOwnDeviceInfo();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -106,6 +108,7 @@ export const ObservationsList: React.FC<
                       observationId: item.docId,
                     })
                   }
+                  isExchanged={item.createdBy !== ownDeviceInfo.deviceId}
                 />
               );
             case 'track':
@@ -118,6 +121,7 @@ export const ObservationsList: React.FC<
                   onPress={() => {
                     navigation.navigate('Track', {trackId: item.docId});
                   }}
+                  isExchanged={item.createdBy !== ownDeviceInfo.deviceId}
                 />
               );
           }

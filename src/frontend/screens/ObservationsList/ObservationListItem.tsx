@@ -14,7 +14,6 @@ import {matchPreset} from '../../lib/utils';
 import {sharedStyles} from './SharedStyle.ts';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
-import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {usePresetsQuery} from '../../hooks/server/presets.ts';
 
@@ -23,6 +22,7 @@ interface ObservationListItemProps {
   observation: Observation;
   testID: string;
   onPress: (id: string) => void;
+  isExchanged: boolean;
 }
 
 type PhotoAttachment = Omit<Attachment, 'type'> & {type: 'photo'};
@@ -38,6 +38,7 @@ function ObservationListItemNotMemoized({
   observation,
   testID,
   onPress,
+  isExchanged,
 }: ObservationListItemProps) {
   return (
     <TouchableOpacity
@@ -50,7 +51,11 @@ function ObservationListItemNotMemoized({
             <UIActivityIndicator />
           </View>
         }>
-        <ObservationListItemInner observation={observation} style={style} />
+        <ObservationListItemInner
+          observation={observation}
+          style={style}
+          isExchanged={isExchanged}
+        />
       </React.Suspense>
     </TouchableOpacity>
   );
@@ -59,17 +64,18 @@ function ObservationListItemNotMemoized({
 function ObservationListItemInner({
   style,
   observation,
+  isExchanged,
 }: {
   style?: ViewStyleProp;
   observation: Observation;
+  isExchanged: boolean;
 }) {
   const {data: allPresets} = usePresetsQuery();
   const preset = matchPreset(observation.tags, allPresets);
   const photos = observation.attachments.filter(isSavedPhoto);
-  const isMine = useIsMyDocument(observation.originalVersionId);
 
   return (
-    <View style={[styles.container, style, !isMine && sharedStyles.synced]}>
+    <View style={[styles.container, style, isExchanged && sharedStyles.synced]}>
       <View style={styles.text}>
         <HeaderText variant="header4">
           <FormattedPresetName preset={preset} />

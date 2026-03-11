@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
 import {View, StyleSheet, Text, StatusBar} from 'react-native';
-import {CameraCapturedPicture} from 'expo-camera';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 import {
   Camera,
   useCameraDevice,
   useCameraPermission,
+  type PhotoFile,
 } from 'react-native-vision-camera';
 
 import {AddButton} from './AddButton';
@@ -13,9 +13,9 @@ import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
 import {useLocationState} from '../contexts/LocationContext';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
-// import * as Sentry from '@sentry/react-native';
-// import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-// import {toError} from '../utils/errors';
+import * as Sentry from '@sentry/react-native';
+import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {toError} from '../utils/errors';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -30,20 +30,18 @@ const m = defineMessages({
 
 type Props = {
   // Called when the user takes a picture.
-  onAddPress: (photo: {
-    photo: CameraCapturedPicture;
-    metadata: PhotoMetadata;
-  }) => void;
+  onAddPress: (photo: {photo: PhotoFile; metadata: PhotoMetadata}) => void;
 };
 
 export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
+  const [cameraReady, setCameraReady] = React.useState(false);
   const accelerometerMeasurement =
     React.useRef<AccelerometerMeasurement | null>(null);
   const {hasPermission} = useCameraPermission();
   const camera = useRef<Camera>(null);
   const location = useLocationState(store => store.location);
-  // const navigation = useNavigationFromRoot();
+  const navigation = useNavigationFromRoot();
   const device = useCameraDevice('back');
 
   console.log({hasPermission, device});
@@ -72,7 +70,7 @@ export const CameraView = ({onAddPress}: Props) => {
   }, []);
 
   function handleAddPress() {
-    if (!camera.current) {
+    if (!camera.current || !cameraReady) {
       throw new Error('Camera Not Ready');
     }
 
@@ -83,61 +81,29 @@ export const CameraView = ({onAddPress}: Props) => {
 
     setCapturing(true);
 
-    camera.current.takePhoto({enableShutterSound: false}).then(photo => {
-      onAddPress({
-        photo: {...photo, uri: '', format: 'jpg'},
-        metadata: {
-          location,
-          accelerometer: accelerometerMeasurement.current || undefined,
-          timestamp: Date.now(),
-        },
+    camera.current
+      .takePhoto({enableShutterSound: false})
+      .then(async photo => {
+        onAddPress({
+          photo,
+          metadata: {
+            location,
+            accelerometer: accelerometerMeasurement.current || undefined,
+            timestamp: Date.now(),
+          },
+        });
+      })
+      .catch(err => {
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet', {
+          error: toError(err, 'Error taking picture'),
+        });
       });
-    });
+
+    setCapturing(false);
   }
 
-  // const handleAddPress = React.useCallback(() => {
-  //   if (!camera.current) {
-  //     throw new Error('Camera Not Ready');
-  //   }
-
-  //   // if there is a double click of the button => ignore
-  //   if (capturing) {
-  //     return;
-  //   }
-
-  //   setCapturing(true);
-
-  //   camera.current
-  //     .takePictureAsync({
-  //       base64: false,
-  //       exif: true,
-  //       skipProcessing: false,
-  //       shutterSound: false,
-  //       quality: 0.75,
-  //       imageType: 'jpg',
-  //     })
-  //     .then(photo => {
-  //       onAddPress({
-  //         photo,
-  //         metadata: {
-  //           location,
-  //           accelerometer: accelerometerMeasurement.current || undefined,
-  //           timestamp: Date.now(),
-  //         },
-  //       });
-  //     })
-  //     .catch(err => {
-  //       Sentry.captureException(err);
-  //       navigation.navigate('ErrorBottomSheet', {
-  //         error: toError(err, 'Error taking picture'),
-  //       });
-  //     })
-  //     .finally(() => {
-  //       setCapturing(false);
-  //     });
-  // }, [capturing, setCapturing, onAddPress, location, navigation]);
-
-  const disableButton = capturing; //|| !cameraReady;
+  const disableButton = capturing || !cameraReady;
 
   return (
     <View style={styles.container} testID="MAIN.camera-scrn">
@@ -155,6 +121,7 @@ export const CameraView = ({onAddPress}: Props) => {
           style={{flex: 1}}
           isActive={true}
           photo={true}
+          onInitialized={() => setCameraReady(true)}
         />
       )}
 

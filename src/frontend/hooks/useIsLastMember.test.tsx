@@ -1,5 +1,6 @@
 import {renderHook} from '@testing-library/react-native';
 import {type ReactNode} from 'react';
+import type {MemberApi} from '@comapeo/core';
 import {useManyMembers} from '@comapeo/core-react';
 
 import {ActiveProjectProvider} from '../contexts/ActiveProjectContext';
@@ -11,7 +12,6 @@ import {
   BLOCKED_ROLE_ID,
   LEFT_ROLE_ID,
 } from '../sharedTypes';
-import {type MemberInfo} from '@comapeo/core/dist/member-api';
 
 jest.mock('@comapeo/core-react', () => ({
   useManyMembers: jest.fn(),
@@ -38,16 +38,17 @@ function createWrapper() {
 
 function mockMember(
   deviceId: string,
-  roleId: string,
+  roleId: MemberApi.RoleId,
   deviceType: 'mobile' | 'desktop' = 'mobile',
-): MemberInfo {
+): MemberApi.MemberInfo {
   return {
     deviceId,
     name: `Device ${deviceId}`,
+    // @ts-expect-error Unsound but enough for testing purposes
     role: {roleId},
     deviceType,
     joinedAt: new Date().toISOString(),
-  } as MemberInfo;
+  };
 }
 
 afterEach(() => {

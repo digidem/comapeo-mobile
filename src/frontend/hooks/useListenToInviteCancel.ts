@@ -1,13 +1,14 @@
-import {Invite} from '@comapeo/core/dist/invite/invite-api';
 import {useEffect} from 'react';
-import {useNavigationFromRoot} from './useNavigationWithTypes';
+import type {InviteApi} from '@comapeo/core';
 import {useClientApi} from '@comapeo/core-react';
+
+import {useNavigationFromRoot} from './useNavigationWithTypes';
 
 export function useListenToInviteCancel(inviteId: string) {
   const navigation = useNavigationFromRoot();
   const {invite: mapeoApiInvite} = useClientApi();
   useEffect(() => {
-    function navigateOnCancel(invite: Invite) {
+    function navigateOnCancel(invite: InviteApi.Invite) {
       if (invite.inviteId !== inviteId) return;
 
       if (invite.state === 'canceled') {

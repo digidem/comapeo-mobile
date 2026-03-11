@@ -1,4 +1,4 @@
-import {type MemberInfo} from '@comapeo/core/dist/member-api';
+import type {MemberApi} from '@comapeo/core';
 import {
   useProjectSettings as useComapeoProjectSettings,
   useExportGeoJSON,
@@ -37,14 +37,16 @@ export function useGetOwnRole() {
 }
 
 // TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
-export type ArchiveServerMemberInfo = MemberInfo & {
+export type ArchiveServerMemberInfo = MemberApi.MemberInfo & {
   deviceType: 'selfHostedServer';
-  selfHostedServerDetails: NonNullable<MemberInfo['selfHostedServerDetails']>;
+  selfHostedServerDetails: NonNullable<
+    MemberApi.MemberInfo['selfHostedServerDetails']
+  >;
 };
 
 // TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
 export function isActiveArchiveServerMember(
-  member: MemberInfo,
+  member: MemberApi.MemberInfo,
 ): member is ArchiveServerMemberInfo {
   if (member.deviceType !== 'selfHostedServer') return false;
   if (!member.selfHostedServerDetails) return false;

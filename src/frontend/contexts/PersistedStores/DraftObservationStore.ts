@@ -20,6 +20,7 @@ import {PhotoEXIFSchema} from '../../lib/exif.ts';
 import * as Sentry from '@sentry/react-native';
 import {MMKVStoreInitializer} from '../../hooks/persistedState/createPersistedState';
 import type {PhotoFile} from 'react-native-vision-camera';
+import * as Exify from '@lodev09/react-native-exify';
 
 export type DraftObservationStore = ReturnType<
   typeof createDraftObservationStore
@@ -238,7 +239,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
   }
 
   async function addPhoto(picture: PhotoFile, metadata: PhotoMetadata) {
-    const newAttachment = createNewPhotoAttachment({
+    const newAttachment = await createNewPhotoAttachment({
       id: nextAttachmentId++,
       metadata,
       picture,
@@ -518,7 +519,7 @@ function createEmptyObservationValue(): ObservationValueWithPreset {
   };
 }
 
-function createNewPhotoAttachment({
+async function createNewPhotoAttachment({
   id,
   metadata,
   picture,
@@ -526,16 +527,17 @@ function createNewPhotoAttachment({
   id: number;
   metadata: PhotoMetadata;
   picture: PhotoFile;
-}): UnsavedPhotoAttachment {
+}): Promise<UnsavedPhotoAttachment> {
+  const uri = `file://${picture.path}`;
+  const exif = await Exify.read(uri);
   return {
     id,
     type: 'photo',
-    raw: {uri: `file://${picture.path}`, processingState: 'complete'},
+    raw: {uri, processingState: 'complete'},
     original: {uri: null, processingState: 'pending'},
     thumbnail: {uri: null, processingState: 'pending'},
     preview: {uri: null, processingState: 'pending'},
-    photoExif:
-      'exif' in picture ? parse(PhotoEXIFSchema, picture.exif) : undefined,
+    photoExif: exif ? parse(PhotoEXIFSchema, exif) : undefined,
     ...metadata,
   };
 }

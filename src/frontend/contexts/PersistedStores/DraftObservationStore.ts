@@ -11,7 +11,6 @@ import {
 } from 'zustand/middleware';
 import type {LocationObject, LocationProviderStatus} from 'expo-location';
 import type {AccelerometerMeasurement} from 'expo-sensors';
-import type {CameraCapturedPicture} from 'expo-camera';
 import {manipulateAsync} from 'expo-image-manipulator';
 import {excludeKeys} from 'filter-obj';
 import type {Attachment, Position} from '../../sharedTypes/index.ts';
@@ -20,6 +19,7 @@ import {parse} from 'valibot';
 import {PhotoEXIFSchema} from '../../lib/exif.ts';
 import * as Sentry from '@sentry/react-native';
 import {MMKVStoreInitializer} from '../../hooks/persistedState/createPersistedState';
+import type {PhotoFile} from 'react-native-vision-camera';
 
 export type DraftObservationStore = ReturnType<
   typeof createDraftObservationStore
@@ -237,10 +237,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     }
   }
 
-  async function addPhoto(
-    picture: CameraCapturedPicture,
-    metadata: PhotoMetadata,
-  ) {
+  async function addPhoto(picture: PhotoFile, metadata: PhotoMetadata) {
     const newAttachment = createNewPhotoAttachment({
       id: nextAttachmentId++,
       metadata,
@@ -528,12 +525,12 @@ function createNewPhotoAttachment({
 }: {
   id: number;
   metadata: PhotoMetadata;
-  picture: CameraCapturedPicture;
+  picture: PhotoFile;
 }): UnsavedPhotoAttachment {
   return {
     id,
     type: 'photo',
-    raw: {uri: picture.uri, processingState: 'complete'},
+    raw: {uri: `file://${picture.path}`, processingState: 'complete'},
     original: {uri: null, processingState: 'pending'},
     thumbnail: {uri: null, processingState: 'pending'},
     preview: {uri: null, processingState: 'pending'},

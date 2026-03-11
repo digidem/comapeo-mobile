@@ -4,9 +4,9 @@ import {useIsFocused} from '@react-navigation/native';
 
 import {CameraView} from '../sharedComponents/CameraView';
 import {NativeHomeTabsNavigationProps} from '../sharedTypes/navigation';
-import {CameraCapturedPicture} from 'expo-camera';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import {useDraftObservationActions} from '../contexts/DraftObservationContext';
+import {PhotoFile} from 'react-native-vision-camera';
 
 export const CameraScreen = ({
   navigation,
@@ -15,7 +15,7 @@ export const CameraScreen = ({
   const {createDraft, addPhoto} = useDraftObservationActions();
 
   function handleAddPress(capture: {
-    photo: CameraCapturedPicture;
+    photo: PhotoFile;
     metadata: PhotoMetadata;
   }) {
     createDraft();

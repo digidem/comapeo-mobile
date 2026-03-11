@@ -119,6 +119,7 @@ export const CameraView = ({onAddPress}: Props) => {
           style={{flex: 1}}
           isActive={true}
           photo={true}
+          enableZoomGesture={true}
           onInitialized={() => setCameraReady(true)}
         />
       )}

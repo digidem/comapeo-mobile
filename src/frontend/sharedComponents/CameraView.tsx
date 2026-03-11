@@ -44,8 +44,6 @@ export const CameraView = ({onAddPress}: Props) => {
   const navigation = useNavigationFromRoot();
   const device = useCameraDevice('back');
 
-  console.log({hasPermission, device});
-
   React.useEffect(() => {
     let isCancelled = false;
     let deviceMotionSub: Subscription;

@@ -27,8 +27,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {sharedStyles} from './sharedStyles.ts';
-import {useGetCreatedBy} from '../../hooks/server/useGetCreatedBy.ts';
-import {useSingleDocByDocId} from '@comapeo/core-react';
+import {useSingleDocByDocId, useSingleMember} from '@comapeo/core-react';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag.ts';
 import {Accordian} from '../../sharedComponents/Accordian.tsx';
 import Octicons from '@react-native-vector-icons/octicons';
@@ -78,12 +77,7 @@ export function AttachedPhotoPreviewModal({
   const {projectId} = useActiveProject();
   const lang = useAppLanguageTag();
   const {
-    data: {
-      originalVersionId: observationOriginalVersionId,
-      createdAt: observationCreatedAt,
-      lat,
-      lon,
-    },
+    data: {createdAt: observationCreatedAt, createdBy, lat, lon},
   } = useSingleDocByDocId({
     projectId,
     docType: 'observation',
@@ -91,7 +85,10 @@ export function AttachedPhotoPreviewModal({
     lang,
   });
 
-  const {data: memberInfo} = useGetCreatedBy(observationOriginalVersionId);
+  const {data: createdByMemberInfo} = useSingleMember({
+    projectId,
+    deviceId: createdBy,
+  });
 
   const {formatMessage, formatNumber} = useIntl();
 
@@ -247,7 +244,7 @@ export function AttachedPhotoPreviewModal({
                     </InfoItem>
                   )}
 
-                  {memberInfo.name && (
+                  {createdByMemberInfo.name && (
                     <InfoItem
                       icon={
                         <MaterialIcons
@@ -258,7 +255,9 @@ export function AttachedPhotoPreviewModal({
                         />
                       }>
                       <BodyText selectable style={sharedStyles.primaryInfoText}>
-                        {formatMessage(m.attachedBy, {name: memberInfo.name})}
+                        {formatMessage(m.attachedBy, {
+                          name: createdByMemberInfo.name,
+                        })}
                       </BodyText>
                     </InfoItem>
                   )}
@@ -310,7 +309,7 @@ export function AttachedPhotoPreviewModal({
             selectable
             style={sharedStyles.primaryInfoText}
             numberOfLines={1}>
-            {memberInfo.deviceId.slice(0, 15)}
+            {createdByMemberInfo.deviceId.slice(0, 15)}
           </BodyText>
         </InfoItem>
       </View>

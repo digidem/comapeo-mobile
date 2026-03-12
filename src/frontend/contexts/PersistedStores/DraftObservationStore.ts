@@ -537,7 +537,14 @@ async function createNewPhotoAttachment({
     original: {uri: null, processingState: 'pending'},
     thumbnail: {uri: null, processingState: 'pending'},
     preview: {uri: null, processingState: 'pending'},
-    photoExif: exif ? parse(PhotoEXIFSchema, exif) : undefined,
+    photoExif: exif
+      ? parse(PhotoEXIFSchema, {
+          ...exif,
+          ISOSpeedRatings: Array.isArray(exif.ISOSpeedRatings)
+            ? exif.ISOSpeedRatings[0]
+            : exif.ISOSpeedRatings,
+        })
+      : undefined,
     ...metadata,
   };
 }

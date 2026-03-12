@@ -3,7 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import {useManyMembers} from '@comapeo/core-react';
-import {type MemberInfo} from '@comapeo/core/dist/member-api';
+import type {MemberApi} from '@comapeo/core';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {useLocalDiscoveryState} from '../hooks/useLocalDiscoveryState';
 import {useLocalPeers} from '../hooks/useLocalPeers';
@@ -145,7 +145,7 @@ SelectDevice.navTitleMapShare = m.titleMapShare;
 
 type GetSelectableDevicesParams = {
   peers: PublicPeerInfo[];
-  projectMembers: MemberInfo[];
+  projectMembers: MemberApi.MemberInfo[];
   selectionMode: SelectionMode;
 };
 

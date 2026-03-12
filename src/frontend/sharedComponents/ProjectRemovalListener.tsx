@@ -3,6 +3,7 @@ import {CommonActions, useNavigationState} from '@react-navigation/native';
 import {
   useOwnRoleInProject,
   useProjectOwnRoleChangeListener,
+  useSingleProject,
 } from '@comapeo/core-react';
 // TODO: Use type officially exported from @comapeo/core when available
 import type {RoleChangeEvent} from '@comapeo/core/dist/mapeo-project';
@@ -46,17 +47,23 @@ export const ProjectRemovalListener = () => {
     }
   }, [roleId, dispatchToRemovedProjectBottomSheet, currentRouteName]);
 
-  useProjectOwnRoleChangeListener({
-    projectId,
-    listener: React.useCallback(
-      (event: RoleChangeEvent) => {
-        if (event.role.roleId === BLOCKED_ROLE_ID) {
-          dispatchToRemovedProjectBottomSheet();
-        }
-      },
-      [dispatchToRemovedProjectBottomSheet],
-    ),
-  });
+  useProjectOwnRoleChangeListener({projectId});
+
+  const {data: projectApi} = useSingleProject({projectId});
+
+  React.useEffect(() => {
+    function handleRoleChange(event: RoleChangeEvent) {
+      if (event.role.roleId === BLOCKED_ROLE_ID) {
+        dispatchToRemovedProjectBottomSheet();
+      }
+    }
+
+    projectApi.addListener('own-role-change', handleRoleChange);
+
+    return () => {
+      projectApi.removeListener('own-role-change', handleRoleChange);
+    };
+  }, [projectApi, dispatchToRemovedProjectBottomSheet]);
 
   return null;
 };

@@ -85,7 +85,7 @@ export async function init({
     projectMigrationsFolder: join(migrationsFolderPath, 'project'),
     fastify,
     defaultConfigPath,
-    defaultIsArchiveDevice: false,
+    defaultIsArchiveDevice: true,
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
     customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
   })

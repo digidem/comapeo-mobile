@@ -1,5 +1,5 @@
 import {getSelectableDevices} from './SelectDevice';
-import {type MemberInfo} from '@comapeo/core/dist/member-api';
+import type {MemberApi} from '@comapeo/core';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {
   BLOCKED_ROLE_ID,
@@ -28,16 +28,17 @@ function mockPeer(
 
 function mockMember(
   deviceId: string,
-  roleId: string,
+  roleId: MemberApi.RoleId,
   deviceType: 'mobile' | 'desktop' = 'mobile',
-): MemberInfo {
+): MemberApi.MemberInfo {
   return {
     deviceId,
     name: `Device ${deviceId}`,
+    // @ts-expect-error Unsound but enough for testing purposes
     role: {roleId},
     deviceType,
     joinedAt: new Date().toISOString(),
-  } as MemberInfo;
+  };
 }
 
 describe('getSelectableDevices', () => {
@@ -48,7 +49,7 @@ describe('getSelectableDevices', () => {
         mockPeer('peer-2', 'Peer 2'),
         mockPeer('peer-3', 'Peer 3'),
       ];
-      const projectMembers: MemberInfo[] = [];
+      const projectMembers: MemberApi.MemberInfo[] = [];
 
       const result = getSelectableDevices({
         peers,
@@ -203,7 +204,7 @@ describe('getSelectableDevices', () => {
         mockPeer('peer-1', 'Peer 1'),
         mockPeer('peer-2', 'Peer 2'),
       ];
-      const projectMembers: MemberInfo[] = [];
+      const projectMembers: MemberApi.MemberInfo[] = [];
 
       const result = getSelectableDevices({
         peers,
@@ -278,9 +279,9 @@ describe('getSelectableDevices', () => {
         mockPeer('peer-3', 'Peer 3'),
       ];
       const projectMembers = [
-        mockMember('peer-1', 'COORDINATOR_ROLE_ID'),
+        mockMember('peer-1', COORDINATOR_ROLE_ID),
         mockMember('peer-2', BLOCKED_ROLE_ID),
-        mockMember('peer-3', 'MEMBER_ROLE_ID'),
+        mockMember('peer-3', MEMBER_ROLE_ID),
       ];
 
       const result = getSelectableDevices({
@@ -300,9 +301,9 @@ describe('getSelectableDevices', () => {
         mockPeer('peer-3', 'Peer 3'),
       ];
       const projectMembers = [
-        mockMember('peer-1', 'COORDINATOR_ROLE_ID'),
+        mockMember('peer-1', COORDINATOR_ROLE_ID),
         mockMember('peer-2', LEFT_ROLE_ID),
-        mockMember('peer-3', 'MEMBER_ROLE_ID'),
+        mockMember('peer-3', MEMBER_ROLE_ID),
       ];
 
       const result = getSelectableDevices({
@@ -323,10 +324,10 @@ describe('getSelectableDevices', () => {
         mockPeer('peer-4', 'Peer 4'),
       ];
       const projectMembers = [
-        mockMember('peer-1', 'COORDINATOR_ROLE_ID'),
+        mockMember('peer-1', COORDINATOR_ROLE_ID),
         mockMember('peer-2', BLOCKED_ROLE_ID),
         mockMember('peer-3', LEFT_ROLE_ID),
-        mockMember('peer-4', 'MEMBER_ROLE_ID'),
+        mockMember('peer-4', MEMBER_ROLE_ID),
       ];
 
       const result = getSelectableDevices({
@@ -343,7 +344,7 @@ describe('getSelectableDevices', () => {
   describe('edge cases', () => {
     it('should handle empty peers and members arrays', () => {
       const peers: PublicPeerInfo[] = [];
-      const projectMembers: MemberInfo[] = [];
+      const projectMembers: MemberApi.MemberInfo[] = [];
 
       const invitesResult = getSelectableDevices({
         peers,

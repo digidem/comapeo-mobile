@@ -1,16 +1,14 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Observation, ObservationValue} from '@comapeo/schema';
-import type {RoleId, RoleIdForNewInvite} from '@comapeo/core/dist/roles';
-import {MemberInfo} from '@comapeo/core/dist/member-api';
-import {type BlobId} from '@comapeo/core/dist/types';
+import type {BlobApi, MemberApi} from '@comapeo/core';
 
 export type DeviceConnectionStatus = 'connected' | 'disconnected';
 
-export type DeviceType = MemberInfo['deviceType'];
+export type DeviceType = MemberApi.MemberInfo['deviceType'];
 
-export type DeviceRole = RoleId;
+export type DeviceRole = MemberApi.RoleId;
 
-export type DeviceRoleForNewInvite = RoleIdForNewInvite;
+export type DeviceRoleForNewInvite = MemberApi.RoleIdForNewInvite;
 
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;
@@ -30,7 +28,7 @@ export type ClientGeneratedObservation = Omit<ObservationValue, 'schemaName'>;
 
 export type Attachment = Observation['attachments'][number];
 
-export type PhotoVariant = (BlobId & {type: 'photo'})['variant'];
+export type PhotoVariant = (BlobApi.BlobId & {type: 'photo'})['variant'];
 
 export type MediaSyncSetting = 'previews' | 'everything';
 

@@ -50,6 +50,7 @@ function ObservationsListHeader(
               alignItems: 'center',
               marginRight: 20,
             }}
+            accessibilityLabel="Download Observations"
             onPress={() => {
               // @ts-expect-error - navigation type mismatch between tab and stack
               navigation.navigate('ExportObservations');

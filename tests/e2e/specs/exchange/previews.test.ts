@@ -16,7 +16,7 @@ describe('Exchange - Selecting Previews Only', () => {
     await expect(
       $(byResourceId('EXCHANGE.radio-selected-previews')),
     ).toBeDisplayed();
-    await $(byText('Close')).click();
+    await $(byText('Save')).click();
     await expect($(byTextMatches('Exchange previews only'))).toBeDisplayed();
   });
 });

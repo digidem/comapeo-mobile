@@ -7,7 +7,7 @@ import {
   useCancelSentMapShare,
   useSingleSentMapShare,
 } from '@comapeo/core-react';
-import InviteSent from '../../images/InviteSent.svg';
+import SendingIcon from '../../images/SendingIcon.svg';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {useCurrentTime} from '../../hooks/useCurrentTime';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -91,7 +91,7 @@ export function WaitingForMapAccept({
 
   return (
     <View style={styles.container}>
-      <InviteSent />
+      <SendingIcon />
       <HeaderText style={{marginTop: 10, textAlign: 'center'}}>
         {t(m.waitingMessage)}
       </HeaderText>

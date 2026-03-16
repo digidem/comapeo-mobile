@@ -458,7 +458,7 @@
     "message": "Make sure both devices are on the same version of CoMapeo"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
-    "message": "Make sure both devices are on the same wifi network"
+    "message": "Make sure both devices are on the same Wi-Fi network"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Select Device to Invite"

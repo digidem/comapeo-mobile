@@ -24,6 +24,10 @@ jest.mock('expo/src/winter/ImportMetaRegistry', () => ({
 
 jest.mock('react-native-nitro-modules', () => {});
 
+jest.mock('@lodev09/react-native-exify', () => ({
+  read: jest.fn(() => Promise.resolve(null)),
+}));
+
 jest.mock('@react-native-community/netinfo', () => mockNetInfo);
 
 jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);

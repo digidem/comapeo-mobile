@@ -54,6 +54,7 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   'yocto-queue',
   'zip-stream-promise',
   'zip-stream',
+  '@lodev09/react-native-exify',
 ];
 
 /** @type {import('jest').Config} */

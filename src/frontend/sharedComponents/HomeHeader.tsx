@@ -16,12 +16,16 @@ type HomeHeaderProps = BottomTabHeaderProps & {
   backgroundColor: string;
   showBottomBorder: boolean;
   onPress: () => void;
+  downloadIcon?: React.ReactNode;
+  shrinkHeader?: boolean;
 };
 
 export function HomeHeader({
   backgroundColor,
   showBottomBorder,
   onPress,
+  downloadIcon,
+  shrinkHeader,
 }: HomeHeaderProps) {
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
@@ -45,6 +49,7 @@ export function HomeHeader({
           style={[
             styles.titleBox,
             {backgroundColor: projectDetails.projectColor},
+            shrinkHeader && {maxWidth: '80%'},
           ]}
           onPress={onPress}
           accessibilityLabel="Open Menu"
@@ -66,6 +71,7 @@ export function HomeHeader({
             </View>
           )}
         </TouchableOpacity>
+        {downloadIcon}
       </View>
     </View>
   );

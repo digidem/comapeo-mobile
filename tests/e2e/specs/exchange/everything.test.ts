@@ -18,18 +18,5 @@ describe('Exchange - Exchange Settings for Everything', () => {
       $(byResourceId('EXCHANGE.radio-selected-everything')),
     ).toBeDisplayed();
     await $(byText('Close')).click();
-    // const saveBtn = await $(byText('Save'));
-    // await saveBtn.click();
-
-    // await $(byTextMatches('Exchange everything')).waitForDisplayed();
-
-    // const everythingTitle = await $(byTextMatches('Exchange everything'));
-    // expect(await everythingTitle.isDisplayed()).toBe(true);
-    // await expect(
-    //   $(byTextMatches('Full size photos and audio')),
-    // ).toBeDisplayed();
-    // await expect($(byTextMatches('Uses more storage'))).toBeDisplayed();
-    // await $(byResourceId('MAIN.header-back-btn')).click();
-    // await $(byResourceId('MAIN.map-screen')).click();
   });
 });

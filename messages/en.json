@@ -427,6 +427,21 @@
   "projectInfoCard.participant": {
     "message": "You are a participant on this project."
   },
+  "screen.BackgroundMaps.SelectDevice.notSeeingDevice": {
+    "message": "Not seeing a Device?"
+  },
+  "screen.BackgroundMaps.SelectDevice.sameProject": {
+    "message": "Make sure both devices have the same project open"
+  },
+  "screen.BackgroundMaps.SelectDevice.sameVersion": {
+    "message": "Make sure both devices are on the same version of CoMapeo"
+  },
+  "screen.BackgroundMaps.SelectDevice.sameWifi": {
+    "message": "Make sure both devices are on the same wifi network"
+  },
+  "screen.BackgroundMaps.SelectDevice.titleMapShare": {
+    "message": "Select Device"
+  },
   "screen.EditProjectDetails.descriptionPlaceholder": {
     "message": "Short Description of the Project, less than 60 characters."
   },
@@ -441,21 +456,6 @@
   },
   "screen.EditProjectDetails.projectName": {
     "message": "Project Name"
-  },
-  "screen.Settings.ProjectSettings.BackgroundMaps.SelectDevice.notSeeingDevice": {
-    "message": "Not seeing a Device?"
-  },
-  "screen.Settings.ProjectSettings.BackgroundMaps.SelectDevice.sameProject": {
-    "message": "Make sure both devices have the same project open"
-  },
-  "screen.Settings.ProjectSettings.BackgroundMaps.SelectDevice.sameVersion": {
-    "message": "Make sure both devices are on the same version of CoMapeo"
-  },
-  "screen.Settings.ProjectSettings.BackgroundMaps.SelectDevice.sameWifi": {
-    "message": "Make sure both devices are on the same wifi network"
-  },
-  "screen.Settings.ProjectSettings.BackgroundMaps.SelectDevice.titleMapShare": {
-    "message": "Select Device"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"

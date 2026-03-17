@@ -79,3 +79,10 @@ Refer to https://github.com/n4kz/react-native-indicators/issues/43 for details.
 Fixes a bug in the `MaskSymbol` component where the mask (`*`) briefly un-hides when typing quickly. This patch sets the `visibleFlag` to `false` immediately, preventing the undesired flicker.
 
 See: [Reviewer context](https://github.com/digidem/comapeo-mobile/pull/1225).
+
+## expo
+
+### [Enable streaming file uploads in fetch API](./expo+54.0.33.patch)
+
+Modifies Expo's native fetch implementation to stream files directly to the fetch request rather than loading them into memory. This patch enables streaming uploads by modifying the native Android code to read and transmit files in chunks. This prevents out-of-memory (OOM) errors when uploading large files (e.g., over 200MB).
+Refer to this [issue](https://github.com/expo/expo/issues) and this [PR](https://github.com/expo/expo/pull) which have been created to address this limitation in Expo's fetch implementation.

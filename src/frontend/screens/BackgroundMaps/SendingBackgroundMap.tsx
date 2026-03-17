@@ -8,7 +8,7 @@ import {
   useCancelSentMapShare,
   useSingleSentMapShare,
 } from '@comapeo/core-react';
-import InviteSent from '../../images/InviteSent.svg';
+import SendingIcon from '../../images/SendingIcon.svg';
 import StackSvg from '../../images/Stack.svg';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -127,7 +127,7 @@ export function SendingBackgroundMap({
 
   return (
     <View style={styles.container}>
-      <InviteSent />
+      <SendingIcon />
       <HeaderText style={{marginTop: 10, textAlign: 'center'}}>
         {t(m.waitingMessage)}
       </HeaderText>

@@ -3,7 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import {useManyMembers} from '@comapeo/core-react';
-import {type MemberInfo} from '@comapeo/core/dist/member-api';
+import type {MemberApi} from '@comapeo/core';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
 import WifiIcon from '../../images/WifiIcon.svg';
@@ -30,7 +30,7 @@ export function getSelectableDevicesForInvite({
   projectMembers,
 }: {
   peers: PublicPeerInfo[];
-  projectMembers: MemberInfo[];
+  projectMembers: MemberApi.MemberInfo[];
 }): PublicPeerInfo[] {
   return peers.filter(device => {
     const existingMember = projectMembers.some(

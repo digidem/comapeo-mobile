@@ -31,7 +31,6 @@ import {
   SecondaryDestructiveButton,
 } from '../../sharedComponents/Buttons';
 import {bytesToMegabytes} from '../../lib/bytesToMegabytes';
-import {Button} from '../../sharedComponents/Button';
 import {DownloadIcon} from '../../sharedComponents/icons';
 import {useMutation} from '@tanstack/react-query';
 
@@ -242,24 +241,14 @@ function NoMapScreen({
         {isUploading ? (
           <Loading size={12} />
         ) : (
-          <Button
-            fullWidth
-            variant="outlined"
+          <SecondaryButton
+            fullSize
+            text={t(m.chooseFile)}
             onPress={onChooseFile}
-            disabled={isUploading}>
-            <View style={styles.buttonContentContainer}>
-              <DownloadIcon size={24} />
-              <View>
-                <HeaderText variant="header5" style={styles.buttonTextBase}>
-                  {t(m.chooseFile)}
-                  <HeaderText variant="header5" style={styles.asteriskText}>
-                    {' '}
-                    *
-                  </HeaderText>
-                </HeaderText>
-              </View>
-            </View>
-          </Button>
+            renderIcon={({color, size}) => (
+              <DownloadIcon size={size} color={color} />
+            )}
+          />
         )}
         <BodyText variant="smallMeta" style={styles.fileTypeText}>
           {t(m.acceptedFileTypes)}
@@ -426,17 +415,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: NEW_DARK_GREY,
     flex: 1,
-  },
-  buttonContentContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  buttonTextBase: {
-    letterSpacing: 0.5,
-  },
-  asteriskText: {
-    color: RED,
   },
   fileTypeText: {
     textAlign: 'center',

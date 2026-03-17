@@ -45,7 +45,7 @@ export function CreatedAtInfoItem({createdAt}: {createdAt: number}) {
 
       <BodyText selectable style={sharedStyles.secondaryInfoText}>
         {formatTime(createdAt, {
-          timeStyle: 'short',
+          timeZoneName: 'short',
         })}
       </BodyText>
     </InfoItem>

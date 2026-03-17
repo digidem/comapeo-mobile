@@ -1,4 +1,4 @@
-import {type MemberInfo} from '@comapeo/core/dist/member-api';
+import type {MemberApi} from '@comapeo/core';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {getSelectableDevicesForInvite} from './SelectInviteDevice';
 import {
@@ -28,16 +28,17 @@ function mockPeer(
 
 function mockMember(
   deviceId: string,
-  roleId: string,
+  roleId: MemberApi.RoleId,
   deviceType: 'mobile' | 'desktop' = 'mobile',
-): MemberInfo {
+): MemberApi.MemberInfo {
   return {
     deviceId,
     name: `Device ${deviceId}`,
+    // @ts-expect-error Unsound but enough for testing purposes
     role: {roleId},
     deviceType,
     joinedAt: new Date().toISOString(),
-  } as MemberInfo;
+  };
 }
 
 describe('getSelectableDevicesForInvite', () => {
@@ -47,7 +48,7 @@ describe('getSelectableDevicesForInvite', () => {
       mockPeer('peer-2', 'Peer 2'),
       mockPeer('peer-3', 'Peer 3'),
     ];
-    const projectMembers: MemberInfo[] = [];
+    const projectMembers: MemberApi.MemberInfo[] = [];
 
     const result = getSelectableDevicesForInvite({
       peers,

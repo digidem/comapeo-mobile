@@ -1,4 +1,4 @@
-import {type MemberInfo} from '@comapeo/core/dist/member-api';
+import type {MemberApi} from '@comapeo/core';
 import {
   useProjectSettings as useComapeoProjectSettings,
   useExportGeoJSON,
@@ -37,14 +37,16 @@ export function useGetOwnRole() {
 }
 
 // TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
-export type ArchiveServerMemberInfo = MemberInfo & {
+export type ArchiveServerMemberInfo = MemberApi.MemberInfo & {
   deviceType: 'selfHostedServer';
-  selfHostedServerDetails: NonNullable<MemberInfo['selfHostedServerDetails']>;
+  selfHostedServerDetails: NonNullable<
+    MemberApi.MemberInfo['selfHostedServerDetails']
+  >;
 };
 
 // TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
 export function isActiveArchiveServerMember(
-  member: MemberInfo,
+  member: MemberApi.MemberInfo,
 ): member is ArchiveServerMemberInfo {
   if (member.deviceType !== 'selfHostedServer') return false;
   if (!member.selfHostedServerDetails) return false;
@@ -93,6 +95,9 @@ export function useFindRemoteArchive({url}: {url?: string}) {
   });
 }
 
+// 'background' key prefix prevents passcode prompt during permission dialog (see AuthContext.tsx)
+const EXPORT_MUTATION_KEY = ['background', 'export', 'observations'] as const;
+
 export function useExportObservations({projectId}: {projectId: string}) {
   const exportNoMedia = useExportGeoJSON({projectId});
   const exportWithMedia = useExportZipFile({projectId});
@@ -100,6 +105,7 @@ export function useExportObservations({projectId}: {projectId: string}) {
   const {formatDate} = useIntl();
 
   return useMutation({
+    mutationKey: EXPORT_MUTATION_KEY,
     retry: false,
     networkMode: 'always',
     mutationFn: async ({exportType}: {exportType: Exports}) => {

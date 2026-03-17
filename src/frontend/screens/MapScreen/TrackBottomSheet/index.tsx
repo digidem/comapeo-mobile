@@ -8,6 +8,7 @@ import {StartStopTrack} from './StartStopTrack';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
 import {WHITE} from '../../../lib/styles';
 import {useFocusEffect} from '@react-navigation/native';
+import {useLocationPermissionModalMutation} from '../../../hooks/useLocationPermissionTracker';
 
 const handleOpenSettings = () => {
   Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
@@ -18,6 +19,13 @@ export const TrackBottomSheet = React.memo(() => {
     React.useState<Location.LocationPermissionResponse | null>(null);
   const [backgroundPermission, setBackgroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
+
+  const requestForegroundPermission = useLocationPermissionModalMutation(
+    Location.requestForegroundPermissionsAsync,
+  );
+  const requestBackgroundPermission = useLocationPermissionModalMutation(
+    Location.requestBackgroundPermissionsAsync,
+  );
 
   const checkPermissions = React.useCallback(async () => {
     const [foreground, background] = await Promise.all([
@@ -70,7 +78,7 @@ export const TrackBottomSheet = React.memo(() => {
           askForegroundLocationPermission={async () => {
             if (foregroundPermission.canAskAgain) {
               const permission =
-                await Location.requestForegroundPermissionsAsync();
+                await requestForegroundPermission.mutateAsync();
               setForegroundPermission(permission);
             } else {
               handleOpenSettings();
@@ -85,7 +93,7 @@ export const TrackBottomSheet = React.memo(() => {
           askBackgroundLocationPermission={async () => {
             if (backgroundPermission.canAskAgain) {
               const permission =
-                await Location.requestBackgroundPermissionsAsync();
+                await requestBackgroundPermission.mutateAsync();
               setBackgroundPermission(permission);
             } else {
               handleOpenSettings();

@@ -1,5 +1,5 @@
 import {useAttachmentUrl, useCreateBlob} from '@comapeo/core-react';
-import type {BlobId, BlobVariant} from '@comapeo/core/dist/types';
+import type {BlobApi} from '@comapeo/core';
 import {useMutation} from '@tanstack/react-query';
 import type {LocationObject} from 'expo-location';
 import {URL} from 'react-native-url-polyfill';
@@ -96,7 +96,7 @@ export function useCreateAudioAttachment({projectId}: {projectId: string}) {
 function buildBlobId(
   attachment: Attachment,
   requestedVariant: 'original' | 'thumbnail' | 'preview',
-): BlobId {
+): BlobApi.BlobId {
   if (
     attachment.type !== 'photo' &&
     attachment.type !== 'audio' &&
@@ -126,7 +126,7 @@ function buildBlobId(
 
 export function useAttachmentUrlQuery(
   attachment: Attachment,
-  variant: BlobVariant<'photo' | 'audio' | 'video'>,
+  variant: BlobApi.BlobVariant<'photo' | 'audio' | 'video'>,
 ) {
   const {projectId} = useActiveProject();
   if (

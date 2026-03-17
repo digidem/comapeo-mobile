@@ -118,7 +118,7 @@ export const SelectMapShareDevice = ({
                 receiverDeviceId: deviceId,
                 mapId: 'custom',
               });
-              navigation.navigate('WaitingForMapAccept', {
+              navigation.navigate('SendingBackgroundMap', {
                 shareId: mapShare.shareId,
               });
             } catch (err) {

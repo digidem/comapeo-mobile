@@ -1,5 +1,5 @@
 import {AppState, StyleSheet, View} from 'react-native';
-import InviteSent from '../../../images/InviteSent.svg';
+import SendingIcon from '../../../images/SendingIcon.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import React from 'react';
 import {TextButton} from '../../../sharedComponents/TextButton';
@@ -57,7 +57,7 @@ export const WaitingForInviteAccept = ({
 
   return (
     <View style={styles.container}>
-      <InviteSent />
+      <SendingIcon />
       <HeaderText style={{marginTop: 10, textAlign: 'center'}}>
         {t(m.waitingMessage)}
       </HeaderText>

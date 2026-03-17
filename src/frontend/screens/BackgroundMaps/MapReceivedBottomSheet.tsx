@@ -157,7 +157,7 @@ export function MapReceivedBottomSheet({
         onError: (err: unknown) => {
           const error = toError(err, 'Failed to start map download');
           Sentry.captureException(error);
-          navigation.navigate('ErrorBottomSheet', {error});
+          navigation.replace('ErrorBottomSheet', {error});
         },
       },
     );

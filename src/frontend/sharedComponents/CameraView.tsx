@@ -90,15 +90,15 @@ export const CameraView = ({onAddPress}: Props) => {
             timestamp: Date.now(),
           },
         });
+        setCapturing(false);
       })
       .catch(err => {
         Sentry.captureException(err);
         navigation.navigate('ErrorBottomSheet', {
           error: toError(err, 'Error taking picture'),
         });
+        setCapturing(false);
       });
-
-    setCapturing(false);
   }
 
   const disableButton = capturing || !cameraReady;

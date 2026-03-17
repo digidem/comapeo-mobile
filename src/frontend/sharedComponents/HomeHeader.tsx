@@ -16,7 +16,6 @@ type HomeHeaderProps = BottomTabHeaderProps & {
   backgroundColor: string;
   showBottomBorder: boolean;
   onPress: () => void;
-  shrinkTitle?: boolean;
 };
 
 export function HomeHeader({
@@ -24,7 +23,6 @@ export function HomeHeader({
   showBottomBorder,
   onPress,
   options,
-  shrinkTitle,
 }: HomeHeaderProps) {
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
@@ -48,7 +46,6 @@ export function HomeHeader({
           style={[
             styles.titleBox,
             {backgroundColor: projectDetails.projectColor},
-            shrinkTitle && {maxWidth: '80%'},
           ]}
           onPress={onPress}
           accessibilityLabel="Open Menu"

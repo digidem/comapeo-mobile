@@ -70,10 +70,9 @@ export function HomeHeader({
             </View>
           )}
         </TouchableOpacity>
-        {options.headerRight?.(
-          // @ts-expect-error - our custom headerRight doesn't use these params
-          {},
-        )}
+        <View style={{paddingLeft: 10}}>
+          {options.headerRight?.({canGoBack: false})}
+        </View>
       </View>
     </View>
   );
@@ -84,7 +83,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   headerRow: {
-    width: '100%',
     minHeight: 58,
     flexDirection: 'row',
     alignItems: 'center',
@@ -92,13 +90,13 @@ const styles = StyleSheet.create({
   },
   titleBox: {
     height: 40,
-    maxWidth: '100%',
     borderRadius: 6,
     borderWidth: 0.5,
     borderColor: BLUE_GREY,
     flexDirection: 'row',
     alignItems: 'center',
     paddingRight: 10,
+    flexShrink: 1,
   },
   menuIconContainer: {
     width: 40,

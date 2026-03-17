@@ -1,6 +1,10 @@
 import * as React from 'react';
 import {TouchableOpacity} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  createBottomTabNavigator,
+  BottomTabHeaderProps,
+} from '@react-navigation/bottom-tabs';
+import {useNavigation} from '@react-navigation/native';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {MapScreen} from '../../screens/MapScreen';
 import {ObservationsList} from '../../screens/ObservationsList';
@@ -17,48 +21,54 @@ import {DownloadIcon} from '../../sharedComponents/icons';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {useNavigation} from '@react-navigation/native';
-import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
-function ObservationsListHeader(
-  props: BottomTabHeaderProps & {
-    onPress: () => void;
-  },
-) {
-  const navigation = useNavigation();
+function useShowDownloadIcon() {
   const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
   const {authState} = useAuthContext();
 
-  const shouldShowDownloadIcon =
-    (observations.length > 0 || tracks.length > 0) && authState !== 'obscured';
+  return (
+    (observations.length > 0 || tracks.length > 0) && authState !== 'obscured'
+  );
+}
+
+function DownloadObservationsButton() {
+  const navigation = useNavigation();
+  const shouldShow = useShowDownloadIcon();
+
+  if (!shouldShow) {
+    return null;
+  }
+
+  return (
+    <TouchableOpacity
+      style={{
+        marginRight: 20,
+      }}
+      accessibilityLabel="Download Observations"
+      onPress={() => {
+        // @ts-expect-error - navigation type mismatch between tab and stack
+        navigation.navigate('ExportObservations');
+      }}>
+      <DownloadIcon size={30} color={NEW_DARK_GREY} />
+    </TouchableOpacity>
+  );
+}
+
+function ObservationsListHeaderComponent(
+  props: BottomTabHeaderProps & {onPress: () => void},
+) {
+  const shouldShowDownloadIcon = useShowDownloadIcon();
 
   return (
     <HomeHeader
       {...props}
       backgroundColor={WHITE}
-      showBottomBorder
+      showBottomBorder={true}
       onPress={props.onPress}
-      shrinkHeader={shouldShowDownloadIcon}
-      downloadIcon={
-        shouldShowDownloadIcon ? (
-          <TouchableOpacity
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginRight: 20,
-            }}
-            accessibilityLabel="Download Observations"
-            onPress={() => {
-              // @ts-expect-error - navigation type mismatch between tab and stack
-              navigation.navigate('ExportObservations');
-            }}>
-            <DownloadIcon size={30} color={NEW_DARK_GREY} />
-          </TouchableOpacity>
-        ) : undefined
-      }
+      shrinkTitle={shouldShowDownloadIcon}
     />
   );
 }
@@ -112,9 +122,10 @@ export const HomeTabs = () => {
             component={ObservationsList}
             options={{
               headerTransparent: false,
+              headerRight: () => <DownloadObservationsButton />,
               header: props => (
                 <React.Suspense fallback={null}>
-                  <ObservationsListHeader
+                  <ObservationsListHeaderComponent
                     {...props}
                     onPress={() => setDrawerOpen(val => !val)}
                   />

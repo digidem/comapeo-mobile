@@ -73,16 +73,6 @@ export function MapReceivedBottomSheet({
   const {shareId} = route.params;
   const mapShare = useSingleReceivedMapShare({shareId});
 
-  React.useEffect(() => {
-    if (
-      !mapShare ||
-      mapShare.status === 'canceled' ||
-      mapShare.status === 'error'
-    ) {
-      navigation.goBack();
-    }
-  }, [mapShare, navigation]);
-
   const {data: storageData} = useStorageReadingQuery();
   const {freeBytes} = storageData;
 
@@ -138,6 +128,7 @@ export function MapReceivedBottomSheet({
   const {mutate: downloadMapShare} = useDownloadReceivedMapShare();
 
   const handleAccept = () => {
+    // Add code here to navigate to canceled sheet
     downloadMapShare(
       {shareId},
       {
@@ -155,6 +146,7 @@ export function MapReceivedBottomSheet({
   };
 
   const handleDecline = () => {
+    // Add code here to navigate to canceled sheet
     const reason =
       warningInfo.warning === 'space' ? 'disk_full' : 'user_rejected';
     declineMapShare(

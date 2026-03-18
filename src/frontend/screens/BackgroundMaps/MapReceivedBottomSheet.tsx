@@ -80,11 +80,7 @@ export function MapReceivedBottomSheet({
       mapShare.status === 'canceled' ||
       mapShare.status === 'error'
     ) {
-      if (navigation.canGoBack()) {
-        navigation.goBack();
-      } else {
-        navigation.replace('BackgroundMaps');
-      }
+      navigation.goBack();
     }
   }, [mapShare, navigation]);
 
@@ -174,11 +170,7 @@ export function MapReceivedBottomSheet({
         },
         onError: (err: unknown) => {
           Sentry.captureException(err);
-          if (navigation.canGoBack()) {
-            navigation.goBack();
-          } else {
-            navigation.replace('BackgroundMaps');
-          }
+          navigation.goBack();
         },
       },
     );

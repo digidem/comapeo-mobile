@@ -50,10 +50,6 @@ export function ReceivingBackgroundMap({
   usePreventAndroidBackButton();
 
   React.useEffect(() => {
-    if (!mapShare) {
-      navigation.goBack();
-      return;
-    }
     if (mapShare.status === 'canceled') {
       navigation.replace('MapShareCanceledBottomSheet');
       return;

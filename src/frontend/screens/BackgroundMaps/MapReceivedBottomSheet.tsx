@@ -74,16 +74,6 @@ export function MapReceivedBottomSheet({
   const {shareId} = route.params;
   const mapShare = useSingleReceivedMapShare({shareId});
 
-  React.useEffect(() => {
-    if (
-      !mapShare ||
-      mapShare.status === 'canceled' ||
-      mapShare.status === 'error'
-    ) {
-      navigation.goBack();
-    }
-  }, [mapShare, navigation]);
-
   const {data: storageData} = useStorageReadingQuery();
   const {freeBytes} = storageData;
 
@@ -140,6 +130,10 @@ export function MapReceivedBottomSheet({
   const {mutate: downloadMapShare} = useDownloadReceivedMapShare();
 
   const handleAccept = () => {
+    if (!mapShare || mapShare.status === 'canceled') {
+      navigation.replace('MapShareCanceledBottomSheet');
+      return;
+    }
     if (customMapInfo && !customMapError) {
       navigation.replace('ReplaceBackgroundMap', {shareId});
       return;
@@ -160,20 +154,24 @@ export function MapReceivedBottomSheet({
   };
 
   const handleDecline = () => {
-    const reason =
-      warningInfo.warning === 'space' ? 'disk_full' : 'user_rejected';
-    declineMapShare(
-      {shareId, reason},
-      {
-        onSuccess: () => {
-          navigation.goBack();
+    if (!mapShare || mapShare.status === 'canceled') {
+      navigation.replace('MapShareCanceledBottomSheet');
+    } else {
+      const reason =
+        warningInfo.warning === 'space' ? 'disk_full' : 'user_rejected';
+      declineMapShare(
+        {shareId, reason},
+        {
+          onSuccess: () => {
+            navigation.goBack();
+          },
+          onError: (err: unknown) => {
+            Sentry.captureException(err);
+            navigation.goBack();
+          },
         },
-        onError: (err: unknown) => {
-          Sentry.captureException(err);
-          navigation.goBack();
-        },
-      },
-    );
+      );
+    }
   };
 
   return (

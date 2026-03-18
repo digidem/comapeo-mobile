@@ -13,7 +13,6 @@ import {
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
@@ -65,7 +64,6 @@ export const InviteReceived = ({
 
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
-  const {setActiveProjectId} = useActiveProjectIdActions();
   const createProject = useCreateProject();
   const {isTracking} = useTracking();
   const {data: allProjects} = useManyProjects();
@@ -87,8 +85,6 @@ export const InviteReceived = ({
       {inviteId: inviteId},
       {
         onSuccess: projectId => {
-          setActiveProjectId(projectId);
-
           if (!hasDefaultProject) {
             createProject.mutate(undefined, {
               onError: err => {
@@ -96,9 +92,15 @@ export const InviteReceived = ({
               },
             });
           }
-
-          navigation.replace('InviteSuccessfullyAccepted', {
-            projectName: invite.projectName,
+          navigation.reset({
+            index: 1,
+            routes: [
+              {name: 'Home'},
+              {
+                name: 'InviteSuccessfullyAccepted',
+                params: {projectName: invite.projectName, projectId},
+              },
+            ],
           });
         },
         onError: err => {

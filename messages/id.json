@@ -1403,9 +1403,6 @@
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Lacak"
   },
-  "screens.ObservationList.downloadObservation": {
-    "message": "Unduh Pengamatan"
-  },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
     "message": "Pengamatan"

@@ -933,6 +933,9 @@
   "screens.ExportObservations.download": {
     "message": "Télécharger"
   },
+  "screens.ExportObservations.downloadObservations": {
+    "message": "Télécharger les observations"
+  },
   "screens.ExportObservations.errorMessage": {
     "message": "Choisissez une option"
   },
@@ -1393,9 +1396,6 @@
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Piste"
-  },
-  "screens.ObservationList.downloadObservation": {
-    "message": "Télécharger les observations"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",

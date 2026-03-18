@@ -163,7 +163,6 @@ export function SendingBackgroundMap({
       <BodyText style={{marginTop: 20}}>
         {t(m.timerMessage, {time: formatElapsed(elapsedSeconds)})}
       </BodyText>
-
       <TextButton title={t(m.cancel)} onPress={cancelShare} />
     </View>
   );

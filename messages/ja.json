@@ -933,6 +933,9 @@
   "screens.ExportObservations.download": {
     "message": "ダウンロード"
   },
+  "screens.ExportObservations.downloadObservations": {
+    "message": "観察記録をダウンロード"
+  },
   "screens.ExportObservations.errorMessage": {
     "message": "オプションを選択"
   },
@@ -1399,9 +1402,6 @@
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "トラック"
-  },
-  "screens.ObservationList.downloadObservation": {
-    "message": "観察記録をダウンロード"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",

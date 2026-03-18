@@ -53,16 +53,17 @@ describe('Observations - should show download options', () => {
     await handleGPSAlert();
   });
 
-  it('should open Observations list and download button', async () => {
+  it('should open Observations list with download icon in header', async () => {
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
-    await expect($(byText('Download Observations'))).toBeDisplayed();
+    await expect($('~Download Observations')).toBeDisplayed();
   });
 
-  it('should open Export Observations bottom screen', async () => {
-    const downloadObsBtn = await $(byText('Download Observations'));
-    await downloadObsBtn.click();
+  it('should open Export Observations screen from header icon', async () => {
+    const downloadIcon = await $('~Download Observations');
+    await downloadIcon.click();
+    await expect($(byText('Download Observations'))).toBeDisplayed();
     await expect($(byText('All Observations'))).toBeDisplayed();
     await expect($(byText('All Observations with Media'))).toBeDisplayed();
   });
@@ -86,11 +87,9 @@ describe('Observations - should show download options', () => {
     await driver.back();
   });
 
-  it('should close bottom sheet on pressing close', async () => {
-    const closeBtn = await $(byText('Close'));
-    await closeBtn.click();
-    await expect($(byText('All Observations'))).not.toBeDisplayed();
-    await expect($(byText('All Observations with Media'))).not.toBeDisplayed();
+  it('should go back to observations list', async () => {
+    await driver.back();
+    await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
     // reset state back to map
     const mapBtn = await $('~Go to map.');
     await mapBtn.click();

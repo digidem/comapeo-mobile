@@ -9,11 +9,12 @@ import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from './Text/HeaderText';
 import {BodyText} from './Text/BodyText';
 import {SecondaryButton} from './Buttons';
+import {BLUE_GREY} from '../lib/styles';
 
 const m = defineMessages({
   somethingWrong: {
     id: 'sharedComponents.ErrorBottomSheet.somethingWrong',
-    defaultMessage: 'Something\n Went Wrong',
+    defaultMessage: 'Something Went Wrong',
   },
   advanced: {
     id: 'sharedComponents.ErrorBottomSheet.advanced',
@@ -31,8 +32,9 @@ export const ErrorBottomSheet = ({
 }: NativeRootNavigationProps<'ErrorBottomSheet'>) => {
   const {formatMessage} = useIntl();
   const [advancedExpanded, setAdvancedExpanded] = React.useState(false);
-  const error = route.params.error;
+  const error = route.params.error as Error & {code?: string};
 
+  const errorCode = error?.code;
   const errorMessage = error?.message || 'Unknown error';
   const errorStack = error?.stack;
 
@@ -41,8 +43,8 @@ export const ErrorBottomSheet = ({
       <View style={styles.container}>
         <View style={styles.contentContainer}>
           <View style={styles.titleSection}>
-            <ErrorIcon width={60} height={60} style={styles.icon} />
-            <HeaderText style={styles.title}>
+            <ErrorIcon width={80} height={80} style={styles.icon} />
+            <HeaderText variant="header2" style={styles.title}>
               {formatMessage(m.somethingWrong)}
             </HeaderText>
           </View>
@@ -51,9 +53,9 @@ export const ErrorBottomSheet = ({
             <TouchableOpacity
               style={styles.advancedButton}
               onPress={() => setAdvancedExpanded(prev => !prev)}>
-              <BodyText style={styles.advancedText}>
+              <HeaderText variant="header5" style={styles.advancedText}>
                 {formatMessage(m.advanced)}
-              </BodyText>
+              </HeaderText>
               {advancedExpanded ? (
                 <ChevronUp width={20} height={20} />
               ) : (
@@ -62,16 +64,23 @@ export const ErrorBottomSheet = ({
             </TouchableOpacity>
 
             {advancedExpanded && (
-              <ScrollView style={styles.errorDetailsContainer}>
-                <BodyText style={styles.errorText}>
+              <ScrollView
+                style={styles.errorDetailsContainer}
+                contentContainerStyle={styles.errorDetailsContent}>
+                {errorCode && (
+                  <BodyText style={styles.errorText} variant="tinyMeta">
+                    {errorCode}
+                    {'\n\n'}
+                  </BodyText>
+                )}
+                <BodyText style={styles.errorText} variant="tinyMeta">
                   {errorStack || errorMessage}
                 </BodyText>
               </ScrollView>
             )}
           </View>
         </View>
-
-        <View style={styles.buttonContainer}>
+        <View style={{paddingTop: 30}}>
           <SecondaryButton
             fullSize
             onPress={() => navigation.goBack()}
@@ -108,14 +117,12 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    fontSize: 24,
-    fontWeight: '500',
-    color: '#333333',
   },
   advancedSection: {
     gap: 10,
     width: '100%',
     alignSelf: 'stretch',
+    flex: 1,
   },
   advancedButton: {
     flexDirection: 'row',
@@ -124,29 +131,22 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: '#F6F5F6',
     borderWidth: 1,
-    borderColor: '#CCCCD6',
+    borderColor: BLUE_GREY,
     borderRadius: 10,
   },
   advancedText: {
-    fontSize: 16,
-    fontWeight: '500',
     color: '#807F82',
   },
   errorDetailsContainer: {
-    padding: 15,
     backgroundColor: '#EEEEEE',
     borderWidth: 1,
-    borderColor: '#CCCCD6',
+    borderColor: BLUE_GREY,
     borderRadius: 6,
-    maxHeight: 255,
+  },
+  errorDetailsContent: {
+    padding: 15,
   },
   errorText: {
-    fontSize: 12,
-    lineHeight: 18,
     color: '#29292A',
-  },
-  buttonContainer: {
-    width: '100%',
-    paddingBottom: 20,
   },
 });

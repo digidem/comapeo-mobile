@@ -33,18 +33,10 @@ const CustomMapInfoSchema = v.object({
 
 export type CustomMapInfo = v.InferOutput<typeof CustomMapInfoSchema>;
 
-const {useRefreshToken, useRefreshTokenActions} = createRefreshTokenStore();
+const {useRefreshTokenActions} = createRefreshTokenStore();
 
 export function useMapStyleJsonUrl() {
-  const refreshToken = useRefreshToken();
-
-  const {
-    data: baseUrl,
-    error,
-    isRefetching,
-  } = useMapStyleUrl({
-    refreshToken: refreshToken?.toString(),
-  });
+  const {data: baseUrl, error, isRefetching} = useMapStyleUrl();
 
   // If we're running E2E tests (e.g. on BrowserStack), fall back to a
   // public Mapbox style rather than our local style server to avoid 502 errors.

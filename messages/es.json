@@ -108,7 +108,7 @@
     "message": "¿Descartar cambios?"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
-    "message": "Cuando las personas que participan en el proyecto intercambian sus datos, también se archivarán en Internet. Los datos de tu proyecto se están sincronizando con el archivo a través de internet con el servidor seguro y cifrado a continuación. La persona propietaria del servidor puede ver los datos."
+    "message": "Cuando los participantes del proyecto intercambien sus datos, también se archivarán en Internet. Los datos de su proyecto están sincronizando con el archivo a través de internet para el servidor seguro y cifrado a continuación. El propietario del servidor puede ver los datos."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
     "message": "URL no válida"
@@ -189,7 +189,7 @@
     "message": "Archivo remoto añadido"
   },
   "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
-    "message": "Todos los dispositivos del proyecto pueden intercambiar datos con este Archivo, compartiendo datos a través de Internet."
+    "message": "Todos los dispositivos de proyecto pueden intercambiar con este Archivo, compartiendo datos a través de Internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Cerrar"
@@ -458,7 +458,7 @@
     "message": "Asegúrate de que ambos dispositivos estén en la misma red Wifi"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
-    "message": "Asegúrate de que ambos dispositivos estén en la misma red Wi-Fi"
+    "message": "Asegúrese de que ambos dispositivos estén en la misma red Wi-Fi"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Seleccionar dispositivo para invitar"
@@ -596,9 +596,6 @@
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "La contraseña de la aplicación le permite añadir una capa adicional de seguridad, requiriendo introducir una contraseña para abrir la aplicación de CoMapeo. Puedes definir tu propia contraseña de 5 dígitos activando la siguiente función."
-  },
-  "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>¡Por favor considera que las contraseñas olvidadas no pueden ser recuperadas!</bold> Una vez que esta funcionalidad está activada, si olvidas o pierdes tu contraseña, no podrás abrir CoMapeo y perderás el acceso a cualquier dato de CoMapeo que no hayas sido intercambiado con otras personas participantes del proyecto."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Cancelar"

@@ -108,7 +108,7 @@
     "message": "Wijzigingen annuleren?"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
-    "message": "Wanneer projectdeelnemers hun gegevens synchroniseren, worden ze ook gearchiveerd op het internet. Uw projectgegevens synchroniseren naar het archief via het internet naar de veilige, versleutelde server hieronder. De eigenaar van de server kan de gegevens bekijken."
+    "message": "Wanneer projectdeelnemers hun gegevens uitwisselen, worden ze ook gearchiveerd op het internet. Uw projectgegevens synchroniseren naar het archief via het internet naar de veilige, versleutelde server hieronder. De eigenaar van de server kan de gegevens bekijken."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
     "message": "Ongeldige URL"
@@ -189,7 +189,7 @@
     "message": "Extern archief toegevoegd"
   },
   "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
-    "message": "Alle projectapparaten kunnen synchroniseren met dit archief, gegevens delen via het internet."
+    "message": "Alle projectapparaten kunnen met dit archief uitwisselen, gegevens delen via het internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Afsluiten"
@@ -598,7 +598,7 @@
     "message": "App toegangscode stelt u in staat een extra beveiligingslaag toe te voegen door u een toegangscode in te voeren om de CoMapeo app te openen. Je kunt je eigen 5-cijferige toegangscode definiëren door de onderstaande functie in te schakelen."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Houd er rekening mee dat vergeten toegangscodes niet kunnen worden hersteld!</bold> Zodra deze functie is ingeschakeld, als u uw wachtwoord vergeet of verliest. u kunt geen CoMapeo openen en verliest toegang tot CoMapeo gegevens die niet zijn gesynchroniseerd met andere deelnemers aan het project."
+    "message": "<bold>Houd er rekening mee dat vergeten toegangscodes niet kunnen worden hersteld!</bold> Zodra deze functie is ingeschakeld, als u uw wachtwoord vergeet of verliest. u kunt geen CoMapeo openen en verliest toegang tot CoMapeo gegevens die niet zijn uitgewisseld met andere deelnemers aan het project."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Annuleren"

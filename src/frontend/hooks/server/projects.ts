@@ -60,7 +60,7 @@ export function useActiveArchiveServer({
   projectId: string;
 }): ArchiveServerMemberInfo | undefined {
   const {data: members} = useManyMembers({projectId});
-  return members.find(isActiveArchiveServerMember);
+  return (members as MemberApi.MemberInfo[]).find(isActiveArchiveServerMember);
 }
 
 export function useFindRemoteArchive({url}: {url?: string}) {

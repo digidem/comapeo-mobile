@@ -237,7 +237,7 @@ function NoMapScreen({
         <BodyText>{t(m.description1)}</BodyText>
         <BodyText>{t(m.description2)}</BodyText>
       </View>
-      <View style={{gap: 20, marginTop: 40}}>
+      <View style={{gap: 20, marginTop: 40, alignItems: 'center'}}>
         {isUploading ? (
           <Loading size={12} />
         ) : (

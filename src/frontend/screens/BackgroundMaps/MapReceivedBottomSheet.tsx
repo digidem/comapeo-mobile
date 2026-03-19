@@ -155,7 +155,7 @@ export function MapReceivedBottomSheet({
 
   const handleDecline = () => {
     if (!mapShare || mapShare.status === 'canceled') {
-      navigation.replace('MapShareCanceledBottomSheet');
+      navigation.goBack();
     } else {
       const reason =
         warningInfo.warning === 'space' ? 'disk_full' : 'user_rejected';

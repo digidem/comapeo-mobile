@@ -61,7 +61,7 @@ export function ReceivingBackgroundMap({
     }
   }, [mapShare, navigation]);
 
-  const handleCancel = () => {
+  const handleCancel = React.useCallback(() => {
     abortDownload(
       {shareId},
       {
@@ -75,7 +75,7 @@ export function ReceivingBackgroundMap({
         },
       },
     );
-  };
+  }, [abortDownload, shareId, navigation]);
 
   const handleDone = () => {
     navigation.popTo('BackgroundMaps');

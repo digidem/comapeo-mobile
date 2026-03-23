@@ -4,8 +4,9 @@ import type {MapeoClientApi} from '@comapeo/ipc';
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 
 /**
- * Integration test that triggers REAL errors from CoMapeo Core
+ * Integration test that triggers real errors from CoMapeo Core
  * to verify they have the expected structure (message, stack)
+ * TODO: Add check for Error codes once updated to comapeo-core@6.0.0
  */
 describe('ErrorBottomSheet - Real CoMapeo Core Errors', () => {
   let manager: MapeoManager;

@@ -25,7 +25,6 @@ import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import * as Sentry from '@sentry/react-native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {
-  SecondaryButton,
   DestructiveButton,
   SecondaryDestructiveButton,
 } from '../../sharedComponents/Buttons';
@@ -325,7 +324,7 @@ function MapInfoScreen({
           })}
         </BodyText>
 
-        <SecondaryButton
+        {/* <SecondaryButton
           fullSize
           text={t(m.sendMap)}
           onPress={() => {
@@ -334,7 +333,7 @@ function MapInfoScreen({
           renderIcon={({color, size}) => (
             <MaterialIcon name="send" size={size} color={color} />
           )}
-        />
+        /> */}
       </View>
       <DestructiveButton
         fullSize
@@ -376,7 +375,8 @@ const styles = StyleSheet.create({
     borderColor: BLUE_GREY,
     borderWidth: 1,
     borderRadius: 10,
-    flex: 1,
+    flexGrow: 1,
+    width: '100%',
   },
   centerStuff: {
     flex: 1,

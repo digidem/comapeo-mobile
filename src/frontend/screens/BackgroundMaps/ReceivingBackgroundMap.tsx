@@ -52,7 +52,7 @@ export function ReceivingBackgroundMap({
   useKeepAwake();
 
   React.useEffect(() => {
-    if (mapShare.status === 'canceled') {
+    if (mapShare.status === 'canceled' || mapShare.status === 'aborted') {
       navigation.replace('MapShareCanceledBottomSheet');
       return;
     }
@@ -71,6 +71,16 @@ export function ReceivingBackgroundMap({
           navigation.popTo('BackgroundMaps');
         },
         onError: (err: unknown) => {
+          const errString = String(err);
+
+          if (
+            errString.includes('Invalid status transition') &&
+            (errString.includes('canceled') || errString.includes('aborted'))
+          ) {
+            navigation.replace('MapShareCanceledBottomSheet');
+            return;
+          }
+
           const error = toError(err, 'Failed to cancel map download');
           Sentry.captureException(error);
           navigation.replace('ErrorBottomSheet', {error});

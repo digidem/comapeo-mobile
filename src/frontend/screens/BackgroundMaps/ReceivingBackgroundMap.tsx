@@ -71,7 +71,7 @@ export function ReceivingBackgroundMap({
         onError: (err: unknown) => {
           const error = toError(err, 'Failed to cancel map download');
           Sentry.captureException(error);
-          navigation.navigate('ErrorBottomSheet', {error});
+          navigation.replace('ErrorBottomSheet', {error});
         },
       },
     );

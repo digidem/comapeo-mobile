@@ -26,7 +26,7 @@ const m = defineMessages({
   warning: {
     id: 'screens.AppPasscode.PasscodeIntro.warning',
     defaultMessage:
-      '<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants.',
+      '<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been exchanged with other project participants.',
   },
   continue: {
     id: 'screens.AppPasscode.NewPasscode.Splash.continue',

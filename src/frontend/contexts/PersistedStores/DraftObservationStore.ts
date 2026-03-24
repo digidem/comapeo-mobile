@@ -11,7 +11,6 @@ import {
 } from 'zustand/middleware';
 import type {LocationObject, LocationProviderStatus} from 'expo-location';
 import type {AccelerometerMeasurement} from 'expo-sensors';
-import type {CameraCapturedPicture} from 'expo-camera';
 import {manipulateAsync} from 'expo-image-manipulator';
 import {excludeKeys} from 'filter-obj';
 import type {Attachment, Position} from '../../sharedTypes/index.ts';
@@ -20,6 +19,8 @@ import {parse} from 'valibot';
 import {PhotoEXIFSchema} from '../../lib/exif.ts';
 import * as Sentry from '@sentry/react-native';
 import {MMKVStoreInitializer} from '../../hooks/persistedState/createPersistedState';
+import type {PhotoFile} from 'react-native-vision-camera';
+import * as Exify from '@lodev09/react-native-exify';
 
 export type DraftObservationStore = ReturnType<
   typeof createDraftObservationStore
@@ -237,11 +238,8 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     }
   }
 
-  async function addPhoto(
-    picture: CameraCapturedPicture,
-    metadata: PhotoMetadata,
-  ) {
-    const newAttachment = createNewPhotoAttachment({
+  async function addPhoto(picture: PhotoFile, metadata: PhotoMetadata) {
+    const newAttachment = await createNewPhotoAttachment({
       id: nextAttachmentId++,
       metadata,
       picture,
@@ -521,24 +519,32 @@ function createEmptyObservationValue(): ObservationValueWithPreset {
   };
 }
 
-function createNewPhotoAttachment({
+async function createNewPhotoAttachment({
   id,
   metadata,
   picture,
 }: {
   id: number;
   metadata: PhotoMetadata;
-  picture: CameraCapturedPicture;
-}): UnsavedPhotoAttachment {
+  picture: PhotoFile;
+}): Promise<UnsavedPhotoAttachment> {
+  const uri = `file://${picture.path}`;
+  const exif = await Exify.read(uri);
   return {
     id,
     type: 'photo',
-    raw: {uri: picture.uri, processingState: 'complete'},
+    raw: {uri, processingState: 'complete'},
     original: {uri: null, processingState: 'pending'},
     thumbnail: {uri: null, processingState: 'pending'},
     preview: {uri: null, processingState: 'pending'},
-    photoExif:
-      'exif' in picture ? parse(PhotoEXIFSchema, picture.exif) : undefined,
+    photoExif: exif
+      ? parse(PhotoEXIFSchema, {
+          ...exif,
+          ISOSpeedRatings: Array.isArray(exif.ISOSpeedRatings)
+            ? exif.ISOSpeedRatings[0]
+            : exif.ISOSpeedRatings,
+        })
+      : undefined,
     ...metadata,
   };
 }

@@ -3,6 +3,7 @@ import {AppState, StyleSheet, View, Pressable} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
+import {useKeepAwake} from 'expo-keep-awake';
 
 import {
   useCancelSentMapShare,
@@ -80,6 +81,7 @@ export function SendingBackgroundMap({
   const currentTime = useCurrentTime(1000);
 
   usePreventAndroidBackButton();
+  useKeepAwake();
 
   const elapsedSeconds = mapShare
     ? Math.floor((currentTime.getTime() - mapShare.mapShareCreatedAt) / 1000)

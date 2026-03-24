@@ -14,6 +14,7 @@ import {VERY_LIGHT_GREY, RED, NEW_DARK_GREY} from '../../lib/styles';
 import {
   useDeclineReceivedMapShare,
   useDownloadReceivedMapShare,
+  useSingleReceivedMapShare,
 } from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
@@ -44,8 +45,16 @@ export function ReplaceBackgroundMap({
 }: NativeRootNavigationProps<'ReplaceBackgroundMap'>) {
   const {formatMessage: t} = useIntl();
   const {shareId} = route.params;
+  const mapShare = useSingleReceivedMapShare({shareId});
   const {mutate: declineMapShare} = useDeclineReceivedMapShare();
   const {mutate: downloadMapShare} = useDownloadReceivedMapShare();
+
+  React.useEffect(() => {
+    if (mapShare.status === 'canceled' || mapShare.status === 'aborted') {
+      navigation.replace('MapShareCanceledBottomSheet');
+      return;
+    }
+  }, [mapShare, navigation]);
 
   const handleReplace = () => {
     downloadMapShare(
@@ -55,9 +64,15 @@ export function ReplaceBackgroundMap({
           navigation.replace('ReceivingBackgroundMap', {shareId});
         },
         onError: (err: unknown) => {
+          const errString = String(err);
+          if (errString.includes('409')) {
+            navigation.replace('MapShareCanceledBottomSheet');
+            return;
+          }
+
           const error = toError(err, 'Failed to start map download');
           Sentry.captureException(error);
-          navigation.navigate('ErrorBottomSheet', {error});
+          navigation.replace('ErrorBottomSheet', {error});
         },
       },
     );
@@ -71,9 +86,15 @@ export function ReplaceBackgroundMap({
           navigation.popTo('BackgroundMaps');
         },
         onError: (err: unknown) => {
+          const errString = String(err);
+          if (errString.includes('409')) {
+            navigation.replace('MapShareCanceledBottomSheet');
+            return;
+          }
+
           const error = toError(err, 'Failed to decline map share');
           Sentry.captureException(error);
-          navigation.navigate('ErrorBottomSheet', {error});
+          navigation.replace('ErrorBottomSheet', {error});
         },
       },
     );

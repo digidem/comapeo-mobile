@@ -95,6 +95,23 @@ export function SendingBackgroundMap({
           navigation.goBack();
         },
         onError: (err: Error) => {
+          const errString = String(err);
+
+          if (errString.includes('409')) {
+            navigation.replace('MapShareCanceledBottomSheet');
+            return;
+          }
+
+          if (
+            errString.includes('Invalid status transition') &&
+            (errString.includes('canceled') ||
+              errString.includes('aborted') ||
+              errString.includes('declined'))
+          ) {
+            navigation.replace('MapShareCanceledBottomSheet');
+            return;
+          }
+
           Sentry.captureException(err);
           navigation.replace('ErrorBottomSheet', {error: err});
         },

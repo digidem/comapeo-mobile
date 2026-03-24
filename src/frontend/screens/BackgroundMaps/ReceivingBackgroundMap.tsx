@@ -52,7 +52,7 @@ export function ReceivingBackgroundMap({
   useKeepAwake();
 
   React.useEffect(() => {
-    if (mapShare.status === 'canceled' || mapShare.status === 'aborted') {
+    if (mapShare.status === 'canceled') {
       navigation.replace('MapShareCanceledBottomSheet');
       return;
     }

@@ -106,22 +106,17 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
       primaryText: formatMessage(m.aboutCoMapeo),
       materialIconName: 'info-outline',
     },
-
-    ...(process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS
-      ? [
-          {
-            onPress: () => {
-              navigation.navigate('EarlyAccess');
-            },
-            testID: 'earlyAccessFlag',
-            primaryText: formatMessage(m.earlyAccessTitle),
-            secondaryText: isEarlyAccess
-              ? formatMessage(m.earlyAccessOn)
-              : formatMessage(m.earlyAccessOff),
-            materialIconName: 'flag' as const,
-          },
-        ]
-      : []),
+    {
+      onPress: () => {
+        navigation.navigate('EarlyAccess');
+      },
+      testID: 'earlyAccessFlag',
+      primaryText: formatMessage(m.earlyAccessTitle),
+      secondaryText: isEarlyAccess
+        ? formatMessage(m.earlyAccessOn)
+        : formatMessage(m.earlyAccessOff),
+      materialIconName: 'flag' as const,
+    },
 
     ...(authState !== 'obscured'
       ? [

@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 30,
+    padding: 20,
   },
   contentContainer: {
     alignItems: 'center',

@@ -17,7 +17,7 @@ const m = defineMessages({
   canSyncOnInternet: {
     id: 'ProjectSettings.RemoteArchive.Success.canSyncOnInternet',
     defaultMessage:
-      'All project devices can sync with this Archive, sharing data over the internet.',
+      'All project devices can exchange with this Archive, sharing data over the internet.',
   },
   close: {
     id: 'ProjectSettings.RemoteArchive.Success.close',

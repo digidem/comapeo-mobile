@@ -19,6 +19,7 @@
       "expo-localization",
       "expo-secure-store",
       "expo-document-picker",
+      "react-native-vision-camera",
       [
         "@rnmapbox/maps",
         {
@@ -46,14 +47,6 @@
           "isIosBackgroundLocationEnabled": true,
           "isAndroidBackgroundLocationEnabled": true,
           "locationPermission": "Allow $(PRODUCT_NAME) to use location?"
-        }
-      ],
-      [
-        "expo-camera",
-        {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to use the camera?",
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
-          "recordAudioAndroid": true
         }
       ],
       [
@@ -88,6 +81,7 @@
       ["./expo-config-plugins/increaseJavaMemory.js"],
       ["./expo-config-plugins/flagSecure/index.js"],
       ["./expo-config-plugins/customPermissionText.js"],
+      ["./expo-config-plugins/removeMediaPlaybackPermission.js"],
       [
         "react-native-share",
         {

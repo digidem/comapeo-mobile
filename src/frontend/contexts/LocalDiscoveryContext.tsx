@@ -29,7 +29,7 @@ export type LocalDiscoveryState = {
   wifiStatus: 'unknown' | 'on' | 'off';
   /** Is the device connected to a WiFi network? */
   wifiConnection: 'unknown' | 'connected' | 'disconnected';
-  /** Speed in Mbps of the WiFi connection (affects sync speed) */
+  /** Speed in Mbps of the WiFi connection (affects speed) */
   wifiLinkSpeed: number | null;
 };
 

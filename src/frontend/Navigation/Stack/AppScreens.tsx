@@ -538,6 +538,11 @@ export const createAppScreens = ({
         component={CollaboratorInfo}
         options={createCollaboratorInfoNavOptions({intl})}
       />
+      <RootStack.Screen
+        name="ExportObservations"
+        component={ExportObservations}
+        options={{headerTitle: intl(ExportObservations.navTitle)}}
+      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -573,10 +578,7 @@ export const createAppScreens = ({
         name="TrackRecordingActive"
         component={TrackRecordingActive}
       />
-      <RootStack.Screen
-        name="ExportObservations"
-        component={ExportObservations}
-      />
+
       <RootStack.Screen
         name="DidNotMoveBottomSheet"
         component={DidNotMoveBottomSheet}

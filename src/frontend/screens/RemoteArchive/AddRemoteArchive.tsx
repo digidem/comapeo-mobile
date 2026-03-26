@@ -43,7 +43,7 @@ const m = defineMessages({
   archiveInfo: {
     id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo',
     defaultMessage:
-      'When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data.',
+      'When project participants exchange their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data.',
   },
   permission: {
     id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.permission',

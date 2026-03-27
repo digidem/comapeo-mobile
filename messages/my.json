@@ -26,10 +26,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "ဆက်လက်ပြင်ဆင်ခြင်း"
   },
-  "ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Button to confirm discarding the observation edits",
-    "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း"
-  },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "ပြောင်းလဲမှုများကို ဖျက်ပစ်မှာလား?"
@@ -144,13 +140,7 @@
   "screens.ExchangeSoloScreen.goBack": {
     "message": "နောက်သို့ ပြန်သွား"
   },
-  "screens.InviteSuccess.done": {
-    "message": "ပြီးသွားပြီ"
-  },
   "screens.LeaveProject.cancel": {
-    "message": "ပယ်ဖျက်သည်"
-  },
-  "screens.LeaveProjectWarning.cancel": {
     "message": "ပယ်ဖျက်သည်"
   },
   "screens.ManualGpsScreen.DdForm.east": {
@@ -293,9 +283,6 @@
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Open Settings"
   },
-  "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
-  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
@@ -305,9 +292,6 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
-    "message": "ပြီးသွားပြီ"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"

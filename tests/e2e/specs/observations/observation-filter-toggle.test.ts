@@ -56,6 +56,7 @@ describe('Observations - Filter Toggle (Early Access)', () => {
 
     await expect($(byTextMatches('Cave'))).toBeDisplayed();
     await expect($(byTextMatches('Tree'))).toBeDisplayed();
+    await $('~Go to map.').click();
   });
 
   it('should disable Early Access and hide the filter toggle', async () => {
@@ -75,10 +76,11 @@ describe('Observations - Filter Toggle (Early Access)', () => {
     const backBtn = $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     await backBtn.click();
-    await $(byResourceId('MAIN.observation-list')).click();
+    await $(byResourceId('MAIN.map-screen')).click();
   });
 
   it('should not show filter toggle on observations list when Early Access is off', async () => {
+    await $('~Go to observations list.').click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
     await expect($(byResourceId('OBS.filter-toggle'))).not.toBeDisplayed();
   });

@@ -25,6 +25,7 @@ import {
 import {
   useDeclineReceivedMapShare,
   useDownloadReceivedMapShare,
+  useGetCustomMapInfo,
   useSingleReceivedMapShare,
 } from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
@@ -124,17 +125,24 @@ export function MapReceivedBottomSheet({
     currentLocation,
   ]);
 
+  const {data: customMapInfo, error: customMapError} = useGetCustomMapInfo();
   const {mutate: declineMapShare} = useDeclineReceivedMapShare();
   const {mutate: downloadMapShare} = useDownloadReceivedMapShare();
 
   const handleAccept = () => {
-    // Add code here to navigate to canceled sheet
+    if (!mapShare || mapShare.status === 'canceled') {
+      navigation.replace('MapShareCanceledBottomSheet');
+      return;
+    }
+    if (customMapInfo && !customMapError) {
+      navigation.replace('ReplaceBackgroundMap', {shareId});
+      return;
+    }
     downloadMapShare(
       {shareId},
       {
         onSuccess: () => {
-          // TODO: show different UI if downloading starts successfully but there is a warning (e.g. location not covered)
-          navigation.goBack();
+          navigation.replace('ReceivingBackgroundMap', {shareId});
         },
         onError: (err: unknown) => {
           const error = toError(err, 'Failed to start map download');
@@ -146,21 +154,24 @@ export function MapReceivedBottomSheet({
   };
 
   const handleDecline = () => {
-    // Add code here to navigate to canceled sheet
-    const reason =
-      warningInfo.warning === 'space' ? 'disk_full' : 'user_rejected';
-    declineMapShare(
-      {shareId, reason},
-      {
-        onSuccess: () => {
-          navigation.goBack();
+    if (!mapShare || mapShare.status === 'canceled') {
+      navigation.goBack();
+    } else {
+      const reason =
+        warningInfo.warning === 'space' ? 'disk_full' : 'user_rejected';
+      declineMapShare(
+        {shareId, reason},
+        {
+          onSuccess: () => {
+            navigation.goBack();
+          },
+          onError: (err: unknown) => {
+            Sentry.captureException(err);
+            navigation.goBack();
+          },
         },
-        onError: (err: unknown) => {
-          Sentry.captureException(err);
-          navigation.goBack();
-        },
-      },
-    );
+      );
+    }
   };
 
   return (

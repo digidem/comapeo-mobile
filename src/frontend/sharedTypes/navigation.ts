@@ -126,9 +126,16 @@ export type RootStackParamsList = {
   MapReceivedBottomSheet: {
     shareId: string;
   };
+  ReplaceBackgroundMap: {
+    shareId: string;
+  };
+  ReceivingBackgroundMap: {
+    shareId: string;
+  };
   SendingBackgroundMap: {
     shareId: string;
   };
+  MapShareCanceledBottomSheet: undefined;
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: PermissionResponse;

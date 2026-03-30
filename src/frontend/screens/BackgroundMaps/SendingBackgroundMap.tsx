@@ -19,6 +19,7 @@ import {TextButton} from '../../sharedComponents/TextButton';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {toError} from '../../utils/errors';
+import {SendingMapProgressBar} from './SendingMapProgressBar';
 import {
   VERY_LIGHT_GREY,
   RED,
@@ -26,7 +27,6 @@ import {
   BLACK,
   COMAPEO_BLUE,
 } from '../../lib/styles';
-import {SendingMapProgressBar} from './SendingMapProgressBar';
 import {useCurrentTime} from '../../hooks/useCurrentTime';
 
 const m = defineMessages({
@@ -116,8 +116,7 @@ export function SendingBackgroundMap({
       return;
     }
     if (mapShare.status === 'aborted') {
-      // TODO: Show map cancelled sheet when that exists
-      navigation.popTo('BackgroundMaps');
+      navigation.replace('MapShareCanceledBottomSheet');
       return;
     }
     if (mapShare.status === 'error') {

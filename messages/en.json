@@ -1905,6 +1905,12 @@
   "screens.Settings.JoinAProject.title": {
     "message": "Join a Project"
   },
+  "screens.Settings.MapManagement.BackgroundMapUpdated.done": {
+    "message": "Done"
+  },
+  "screens.Settings.MapManagement.BackgroundMapUpdated.mapUpdated": {
+    "message": "Background map updated."
+  },
   "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Accepted file types are .smp"
   },
@@ -1989,6 +1995,27 @@
   "screens.Settings.MapManagement.MapReceived.sharingDevice": {
     "message": "{deviceName} wants to share..."
   },
+  "screens.Settings.MapManagement.MapShareCanceled.close": {
+    "message": "Close"
+  },
+  "screens.Settings.MapManagement.MapShareCanceled.message": {
+    "message": "Collaborator canceled sharing before completing."
+  },
+  "screens.Settings.MapManagement.MapShareCanceled.title": {
+    "message": "Sharing Canceled"
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.replaceMapDescription": {
+    "message": "This device has a background map that will be replaced if you continue."
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.replaceMapTitle": {
+    "message": "Replace current background map?"
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.yesReplace": {
+    "message": "Yes, Replace"
+  },
   "screens.Settings.MapManagement.SendingBackgroundMap.cancel": {
     "message": "Cancel"
   },
@@ -2015,6 +2042,12 @@
   },
   "screens.Settings.MapManagement.SendingBackgroundMap.waitingMessage": {
     "message": "Waiting for Device to Accept Map"
+  },
+  "screens.Settings.MapManagement.UpdatingBackgroundMap.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Settings.MapManagement.UpdatingBackgroundMap.updating": {
+    "message": "Updating..."
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invite devices to a new project with all your observations."

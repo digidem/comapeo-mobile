@@ -141,8 +141,11 @@ import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsInclude
 import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
-import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
 import {SendingBackgroundMap} from '../../screens/BackgroundMaps/SendingBackgroundMap.tsx';
+import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
+import {ReplaceBackgroundMap} from '../../screens/BackgroundMaps/ReplaceBackgroundMap.tsx';
+import {ReceivingBackgroundMap} from '../../screens/BackgroundMaps/ReceivingBackgroundMap.tsx';
+import {MapShareCanceledBottomSheet} from '../../screens/BackgroundMaps/MapShareCanceledBottomSheet.tsx';
 import {RootStack} from './RootStack.ts';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -406,6 +409,25 @@ export const createAppScreens = ({
         name="SendingBackgroundMap"
         component={SendingBackgroundMap}
         options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="ReplaceBackgroundMap"
+        component={ReplaceBackgroundMap}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="ReceivingBackgroundMap"
+        component={ReceivingBackgroundMap}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="MapShareCanceledBottomSheet"
+        component={MapShareCanceledBottomSheet}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+          animation: 'fade',
+        }}
       />
 
       {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (

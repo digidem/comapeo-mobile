@@ -47,6 +47,10 @@ import {
   EarlyAccessStoreProvider,
   type EarlyAccessStore,
 } from './EarlyAccessContext';
+import {
+  ObservationFilterStoreProvider,
+  type ObservationFilterStore,
+} from './ObservationFilterContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -64,6 +68,7 @@ type AppProvidersProps = {
   lowStorageBannerStore: LowStorageBannerStore;
   appUsageStatsStore: AppUsageStatsStore;
   earlyAccessStore: EarlyAccessStore;
+  observationFilterStore: ObservationFilterStore;
 };
 
 export const AppProviders = ({
@@ -82,6 +87,7 @@ export const AppProviders = ({
   lowStorageBannerStore,
   earlyAccessStore,
   appUsageStatsStore,
+  observationFilterStore,
 }: AppProvidersProps) => {
   return (
     <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
@@ -108,7 +114,10 @@ export const AppProviders = ({
                                     }>
                                     <EarlyAccessStoreProvider
                                       value={earlyAccessStore}>
-                                      <AuthProvider>{children}</AuthProvider>
+                                      <ObservationFilterStoreProvider
+                                        value={observationFilterStore}>
+                                        <AuthProvider>{children}</AuthProvider>
+                                      </ObservationFilterStoreProvider>
                                     </EarlyAccessStoreProvider>
                                   </DraftObservationProvider>
                                 </ActiveProjectIdStoreProvider>

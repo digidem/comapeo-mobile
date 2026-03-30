@@ -10,6 +10,14 @@ import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
 import {useAuthContext} from '../../contexts/AuthContext';
+import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
+import {
+  useObservationFilterState,
+  useObservationFilterActions,
+} from '../../contexts/ObservationFilterContext';
+import {ObservationFilterToggle} from './ObservationFilterToggle';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 const m = defineMessages({
   loading: {
@@ -52,10 +60,48 @@ export const ObservationsList: React.FC<
   const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
   const {authState} = useAuthContext();
+  const isEarlyAccessEnabled = useEarlyAccessState(s => s.isEarlyAccessEnabled);
+  const filterMode = useObservationFilterState(state => state.filterMode);
+  const {checkAndResetIfNeeded, handleProjectChange} =
+    useObservationFilterActions();
+  const {projectId} = useActiveProject();
+  const {data: deviceInfo} = useOwnDeviceInfo();
+
+  React.useEffect(() => {
+    handleProjectChange(projectId);
+  }, [projectId, handleProjectChange]);
+
+  React.useEffect(() => {
+    if (isEarlyAccessEnabled) {
+      checkAndResetIfNeeded();
+    }
+  }, [isEarlyAccessEnabled, checkAndResetIfNeeded]);
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
   );
+
+  const filteredData = React.useMemo(() => {
+    const allData = [...observations, ...tracks];
+
+    if (!isEarlyAccessEnabled || filterMode === 'all') {
+      return allData.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+    }
+
+    const myDeviceId = deviceInfo?.deviceId;
+
+    const filtered = allData.filter(item => {
+      return 'createdBy' in item && item.createdBy === myDeviceId;
+    });
+
+    return filtered.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  }, [
+    observations,
+    tracks,
+    isEarlyAccessEnabled,
+    filterMode,
+    deviceInfo?.deviceId,
+  ]);
 
   if ((!observations.length && !tracks.length) || authState === 'obscured') {
     return (
@@ -67,6 +113,7 @@ export const ObservationsList: React.FC<
 
   return (
     <View style={styles.container} testID="OBS.list-scrn">
+      {isEarlyAccessEnabled && <ObservationFilterToggle />}
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
       <FlatList
         initialNumToRender={rowsPerWindow}
@@ -105,9 +152,7 @@ export const ObservationsList: React.FC<
               );
           }
         }}
-        data={[...observations, ...tracks].sort((a, b) =>
-          a.createdAt < b.createdAt ? 1 : -1,
-        )}
+        data={filteredData}
       />
     </View>
   );

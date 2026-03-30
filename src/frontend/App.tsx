@@ -37,6 +37,7 @@ import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
 import {Suspense} from 'react';
 import {Loading} from './sharedComponents/Loading.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
+import {createObservationFilterStore} from './contexts/ObservationFilterContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {postHog} from './lib/posthog.ts';
@@ -141,6 +142,7 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 const savedLocationStore = createSavedLocationStore({persist: true});
 const lowStorageBannerStore = createLowStorageBannerStore();
 const earlyAccessStore = createEarlyAccessStore({persist: true});
+const observationFilterStore = createObservationFilterStore({persist: true});
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
@@ -225,7 +227,8 @@ const App = () => {
                   metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
                   appUsageStatsStore={appUsagePromptStore}
                   lowStorageBannerStore={lowStorageBannerStore}
-                  earlyAccessStore={earlyAccessStore}>
+                  earlyAccessStore={earlyAccessStore}
+                  observationFilterStore={observationFilterStore}>
                   <AppNavigator
                     permissionAsked={permissionsAsked}
                     navigationIntegration={navigationIntegration}

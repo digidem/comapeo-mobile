@@ -14,9 +14,8 @@ describe('Observations - Filter Toggle (Early Access)', () => {
     const offCheckbox = await $(byResourceId('EA.checkbox-off'));
     await offCheckbox.click();
     await expect($(byResourceId('EA.checkbox-on'))).toBeDisplayed();
-    let backBtn = $(byResourceId('MAIN.header-back-btn'));
+    const backBtn = $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    backBtn = $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     await $(byResourceId('MAIN.map-screen')).click();
   });
@@ -73,16 +72,13 @@ describe('Observations - Filter Toggle (Early Access)', () => {
     const closeBtn = await $(byText('Close'));
     await closeBtn.click();
     await checkForElementGone(byResourceId('EA.turned-off-sheet'));
-    let backBtn = $(byResourceId('MAIN.header-back-btn'));
+    const backBtn = $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    backBtn = $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $(byResourceId('MAIN.observation-list')).click();
   });
 
   it('should not show filter toggle on observations list when Early Access is off', async () => {
-    const obsListTab = await $('~Go to observations list.');
-    await obsListTab.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
     await expect($(byResourceId('OBS.filter-toggle'))).not.toBeDisplayed();
   });

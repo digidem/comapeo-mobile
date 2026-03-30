@@ -32,7 +32,7 @@ export function ObservationFilterToggle() {
   const isMineActive = filterMode === 'mine';
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="OBS.filter-toggle">
       <View style={styles.filterUI}>
         <TouchableOpacity
           style={[
@@ -44,7 +44,9 @@ export function ObservationFilterToggle() {
           accessibilityLabel={formatMessage(m.all)}
           accessibilityRole="button"
           accessibilityState={{selected: isAllActive}}
-          testID="OBS.filter-all">
+          testID={
+            isAllActive ? 'OBS.filter-all-active' : 'OBS.filter-all-inactive'
+          }>
           <MaterialIcon
             color={isAllActive ? ACTIVE_COLOR : INACTIVE_COLOR}
             size={27}
@@ -67,7 +69,9 @@ export function ObservationFilterToggle() {
           ]}
           onPress={() => setFilterMode('mine')}
           accessibilityLabel={formatMessage(m.justYou)}
-          testID="OBS.filter-mine">
+          testID={
+            isMineActive ? 'OBS.filter-mine-active' : 'OBS.filter-mine-inactive'
+          }>
           <MaterialIcon
             color={isMineActive ? ACTIVE_COLOR : INACTIVE_COLOR}
             size={27}

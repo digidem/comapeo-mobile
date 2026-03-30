@@ -585,6 +585,9 @@
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "Kode Sandi Aplikasi memungkinkan Anda menambahkan lapisan keamanan tambahan dengan mengharuskan Anda memasukkan kode sandi untuk membuka aplikasi CoMapeo. Anda dapat menentukan kode sandi 5 digit Anda sendiri dengan mengaktifkan fitur di bawah ini."
   },
+  "screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "<bold>Awas: code sandi yang terlupakan tidak dapat dipulihkan!</bold> Setelah fitur ini diaktifkan, jika kode sandi dilupakan atau hilang, Anda tidak akan dapat membuka CoMapeo dan akan kehilangan akses ke data CoMapeo apa pun yang belum dipertukarkan dengan peserta lain."
+  },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Batal"
   },

@@ -5,6 +5,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import SuccessCheck from '../../images/Success.svg';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 
 const m = defineMessages({
   done: {
@@ -26,6 +27,7 @@ export const InviteSuccessfullyAccepted = ({
   navigation,
 }: NativeRootNavigationProps<'InviteSuccessfullyAccepted'>) => {
   const {formatMessage} = useIntl();
+  const {setActiveProjectId} = useActiveProjectIdActions();
 
   return (
     <BottomSheetWrapper>
@@ -40,7 +42,10 @@ export const InviteSuccessfullyAccepted = ({
         <>
           <SecondaryButton
             fullSize
-            onPress={() => navigation.popTo('Home', {screen: 'Map'})}
+            onPress={() => {
+              setActiveProjectId(route.params.projectId);
+              navigation.goBack();
+            }}
             text={formatMessage(m.done)}
           />
         </>

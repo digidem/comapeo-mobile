@@ -787,8 +787,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Thay đổi"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Quay trở lại"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Đóng"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "Quay trở lại"

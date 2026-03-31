@@ -32,10 +32,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "සංස්කරණය කරගෙන යන්න"
   },
-  "ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Button to confirm discarding the observation edits",
-    "message": "වෙනස්කම් ඉවතලන්න"
-  },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "වෙනස්කම් ඉවතලන්න?"
@@ -52,9 +48,6 @@
   },
   "Screens.ProjectSettings.update": {
     "message": "යාවත්කාලීන කරන්න"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "View"
   },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "ආරක්ෂාව"
@@ -261,9 +254,6 @@
   "screens.InviteReceived.declineInvite": {
     "message": "ආරාධනාව ප්‍රතික්ෂේප කරන්න"
   },
-  "screens.InviteSuccess.done": {
-    "message": "හරි"
-  },
   "screens.InviteSuccess.success": {
     "message": "සාර්ථකත්වය"
   },
@@ -273,12 +263,6 @@
   },
   "screens.LeaveProject.cancel": {
     "message": "අවලංගු කරන්න"
-  },
-  "screens.LeaveProjectWarning.cancel": {
-    "message": "අවලංගු කරන්න"
-  },
-  "screens.LeaveProjectWarning.continueButton": {
-    "message": "ඉදිරියට යන්න"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -602,9 +586,6 @@
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Open Settings"
   },
-  "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
-  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "මෙතන මොකද වෙන්නේ?"
@@ -638,9 +619,6 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
-    "message": "හරි"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
@@ -701,9 +679,6 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "අපනයන දෝෂ"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
-    "message": "සිතියම ඉවත් කරන්න"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"

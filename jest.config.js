@@ -12,6 +12,7 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   // Awana modules distributed as ESM
   '@comapeo/',
   '@mapeo/',
+  'custom-error-creator',
   'rpc-reflector',
   // Intl modules distributed as ESM
   'react-intl',
@@ -47,6 +48,7 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   'p-timeout',
   'parse-json',
   'serialize-error',
+  'secret-stream-http',
   'string-timing-safe-equal',
   'styled-map-package',
   'uint8array-extras',
@@ -81,7 +83,13 @@ const config = {
   ],
   moduleNameMapper: {
     '\\.svg$': '<rootDir>/src/frontend/__mocks__/svg.tsx',
+    '^@comapeo/core/package\\.json$':
+      '<rootDir>/node_modules/@comapeo/core/package.json',
     '^@comapeo/ipc$': '<rootDir>/node_modules/@comapeo/ipc/dist/index.js',
+    '^custom-error-creator$':
+      '<rootDir>/node_modules/custom-error-creator/index.js',
+    '^@comapeo/map-server$':
+      '<rootDir>/node_modules/@comapeo/map-server/dist/lib/constants.js',
     '^comapeocat/reader\\.js$':
       '<rootDir>/node_modules/comapeocat/src/reader.js',
     '^comapeocat/writer\\.js$':

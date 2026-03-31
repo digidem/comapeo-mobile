@@ -59,7 +59,7 @@ export function useActiveArchiveServer({
 }: {
   projectId: string;
 }): ArchiveServerMemberInfo | undefined {
-  const {data: members} = useManyMembers({projectId});
+  const {data: members} = useManyMembers({projectId, includeLeft: true});
   return members.find(isActiveArchiveServerMember);
 }
 

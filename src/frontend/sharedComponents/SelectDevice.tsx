@@ -16,8 +16,10 @@ import {LIGHT_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {
+  BLOCKED_ROLE_ID,
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
+  LEFT_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
 
@@ -154,7 +156,12 @@ export function getSelectableDevices({
 }: GetSelectableDevicesParams): PublicPeerInfo[] {
   if (selectionMode === 'shareMap') {
     return peers.filter(device =>
-      projectMembers.some(member => member.deviceId === device.deviceId),
+      projectMembers.some(
+        member =>
+          member.deviceId === device.deviceId &&
+          member.role.roleId !== BLOCKED_ROLE_ID &&
+          member.role.roleId !== LEFT_ROLE_ID,
+      ),
     );
   }
 

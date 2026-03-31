@@ -222,5 +222,8 @@
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
     "description": "Shown in new observation screen whilst looking for GPS",
     "message": "Cheeng'…"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Keer"
   }
 }

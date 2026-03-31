@@ -13,12 +13,13 @@
 import comapeoServer from '@comapeo/cloud';
 import createFastify from 'fastify';
 import {randomBytes} from 'node:crypto';
+import {createRequire} from 'node:module';
 import * as path from 'node:path';
-import {fileURLToPath} from 'node:url';
 import RAM from 'random-access-memory';
 
+const require = createRequire(import.meta.url);
 const COMAPEO_CORE_PKG_FOLDER = path.dirname(
-  fileURLToPath(import.meta.resolve('@comapeo/core/package.json')),
+  path.dirname(require.resolve('@comapeo/core')),
 );
 const projectMigrationsFolder = path.join(
   COMAPEO_CORE_PKG_FOLDER,

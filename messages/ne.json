@@ -29,6 +29,10 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "निरन्तर सम्पादन"
   },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "परिवर्तन रद्द"
+  },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "परिवर्तन रद्द?"
@@ -184,6 +188,9 @@
   "screens.ExchangeSoloScreen.goBack": {
     "message": "पछाडी जानुहाेस"
   },
+  "screens.InviteSuccess.done": {
+    "message": "भयाे"
+  },
   "screens.InviteSuccess.success": {
     "message": "सफल"
   },
@@ -193,6 +200,12 @@
   },
   "screens.LeaveProject.cancel": {
     "message": "रद्द"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "रद्द"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "जारी राख्ने"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -415,6 +428,9 @@
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Open Settings"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "यहाँ के भइ राखेकाे छ?"
@@ -430,6 +446,9 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "भयाे"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"

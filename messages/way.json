@@ -53,6 +53,9 @@
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Open Settings"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },

@@ -20,6 +20,10 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Taastay iweechweech"
   },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "Toochinee weecheet"
+  },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Toochinee weecheet?"
@@ -97,6 +101,12 @@
   "screens.LeaveProject.cancel": {
     "message": "Noomtee"
   },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Noomtee"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Taastay"
+  },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
     "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
   },
@@ -120,6 +130,9 @@
     "message": "Open Settings"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
+    "message": "Open Settings"
+  },
+  "screens.RemovedFromProjectBottomSheet.close": {
     "message": "Open Settings"
   },
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {

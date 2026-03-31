@@ -32,6 +32,10 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Endelea kuhariri"
   },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "Tupa mabadiliko"
+  },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Ungependa kutupa mabadiliko?"
@@ -269,6 +273,9 @@
   "screens.InviteReceived.declineInvite": {
     "message": "Kataa Mwaliko"
   },
+  "screens.InviteSuccess.done": {
+    "message": "Imekamilika"
+  },
   "screens.InviteSuccess.success": {
     "message": "Imefaulu"
   },
@@ -278,6 +285,12 @@
   },
   "screens.LeaveProject.cancel": {
     "message": "Ghairi"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Ghairi"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Endelea"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -610,6 +623,9 @@
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Open Settings"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Ni nini kinachofanyika hapa?"
@@ -646,6 +662,9 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Imekamilika"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
@@ -709,6 +728,9 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Hitilafu ya Kuleta"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Ondoa Ramani"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"

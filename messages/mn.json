@@ -32,6 +32,10 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Үргэлжлүүлэн засварлах"
   },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "Өөрчлөлтийг цуцлах"
+  },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Өөрчлөлтийг цуцлах уу? "
@@ -257,6 +261,9 @@
   "screens.InviteReceived.declineInvite": {
     "message": "Урилгаас татгалзах"
   },
+  "screens.InviteSuccess.done": {
+    "message": "Дууслаа"
+  },
   "screens.InviteSuccess.success": {
     "message": "Амжилттай"
   },
@@ -266,6 +273,12 @@
   },
   "screens.LeaveProject.cancel": {
     "message": "Цуцлах"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Үргэлжлүүлэх"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -576,6 +589,9 @@
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Open Settings"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Энд юу болоод байгаа юм бэ?"
@@ -612,6 +628,9 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Дууслаа"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
@@ -675,6 +694,9 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Импорт хийхэд гарсан алдаа"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Газрын зургийг арилгах"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"

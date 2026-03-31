@@ -32,6 +32,10 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "ทำการแก้ไขต่อ"
   },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "ยกเลิกการเปลี่ยนแปลง"
+  },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "ยกเลิกการเปลี่ยนแปลงหรือไม่?"
@@ -224,6 +228,9 @@
   "screens.InviteReceived.declineInvite": {
     "message": "ปฏิเสธคำเชิญ"
   },
+  "screens.InviteSuccess.done": {
+    "message": "เสร็จสิ้น"
+  },
   "screens.InviteSuccess.success": {
     "message": "สำเร็จ"
   },
@@ -233,6 +240,12 @@
   },
   "screens.LeaveProject.cancel": {
     "message": "ยกเลิก"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "ยกเลิก"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "ดำเนินการต่อ"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -559,6 +572,9 @@
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Open Settings"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "เกิดอะไรขึ้นที่นี่?"
@@ -592,6 +608,9 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "เสร็จสิ้น"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
@@ -652,6 +671,9 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "ข้อผิดพลาดในการนำเข้า"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "นำแผนที่ออก"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"

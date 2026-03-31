@@ -26,6 +26,10 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "បន្តកែសម្រួល"
   },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "លះបង់​ការកែប្រែ"
+  },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "តើ​អ្នក​ចង់​រក្សា​ទុក​មុន​ពេល​ចាកចេញទេ?"
@@ -157,12 +161,21 @@
   "screens.InviteCancelled.close": {
     "message": "បិទ"
   },
+  "screens.InviteSuccess.done": {
+    "message": "រួចរាល់"
+  },
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "ភាសា"
   },
   "screens.LeaveProject.cancel": {
     "message": "បោះបង់"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "បោះបង់"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "បន្ត"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -394,6 +407,9 @@
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Open Settings"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "តើមានអ្វីកំពុងកើតឡើងនៅទីនេះ?"
@@ -403,6 +419,9 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "រួចរាល់"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"

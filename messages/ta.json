@@ -32,6 +32,10 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "தொடர்ந்து திருத்தவும்"
   },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "மாற்றங்களை நிராகரிக்கவும்"
+  },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "மாற்றங்களை அகற்றவா?"
@@ -221,12 +225,21 @@
   "screens.InviteReceived.declineInvite": {
     "message": "அழைப்பை நிராகரி"
   },
+  "screens.InviteSuccess.done": {
+    "message": "முடிந்தது"
+  },
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "மொழி"
   },
   "screens.LeaveProject.cancel": {
     "message": "ரத்து செய்க"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "ரத்து செய்க"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "தொடரவும்"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -544,6 +557,9 @@
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Open Settings"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "இங்கே என்ன நடக்கிறது?"
@@ -577,6 +593,9 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "முடிந்தது"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"

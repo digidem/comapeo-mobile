@@ -32,6 +32,10 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Tiếp tục chỉnh sửa"
   },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "Hủy bỏ thay đổi"
+  },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Hủy bỏ thay đổi?"
@@ -57,6 +61,9 @@
   },
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Tên thiết bị"
+  },
+  "Screens.Settings.AppSettings.language": {
+    "message": "Language"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
@@ -263,6 +270,9 @@
   "screens.InviteReceived.declineInvite": {
     "message": "Từ chối lời mời"
   },
+  "screens.InviteSuccess.done": {
+    "message": "Hoàn thành"
+  },
   "screens.InviteSuccess.success": {
     "message": "Thành công"
   },
@@ -272,6 +282,12 @@
   },
   "screens.LeaveProject.cancel": {
     "message": "Hủy"
+  },
+  "screens.LeaveProjectWarning.cancel": {
+    "message": "Hủy"
+  },
+  "screens.LeaveProjectWarning.continueButton": {
+    "message": "Tiếp tục"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -601,6 +617,9 @@
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Open Settings"
   },
+  "screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Open Settings"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Có điều gì đang diễn ra ở đây?"
@@ -635,6 +654,9 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Hoàn thành"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
@@ -652,6 +674,9 @@
   },
   "screens.Settings.Config.navTitle": {
     "message": "Configuration"
+  },
+  "screens.Settings.Config.okButton": {
+    "message": "OK"
   },
   "screens.Settings.Config.projectName": {
     "message": "Tên dự án:"
@@ -694,6 +719,9 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Lỗi nhập"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Gỡ bỏ bản đồ"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"

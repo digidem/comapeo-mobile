@@ -130,5 +130,8 @@
   },
   "screens.TrackRecordingActive.warningMessage": {
     "message": "You’re currently recording a track. To join project, stop recording"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Open Settings"
   }
 }

@@ -531,5 +531,8 @@
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "ផ្លាស់ប្តូរ"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Open Settings"
   }
 }

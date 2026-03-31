@@ -60,7 +60,7 @@
     "message": "Colaborar"
   },
   "Navigation.Menu.coordinator": {
-    "message": "Persona Coordinadora"
+    "message": "Coordinador"
   },
   "Navigation.Menu.coordinatorTools": {
     "message": "Herramientas Coordinador"
@@ -598,7 +598,7 @@
     "message": "La contraseña de la aplicación le permite añadir una capa adicional de seguridad, requiriendo introducir una contraseña para abrir la aplicación de CoMapeo. Puedes definir tu propia contraseña de 5 dígitos activando la siguiente función."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>¡Por favor considera que las contraseñas olvidadas no pueden ser recuperadas!</bold> Una vez que esta funcionalidad está activada, si olvidas o pierdes tu contraseña, no podrás abrir CoMapeo y perderás el acceso a cualquier dato de CoMapeo que no hayas sido sincronizado con otras personas participantes del proyecto."
+    "message": "<bold>¡Por favor considera que las contraseñas olvidadas no pueden ser recuperadas!</bold> Una vez que esta funcionalidad está activada, si olvidas o pierdes tu contraseña, no podrás abrir CoMapeo y perderás el acceso a cualquier dato de CoMapeo que no hayas sido intercambiado con otras personas participantes del proyecto."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Cancelar"

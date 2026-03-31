@@ -2156,8 +2156,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "変更"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "戻る"
+  "sharedComponents.ErrorBottomSheet.advanced": {
+    "message": "高度な設定"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Open Settings"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "問題が発生しました"

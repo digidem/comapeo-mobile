@@ -134,5 +134,8 @@
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Open Settings"
   }
 }

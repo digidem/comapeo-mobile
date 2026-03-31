@@ -762,8 +762,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Өөрчлөх"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Буцах"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Хаах"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "Буцах"

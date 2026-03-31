@@ -54,7 +54,7 @@
     "message": "Pengaturan CoMapeo"
   },
   "Navigation.Menu.bgMap": {
-    "message": "Background Maps"
+    "message": "Peta Latar Belakang"
   },
   "Navigation.Menu.collaborate": {
     "message": "Berkolaborasi"
@@ -395,7 +395,7 @@
     "message": "km"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "allProjects.newCollab": {
     "message": "Kolaborasi Baru"
@@ -856,7 +856,7 @@
     "message": "Gunakan Fitur Akses Awal"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.EarlyAccessTurnedOff.desc": {
     "message": "Data dari Akses Awal akan disembunyikan setelah dimatikan, tetapi masih disimpan. Beralih kembali kapan saja untuk melihatnya."
@@ -1213,10 +1213,10 @@
     "message": "Nomor Zona"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+    "message": "Menggunakan Lokasi? Melacak lokasi bahkan saat ditutup. Data hanya ada di perangkat."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
+    "message": "Hidupkan Lokasi"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
     "message": "Use Your Location"
@@ -1482,7 +1482,7 @@
     "message": "Memuat… ini bisa memakan waktu cukup lama setelah menyinkronkan perangkat baru"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.Onboarding.JoinProjectIntro.description": {
     "message": "Berkoordinasi dengan tim Anda untuk menerima undangan proyek."
@@ -1494,7 +1494,7 @@
     "message": "Tambahkan rekaman audio."
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.Onboarding.MapOnYourOwnIntro.description": {
     "message": "Jelajahi CoMapeo—undang kolaborator kapan saja."
@@ -1678,7 +1678,7 @@
     "message": "Statistik proyek dibagikan dengan Awana Digital"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.ProjectStatisticsTurnedOff.desc": {
     "message": "Perubahan ini akan berlaku saat Anda Bertukar dengan anggota tim berikutnya."
@@ -1687,7 +1687,7 @@
     "message": "Statistik Proyek | MATI"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.RemovedFromProjectBottomSheet.reasonLabel": {
     "message": "Alasan: {reason}"
@@ -1813,7 +1813,7 @@
     "message": "Bergabung dengan Proyek"
   },
   "screens.Settings.Collaborate.startNewProject": {
-    "message": "Create a Project"
+    "message": "Mulai Proyek Baru"
   },
   "screens.Settings.Collaborate.title": {
     "message": "Berkolaborasi"
@@ -1840,7 +1840,7 @@
     "message": "Nama Proyek:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
+    "message": "Mulai Proyek Baru"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Beri Nama Proyek Saya"
@@ -1849,7 +1849,7 @@
     "message": "Selesai"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
-    "message": "Invite Device"
+    "message": "Undang Perangkat"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
     "message": "{projectName} sekarang siap bagi Anda untuk mengundang perangkat."
@@ -1861,10 +1861,10 @@
     "message": "Berhasil!"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
+    "message": "Buat baru"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
+    "message": "Nama proyek"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Menggunakan nama proyek yang ada tidak menjadikannya proyek yang sama."
@@ -1924,10 +1924,10 @@
     "message": "Hapus Peta"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
+    "message": "Peta latar belakang kustom memungkinkan Anda melihat peta secara offline."
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
+    "message": "Catatan: Peta latar belakang kustom tidak dibagikan dengan kolaborator."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "Tidak dapat mengimpor file. Silakan kembali dan coba lagi."
@@ -1945,7 +1945,7 @@
     "message": "Hapus File Peta"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
+    "message": "Peta Latar Belakang"
   },
   "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
     "message": "Kirim Peta"
@@ -1972,7 +1972,7 @@
     "message": "Lanjut"
   },
   "screens.Settings.StartNewProjectIntro.title": {
-    "message": "Create a Project"
+    "message": "Mulai Proyek Baru"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Undangan Ditolak"
@@ -2011,7 +2011,7 @@
     "message": "Ya, Bagikan Statistik"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.Sync.NoWifiDisplay.description": {
     "message": "Open your phone settings and connect to a WiFi network to synchronize"
@@ -2071,13 +2071,13 @@
     "message": "Selesai! Menunggu perangkat lain bergabung"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
+    "message": "Selesai!"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
     "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
+    "message": "Menunggu perangkat..."
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
@@ -2215,7 +2215,7 @@
     "message": "Mulai"
   },
   "soloProject.startNewProject.title": {
-    "message": "Create a Project"
+    "message": "Mulai Proyek Baru"
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Setiap proyek unik dan terpisah."

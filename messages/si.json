@@ -769,8 +769,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "වෙනස් කරන්න"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "ආපසු යන්න"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "වසන්න"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "ආපසු යන්න"

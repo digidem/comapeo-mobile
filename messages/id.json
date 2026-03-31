@@ -36,7 +36,7 @@
     "message": "Enable"
   },
   "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
+    "message": "GPS dan lokasi diperlukan untuk merekam jejak."
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Dinonaktifkan"
@@ -48,7 +48,7 @@
     "message": "Memuat…"
   },
   "Modal.GPSEnable.button.stop": {
-    "message": "Jalur Berhenti"
+    "message": "Hentikan trek"
   },
   "Navigation.Menu.Settings": {
     "message": "Pengaturan CoMapeo"
@@ -94,7 +94,7 @@
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Lanjutkan menyunting"
+    "message": "Lanjutkan mengedit"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Button to confirm discarding the observation edits",
@@ -106,6 +106,9 @@
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Batalkan perubahan?"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
+    "message": "Saat peserta proyek bertukar data, data tersebut juga akan diarsipkan di internet. Data proyek disinkronkan ke arsip melalui internet ke server terenkripsi yang aman. Pemilik server dapat melihat data tersebut."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
     "message": "URL tidak valid"
@@ -129,7 +132,7 @@
     "message": "Anda menambahkan:"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive": {
-    "message": "Tambahkan Arsip Jarak Jauh"
+    "message": "Tambahkan Arsip jarak jauh"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOff.dataNotShared": {
     "message": "Data dalam proyek Anda tidak dibagikan melalui internet. Hanya orang dalam project Anda yang dapat melihat data Anda."
@@ -144,7 +147,7 @@
     "message": "Arsip Jarak Jauh Dinonaktifkan"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.coordinatorCanTurnOff": {
-    "message": "Hanya Koordinator Proyek yang dapat menonaktifkan Arsip Jarak Jauh."
+    "message": "Hanya Koordinator Proyek yang dapat menonaktifkan Arsip jarak jauh."
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.dateAdded": {
     "message": "Tanggal Ditambahkan"
@@ -174,7 +177,7 @@
     "message": "Nama Server"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.syncWithInternet": {
-    "message": "Data proyek Anda disinkronkan ke arsip melalui internet ke server terenkripsi yang aman di bawah ini. Pemilik server dapat melihat data."
+    "message": "Data proyek Anda sedang disinkronkan ke arsip melalui internet ke server yang aman dan terenkripsi di bawah. Pemilik server dapat melihat data tersebut."
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.thisIncludes": {
     "message": "Ini termasuk:"
@@ -184,6 +187,9 @@
   },
   "ProjectSettings.RemoteArchive.Success.archiveAdded": {
     "message": "Arsip Jarak Jauh Ditambahkan"
+  },
+  "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
+    "message": "Semua perangkat proyek dapat bertukar data dengan Arsip ini, berbagi data melalui internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Tutup"
@@ -291,7 +297,7 @@
     "message": "Akses Awal MATI"
   },
   "Screens.Settings.AppSettings.earlyAccess.on": {
-    "message": "Akses Awal AKTIF"
+    "message": "Akses Awal ON"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "Bahasa"
@@ -307,11 +313,11 @@
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
-    "message": "Batal"
+    "message": "Batalkan"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
     "description": "Explanation for consequences of removing archive server.",
-    "message": "Ini akan menghentikan pengarsipan data baru untuk proyek ini. Data arsip yang ada tidak akan dihapus."
+    "message": "Ini akan menghentikan pengarsipan data baru untuk proyek ini. Data yang sudah diarsipkan tidak akan dihapus."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.removeArchive": {
     "description": "Text for destructive action button.",
@@ -448,6 +454,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
     "message": "Pastikan kedua perangkat berada di versi CoMapeo yang sama"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
+    "message": "Pastikan berdua perangkat terhubung ke jaringan Wi-Fi yang sama."
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Pilih Perangkat yang Akan Diundang"
   },
@@ -461,7 +470,7 @@
     "message": "Sebagai Peserta, perangkat ini dapat mengambil dan berbagi pengamatan. Mereka tidak dapat mengelola pengguna atau detail proyek."
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice": {
-    "message": "Anda memilih peran untuk perangkat ini:"
+    "message": "Anda sedang memilih peran untuk perangkat ini:"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Pilih Peran"
@@ -584,6 +593,9 @@
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "Kode Sandi Aplikasi memungkinkan Anda menambahkan lapisan keamanan tambahan dengan mengharuskan Anda memasukkan kode sandi untuk membuka aplikasi CoMapeo. Anda dapat menentukan kode sandi 5 digit Anda sendiri dengan mengaktifkan fitur di bawah ini."
+  },
+  "screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "<bold>Awas: code sandi yang terlupakan tidak dapat dipulihkan!</bold> Setelah fitur ini diaktifkan, jika kode sandi dilupakan atau hilang, Anda tidak akan dapat membuka CoMapeo dan akan kehilangan akses ke data CoMapeo apa pun yang belum dipertukarkan dengan peserta lain."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Batal"
@@ -923,6 +935,9 @@
   },
   "screens.ExportObservations.download": {
     "message": "Unduh"
+  },
+  "screens.ExportObservations.downloadObservations": {
+    "message": "Unduh pengamatan"
   },
   "screens.ExportObservations.errorMessage": {
     "message": "Pilih opsi"
@@ -2151,8 +2166,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Ubah"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Kembali"
+  "sharedComponents.ErrorBottomSheet.advanced": {
+    "message": "Maju"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Tutup"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Ada yang Tak Beres"

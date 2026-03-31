@@ -2154,8 +2154,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Modifier"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Retour"
+  "sharedComponents.ErrorBottomSheet.advanced": {
+    "message": "Avancé"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Fermer"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Quelque chose s'est mal passé"

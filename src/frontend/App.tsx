@@ -39,6 +39,7 @@ import {Loading} from './sharedComponents/Loading.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
+import {createAppRpc} from './lib/createAppRpc.ts';
 import {postHog} from './lib/posthog.ts';
 import {APP_VARIANT} from './lib/appVariant.ts';
 
@@ -101,6 +102,14 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const serverStateStore = createServerStateStore();
 const mapeoApi = createMapeoApi({serverStateStore});
+const appRpc = createAppRpc({serverStateStore});
+const mapServerListenPromise = appRpc.mapServer.listen();
+const mapServerApi = {
+  async getBaseUrl() {
+    const {localPort} = await mapServerListenPromise;
+    return new URL(`http://127.0.0.1:${localPort}`);
+  },
+};
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 
@@ -213,6 +222,7 @@ const App = () => {
                   queryClient={queryClient}
                   localDiscoveryController={localDiscoveryController}
                   mapeoApi={mapeoApi}
+                  mapServerApi={mapServerApi}
                   persistedDrafObservationStore={persistedDraftObservationStore}
                   trackStore={persistedTrackStore}
                   securityStore={persistedSecurityStore}

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {ClientApiProvider} from '@comapeo/core-react';
+import {ComapeoCoreProvider} from '@comapeo/core-react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {fetch} from 'expo/fetch';
 import {AuthProvider} from './AuthContext';
 import {
   LocalDiscoveryProvider,
@@ -52,6 +53,7 @@ type AppProvidersProps = {
   children: React.ReactNode;
   localDiscoveryController: ReturnType<typeof createLocalDiscoveryController>;
   mapeoApi: MapeoClientApi;
+  mapServerApi: {getBaseUrl: () => Promise<URL>};
   persistedDrafObservationStore: DraftObservationStore;
   trackStore: TrackStore;
   securityStore: SecurityStore;
@@ -70,6 +72,7 @@ export const AppProviders = ({
   children,
   localDiscoveryController,
   mapeoApi,
+  mapServerApi,
   persistedDrafObservationStore,
   trackStore,
   securityStore,
@@ -99,7 +102,11 @@ export const AppProviders = ({
                           <LocationProvider>
                             <LocalDiscoveryProvider
                               value={localDiscoveryController}>
-                              <ClientApiProvider clientApi={mapeoApi}>
+                              <ComapeoCoreProvider
+                                clientApi={mapeoApi}
+                                getMapServerBaseUrl={mapServerApi.getBaseUrl}
+                                fetch={fetch}
+                                queryClient={queryClient}>
                                 <ActiveProjectIdStoreProvider
                                   store={activeProjectIdStore}>
                                   <DraftObservationProvider
@@ -112,7 +119,7 @@ export const AppProviders = ({
                                     </EarlyAccessStoreProvider>
                                   </DraftObservationProvider>
                                 </ActiveProjectIdStoreProvider>
-                              </ClientApiProvider>
+                              </ComapeoCoreProvider>
                             </LocalDiscoveryProvider>
                           </LocationProvider>
                         </SavedLocationStoreProvider>

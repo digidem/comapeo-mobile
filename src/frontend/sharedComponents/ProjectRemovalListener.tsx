@@ -5,8 +5,7 @@ import {
   useProjectOwnRoleChangeListener,
   useSingleProject,
 } from '@comapeo/core-react';
-// TODO: Use type officially exported from @comapeo/core when available
-import type {RoleChangeEvent} from '@comapeo/core/dist/mapeo-project';
+import type {RoleChangeEvent} from '@comapeo/core';
 import {BLOCKED_ROLE_ID} from '../sharedTypes';
 import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
 import {useActiveProject} from '../contexts/ActiveProjectContext';

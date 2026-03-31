@@ -553,8 +553,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "परिवर्तन"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "पछाडी जानुहाेस"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Open Settings"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "पछाडी जानुहाेस"

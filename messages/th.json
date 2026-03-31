@@ -739,8 +739,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "แก้ไข"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "ย้อนกลับ"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "ปิด"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "ย้อนกลับ"

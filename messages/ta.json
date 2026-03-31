@@ -721,8 +721,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "மாற்றுக"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "பின் செல்"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "மூடுக"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "பின் செல்"

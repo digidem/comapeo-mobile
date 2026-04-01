@@ -796,8 +796,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Badilisha"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Rudi Nyuma"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Funga"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "Rudi Nyuma"

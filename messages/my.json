@@ -400,8 +400,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "ပြောင်းလဲသည်"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "နောက်သို့ ပြန်သွား"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Open Settings"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "နောက်သို့ ပြန်သွား"

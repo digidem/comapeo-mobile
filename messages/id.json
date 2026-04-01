@@ -36,7 +36,7 @@
     "message": "Enable"
   },
   "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
+    "message": "GPS dan lokasi diperlukan untuk merekam jejak."
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Dinonaktifkan"
@@ -48,13 +48,13 @@
     "message": "Memuat…"
   },
   "Modal.GPSEnable.button.stop": {
-    "message": "Jalur Berhenti"
+    "message": "Hentikan trek"
   },
   "Navigation.Menu.Settings": {
     "message": "Pengaturan CoMapeo"
   },
   "Navigation.Menu.bgMap": {
-    "message": "Background Maps"
+    "message": "Peta Latar Belakang"
   },
   "Navigation.Menu.collaborate": {
     "message": "Berkolaborasi"
@@ -94,7 +94,7 @@
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Lanjutkan menyunting"
+    "message": "Lanjutkan mengedit"
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Button to confirm discarding the observation edits",
@@ -106,6 +106,9 @@
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Batalkan perubahan?"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
+    "message": "Saat peserta proyek bertukar data, data tersebut juga akan diarsipkan di internet. Data proyek disinkronkan ke arsip melalui internet ke server terenkripsi yang aman. Pemilik server dapat melihat data tersebut."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
     "message": "URL tidak valid"
@@ -129,7 +132,7 @@
     "message": "Anda menambahkan:"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive": {
-    "message": "Tambahkan Arsip Jarak Jauh"
+    "message": "Tambahkan Arsip jarak jauh"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOff.dataNotShared": {
     "message": "Data dalam proyek Anda tidak dibagikan melalui internet. Hanya orang dalam project Anda yang dapat melihat data Anda."
@@ -144,7 +147,7 @@
     "message": "Arsip Jarak Jauh Dinonaktifkan"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.coordinatorCanTurnOff": {
-    "message": "Hanya Koordinator Proyek yang dapat menonaktifkan Arsip Jarak Jauh."
+    "message": "Hanya Koordinator Proyek yang dapat menonaktifkan Arsip jarak jauh."
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.dateAdded": {
     "message": "Tanggal Ditambahkan"
@@ -174,7 +177,7 @@
     "message": "Nama Server"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.syncWithInternet": {
-    "message": "Data proyek Anda disinkronkan ke arsip melalui internet ke server terenkripsi yang aman di bawah ini. Pemilik server dapat melihat data."
+    "message": "Data proyek Anda sedang disinkronkan ke arsip melalui internet ke server yang aman dan terenkripsi di bawah. Pemilik server dapat melihat data tersebut."
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.thisIncludes": {
     "message": "Ini termasuk:"
@@ -184,6 +187,9 @@
   },
   "ProjectSettings.RemoteArchive.Success.archiveAdded": {
     "message": "Arsip Jarak Jauh Ditambahkan"
+  },
+  "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
+    "message": "Semua perangkat proyek dapat bertukar data dengan Arsip ini, berbagi data melalui internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Tutup"
@@ -291,7 +297,7 @@
     "message": "Akses Awal MATI"
   },
   "Screens.Settings.AppSettings.earlyAccess.on": {
-    "message": "Akses Awal AKTIF"
+    "message": "Akses Awal ON"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "Bahasa"
@@ -307,11 +313,11 @@
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
-    "message": "Batal"
+    "message": "Batalkan"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
     "description": "Explanation for consequences of removing archive server.",
-    "message": "Ini akan menghentikan pengarsipan data baru untuk proyek ini. Data arsip yang ada tidak akan dihapus."
+    "message": "Ini akan menghentikan pengarsipan data baru untuk proyek ini. Data yang sudah diarsipkan tidak akan dihapus."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.removeArchive": {
     "description": "Text for destructive action button.",
@@ -389,7 +395,7 @@
     "message": "km"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "allProjects.newCollab": {
     "message": "Kolaborasi Baru"
@@ -448,6 +454,9 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
     "message": "Pastikan kedua perangkat berada di versi CoMapeo yang sama"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
+    "message": "Pastikan berdua perangkat terhubung ke jaringan Wi-Fi yang sama."
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Pilih Perangkat yang Akan Diundang"
   },
@@ -461,7 +470,7 @@
     "message": "Sebagai Peserta, perangkat ini dapat mengambil dan berbagi pengamatan. Mereka tidak dapat mengelola pengguna atau detail proyek."
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice": {
-    "message": "Anda memilih peran untuk perangkat ini:"
+    "message": "Anda sedang memilih peran untuk perangkat ini:"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Pilih Peran"
@@ -584,6 +593,9 @@
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "Kode Sandi Aplikasi memungkinkan Anda menambahkan lapisan keamanan tambahan dengan mengharuskan Anda memasukkan kode sandi untuk membuka aplikasi CoMapeo. Anda dapat menentukan kode sandi 5 digit Anda sendiri dengan mengaktifkan fitur di bawah ini."
+  },
+  "screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "<bold>Awas: code sandi yang terlupakan tidak dapat dipulihkan!</bold> Setelah fitur ini diaktifkan, jika kode sandi dilupakan atau hilang, Anda tidak akan dapat membuka CoMapeo dan akan kehilangan akses ke data CoMapeo apa pun yang belum dipertukarkan dengan peserta lain."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Batal"
@@ -844,7 +856,7 @@
     "message": "Gunakan Fitur Akses Awal"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.EarlyAccessTurnedOff.desc": {
     "message": "Data dari Akses Awal akan disembunyikan setelah dimatikan, tetapi masih disimpan. Beralih kembali kapan saja untuk melihatnya."
@@ -923,6 +935,9 @@
   },
   "screens.ExportObservations.download": {
     "message": "Unduh"
+  },
+  "screens.ExportObservations.downloadObservations": {
+    "message": "Unduh pengamatan"
   },
   "screens.ExportObservations.errorMessage": {
     "message": "Pilih opsi"
@@ -1201,10 +1216,10 @@
     "message": "Nomor Zona"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+    "message": "Menggunakan Lokasi? Melacak lokasi bahkan saat ditutup. Data hanya ada di perangkat."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
+    "message": "Hidupkan Lokasi"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
     "message": "Use Your Location"
@@ -1467,7 +1482,7 @@
     "message": "Memuat… ini bisa memakan waktu cukup lama setelah menyinkronkan perangkat baru"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.Onboarding.JoinProjectIntro.description": {
     "message": "Berkoordinasi dengan tim Anda untuk menerima undangan proyek."
@@ -1479,7 +1494,7 @@
     "message": "Tambahkan rekaman audio."
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.Onboarding.MapOnYourOwnIntro.description": {
     "message": "Jelajahi CoMapeo—undang kolaborator kapan saja."
@@ -1663,7 +1678,7 @@
     "message": "Statistik proyek dibagikan dengan Awana Digital"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.ProjectStatisticsTurnedOff.desc": {
     "message": "Perubahan ini akan berlaku saat Anda Bertukar dengan anggota tim berikutnya."
@@ -1672,7 +1687,7 @@
     "message": "Statistik Proyek | MATI"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.RemovedFromProjectBottomSheet.reasonLabel": {
     "message": "Alasan: {reason}"
@@ -1798,7 +1813,7 @@
     "message": "Bergabung dengan Proyek"
   },
   "screens.Settings.Collaborate.startNewProject": {
-    "message": "Create a Project"
+    "message": "Mulai Proyek Baru"
   },
   "screens.Settings.Collaborate.title": {
     "message": "Berkolaborasi"
@@ -1825,7 +1840,7 @@
     "message": "Nama Proyek:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
+    "message": "Mulai Proyek Baru"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Beri Nama Proyek Saya"
@@ -1834,7 +1849,7 @@
     "message": "Selesai"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
-    "message": "Invite Device"
+    "message": "Undang Perangkat"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
     "message": "{projectName} sekarang siap bagi Anda untuk mengundang perangkat."
@@ -1846,10 +1861,10 @@
     "message": "Berhasil!"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
+    "message": "Buat baru"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
+    "message": "Nama proyek"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Menggunakan nama proyek yang ada tidak menjadikannya proyek yang sama."
@@ -1909,10 +1924,10 @@
     "message": "Hapus Peta"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
+    "message": "Peta latar belakang kustom memungkinkan Anda melihat peta secara offline."
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
+    "message": "Catatan: Peta latar belakang kustom tidak dibagikan dengan kolaborator."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "Tidak dapat mengimpor file. Silakan kembali dan coba lagi."
@@ -1930,7 +1945,7 @@
     "message": "Hapus File Peta"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
+    "message": "Peta Latar Belakang"
   },
   "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
     "message": "Kirim Peta"
@@ -1957,7 +1972,7 @@
     "message": "Lanjut"
   },
   "screens.Settings.StartNewProjectIntro.title": {
-    "message": "Create a Project"
+    "message": "Mulai Proyek Baru"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Undangan Ditolak"
@@ -1996,7 +2011,7 @@
     "message": "Ya, Bagikan Statistik"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
+    "message": "Tutup"
   },
   "screens.Sync.NoWifiDisplay.description": {
     "message": "Open your phone settings and connect to a WiFi network to synchronize"
@@ -2056,13 +2071,13 @@
     "message": "Selesai! Menunggu perangkat lain bergabung"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
+    "message": "Selesai!"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
     "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
+    "message": "Menunggu perangkat..."
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
@@ -2151,8 +2166,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Ubah"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Kembali"
+  "sharedComponents.ErrorBottomSheet.advanced": {
+    "message": "Maju"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Tutup"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Ada yang Tak Beres"
@@ -2200,7 +2218,7 @@
     "message": "Mulai"
   },
   "soloProject.startNewProject.title": {
-    "message": "Create a Project"
+    "message": "Mulai Proyek Baru"
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Setiap proyek unik dan terpisah."

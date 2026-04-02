@@ -69,7 +69,7 @@ export const SelectMapShareDevice = ({
   const availablePeers = useInitiallyConnectedPeers();
   const {projectId} = useActiveProject();
   const syncState = useSyncState({projectId});
-  const {mutateAsync: sendMapShare} = useSendMapShare({projectId});
+  const {mutateAsync: sendMapShare} = useSendMapShare();
 
   const selectableDevices = getSelectableDevicesForMapShare({
     peers: availablePeers,

@@ -48,7 +48,6 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   'p-timeout',
   'parse-json',
   'serialize-error',
-  'secret-stream-http',
   'string-timing-safe-equal',
   'styled-map-package',
   'uint8array-extras',
@@ -88,7 +87,7 @@ const config = {
     '^@comapeo/ipc$': '<rootDir>/node_modules/@comapeo/ipc/dist/index.js',
     '^custom-error-creator$':
       '<rootDir>/node_modules/custom-error-creator/index.js',
-    '^@comapeo/map-server$':
+    '^@comapeo/map-server/constants\\.js$':
       '<rootDir>/node_modules/@comapeo/map-server/dist/lib/constants.js',
     '^comapeocat/reader\\.js$':
       '<rootDir>/node_modules/comapeocat/src/reader.js',

@@ -2,10 +2,10 @@ import {getSelectableDevices} from './SelectDevice';
 import type {MemberApi} from '@comapeo/core';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {
-  BLOCKED_ROLE_ID,
   COORDINATOR_ROLE_ID,
-  LEFT_ROLE_ID,
   MEMBER_ROLE_ID,
+  BLOCKED_ROLE_ID,
+  LEFT_ROLE_ID,
 } from '../sharedTypes';
 
 type PublicPeerInfo = Awaited<
@@ -30,15 +30,14 @@ function mockMember(
   deviceId: string,
   roleId: MemberApi.RoleId,
   deviceType: 'mobile' | 'desktop' = 'mobile',
-): MemberApi.MemberInfo {
+): MemberApi.ActiveMemberInfo {
   return {
     deviceId,
     name: `Device ${deviceId}`,
-    // @ts-expect-error Unsound but enough for testing purposes
     role: {roleId},
     deviceType,
     joinedAt: new Date().toISOString(),
-  };
+  } as MemberApi.ActiveMemberInfo;
 }
 
 describe('getSelectableDevices', () => {
@@ -49,7 +48,7 @@ describe('getSelectableDevices', () => {
         mockPeer('peer-2', 'Peer 2'),
         mockPeer('peer-3', 'Peer 3'),
       ];
-      const projectMembers: MemberApi.MemberInfo[] = [];
+      const projectMembers: MemberApi.ActiveMemberInfo[] = [];
 
       const result = getSelectableDevices({
         peers,
@@ -204,7 +203,7 @@ describe('getSelectableDevices', () => {
         mockPeer('peer-1', 'Peer 1'),
         mockPeer('peer-2', 'Peer 2'),
       ];
-      const projectMembers: MemberApi.MemberInfo[] = [];
+      const projectMembers: MemberApi.ActiveMemberInfo[] = [];
 
       const result = getSelectableDevices({
         peers,
@@ -344,7 +343,7 @@ describe('getSelectableDevices', () => {
   describe('edge cases', () => {
     it('should handle empty peers and members arrays', () => {
       const peers: PublicPeerInfo[] = [];
-      const projectMembers: MemberApi.MemberInfo[] = [];
+      const projectMembers: MemberApi.ActiveMemberInfo[] = [];
 
       const invitesResult = getSelectableDevices({
         peers,

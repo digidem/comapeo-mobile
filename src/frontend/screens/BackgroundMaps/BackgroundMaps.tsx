@@ -10,6 +10,7 @@ import {
   useImportCustomMapFile,
   useGetCustomMapInfo,
   useRemoveCustomMapFile,
+  isHTTPError,
 } from '@comapeo/core-react';
 import StackSvg from '../../images/Stack.svg';
 import {
@@ -254,22 +255,20 @@ function NoMapScreen({
           {t(m.acceptedFileTypes)}
         </BodyText>
       </View>
-      {error &&
-        /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-        (error as any).code !== 'MAP_NOT_FOUND' && (
-          <View style={{marginTop: 40}}>
-            <BodyText variant="large" style={styles.infoLoadErrorText}>
-              {t(m.customMapInfoLoadError)}
-            </BodyText>
-            <View style={{alignItems: 'center', marginTop: 20}}>
-              <SecondaryDestructiveButton
-                fullSize
-                text={t(m.removeMapFile)}
-                onPress={onRemoveMapFile}
-              />
-            </View>
+      {error && isHTTPError(error) && error.code !== 'MAP_NOT_FOUND' && (
+        <View style={{marginTop: 40}}>
+          <BodyText variant="large" style={styles.infoLoadErrorText}>
+            {t(m.customMapInfoLoadError)}
+          </BodyText>
+          <View style={{alignItems: 'center', marginTop: 20}}>
+            <SecondaryDestructiveButton
+              fullSize
+              text={t(m.removeMapFile)}
+              onPress={onRemoveMapFile}
+            />
           </View>
-        )}
+        </View>
+      )}
     </View>
   );
 }

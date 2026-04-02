@@ -59,7 +59,10 @@ export function useActiveArchiveServer({
 }: {
   projectId: string;
 }): ArchiveServerMemberInfo | undefined {
-  const {data: members} = useManyMembers({projectId, includeLeft: true});
+  // Cast needed due to a types bug in @comapeo/core: https://github.com/digidem/comapeo-core/issues/1256
+  const {data: members} = useManyMembers({projectId, includeLeft: false}) as {
+    data: MemberApi.MemberInfo[];
+  };
   return members.find(isActiveArchiveServerMember);
 }
 

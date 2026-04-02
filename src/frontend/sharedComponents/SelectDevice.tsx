@@ -16,10 +16,8 @@ import {LIGHT_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {
-  BLOCKED_ROLE_ID,
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
-  LEFT_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
 
@@ -61,7 +59,14 @@ export const SelectDevice = ({
 
   const availablePeers = useInitiallyConnectedPeers();
   const {projectId} = useActiveProject();
-  const projectMembersQuery = useManyMembers({projectId});
+  // includeLeft: false is explicit here to get only active members.
+  // The cast is needed due to a types bug in @comapeo/core: https://github.com/digidem/comapeo-core/issues/1256
+  const projectMembersQuery = useManyMembers({
+    projectId,
+    includeLeft: false,
+  }) as {
+    data: MemberApi.ActiveMemberInfo[];
+  };
 
   const selectionMode: SelectionMode =
     route.name === 'SelectMapShareDevice' ? 'shareMap' : 'invites';
@@ -145,7 +150,7 @@ SelectDevice.navTitleMapShare = m.titleMapShare;
 
 type GetSelectableDevicesParams = {
   peers: PublicPeerInfo[];
-  projectMembers: MemberApi.MemberInfo[];
+  projectMembers: MemberApi.ActiveMemberInfo[];
   selectionMode: SelectionMode;
 };
 
@@ -156,12 +161,7 @@ export function getSelectableDevices({
 }: GetSelectableDevicesParams): PublicPeerInfo[] {
   if (selectionMode === 'shareMap') {
     return peers.filter(device =>
-      projectMembers.some(
-        member =>
-          member.deviceId === device.deviceId &&
-          member.role.roleId !== BLOCKED_ROLE_ID &&
-          member.role.roleId !== LEFT_ROLE_ID,
-      ),
+      projectMembers.some(member => member.deviceId === device.deviceId),
     );
   }
 

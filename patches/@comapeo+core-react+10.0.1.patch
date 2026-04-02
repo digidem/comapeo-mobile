@@ -1,0 +1,23 @@
+diff --git a/node_modules/@comapeo/core-react/dist/commonjs/lib/react-query.js b/node_modules/@comapeo/core-react/dist/commonjs/lib/react-query.js
+index 50f07be..697bef4 100644
+--- a/node_modules/@comapeo/core-react/dist/commonjs/lib/react-query.js
++++ b/node_modules/@comapeo/core-react/dist/commonjs/lib/react-query.js
+@@ -23,7 +23,7 @@ exports.getDocumentsQueryKey = getDocumentsQueryKey;
+ exports.getManyDocumentsQueryKey = getManyDocumentsQueryKey;
+ exports.getDocumentByDocIdQueryKey = getDocumentByDocIdQueryKey;
+ exports.getDocumentByVersionIdQueryKey = getDocumentByVersionIdQueryKey;
+-const map_server_1 = require("@comapeo/map-server");
++const map_server_1 = require("@comapeo/map-server/constants.js");
+ // #region Shared
+ const ROOT_QUERY_KEY = '@comapeo/core-react';
+ // Since the API is running locally, queries should run regardless of network
+diff --git a/node_modules/@comapeo/core-react/dist/esm/lib/react-query.js b/node_modules/@comapeo/core-react/dist/esm/lib/react-query.js
+index 0c90995..c8d09b2 100644
+--- a/node_modules/@comapeo/core-react/dist/esm/lib/react-query.js
++++ b/node_modules/@comapeo/core-react/dist/esm/lib/react-query.js
+@@ -1,4 +1,4 @@
+-import { DEFAULT_MAP_ID } from '@comapeo/map-server';
++import { DEFAULT_MAP_ID } from '@comapeo/map-server/constants.js';
+ // #region Shared
+ const ROOT_QUERY_KEY = '@comapeo/core-react';
+ // Since the API is running locally, queries should run regardless of network

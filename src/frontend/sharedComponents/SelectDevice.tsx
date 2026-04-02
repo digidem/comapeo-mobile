@@ -60,13 +60,7 @@ export const SelectDevice = ({
   const availablePeers = useInitiallyConnectedPeers();
   const {projectId} = useActiveProject();
   // includeLeft: false is explicit here to get only active members.
-  // The cast is needed due to a types bug in @comapeo/core: https://github.com/digidem/comapeo-core/issues/1256
-  const projectMembersQuery = useManyMembers({
-    projectId,
-    includeLeft: false,
-  }) as {
-    data: MemberApi.ActiveMemberInfo[];
-  };
+  const projectMembersQuery = useManyMembers({projectId, includeLeft: false});
 
   const selectionMode: SelectionMode =
     route.name === 'SelectMapShareDevice' ? 'shareMap' : 'invites';

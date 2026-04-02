@@ -170,6 +170,7 @@ export function BackgroundMapsScreen() {
       onError: err => {
         if (
           err instanceof Error &&
+          // Error message from expo-file-system's File.pickFileAsync() when user cancels
           err.message.includes('cancelled by the user')
         ) {
           return;

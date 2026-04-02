@@ -47,22 +47,15 @@ export type ArchiveServerMemberInfo = MemberApi.MemberInfo & {
 // TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
 export function isActiveArchiveServerMember(
   member: MemberApi.MemberInfo,
-): member is ArchiveServerMemberInfo {
+): member is ArchiveServerMemberInfo & MemberApi.ActiveMemberInfo {
   if (member.deviceType !== 'selfHostedServer') return false;
   if (!member.selfHostedServerDetails) return false;
   if (member.role.roleId !== MEMBER_ROLE_ID) return false;
   return true;
 }
 
-export function useActiveArchiveServer({
-  projectId,
-}: {
-  projectId: string;
-}): ArchiveServerMemberInfo | undefined {
-  // Cast needed due to a types bug in @comapeo/core: https://github.com/digidem/comapeo-core/issues/1256
-  const {data: members} = useManyMembers({projectId, includeLeft: false}) as {
-    data: MemberApi.MemberInfo[];
-  };
+export function useActiveArchiveServer({projectId}: {projectId: string}) {
+  const {data: members} = useManyMembers({projectId, includeLeft: false});
   return members.find(isActiveArchiveServerMember);
 }
 

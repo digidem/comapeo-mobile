@@ -29,10 +29,13 @@ function mockMember(
   return {
     deviceId,
     name: `Device ${deviceId}`,
-    role: {roleId},
+    role: {
+      // @ts-expect-error Sufficient for testing purposes
+      roleId,
+    },
     deviceType,
     joinedAt: new Date().toISOString(),
-  } as MemberApi.ActiveMemberInfo;
+  };
 }
 
 describe('getSelectableDevices', () => {

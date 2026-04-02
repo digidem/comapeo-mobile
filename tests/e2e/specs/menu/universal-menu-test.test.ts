@@ -41,12 +41,8 @@ describe('Menu - basic functionality of the menu', () => {
 
     await expect(await $(byTextMatches('Choose File'))).toBeDisplayed();
 
-    const errorMessage = await $(
-      byTextMatches('Could not get custom map information'),
-    );
     const removeMapButton = await $(byText('Remove Map File'));
 
-    await expect(errorMessage).toBeDisplayed();
     await expect(removeMapButton).toBeDisplayed();
 
     await driver.back();

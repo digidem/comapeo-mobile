@@ -22,6 +22,7 @@ export function HomeHeader({
   backgroundColor,
   showBottomBorder,
   onPress,
+  options,
 }: HomeHeaderProps) {
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
@@ -66,6 +67,9 @@ export function HomeHeader({
             </View>
           )}
         </TouchableOpacity>
+        <View style={{paddingLeft: 10}}>
+          {options.headerRight?.({canGoBack: false})}
+        </View>
       </View>
     </View>
   );
@@ -76,7 +80,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   headerRow: {
-    width: '100%',
     minHeight: 58,
     flexDirection: 'row',
     alignItems: 'center',
@@ -84,13 +87,13 @@ const styles = StyleSheet.create({
   },
   titleBox: {
     height: 40,
-    maxWidth: '100%',
     borderRadius: 6,
     borderWidth: 0.5,
     borderColor: BLUE_GREY,
     flexDirection: 'row',
     alignItems: 'center',
     paddingRight: 10,
+    flexShrink: 1,
   },
   menuIconContainer: {
     width: 40,

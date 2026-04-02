@@ -48,6 +48,8 @@ export const EDITING_SCREEN_NAMES: (
   'Success',
   'AuthScreen',
   'ErrorBottomSheet',
+  'ConfirmDiscardObservationBottomSheet',
+  'ConfirmDiscardObservationEditBottomSheet',
 ];
 
 export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [

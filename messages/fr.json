@@ -53,9 +53,6 @@
   "Navigation.Menu.Settings": {
     "message": "Paramètres de CoMapeo"
   },
-  "Navigation.Menu.bgMap": {
-    "message": "Background Maps"
-  },
   "Navigation.Menu.collaborate": {
     "message": "Collaborer"
   },
@@ -108,7 +105,7 @@
     "message": "Annuler les modifications ?"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
-    "message": "Lorsque les participants au projet synchronisent leurs données, ils seront également archivés sur Internet. Les données de votre projet sont en train de se synchroniser avec l'archive via Internet sur le serveur sécurisé et chiffré ci-dessous. Le propriétaire du serveur peut voir les données."
+    "message": "Lorsque les participants au projet échangent leurs données, ils seront également archivés sur Internet. Les données de votre projet sont en train de se synchroniser avec l'archive via Internet sur le serveur sécurisé et chiffré ci-dessous. Le propriétaire du serveur peut voir les données."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
     "message": "URL invalide"
@@ -189,7 +186,7 @@
     "message": "Archives distantes ajoutées"
   },
   "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
-    "message": "Tous les périphériques de projet peuvent se synchroniser avec cette Archive, en partageant des données sur Internet."
+    "message": "Tous les dispositifs de projet peuvent échanger avec cette Archive, en partageant des données sur Internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Fermer"
@@ -458,7 +455,7 @@
     "message": "Assurez-vous que les deux appareils sont sur la même version de CoMapeo"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
-    "message": "Assurez-vous que les deux appareils sont sur le même réseau wifi"
+    "message": "Assurez-vous que les deux appareils sont sur le même réseau Wi-Fi"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Sélectionnez l'appareil à inviter"
@@ -596,9 +593,6 @@
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "Le code d'accès de l'application vous permet d'ajouter une couche de sécurité supplémentaire en exigeant que vous saisissiez un code d'accès pour ouvrir l'application CoMapeo. Vous pouvez définir votre propre code d'accès à 5 chiffres en activant la fonction ci-dessous."
-  },
-  "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Veuillez noter que les mots de passe oubliés ne peuvent pas être récupérés !</bold> Une fois cette fonctionnalité activée, si vous oubliez ou perdez votre code d'accès, vous ne serez pas en mesure d'ouvrir CoMapeo et perdrez l'accès aux données CoMapeo qui n'ont pas été échanger avec les autres participants au projet."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Annuler"
@@ -858,9 +852,6 @@
   "screens.EarlyAccess.useEarlyAccess": {
     "message": "Utiliser les fonctionnalités d'accès anticipé"
   },
-  "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
-  },
   "screens.EarlyAccessTurnedOff.desc": {
     "message": "Les données de l'accès anticipé seront masquées après désactivation, mais elles sont toujours enregistrées. Rebasculez à tout moment pour les voir."
   },
@@ -938,6 +929,9 @@
   },
   "screens.ExportObservations.download": {
     "message": "Télécharger"
+  },
+  "screens.ExportObservations.downloadObservations": {
+    "message": "Télécharger les observations"
   },
   "screens.ExportObservations.errorMessage": {
     "message": "Choisissez une option"
@@ -1215,12 +1209,6 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Numéro de la zone"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
-  },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
     "message": "Use Your Location"
   },
@@ -1405,9 +1393,6 @@
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Piste"
-  },
-  "screens.ObservationList.downloadObservation": {
-    "message": "Télécharger les observations"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",

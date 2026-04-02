@@ -56,7 +56,7 @@ const m = defineMessages({
   },
   sameWifi: {
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi',
-    defaultMessage: 'Make sure both devices are on the same wifi network ',
+    defaultMessage: 'Make sure both devices are on the same Wi-Fi network ',
   },
   sameVersion: {
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion',
@@ -72,7 +72,8 @@ export const SelectInviteDevice = ({
 
   const availablePeers = useInitiallyConnectedPeers();
   const {projectId} = useActiveProject();
-  const projectMembersQuery = useManyMembers({projectId});
+  // includeLeft: false is explicit here to get only active members.
+  const projectMembersQuery = useManyMembers({projectId, includeLeft: false});
 
   const selectableDevices = getSelectableDevicesForInvite({
     peers: availablePeers,

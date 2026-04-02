@@ -5,9 +5,9 @@ import {defineMessages, FormattedMessage} from 'react-intl';
 import {CameraView} from '../sharedComponents/CameraView';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {useDraftObservationActions} from '../contexts/DraftObservationContext';
-import {CameraCapturedPicture} from 'expo-camera';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
+import type {PhotoFile} from 'react-native-vision-camera';
 
 const m = defineMessages({
   cancel: {
@@ -22,7 +22,7 @@ export const AddPhotoScreen = ({
   const {addPhoto} = useDraftObservationActions();
 
   const handleAddPress = (capture: {
-    photo: CameraCapturedPicture;
+    photo: PhotoFile;
     metadata: PhotoMetadata;
   }) => {
     addPhoto(capture.photo, capture.metadata);

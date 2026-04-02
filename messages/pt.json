@@ -108,7 +108,7 @@
     "message": "Descartar alterações?"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
-    "message": "Quando os participantes do projeto sincronizam seus dados, eles também serão arquivados na internet. Os dados do seu projeto estão sendo sincronizados com a internet para o servidor seguro e criptografado abaixo. O proprietário do servidor pode ver os dados."
+    "message": "Quando os participantes do projeto trocam seus dados, eles também serão arquivados na internet. Os dados do seu projeto estão sendo sincronizados com a internet para o servidor seguro e criptografado abaixo. O proprietário do servidor pode ver os dados."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
     "message": "URL inválida"
@@ -189,7 +189,7 @@
     "message": "Arquivo remoto adicionado"
   },
   "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
-    "message": "Todos os dispositivos desse Projeto podem sincronizar com esse Arquivo, compartilhando dados na internet."
+    "message": "Todos os dispositivos do projeto podem trocar com este Arquivo, compartilhar dados pela internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Fechar"
@@ -458,7 +458,7 @@
     "message": "Certifique-se de que os dois dispositivos possuem a mesma versão do CoMapeo"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
-    "message": "Certifique-se de que os dois dispositivos estão conectados a mesma rede wifi"
+    "message": "Certifique-se de que ambos os dispositivos estão na mesma rede Wi-Fi"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Selecione um dispositivo para convidar"
@@ -596,9 +596,6 @@
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "Criar uma senha para utilizar o CoMapeo te oferece mais uma camada de segurança, exigindo que você a insira para abrir o aplicativo. Você pode definir sua própria senha de 5 dígitos ativando o recurso abaixo."
-  },
-  "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Observe que senhas as esquecidas não podem ser recuperadas!</bold> Depois que esse recurso estiver habilitado, se você esquecer ou perder sua senha, não poderá abrir o CoMapeo e perderá o acesso a quaisquer dados que não tenham sido sincronizados com outros participantes do mesmo projeto."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Cancelar"
@@ -938,6 +935,9 @@
   },
   "screens.ExportObservations.download": {
     "message": "Fazer download"
+  },
+  "screens.ExportObservations.downloadObservations": {
+    "message": "Baixar observações"
   },
   "screens.ExportObservations.errorMessage": {
     "message": "Escolha uma opção"
@@ -1405,9 +1405,6 @@
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Trilha"
-  },
-  "screens.ObservationList.downloadObservation": {
-    "message": "Baixar observações"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",

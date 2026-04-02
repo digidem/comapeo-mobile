@@ -105,7 +105,7 @@
     "message": "変更を破棄してよろしいですか？"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
-    "message": "プロジェクト参加者がデータを同期すると、インターネット上でアーカイブされます。 あなたのプロジェクト データは、以下の安全な暗号化されたサーバーにインターネット経由でアーカイブに同期されています。サーバーの所有者はデータを表示できます。"
+    "message": "プロジェクト参加者がデータを交換する際には、インターネット上でアーカイブされます。 あなたのプロジェクト データは、以下の安全な暗号化されたサーバーにインターネット経由でアーカイブに同期されています。サーバーの所有者はデータを表示できます。"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
     "message": "無効な URL"
@@ -186,7 +186,7 @@
     "message": "リモートアーカイブが追加されました"
   },
   "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
-    "message": "すべてのプロジェクトデバイスはこのアーカイブと同期でき、インターネット上でデータを共有できます。"
+    "message": "すべてのプロジェクトデバイスは、インターネット上でデータを共有する、このアーカイブと交換することができます。"
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "閉じる"
@@ -933,6 +933,9 @@
   "screens.ExportObservations.download": {
     "message": "ダウンロード"
   },
+  "screens.ExportObservations.downloadObservations": {
+    "message": "観察記録をダウンロード"
+  },
   "screens.ExportObservations.errorMessage": {
     "message": "オプションを選択"
   },
@@ -1399,9 +1402,6 @@
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "トラック"
-  },
-  "screens.ObservationList.downloadObservation": {
-    "message": "観察記録をダウンロード"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",

@@ -108,7 +108,7 @@
     "message": "Änderungen verwerfen?"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
-    "message": "Wenn Projektteilnehmer ihre Daten synchronisieren, werden sie auch im Internet archiviert. Ihre Projektdaten werden über das Internet mit dem gesicherten, verschlüsselten Server synchronisiert. Der Serverbesitzer kann die Daten einsehen."
+    "message": "Wenn Projektteilnehmer ihre Daten austauschen, werden sie auch im Internet archiviert. Ihre Projektdaten werden über das Internet mit dem gesicherten, verschlüsselten Server synchronisiert. Der Serverbesitzer kann die Daten einsehen."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
     "message": "Ungültige URL"
@@ -189,7 +189,7 @@
     "message": "Remote-Archiv hinzugefügt"
   },
   "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
-    "message": "Alle Projekt-Geräte können mit diesem Archiv synchronisieren und Daten über das Internet teilen."
+    "message": "Alle Projektgeräte können mit diesem Archiv austauschen und Daten über das Internet austauschen."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Schließen"
@@ -458,7 +458,7 @@
     "message": "Stellen Sie sicher, dass beide Geräte auf der gleichen Version von CoMapeo sind"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
-    "message": "Stellen Sie sicher, dass beide Geräte im gleichen Wifi-Netzwerk sind"
+    "message": "Stellen Sie sicher, dass beide Geräte im gleichen Wi-Fi-Netzwerk sind"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Gerät zum Laden auswählen"
@@ -598,7 +598,7 @@
     "message": "Der App-Passcode erlaubt es Ihnen, eine zusätzliche Sicherheitsstufe hinzuzufügen, indem Sie ein Passwort eingeben müssen, um die CoMapeo App zu öffnen. Sie können Ihren eigenen 5-stelligen Zugangscode definieren, indem Sie die Funktion unten einschalten."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Bitte beachten Sie, dass vergessene Passcodes nicht wiederhergestellt werden können!</bold> Sobald diese Funktion aktiviert ist, wenn Sie Ihr Passwort vergessen oder verlieren Sie werden nicht in der Lage sein, CoMapeo zu öffnen und verlieren Zugriff auf keine CoMapeo-Daten, die nicht mit anderen Projektteilnehmern synchronisiert wurden."
+    "message": "<bold>Bitte beachten Sie, dass vergessene Passcodes nicht wiederhergestellt werden können!</bold> Sobald diese Funktion aktiviert ist, wenn Sie Ihr Passwort vergessen oder verlieren Sie werden nicht in der Lage sein, CoMapeo zu öffnen und verlieren Zugriff auf keine CoMapeo-Daten, die nicht mit anderen Projektteilnehmern ausgetauscht wurden."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Abbrechen"
@@ -938,6 +938,9 @@
   },
   "screens.ExportObservations.download": {
     "message": "Download"
+  },
+  "screens.ExportObservations.downloadObservations": {
+    "message": "Beobachtungen herunterladen"
   },
   "screens.ExportObservations.errorMessage": {
     "message": "Wählen Sie eine Option"
@@ -1405,9 +1408,6 @@
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Spur"
-  },
-  "screens.ObservationList.downloadObservation": {
-    "message": "Beobachtungen herunterladen"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",

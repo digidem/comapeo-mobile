@@ -89,10 +89,21 @@ export async function init({
     projectMigrationsFolder: join(migrationsFolderPath, 'project'),
     fastify,
     defaultConfigPath,
-    defaultIsArchiveDevice: false,
+    defaultIsArchiveDevice: true,
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
     customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
   })
+  const { publicKey, secretKey } = new KeyManager(rootKey).getIdentityKeypair()
+  const mapServer = createMapServer({
+    defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
+    fallbackMapPath: DEFAULT_FALLBACK_MAP_FILE_PATH,
+    customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
+    keyPair: {
+      publicKey: new Uint8Array(publicKey),
+      secretKey: new Uint8Array(secretKey),
+    },
+  })
+
   const { publicKey, secretKey } = new KeyManager(rootKey).getIdentityKeypair()
   const mapServer = createMapServer({
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,

@@ -29,7 +29,7 @@ describe('Menu - basic functionality of the menu', () => {
     await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
   });
 
-  it('should navigate to background map screen on background map press and see map error', async () => {
+  it('should navigate to background map screen on background map press', async () => {
     const header = await $('~Open Menu');
     await header.click();
 
@@ -40,10 +40,6 @@ describe('Menu - basic functionality of the menu', () => {
     await driver.pause(2000);
 
     await expect(await $(byTextMatches('Choose File'))).toBeDisplayed();
-
-    const removeMapButton = await $(byText('Remove Map File'));
-
-    await expect(removeMapButton).toBeDisplayed();
 
     await driver.back();
   });

@@ -65,7 +65,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const {projectId} = useActiveProject();
-  const membersQuery = useManyMembers({projectId});
+  const membersQuery = useManyMembers({projectId, includeLeft: true});
   const {data: deviceInfo} = useOwnDeviceInfo();
 
   const coordinators = membersQuery.data.filter(member =>

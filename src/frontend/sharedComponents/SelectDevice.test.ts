@@ -1,12 +1,7 @@
 import {getSelectableDevices} from './SelectDevice';
 import type {MemberApi} from '@comapeo/core';
 import {type MapeoClientApi} from '@comapeo/ipc';
-import {
-  BLOCKED_ROLE_ID,
-  COORDINATOR_ROLE_ID,
-  LEFT_ROLE_ID,
-  MEMBER_ROLE_ID,
-} from '../sharedTypes';
+import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../sharedTypes';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
@@ -30,12 +25,14 @@ function mockMember(
   deviceId: string,
   roleId: MemberApi.RoleId,
   deviceType: 'mobile' | 'desktop' = 'mobile',
-): MemberApi.MemberInfo {
+): MemberApi.ActiveMemberInfo {
   return {
     deviceId,
     name: `Device ${deviceId}`,
-    // @ts-expect-error Unsound but enough for testing purposes
-    role: {roleId},
+    role: {
+      // @ts-expect-error Sufficient for testing purposes
+      roleId,
+    },
     deviceType,
     joinedAt: new Date().toISOString(),
   };
@@ -49,7 +46,7 @@ describe('getSelectableDevices', () => {
         mockPeer('peer-2', 'Peer 2'),
         mockPeer('peer-3', 'Peer 3'),
       ];
-      const projectMembers: MemberApi.MemberInfo[] = [];
+      const projectMembers: MemberApi.ActiveMemberInfo[] = [];
 
       const result = getSelectableDevices({
         peers,
@@ -133,48 +130,6 @@ describe('getSelectableDevices', () => {
       expect(result).toHaveLength(2);
       expect(result.map(p => p.deviceId)).toEqual(['peer-2', 'peer-3']);
     });
-
-    it('should allow inviting blocked members', () => {
-      const peers = [
-        mockPeer('peer-1', 'Peer 1'),
-        mockPeer('peer-2', 'Peer 2'),
-        mockPeer('peer-3', 'Peer 3'),
-      ];
-      const projectMembers = [
-        mockMember('peer-1', COORDINATOR_ROLE_ID),
-        mockMember('peer-2', BLOCKED_ROLE_ID),
-      ];
-
-      const result = getSelectableDevices({
-        peers,
-        projectMembers,
-        selectionMode: 'invites',
-      });
-
-      expect(result).toHaveLength(2);
-      expect(result.map(p => p.deviceId)).toEqual(['peer-2', 'peer-3']);
-    });
-
-    it('should allow inviting left members', () => {
-      const peers = [
-        mockPeer('peer-1', 'Peer 1'),
-        mockPeer('peer-2', 'Peer 2'),
-        mockPeer('peer-3', 'Peer 3'),
-      ];
-      const projectMembers = [
-        mockMember('peer-1', COORDINATOR_ROLE_ID),
-        mockMember('peer-2', LEFT_ROLE_ID),
-      ];
-
-      const result = getSelectableDevices({
-        peers,
-        projectMembers,
-        selectionMode: 'invites',
-      });
-
-      expect(result).toHaveLength(2);
-      expect(result.map(p => p.deviceId)).toEqual(['peer-2', 'peer-3']);
-    });
   });
 
   describe('shareMap mode', () => {
@@ -204,7 +159,7 @@ describe('getSelectableDevices', () => {
         mockPeer('peer-1', 'Peer 1'),
         mockPeer('peer-2', 'Peer 2'),
       ];
-      const projectMembers: MemberApi.MemberInfo[] = [];
+      const projectMembers: MemberApi.ActiveMemberInfo[] = [];
 
       const result = getSelectableDevices({
         peers,
@@ -271,80 +226,12 @@ describe('getSelectableDevices', () => {
       expect(result).toHaveLength(2);
       expect(result.map(p => p.deviceId)).toEqual(['peer-2', 'peer-4']);
     });
-
-    it('should filter out blocked members', () => {
-      const peers = [
-        mockPeer('peer-1', 'Peer 1'),
-        mockPeer('peer-2', 'Peer 2'),
-        mockPeer('peer-3', 'Peer 3'),
-      ];
-      const projectMembers = [
-        mockMember('peer-1', COORDINATOR_ROLE_ID),
-        mockMember('peer-2', BLOCKED_ROLE_ID),
-        mockMember('peer-3', MEMBER_ROLE_ID),
-      ];
-
-      const result = getSelectableDevices({
-        peers,
-        projectMembers,
-        selectionMode: 'shareMap',
-      });
-
-      expect(result).toHaveLength(2);
-      expect(result.map(p => p.deviceId)).toEqual(['peer-1', 'peer-3']);
-    });
-
-    it('should filter out left members', () => {
-      const peers = [
-        mockPeer('peer-1', 'Peer 1'),
-        mockPeer('peer-2', 'Peer 2'),
-        mockPeer('peer-3', 'Peer 3'),
-      ];
-      const projectMembers = [
-        mockMember('peer-1', COORDINATOR_ROLE_ID),
-        mockMember('peer-2', LEFT_ROLE_ID),
-        mockMember('peer-3', MEMBER_ROLE_ID),
-      ];
-
-      const result = getSelectableDevices({
-        peers,
-        projectMembers,
-        selectionMode: 'shareMap',
-      });
-
-      expect(result).toHaveLength(2);
-      expect(result.map(p => p.deviceId)).toEqual(['peer-1', 'peer-3']);
-    });
-
-    it('should filter out both blocked and left members', () => {
-      const peers = [
-        mockPeer('peer-1', 'Peer 1'),
-        mockPeer('peer-2', 'Peer 2'),
-        mockPeer('peer-3', 'Peer 3'),
-        mockPeer('peer-4', 'Peer 4'),
-      ];
-      const projectMembers = [
-        mockMember('peer-1', COORDINATOR_ROLE_ID),
-        mockMember('peer-2', BLOCKED_ROLE_ID),
-        mockMember('peer-3', LEFT_ROLE_ID),
-        mockMember('peer-4', MEMBER_ROLE_ID),
-      ];
-
-      const result = getSelectableDevices({
-        peers,
-        projectMembers,
-        selectionMode: 'shareMap',
-      });
-
-      expect(result).toHaveLength(2);
-      expect(result.map(p => p.deviceId)).toEqual(['peer-1', 'peer-4']);
-    });
   });
 
   describe('edge cases', () => {
     it('should handle empty peers and members arrays', () => {
       const peers: PublicPeerInfo[] = [];
-      const projectMembers: MemberApi.MemberInfo[] = [];
+      const projectMembers: MemberApi.ActiveMemberInfo[] = [];
 
       const invitesResult = getSelectableDevices({
         peers,

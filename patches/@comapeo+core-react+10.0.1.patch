@@ -1,0 +1,57 @@
+diff --git a/node_modules/@comapeo/core-react/dist/commonjs/lib/react-query.js b/node_modules/@comapeo/core-react/dist/commonjs/lib/react-query.js
+index 50f07be..0b48980 100644
+--- a/node_modules/@comapeo/core-react/dist/commonjs/lib/react-query.js
++++ b/node_modules/@comapeo/core-react/dist/commonjs/lib/react-query.js
+@@ -23,7 +23,7 @@ exports.getDocumentsQueryKey = getDocumentsQueryKey;
+ exports.getManyDocumentsQueryKey = getManyDocumentsQueryKey;
+ exports.getDocumentByDocIdQueryKey = getDocumentByDocIdQueryKey;
+ exports.getDocumentByVersionIdQueryKey = getDocumentByVersionIdQueryKey;
+-const map_server_1 = require("@comapeo/map-server");
++const map_server_1 = require("@comapeo/map-server/constants.js");
+ // #region Shared
+ const ROOT_QUERY_KEY = '@comapeo/core-react';
+ // Since the API is running locally, queries should run regardless of network
+@@ -122,13 +122,9 @@ function getProjectRoleQueryKey({ projectId }) {
+     return [ROOT_QUERY_KEY, 'projects', projectId, 'role'];
+ }
+ function getMembersQueryKey({ projectId, includeLeft, }) {
+-    return [
+-        ROOT_QUERY_KEY,
+-        'projects',
+-        projectId,
+-        'members',
+-        { includeLeft },
+-    ];
++    return includeLeft === undefined
++		? [ROOT_QUERY_KEY, 'projects', projectId, 'members']
++		: [ROOT_QUERY_KEY, 'projects', projectId, 'members', { includeLeft }]
+ }
+ function getMemberByIdQueryKey({ projectId, deviceId, }) {
+     return [ROOT_QUERY_KEY, 'projects', projectId, 'members', deviceId];
+diff --git a/node_modules/@comapeo/core-react/dist/esm/lib/react-query.js b/node_modules/@comapeo/core-react/dist/esm/lib/react-query.js
+index 0c90995..0bc9f14 100644
+--- a/node_modules/@comapeo/core-react/dist/esm/lib/react-query.js
++++ b/node_modules/@comapeo/core-react/dist/esm/lib/react-query.js
+@@ -1,4 +1,4 @@
+-import { DEFAULT_MAP_ID } from '@comapeo/map-server';
++import { DEFAULT_MAP_ID } from '@comapeo/map-server/constants.js';
+ // #region Shared
+ const ROOT_QUERY_KEY = '@comapeo/core-react';
+ // Since the API is running locally, queries should run regardless of network
+@@ -97,13 +97,9 @@ export function getProjectRoleQueryKey({ projectId }) {
+     return [ROOT_QUERY_KEY, 'projects', projectId, 'role'];
+ }
+ export function getMembersQueryKey({ projectId, includeLeft, }) {
+-    return [
+-        ROOT_QUERY_KEY,
+-        'projects',
+-        projectId,
+-        'members',
+-        { includeLeft },
+-    ];
++	return includeLeft === undefined
++		? [ROOT_QUERY_KEY, 'projects', projectId, 'members']
++		: [ROOT_QUERY_KEY, 'projects', projectId, 'members', { includeLeft }]
+ }
+ export function getMemberByIdQueryKey({ projectId, deviceId, }) {
+     return [ROOT_QUERY_KEY, 'projects', projectId, 'members', deviceId];

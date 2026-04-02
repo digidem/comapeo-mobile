@@ -3,13 +3,15 @@ import React from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
+import {File} from 'expo-file-system';
 
-import {useSelectFile} from '../../hooks/files';
+import {FILE_SELECT_MUTATION_KEY} from '../../hooks/files';
 import {
-  useGetCustomMapInfo,
   useImportCustomMapFile,
+  useGetCustomMapInfo,
   useRemoveCustomMapFile,
-} from '../../hooks/server/maps';
+  isHTTPError,
+} from '@comapeo/core-react';
 import StackSvg from '../../images/Stack.svg';
 import {
   RED,
@@ -30,8 +32,8 @@ import {
   SecondaryDestructiveButton,
 } from '../../sharedComponents/Buttons';
 import {bytesToMegabytes} from '../../lib/bytesToMegabytes';
-import {Button} from '../../sharedComponents/Button';
 import {DownloadIcon} from '../../sharedComponents/icons';
+import {useMutation} from '@tanstack/react-query';
 
 const m = defineMessages({
   screenTitle: {
@@ -144,68 +146,60 @@ export function BackgroundMapsScreen() {
   const {formatMessage: t} = useIntl();
   const {navigate} = useNavigationFromRoot();
 
-  const selectFileMutation = useSelectFile();
+  const selectFileMutation = useMutation({
+    mutationKey: FILE_SELECT_MUTATION_KEY,
+    mutationFn: async () => {
+      const result = await File.pickFileAsync(undefined, 'application/*');
+      // The return type of `File.pickFileAsync()` is incorrect. See https://github.com/expo/expo/issues/43201
+      const file = (Array.isArray(result) ? result[0] : result) as File;
+      if (!file) {
+        throw new Error('No file selected');
+      }
+      await importCustomMapMutation.mutateAsync({file});
+    },
+  });
   const importCustomMapMutation = useImportCustomMapFile();
   const removeCustomMapMutation = useRemoveCustomMapFile();
-  const customMapInfoQuery = useGetCustomMapInfo();
+  const {data: customMapInfo, isRefetching, error} = useGetCustomMapInfo();
 
   const handleChooseFile = () => {
-    selectFileMutation.mutate(
-      {
-        copyToCacheDirectory: false,
-        allowedExtensions: ['smp'],
+    selectFileMutation.mutate(undefined, {
+      onSuccess: () => {
+        navigate('MapAddedBottomSheet');
       },
-      {
-        onSuccess: asset => {
-          if (!asset) return;
-
-          importCustomMapMutation.mutate(
-            {
-              uri: asset.uri,
-            },
-            {
-              onSuccess: () => {
-                navigate('MapAddedBottomSheet');
-              },
-              onError: err => {
-                Sentry.captureException(err);
-                navigate('BackgroundMapErrorBottomSheet', {
-                  title: t(m.importErrorTitle),
-                  description: t(m.importErrorDesciption),
-                });
-              },
-            },
-          );
-        },
-        onError: err => {
-          Sentry.captureException(err);
-          navigate('BackgroundMapErrorBottomSheet', {
-            title: t(m.importErrorTitle),
-            description: t(m.importErrorDesciption),
-          });
-        },
+      onError: err => {
+        if (
+          err instanceof Error &&
+          // Error message from expo-file-system's File.pickFileAsync() when user cancels
+          err.message.includes('cancelled by the user')
+        ) {
+          return;
+        }
+        Sentry.captureException(err);
+        navigate('BackgroundMapErrorBottomSheet', {
+          title: t(m.importErrorTitle),
+          description: t(m.importErrorDesciption),
+        });
       },
-    );
+    });
   };
 
   const handleRemoveMap = () => {
     navigate('DeleteCustomMapBottomSheet');
   };
 
+  const isUploading = selectFileMutation.isPending;
+
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-        {customMapInfoQuery.isPending ? (
-          <Loading size={10} />
-        ) : customMapInfoQuery.data ? (
-          <MapInfoScreen
-            customMapInfo={customMapInfoQuery.data}
-            onRemoveMap={handleRemoveMap}
-          />
-        ) : (
+        {isRefetching ? (
+          <Loading size={20} />
+        ) : error || !customMapInfo ? (
           <NoMapScreen
-            error={customMapInfoQuery.error}
+            error={error}
             onChooseFile={handleChooseFile}
+            isUploading={isUploading}
             onRemoveMapFile={() => {
               removeCustomMapMutation.mutate(undefined, {
                 onError: err => {
@@ -214,6 +208,11 @@ export function BackgroundMapsScreen() {
                 },
               });
             }}
+          />
+        ) : (
+          <MapInfoScreen
+            customMapInfo={customMapInfo}
+            onRemoveMap={handleRemoveMap}
           />
         )}
       </ScrollView>
@@ -224,10 +223,12 @@ export function BackgroundMapsScreen() {
 function NoMapScreen({
   error,
   onChooseFile,
+  isUploading,
   onRemoveMapFile,
 }: {
   error: Error | null;
   onChooseFile: () => void;
+  isUploading: boolean;
   onRemoveMapFile: () => void;
 }) {
   const {formatMessage: t} = useIntl();
@@ -238,26 +239,24 @@ function NoMapScreen({
         <BodyText>{t(m.description1)}</BodyText>
         <BodyText>{t(m.description2)}</BodyText>
       </View>
-      <View style={{gap: 20, marginTop: 40}}>
-        <Button fullWidth variant="outlined" onPress={onChooseFile}>
-          <View style={styles.buttonContentContainer}>
-            <DownloadIcon size={24} />
-            <View>
-              <HeaderText variant="header5" style={styles.buttonTextBase}>
-                {t(m.chooseFile)}
-                <HeaderText variant="header5" style={styles.asteriskText}>
-                  {' '}
-                  *
-                </HeaderText>
-              </HeaderText>
-            </View>
-          </View>
-        </Button>
+      <View style={{gap: 20, marginTop: 40, alignItems: 'center'}}>
+        {isUploading ? (
+          <Loading size={12} />
+        ) : (
+          <SecondaryButton
+            fullSize
+            text={t(m.chooseFile)}
+            onPress={onChooseFile}
+            renderIcon={({color, size}) => (
+              <DownloadIcon size={size} color={color} />
+            )}
+          />
+        )}
         <BodyText variant="smallMeta" style={styles.fileTypeText}>
           {t(m.acceptedFileTypes)}
         </BodyText>
       </View>
-      {error && (
+      {error && isHTTPError(error) && error.code !== 'MAP_NOT_FOUND' && (
         <View style={{marginTop: 40}}>
           <BodyText variant="large" style={styles.infoLoadErrorText}>
             {t(m.customMapInfoLoadError)}
@@ -325,7 +324,7 @@ function MapInfoScreen({
           })}
         </BodyText>
 
-        <SecondaryButton
+        {/* <SecondaryButton
           fullSize
           text={t(m.sendMap)}
           onPress={() => {
@@ -334,7 +333,7 @@ function MapInfoScreen({
           renderIcon={({color, size}) => (
             <MaterialIcon name="send" size={size} color={color} />
           )}
-        />
+        /> */}
       </View>
       <DestructiveButton
         fullSize
@@ -406,17 +405,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: NEW_DARK_GREY,
     flex: 1,
-  },
-  buttonContentContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  buttonTextBase: {
-    letterSpacing: 0.5,
-  },
-  asteriskText: {
-    color: RED,
   },
   fileTypeText: {
     textAlign: 'center',

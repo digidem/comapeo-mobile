@@ -1,7 +1,7 @@
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
-import {ClientApiProvider} from '@comapeo/core-react';
+import {ComapeoCoreProvider} from '@comapeo/core-react';
 import {ReactNode} from 'react';
 
 export const MapeoApiWrapper = ({
@@ -24,9 +24,19 @@ export const MapeoApiWrapper = ({
     },
   });
 
+  // Mock map server API for tests
+  const getMapServerBaseUrl = async () => new URL('http://localhost:8080');
+  const mockFetch = async () => ({}) as Response;
+
   return (
     <QueryClientProvider client={queryClient}>
-      <ClientApiProvider clientApi={mapeoApi}>{children}</ClientApiProvider>
+      <ComapeoCoreProvider
+        clientApi={mapeoApi}
+        getMapServerBaseUrl={getMapServerBaseUrl}
+        fetch={mockFetch}
+        queryClient={queryClient}>
+        {children}
+      </ComapeoCoreProvider>
     </QueryClientProvider>
   );
 };

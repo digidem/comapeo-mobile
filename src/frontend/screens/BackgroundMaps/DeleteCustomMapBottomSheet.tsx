@@ -13,7 +13,7 @@ import {
   SecondaryButton,
 } from '../../sharedComponents/Buttons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useRemoveCustomMapFile} from '../../hooks/server/maps';
+import {useRemoveCustomMapFile} from '@comapeo/core-react';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
@@ -62,7 +62,7 @@ export const DeleteCustomMapBottomSheet = () => {
           {t(m.cannotBeUndone)}
         </BodyText>
 
-        {removeCustomMapMutation.isPending ? (
+        {removeCustomMapMutation.status === 'pending' ? (
           <View style={styles.loading}>
             <UIActivityIndicator size={40} />
           </View>

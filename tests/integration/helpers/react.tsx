@@ -45,6 +45,10 @@ const DISCONNECTED_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   wifiLinkSpeed: null,
 };
 
+jest.mock('expo/fetch', () => ({
+  fetch: globalThis.fetch,
+}));
+
 export function createMinimalWrapper() {
   const localeStore = createLocaleStore({persist: false});
 
@@ -170,6 +174,12 @@ export function createAppProvidersWrapper({
     appUsageMetricsOptOut: () => {},
   });
 
+  const mockMapServerApi = {
+    getBaseUrl: jest.fn(() =>
+      Promise.resolve(new URL('http://127.0.0.1:9999')),
+    ),
+  };
+
   if (activeProjectId) {
     persistedActiveProjectIdStore.instance.setState({
       projectId: activeProjectId,
@@ -183,6 +193,7 @@ export function createAppProvidersWrapper({
         <AppProviders
           queryClient={queryClient}
           mapeoApi={mapeoApi}
+          mapServerApi={mockMapServerApi}
           localDiscoveryController={localDiscoveryController}
           activeProjectIdStore={persistedActiveProjectIdStore}
           persistedDrafObservationStore={persistedDraftObservationStore}

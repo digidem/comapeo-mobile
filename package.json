@@ -55,7 +55,6 @@
     "@react-native-vector-icons/material-icons": "12.4.0",
     "@react-native-vector-icons/octicons": "20.4.0",
     "@react-navigation/bottom-tabs": "7.14.0",
-    "@react-navigation/elements": "2.9.5",
     "@react-navigation/native": "7.1.28",
     "@react-navigation/stack": "7.7.2",
     "@rnmapbox/maps": "10.1.42",
@@ -200,8 +199,5 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.50.0",
     "webdriverio": "9.21.0"
-  },
-  "overrides": {
-    "@hyperswarm/secret-stream": "6.7.1"
   }
 }

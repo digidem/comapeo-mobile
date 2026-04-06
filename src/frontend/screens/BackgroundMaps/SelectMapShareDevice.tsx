@@ -3,7 +3,8 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import * as Sentry from '@sentry/react-native';
 
-import {useSendMapShare, useSyncState} from '@comapeo/core-react';
+import {useSendMapShare, useManyMembers} from '@comapeo/core-react';
+import type {MemberApi} from '@comapeo/core';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {toError} from '../../utils/errors';
 import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
@@ -23,18 +24,14 @@ type PublicPeerInfo = Awaited<
 
 export function getSelectableDevicesForMapShare({
   peers,
-  syncState,
+  projectMembers,
 }: {
   peers: PublicPeerInfo[];
-  syncState: ReturnType<typeof useSyncState>;
+  projectMembers: MemberApi.ActiveMemberInfo[];
 }): PublicPeerInfo[] {
-  if (!syncState) return [];
-
-  const connectedDeviceIds = Object.keys(syncState.remoteDeviceSyncState);
-
-  return peers.filter(device => {
-    return connectedDeviceIds.includes(device.deviceId);
-  });
+  return peers.filter(device =>
+    projectMembers.some(member => member.deviceId === device.deviceId),
+  );
 }
 
 const m = defineMessages({
@@ -54,10 +51,6 @@ const m = defineMessages({
     id: 'screen.BackgroundMaps.SelectDevice.sameVersion',
     defaultMessage: 'Make sure both devices are on the same version of CoMapeo',
   },
-  sameProject: {
-    id: 'screen.BackgroundMaps.SelectDevice.sameProject',
-    defaultMessage: 'Make sure both devices have the same project open',
-  },
 });
 
 export const SelectMapShareDevice = ({
@@ -68,12 +61,15 @@ export const SelectMapShareDevice = ({
 
   const availablePeers = useInitiallyConnectedPeers();
   const {projectId} = useActiveProject();
-  const syncState = useSyncState({projectId});
+  const {data: projectMembers} = useManyMembers({
+    projectId,
+    includeLeft: false,
+  });
   const {mutateAsync: sendMapShare} = useSendMapShare();
 
   const selectableDevices = getSelectableDevicesForMapShare({
     peers: availablePeers,
-    syncState,
+    projectMembers,
   });
 
   return (
@@ -90,8 +86,7 @@ export const SelectMapShareDevice = ({
       <BodyText style={{marginLeft: 10}}>{`\u2022 ${t(m.sameWifi)}`}</BodyText>
       <BodyText
         style={{marginLeft: 10}}>{`\u2022 ${t(m.sameVersion)}`}</BodyText>
-      <BodyText
-        style={{marginLeft: 10}}>{`\u2022 ${t(m.sameProject)}`}</BodyText>
+
       <View style={{marginTop: 20}} />
 
       <View style={styles.deviceListContainer}>
@@ -114,7 +109,6 @@ export const SelectMapShareDevice = ({
           const handlePress = async () => {
             try {
               const mapShare = await sendMapShare({
-                projectId,
                 receiverDeviceId: deviceId,
                 mapId: 'custom',
               });

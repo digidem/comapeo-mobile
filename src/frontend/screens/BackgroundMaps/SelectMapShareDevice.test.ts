@@ -1,12 +1,11 @@
 import {type MapeoClientApi} from '@comapeo/ipc';
-import {type useSyncState} from '@comapeo/core-react';
+import type {MemberApi} from '@comapeo/core';
 import {getSelectableDevicesForMapShare} from './SelectMapShareDevice';
+import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
 >[number];
-
-type SyncState = ReturnType<typeof useSyncState>;
 
 function mockPeer(
   deviceId: string,
@@ -22,24 +21,25 @@ function mockPeer(
   } as PublicPeerInfo;
 }
 
-function mockSyncState(connectedDeviceIds: string[]): SyncState {
-  const remoteDeviceSyncState: Record<
-    string,
-    {syncing: boolean; progress: number}
-  > = {};
-  for (const deviceId of connectedDeviceIds) {
-    remoteDeviceSyncState[deviceId] = {
-      syncing: false,
-      progress: 0,
-    };
-  }
+function mockMember(
+  deviceId: string,
+  roleId: MemberApi.RoleId,
+  deviceType: 'mobile' | 'desktop' = 'mobile',
+): MemberApi.ActiveMemberInfo {
   return {
-    remoteDeviceSyncState,
-  } as unknown as SyncState;
+    deviceId,
+    name: `Device ${deviceId}`,
+    role: {
+      // @ts-expect-error Sufficient for testing purposes
+      roleId,
+    },
+    deviceType,
+    joinedAt: new Date().toISOString(),
+  };
 }
 
 describe('getSelectableDevicesForMapShare', () => {
-  it('should return only peers that are on the same project', () => {
+  it('should return only peers that are project members', () => {
     const peers = [
       mockPeer('peer-1', 'Peer 1'),
       mockPeer('peer-2', 'Peer 2'),
@@ -48,19 +48,22 @@ describe('getSelectableDevicesForMapShare', () => {
 
     const result = getSelectableDevicesForMapShare({
       peers,
-      syncState: mockSyncState(['peer-1', 'peer-2']),
+      projectMembers: [
+        mockMember('peer-1', COORDINATOR_ROLE_ID),
+        mockMember('peer-2', MEMBER_ROLE_ID),
+      ],
     });
 
     expect(result).toHaveLength(2);
     expect(result.map(p => p.deviceId)).toEqual(['peer-1', 'peer-2']);
   });
 
-  it('should return empty array when there are no devices on same project', () => {
+  it('should return empty array when there are no project members', () => {
     const peers = [mockPeer('peer-1', 'Peer 1'), mockPeer('peer-2', 'Peer 2')];
 
     const result = getSelectableDevicesForMapShare({
       peers,
-      syncState: mockSyncState([]),
+      projectMembers: [],
     });
 
     expect(result).toHaveLength(0);
@@ -71,24 +74,13 @@ describe('getSelectableDevicesForMapShare', () => {
 
     const result = getSelectableDevicesForMapShare({
       peers,
-      syncState: mockSyncState(['member-1']),
+      projectMembers: [mockMember('member-1', COORDINATOR_ROLE_ID)],
     });
 
     expect(result).toHaveLength(0);
   });
 
-  it('should return empty array when syncState is null (no devices on same project)', () => {
-    const peers = [mockPeer('peer-1', 'Peer 1'), mockPeer('peer-2', 'Peer 2')];
-
-    const result = getSelectableDevicesForMapShare({
-      peers,
-      syncState: null,
-    });
-
-    expect(result).toHaveLength(0);
-  });
-
-  it('should filter peers to only those on the same project', () => {
+  it('should filter peers to only those that are project members', () => {
     const peers = [
       mockPeer('peer-1', 'Peer 1'),
       mockPeer('peer-2', 'Peer 2'),
@@ -98,14 +90,17 @@ describe('getSelectableDevicesForMapShare', () => {
 
     const result = getSelectableDevicesForMapShare({
       peers,
-      syncState: mockSyncState(['peer-2', 'peer-4']),
+      projectMembers: [
+        mockMember('peer-2', COORDINATOR_ROLE_ID),
+        mockMember('peer-4', MEMBER_ROLE_ID),
+      ],
     });
 
     expect(result).toHaveLength(2);
     expect(result.map(p => p.deviceId)).toEqual(['peer-2', 'peer-4']);
   });
 
-  it('should include all peers that are on the same project regardless of connection status', () => {
+  it('should include project member peers regardless of connection status', () => {
     const peers = [
       mockPeer('peer-1', 'Peer 1', 'mobile', 'connected'),
       mockPeer('peer-2', 'Peer 2', 'desktop', 'disconnected'),
@@ -114,7 +109,11 @@ describe('getSelectableDevicesForMapShare', () => {
 
     const result = getSelectableDevicesForMapShare({
       peers,
-      syncState: mockSyncState(['peer-1', 'peer-2', 'peer-3']),
+      projectMembers: [
+        mockMember('peer-1', COORDINATOR_ROLE_ID),
+        mockMember('peer-2', COORDINATOR_ROLE_ID),
+        mockMember('peer-3', MEMBER_ROLE_ID),
+      ],
     });
 
     expect(result).toHaveLength(3);

@@ -274,20 +274,11 @@ function NoMapScreen({
   );
 }
 
-// Note: The type definition in @comapeo/core-react v9.0.2 doesn't match the actual API response
-// API returns: {name, size, created} but types say: {mapName, estimatedSizeBytes, mapCreatedAt}
-// Using the actual API response structure here
-type CustomMapInfo = {
-  name: string;
-  size: number;
-  created: number;
-};
-
 function MapInfoScreen({
   customMapInfo,
   onRemoveMap,
 }: {
-  customMapInfo: CustomMapInfo;
+  customMapInfo: NonNullable<ReturnType<typeof useGetCustomMapInfo>['data']>;
   onRemoveMap: () => void;
 }) {
   const {formatMessage: t} = useIntl();

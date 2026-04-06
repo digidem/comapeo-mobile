@@ -27,7 +27,10 @@ import {
   useDownloadReceivedMapShare,
   useGetCustomMapInfo,
   useSingleReceivedMapShare,
+  getErrorCode,
+  MapShareErrorCode,
 } from '@comapeo/core-react';
+import {Loading} from '../../sharedComponents/Loading';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
 
@@ -126,7 +129,8 @@ export function MapReceivedBottomSheet({
   ]);
 
   const {data: customMapInfo, error: customMapError} = useGetCustomMapInfo();
-  const {mutate: declineMapShare} = useDeclineReceivedMapShare();
+  const {mutate: declineMapShare, status: declineStatus} =
+    useDeclineReceivedMapShare();
   const {mutate: downloadMapShare} = useDownloadReceivedMapShare();
 
   const handleAccept = () => {
@@ -166,6 +170,10 @@ export function MapReceivedBottomSheet({
             navigation.goBack();
           },
           onError: (err: unknown) => {
+            if (getErrorCode(err) === MapShareErrorCode.MAP_SHARE_CANCELED) {
+              navigation.goBack();
+              return;
+            }
             Sentry.captureException(err);
             navigation.goBack();
           },
@@ -226,11 +234,15 @@ export function MapReceivedBottomSheet({
           {warningInfo.warning !== 'space' && (
             <PrimaryButton fullSize text={t(m.accept)} onPress={handleAccept} />
           )}
-          <SecondaryButton
-            fullSize
-            text={t(m.decline)}
-            onPress={handleDecline}
-          />
+          {declineStatus === 'pending' ? (
+            <Loading size={12} />
+          ) : (
+            <SecondaryButton
+              fullSize
+              text={t(m.decline)}
+              onPress={handleDecline}
+            />
+          )}
         </View>
       </View>
     </BottomSheetWrapper>

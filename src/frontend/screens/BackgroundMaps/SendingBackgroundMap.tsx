@@ -3,10 +3,13 @@ import {AppState, StyleSheet, View, Pressable} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
+import {useKeepAwake} from 'expo-keep-awake';
 
 import {
   useCancelSentMapShare,
   useSingleSentMapShare,
+  getErrorCode,
+  MapShareErrorCode,
 } from '@comapeo/core-react';
 import SendingIcon from '../../images/SendingIcon.svg';
 import StackSvg from '../../images/Stack.svg';
@@ -78,6 +81,7 @@ export function SendingBackgroundMap({
   const mapShare = useSingleSentMapShare({shareId});
   const {mutate: cancelMapShare} = useCancelSentMapShare();
   const currentTime = useCurrentTime(1000);
+  useKeepAwake();
 
   usePreventAndroidBackButton();
 
@@ -93,8 +97,18 @@ export function SendingBackgroundMap({
           navigation.goBack();
         },
         onError: (err: Error) => {
+          const code = getErrorCode(err);
+          if (
+            code === MapShareErrorCode.INVALID_STATUS_TRANSITION ||
+            code === MapShareErrorCode.MAP_SHARE_NOT_FOUND
+          ) {
+            navigation.goBack();
+            return;
+          }
           Sentry.captureException(err);
-          navigation.replace('ErrorBottomSheet', {error: err});
+          navigation.replace('ErrorBottomSheet', {
+            error: toError(err, 'Failed to cancel map share'),
+          });
         },
       },
     );
@@ -120,10 +134,9 @@ export function SendingBackgroundMap({
       return;
     }
     if (mapShare.status === 'error') {
-      Sentry.captureException(mapShare.error);
-      navigation.replace('ErrorBottomSheet', {
-        error: toError(mapShare.error, 'Map share failed'),
-      });
+      const error = toError(mapShare.error, 'Map share failed');
+      Sentry.captureException(error);
+      navigation.replace('ErrorBottomSheet', {error});
     }
   }, [mapShare, navigation]);
 

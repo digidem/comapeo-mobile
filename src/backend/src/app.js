@@ -104,17 +104,6 @@ export async function init({
     },
   })
 
-  const { publicKey, secretKey } = new KeyManager(rootKey).getIdentityKeypair()
-  const mapServer = createMapServer({
-    defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
-    fallbackMapPath: DEFAULT_FALLBACK_MAP_FILE_PATH,
-    customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
-    keyPair: {
-      publicKey: new Uint8Array(publicKey),
-      secretKey: new Uint8Array(secretKey),
-    },
-  })
-
   // Don't await, methods that use the server will await this internally
   // Server is listening on loopback only, so will not be accessible from other devices on the network
   fastify.listen({ host: '127.0.0.1', port: 0 }).catch((error) => {

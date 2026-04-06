@@ -14,6 +14,8 @@ import {VERY_LIGHT_GREY, RED, NEW_DARK_GREY} from '../../lib/styles';
 import {
   useDeclineReceivedMapShare,
   useDownloadReceivedMapShare,
+  getErrorCode,
+  MapShareErrorCode,
 } from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
@@ -55,6 +57,10 @@ export function ReplaceBackgroundMap({
           navigation.replace('ReceivingBackgroundMap', {shareId});
         },
         onError: (err: unknown) => {
+          if (getErrorCode(err) === MapShareErrorCode.MAP_SHARE_CANCELED) {
+            navigation.navigate('MapShareCanceledBottomSheet');
+            return;
+          }
           const error = toError(err, 'Failed to start map download');
           Sentry.captureException(error);
           navigation.navigate('ErrorBottomSheet', {error});
@@ -71,6 +77,10 @@ export function ReplaceBackgroundMap({
           navigation.popTo('BackgroundMaps');
         },
         onError: (err: unknown) => {
+          if (getErrorCode(err) === MapShareErrorCode.MAP_SHARE_CANCELED) {
+            navigation.goBack();
+            return;
+          }
           const error = toError(err, 'Failed to decline map share');
           Sentry.captureException(error);
           navigation.navigate('ErrorBottomSheet', {error});

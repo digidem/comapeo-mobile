@@ -28,7 +28,7 @@ export function MapShareCanceledBottomSheet({
   const {formatMessage: t} = useIntl();
 
   const handleClose = () => {
-    navigation.popTo('BackgroundMaps');
+    navigation.goBack();
   };
 
   return (

@@ -3,10 +3,13 @@ import {StyleSheet, View, Pressable} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import * as Sentry from '@sentry/react-native';
+import {useKeepAwake} from 'expo-keep-awake';
 
 import {
   useAbortReceivedMapShareDownload,
   useSingleReceivedMapShare,
+  getErrorCode,
+  MapShareErrorCode,
 } from '@comapeo/core-react';
 import StackSvg from '../../images/Stack.svg';
 import SuccessIcon from '../../images/Success.svg';
@@ -48,6 +51,7 @@ export function ReceivingBackgroundMap({
   const mapShare = useSingleReceivedMapShare({shareId});
 
   usePreventAndroidBackButton();
+  useKeepAwake();
 
   React.useEffect(() => {
     if (mapShare.status === 'canceled') {
@@ -69,6 +73,10 @@ export function ReceivingBackgroundMap({
           navigation.popTo('BackgroundMaps');
         },
         onError: (err: unknown) => {
+          if (getErrorCode(err) === MapShareErrorCode.MAP_SHARE_CANCELED) {
+            navigation.replace('MapShareCanceledBottomSheet');
+            return;
+          }
           const error = toError(err, 'Failed to cancel map download');
           Sentry.captureException(error);
           navigation.replace('ErrorBottomSheet', {error});

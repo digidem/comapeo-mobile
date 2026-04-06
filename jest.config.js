@@ -64,6 +64,7 @@ const config = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   // https://react-native-documents.github.io/docs/sponsor-only/jest-mocks
   setupFiles: [
+    './jest.sodium-stub.js',
     './node_modules/@react-native-documents/picker/jest/build/jest/setup.js',
   ],
   setupFilesAfterEnv: ['@rnmapbox/maps/setup-jest', './jest.setup.js'],

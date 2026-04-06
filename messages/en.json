@@ -430,9 +430,6 @@
   "screen.BackgroundMaps.SelectDevice.notSeeingDevice": {
     "message": "Not seeing a Device?"
   },
-  "screen.BackgroundMaps.SelectDevice.sameProject": {
-    "message": "Make sure both devices have the same project open"
-  },
   "screen.BackgroundMaps.SelectDevice.sameVersion": {
     "message": "Make sure both devices are on the same version of CoMapeo"
   },

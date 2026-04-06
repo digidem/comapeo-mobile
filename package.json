@@ -128,14 +128,11 @@
     "validate-color": "2.2.4",
     "zustand": "5.0.11"
   },
-  "overrides": {
-    "zod-validation-error": "4.0.2"
-  },
   "devDependencies": {
     "@babel/core": "7.28.5",
     "@babel/preset-env": "7.28.5",
     "@babel/runtime": "7.28.4",
-    "@comapeo/cloud": "0.3.0",
+    "@comapeo/cloud": "0.4.0",
     "@comapeo/core": "7.0.1",
     "@comapeo/schema": "2.2.0",
     "@digidem/types": "2.3.0",
@@ -203,5 +200,8 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.50.0",
     "webdriverio": "9.21.0"
+  },
+  "overrides": {
+    "@hyperswarm/secret-stream": "6.7.1"
   }
 }

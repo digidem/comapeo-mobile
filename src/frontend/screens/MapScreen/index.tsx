@@ -12,7 +12,7 @@ import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
-// import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
+import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 // import {TracksMapLayer} from './MapLayers/TracksMapLayer';
@@ -26,7 +26,7 @@ import {AuthState, useAuthContext} from '../../contexts/AuthContext';
 import {useLocationState} from '../../contexts/LocationContext';
 import {getCoords} from '../../lib/coordinateFormat';
 import {useTracking} from '../../hooks/useTracking';
-// import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
+import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
 import {useResetMapLayout} from '../../hooks/useResetMapLayout';
 import {
@@ -64,7 +64,8 @@ export const MapScreen = ({
 }: NativeHomeTabsNavigationProps<'Map'>) => {
   const trackBottomSheetOpen = route.params?.trackingOpen;
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
-  const [, setIsFinishedLoadingStyle] = React.useState(false);
+  const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
+    React.useState(false);
   const {dimensions, mapKey, onLayout} = useResetMapLayout();
   const {createDraft} = useDraftObservationActions();
   const {navigate} = useNavigationFromHomeTabs();
@@ -183,15 +184,15 @@ export const MapScreen = ({
 
           {coords && <UserLocation minDisplacement={MIN_DISPLACEMENT} />}
 
-          {/* {isFinishedLoadingStyle && authState !== 'obscured' && (
+          {isFinishedLoadingStyle && authState !== 'obscured' && (
             <>
-              <RemoteDetectionAlertsMapLayer />
+              {/* <RemoteDetectionAlertsMapLayer /> */}
               <CurrentTrackMapLayer location={location} />
               {isTracking && <UserTooltipMarker />}
-              <TracksMapLayer />
-              <ObservationMapLayer />
+              {/* <TracksMapLayer />
+              <ObservationMapLayer /> */}
             </>
-          )} */}
+          )}
         </MapView>
       )}
       <View style={styles.bottomContainer}>

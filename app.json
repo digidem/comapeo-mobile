@@ -22,13 +22,6 @@
       "react-native-vision-camera",
       ["@maplibre/maplibre-react-native"],
       [
-        "@rnmapbox/maps",
-        {
-          "RNMapboxMapsImpl": "mapbox",
-          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiYnN0ZWZhbmN6eWsiLCJhIjoiY2x1dXV1NHNlMGU5dzJqcnh1Zno4YW4xcyJ9.P_LsVHh_HWTh25x5rRdrQg"
-        }
-      ],
-      [
         "expo-splash-screen",
         {
           "image": "./assets/splash.png",

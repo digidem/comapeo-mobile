@@ -1,23 +1,23 @@
 import * as React from 'react';
-import Mapbox from '@rnmapbox/maps';
-
+// import Mapbox from '@rnmapbox/maps';
+import {Camera, MapView, UserLocation} from '@maplibre/maplibre-react-native';
 import {
   LocationFollowingIcon,
   LocationNoFollowIcon,
 } from '../../sharedComponents/icons';
 
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
+// import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
-import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
+// import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
-import {TracksMapLayer} from './MapLayers/TracksMapLayer';
+// import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
-import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
+// import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {GPSPill} from '../../sharedComponents/GPSPill';
@@ -26,7 +26,7 @@ import {AuthState, useAuthContext} from '../../contexts/AuthContext';
 import {useLocationState} from '../../contexts/LocationContext';
 import {getCoords} from '../../lib/coordinateFormat';
 import {useTracking} from '../../hooks/useTracking';
-import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
+// import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
 import {useResetMapLayout} from '../../hooks/useResetMapLayout';
 import {
@@ -56,7 +56,6 @@ assert(
   process.env.MAPBOX_ACCESS_TOKEN,
   'MAPBOX_ACCESS_TOKEN environment variable should be set',
 );
-Mapbox.setAccessToken(process.env.MAPBOX_ACCESS_TOKEN);
 const MIN_DISPLACEMENT = 3;
 
 export const MapScreen = ({
@@ -65,8 +64,7 @@ export const MapScreen = ({
 }: NativeHomeTabsNavigationProps<'Map'>) => {
   const trackBottomSheetOpen = route.params?.trackingOpen;
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
-  const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
-    React.useState(false);
+  const [, setIsFinishedLoadingStyle] = React.useState(false);
   const {dimensions, mapKey, onLayout} = useResetMapLayout();
   const {createDraft} = useDraftObservationActions();
   const {navigate} = useNavigationFromHomeTabs();
@@ -140,7 +138,7 @@ export const MapScreen = ({
         )}
       </View>
       {dimensions && (
-        <Mapbox.MapView
+        <MapView
           key={mapKey}
           testID="MAIN.mapbox-map-view"
           style={{width: dimensions.width, height: dimensions.height}}
@@ -150,17 +148,18 @@ export const MapScreen = ({
           surfaceView={true}
           attributionPosition={{right: 8, bottom: 8}}
           compassEnabled={false}
-          scaleBarEnabled={false}
-          styleURL={styleUrl}
-          onMapIdle={event => {
-            setZoom(event.properties.zoom);
-          }}
+          // scaleBarEnabled={false}
+          mapStyle={styleUrl}
+          // onMapIdle={event => {
+          //   setZoom(event.properties.zoom);
+          // }}
           onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
-          onMoveShouldSetResponder={() => {
-            if (following) setFollowing(false);
-            return true;
-          }}>
-          <Mapbox.Camera
+          // onMoveShouldSetResponder={() => {
+          //   if (following) setFollowing(false);
+          //   return true;
+          // }}
+        >
+          <Camera
             ref={cam => {
               if (cam && !initialPositionSet.current) {
                 cam.setCamera({
@@ -178,13 +177,13 @@ export const MapScreen = ({
             centerCoordinate={following ? coords : undefined}
             zoomLevel={DEFAULT_ZOOM}
             animationDuration={0}
-            animationMode="none"
+            // animationMode="none"
             followUserLocation={false}
           />
 
-          {coords && <Mapbox.UserLocation minDisplacement={MIN_DISPLACEMENT} />}
+          {coords && <UserLocation minDisplacement={MIN_DISPLACEMENT} />}
 
-          {isFinishedLoadingStyle && authState !== 'obscured' && (
+          {/* {isFinishedLoadingStyle && authState !== 'obscured' && (
             <>
               <RemoteDetectionAlertsMapLayer />
               <CurrentTrackMapLayer location={location} />
@@ -192,8 +191,8 @@ export const MapScreen = ({
               <TracksMapLayer />
               <ObservationMapLayer />
             </>
-          )}
-        </Mapbox.MapView>
+          )} */}
+        </MapView>
       )}
       <View style={styles.bottomContainer}>
         <View style={{flex: 1, alignItems: 'center'}}>

@@ -66,7 +66,7 @@ const config = {
   setupFiles: [
     './node_modules/@react-native-documents/picker/jest/build/jest/setup.js',
   ],
-  setupFilesAfterEnv: ['@rnmapbox/maps/setup-jest', './jest.setup.js'],
+  setupFilesAfterEnv: ['./jest.setup.js'],
   transform: {
     '\\.[jt]sx?$': [
       'babel-jest',

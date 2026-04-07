@@ -141,7 +141,7 @@ export type RootStackParamsList = {
     createdAt?: string;
   };
   InviteReceived: {inviteId: string};
-  InviteSuccessfullyAccepted: {projectName: string};
+  InviteSuccessfullyAccepted: {projectName: string; projectId: string};
   InviteCanceled: {projectName: string};
   RemovedFromProjectBottomSheet: {projectId: string};
   ObservationMetadata: {observationId: string};

@@ -16,10 +16,8 @@ import {LIGHT_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {
-  BLOCKED_ROLE_ID,
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
-  LEFT_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
 
@@ -60,8 +58,9 @@ export const SelectDevice = ({
   const {formatMessage: t} = useIntl();
 
   const availablePeers = useInitiallyConnectedPeers();
-  const projectId = useActiveProject();
-  const projectMembersQuery = useManyMembers(projectId);
+  const {projectId} = useActiveProject();
+  // includeLeft: false is explicit here to get only active members.
+  const projectMembersQuery = useManyMembers({projectId, includeLeft: false});
 
   const selectionMode: SelectionMode =
     route.name === 'SelectMapShareDevice' ? 'shareMap' : 'invites';
@@ -145,7 +144,7 @@ SelectDevice.navTitleMapShare = m.titleMapShare;
 
 type GetSelectableDevicesParams = {
   peers: PublicPeerInfo[];
-  projectMembers: MemberApi.MemberInfo[];
+  projectMembers: MemberApi.ActiveMemberInfo[];
   selectionMode: SelectionMode;
 };
 
@@ -155,15 +154,9 @@ export function getSelectableDevices({
   selectionMode,
 }: GetSelectableDevicesParams): PublicPeerInfo[] {
   if (selectionMode === 'shareMap') {
-    return peers.filter(device => {
-      const isActiveProjectMember = projectMembers.some(
-        member =>
-          member.deviceId === device.deviceId &&
-          member.role.roleId !== BLOCKED_ROLE_ID &&
-          member.role.roleId !== LEFT_ROLE_ID,
-      );
-      return isActiveProjectMember;
-    });
+    return peers.filter(device =>
+      projectMembers.some(member => member.deviceId === device.deviceId),
+    );
   }
 
   return peers.filter(device => {

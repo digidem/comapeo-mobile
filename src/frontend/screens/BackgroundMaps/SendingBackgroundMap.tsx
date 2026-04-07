@@ -11,6 +11,8 @@ import {
   getErrorCode,
   MapShareErrorCode,
 } from '@comapeo/core-react';
+import {MapShareCanceled} from '../../sharedComponents/MapShareCanceled';
+import {MapShareError} from '../../sharedComponents/MapShareError';
 import SendingIcon from '../../images/SendingIcon.svg';
 import StackSvg from '../../images/Stack.svg';
 import SuccessIcon from '../../images/Success.svg';
@@ -106,8 +108,10 @@ export function SendingBackgroundMap({
             return;
           }
           Sentry.captureException(err);
-          navigation.replace('ErrorBottomSheet', {
-            error: toError(err, 'Failed to cancel map share'),
+          const error = toError(err, 'Failed to cancel map share');
+          navigation.replace('BackgroundMapErrorBottomSheet', {
+            title: error.message,
+            description: error.message,
           });
         },
       },
@@ -124,24 +128,8 @@ export function SendingBackgroundMap({
     return () => subscription.remove();
   }, [cancelShare]);
 
-  React.useEffect(() => {
-    if (!mapShare) {
-      navigation.popTo('BackgroundMaps');
-      return;
-    }
-    if (mapShare.status === 'aborted') {
-      navigation.replace('MapShareCanceledBottomSheet');
-      return;
-    }
-    if (mapShare.status === 'error') {
-      const error = toError(mapShare.error, 'Map share failed');
-      Sentry.captureException(error);
-      navigation.replace('ErrorBottomSheet', {error});
-    }
-  }, [mapShare, navigation]);
-
   const handleClose = () => {
-    navigation.popTo('BackgroundMaps');
+    navigation.goBack();
   };
 
   function formatElapsed(totalSeconds: number) {
@@ -151,6 +139,26 @@ export function SendingBackgroundMap({
     return `${minutes.toString().padStart(2, '0')}:${seconds
       .toString()
       .padStart(2, '0')}`;
+  }
+
+  if (!mapShare) {
+    return null;
+  }
+
+  if (mapShare.status === 'aborted') {
+    return <MapShareCanceled onClose={handleClose} />;
+  }
+
+  if (mapShare.status === 'error') {
+    const error = toError(mapShare.error, 'Map share failed');
+    Sentry.captureException(error);
+    return (
+      <MapShareError
+        title={error.message}
+        description={error.message}
+        onClose={handleClose}
+      />
+    );
   }
 
   if (mapShare?.status === 'declined') {

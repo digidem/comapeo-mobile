@@ -4,6 +4,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import bboxPolygon from '@turf/bbox-polygon';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import pointToPolygonDistance from '@turf/point-to-polygon-distance';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import StackSvg from '../../images/Stack.svg';
 import CautionSvg from '../../images/caution.svg';
@@ -30,7 +31,6 @@ import {
   getErrorCode,
   MapShareErrorCode,
 } from '@comapeo/core-react';
-import {Loading} from '../../sharedComponents/Loading';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
 
@@ -231,17 +231,24 @@ export function MapReceivedBottomSheet({
         </View>
 
         <View style={styles.buttonsContainer}>
-          {warningInfo.warning !== 'space' && (
-            <PrimaryButton fullSize text={t(m.accept)} onPress={handleAccept} />
-          )}
           {declineStatus === 'pending' ? (
-            <Loading size={12} />
+            <UIActivityIndicator size={32} />
           ) : (
-            <SecondaryButton
-              fullSize
-              text={t(m.decline)}
-              onPress={handleDecline}
-            />
+            <>
+              {warningInfo.warning !== 'space' && (
+                <PrimaryButton
+                  fullSize
+                  text={t(m.accept)}
+                  onPress={handleAccept}
+                />
+              )}
+
+              <SecondaryButton
+                fullSize
+                text={t(m.decline)}
+                onPress={handleDecline}
+              />
+            </>
           )}
         </View>
       </View>
@@ -310,5 +317,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     gap: 12,
     alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 120,
   },
 });

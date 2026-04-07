@@ -14,9 +14,11 @@ import {VERY_LIGHT_GREY, RED, NEW_DARK_GREY} from '../../lib/styles';
 import {
   useDeclineReceivedMapShare,
   useDownloadReceivedMapShare,
+  useSingleReceivedMapShare,
   getErrorCode,
   MapShareErrorCode,
 } from '@comapeo/core-react';
+import {MapShareCanceled} from '../../sharedComponents/MapShareCanceled';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
 
@@ -46,8 +48,13 @@ export function ReplaceBackgroundMap({
 }: NativeRootNavigationProps<'ReplaceBackgroundMap'>) {
   const {formatMessage: t} = useIntl();
   const {shareId} = route.params;
+  const mapShare = useSingleReceivedMapShare({shareId});
   const {mutate: declineMapShare} = useDeclineReceivedMapShare();
   const {mutate: downloadMapShare} = useDownloadReceivedMapShare();
+
+  if (mapShare.status === 'canceled') {
+    return <MapShareCanceled onClose={() => navigation.goBack()} />;
+  }
 
   const handleReplace = () => {
     downloadMapShare(

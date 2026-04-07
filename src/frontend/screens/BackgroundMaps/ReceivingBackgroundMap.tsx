@@ -11,6 +11,8 @@ import {
   getErrorCode,
   MapShareErrorCode,
 } from '@comapeo/core-react';
+import {MapShareCanceled} from '../../sharedComponents/MapShareCanceled';
+import {MapShareError} from '../../sharedComponents/MapShareError';
 import StackSvg from '../../images/Stack.svg';
 import SuccessIcon from '../../images/Success.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -53,18 +55,6 @@ export function ReceivingBackgroundMap({
   usePreventAndroidBackButton();
   useKeepAwake();
 
-  React.useEffect(() => {
-    if (mapShare.status === 'canceled') {
-      navigation.replace('MapShareCanceledBottomSheet');
-      return;
-    }
-    if (mapShare.status === 'error') {
-      const error = toError(mapShare.error, 'Map download failed');
-      Sentry.captureException(mapShare.error);
-      navigation.replace('ErrorBottomSheet', {error});
-    }
-  }, [mapShare, navigation]);
-
   const handleCancel = React.useCallback(() => {
     abortDownload(
       {shareId},
@@ -74,12 +64,15 @@ export function ReceivingBackgroundMap({
         },
         onError: (err: unknown) => {
           if (getErrorCode(err) === MapShareErrorCode.MAP_SHARE_CANCELED) {
-            navigation.replace('MapShareCanceledBottomSheet');
+            navigation.popTo('BackgroundMaps');
             return;
           }
           const error = toError(err, 'Failed to cancel map download');
           Sentry.captureException(error);
-          navigation.replace('ErrorBottomSheet', {error});
+          navigation.replace('BackgroundMapErrorBottomSheet', {
+            title: error.message,
+            description: error.message,
+          });
         },
       },
     );
@@ -89,7 +82,23 @@ export function ReceivingBackgroundMap({
     navigation.popTo('BackgroundMaps');
   };
 
-  if (mapShare?.status === 'completed') {
+  if (mapShare.status === 'canceled') {
+    return <MapShareCanceled onClose={handleDone} />;
+  }
+
+  if (mapShare.status === 'error') {
+    const error = toError(mapShare.error, 'Map download failed');
+    Sentry.captureException(error);
+    return (
+      <MapShareError
+        title={error.message}
+        description={error.message}
+        onClose={handleDone}
+      />
+    );
+  }
+
+  if (mapShare.status === 'completed') {
     return <MapUpdated onDone={handleDone} />;
   }
 

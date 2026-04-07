@@ -184,7 +184,7 @@ export function SendingBackgroundMap({
     return <MapSent onDone={handleClose} />;
   }
 
-  if (cancelStatus === 'idle' || cancelStatus === 'pending') {
+  if (cancelStatus === 'pending') {
     return <Loading />;
   }
 

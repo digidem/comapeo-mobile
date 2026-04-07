@@ -89,7 +89,7 @@ export function ReceivingBackgroundMap({
     navigation.goBack();
   };
 
-  if (abortStatus === 'idle' || abortStatus === 'pending') {
+  if (abortStatus === 'pending') {
     return <Loading />;
   }
 

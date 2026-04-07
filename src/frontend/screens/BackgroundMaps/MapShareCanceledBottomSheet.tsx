@@ -8,7 +8,7 @@ export function MapShareCanceledBottomSheet({
 }: NativeRootNavigationProps<'MapShareCanceledBottomSheet'>) {
   return (
     <BottomSheetWrapper>
-      <MapShareCanceled onClose={() => navigation.goBack()} />
+      <MapShareCanceled onClose={() => navigation.replace('BackgroundMaps')} />
     </BottomSheetWrapper>
   );
 }

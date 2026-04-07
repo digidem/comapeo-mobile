@@ -88,7 +88,7 @@ export function ReplaceBackgroundMap({
       {shareId, reason: 'user_rejected'},
       {
         onSuccess: () => {
-          navigation.popTo('BackgroundMaps');
+          navigation.goBack();
         },
         onError: (err: unknown) => {
           const code = getErrorCode(err);

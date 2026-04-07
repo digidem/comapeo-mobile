@@ -22,6 +22,7 @@ import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButt
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {ReceivingMapProgressBar} from './ReceivingMapProgressBar';
+import {Loading} from '../../sharedComponents/Loading';
 import {VERY_LIGHT_GREY, NEW_DARK_GREY, COMAPEO_BLUE} from '../../lib/styles';
 
 const m = defineMessages({
@@ -50,26 +51,29 @@ export function ReceivingBackgroundMap({
   const {formatMessage: t} = useIntl();
   const {shareId} = route.params;
   const {mutate: abortDownload} = useAbortReceivedMapShareDownload();
+  const [abortPending, setAbortPending] = React.useState(false);
   const mapShare = useSingleReceivedMapShare({shareId});
 
   usePreventAndroidBackButton();
   useKeepAwake();
 
   const handleCancel = React.useCallback(() => {
+    setAbortPending(true);
     abortDownload(
       {shareId},
       {
         onSuccess: () => {
-          navigation.popTo('BackgroundMaps');
+          navigation.goBack();
         },
         onError: (err: unknown) => {
+          setAbortPending(false);
           const code = getErrorCode(err);
           if (
             code === MapShareErrorCode.MAP_SHARE_CANCELED ||
             code === MapShareErrorCode.INVALID_STATUS_TRANSITION ||
             code === MapShareErrorCode.MAP_SHARE_NOT_FOUND
           ) {
-            navigation.popTo('BackgroundMaps');
+            navigation.goBack();
             return;
           }
           const error = toError(err, 'Failed to cancel map download');
@@ -81,11 +85,15 @@ export function ReceivingBackgroundMap({
         },
       },
     );
-  }, [abortDownload, shareId, navigation]);
+  }, [abortDownload, shareId, navigation, setAbortPending]);
 
   const handleDone = () => {
-    navigation.popTo('BackgroundMaps');
+    navigation.goBack();
   };
+
+  if (abortPending) {
+    return <Loading />;
+  }
 
   if (mapShare.status === 'canceled') {
     return <MapShareCanceled onClose={handleDone} />;

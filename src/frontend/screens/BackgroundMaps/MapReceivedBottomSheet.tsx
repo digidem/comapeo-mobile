@@ -128,7 +128,7 @@ export function MapReceivedBottomSheet({
     currentLocation,
   ]);
 
-  const {data: customMapInfo, error: customMapError} = useGetCustomMapInfo();
+  const {data: customMapInfo, status: customMapStatus} = useGetCustomMapInfo();
   const {mutate: declineMapShare, status: declineStatus} =
     useDeclineReceivedMapShare();
   const {mutate: downloadMapShare} = useDownloadReceivedMapShare();
@@ -138,7 +138,7 @@ export function MapReceivedBottomSheet({
       navigation.replace('MapShareCanceledBottomSheet');
       return;
     }
-    if (customMapInfo && !customMapError) {
+    if (customMapStatus === 'success' && customMapInfo) {
       navigation.replace('ReplaceBackgroundMap', {shareId});
       return;
     }

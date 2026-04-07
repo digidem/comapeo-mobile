@@ -4,6 +4,7 @@ import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {File} from 'expo-file-system';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FILE_SELECT_MUTATION_KEY} from '../../hooks/files';
 import {
@@ -160,7 +161,12 @@ export function BackgroundMapsScreen() {
   });
   const importCustomMapMutation = useImportCustomMapFile();
   const removeCustomMapMutation = useRemoveCustomMapFile();
-  const {data: customMapInfo, isRefetching, error} = useGetCustomMapInfo();
+  const {
+    data: customMapInfo,
+    isRefetching,
+    status: mapInfoStatus,
+    error: mapInfoError,
+  } = useGetCustomMapInfo();
 
   const handleChooseFile = () => {
     selectFileMutation.mutate(undefined, {
@@ -193,11 +199,11 @@ export function BackgroundMapsScreen() {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-        {isRefetching ? (
-          <Loading size={20} />
-        ) : error || !customMapInfo ? (
+        {isRefetching || mapInfoStatus === 'pending' ? (
+          <Loading size={12} />
+        ) : mapInfoStatus !== 'success' || !customMapInfo ? (
           <NoMapScreen
-            error={error}
+            error={mapInfoError}
             onChooseFile={handleChooseFile}
             isUploading={isUploading}
             onRemoveMapFile={() => {
@@ -241,7 +247,7 @@ function NoMapScreen({
       </View>
       <View style={{gap: 20, marginTop: 40, alignItems: 'center'}}>
         {isUploading ? (
-          <Loading size={12} />
+          <UIActivityIndicator size={32} />
         ) : (
           <SecondaryButton
             fullSize

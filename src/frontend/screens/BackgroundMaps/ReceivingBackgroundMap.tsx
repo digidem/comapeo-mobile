@@ -50,15 +50,14 @@ export function ReceivingBackgroundMap({
 }: NativeRootNavigationProps<'ReceivingBackgroundMap'>) {
   const {formatMessage: t} = useIntl();
   const {shareId} = route.params;
-  const {mutate: abortDownload} = useAbortReceivedMapShareDownload();
-  const [abortPending, setAbortPending] = React.useState(false);
+  const {mutate: abortDownload, status: abortStatus} =
+    useAbortReceivedMapShareDownload();
   const mapShare = useSingleReceivedMapShare({shareId});
 
   usePreventAndroidBackButton();
   useKeepAwake();
 
   const handleCancel = React.useCallback(() => {
-    setAbortPending(true);
     abortDownload(
       {shareId},
       {
@@ -66,7 +65,6 @@ export function ReceivingBackgroundMap({
           navigation.goBack();
         },
         onError: (err: unknown) => {
-          setAbortPending(false);
           const code = getErrorCode(err);
           if (
             code === MapShareErrorCode.MAP_SHARE_CANCELED ||
@@ -85,13 +83,13 @@ export function ReceivingBackgroundMap({
         },
       },
     );
-  }, [abortDownload, shareId, navigation, setAbortPending]);
+  }, [abortDownload, shareId, navigation]);
 
   const handleDone = () => {
     navigation.goBack();
   };
 
-  if (abortPending) {
+  if (abortStatus === 'idle' || abortStatus === 'pending') {
     return <Loading />;
   }
 
@@ -112,7 +110,7 @@ export function ReceivingBackgroundMap({
   }
 
   if (mapShare.status === 'completed') {
-    return <MapUpdated onDone={handleDone} />;
+    return <MapUpdated onDone={() => navigation.replace('BackgroundMaps')} />;
   }
 
   return (

@@ -63,7 +63,12 @@ export function ReceivingBackgroundMap({
           navigation.popTo('BackgroundMaps');
         },
         onError: (err: unknown) => {
-          if (getErrorCode(err) === MapShareErrorCode.MAP_SHARE_CANCELED) {
+          const code = getErrorCode(err);
+          if (
+            code === MapShareErrorCode.MAP_SHARE_CANCELED ||
+            code === MapShareErrorCode.INVALID_STATUS_TRANSITION ||
+            code === MapShareErrorCode.MAP_SHARE_NOT_FOUND
+          ) {
             navigation.popTo('BackgroundMaps');
             return;
           }
@@ -87,12 +92,12 @@ export function ReceivingBackgroundMap({
   }
 
   if (mapShare.status === 'error') {
-    const error = toError(mapShare.error, 'Map download failed');
-    Sentry.captureException(error);
+    const message = mapShare.error.message ?? 'Map download failed';
+    Sentry.captureException(new Error(message));
     return (
       <MapShareError
-        title={error.message}
-        description={error.message}
+        title={message}
+        description={message}
         onClose={handleDone}
       />
     );

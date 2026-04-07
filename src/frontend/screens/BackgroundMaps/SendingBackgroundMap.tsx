@@ -150,6 +150,14 @@ export function SendingBackgroundMap({
   }
 
   if (mapShare.status === 'error') {
+    const code = mapShare.error.code;
+    if (
+      code === MapShareErrorCode.INVALID_STATUS_TRANSITION ||
+      code === MapShareErrorCode.MAP_SHARE_NOT_FOUND ||
+      code === MapShareErrorCode.MAP_SHARE_CANCELED
+    ) {
+      return <MapShareCanceled onClose={handleClose} />;
+    }
     const error = toError(mapShare.error, 'Map share failed');
     Sentry.captureException(error);
     return (

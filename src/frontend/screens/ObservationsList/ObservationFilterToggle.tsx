@@ -2,10 +2,6 @@ import * as React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
-import {
-  useObservationFilterState,
-  useObservationFilterActions,
-} from '../../contexts/ObservationFilterContext';
 import {BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 
@@ -23,10 +19,16 @@ const m = defineMessages({
 const ACTIVE_COLOR = COMAPEO_BLUE;
 const INACTIVE_COLOR = NEW_DARK_GREY;
 
-export function ObservationFilterToggle() {
+type Props = {
+  filterMode: 'all' | 'mine';
+  onFilterModeChange: (mode: 'all' | 'mine') => void;
+};
+
+export function ObservationFilterToggle({
+  filterMode,
+  onFilterModeChange,
+}: Props) {
   const {formatMessage} = useIntl();
-  const filterMode = useObservationFilterState(state => state.filterMode);
-  const {setFilterMode} = useObservationFilterActions();
 
   const isAllActive = filterMode === 'all';
   const isMineActive = filterMode === 'mine';
@@ -37,10 +39,9 @@ export function ObservationFilterToggle() {
         <TouchableOpacity
           style={[
             styles.leftSide,
-            isAllActive && styles.activeButton,
-            !isAllActive && styles.inactiveButton,
+            isAllActive ? styles.activeButton : styles.inactiveButton,
           ]}
-          onPress={() => setFilterMode('all')}
+          onPress={() => onFilterModeChange('all')}
           accessibilityLabel={formatMessage(m.all)}
           accessibilityRole="button"
           accessibilityState={{selected: isAllActive}}
@@ -54,9 +55,7 @@ export function ObservationFilterToggle() {
           />
           <HeaderText
             variant="header6"
-            style={{
-              color: isAllActive ? ACTIVE_COLOR : INACTIVE_COLOR,
-            }}>
+            style={{color: isAllActive ? ACTIVE_COLOR : INACTIVE_COLOR}}>
             {formatMessage(m.all)}
           </HeaderText>
         </TouchableOpacity>
@@ -64,10 +63,9 @@ export function ObservationFilterToggle() {
         <TouchableOpacity
           style={[
             styles.rightSide,
-            isMineActive && styles.activeButton,
-            !isMineActive && styles.inactiveButton,
+            isMineActive ? styles.activeButton : styles.inactiveButton,
           ]}
-          onPress={() => setFilterMode('mine')}
+          onPress={() => onFilterModeChange('mine')}
           accessibilityLabel={formatMessage(m.justYou)}
           testID={
             isMineActive ? 'OBS.filter-mine-active' : 'OBS.filter-mine-inactive'
@@ -79,9 +77,7 @@ export function ObservationFilterToggle() {
           />
           <HeaderText
             variant="header6"
-            style={{
-              color: isMineActive ? ACTIVE_COLOR : INACTIVE_COLOR,
-            }}>
+            style={{color: isMineActive ? ACTIVE_COLOR : INACTIVE_COLOR}}>
             {formatMessage(m.justYou)}
           </HeaderText>
         </TouchableOpacity>

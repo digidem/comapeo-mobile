@@ -2,6 +2,8 @@ import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
+import {useFocusEffect} from '@react-navigation/native';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {ObservationListItem} from './ObservationListItem';
 import {ObservationEmptyView} from './ObservationsEmptyView';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
@@ -11,13 +13,7 @@ import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
-import {
-  useObservationFilterState,
-  useObservationFilterActions,
-} from '../../contexts/ObservationFilterContext';
 import {ObservationFilterToggle} from './ObservationFilterToggle';
-import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 const m = defineMessages({
   loading: {
@@ -41,6 +37,7 @@ const m = defineMessages({
 });
 
 const OBSERVATION_CELL_HEIGHT = 80;
+const ONE_HOUR = 60 * 60 * 1000;
 
 function getItemLayout(data: unknown, index: number) {
   return {
@@ -61,21 +58,34 @@ export const ObservationsList: React.FC<
   const {data: tracks} = useTracks();
   const {authState} = useAuthContext();
   const isEarlyAccessEnabled = useEarlyAccessState(s => s.isEarlyAccessEnabled);
-  const filterMode = useObservationFilterState(state => state.filterMode);
-  const {checkAndResetIfNeeded, handleProjectChange} =
-    useObservationFilterActions();
-  const {projectId} = useActiveProject();
   const {data: deviceInfo} = useOwnDeviceInfo();
 
-  React.useEffect(() => {
-    handleProjectChange(projectId);
-  }, [projectId, handleProjectChange]);
+  const [filterMode, setFilterMode] = React.useState<'all' | 'mine'>('all');
+  const lastInteractionRef = React.useRef<number | null>(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (
+        lastInteractionRef.current !== null &&
+        Date.now() - lastInteractionRef.current > ONE_HOUR
+      ) {
+        setFilterMode('all');
+        lastInteractionRef.current = null;
+      }
+    }, []),
+  );
 
   React.useEffect(() => {
-    if (isEarlyAccessEnabled) {
-      checkAndResetIfNeeded();
+    if (!isEarlyAccessEnabled) {
+      setFilterMode('all');
+      lastInteractionRef.current = null;
     }
-  }, [isEarlyAccessEnabled, checkAndResetIfNeeded]);
+  }, [isEarlyAccessEnabled]);
+
+  function handleFilterModeChange(mode: 'all' | 'mine') {
+    setFilterMode(mode);
+    lastInteractionRef.current = Date.now();
+  }
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -89,10 +99,9 @@ export const ObservationsList: React.FC<
     }
 
     const myDeviceId = deviceInfo?.deviceId;
-
-    const filtered = allData.filter(item => {
-      return 'createdBy' in item && item.createdBy === myDeviceId;
-    });
+    const filtered = allData.filter(
+      item => 'createdBy' in item && item.createdBy === myDeviceId,
+    );
 
     return filtered.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
   }, [
@@ -113,7 +122,12 @@ export const ObservationsList: React.FC<
 
   return (
     <View style={styles.container} testID="OBS.list-scrn">
-      {isEarlyAccessEnabled && <ObservationFilterToggle />}
+      {isEarlyAccessEnabled && (
+        <ObservationFilterToggle
+          filterMode={filterMode}
+          onFilterModeChange={handleFilterModeChange}
+        />
+      )}
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
       <FlatList
         initialNumToRender={rowsPerWindow}

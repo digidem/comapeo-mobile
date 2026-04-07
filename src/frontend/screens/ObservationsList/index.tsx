@@ -39,7 +39,7 @@ const m = defineMessages({
 const OBSERVATION_CELL_HEIGHT = 80;
 const ONE_HOUR = 60 * 60 * 1000;
 
-function getItemLayout(data: unknown, index: number) {
+function getItemLayout(_data: unknown, index: number) {
   return {
     length: OBSERVATION_CELL_HEIGHT,
     offset: OBSERVATION_CELL_HEIGHT * index,
@@ -75,16 +75,9 @@ export const ObservationsList: React.FC<
     }, []),
   );
 
-  React.useEffect(() => {
-    if (!isEarlyAccessEnabled) {
-      setFilterMode('all');
-      lastInteractionRef.current = null;
-    }
-  }, [isEarlyAccessEnabled]);
-
   function handleFilterModeChange(mode: 'all' | 'mine') {
     setFilterMode(mode);
-    lastInteractionRef.current = Date.now();
+    lastInteractionRef.current = mode === 'mine' ? Date.now() : null;
   }
 
   const rowsPerWindow = Math.ceil(

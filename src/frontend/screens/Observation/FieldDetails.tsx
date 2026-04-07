@@ -29,7 +29,7 @@ export const FieldDetails = ({
               <FormattedFieldProp field={field} propName="label" />
             </HeaderText>
             <BodyText
-              style={{color: value === undefined ? MEDIUM_GREY : undefined}}>
+              style={value === undefined ? {color: MEDIUM_GREY} : undefined}>
               <FormattedFieldValue value={value} field={field} />
             </BodyText>
           </View>

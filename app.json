@@ -20,6 +20,7 @@
       "expo-secure-store",
       "expo-document-picker",
       "react-native-vision-camera",
+      ["@maplibre/maplibre-react-native"],
       [
         "@rnmapbox/maps",
         {

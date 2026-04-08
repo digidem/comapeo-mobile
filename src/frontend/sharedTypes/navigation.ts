@@ -33,7 +33,7 @@ export type HomeTabsParamsList = {
 export type TabName = keyof HomeTabsParamsList;
 
 // --- Early Access routing pattern -----------------------------------------
-// Require { isEarlyAdopter: true } (literal true, not boolean) for any *early-access-only* screen.
+// Require { isEarlyAccess: true } (literal true, not boolean) for any *early-access-only* screen.
 //
 // Example usage when you add the first early-only screen:
 //
@@ -47,7 +47,7 @@ export type TabName = keyof HomeTabsParamsList;
 // surface all call sites for cleanup.
 // ---------------------------------------------------------------------------
 
-export type EarlyOnlyParam = {readonly isEarlyAdopter: true};
+export type EarlyOnlyParam = {readonly isEarlyAccess: true};
 
 export type RootStackParamsList = {
   Home: NavigatorScreenParams<HomeTabsParamsList>;

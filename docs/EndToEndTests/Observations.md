@@ -21,6 +21,9 @@
 - [Exporting Observations](#exporting-observations)
   - [Test Objectives](#test-objectives-7)
   - [Special Considerations](#special-considerations-6)
+- [Observation Filter Toggle (Early Access)](#observation-filter-toggle-early-access)
+  - [Test Objectives](#test-objectives-8)
+  - [Special Considerations](#special-considerations-7)
 
 ### Overview
 
@@ -159,3 +162,23 @@ This test validates the download/export functionality for observations, includin
 
 - Cannot fully test the actual file download or save functionality on BrowserStack
 - Test validates the UI flow and option selection but does not verify the exported file contents or format
+
+## Observation Filter Toggle (Early Access)
+
+This test validates the filter toggle UI that appears on the Observations List when Early Access is enabled. The toggle allows users to switch between viewing all observations ("All") and only their own ("Just You").
+
+### Test Objectives
+
+- Enables Early Access via the drawer menu → App Settings before testing
+- Verifies the filter toggle appears on the Observations List when Early Access is on
+- Confirms "All" is active and "Just You" is inactive by default
+- Taps "Just You" and confirms it becomes active and "All" becomes inactive
+- Confirms the same observations are still visible after switching to "Just You" (since all observations in the test were created on the same device)
+- Taps "All" and confirms it becomes active again
+- Disables Early Access at the end of the test to leave app state clean
+- Verifies the filter toggle is no longer visible once Early Access is off
+
+### Special Considerations
+
+- This test cannot verify the filtering of observations created by _other_ devices, since E2E tests run on a single device. The "Just You" and "All" views will look identical in this test — what is verified is the toggle UI state and that observations are not hidden unexpectedly
+- The toggle is gated behind Early Access and should not appear in normal app usage

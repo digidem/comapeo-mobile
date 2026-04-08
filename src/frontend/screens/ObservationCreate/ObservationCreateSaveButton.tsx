@@ -104,10 +104,7 @@ export const ObservationCreateSaveButton = () => {
       projectId,
     });
 
-  const {
-    addNewLocations: addNewTrackLocations,
-    addNewObservation: addNewTrackObservation,
-  } = useTrackActions();
+  const {addNewObservation: addNewTrackObservation} = useTrackActions();
 
   const isLoading =
     photoAttachmentStatus === 'pending' ||
@@ -118,22 +115,6 @@ export const ObservationCreateSaveButton = () => {
     queryClient.invalidateQueries({queryKey: STORAGE_QUERY_KEY});
     clearDraft();
     navigation.popTo('Home', {screen: 'Map'});
-  };
-
-  const addObservationRefToTrack = (observation: Observation) => {
-    if (observation.lat && observation.lon) {
-      addNewTrackLocations([
-        {
-          timestamp: Date.now(),
-          latitude: observation.lat,
-          longitude: observation.lon,
-        },
-      ]);
-    }
-    addNewTrackObservation({
-      docId: observation.docId,
-      versionId: observation.versionId,
-    });
   };
 
   function checkAccuracyAndLocation(
@@ -204,7 +185,10 @@ export const ObservationCreateSaveButton = () => {
       });
 
       if (isTracking) {
-        addObservationRefToTrack(createdObservation);
+        addNewTrackObservation({
+          docId: createdObservation.docId,
+          versionId: createdObservation.versionId,
+        });
       }
 
       finalizeSave();

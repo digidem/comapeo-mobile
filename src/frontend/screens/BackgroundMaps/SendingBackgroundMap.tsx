@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AppState, StyleSheet, View, Pressable} from 'react-native';
+import {StyleSheet, View, Pressable} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -120,16 +120,6 @@ export function SendingBackgroundMap({
     );
   }, [navigation, cancelMapShare, shareId]);
 
-  React.useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextState => {
-      if (nextState === 'background') {
-        cancelShare();
-      }
-    });
-
-    return () => subscription.remove();
-  }, [cancelShare]);
-
   const handleClose = () => {
     navigation.goBack();
   };
@@ -171,16 +161,16 @@ export function SendingBackgroundMap({
     );
   }
 
-  if (mapShare?.status === 'declined') {
+  if (mapShare.status === 'declined') {
     const reason = (mapShare as {reason?: string}).reason;
     return <MapDeclined reason={reason} onClose={handleClose} />;
   }
 
-  if (mapShare?.status === 'downloading') {
+  if (mapShare.status === 'downloading') {
     return <SendingMap shareId={shareId} onCancel={cancelShare} />;
   }
 
-  if (mapShare?.status === 'completed') {
+  if (mapShare.status === 'completed') {
     return <MapSent onDone={handleClose} />;
   }
 

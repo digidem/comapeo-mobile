@@ -15,6 +15,7 @@
       "reactCompiler": true
     },
     "plugins": [
+      "expo-system-ui",
       "expo-audio",
       "expo-localization",
       "expo-secure-store",
@@ -34,7 +35,8 @@
           "backgroundColor": "#050F77",
           "imageWidth": 300,
           "android": {
-            "resizeMode": "contain"
+            "resizeMode": "contain",
+            "userInterfaceStyle": "light"
           },
           "ios": {
             "resizeMode": "contain"

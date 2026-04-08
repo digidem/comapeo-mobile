@@ -10,7 +10,7 @@ import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 
 import {Text} from '../../../sharedComponents/Text';
 import {Select} from '../../../sharedComponents/Select';
-import {BLACK, LIGHT_GREY} from '../../../lib/styles';
+import {BLACK, DARK_GREY, LIGHT_GREY} from '../../../lib/styles';
 import {INTEGER_REGEX, parseNumber} from '../shared';
 import {DmsData, DmsUnit} from './types';
 
@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     marginBottom: 5,
+    color: DARK_GREY,
   },
   row: {
     marginBottom: 20,

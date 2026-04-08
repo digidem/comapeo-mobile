@@ -24,6 +24,7 @@ import {
 } from '../../utils/trackMetrics';
 import {TrackStats} from '../../sharedComponents/TrackStats.tsx';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 
 const m = defineMessages({
   title: {
@@ -114,7 +115,9 @@ export const TrackScreen = ({
         <View style={styles.divider} />
         <ObservationList observations={trackObservations} />
         <View style={styles.divider} />
-        <Text style={styles.text}>{track.tags.notes}</Text>
+        <HeaderText variant="header3" style={styles.text}>
+          {track.tags.notes}
+        </HeaderText>
       </View>
     </ScreenContentWithDock>
   );

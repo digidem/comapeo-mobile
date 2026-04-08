@@ -35,8 +35,7 @@
           "backgroundColor": "#050F77",
           "imageWidth": 300,
           "android": {
-            "resizeMode": "contain",
-            "userInterfaceStyle": "light"
+            "resizeMode": "contain"
           },
           "ios": {
             "resizeMode": "contain"

@@ -9,4 +9,5 @@ describe('CoMapeo E2E Flow', function () {
   require('./edit-observation.test');
   require('./delete-observation.test');
   require('./restart-navigation.test');
+  require('./observation-filter-toggle.test');
 });

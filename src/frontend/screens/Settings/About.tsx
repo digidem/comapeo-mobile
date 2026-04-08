@@ -112,7 +112,7 @@ export const AboutSettings = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && isEarly ? (
+      {isEarly ? (
         <View style={styles.banner} testID="ABOUT.ea-banner">
           <MaterialIcon name="flag" size={20} />
           <BodyText>{t(m.earlyAccessBanner)}</BodyText>

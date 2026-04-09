@@ -7,7 +7,7 @@ import {
 } from '../../sharedComponents/icons';
 
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-// import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
+import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -149,17 +149,13 @@ export const MapScreen = ({
           surfaceView={true}
           attributionPosition={{right: 8, bottom: 8}}
           compassEnabled={false}
-          // scaleBarEnabled={false}
           mapStyle={styleUrl}
-          // onMapIdle={event => {
-          //   setZoom(event.properties.zoom);
-          // }}
           onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
-          // onMoveShouldSetResponder={() => {
-          //   if (following) setFollowing(false);
-          //   return true;
-          // }}
-        >
+          onRegionWillChange={event => {
+            if (event.properties.isUserInteraction && following) {
+              setFollowing(false);
+            }
+          }}>
           <Camera
             ref={cam => {
               if (cam && !initialPositionSet.current) {
@@ -189,8 +185,8 @@ export const MapScreen = ({
               {/* <RemoteDetectionAlertsMapLayer /> */}
               <CurrentTrackMapLayer location={location} />
               {isTracking && <UserTooltipMarker />}
-              {/* <TracksMapLayer />
-              <ObservationMapLayer /> */}
+              {/* <TracksMapLayer /> */}
+              <ObservationMapLayer />
             </>
           )}
         </MapView>

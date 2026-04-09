@@ -1,4 +1,4 @@
-import {LineLayer, ShapeSource} from '@rnmapbox/maps';
+import {LineLayer, ShapeSource} from '@maplibre/maplibre-react-native';
 import * as React from 'react';
 
 import {FeatureCollection} from 'geojson';
@@ -23,7 +23,7 @@ export const TracksMapLayer = () => {
       onPress={handlePress}
       id="tracks"
       shape={convertTracksToFeatures(tracks)}>
-      <LineLayer id="trackLines" style={SAVED_TRACK_LINE_STYLE} existing />
+      <LineLayer id="trackLines" style={SAVED_TRACK_LINE_STYLE} />
     </ShapeSource>
   );
 };

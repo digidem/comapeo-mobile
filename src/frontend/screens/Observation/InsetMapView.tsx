@@ -1,4 +1,4 @@
-import MapboxGL from '@rnmapbox/maps';
+import {MapView, Camera, MarkerView} from '@maplibre/maplibre-react-native';
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {WHITE} from '../../lib/styles';
@@ -7,7 +7,6 @@ import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import MapPin from '../../images/MapPin.svg';
 import OrangeDot from '../../images/OrangeDot.svg';
-import {MarkerView} from '@rnmapbox/maps';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext';
 
@@ -27,7 +26,7 @@ export const InsetMapView = React.memo<MapProps>(
     const {navigate} = useNavigationFromRoot();
 
     return (
-      <MapboxGL.MapView
+      <MapView
         style={styles.map}
         zoomEnabled={false}
         logoEnabled={false}
@@ -35,13 +34,8 @@ export const InsetMapView = React.memo<MapProps>(
         pitchEnabled={false}
         rotateEnabled={false}
         compassEnabled={false}
-        scaleBarEnabled={false}
-        styleURL={styleUrlQuery.data}>
-        <MapboxGL.Camera
-          centerCoordinate={[lon, lat]}
-          zoomLevel={12}
-          animationMode="none"
-        />
+        mapStyle={styleUrlQuery.data}>
+        <Camera centerCoordinate={[lon, lat]} zoomLevel={12} />
         <MarkerView
           id="locationIndicator"
           anchor={{x: 0.5, y: 0.8}}
@@ -64,7 +58,7 @@ export const InsetMapView = React.memo<MapProps>(
             <OrangeDot style={{alignSelf: 'center'}} />
           </TouchableOpacity>
         </MarkerView>
-      </MapboxGL.MapView>
+      </MapView>
     );
   },
 );

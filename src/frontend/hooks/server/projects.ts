@@ -112,7 +112,9 @@ export function useExportObservations({projectId}: {projectId: string}) {
         await FileSystem.makeDirectoryAsync(exportDir);
       }
 
-      const fileName = `CoMapeo_Obsvns_${formatDate(Date.now())}`;
+      const filePrefix =
+        exportType === 'Tracks' ? 'CoMapeo_Tracks' : 'CoMapeo_Obsvns';
+      const fileName = `${filePrefix}_${formatDate(Date.now())}`;
 
       if (exportType === 'Observation' || exportType === 'Tracks') {
         return exportNoMedia

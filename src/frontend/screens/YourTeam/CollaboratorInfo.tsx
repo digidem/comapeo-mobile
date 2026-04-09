@@ -89,13 +89,14 @@ export const CollaboratorInfo: NativeNavigationComponent<
     ownRole.roleId === CREATOR_ROLE_ID;
 
   const isDesktop = deviceType === 'desktop';
+  const isServer = isArchiveServer || deviceType === 'selfHostedServer';
 
   const isLastCoordinator = useIsLastCoordinator({
     deviceId: route.params.deviceId,
   });
   const isLastMember = useIsLastMember({deviceId: route.params.deviceId});
 
-  const canShowActionButton = !isArchiveServer && !isDesktop;
+  const canShowActionButton = !isServer && !isDesktop;
 
   return (
     <View style={styles.container}>

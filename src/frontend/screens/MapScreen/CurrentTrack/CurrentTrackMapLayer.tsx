@@ -40,12 +40,13 @@ export const CurrentTrackMapLayer = ({
       }>
       <LineLayer
         id="currentTrackBase"
-        belowLayerID="mapboxUserLocationPulseCircle"
+        // map libre's bottom-most user location layer
+        belowLayerID="mlrn-user-location-puck-pulse"
         style={BASE_TRACK_LINE_STYLE}
       />
       <LineLayer
         id="currentTrackOverlay"
-        belowLayerID="mapboxUserLocationPulseCircle"
+        belowLayerID="mlrn-user-location-puck-pulse"
         style={OVERLAY_TRACK_LINE_STYLE}
       />
     </ShapeSource>

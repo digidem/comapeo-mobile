@@ -1,5 +1,4 @@
 import React from 'react';
-// import MapboxGL from '@rnmapbox/maps';
 import {CircleLayer, ShapeSource} from '@maplibre/maplibre-react-native';
 import {useObservations} from '../../../hooks/server/observations';
 import {usePresetsQuery} from '../../../hooks/server/presets';

@@ -1,10 +1,13 @@
-import {LineLayer, ShapeSource} from '@maplibre/maplibre-react-native';
+import {
+  LineLayer,
+  ShapeSource,
+  type OnPressEvent,
+} from '@maplibre/maplibre-react-native';
 import * as React from 'react';
 
 import {FeatureCollection} from 'geojson';
 import {useTracks} from '../../../hooks/server/track';
 import {Track} from '@comapeo/schema';
-import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 import {SAVED_TRACK_LINE_STYLE} from '../../../lib/trackMapStyles';
 export const TracksMapLayer = () => {

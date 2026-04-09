@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import Mapbox from '@rnmapbox/maps';
 import {Camera, MapView, UserLocation} from '@maplibre/maplibre-react-native';
 import {
   LocationFollowingIcon,

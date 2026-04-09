@@ -14,6 +14,7 @@ export const ProjectRemovalListener = () => {
   const {projectId} = useActiveProject();
   const {
     data: {roleId},
+    isRefetching: isRoleRefetching,
   } = useOwnRoleInProject({projectId});
 
   const navigation = useNavigationFromHomeTabs();
@@ -40,11 +41,17 @@ export const ProjectRemovalListener = () => {
   React.useEffect(() => {
     if (
       roleId === BLOCKED_ROLE_ID &&
+      !isRoleRefetching &&
       currentRouteName !== 'RemovedFromProjectBottomSheet'
     ) {
       dispatchToRemovedProjectBottomSheet();
     }
-  }, [roleId, dispatchToRemovedProjectBottomSheet, currentRouteName]);
+  }, [
+    roleId,
+    isRoleRefetching,
+    dispatchToRemovedProjectBottomSheet,
+    currentRouteName,
+  ]);
 
   useProjectOwnRoleChangeListener({projectId});
 

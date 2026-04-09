@@ -195,6 +195,7 @@
     "webdriverio": "9.21.0"
   },
   "overrides": {
-    "axios": "1.15.0"
+    "axios": "1.15.0",
+    "basic-ftp": "5.2.0"
   }
 }

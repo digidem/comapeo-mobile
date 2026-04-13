@@ -35,7 +35,11 @@ export const InsetMapView = React.memo<MapProps>(
         rotateEnabled={false}
         compassEnabled={false}
         mapStyle={styleUrlQuery.data}>
-        <Camera centerCoordinate={[lon, lat]} zoomLevel={12} />
+        <Camera
+          centerCoordinate={[lon, lat]}
+          zoomLevel={12}
+          animationMode="moveTo"
+        />
         <MarkerView
           id="locationIndicator"
           anchor={{x: 0.5, y: 0.8}}

@@ -21,17 +21,17 @@ import {toError} from '../../utils/errors';
 const m = defineMessages({
   leaveProjectTitle: {
     id: 'screens.LeaveProject.leaveProjectTitle',
-    defaultMessage: 'Leave {projectName}?',
+    defaultMessage: 'Leave this project?',
   },
   leaveProjectDescriptionCoordinator: {
     id: 'screens.LeaveProject.leaveProjectDescriptionCoordinator',
     defaultMessage:
-      'Device will no longer be able to view, contribute to, or adjust this project.',
+      'Device will no longer be able to view, contribute to, or adjust the project {projectName}.',
   },
   leaveProjectDescriptionParticipant: {
     id: 'screens.LeaveProject.leaveProjectDescriptionParticipant',
     defaultMessage:
-      'Device will no longer be able to view or contribute to this project.',
+      'Device will no longer be able to view or contribute to the project {projectName}.',
   },
   yesLeave: {
     id: 'screens.LeaveProject.yesLeave',
@@ -62,7 +62,9 @@ export const LeaveProject = ({
       {
         onSuccess: () => {
           try {
-            navigation.replace('LeftProjectConfirmation');
+            navigation.replace('LeftProjectConfirmation', {
+              projectName: projectSettings.name ?? '',
+            });
             const defaultProject = projects?.find(
               project => project.name === undefined,
             );
@@ -90,15 +92,14 @@ export const LeaveProject = ({
         <View style={styles.deviceInfo}>
           <MaterialDesignIcons name="export" size={60} color={BLUE_GREY} />
           <HeaderText variant="header2" style={styles.title}>
-            {formatMessage(m.leaveProjectTitle, {
-              projectName: projectSettings?.name || '',
-            })}
+            {formatMessage(m.leaveProjectTitle)}
           </HeaderText>
           <BodyText style={styles.description}>
             {formatMessage(
               isCoordinator
                 ? m.leaveProjectDescriptionCoordinator
                 : m.leaveProjectDescriptionParticipant,
+              {projectName: projectSettings.name ?? ''},
             )}
           </BodyText>
         </View>

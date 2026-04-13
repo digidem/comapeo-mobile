@@ -8,7 +8,6 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   '@?react-navigation',
   '@sentry/react-native',
   'native-base',
-  '@rnmapbox/maps',
   // Awana modules distributed as ESM
   '@comapeo/',
   '@mapeo/',

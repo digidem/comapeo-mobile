@@ -63,7 +63,7 @@
     "message": "Coordinador"
   },
   "Navigation.Menu.coordinatorTools": {
-    "message": "Herramientas de coordinador de proyecto"
+    "message": "Herramientas del Coordinador"
   },
   "Navigation.Menu.currentProject": {
     "message": "Proyecto actual"
@@ -246,7 +246,7 @@
     "message": "Las estadísticas del proyecto no están siendo compartidas."
   },
   "Screens.ProjectSettings.projectStatsOn": {
-    "message": "Estadísticas del proyecto | ON"
+    "message": "Estadísticas del proyecto | Activado"
   },
   "Screens.ProjectSettings.projectStatsOnDesc": {
     "message": "Este proyecto está compartiendo estadísticas anónimas."
@@ -270,7 +270,7 @@
     "message": "Actualizar"
   },
   "Screens.ProjectSettings.updateCategories": {
-    "message": "Actualizar conjunto"
+    "message": "Actualizar conjunto de categorías"
   },
   "Screens.ProjectSettings.view": {
     "message": "Ver"
@@ -708,7 +708,7 @@
     "message": "No hay acceso a la cámara. Por favor permite el acceso en ajustes."
   },
   "screens.CollaboratorInfo.addedOn": {
-    "message": "Añadido en {date}"
+    "message": "Añadido el {date}"
   },
   "screens.CollaboratorInfo.coordinator": {
     "message": "Persona Coordinadora"
@@ -946,7 +946,7 @@
     "message": "Trayectos"
   },
   "screens.ExportObservations.tracksDescription": {
-    "message": "Trayectos se exportan solo como un archivo GeoJSON"
+    "message": "Los Trayectos se exportan solo como un archivo GeoJSON"
   },
   "screens.FatalError.restart": {
     "message": "Reiniciar la aplicación"
@@ -1041,7 +1041,7 @@
     "message": "Continuar"
   },
   "screens.LeaveProjectWarning.exportRecommendation": {
-    "message": "Antes de salir, exportar cualquier dato importante."
+    "message": "Antes de salir, exporta cualquier dato importante."
   },
   "screens.LeaveProjectWarning.inviteRecommendation": {
     "message": "Para evitar esto, invita a un nuevo dispositivo como coordinador."
@@ -1056,7 +1056,7 @@
     "message": "Si este dispositivo sale, se perderán todos los datos de este proyecto."
   },
   "screens.LeaveProjectWarning.lastDeviceTitle": {
-    "message": "Dispositivo es el último dispositivo."
+    "message": "Es el último dispositivo del proyecto."
   },
   "screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Abrir {deviceName}"
@@ -1222,7 +1222,7 @@
     "message": "Activa tu ubicación"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "¿Estas usando tu ubicación?"
+    "message": "Permitir Ubicación en todo momento"
   },
   "screens.ObscurePasscode.description": {
     "message": "La Contraseña Oscura es una funcionalidad de seguridad que te permite abrir CoMapeo en un modo que oculta toda tu información. Al introducir la Constraseña Oscura en la pantalla de inicio, se mostrará una versión vacía de CoMapeo que te permite crear observaciones de demostración que no se guardan en la base de datos de CoMapeo."
@@ -1834,7 +1834,7 @@
     "message": "Nombre de categorías:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Configuración"
+    "message": "Configuración de categorías"
   },
   "screens.Settings.Config.okButton": {
     "message": "OK"
@@ -1897,7 +1897,7 @@
     "message": "Los tipos de archivo aceptados son .smp"
   },
   "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
-    "message": "Añadido en {date}"
+    "message": "Añadido el {date}"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Esta acción no se puede deshacer."
@@ -2056,7 +2056,7 @@
     "message": "Solo previsualizaciones de intercambio."
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
-    "message": "No se encontraron dispositivos."
+    "message": "No se encontraron dispositivos..."
   },
   "screens.Sync.ProjectSyncDisplay.noWifi": {
     "message": "No Wifi."

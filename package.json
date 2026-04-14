@@ -22,7 +22,7 @@
     "build:translations": "node ./scripts/build-translations.mjs",
     "build:intl-polyfills": "node ./scripts/build-intl-polyfills.mjs",
     "build:backend": "node ./scripts/build-backend.mjs",
-    "extract-messages": "formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --out-file ./messages/en.json",
+    "extract-messages": "node scripts/extract-messages.mjs",
     "eas-build-post-install": "npm run build:backend && npm run build:translations && npm run build:intl-polyfills",
     "eas-build-on-success": "scripts/upload-release.sh",
     "upgrade-deps:all": "npm-check --update --save-exact",

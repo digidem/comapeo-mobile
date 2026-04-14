@@ -8,7 +8,7 @@
     "message": "නිරීක්ෂණය ඉවතලන්නද?"
   },
   "ExportSuccess.done": {
-    "message": "හරි"
+    "message": "කළා"
   },
   "ExportSuccess.title": {
     "message": "සාර්ථකයි!"
@@ -98,7 +98,7 @@
     "message": "වෙනස්කම් ඉවතලන්න"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "වසන්න"
   },
   "screen.EditProjectDetails.projectName": {
     "message": "ව්යාපෘතියේ නම"
@@ -183,7 +183,7 @@
     "message": "යෙදුම් මුර කේතය"
   },
   "screens.AppUsageSharingSuccess.done": {
-    "message": "හරි"
+    "message": "කළා"
   },
   "screens.AppUsageSharingSuccess.success": {
     "message": "සාර්ථකයි!"
@@ -235,7 +235,7 @@
     "message": "සුරකින්න"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "වසන්න"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
@@ -262,7 +262,7 @@
     "message": "ආරාධනාව ප්‍රතික්ෂේප කරන්න"
   },
   "screens.InviteSuccess.done": {
-    "message": "හරි"
+    "message": "කළා"
   },
   "screens.InviteSuccess.success": {
     "message": "සාර්ථකත්වය"
@@ -586,24 +586,27 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "නිරීක්ෂණය එකතු කරන්න"
   },
+  "screens.ObservationsList.filter.all": {
+    "message": "සියල්ල"
+  },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "පූරණය වෙමින් පවතී... මෙය නව උපාංගයක් සමඟ සමමුහුර්ත කිරීමෙන් පසු යම් කාලයක් ගත විය හැක"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "වසන්න"
   },
   "screens.Onboarding.JoinProjectIntro.title": {
     "message": "ව්යාපෘතියකට සම්බන්ධ වන්න"
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "වසන්න"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "වසන්න"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "වසන්න"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -640,7 +643,7 @@
     "message": "Add Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
-    "message": "හරි"
+    "message": "කළා"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
@@ -670,7 +673,7 @@
     "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
-    "message": "හරි"
+    "message": "කළා"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
     "message": "Invite Device"
@@ -769,8 +772,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "වෙනස් කරන්න"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "ආපසු යන්න"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "වසන්න"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "ආපසු යන්න"

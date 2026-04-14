@@ -98,7 +98,7 @@
     "message": "ยกเลิกการเปลี่ยนแปลง"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "ปิด"
   },
   "screen.EditProjectDetails.projectName": {
     "message": "ชื่อโครงการ"
@@ -202,7 +202,7 @@
     "message": "บันทึก"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "ปิด"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
@@ -556,24 +556,27 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "เพิ่มการสังเกต"
   },
+  "screens.ObservationsList.filter.all": {
+    "message": "ทั้งหมด"
+  },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "กำลังโหลดข้อมูล... การเชื่อมต่อกับอุปกรณ์ใหม่จะใช้เวลาสักครู่"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "ปิด"
   },
   "screens.Onboarding.JoinProjectIntro.title": {
     "message": "เข้าร่วมโครงการ"
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "ปิด"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "ปิด"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "ปิด"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -739,8 +742,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "แก้ไข"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "ย้อนกลับ"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "ปิด"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "ย้อนกลับ"

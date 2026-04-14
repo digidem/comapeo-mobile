@@ -98,7 +98,7 @@
     "message": "Hủy bỏ thay đổi"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "Đóng"
   },
   "screen.EditProjectDetails.projectName": {
     "message": "Tên dự án"
@@ -241,7 +241,7 @@
     "message": "Print"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Đóng"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Nhập mật khẩu"
@@ -601,24 +601,27 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Thêm Quan sát"
   },
+  "screens.ObservationsList.filter.all": {
+    "message": "Tất cả"
+  },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Đang tải... việc này có thể càn một chút thời gian sau khi đồng bộ hóa với thiết bị mới"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "Đóng"
   },
   "screens.Onboarding.JoinProjectIntro.title": {
     "message": "Tham gia một dự án"
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "Đóng"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Đóng"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "Đóng"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -787,8 +790,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Thay đổi"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Quay trở lại"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Đóng"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "Quay trở lại"

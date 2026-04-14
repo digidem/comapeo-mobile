@@ -10,8 +10,9 @@ import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
+  // primary-string
   customMapAddedTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle',
     defaultMessage: 'Custom Map Added',
   },
   customMapAddedDescription: {
@@ -19,8 +20,9 @@ const m = defineMessages({
     defaultMessage:
       'You will see this map when you are offline, but you will not see a map outside the area defined in your custom map.',
   },
+  // primary-string
   close: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.close',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.close',
     defaultMessage: 'Close',
   },
 });

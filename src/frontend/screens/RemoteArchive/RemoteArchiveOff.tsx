@@ -8,8 +8,9 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import MaterialIcons from '@react-native-vector-icons/material-design-icons';
 
 const m = defineMessages({
+  // primary-string
   remoteArchiveOff: {
-    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff',
+    id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff',
     defaultMessage: 'Remote Archive is Off',
   },
   dataNotShared: {
@@ -26,8 +27,9 @@ const m = defineMessages({
     id: 'ProjectSettings.RemoteArchive.RemoteArchiveOff.noServers',
     defaultMessage: 'No servers have been added to this project',
   },
+  // primary-string
   addArchive: {
-    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive',
+    id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive',
     defaultMessage: 'Add Remote Archive',
   },
 });

@@ -20,8 +20,9 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
+  // primary-string
   navTitle: {
-    id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle',
+    id: '$1ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle',
     defaultMessage: 'Add Remote Archive',
   },
   url: {
@@ -32,12 +33,14 @@ const m = defineMessages({
     id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl',
     defaultMessage: 'Invalid URL',
   },
+  // primary-string
   looking: {
-    id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.looking',
+    id: '$1ProjectSettings.RemoteArchive.AddRemoteArchive.looking',
     defaultMessage: 'Looking for Remote Archive...',
   },
+  // primary-string
   youAreAdding: {
-    id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding',
+    id: '$1ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding',
     defaultMessage: 'You are adding:',
   },
   archiveInfo: {

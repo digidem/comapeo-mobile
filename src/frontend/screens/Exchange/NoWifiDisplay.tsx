@@ -11,16 +11,18 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 const m = defineMessages({
+  // primary-string
   title: {
-    id: 'screens.Sync.NoWifiDisplay.title',
+    id: '$1screens.Sync.NoWifiDisplay.title',
     defaultMessage: 'No Wi-Fi.',
   },
   description: {
     id: 'screens.Sync.NoWifiDisplay.description',
     defaultMessage: 'Check device’s settings and connectivity.',
   },
+  // primary-string
   buttonText: {
-    id: 'screens.Sync.NoWifiDisplay.buttonText',
+    id: '$1screens.Sync.NoWifiDisplay.buttonText',
     defaultMessage: 'Close',
   },
 });

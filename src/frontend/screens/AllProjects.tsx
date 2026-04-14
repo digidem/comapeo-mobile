@@ -17,12 +17,14 @@ import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
 import CheckMark from '../images/CheckMark.svg';
 
 const m = defineMessages({
+  // primary-string
   newCollab: {
-    id: 'allProjects.newCollab',
+    id: '$1allProjects.newCollab',
     defaultMessage: 'New Collaboration',
   },
+  // primary-string
   close: {
-    id: 'allProjects.close',
+    id: '$1allProjects.close',
     defaultMessage: 'Close',
   },
 });

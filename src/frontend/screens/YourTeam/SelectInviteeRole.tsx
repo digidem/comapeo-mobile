@@ -12,8 +12,9 @@ import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
+  // primary-string
   title: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title',
+    id: '$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title',
     defaultMessage: 'Select a Role',
   },
   selectingDevice: {
@@ -68,6 +69,7 @@ export const SelectInviteeRole: NativeNavigationComponent<
 };
 
 type RoleCardProps = {
+  // primary-string
   role: 'participant' | 'coordinator';
   onPress: () => void;
 };

@@ -12,16 +12,18 @@ import {SecondaryButton} from './Buttons';
 import {BLUE_GREY} from '../lib/styles';
 
 const m = defineMessages({
+  // primary-string
   somethingWrong: {
-    id: 'sharedComponents.ErrorBottomSheet.somethingWrong',
+    id: '$1sharedComponents.ErrorBottomSheet.somethingWrong',
     defaultMessage: 'Something Went Wrong',
   },
   advanced: {
     id: 'sharedComponents.ErrorBottomSheet.advanced',
     defaultMessage: 'Advanced',
   },
+  // primary-string
   close: {
-    id: 'sharedComponents.ErrorBottomSheet.close',
+    id: '$1sharedComponents.ErrorBottomSheet.close',
     defaultMessage: 'Close',
   },
 });

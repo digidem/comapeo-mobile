@@ -12,21 +12,22 @@ import InviteDevices from '../../images/AddPerson.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {useTracking} from '../../hooks/useTracking';
 
+// primary-string ENTIRE SCREEN
 const m = defineMessages({
   title: {
-    id: 'screens.Settings.Collaborate.title',
+    id: '$1screens.Settings.Collaborate.title',
     defaultMessage: 'Collaborate',
   },
   joinProject: {
-    id: 'screens.Settings.Collaborate.joinProject',
+    id: '$1screens.Settings.Collaborate.joinProject',
     defaultMessage: 'Join a Project',
   },
   startNewProject: {
-    id: 'screens.Settings.Collaborate.startNewProject',
+    id: '$1screens.Settings.Collaborate.startNewProject',
     defaultMessage: 'Start New Project',
   },
   inviteDevices: {
-    id: 'screens.Settings.Collaborate.inviteDevices',
+    id: '$1screens.Settings.Collaborate.inviteDevices',
     defaultMessage: 'Invite Devices',
   },
 });

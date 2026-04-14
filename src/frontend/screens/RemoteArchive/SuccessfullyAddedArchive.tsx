@@ -10,8 +10,9 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 
 const m = defineMessages({
+  // primary-string
   archiveAdded: {
-    id: 'ProjectSettings.RemoteArchive.Success.archiveAdded',
+    id: '$1ProjectSettings.RemoteArchive.Success.archiveAdded',
     defaultMessage: 'Remote Archive Added',
   },
   canSyncOnInternet: {
@@ -19,8 +20,9 @@ const m = defineMessages({
     defaultMessage:
       'All project devices can exchange with this Archive, sharing data over the internet.',
   },
+  // primary-string
   close: {
-    id: 'ProjectSettings.RemoteArchive.Success.close',
+    id: '$1ProjectSettings.RemoteArchive.Success.close',
     defaultMessage: 'Close',
   },
 });

@@ -29,22 +29,23 @@ import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {UIActivityIndicator} from 'react-native-indicators';
 
+// primary-string ENTIRE
 const m = defineMessages({
   header: {
-    id: 'screens.DeviceNaming.header',
+    id: '$1screens.DeviceNaming.header',
     defaultMessage: 'Name Your Device',
   },
   description: {
-    id: 'screens.DeviceNaming.description',
+    id: '$1screens.DeviceNaming.description',
     defaultMessage:
       'Distinct names help collaborators using CoMapeo to recognize you.',
   },
   save: {
-    id: 'screens.DeviceNaming.save',
+    id: '$1screens.DeviceNaming.save',
     defaultMessage: 'Save',
   },
   placeholder: {
-    id: 'screens.DeviceNaming.placeholder',
+    id: '$1screens.DeviceNaming.placeholder',
     defaultMessage: 'Device Name',
   },
 });

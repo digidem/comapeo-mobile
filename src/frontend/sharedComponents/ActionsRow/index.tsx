@@ -15,18 +15,21 @@ import {CustomCircleIcon} from './CustomCircleIcon';
 import {useFocusEffect} from '@react-navigation/native';
 
 const m = defineMessages({
+  // primary-string
   audioButton: {
-    id: 'screens.ObservationEdit.ObservationEditView.audioButton',
+    id: '$1screens.ObservationEdit.ObservationEditView.audioButton',
     defaultMessage: 'Audio',
     description: 'Button label for adding audio',
   },
+  // primary-string
   photoButton: {
-    id: 'screens.ObservationEdit.ObservationEditView.photoButton',
+    id: '$1screens.ObservationEdit.ObservationEditView.photoButton',
     defaultMessage: 'Photo',
     description: 'Button label for adding photo',
   },
+  // primary-string
   detailsButton: {
-    id: 'screens.ObservationEdit.ObservationEditView.detailsButton',
+    id: '$1screens.ObservationEdit.ObservationEditView.detailsButton',
     defaultMessage: 'Details',
     description: 'Button label to add details',
   },

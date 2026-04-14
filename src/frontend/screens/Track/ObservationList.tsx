@@ -13,12 +13,14 @@ interface TrackObservation {
 }
 
 const m = defineMessages({
+  // primary-string
   observations: {
-    id: 'screens.Track.ObservationList.observations',
+    id: '$1screens.Track.ObservationList.observations',
     defaultMessage: 'Observations',
   },
+  // primary-string
   observation: {
-    id: 'screens.Track.ObservationList.observation',
+    id: '$1screens.Track.ObservationList.observation',
     defaultMessage: 'Observation',
   },
 });

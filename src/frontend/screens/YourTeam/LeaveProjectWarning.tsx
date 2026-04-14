@@ -20,40 +20,40 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 import MobilePhoneArrowIcon from '../../images/MobilePhoneArrow.svg';
-
+// primary-string ENTIRE
 const m = defineMessages({
   lastCoordinatorTitle: {
-    id: 'screens.LeaveProjectWarning.lastCoordinatorTitle',
+    id: '$1screens.LeaveProjectWarning.lastCoordinatorTitle',
     defaultMessage: 'Device is last coordinator.',
   },
   lastDeviceTitle: {
-    id: 'screens.LeaveProjectWarning.lastDeviceTitle',
+    id: '$1screens.LeaveProjectWarning.lastDeviceTitle',
     defaultMessage: 'Device is last device.',
   },
   lastCoordinatorDescription: {
-    id: 'screens.LeaveProjectWarning.lastCoordinatorDescription',
+    id: '$1screens.LeaveProjectWarning.lastCoordinatorDescription',
     defaultMessage:
       'If this device leaves, then no other device can add or remove devices, adjust project info, or update the categories set.',
   },
   lastDeviceDescription: {
-    id: 'screens.LeaveProjectWarning.lastDeviceDescription',
+    id: '$1screens.LeaveProjectWarning.lastDeviceDescription',
     defaultMessage:
       'If this device leaves, then all data on this project will be lost.',
   },
   inviteRecommendation: {
-    id: 'screens.LeaveProjectWarning.inviteRecommendation',
+    id: '$1screens.LeaveProjectWarning.inviteRecommendation',
     defaultMessage: 'To avoid this, invite a new device as a coordinator.',
   },
   exportRecommendation: {
-    id: 'screens.LeaveProjectWarning.exportRecommendation',
+    id: '$1screens.LeaveProjectWarning.exportRecommendation',
     defaultMessage: 'Before leaving, export any important data.',
   },
   continueButton: {
-    id: 'screens.LeaveProjectWarning.continueButton',
+    id: '$1screens.LeaveProjectWarning.continueButton',
     defaultMessage: 'Continue',
   },
   cancel: {
-    id: 'screens.LeaveProjectWarning.cancel',
+    id: '$1screens.LeaveProjectWarning.cancel',
     defaultMessage: 'Cancel',
   },
 });

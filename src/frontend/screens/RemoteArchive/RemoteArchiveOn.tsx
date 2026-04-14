@@ -8,12 +8,14 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
+  // primary-string
   navTitle: {
-    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle',
+    id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle',
     defaultMessage: 'Remote Archive',
   },
+  // primary-string
   remoteArchiveOn: {
-    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn',
+    id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn',
     defaultMessage: 'Remote Archive is On',
   },
   syncWithInternet: {
@@ -57,8 +59,9 @@ const m = defineMessages({
     id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.dateAdded',
     defaultMessage: 'Date Added',
   },
+  // primary-string
   removeServer: {
-    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.removeServer',
+    id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOn.removeServer',
     defaultMessage: 'Remove Server',
   },
 });

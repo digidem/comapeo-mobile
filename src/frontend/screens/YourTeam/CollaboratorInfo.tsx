@@ -21,9 +21,10 @@ import {useIsLastCoordinator} from '../../hooks/useIsLastCoordinator';
 import {useIsLastMember} from '../../hooks/useIsLastMember';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
+// primary-string
 const m = defineMessages({
   navTitle: {
-    id: 'screens.CollaboratorInfo.navTitle',
+    id: '$1screens.CollaboratorInfo.navTitle',
     defaultMessage: 'Collaborator Info',
   },
   addedOn: {

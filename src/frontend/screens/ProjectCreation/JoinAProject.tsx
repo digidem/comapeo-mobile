@@ -8,20 +8,21 @@ import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription'
 
 const m = defineMessages({
   title: {
-    id: 'screens.Settings.JoinAProject.title',
+    id: '$1screens.Settings.JoinAProject.title',
     defaultMessage: 'Join a Project',
   },
   heading: {
-    id: 'screens.Settings.JoinAProject.heading',
+    id: '$1screens.Settings.JoinAProject.heading',
     defaultMessage: 'Coordinate with your team.',
   },
   description: {
-    id: 'screens.Settings.JoinAProject.description',
+    id: '$1screens.Settings.JoinAProject.description',
     defaultMessage:
       'Ask a project coordinator to receive a project invitation.',
   },
 });
 
+// primary-string ENTIRE
 export const JoinAProject: NativeNavigationComponent<'JoinAProject'> = () => {
   const {formatMessage: t} = useIntl();
 

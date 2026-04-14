@@ -16,27 +16,27 @@ import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 const m = defineMessages({
   success: {
-    id: 'screens.DeviceNaming.Success.success',
+    id: '$1screens.DeviceNaming.Success.success',
     defaultMessage: 'Success!',
   },
   deviceReady: {
-    id: 'screens.DeviceNaming.Success.deviceReady',
+    id: '$1screens.DeviceNaming.Success.deviceReady',
     defaultMessage: '{deviceName} is ready!',
   },
   chooseProject: {
-    id: 'screens.DeviceNaming.Success.chooseProject',
+    id: '$1screens.DeviceNaming.Success.chooseProject',
     defaultMessage: 'Choose from below to start your first project.',
   },
   joinProject: {
-    id: 'screens.DeviceNaming.Success.joinProject',
+    id: '$1screens.DeviceNaming.Success.joinProject',
     defaultMessage: 'Join a Project',
   },
   mapOnYourOwn: {
-    id: 'screens.DeviceNaming.Success.mapOnYourOwn',
+    id: '$1screens.DeviceNaming.Success.mapOnYourOwn',
     defaultMessage: 'Map On Your Own',
   },
 });
-
+// primary-string ENTIRE
 export const Success = ({
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'Success'>) => {

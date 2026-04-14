@@ -13,8 +13,9 @@ import {
 } from '../../../contexts/CoordinateFormatStoreContext';
 
 const m = defineMessages({
+  // primary-string
   title: {
-    id: 'screens.CoordinateFormat.title',
+    id: '$1screens.CoordinateFormat.title',
     defaultMessage: 'Coordinate Format',
     description: 'Title coordinate format screen',
   },

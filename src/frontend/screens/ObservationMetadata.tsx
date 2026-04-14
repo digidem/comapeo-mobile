@@ -24,8 +24,9 @@ import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
 import {formatCoords} from '../lib/coordinateFormat';
 
 const m = defineMessages({
+  // primary-string
   navTitle: {
-    id: 'screens.ObservationMetadataVerified.navTitle',
+    id: '$1screens.ObservationMetadataVerified.navTitle',
     defaultMessage: 'Observation Metadata',
   },
   howWeCheck: {

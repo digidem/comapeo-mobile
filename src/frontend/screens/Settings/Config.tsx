@@ -18,8 +18,9 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
+  // primary-string
   navTitle: {
-    id: 'screens.Settings.Config.navTitle',
+    id: '$1screens.Settings.Config.navTitle',
     defaultMessage: 'Categories',
   },
   name: {
@@ -34,16 +35,19 @@ const m = defineMessages({
     id: 'screens.Settings.Config.created',
     defaultMessage: 'Created {date} at {time}',
   },
+  // primary-string
   importCategories: {
-    id: 'screens.Settings.Config.importCategories',
+    id: '$1screens.Settings.Config.importCategories',
     defaultMessage: 'Import Categories',
   },
+  // primary-string
   categoryImportTitle: {
-    id: 'screens.Settings.Config.importSuccessTitle',
+    id: '$1screens.Settings.Config.importSuccessTitle',
     defaultMessage: 'Successfully imported categories:',
   },
+  // primary-string
   okButton: {
-    id: 'screens.Settings.Config.okButton',
+    id: '$1screens.Settings.Config.okButton',
     defaultMessage: 'OK',
   },
 });

@@ -36,6 +36,7 @@ import {DownloadIcon} from '../../sharedComponents/icons';
 import {useMutation} from '@tanstack/react-query';
 
 const m = defineMessages({
+  // primary-string
   screenTitle: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.screenTitle',
     defaultMessage: 'Background Map',
@@ -93,7 +94,7 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText',
     defaultMessage: 'Delete Map',
   },
-
+  // primary-string
   importErrorTitle: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.importErrorTitle',
     defaultMessage: 'Import Error',
@@ -102,10 +103,12 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.importErrorDescription',
     defaultMessage: 'Unable to import the file. Please go back and try again.',
   },
+  // primary-string
   sendMap: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.sendMap',
     defaultMessage: 'Send Map',
   },
+  // primary-string
   removeMap: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.removeMap',
     defaultMessage: 'Remove Map',
@@ -118,6 +121,7 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.megabytes',
     defaultMessage: '{size} MB',
   },
+  // primary-string
   chooseFile: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.chooseFile',
     defaultMessage: 'Choose File',

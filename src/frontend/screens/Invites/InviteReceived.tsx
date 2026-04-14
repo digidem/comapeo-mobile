@@ -20,20 +20,23 @@ import {useTracking} from '../../hooks/useTracking';
 import GraphIcon from '../../images/Graph.svg';
 
 const m = defineMessages({
+  // primary-string
   joinProject: {
-    id: 'screens.InviteReceived.joinProject',
+    id: '$1screens.InviteReceived.joinProject',
     defaultMessage: 'Join Project',
   },
+  // primary-string
   declineInvite: {
-    id: 'screens.InviteReceived.declineInvite',
+    id: '$1screens.InviteReceived.declineInvite',
     defaultMessage: 'Decline Invite',
   },
   invitedToJoin: {
     id: 'screens.InviteReceived.invitedToJoin',
     defaultMessage: "You've been invited to...",
   },
+  // primary-string
   joinAsRole: {
-    id: 'screens.InviteReceived.joinAsRole',
+    id: '$1screens.InviteReceived.joinAsRole',
     defaultMessage: 'Join as a {role}?',
   },
   coordinatorRole: {

@@ -16,25 +16,26 @@ import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {deviceType} from 'expo-device';
 import * as Sentry from '@sentry/react-native';
 
+// primary-string ENTIRE SCREEN
 const m = defineMessages({
   title: {
-    id: 'screens.Setting.ProjectSettings.DeviceName.EditScreen.title',
+    id: '$1screens.Setting.ProjectSettings.DeviceName.EditScreen.title',
     defaultMessage: 'Device Name',
   },
   deviceNameLabel: {
-    id: 'screens.Setting.ProjectSettings.DeviceName.EditScreen.deviceNameLabel',
+    id: '$1screens.Setting.ProjectSettings.DeviceName.EditScreen.deviceNameLabel',
     defaultMessage: 'Edit Device Name',
   },
   discardChangesAlertTitle: {
-    id: 'screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle',
+    id: '$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle',
     defaultMessage: 'Discard changes?',
   },
   discardChangesAlertConfirmText: {
-    id: 'screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertConfirmText',
+    id: '$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertConfirmText',
     defaultMessage: 'Discard Changes',
   },
   discardChangesAlertCancelText: {
-    id: 'screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertCancelText',
+    id: '$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertCancelText',
     defaultMessage: 'Continue Editing',
   },
 });

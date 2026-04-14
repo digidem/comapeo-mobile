@@ -10,13 +10,14 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useFocusEffect} from '@react-navigation/native';
 
+// primary-string ENTIRE
 const m = defineMessages({
   youveLeftProject: {
-    id: 'screens.LeftProjectConfirmation.youveLeftProject',
+    id: '$1screens.LeftProjectConfirmation.youveLeftProject',
     defaultMessage: "You've left the project.",
   },
   openDefaultProject: {
-    id: 'screens.LeftProjectConfirmation.openDefaultProject',
+    id: '$1screens.LeftProjectConfirmation.openDefaultProject',
     defaultMessage: 'Open {deviceName}',
   },
 });

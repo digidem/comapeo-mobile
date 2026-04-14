@@ -17,6 +17,7 @@ import {useRemoveCustomMapFile} from '@comapeo/core-react';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
+  // primary-string
   deleteCustomMapTitle: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle',
     defaultMessage: 'Delete Custom Map?',
@@ -26,14 +27,17 @@ const m = defineMessages({
     defaultMessage:
       'This will delete the map and its offline areas. No collected observation data will be deleted.',
   },
+  // primary-string
   cannotBeUndone: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone',
     defaultMessage: 'This cannot be undone.',
   },
+  // primary-string
   deleteMapButtonText: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText',
     defaultMessage: 'Delete Map',
   },
+  // primary-string
   close: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.close',
     defaultMessage: 'Close',

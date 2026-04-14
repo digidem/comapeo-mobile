@@ -8,37 +8,38 @@ import {useSecurityState} from '../../contexts/SecurityStoreContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {MEDIUM_GREY, RED} from '../../lib/styles';
 
+// primary-string ENTIRE
 const m = defineMessages({
   title: {
-    id: 'screens.Security.title',
+    id: '$1screens.Security.title',
     defaultMessage: 'Security',
   },
   securitySubheader: {
-    id: 'screens.Security.securitySubheader',
+    id: '$1screens.Security.securitySubheader',
     defaultMessage: 'Device Security',
   },
   passcodeHeader: {
-    id: 'screens.Security.passcodeHeader',
+    id: '$1screens.Security.passcodeHeader',
     defaultMessage: 'App Passcode',
   },
   passDesriptionPassNotSet: {
-    id: 'screens.Security.passDesriptionPassNotSet',
+    id: '$1screens.Security.passDesriptionPassNotSet',
     defaultMessage: 'Passcode not set',
   },
   passDesriptionPassSet: {
-    id: 'screens.Security.passDesriptionPassSet',
+    id: '$1screens.Security.passDesriptionPassSet',
     defaultMessage: 'Passcode is set',
   },
   obscurePasscodeHeader: {
-    id: 'screens.Security.obscurePasscodeHeader',
+    id: '$1screens.Security.obscurePasscodeHeader',
     defaultMessage: 'Obscure Passcode',
   },
   obscurePassDescriptonPassSet: {
-    id: 'screens.Security.obscurePasscodeDescriptionActivated',
+    id: '$1screens.Security.obscurePasscodeDescriptionActivated',
     defaultMessage: 'Protect your device against seizure',
   },
   obscurePassDescriptonPassNotSet: {
-    id: 'screens.Security.obscurePasscodeDescription',
+    id: '$1screens.Security.obscurePasscodeDescription',
     defaultMessage: 'To use, turn on App Passcode',
   },
 });

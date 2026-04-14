@@ -398,7 +398,7 @@
     "message": "km"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "Afsluiten"
   },
   "allProjects.newCollab": {
     "message": "Nieuwe samenwerking"
@@ -859,7 +859,7 @@
     "message": "Gebruik Vroegtijdige Toegang Functies"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Afsluiten"
   },
   "screens.EarlyAccessTurnedOff.desc": {
     "message": "Gegevens van Vroegtijdige Toegang worden verborgen na het uitschakelen van de toegang, maar zijn nog steeds opgeslagen. Schakel op elk moment terug om het te zien."
@@ -1480,12 +1480,18 @@
     "description": "message shown when there is an unexpected error when loading observations",
     "message": "Fout bij het laden van waarnemingen. Probeer CoMapeo te sluiten en opnieuw te starten."
   },
+  "screens.ObservationsList.filter.all": {
+    "message": "Allemaal"
+  },
+  "screens.ObservationsList.filter.justYou": {
+    "message": "U alleen"
+  },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Bezig te laden… dit kan even duren na het synchroniseren met een nieuw apparaat"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "Afsluiten"
   },
   "screens.Onboarding.JoinProjectIntro.description": {
     "message": "Coördineer met je team om een projectuitnodiging te ontvangen."
@@ -1497,7 +1503,7 @@
     "message": "Audio-opnamen toevoegen."
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "Afsluiten"
   },
   "screens.Onboarding.MapOnYourOwnIntro.description": {
     "message": "Verken CoMapeo—nodig medewerkers op elk gewenst moment uit."
@@ -1681,7 +1687,7 @@
     "message": "Projectstatistieken worden gedeeld met Awana Digitaal"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Afsluiten"
   },
   "screens.ProjectStatisticsTurnedOff.desc": {
     "message": "Deze wijziging zal de volgende keer dat u teamleden vervangt van kracht worden."
@@ -1690,7 +1696,7 @@
     "message": "Project Statistieken Instrument UIT"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "Afsluiten"
   },
   "screens.RemovedFromProjectBottomSheet.reasonLabel": {
     "message": "Reden: {reason}"
@@ -2169,8 +2175,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Wijzigen"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Ga terug"
+  "sharedComponents.ErrorBottomSheet.advanced": {
+    "message": "Geavanceerd"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Afsluiten"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Er is iets misgegaan"

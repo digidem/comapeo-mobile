@@ -76,9 +76,6 @@
     "description": "Button to confirm discarding the track",
     "message": "परिवर्तन रद्द"
   },
-  "allProjects.close": {
-    "message": "Open Settings"
-  },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
     "message": "Android build नम्बर"
@@ -175,9 +172,6 @@
   },
   "screens.DeviceNaming.save": {
     "message": "संग्रह"
-  },
-  "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
@@ -419,18 +413,6 @@
     "description": "message shown whilst observations are loading",
     "message": "लाेड हुँदै... नयाँ उपकरणसँग सिंक्राेनाइज हुन केहि समय लाग्न सक्छ"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
-  },
-  "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
-  },
-  "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
-  },
-  "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
-  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "यहाँ के भइ राखेकाे छ?"
@@ -552,9 +534,6 @@
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "परिवर्तन"
-  },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "पछाडी जानुहाेस"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "पछाडी जानुहाेस"

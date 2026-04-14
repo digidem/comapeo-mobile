@@ -15,10 +15,10 @@
     "message": "Fechar"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "Fechar"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Fechar"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
@@ -45,16 +45,16 @@
     "message": "CoMapeo Alert"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "Fechar"
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "Fechar"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Fechar"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "Fechar"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
@@ -130,5 +130,8 @@
   },
   "screens.TrackRecordingActive.warningMessage": {
     "message": "You’re currently recording a track. To join project, stop recording"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Fechar"
   }
 }

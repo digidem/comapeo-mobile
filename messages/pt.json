@@ -282,7 +282,7 @@
     "message": "Segurança"
   },
   "Screens.Settings.AppSettings.aboutCoMapeo": {
-    "message": "Sobre o CoMapeo"
+    "message": "Sobre CoMapeo"
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Sistema de Coordenadas"
@@ -398,7 +398,7 @@
     "message": "km"
   },
   "allProjects.close": {
-    "message": "Abrir Configurações"
+    "message": "Fechar"
   },
   "allProjects.newCollab": {
     "message": "Nova colaboração"
@@ -856,7 +856,7 @@
     "message": "Usar recursos de Acesso Antecipado"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Abrir Configurações"
+    "message": "Fechar"
   },
   "screens.EarlyAccessTurnedOff.desc": {
     "message": "Os dados do Acesso Antecipado ficarão ocultos após desativar, mas ainda é salvo. Volte a qualquer momento para vê-los."
@@ -1477,12 +1477,18 @@
     "description": "message shown when there is an unexpected error when loading observations",
     "message": "Erro ao carregar observações. Tente sair e reiniciar o CoMapeo."
   },
+  "screens.ObservationsList.filter.all": {
+    "message": "Todas"
+  },
+  "screens.ObservationsList.filter.justYou": {
+    "message": "Apenas você"
+  },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Carregando... pode demorar um pouco após a sincronização com um novo dispositivo"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Abrir Configurações"
+    "message": "Fechar"
   },
   "screens.Onboarding.JoinProjectIntro.description": {
     "message": "Coordene com sua equipe para receber um convite para um projeto."
@@ -1494,7 +1500,7 @@
     "message": "Adicione gravações de áudio."
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Abrir Configurações"
+    "message": "Fechar"
   },
   "screens.Onboarding.MapOnYourOwnIntro.description": {
     "message": "Explore o CoMapeo — convide colaboradores a qualquer hora."
@@ -1678,7 +1684,7 @@
     "message": "Estatísticas do projeto são compartilhadas com Awana Digital"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Abrir Configurações"
+    "message": "Fechar"
   },
   "screens.ProjectStatisticsTurnedOff.desc": {
     "message": "Esta alteração entrará em vigor na próxima vez que você trocar com os membros da equipe."
@@ -1687,7 +1693,7 @@
     "message": "Estatísticas do Projeto OFF"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Abrir Configurações"
+    "message": "Fechar"
   },
   "screens.RemovedFromProjectBottomSheet.reasonLabel": {
     "message": "Motivo: {reason}"
@@ -2166,8 +2172,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Alterar"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Voltar"
+  "sharedComponents.ErrorBottomSheet.advanced": {
+    "message": "Avançado"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Fechar"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Ocorreu um erro"

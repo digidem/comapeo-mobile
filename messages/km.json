@@ -86,7 +86,7 @@
     "message": "លះបង់​ការកែប្រែ"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "បិទ"
   },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
@@ -141,7 +141,7 @@
     "message": "រក្សាទុក"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "បិទ"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
@@ -394,21 +394,24 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "បន្ថែមការសង្កេត"
   },
+  "screens.ObservationsList.filter.all": {
+    "message": "ទាំងអស់"
+  },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "កំពុងធ្វើការ ... វាត្រូវការពេលមួយរយៈ បន្ទាប់ពីធ្វើសមកាលកម្មជាមួយឧបករណ៍ថ្មីរួចរាល់"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "បិទ"
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "បិទ"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "បិទ"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "បិទ"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -531,5 +534,8 @@
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "ផ្លាស់ប្តូរ"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "បិទ"
   }
 }

@@ -70,9 +70,6 @@
     "description": "Button to confirm discarding the track",
     "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း"
   },
-  "allProjects.close": {
-    "message": "Open Settings"
-  },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
     "message": "အန့်ဒရိုက် Android တည်ဆောက် နံပါတ်"
@@ -134,9 +131,6 @@
   },
   "screens.DataPrivacy.next": {
     "message": "နောက်ထပ်"
-  },
-  "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
@@ -284,18 +278,6 @@
     "description": "Default name of observation with no matching preset",
     "message": "လေ့လာတွေ့ရှိချက်များ"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
-  },
-  "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
-  },
-  "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
-  },
-  "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
-  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
@@ -399,9 +381,6 @@
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "ပြောင်းလဲသည်"
-  },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "နောက်သို့ ပြန်သွား"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "နောက်သို့ ပြန်သွား"

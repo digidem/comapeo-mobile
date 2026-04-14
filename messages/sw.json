@@ -98,7 +98,7 @@
     "message": "Tupa mabadiliko"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "Funga"
   },
   "screen.EditProjectDetails.projectName": {
     "message": "Jina la Mradi"
@@ -244,7 +244,7 @@
     "message": "Hifadhi"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Funga"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Weka nambari yako ya siri"
@@ -607,24 +607,27 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Ongeza Uchunguzi"
   },
+  "screens.ObservationsList.filter.all": {
+    "message": "Yote"
+  },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Inapakia... hii inaweza kuchukua muda baada ya kusawazisha na kifaa kipya"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "Funga"
   },
   "screens.Onboarding.JoinProjectIntro.title": {
     "message": "Jiunge na Mradi"
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "Funga"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Funga"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "Funga"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -796,8 +799,8 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Badilisha"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Rudi Nyuma"
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Funga"
   },
   "soloProject.inviteCollaborators.goBack": {
     "message": "Rudi Nyuma"

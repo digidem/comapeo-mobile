@@ -395,7 +395,7 @@
     "message": "km"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "閉じる"
   },
   "allProjects.newCollab": {
     "message": "新しいコラボレーション"
@@ -853,7 +853,7 @@
     "message": "早期アクセス機能を使用する"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "閉じる"
   },
   "screens.EarlyAccessTurnedOff.desc": {
     "message": "アーリーアクセスのデータは、オフにすると非表示になりますが、保存されています。いつでも戻って確認できます。"
@@ -1474,8 +1474,14 @@
     "description": "message shown when there is an unexpected error when loading observations",
     "message": "観察記録の読み込み中にエラーが発生しました。CoMapeoを終了して再起動してください。"
   },
+  "screens.ObservationsList.filter.all": {
+    "message": "すべて"
+  },
+  "screens.ObservationsList.filter.justYou": {
+    "message": "あなただけ"
+  },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "閉じる"
   },
   "screens.Onboarding.JoinProjectIntro.description": {
     "message": "プロジェクトの招待状を受け取るには、チームと調整してください。"
@@ -1487,7 +1493,7 @@
     "message": "音声録音を追加します。"
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "閉じる"
   },
   "screens.Onboarding.MapOnYourOwnIntro.description": {
     "message": "CoMapeoを探索する — いつでもコラボレーターを招待できます。"
@@ -1671,7 +1677,7 @@
     "message": "プロジェクト統計はAwana Digital と共有されます"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "閉じる"
   },
   "screens.ProjectStatisticsTurnedOff.desc": {
     "message": "この変更は、次回チームメンバーと交換する際に有効になります。"
@@ -1680,7 +1686,7 @@
     "message": "プロジェクト統計情報|OFF"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "閉じる"
   },
   "screens.RemovedFromProjectBottomSheet.reasonLabel": {
     "message": "理由: {reason}"
@@ -2156,8 +2162,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "変更"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "戻る"
+  "sharedComponents.ErrorBottomSheet.advanced": {
+    "message": "高度な設定"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "閉じる"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "問題が発生しました"

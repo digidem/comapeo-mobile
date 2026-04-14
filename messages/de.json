@@ -398,7 +398,7 @@
     "message": "km"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "Schließen"
   },
   "allProjects.newCollab": {
     "message": "Neue Zusammenarbeit"
@@ -859,7 +859,7 @@
     "message": "Frühe Zugriffsfunktionen verwenden"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Schließen"
   },
   "screens.EarlyAccessTurnedOff.desc": {
     "message": "Daten aus Early Access werden nach dem Ausschalten ausgeblendet, aber immer noch gespeichert. Schalten Sie sie jederzeit wieder ein, um sie zu sehen."
@@ -1480,12 +1480,18 @@
     "description": "message shown when there is an unexpected error when loading observations",
     "message": "Fehler beim Laden von Beobachtungen. Versuchen Sie CoMapeo zu beenden und neu zu starten."
   },
+  "screens.ObservationsList.filter.all": {
+    "message": "Alle"
+  },
+  "screens.ObservationsList.filter.justYou": {
+    "message": "Nur Sie"
+  },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Laden… Dies kann einige Zeit nach dem synchronisieren mit einem neuen Gerät dauern"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "Schließen"
   },
   "screens.Onboarding.JoinProjectIntro.description": {
     "message": "Koordinieren Sie Ihr Team, um eine Einladung zu erhalten."
@@ -1497,7 +1503,7 @@
     "message": "Audioaufnahmen hinzufügen."
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "Schließen"
   },
   "screens.Onboarding.MapOnYourOwnIntro.description": {
     "message": "Entdecken Sie CoMapeo – laden Sie Mitarbeiter jederzeit ein."
@@ -1681,7 +1687,7 @@
     "message": "Projekt-Statistiken werden mit Awana Digital geteilt"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Schließen"
   },
   "screens.ProjectStatisticsTurnedOff.desc": {
     "message": "Diese Änderung wird beim nächsten Austausch mit Teammitgliedern wirksam."
@@ -1690,7 +1696,7 @@
     "message": "Projektstatistik | AUS"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "Schließen"
   },
   "screens.RemovedFromProjectBottomSheet.reasonLabel": {
     "message": "Grund: {reason}"
@@ -2169,8 +2175,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Bearbeiten"
   },
-  "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Gehe zurück"
+  "sharedComponents.ErrorBottomSheet.advanced": {
+    "message": "Erweitert"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Schließen"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Etwas ist schief"

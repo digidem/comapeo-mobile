@@ -59,7 +59,7 @@
     "message": "Toochinee weecheet"
   },
   "allProjects.close": {
-    "message": "Open Settings"
+    "message": "Keer"
   },
   "screens.AboutSettings.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",
@@ -84,7 +84,7 @@
     "message": "Noomtee"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Keer"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
@@ -124,16 +124,16 @@
     "message": "CoMapeo Alert"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Open Settings"
+    "message": "Keer"
   },
   "screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Open Settings"
+    "message": "Keer"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
-    "message": "Open Settings"
+    "message": "Keer"
   },
   "screens.RemovedFromProjectBottomSheet.close": {
-    "message": "Open Settings"
+    "message": "Keer"
   },
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
     "message": "Toochinee weecheet?"
@@ -222,5 +222,8 @@
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
     "description": "Shown in new observation screen whilst looking for GPS",
     "message": "Cheeng'…"
+  },
+  "sharedComponents.ErrorBottomSheet.close": {
+    "message": "Keer"
   }
 }

@@ -34,7 +34,7 @@ const m = defineMessages({
     defaultMessage: 'Audio Recording',
   },
   share: {
-    id: 'screens.AudioAttachmentPlayback.share',
+    id: '$1screens.AudioAttachmentPlayback.share',
     defaultMessage: 'Share',
   },
 });

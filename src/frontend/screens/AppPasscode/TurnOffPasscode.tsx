@@ -19,25 +19,25 @@ import {useSecurityState} from '../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   appUsePasscode: {
-    id: 'screens.AppPasscode.TurnOffPasscode.usePasscode',
+    id: '$1screens.AppPasscode.TurnOffPasscode.usePasscode',
     defaultMessage: 'Use App Passcode',
   },
   changePasscode: {
-    id: 'screens.AppPasscode.TurnOffPasscode.changePasscode',
+    id: '$1screens.AppPasscode.TurnOffPasscode.changePasscode',
     defaultMessage: 'Change App Passcode',
   },
   description: {
-    id: 'screens.AppPasscode.TurnOffPasscode.description',
+    id: '$1screens.AppPasscode.TurnOffPasscode.description',
     defaultMessage:
       'App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app.',
   },
   currentlyUsing: {
-    id: 'screens.AppPasscode.TurnOffPasscode.currentlyUsing',
+    id: '$1screens.AppPasscode.TurnOffPasscode.currentlyUsing',
     defaultMessage:
       'You are currently using App Passcode. See below to stop using or change your passcode.',
   },
   title: {
-    id: 'screens.AppPasscode.TurnOffPasscode.title',
+    id: '$1screens.AppPasscode.TurnOffPasscode.title',
     defaultMessage: 'App Passcode',
   },
 });

@@ -18,7 +18,7 @@ import {useSecurityState} from '../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   title: {
-    id: 'screens.AudioPermission.title',
+    id: '$1screens.AudioPermission.title',
     defaultMessage: 'Recording Audio with CoMapeo',
     description: 'Screen title for audio permission screen',
   },
@@ -29,12 +29,12 @@ const m = defineMessages({
     description: 'Screen description for audio permission screen',
   },
   notNowButtonText: {
-    id: 'screens.AudioPermission.Button.notNow',
+    id: '$1screens.AudioPermission.Button.notNow',
     defaultMessage: 'Not Now',
     description: 'Screen button text for not granting audio permission',
   },
   allowButtonText: {
-    id: 'screens.AudioPermission.Button.allow',
+    id: '$1screens.AudioPermission.Button.allow',
     defaultMessage: 'Allow',
     description: 'Screen button text for granting the audio permission',
   },

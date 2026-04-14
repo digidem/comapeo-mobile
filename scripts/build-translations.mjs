@@ -44,11 +44,13 @@ async function loadMessages() {
 
   /** @type {Array<[string, any]>} */
   const loadedMessages = await Promise.all(
-    files.map(async file => {
-      const lang = path.parse(file.name).name;
-      const msgs = JSON.parse(await readFile(path.join(messagesDir, file.name)));
-      return [lang, msgs];
-    }),
+    files
+      .filter(file => file.isFile())
+      .map(async file => {
+        const lang = path.parse(file.name).name;
+        const msgs = JSON.parse(await readFile(path.join(messagesDir, file.name)));
+        return [lang, msgs];
+      }),
   );
 
   const result = {};

@@ -32,6 +32,12 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Ga terug"
   },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
   "Modal.GPSDisable.title": {
     "message": "GPS uitgeschakeld"
   },
@@ -397,6 +403,10 @@
     "description": "Degrees/Minutes/Seconds coordinate format",
     "message": "Graden/Minuten/Seconden (DMS)"
   },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "Universal Transverse Mercator (UTM)"
+  },
   "screens.DataAndPrivacy.appUsageId": {
     "message": "ID-nummers worden willekeurig gecodeerd en elke maand veranderd."
   },
@@ -465,6 +475,9 @@
   },
   "screens.EnterPassword.lockoutMessage": {
     "message": "Probeer het opnieuw in {minutes, plural, one {# minuut} other {# minuten}}"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Incorrect passcode, please try again"
   },
   "screens.ExchangeSettingsBottomSheet.everythingDesc": {
     "message": "Foto's op volledige grootte en audio. Gebruikt meer opslag."
@@ -666,11 +679,17 @@
   "screens.ManualGpsScreen.easting": {
     "message": "Oost"
   },
+  "screens.ManualGpsScreen.eastingSuffix": {
+    "message": "mE"
+  },
   "screens.ManualGpsScreen.invalidCoordinates": {
     "message": "Ongeldige coördinaten. Breedtegraad moet tussen -90 en 90 zijn. Lengte moet tussen -180 en 180 zijn"
   },
   "screens.ManualGpsScreen.northing": {
     "message": "Noord"
+  },
+  "screens.ManualGpsScreen.northingSuffix": {
+    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
@@ -681,6 +700,9 @@
   },
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone nummer"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is een beveiligingsfunctie waarmee je CoMapeo kunt openen in een decoy modus die al je gegevens verbergt. Het invoeren van de Obscure toegangscode op het intro scherm geeft een lege versie van CoMapeo weer die u in staat stelt demonstratie-waarnemingen te maken die niet in de CoMapeo database zijn opgeslagen."
@@ -697,6 +719,10 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Waarneming"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Waarneming verwijderen?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
@@ -1012,6 +1038,9 @@
     "description": "Category title for new track screen",
     "message": "Bijhouden"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Uitnodiging bekijken"
   },
@@ -1032,6 +1061,9 @@
   },
   "screens.Settings.Config.created": {
     "message": "{date} aangemaakt op {time}"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
   },
   "screens.Settings.Config.projectName": {
     "message": "Project naam:"
@@ -1068,6 +1100,12 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription": {
     "message": "Dit zal de kaart en de offline gebieden verwijderen. Geen verzamelde waarnemingsgegevens zullen worden verwijderd."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "Kan het bestand niet importeren. Ga terug en probeer het opnieuw."
@@ -1111,8 +1149,14 @@
   "screens.ShareProjectStats.infoAnonymized": {
     "message": "Gedeelde informatie zal volledig geanonimiseerd worden"
   },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "Je bent allemaal verstrikt!"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
   },
   "screens.Sync.ProjectSyncDisplay.exchangeAction": {
     "message": "Instellingen wijzigen"
@@ -1140,6 +1184,9 @@
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
     "message": "Voltooid! Wachten op andere apparaten"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"

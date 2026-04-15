@@ -1,0 +1,200 @@
+{
+  "AppContainer.EditHeader.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "AppContainer.EditHeader.discardTitle": {
+    "description": "Title of dialog that shows when cancelling a new observation",
+    "message": "Сануулгаас татгалзах уу?"
+  },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
+    "message": "Нууц үгийг оруулна уу"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
+    "message": "Нууц үг оруулах"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "Дараагийнх"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
+    "message": "Нууц үг буруу"
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOff": {
+    "message": "Унтраах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
+    "message": "Аппликэйшний нууц үгийг унтраах"
+  },
+  "screens.EnterPassword.enterPass": {
+    "message": "Нууц үгээ оруулах"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Нууц үг буруу байна, дахин оролдоно уу"
+  },
+  "screens.ManualGpsScreen.DdForm.east": {
+    "message": "Дорнод"
+  },
+  "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
+    "message": "Буруу солбицол"
+  },
+  "screens.ManualGpsScreen.DdForm.latInputLabel": {
+    "message": "Өргөрөгийн утга"
+  },
+  "screens.ManualGpsScreen.DdForm.latitude": {
+    "message": "Өргөрөг"
+  },
+  "screens.ManualGpsScreen.DdForm.lonInputLabel": {
+    "message": "Уртрагын утга"
+  },
+  "screens.ManualGpsScreen.DdForm.longitude": {
+    "message": "Уртраг"
+  },
+  "screens.ManualGpsScreen.DdForm.north": {
+    "message": "Хойд"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
+    "message": "Өргөргийн үндсэн байдлыг сонгох"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
+    "message": "Уртрагын үндсэн байдлыг сонгох"
+  },
+  "screens.ManualGpsScreen.DdForm.south": {
+    "message": "Өмнөд"
+  },
+  "screens.ManualGpsScreen.DdForm.west": {
+    "message": "Өрнөд"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
+    "message": "{field} минутын оролт"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
+    "message": "{field} секундын оролт"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
+    "message": "Өнцөг"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
+    "message": "Чиглэл"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
+    "message": "Минут"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
+    "message": "Секунд"
+  },
+  "screens.ManualGpsScreen.DmsForm.east": {
+    "message": "Дорнод"
+  },
+  "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
+    "message": "Буруу солбицол"
+  },
+  "screens.ManualGpsScreen.DmsForm.latitude": {
+    "message": "Өргөрөг"
+  },
+  "screens.ManualGpsScreen.DmsForm.longitude": {
+    "message": "Уртраг"
+  },
+  "screens.ManualGpsScreen.DmsForm.north": {
+    "message": "Хойд"
+  },
+  "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
+    "message": "Өргөргийн үндсэн байдлыг сонгох"
+  },
+  "screens.ManualGpsScreen.DmsForm.south": {
+    "message": "Өмнөд"
+  },
+  "screens.ManualGpsScreen.DmsForm.west": {
+    "message": "Өрнөд"
+  },
+  "screens.ManualGpsScreen.coordinateFormat": {
+    "message": "Солбицолын формат"
+  },
+  "screens.ManualGpsScreen.easting": {
+    "message": "Дорнод"
+  },
+  "screens.ManualGpsScreen.northing": {
+    "message": "Хойд"
+  },
+  "screens.ManualGpsScreen.title": {
+    "description": "title of manual GPS screen",
+    "message": "Солбицол оруулах"
+  },
+  "screens.ManualGpsScreen.zoneLetter": {
+    "message": "Бүсийн үсэг"
+  },
+  "screens.ManualGpsScreen.zoneNumber": {
+    "message": "Бүсын дугаар"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
+  "screens.ObscurePasscode.title": {
+    "message": "Тодорхой бус нууц үг"
+  },
+  "screens.ObscurePasscode.toggleMessage": {
+    "message": "Тодорхой бус нууц үгийг ашиглах"
+  },
+  "screens.ObscurePasscode.whatIsObscure": {
+    "message": "Тодорхой бус нууц үг юу вэ?"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Сануулга"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Сануулгыг устгах уу?"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Энд юу болоод байгаа юм бэ?"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Сануулгууд"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "Анхны сануулгаа бичхийн тулд газрын зураг эсвэл камерын харагдацаас эхэл."
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "Ачаалж байна... шинэ төхөөрөмжтэй зэрэгцүүлэлт хийсний дараа хэсэг хугацаа шаардагдах болно"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
+  }
+}

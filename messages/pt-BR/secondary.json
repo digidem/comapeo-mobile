@@ -746,6 +746,10 @@
     "description": "Default name of observation with no matching preset",
     "message": "Observação"
   },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Excluir observação?"
+  },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Observação"
@@ -1117,14 +1121,29 @@
   "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
     "message": "Adicionado em {date}"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
+    "message": "Isto não pode ser desfeito."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.close": {
+    "message": "Fechar"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
     "message": "Você verá este mapa quando estiver offline, mas não verá um mapa fora da área definida em seu mapa personalizado."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle": {
+    "message": "Mapa Personalizado Adicionado"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapInfoLoadError": {
     "message": "Não foi possível obter informação de mapa personalizado do arquivo. Por favor, remova-a ou escolha um arquivo diferente."
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription": {
     "message": "Isto excluirá o mapa e suas áreas offline. Nenhum dado de observação coletada será excluído."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle": {
+    "message": "Excluir Mapa Personalizado?"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
+    "message": "Excluir mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
     "message": "Adicionar um mapa personalizado permitirá que você veja um mapa quando estiver offline."
@@ -1152,6 +1171,9 @@
   },
   "screens.Settings.NameDefaultProjectIntro.title": {
     "message": "Convidar dispositivos"
+  },
+  "screens.Settings.YourTeam.close": {
+    "message": "Fechar"
   },
   "screens.Settings.YourTeam.deviceHasJoined": {
     "message": "O dispositivo está participando do {projectName}"

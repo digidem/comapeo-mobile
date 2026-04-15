@@ -596,8 +596,14 @@
   "screens.ManualGpsScreen.DdForm.latInputLabel": {
     "message": "Valeur de la latitude"
   },
+  "screens.ManualGpsScreen.DdForm.latitude": {
+    "message": "Latitude"
+  },
   "screens.ManualGpsScreen.DdForm.lonInputLabel": {
     "message": "Valeur de la longitude"
+  },
+  "screens.ManualGpsScreen.DdForm.longitude": {
+    "message": "Longitude"
   },
   "screens.ManualGpsScreen.DdForm.north": {
     "message": "Nord"
@@ -626,6 +632,12 @@
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
     "message": "{field} degrés entrés"
   },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
+    "message": "Direction"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
+    "message": "Minutes"
+  },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
     "message": "Secondes"
   },
@@ -634,6 +646,12 @@
   },
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
     "message": "Coordonnées invalides"
+  },
+  "screens.ManualGpsScreen.DmsForm.latitude": {
+    "message": "Latitude"
+  },
+  "screens.ManualGpsScreen.DmsForm.longitude": {
+    "message": "Longitude"
   },
   "screens.ManualGpsScreen.DmsForm.north": {
     "message": "Nord"
@@ -659,11 +677,17 @@
   "screens.ManualGpsScreen.easting": {
     "message": "Est"
   },
+  "screens.ManualGpsScreen.eastingSuffix": {
+    "message": "mE"
+  },
   "screens.ManualGpsScreen.invalidCoordinates": {
     "message": "Coordonnées non valides. La latitude doit être comprise entre -90 et 90. La longitude doit être comprise entre -180 et 180"
   },
   "screens.ManualGpsScreen.northing": {
     "message": "Nord"
+  },
+  "screens.ManualGpsScreen.northingSuffix": {
+    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
@@ -689,6 +713,14 @@
   },
   "screens.ObscurePasscode.whatIsObscure": {
     "message": "Qu'est-ce que le mot de passe obscure ?"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Observation"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Supprimer l'observation?"
   },
   "screens.ObservationCategoryChooser.title": {
     "message": "Choisissez une catégorie"
@@ -738,6 +770,10 @@
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Piste"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Observations"
   },
   "screens.ObservationMetadataVerified.accuracy": {
     "message": "Précision"

@@ -1,0 +1,230 @@
+{
+  "AppContainer.EditHeader.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Endelea kuhariri"
+  },
+  "AppContainer.EditHeader.discardTitle": {
+    "description": "Title of dialog that shows when cancelling a new observation",
+    "message": "Ungependa kutupa uchunguzi?"
+  },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "Ghairi"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
+    "message": "Tafadhali Weka Nambari ya siri"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
+    "message": "Weka Nambari ya siri"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "Ghairi"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "Inayofuata"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
+    "message": "Nambari ya siri si sahihi"
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "Ghairi"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOff": {
+    "message": "Zima"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
+    "message": "Ungependa Kuzima Nambari ya siri ya Programu?"
+  },
+  "screens.CoordinateFormat.dd": {
+    "description": "Decimal Degrees coordinate format",
+    "message": "Digrii za Desimali (DD)"
+  },
+  "screens.CoordinateFormat.dms": {
+    "description": "Degrees/Minutes/Seconds coordinate format",
+    "message": "Digrii/Dakika/Sekunde (DMS)"
+  },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "Universal Transverse Mercator (UTM)"
+  },
+  "screens.EnterPassword.enterPass": {
+    "message": "Weka nambari yako ya siri"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Nambari ya siri si sahihi, tafadhali jaribu tena"
+  },
+  "screens.ManualGpsScreen.DdForm.east": {
+    "message": "Mashariki"
+  },
+  "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
+    "message": "Viratibu si sahihi"
+  },
+  "screens.ManualGpsScreen.DdForm.latInputLabel": {
+    "message": "Thamani ya latitudo"
+  },
+  "screens.ManualGpsScreen.DdForm.latitude": {
+    "message": "Latitudo"
+  },
+  "screens.ManualGpsScreen.DdForm.lonInputLabel": {
+    "message": "Thamani ya longitudo"
+  },
+  "screens.ManualGpsScreen.DdForm.longitude": {
+    "message": "Longitudo"
+  },
+  "screens.ManualGpsScreen.DdForm.north": {
+    "message": "Kaskazini"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
+    "message": "Chagua sehemu kuu ya latitudo"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
+    "message": "Chagua sehemu kuu ya longitudo"
+  },
+  "screens.ManualGpsScreen.DdForm.south": {
+    "message": "Kusini"
+  },
+  "screens.ManualGpsScreen.DdForm.west": {
+    "message": "Magharibi"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
+    "message": "Ingizo la dakika {field}"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
+    "message": "Ingizo la sekunde {field}"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
+    "message": "Digrii"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
+    "message": "Ingizo la digrii {field}"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
+    "message": "Mwelekeo"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
+    "message": "Dakika"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
+    "message": "Sekunde"
+  },
+  "screens.ManualGpsScreen.DmsForm.east": {
+    "message": "Mashariki"
+  },
+  "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
+    "message": "Viratibu si sahihi"
+  },
+  "screens.ManualGpsScreen.DmsForm.latitude": {
+    "message": "Latitudo"
+  },
+  "screens.ManualGpsScreen.DmsForm.longitude": {
+    "message": "Longitudo"
+  },
+  "screens.ManualGpsScreen.DmsForm.north": {
+    "message": "Kaskazini"
+  },
+  "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
+    "message": "Chagua sehemu kuu ya latitudo"
+  },
+  "screens.ManualGpsScreen.DmsForm.south": {
+    "message": "Kusini"
+  },
+  "screens.ManualGpsScreen.DmsForm.west": {
+    "message": "Magharibi"
+  },
+  "screens.ManualGpsScreen.coordinateFormat": {
+    "message": "Muundo wa Kiratibu"
+  },
+  "screens.ManualGpsScreen.decimalDegrees": {
+    "message": "Digrii za Desimali (DD)"
+  },
+  "screens.ManualGpsScreen.degreesMinutesSeconds": {
+    "message": "Digrii/Dakika/Sekunde (DMS)"
+  },
+  "screens.ManualGpsScreen.easting": {
+    "message": "Mashariki"
+  },
+  "screens.ManualGpsScreen.eastingSuffix": {
+    "message": "mE"
+  },
+  "screens.ManualGpsScreen.northing": {
+    "message": "Kaskazini"
+  },
+  "screens.ManualGpsScreen.northingSuffix": {
+    "message": "mN"
+  },
+  "screens.ManualGpsScreen.title": {
+    "description": "title of manual GPS screen",
+    "message": "Weka viratibu"
+  },
+  "screens.ManualGpsScreen.universalTransverseMercator": {
+    "message": "Universal Transverse Mercator (UTM)"
+  },
+  "screens.ManualGpsScreen.zoneLetter": {
+    "message": "Herufi ya Ukanda"
+  },
+  "screens.ManualGpsScreen.zoneNumber": {
+    "message": "Nambari ya Ukanda"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
+  "screens.ObscurePasscode.title": {
+    "message": "Nambari ya siri Isiyojulikana"
+  },
+  "screens.ObscurePasscode.toggleMessage": {
+    "message": "Tumia Nambari ya siri Isiyojulikana"
+  },
+  "screens.ObscurePasscode.whatIsObscure": {
+    "message": "Nambari ya siri Isiyojulikana ni nini?"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Uchunguzi"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Ungependa kufuta uchunguzi?"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Ni nini kinachofanyika hapa?"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Uchunguzi"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "Anza kwenye ramani au mwonekano wa kamera ili urekodi uchunguzi wako wa kwanza."
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "Inapakia... hii inaweza kuchukua muda baada ya kusawazisha na kifaa kipya"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
+  }
+}

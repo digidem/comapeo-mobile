@@ -1,0 +1,311 @@
+{
+  "$1ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "$1ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "Өөрчлөлтийг цуцлах"
+  },
+  "$1ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Өөрчлөлтийг цуцлах уу? "
+  },
+  "$1ProjectSettings.RemoteArchive.Success.close": {
+    "message": "Хаах"
+  },
+  "$1SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "$1Screens.Settings.AppSettings.Drawer.security": {
+    "message": "Аюулгүй байдал"
+  },
+  "$1Screens.Settings.AppSettings.deviceName": {
+    "message": "Төхөөрөмжний нэр"
+  },
+  "$1Screens.Settings.AppSettings.language": {
+    "message": "Хэл"
+  },
+  "$1allProjects.close": {
+    "message": "Хаах"
+  },
+  "$1screen.EditProjectDetails.projectName": {
+    "message": "Төслийн нэр"
+  },
+  "$1screens.AppPasscode": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Цуцлах"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "Аппликэйшний нууц үгийг хадгалах"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "Нууц үг дахин оруулах"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "Нууц үг тохируулах"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "Нууц үг 5 оронтой тоо байх ёстой"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "Нууц үг болгон ашиглах боломжгүй"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "Нууц үг тохирохгүй байна"
+  },
+  "$1screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
+    "message": "Нууц үг тохируулах"
+  },
+  "$1screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Үргэлжлүүлэх"
+  },
+  "$1screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "Аппликэйшний нууц үг гэж юу вэ?"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "Аппликэйшний нууц үгийг өөрчлөх"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
+    "message": "Та одоогоор Аппликэйшний нууц үгийг ашиглаж байна. Нууц үгээ ашиглахаа зогсоох эсвэл өөрчлөхийн тулд доороос үзнэ үү."
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "Аппликэйшний нууц үгийг ашиглах"
+  },
+  "$1screens.AudioAttachmentPlayback.share": {
+    "message": "Хуваалцах"
+  },
+  "$1screens.AudioPlaybackNew.delete": {
+    "message": "Устгах"
+  },
+  "$1screens.ConfirmDeletePhoto.cancel": {
+    "message": "Цуцлах"
+  },
+  "$1screens.ConfirmDeletePhoto.title": {
+    "message": "Энэ зургийг устгах уу?"
+  },
+  "$1screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "Солбицолын формат"
+  },
+  "$1screens.DataPrivacy.next": {
+    "message": "Дараагийнх"
+  },
+  "$1screens.DeviceNaming.Success.joinProject": {
+    "message": "Төсөлд нэгдэх"
+  },
+  "$1screens.DeviceNaming.Success.success": {
+    "message": "Амжилттай!"
+  },
+  "$1screens.DeviceNaming.placeholder": {
+    "message": "Төхөөрөмжний нэр"
+  },
+  "$1screens.DeviceNaming.save": {
+    "message": "Хадгалах"
+  },
+  "$1screens.ExchangeSettingsBottomSheet.close": {
+    "message": "Хаах"
+  },
+  "$1screens.ExchangeSettingsBottomSheet.save": {
+    "message": "Хадгалах"
+  },
+  "$1screens.InviteReceived.declineInvite": {
+    "message": "Урилгаас татгалзах"
+  },
+  "$1screens.InviteSuccess.done": {
+    "message": "Дууслаа"
+  },
+  "$1screens.InviteSuccess.success": {
+    "message": "Амжилттай"
+  },
+  "$1screens.LanguageSettings.title": {
+    "description": "Title language settings screen",
+    "message": "Хэл"
+  },
+  "$1screens.LeaveProject.cancel": {
+    "message": "Цуцлах"
+  },
+  "$1screens.LeaveProjectWarning.cancel": {
+    "message": "Цуцлах"
+  },
+  "$1screens.LeaveProjectWarning.continueButton": {
+    "message": "Үргэлжлүүлэх"
+  },
+  "$1screens.LocationInfoScreen.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "Одоогийн GPS-ийн байршил"
+  },
+  "$1screens.LocationInfoScreen.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Үгүй"
+  },
+  "$1screens.LocationInfoScreen.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Тийм"
+  },
+  "$1screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Устгах"
+  },
+  "$1screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "Хариулт алга"
+  },
+  "$1screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "Хуваалцах"
+  },
+  "$1screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Цуцлах"
+  },
+  "$1screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Тийм, устгах"
+  },
+  "$1screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Сануулгыг устгах уу?"
+  },
+  "$1screens.Observation.description": {
+    "message": "Тодорхойлолт:"
+  },
+  "$1screens.Observation.details": {
+    "message": "Дэлгэрэнгүй:"
+  },
+  "$1screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Сануулга"
+  },
+  "$1screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Сануулга"
+  },
+  "$1screens.ObservationCreate.changePreset": {
+    "message": "Өөрчлөх"
+  },
+  "$1screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Энд юу болоод байгаа юм бэ?"
+  },
+  "$1screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "Дууслаа"
+  },
+  "$1screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "Дараагийнх"
+  },
+  "$1screens.ObservationEdit.ObservationEditView.detailsButton": {
+    "description": "Button label to add details",
+    "message": "Дэлгэрэнгүй"
+  },
+  "$1screens.ObservationEdit.navTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "Сануулга засах"
+  },
+  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "Газрын зураг руу очих"
+  },
+  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "Сануулгууд нэмэх"
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Хаах"
+  },
+  "$1screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Хаах"
+  },
+  "$1screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "Төхөөрөмжөө хураахаас хамгаалаарай"
+  },
+  "$1screens.Security.obscurePasscodeHeader": {
+    "message": "Тодорхой бус нууц үг"
+  },
+  "$1screens.Security.passDesriptionPassNotSet": {
+    "message": "Нууц үгийг тохируулаагүй байна"
+  },
+  "$1screens.Security.passDesriptionPassSet": {
+    "message": "Нууц үгийг тохируулсан байна"
+  },
+  "$1screens.Security.passcodeHeader": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "$1screens.Security.securitySubheader": {
+    "message": "Төхөөрөмжийн аюулгүй байдал"
+  },
+  "$1screens.Security.title": {
+    "message": "Аюулгүй байдал"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title": {
+    "message": "Төхөөрөмжний нэр"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "Өөрчлөлтийг цуцлах уу? "
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
+    "message": "Төхөөрөмжний нэр"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Дууслаа"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "Төхөөрөмж урих"
+  },
+  "$1screens.Settings.Collaborate.joinProject": {
+    "message": "Төсөлд нэгдэх"
+  },
+  "$1screens.Settings.Config.okButton": {
+    "message": "Баталгаажуулах"
+  },
+  "$1screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "Дууслаа"
+  },
+  "$1screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
+    "message": "Амжилттай!"
+  },
+  "$1screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "Хадгалах"
+  },
+  "$1screens.Settings.JoinAProject.title": {
+    "message": "Төсөлд нэгдэх"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.close": {
+    "message": "Хаах"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
+    "message": "Газрын зургийг устгах"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
+    "message": "Импорт хийхэд гарсан алдаа"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Газрын зургийг арилгах"
+  },
+  "$1screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Дараагийнх"
+  },
+  "$1screens.Settings.YourTeam.close": {
+    "message": "Хаах"
+  },
+  "$1screens.Sync.ProjectSyncDisplay.close": {
+    "message": "Хаах"
+  },
+  "$1screens.Track.ObservationList.observation": {
+    "message": "Сануулга"
+  },
+  "$1screens.Track.ObservationList.observations": {
+    "message": "Сануулгууд"
+  },
+  "$1sharedComponents.ErrorBottomSheet.close": {
+    "message": "Хаах"
+  }
+}

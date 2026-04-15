@@ -1,0 +1,73 @@
+{
+  "$1ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Taastay iweechweech"
+  },
+  "$1ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "Toochinee weecheet"
+  },
+  "$1ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Toochinee weecheet?"
+  },
+  "$1ProjectSettings.RemoteArchive.Success.close": {
+    "message": "Keer"
+  },
+  "$1SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Taastay iweechweech"
+  },
+  "$1allProjects.close": {
+    "message": "Keer"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Noomtee"
+  },
+  "$1screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Taastay"
+  },
+  "$1screens.ConfirmDeletePhoto.cancel": {
+    "message": "Noomtee"
+  },
+  "$1screens.ExchangeSettingsBottomSheet.close": {
+    "message": "Keer"
+  },
+  "$1screens.LeaveProject.cancel": {
+    "message": "Noomtee"
+  },
+  "$1screens.LeaveProjectWarning.cancel": {
+    "message": "Noomtee"
+  },
+  "$1screens.LeaveProjectWarning.continueButton": {
+    "message": "Taastay"
+  },
+  "$1screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Noomtee"
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Keer"
+  },
+  "$1screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Keer"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "Toochinee weecheet?"
+  },
+  "$1screens.Settings.Config.okButton": {
+    "message": "Karaam"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.close": {
+    "message": "Keer"
+  },
+  "$1screens.Settings.YourTeam.close": {
+    "message": "Keer"
+  },
+  "$1screens.Sync.ProjectSyncDisplay.close": {
+    "message": "Keer"
+  },
+  "$1sharedComponents.ErrorBottomSheet.close": {
+    "message": "Keer"
+  }
+}

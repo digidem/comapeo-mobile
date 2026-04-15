@@ -1,0 +1,118 @@
+{
+  "$1ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "ဆက်လက်ပြင်ဆင်ခြင်း"
+  },
+  "$1ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း"
+  },
+  "$1ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ပစ်မှာလား?"
+  },
+  "$1SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "ဆက်လက်ပြင်ဆင်ခြင်း"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "$1screens.AudioAttachmentPlayback.share": {
+    "message": "မျှဝေခြင်း"
+  },
+  "$1screens.AudioPlaybackNew.delete": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "$1screens.ConfirmDeletePhoto.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "$1screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "ကိုဩဒိနိတ် ပုံစံ"
+  },
+  "$1screens.DataPrivacy.next": {
+    "message": "နောက်ထပ်"
+  },
+  "$1screens.InviteSuccess.done": {
+    "message": "ပြီးသွားပြီ"
+  },
+  "$1screens.LeaveProject.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "$1screens.LeaveProjectWarning.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "$1screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "$1screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "အဖြေမရှိပါ"
+  },
+  "$1screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "မျှဝေခြင်း"
+  },
+  "$1screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "$1screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "ဟုတ်ကဲ့၊ ပယ်ဖျက်မည်"
+  },
+  "$1screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "လေ့လာထားရှိမှုများကို ဖျက်ပစ်မှာလား?"
+  },
+  "$1screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  },
+  "$1screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  },
+  "$1screens.ObservationCreate.changePreset": {
+    "message": "ပြောင်းလဲသည်"
+  },
+  "$1screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
+  },
+  "$1screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "ပြီးသွားပြီ"
+  },
+  "$1screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "နောက်ထပ်"
+  },
+  "$1screens.ObservationDetails.title": {
+    "description": "Title of observation details screen showing question number and total",
+    "message": "{စုစုပေါင်း} မှ {လက်ရှိ} မေးခွန်း"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ပစ်မှာလား?"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "ပြီးသွားပြီ"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "ကိရိယာများကို ဖိတ်ခေါ်ပါ"
+  },
+  "$1screens.Settings.Config.okButton": {
+    "message": "အိုကေ"
+  },
+  "$1screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "ပြီးသွားပြီ"
+  },
+  "$1screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "နောက်ထပ်"
+  },
+  "$1screens.Track.ObservationList.observation": {
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  }
+}

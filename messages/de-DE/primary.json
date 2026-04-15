@@ -1,0 +1,871 @@
+{
+  "$1Modal.GPSEnable.button.default": {
+    "message": "Tracks starten"
+  },
+  "$1Modal.GPSEnable.button.stop": {
+    "message": "Tracks stoppen"
+  },
+  "$1Navigation.Menu.Settings": {
+    "message": "CoMapeo Einstellungen"
+  },
+  "$1Navigation.Menu.bgMap": {
+    "message": "Background Maps"
+  },
+  "$1Navigation.Menu.collaborate": {
+    "message": "Mitarbeiten"
+  },
+  "$1Navigation.Menu.coordinator": {
+    "message": "Koordinator"
+  },
+  "$1Navigation.Menu.coordinatorTools": {
+    "message": "Coordinator-Tools"
+  },
+  "$1Navigation.Menu.currentProject": {
+    "message": "Aktuelles Projekt"
+  },
+  "$1Navigation.Menu.earlyAccessLabel": {
+    "message": "Sie befinden sich im Frühzugriffsmodus."
+  },
+  "$1Navigation.Menu.exchange": {
+    "message": "Umtausch"
+  },
+  "$1Navigation.Menu.gatherObservations": {
+    "message": "Beobachtungen sammeln"
+  },
+  "$1Navigation.Menu.justYou": {
+    "message": "Nur Sie"
+  },
+  "$1Navigation.Menu.mappingOnOwn": {
+    "message": "Du mappst auf eigene Faust."
+  },
+  "$1Navigation.Menu.participant": {
+    "message": "Teilnehmer"
+  },
+  "$1Navigation.Menu.switchProject": {
+    "message": "Projekt wechseln"
+  },
+  "$1ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Bearbeitung fortsetzen"
+  },
+  "$1ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "Änderungen verwerfen"
+  },
+  "$1ObservationEdit.HeaderLeft.discardObservationDescription": {
+    "message": "Ihre Änderungen werden nicht gespeichert. Dies kann nicht rückgängig gemacht werden."
+  },
+  "$1ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Änderungen verwerfen?"
+  },
+  "$1ProjectSettings.RemoteArchive.AddRemoteArchive.looking": {
+    "message": "Suche nach Remote-Archiv..."
+  },
+  "$1ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle": {
+    "message": "Remote-Archiv hinzufügen"
+  },
+  "$1ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
+    "message": "Sie fügen hinzu:"
+  },
+  "$1ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive": {
+    "message": "Remote-Archiv hinzufügen"
+  },
+  "$1ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff": {
+    "message": "Remote-Archiv ist aus"
+  },
+  "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
+    "message": "Entferntes Archiv"
+  },
+  "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
+    "message": "Remote-Archiv ist an"
+  },
+  "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.removeServer": {
+    "message": "Server entfernen"
+  },
+  "$1ProjectSettings.RemoteArchive.Success.archiveAdded": {
+    "message": "Remote-Archiv hinzugefügt"
+  },
+  "$1ProjectSettings.RemoteArchive.Success.close": {
+    "message": "Schließen"
+  },
+  "$1ProjectSettings.RemoteArchive.navTitle": {
+    "message": "Entferntes Archiv"
+  },
+  "$1SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Bearbeitung fortsetzen"
+  },
+  "$1SaveTrack.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "Track verwerfen?"
+  },
+  "$1SaveTrack.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "Track verwerfen"
+  },
+  "$1SaveTrack.HeaderLeft.discardTrackDescription": {
+    "message": "Ihr Track wird nicht gespeichert. Dies kann nicht rückgängig gemacht werden."
+  },
+  "$1Screens.ProjectSettings.configTitle": {
+    "message": "Projektkategorien"
+  },
+  "$1Screens.ProjectSettings.projectStatsOff": {
+    "message": "Projektstatistik | AUS"
+  },
+  "$1Screens.ProjectSettings.projectStatsOn": {
+    "message": "Projektstatistik | AN"
+  },
+  "$1Screens.ProjectSettings.remoteArchiveOff": {
+    "message": "Remote-Archiv | AUS"
+  },
+  "$1Screens.ProjectSettings.remoteArchiveOn": {
+    "message": "Remote-Archiv | AN"
+  },
+  "$1Screens.ProjectSettings.title": {
+    "message": "Coordinator-Tools"
+  },
+  "$1Screens.Settings.AppSettings.Drawer.security": {
+    "message": "Sicherheit"
+  },
+  "$1Screens.Settings.AppSettings.aboutCoMapeo": {
+    "message": "Über CoMapeo"
+  },
+  "$1Screens.Settings.AppSettings.coordinateSystem": {
+    "message": "Koordinatensystem"
+  },
+  "$1Screens.Settings.AppSettings.deviceName": {
+    "message": "Gerätename"
+  },
+  "$1Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Frühzeitiger Zugriffsmodus"
+  },
+  "$1Screens.Settings.AppSettings.earlyAccess.off": {
+    "message": "Frühzeitiger Zugriff ist AUS"
+  },
+  "$1Screens.Settings.AppSettings.earlyAccess.on": {
+    "message": "Früherer Zugriff ist AN"
+  },
+  "$1Screens.Settings.AppSettings.language": {
+    "message": "Sprache"
+  },
+  "$1Screens.Settings.AppSettings.languageDesc": {
+    "message": "Sprache für App anzeigen"
+  },
+  "$1Screens.Settings.AppSettings.privacyPolicy": {
+    "message": "Daten & Privatsphäre"
+  },
+  "$1Screens.Settings.AppSettings.title": {
+    "message": "CoMapeo Einstellungen"
+  },
+  "$1TrackBottomSheet.DidNotMove.delete": {
+    "message": "Tracks beenden"
+  },
+  "$1TrackBottomSheet.DidNotMove.didNotMove": {
+    "message": "Du hast dich nicht über einen Meter bewegt."
+  },
+  "$1TrackBottomSheet.DidNotMove.keepRecording": {
+    "message": "Aufnahme fortsetzen"
+  },
+  "$1TrackBottomSheet.DidNotMove.noTrackRecorded": {
+    "message": "Kein Track aufgenommen"
+  },
+  "$1TrackBottomSheet.StartStopTrack.trackingRequirement": {
+    "message": "Bewege einen Meter um die Strecke zu sehen."
+  },
+  "$1allProjects.close": {
+    "message": "Schließen"
+  },
+  "$1allProjects.newCollab": {
+    "message": "Neue Zusammenarbeit"
+  },
+  "$1screen.EditProjectDetails.navTitle": {
+    "message": "Info bearbeiten"
+  },
+  "$1screen.EditProjectDetails.projectDescription": {
+    "message": "Projektbeschreibung"
+  },
+  "$1screen.EditProjectDetails.projectName": {
+    "message": "Name des Projektes"
+  },
+  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
+    "message": "Koordinator"
+  },
+  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
+    "message": "Teilnehmer"
+  },
+  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
+    "message": "Einladung senden"
+  },
+  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice": {
+    "message": "Gerät nicht sichtbar?"
+  },
+  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
+    "message": "Stellen Sie sicher, dass beide Geräte auf der gleichen Version von CoMapeo sind"
+  },
+  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
+    "message": "Stellen Sie sicher, dass beide Geräte im gleichen Wi-Fi-Netzwerk sind"
+  },
+  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
+    "message": "Gerät zum Laden auswählen"
+  },
+  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
+    "message": "Gerät auswählen"
+  },
+  "$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
+    "message": "Wählen Sie eine Rolle"
+  },
+  "$1screens.AboutSettings.seeUpdates": {
+    "message": "Siehe CoMapeo Updates"
+  },
+  "$1screens.AboutSettings.title": {
+    "description": "Title of 'About CoMapeo' screen",
+    "message": "Über CoMapeo"
+  },
+  "$1screens.AppPasscode": {
+    "message": "App-Passwort"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Abbrechen"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
+    "description": "used to indicate to the user what the new passcode will be.",
+    "message": "Passwort: {passcode}"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "App-Passwort speichern"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
+    "message": "Achten Sie vor dem Speichern auf das Passwort an einem sicheren Ort."
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.title": {
+    "message": "App-Passcodes können nie wiederhergestellt werden, wenn sie verloren oder vergessen sind!"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "Passwort erneut eingeben"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "App-Passcode festlegen"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "Passwort muss 5 Zahlen enthalten"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "Kann nicht als Passwort verwendet werden"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "Passwort stimmt nicht überein"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
+    "message": "Dieser Zugangscode wird benötigt, um die CoMapeo App zu öffnen"
+  },
+  "$1screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
+    "message": "Passwort festlegen"
+  },
+  "$1screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Fortsetzen"
+  },
+  "$1screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "Was ist ein App-Passwort?"
+  },
+  "$1screens.AppPasscode.PasscodeIntro.description": {
+    "message": "Der App-Passcode erlaubt es Ihnen, eine zusätzliche Sicherheitsstufe hinzuzufügen, indem Sie ein Passwort eingeben müssen, um die CoMapeo App zu öffnen. Sie können Ihren eigenen 5-stelligen Zugangscode definieren, indem Sie die Funktion unten einschalten."
+  },
+  "$1screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "<bold>Bitte beachten Sie, dass vergessene Passcodes nicht wiederhergestellt werden können!</bold> Sobald diese Funktion aktiviert ist, wenn Sie Ihr Passwort vergessen oder verlieren Sie werden nicht in der Lage sein, CoMapeo zu öffnen und verlieren Zugriff auf keine CoMapeo-Daten, die nicht mit anderen Projektteilnehmern ausgetauscht wurden."
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "App-Zugangscode ändern"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
+    "message": "Sie verwenden derzeit App-Passcode. Siehe unten, um Ihr Passwort zu verwenden oder zu ändern."
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.description": {
+    "message": "App-Passcode fügt eine zusätzliche Sicherheitsstufe hinzu, indem Sie ein Passwort eingeben müssen, um die CoMapeo-App zu öffnen."
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "App-Passwort"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "App-Zugangscode verwenden"
+  },
+  "$1screens.AudioAttachmentPlayback.share": {
+    "message": "Teilen"
+  },
+  "$1screens.AudioPermission.Button.allow": {
+    "description": "Screen button text for granting the audio permission",
+    "message": "Erlauben"
+  },
+  "$1screens.AudioPermission.Button.notNow": {
+    "description": "Screen button text for not granting audio permission",
+    "message": "Nicht jetzt"
+  },
+  "$1screens.AudioPermission.title": {
+    "description": "Screen title for audio permission screen",
+    "message": "Audio mit CoMapeo aufnehmen"
+  },
+  "$1screens.AudioPlaybackNew.backToEditing": {
+    "message": "Zurück zur Bearbeitung"
+  },
+  "$1screens.AudioPlaybackNew.delete": {
+    "message": "Löschen"
+  },
+  "$1screens.AudioPlaybackNew.recordingSaved": {
+    "message": "Aufnahme gespeichert!"
+  },
+  "$1screens.AudioRecording.nowRecording": {
+    "message": "Aufnahme läuft..."
+  },
+  "$1screens.CollaboratorInfo.navTitle": {
+    "message": "Mitarbeiter-Info"
+  },
+  "$1screens.ConfirmDeletePhoto.cancel": {
+    "message": "Abbrechen"
+  },
+  "$1screens.ConfirmDeletePhoto.deletePhoto": {
+    "message": "Foto löschen"
+  },
+  "$1screens.ConfirmDeletePhoto.title": {
+    "message": "Dieses Foto löschen?"
+  },
+  "$1screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "Koordinaten Format"
+  },
+  "$1screens.DataAndPrivacy.shareAppUsage": {
+    "message": "App-Nutzung teilen"
+  },
+  "$1screens.DataPrivacy.diagnostic": {
+    "message": "Diagnoseinformationen werden vollständig anonymisiert – Opt-out zu jeder Zeit."
+  },
+  "$1screens.DataPrivacy.intro": {
+    "message": "Einige wichtige Dinge zu beachten:"
+  },
+  "$1screens.DataPrivacy.learnMore": {
+    "message": "Mehr erfahren"
+  },
+  "$1screens.DataPrivacy.manageAndControl": {
+    "message": "Einfaches Verwalten und Verwalten von Teilen und Zusammenarbeit."
+  },
+  "$1screens.DataPrivacy.next": {
+    "message": "Nächste Frage"
+  },
+  "$1screens.DataPrivacy.stays": {
+    "message": "Ihre Daten bleiben auf Ihren Geräten – vollständig verschlüsselt und in Ihrer Steuerung."
+  },
+  "$1screens.DataPrivacy.title": {
+    "message": "CoMapeo ist standardmäßig privat."
+  },
+  "$1screens.DeviceNaming.Success.chooseProject": {
+    "message": "Wählen Sie unten aus, um Ihr erstes Projekt zu starten."
+  },
+  "$1screens.DeviceNaming.Success.deviceReady": {
+    "message": "{deviceName} ist bereit!"
+  },
+  "$1screens.DeviceNaming.Success.joinProject": {
+    "message": "Einem Projekt beitreten"
+  },
+  "$1screens.DeviceNaming.Success.mapOnYourOwn": {
+    "message": "Karte auf Ihrem eigenen"
+  },
+  "$1screens.DeviceNaming.Success.success": {
+    "message": "Erfolg!"
+  },
+  "$1screens.DeviceNaming.description": {
+    "message": "Unterschiedliche Namen helfen Kollaborateuren mit CoMapeo Sie zu erkennen."
+  },
+  "$1screens.DeviceNaming.header": {
+    "message": "Benennen Sie Ihr Gerät"
+  },
+  "$1screens.DeviceNaming.placeholder": {
+    "message": "Gerätename"
+  },
+  "$1screens.DeviceNaming.save": {
+    "message": "Speichern"
+  },
+  "$1screens.ExchangeSettingsBottomSheet.close": {
+    "message": "Schließen"
+  },
+  "$1screens.ExchangeSettingsBottomSheet.everythingTitle": {
+    "message": "Alles tauschen"
+  },
+  "$1screens.ExchangeSettingsBottomSheet.previewsTitle": {
+    "message": "Nur Exchange-Vorschau"
+  },
+  "$1screens.ExchangeSettingsBottomSheet.save": {
+    "message": "Speichern"
+  },
+  "$1screens.IntroToCoMapeo.collaborate": {
+    "message": "Sicher mit Mitarbeitern teilen"
+  },
+  "$1screens.IntroToCoMapeo.designedFor": {
+    "message": "Co-entworfen mit und für indigene Territorien Landkarten & Monitore."
+  },
+  "$1screens.IntroToCoMapeo.getStarted": {
+    "message": "Los geht's"
+  },
+  "$1screens.IntroToCoMapeo.mapAnywhere": {
+    "message": "Karte überall und überall"
+  },
+  "$1screens.IntroToCoMapeo.mapWorldTogether": {
+    "message": "Maple deine Welt."
+  },
+  "$1screens.IntroToCoMapeo.ownData": {
+    "message": "Immer besitzen und kontrollieren Sie Ihre Daten"
+  },
+  "$1screens.InviteReceived.declineInvite": {
+    "message": "Einladung ablehnen"
+  },
+  "$1screens.InviteReceived.joinAsRole": {
+    "message": "Als {role} beitreten?"
+  },
+  "$1screens.InviteReceived.joinProject": {
+    "message": "Projekt beitreten"
+  },
+  "$1screens.InviteSuccess.done": {
+    "message": "Fertig"
+  },
+  "$1screens.InviteSuccess.success": {
+    "message": "Erfolg"
+  },
+  "$1screens.LanguageSettings.followSystemPreferences": {
+    "description": "Label for language option to follow system preferences",
+    "message": "Systemeinstellungen folgen"
+  },
+  "$1screens.LanguageSettings.title": {
+    "description": "Title language settings screen",
+    "message": "Sprache"
+  },
+  "$1screens.LeaveProject.cancel": {
+    "message": "Abbrechen"
+  },
+  "$1screens.LeaveProject.leaveProjectTitle": {
+    "message": "{projectName} verlassen ?"
+  },
+  "$1screens.LeaveProject.yesLeave": {
+    "message": "Ja, verlassen"
+  },
+  "$1screens.LeaveProjectWarning.cancel": {
+    "message": "Abbrechen"
+  },
+  "$1screens.LeaveProjectWarning.continueButton": {
+    "message": "Fortsetzen"
+  },
+  "$1screens.LeaveProjectWarning.exportRecommendation": {
+    "message": "Exportieren Sie vor dem Verlassen wichtige Daten."
+  },
+  "$1screens.LeaveProjectWarning.inviteRecommendation": {
+    "message": "Um dies zu vermeiden, laden Sie ein neues Gerät als Koordinator."
+  },
+  "$1screens.LeaveProjectWarning.lastCoordinatorDescription": {
+    "message": "Wenn dieses Gerät verlässt, kann kein anderes Gerät Geräte hinzufügen oder entfernen, Projektinformationen anpassen oder die gesetzten Kategorien aktualisieren."
+  },
+  "$1screens.LeaveProjectWarning.lastCoordinatorTitle": {
+    "message": "Gerät ist der letzte Coordinator."
+  },
+  "$1screens.LeaveProjectWarning.lastDeviceDescription": {
+    "message": "Wenn dieses Gerät verlässt, gehen alle Daten zu diesem Projekt verloren."
+  },
+  "$1screens.LeaveProjectWarning.lastDeviceTitle": {
+    "message": "Gerät ist das letzte Gerät."
+  },
+  "$1screens.LeftProjectConfirmation.openDefaultProject": {
+    "message": "{deviceName} öffnen"
+  },
+  "$1screens.LeftProjectConfirmation.youveLeftProject": {
+    "message": "Sie haben das Projekt verlassen."
+  },
+  "$1screens.LocationInfoScreen.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "Aktuelle GPS Position"
+  },
+  "$1screens.LocationInfoScreen.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Nein"
+  },
+  "$1screens.LocationInfoScreen.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Ja"
+  },
+  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
+    "message": "Turn On"
+  },
+  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
+    "message": "Use Your Location"
+  },
+  "$1screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Löschen"
+  },
+  "$1screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "Keine Antwort"
+  },
+  "$1screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "Teilen"
+  },
+  "$1screens.Observation.TrackList.track": {
+    "message": "Spur"
+  },
+  "$1screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Abbrechen"
+  },
+  "$1screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Ja, löschen"
+  },
+  "$1screens.Observation.defaultProjectName": {
+    "message": "Mein Projekt"
+  },
+  "$1screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Beobachtung löschen?"
+  },
+  "$1screens.Observation.description": {
+    "message": "Beschreibung:"
+  },
+  "$1screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Beobachtung"
+  },
+  "$1screens.Observation.location": {
+    "message": "Ort:"
+  },
+  "$1screens.Observation.precision": {
+    "message": "Präzision:"
+  },
+  "$1screens.Observation.shareMediaTitle": {
+    "description": "Title of dialog to share an observation with media",
+    "message": "Bild teilen"
+  },
+  "$1screens.Observation.shareMessageFooter": {
+    "message": "Gesendet von CoMapeo"
+  },
+  "$1screens.Observation.shareTextTitle": {
+    "description": "Title of dialog to share an observation without media",
+    "message": "Text teilen"
+  },
+  "$1screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Beobachtung"
+  },
+  "$1screens.ObservationCreate.changePreset": {
+    "message": "Bearbeiten"
+  },
+  "$1screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Was passiert hier?"
+  },
+  "$1screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "Fertig"
+  },
+  "$1screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "Nächste Frage"
+  },
+  "$1screens.ObservationDetails.title": {
+    "description": "Title of observation details screen showing question number and total",
+    "message": "Frage {current} von {total}"
+  },
+  "$1screens.ObservationEdit.ObservationEditView.photoButton": {
+    "description": "Button label for adding photo",
+    "message": "Foto"
+  },
+  "$1screens.ObservationEdit.navTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "Beobachtung bearbeiten"
+  },
+  "$1screens.ObservationMetadataVerified.navTitle": {
+    "message": "Beobachtungs-Metadaten"
+  },
+  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "Zur Karte"
+  },
+  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "Beobachtung(en) hinzufügen"
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
+    "message": "Audioaufnahmen hinzufügen."
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Schließen"
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
+    "message": "Entdecken Sie CoMapeo – laden Sie Mitarbeiter jederzeit ein."
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
+    "message": "Gehe zur Karte"
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
+    "message": "Fotos on-the-go schnappen."
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.title": {
+    "message": "Karte auf Ihrem eigenen"
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
+    "message": "Spurpfade sind gegangen."
+  },
+  "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
+    "message": "Diagnoseinformationen teilen"
+  },
+  "$1screens.PhotoPreviewModal.headerButtonText": {
+    "message": "Foto löschen"
+  },
+  "$1screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Schließen"
+  },
+  "$1screens.RemovedFromProjectBottomSheet.reasonLabel": {
+    "message": "Grund: {reason}"
+  },
+  "$1screens.RemovedFromProjectBottomSheet.title": {
+    "message": "DIESE GERÄT VON… ENTFERNT"
+  },
+  "$1screens.SaveTrack.TrackEditView.title": {
+    "description": "Title for new track screen",
+    "message": "Neue Spur"
+  },
+  "$1screens.Security.obscurePasscodeDescription": {
+    "message": "App-Code zum Benutzen aktivieren"
+  },
+  "$1screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "Schützen Sie Ihr Gerät vor Beschlagnahme"
+  },
+  "$1screens.Security.passDesriptionPassNotSet": {
+    "message": "Passwort nicht festgelegt"
+  },
+  "$1screens.Security.passDesriptionPassSet": {
+    "message": "Code ist festgelegt"
+  },
+  "$1screens.Security.passcodeHeader": {
+    "message": "App-Passwort"
+  },
+  "$1screens.Security.securitySubheader": {
+    "message": "Gerätesicherheit"
+  },
+  "$1screens.Security.title": {
+    "message": "Sicherheit"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel": {
+    "message": "Ihr Gerätename"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title": {
+    "message": "Gerätename"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.deviceNameLabel": {
+    "message": "Gerätename bearbeiten"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertCancelText": {
+    "message": "Bearbeiten fortsetzen"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertConfirmText": {
+    "message": "Änderungen verwerfen"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "Änderungen verwerfen?"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
+    "message": "Gerätename"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
+    "message": "Add Another Device"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Fertig"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
+    "message": "<bold>{deviceName}</bold> ist jetzt Teil Ihres Projekts."
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.title": {
+    "message": "Einladung prüfen"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite": {
+    "message": "Einladung abbrechen"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
+    "message": "Warte auf Einladung des Geräts"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.coordinators": {
+    "message": "Koordinatoren"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "Gerät einladen"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.participants": {
+    "message": "Teilnehmer"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
+    "message": "Frühere Mitarbeiter"
+  },
+  "$1screens.Settings.Collaborate.inviteDevices": {
+    "message": "Geräte einladen"
+  },
+  "$1screens.Settings.Collaborate.joinProject": {
+    "message": "Einem Projekt beitreten"
+  },
+  "$1screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
+  "$1screens.Settings.Collaborate.title": {
+    "message": "Mitarbeiten"
+  },
+  "$1screens.Settings.Config.importCategories": {
+    "message": "Kategorien importieren"
+  },
+  "$1screens.Settings.Config.importSuccessTitle": {
+    "message": "Kategorien erfolgreich importiert:"
+  },
+  "$1screens.Settings.Config.navTitle": {
+    "message": "Configuration"
+  },
+  "$1screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Create a Project"
+  },
+  "$1screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
+    "message": "Mein Projekt benennen"
+  },
+  "$1screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "Fertig"
+  },
+  "$1screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
+    "message": "Erfolg!"
+  },
+  "$1screens.Settings.CreateOrJoinProject.createProjectButton": {
+    "message": "Create Project"
+  },
+  "$1screens.Settings.CreateOrJoinProject.enterName": {
+    "message": "Enter a name for the Project"
+  },
+  "$1screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "Speichern"
+  },
+  "$1screens.Settings.JoinAProject.description": {
+    "message": "Bitten Sie einen Projektkoordinator, eine Projekteinladung zu erhalten."
+  },
+  "$1screens.Settings.JoinAProject.heading": {
+    "message": "Koordinieren Sie Ihr Team."
+  },
+  "$1screens.Settings.JoinAProject.title": {
+    "message": "Einem Projekt beitreten"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
+    "message": "Dies kann nicht rückgängig gemacht werden."
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.chooseFile": {
+    "message": "Datei auswählen"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.close": {
+    "message": "Schließen"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle": {
+    "message": "Benutzerdefinierte Karte hinzugefügt"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle": {
+    "message": "Benutzerdefinierte Karte löschen?"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
+    "message": "Karte löschen"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
+    "message": "Fehler beim Importieren"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Karte entfernen"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
+    "message": "Background Maps"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.sendMap": {
+    "message": "Karte senden"
+  },
+  "$1screens.Settings.StartNewProjectIntro.description": {
+    "message": "Lade Geräte zu einem separaten und leeren Projekt ein."
+  },
+  "$1screens.Settings.StartNewProjectIntro.heading": {
+    "message": "Starten Sie ein neues Projekt ohne Beobachtungen."
+  },
+  "$1screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Nächste Frage"
+  },
+  "$1screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
+  },
+  "$1screens.Settings.YourTeam.InviteDeclined": {
+    "message": "Einladung abgelehnt"
+  },
+  "$1screens.Settings.YourTeam.close": {
+    "message": "Schließen"
+  },
+  "$1screens.ShareProjectStats.shareProjectStats": {
+    "message": "Projektstatistiken teilen"
+  },
+  "$1screens.ShareProjectStats.skip": {
+    "message": "Nein, jetzt überspringen"
+  },
+  "$1screens.ShareProjectStats.yesShare": {
+    "message": "Ja, Statistiken teilen"
+  },
+  "$1screens.Sync.NoWifiDisplay.buttonText": {
+    "message": "Open Settings"
+  },
+  "$1screens.Sync.NoWifiDisplay.title": {
+    "message": "No WiFi"
+  },
+  "$1screens.Sync.ProjectSyncDisplay.close": {
+    "message": "Schließen"
+  },
+  "$1screens.Sync.ProjectSyncDisplay.devicesFound": {
+    "message": "Devices found"
+  },
+  "$1screens.Sync.ProjectSyncDisplay.noDevicesFound": {
+    "message": "Keine Geräte gefunden."
+  },
+  "$1screens.Sync.ProjectSyncDisplay.stop": {
+    "message": "Stoppen"
+  },
+  "$1screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
+    "message": "Complete! You're up to date"
+  },
+  "$1screens.Sync.ProjectSyncDisplay.waitingForDevices": {
+    "message": "Waiting for devices"
+  },
+  "$1screens.Sync.headerTitle": {
+    "message": "Umtausch"
+  },
+  "$1screens.Track.ObservationList.observation": {
+    "message": "Beobachtung"
+  },
+  "$1screens.Track.ObservationList.observations": {
+    "message": "Beobachtungen"
+  },
+  "$1screens.Track.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete a track",
+    "message": "Track löschen?"
+  },
+  "$1screens.Track.title": {
+    "description": "Title of track screen showing (non-editable) view of observation with map",
+    "message": "Spur"
+  },
+  "$1screens.TrackCategoryChooser.title": {
+    "message": "Wählen Sie eine Kategorie"
+  },
+  "$1screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
+    "message": "Entfernen & benachrichtigen"
+  },
+  "$1screens.YourTeam.RemoveDevice.title": {
+    "message": "Gerät entfernen"
+  },
+  "$1sharedComponents.ErrorBottomSheet.close": {
+    "message": "Schließen"
+  },
+  "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
+    "message": "Etwas ist schief"
+  },
+  "$1soloProject.startNewProject.title": {
+    "message": "Neues Projekt starten"
+  }
+}

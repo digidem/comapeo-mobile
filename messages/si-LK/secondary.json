@@ -16,6 +16,12 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "ආපසු යන්න"
   },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
   "Modal.GPSEnable.button.loading": {
     "message": "පූරණය වෙමින්…"
   },
@@ -111,8 +117,15 @@
     "description": "Degrees/Minutes/Seconds coordinate format",
     "message": "උපාධි/මිනිත්තු/තත්පර (DMS)"
   },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "Universal Transverse Mercator (UTM)"
+  },
   "screens.EarlyAccessTurnedOff.close": {
     "message": "වසන්න"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Incorrect passcode, please try again"
   },
   "screens.ExchangeSoloScreen.goBack": {
     "message": "ආපසු යන්න"
@@ -240,12 +253,21 @@
   "screens.ManualGpsScreen.easting": {
     "message": "නැගෙනහිර"
   },
+  "screens.ManualGpsScreen.eastingSuffix": {
+    "message": "mE"
+  },
   "screens.ManualGpsScreen.northing": {
     "message": "උතුරු"
+  },
+  "screens.ManualGpsScreen.northingSuffix": {
+    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
     "message": "ඛණ්ඩාංක ඇතුළත් කරන්න"
+  },
+  "screens.ManualGpsScreen.universalTransverseMercator": {
+    "message": "Universal Transverse Mercator (UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "කලාප ලිපිය"
@@ -253,9 +275,16 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "කලාප අංකය"
   },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "නිරීක්ෂණ"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "නිරීක්ෂණය මකන්නද?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
@@ -346,11 +375,32 @@
     "description": "Placeholder for description/notes field",
     "message": "මෙතන මොකද වෙන්නේ?"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
   "screens.Settings.Config.projectName": {
     "message": "ව්යාපෘතියේ නම:"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
     "message": "ඊළඟ"
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
   },
   "screens.TrackRecordingActive.cancel": {
     "message": "අවලංගු කරන්න"

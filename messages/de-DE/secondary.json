@@ -613,6 +613,9 @@
   "screens.ManualGpsScreen.DdForm.south": {
     "message": "Süd"
   },
+  "screens.ManualGpsScreen.DdForm.west": {
+    "message": "West"
+  },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
     "message": "{field} Minuten Eingabe"
   },
@@ -655,6 +658,9 @@
   "screens.ManualGpsScreen.DmsForm.south": {
     "message": "Süd"
   },
+  "screens.ManualGpsScreen.DmsForm.west": {
+    "message": "West"
+  },
   "screens.ManualGpsScreen.coordinateFormat": {
     "message": "Koordinaten Format"
   },
@@ -667,11 +673,17 @@
   "screens.ManualGpsScreen.easting": {
     "message": "Osten"
   },
+  "screens.ManualGpsScreen.eastingSuffix": {
+    "message": "mE"
+  },
   "screens.ManualGpsScreen.invalidCoordinates": {
     "message": "Ungültige Koordinaten. Die Breite muss zwischen -90 und 90 liegen. Die Länge muss zwischen -180 und 180 liegen"
   },
   "screens.ManualGpsScreen.northing": {
     "message": "Norden"
+  },
+  "screens.ManualGpsScreen.northingSuffix": {
+    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
@@ -704,6 +716,10 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Beobachtung"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Beobachtung löschen?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",

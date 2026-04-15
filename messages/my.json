@@ -13,15 +13,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "နောက်သို့ ပြန်သွား"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Enable"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
-  },
-  "Navigation.Menu.bgMap": {
-    "message": "Background Maps"
-  },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "ဆက်လက်ပြင်ဆင်ခြင်း"
@@ -132,9 +123,6 @@
   "screens.DataPrivacy.next": {
     "message": "နောက်ထပ်"
   },
-  "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect passcode, please try again"
-  },
   "screens.ExchangeSoloScreen.goBack": {
     "message": "နောက်သို့ ပြန်သွား"
   },
@@ -184,15 +172,6 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "ဇုန်နံပါတ်"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
-  },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
     "message": "ပယ်ဖျက်သည်"
@@ -212,9 +191,6 @@
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "ပယ်ဖျက်သည်"
-  },
-  "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -285,53 +261,17 @@
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
     "message": "ပြောင်းလဲမှုများကို ဖျက်ပစ်မှာလား?"
   },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Add Another Device"
-  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
     "message": "ပြီးသွားပြီ"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "ကိရိယာများကို ဖိတ်ခေါ်ပါ"
   },
-  "screens.Settings.Collaborate.startNewProject": {
-    "message": "Create a Project"
-  },
-  "screens.Settings.Config.name": {
-    "message": "Config Name:"
-  },
-  "screens.Settings.Config.navTitle": {
-    "message": "Configuration"
-  },
   "screens.Settings.Config.okButton": {
     "message": "အိုကေ"
   },
-  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "ပြီးသွားပြီ"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
-    "message": "Invite Device"
-  },
-  "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
-  },
-  "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
   },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
     "message": "နောက်ထပ်"
@@ -339,41 +279,11 @@
   "screens.Settings.StartNewProjectIntro.nextButton": {
     "message": "နောက်ထပ်"
   },
-  "screens.Settings.StartNewProjectIntro.title": {
-    "message": "Create a Project"
-  },
-  "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
-  },
-  "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
-  },
-  "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
-  },
-  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data synced"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
-  },
-  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
-  },
   "screens.Track.ObservationList.observation": {
     "message": "လေ့လာတွေ့ရှိချက်များ"
   },
   "screens.TrackRecordingActive.cancel": {
     "message": "ပယ်ဖျက်သည်"
-  },
-  "screens.TrackRecordingActive.warningMessage": {
-    "message": "You’re currently recording a track. To join project, stop recording"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
     "description": "Shown in new observation screen whilst looking for GPS",

@@ -32,9 +32,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Kembali"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Enable"
-  },
   "Modal.GPSDisable.description": {
     "message": "GPS dan lokasi diperlukan untuk merekam jejak."
   },
@@ -233,9 +230,6 @@
   "Screens.ProjectSettings.configTitle": {
     "message": "Kategori Proyek"
   },
-  "Screens.ProjectSettings.editInfo": {
-    "message": "Edit Info"
-  },
   "Screens.ProjectSettings.invite": {
     "message": "Undang Kolaborator"
   },
@@ -427,9 +421,6 @@
   "screen.EditProjectDetails.descriptionPlaceholder": {
     "message": "Deskripsi Singkat Proyek, kurang dari 60 karakter."
   },
-  "screen.EditProjectDetails.navTitle": {
-    "message": "Edit Info"
-  },
   "screen.EditProjectDetails.projectColors": {
     "message": "Warna Kartu Proyek"
   },
@@ -572,9 +563,6 @@
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
     "message": "Kata sandi tidak cocok"
-  },
-  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
-    "message": "Incorrect passcode, please try again"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
     "message": "Kode sandi ini akan diperlukan untuk membuka Aplikasi CoMapeo"
@@ -869,9 +857,6 @@
   },
   "screens.EnterPassword.lockoutMessage": {
     "message": "Coba lagi di {minutes, plural, one {# menit} other {# menit}}"
-  },
-  "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect passcode, please try again"
   },
   "screens.Exchange.WifiCard.noWifi": {
     "message": "Tidak ada Wi-Fi"
@@ -1221,9 +1206,6 @@
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
     "message": "Hidupkan Lokasi"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
-  },
   "screens.ObscurePasscode.description": {
     "message": "Kode Sandi Obscure adalah fitur keamanan yang memungkinkan Anda membuka CoMapeo dalam mode umpan yang menyembunyikan semua data Anda. Memasukkan Kode Sandi Obscure pada layar intro akan menampilkan versi kosong CoMapeo yang memungkinkan Anda membuat pengamatan demonstrasi yang tidak disimpan ke database CoMapeo."
   },
@@ -1261,9 +1243,6 @@
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "Batal"
-  },
-  "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -1372,10 +1351,6 @@
     "description": "Title of observation details screen showing question number and total",
     "message": "Pertanyaan {current} dari {total}"
   },
-  "screens.ObservationEdit.ObservationEditView.audioButton": {
-    "description": "Button label for adding audio",
-    "message": "Audio"
-  },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "Apa yang terjadi di sini?"
@@ -1418,9 +1393,6 @@
   },
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Akurasi Ketinggian"
-  },
-  "screens.ObservationMetadataVerified.coMapeoMetadata": {
-    "message": "CoMapeo Metadata"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "Data ini dimasukkan secara manual."
@@ -1590,9 +1562,6 @@
   "screens.PrivacyPolicy.controlDescription": {
     "message": "Anda dapat memilih untuk tidak mengirim informasi apa pun ke Awana Digital. Anda memilih di mana data Anda disimpan dan dengan siapa data tersebut dibagikan. Anda dapat memilih untuk membagikan data anonim dan ringkasan tentang cara Anda menggunakan CoMapeo dengan Awana Digital. Kami akan selalu transparan tentang informasi apa yang Anda pilih untuk dibagikan dengan tujuan meningkatkan aplikasi, dan informasi ini tidak akan pernah menyertakan foto, video, audio, teks, atau lokasi tepat yang telah Anda masukkan ke CoMapeo."
   },
-  "screens.PrivacyPolicy.crashData": {
-    "message": "Crash Data"
-  },
   "screens.PrivacyPolicy.crashDataDescription": {
     "message": "Informasi tentang apa yang menyebabkan aplikasi ditutup secara tak terduga"
   },
@@ -1755,14 +1724,8 @@
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
     "message": "Nama Perangkat"
   },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Add Another Device"
-  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
     "message": "Selesai"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> sekarang adalah bagian dari proyek Anda."
@@ -1829,12 +1792,6 @@
   },
   "screens.Settings.Config.importSuccessTitle": {
     "message": "Kategori yang berhasil diimpor:"
-  },
-  "screens.Settings.Config.name": {
-    "message": "Config Name:"
-  },
-  "screens.Settings.Config.navTitle": {
-    "message": "Configuration"
   },
   "screens.Settings.Config.okButton": {
     "message": "Oke"
@@ -2016,23 +1973,11 @@
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Tutup"
   },
-  "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
-  },
-  "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
-  },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "Kalian semua terjebak!"
   },
-  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data synced"
-  },
   "screens.Sync.ProjectSyncDisplay.close": {
     "message": "Tutup"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
   },
   "screens.Sync.ProjectSyncDisplay.exchangeAction": {
     "message": "Ubah Pengaturan"
@@ -2058,9 +2003,6 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
     "message": "Tidak ada perangkat yang ditemukan."
   },
-  "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No WiFi"
-  },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Mulai"
   },
@@ -2075,9 +2017,6 @@
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
     "message": "Selesai!"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Menunggu perangkat..."
@@ -2127,9 +2066,6 @@
   },
   "screens.TrackRecordingActive.stopTracks": {
     "message": "Jalur Berhenti"
-  },
-  "screens.TrackRecordingActive.warningMessage": {
-    "message": "You’re currently recording a track. To join project, stop recording"
   },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Perangkat dilepas."

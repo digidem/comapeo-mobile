@@ -16,17 +16,8 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "ආපසු යන්න"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Enable"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
-  },
   "Modal.GPSEnable.button.loading": {
     "message": "පූරණය වෙමින්…"
-  },
-  "Navigation.Menu.bgMap": {
-    "message": "Background Maps"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -52,9 +43,6 @@
   },
   "Screens.ProjectSettings.update": {
     "message": "යාවත්කාලීන කරන්න"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "View"
   },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "ආරක්ෂාව"
@@ -215,10 +203,6 @@
     "description": "Title coordinate format screen",
     "message": "සම්බන්ධීකරණ ආකෘතිය"
   },
-  "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
-  },
   "screens.DataPrivacy.next": {
     "message": "ඊළඟ"
   },
@@ -236,9 +220,6 @@
   },
   "screens.EarlyAccessTurnedOff.close": {
     "message": "වසන්න"
-  },
-  "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect passcode, please try again"
   },
   "screens.ExchangeSettingsBottomSheet.close": {
     "message": "වසන්න"
@@ -406,36 +387,18 @@
   "screens.ManualGpsScreen.easting": {
     "message": "නැගෙනහිර"
   },
-  "screens.ManualGpsScreen.eastingSuffix": {
-    "message": "mE"
-  },
   "screens.ManualGpsScreen.northing": {
     "message": "උතුරු"
-  },
-  "screens.ManualGpsScreen.northingSuffix": {
-    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
     "message": "ඛණ්ඩාංක ඇතුළත් කරන්න"
-  },
-  "screens.ManualGpsScreen.universalTransverseMercator": {
-    "message": "Universal Transverse Mercator (UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "කලාප ලිපිය"
   },
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "කලාප අංකය"
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
   },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
@@ -456,9 +419,6 @@
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "අවලංගු කරන්න"
-  },
-  "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -639,14 +599,8 @@
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
     "message": "උපාංගයේ නම"
   },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Add Another Device"
-  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
     "message": "කළා"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "උපාංගයට ආරාධනා කරන්න"
@@ -654,38 +608,17 @@
   "screens.Settings.Collaborate.joinProject": {
     "message": "ව්යාපෘතියකට සම්බන්ධ වන්න"
   },
-  "screens.Settings.Collaborate.startNewProject": {
-    "message": "Create a Project"
-  },
-  "screens.Settings.Config.name": {
-    "message": "Config Name:"
-  },
-  "screens.Settings.Config.navTitle": {
-    "message": "Configuration"
-  },
   "screens.Settings.Config.okButton": {
     "message": "හරි"
   },
   "screens.Settings.Config.projectName": {
     "message": "ව්යාපෘතියේ නම:"
   },
-  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "කළා"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
-    "message": "Invite Device"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "සාර්ථකයි!"
-  },
-  "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
-  },
-  "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "සුරකින්න"
@@ -696,20 +629,11 @@
   "screens.Settings.MapManagement.BackgroundMaps.close": {
     "message": "වසන්න"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
-  },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "අපනයන දෝෂ"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
     "message": "සිතියම ඉවත් කරන්න"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
   },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
     "message": "ඊළඟ"
@@ -717,38 +641,11 @@
   "screens.Settings.StartNewProjectIntro.nextButton": {
     "message": "ඊළඟ"
   },
-  "screens.Settings.StartNewProjectIntro.title": {
-    "message": "Create a Project"
-  },
   "screens.Settings.YourTeam.close": {
     "message": "වසන්න"
   },
-  "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
-  },
-  "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
-  },
-  "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
-  },
-  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data synced"
-  },
   "screens.Sync.ProjectSyncDisplay.close": {
     "message": "වසන්න"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
-  },
-  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
   },
   "screens.Track.ObservationList.observation": {
     "message": "නිරීක්ෂණ"
@@ -758,9 +655,6 @@
   },
   "screens.TrackRecordingActive.cancel": {
     "message": "අවලංගු කරන්න"
-  },
-  "screens.TrackRecordingActive.warningMessage": {
-    "message": "You’re currently recording a track. To join project, stop recording"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "සම්බන්ද තාවයක් නැත"

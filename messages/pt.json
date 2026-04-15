@@ -588,9 +588,6 @@
   "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
     "message": "Definir senha"
   },
-  "screens.AppPasscode.NewPasscode.Splash.continue": {
-    "message": "Continue"
-  },
   "screens.AppPasscode.NewPasscode.Splash.title": {
     "message": "O que é Senha do aplicativo?"
   },
@@ -1036,9 +1033,6 @@
   },
   "screens.LeaveProjectWarning.cancel": {
     "message": "Cancelar"
-  },
-  "screens.LeaveProjectWarning.continueButton": {
-    "message": "Continue"
   },
   "screens.LeaveProjectWarning.exportRecommendation": {
     "message": "Antes de sair, exporte quaisquer dados importantes."

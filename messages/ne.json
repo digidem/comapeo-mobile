@@ -16,15 +16,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "पछाडी जानुहाेस"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Enable"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
-  },
-  "Navigation.Menu.bgMap": {
-    "message": "Background Maps"
-  },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "निरन्तर सम्पादन"
@@ -173,9 +164,6 @@
   "screens.DeviceNaming.save": {
     "message": "संग्रह"
   },
-  "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect passcode, please try again"
-  },
   "screens.ExchangeSettingsBottomSheet.save": {
     "message": "संग्रह"
   },
@@ -244,14 +232,8 @@
   "screens.ManualGpsScreen.easting": {
     "message": "पुर्व"
   },
-  "screens.ManualGpsScreen.eastingSuffix": {
-    "message": "mE"
-  },
   "screens.ManualGpsScreen.northing": {
     "message": "उत्तर"
-  },
-  "screens.ManualGpsScreen.northingSuffix": {
-    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
@@ -262,15 +244,6 @@
   },
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "जाेन नम्बर"
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
   },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
@@ -291,9 +264,6 @@
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "रद्द"
-  },
-  "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -426,95 +396,32 @@
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
     "message": "परिवर्तन रद्द?"
   },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Add Another Device"
-  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
     "message": "भयाे"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "उपकरणलाई निमन्त्रणा"
   },
-  "screens.Settings.Collaborate.startNewProject": {
-    "message": "Create a Project"
-  },
-  "screens.Settings.Config.name": {
-    "message": "Config Name:"
-  },
-  "screens.Settings.Config.navTitle": {
-    "message": "Configuration"
-  },
   "screens.Settings.Config.okButton": {
     "message": "ठिक छ"
-  },
-  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "भयाे"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
-    "message": "Invite Device"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "सफल!"
-  },
-  "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
-  },
-  "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "संग्रह"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
-  },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "भित्राउनमा समस्या"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
   },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
     "message": "अर्काे"
   },
   "screens.Settings.StartNewProjectIntro.nextButton": {
     "message": "अर्काे"
-  },
-  "screens.Settings.StartNewProjectIntro.title": {
-    "message": "Create a Project"
-  },
-  "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
-  },
-  "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
-  },
-  "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
-  },
-  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data synced"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
-  },
-  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
   },
   "screens.Track.ObservationList.observation": {
     "message": "अवलाेकन"
@@ -524,9 +431,6 @@
   },
   "screens.TrackRecordingActive.cancel": {
     "message": "रद्द"
-  },
-  "screens.TrackRecordingActive.warningMessage": {
-    "message": "You’re currently recording a track. To join project, stop recording"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
     "description": "Shown in new observation screen whilst looking for GPS",

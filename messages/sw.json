@@ -16,17 +16,8 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Rudi Nyuma"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Enable"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
-  },
   "Modal.GPSEnable.button.loading": {
     "message": "Inapakia…"
-  },
-  "Navigation.Menu.bgMap": {
-    "message": "Background Maps"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -224,10 +215,6 @@
     "description": "Title coordinate format screen",
     "message": "Muundo wa Kiratibu"
   },
-  "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
-  },
   "screens.DataPrivacy.next": {
     "message": "Inayofuata"
   },
@@ -418,36 +405,18 @@
   "screens.ManualGpsScreen.easting": {
     "message": "Mashariki"
   },
-  "screens.ManualGpsScreen.eastingSuffix": {
-    "message": "mE"
-  },
   "screens.ManualGpsScreen.northing": {
     "message": "Kaskazini"
-  },
-  "screens.ManualGpsScreen.northingSuffix": {
-    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
     "message": "Weka viratibu"
-  },
-  "screens.ManualGpsScreen.universalTransverseMercator": {
-    "message": "Universal Transverse Mercator (UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "Herufi ya Ukanda"
   },
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Nambari ya Ukanda"
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
   },
   "screens.ObscurePasscode.title": {
     "message": "Nambari ya siri Isiyojulikana"
@@ -477,9 +446,6 @@
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "Ghairi"
-  },
-  "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -663,14 +629,8 @@
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
     "message": "Jina la Kifaa"
   },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Add Another Device"
-  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
     "message": "Imekamilika"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Alika Kifaa"
@@ -678,38 +638,17 @@
   "screens.Settings.Collaborate.joinProject": {
     "message": "Jiunge na Mradi"
   },
-  "screens.Settings.Collaborate.startNewProject": {
-    "message": "Create a Project"
-  },
-  "screens.Settings.Config.name": {
-    "message": "Config Name:"
-  },
-  "screens.Settings.Config.navTitle": {
-    "message": "Configuration"
-  },
   "screens.Settings.Config.okButton": {
     "message": "Sawa"
   },
   "screens.Settings.Config.projectName": {
     "message": "Jina la Mradi:"
   },
-  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "Imekamilika"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
-    "message": "Invite Device"
-  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Imefaulu!"
-  },
-  "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
-  },
-  "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "Hifadhi"
@@ -723,20 +662,11 @@
   "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
     "message": "Futa Ramani"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
-  },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "Hitilafu ya Kuleta"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
     "message": "Ondoa Ramani"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
   },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
     "message": "Inayofuata"
@@ -744,38 +674,11 @@
   "screens.Settings.StartNewProjectIntro.nextButton": {
     "message": "Inayofuata"
   },
-  "screens.Settings.StartNewProjectIntro.title": {
-    "message": "Create a Project"
-  },
   "screens.Settings.YourTeam.close": {
     "message": "Funga"
   },
-  "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
-  },
-  "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
-  },
-  "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
-  },
-  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data synced"
-  },
   "screens.Sync.ProjectSyncDisplay.close": {
     "message": "Funga"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
-  },
-  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
   },
   "screens.Track.ObservationList.observation": {
     "message": "Uchunguzi"
@@ -785,9 +688,6 @@
   },
   "screens.TrackRecordingActive.cancel": {
     "message": "Ghairi"
-  },
-  "screens.TrackRecordingActive.warningMessage": {
-    "message": "You’re currently recording a track. To join project, stop recording"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Imetenganishwa"

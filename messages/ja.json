@@ -32,12 +32,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "戻る"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Enable"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
-  },
   "Modal.GPSDisable.title": {
     "message": "GPS 無効"
   },
@@ -50,14 +44,8 @@
   "Navigation.Menu.Settings": {
     "message": "CoMapeoの設定"
   },
-  "Navigation.Menu.bgMap": {
-    "message": "Background Maps"
-  },
   "Navigation.Menu.collaborate": {
     "message": "共同作業"
-  },
-  "Navigation.Menu.coordinator": {
-    "message": "Coordinator"
   },
   "Navigation.Menu.coordinatorTools": {
     "message": "コーディネータツール"
@@ -284,9 +272,6 @@
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "座標系"
   },
-  "Screens.Settings.AppSettings.coordinateSystemDesc": {
-    "message": "UTM,Lat/Lon,DMS"
-  },
   "Screens.Settings.AppSettings.deviceName": {
     "message": "端末名"
   },
@@ -391,9 +376,6 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "変更は保存されません。元に戻すことはできません。"
   },
-  "TrackStats.kilometers": {
-    "message": "km"
-  },
   "allProjects.close": {
     "message": "閉じる"
   },
@@ -439,9 +421,6 @@
   "screen.EditProjectDetails.projectName": {
     "message": "プロジェクト名"
   },
-  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
-    "message": "Coordinator"
-  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
     "message": "参加者"
   },
@@ -478,10 +457,6 @@
   "screens.AboutSettings.CoMapeoBuild": {
     "description": "Label for CoMapeo build number",
     "message": "CoMapeo ビルド"
-  },
-  "screens.AboutSettings.CoMapeoType": {
-    "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)",
-    "message": "CoMapeo variant"
   },
   "screens.AboutSettings.CoMapeoVersion": {
     "description": "Label for CoMapeo version",
@@ -572,9 +547,6 @@
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
     "message": "パスワードが一致しません"
-  },
-  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
-    "message": "Incorrect Passcode"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
     "message": "このパスコードはCoMapeoアプリを開くために必要です"
@@ -703,9 +675,6 @@
   },
   "screens.CollaboratorInfo.addedOn": {
     "message": "{date} に追加"
-  },
-  "screens.CollaboratorInfo.coordinator": {
-    "message": "Coordinator"
   },
   "screens.CollaboratorInfo.leaveProject": {
     "message": "プロジェクトを退出する"
@@ -866,12 +835,6 @@
   },
   "screens.EnterPassword.lockoutMessage": {
     "message": "{minutes, plural, one {# 分} other {# 分}}"
-  },
-  "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect passcode, please try again"
-  },
-  "screens.Exchange.WifiCard.noWifi": {
-    "message": "No Wi-Fi"
   },
   "screens.ExchangeSettingsBottomSheet.close": {
     "message": "閉じる"
@@ -1097,9 +1060,6 @@
     "description": "if a location sensor is active yes/no",
     "message": "はい"
   },
-  "screens.ManualGpsScreen.DdForm.east": {
-    "message": "East"
-  },
   "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
     "message": "座標が無効です"
   },
@@ -1115,17 +1075,11 @@
   "screens.ManualGpsScreen.DdForm.longitude": {
     "message": "経度："
   },
-  "screens.ManualGpsScreen.DdForm.north": {
-    "message": "North"
-  },
   "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
     "message": "緯度の多重度を選択"
   },
   "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
     "message": "経度の多重度を選択"
-  },
-  "screens.ManualGpsScreen.DdForm.south": {
-    "message": "South"
   },
   "screens.ManualGpsScreen.DdForm.west": {
     "message": "西へ"
@@ -1151,9 +1105,6 @@
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
     "message": "秒"
   },
-  "screens.ManualGpsScreen.DmsForm.east": {
-    "message": "East"
-  },
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
     "message": "座標が無効です"
   },
@@ -1163,14 +1114,8 @@
   "screens.ManualGpsScreen.DmsForm.longitude": {
     "message": "経度："
   },
-  "screens.ManualGpsScreen.DmsForm.north": {
-    "message": "North"
-  },
   "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
     "message": "緯度の多重度を選択"
-  },
-  "screens.ManualGpsScreen.DmsForm.south": {
-    "message": "South"
   },
   "screens.ManualGpsScreen.DmsForm.west": {
     "message": "西へ"
@@ -1184,20 +1129,8 @@
   "screens.ManualGpsScreen.degreesMinutesSeconds": {
     "message": "時分秒緯経度(DMS)"
   },
-  "screens.ManualGpsScreen.easting": {
-    "message": "East"
-  },
-  "screens.ManualGpsScreen.eastingSuffix": {
-    "message": "mE"
-  },
   "screens.ManualGpsScreen.invalidCoordinates": {
     "message": "座標が無効です。緯度は-90から90の間でなければなりません。経度は-180から180の間でなければなりません。"
-  },
-  "screens.ManualGpsScreen.northing": {
-    "message": "North"
-  },
-  "screens.ManualGpsScreen.northingSuffix": {
-    "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
@@ -1212,23 +1145,11 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "ゾーン番号"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
-  },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcodeは、CoMapeoをすべてのデータを非表示にするデコイモードで開くことができるセキュリティ機能です。 イントロ画面に「Obscure Passcode」を入力すると、空のバージョンのCoMapeoが表示され、CoMapeoデータベースに保存されていないデモ観察記録を作成できます。"
   },
   "screens.ObscurePasscode.instructions": {
     "message": "CoMapeoでデータを非表示にするコードを入力してください"
-  },
-  "screens.ObscurePasscode.title": {
-    "message": "Obscure Passcode"
   },
   "screens.ObscurePasscode.toggleMessage": {
     "message": "Obscure Passcode を使用"
@@ -1258,9 +1179,6 @@
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "取消"
-  },
-  "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -1299,9 +1217,6 @@
   },
   "screens.Observation.shareMessageFooter": {
     "message": "CoMapeoから送信"
-  },
-  "screens.Observation.shareMessageTitle": {
-    "message": "CoMapeo Alert"
   },
   "screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
@@ -1533,10 +1448,6 @@
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "写真を削除"
   },
-  "screens.PhotoPreviewModal.imageStorageSize": {
-    "description": "Image size in megabytes",
-    "message": "{value} MB"
-  },
   "screens.PhotoPreviewModal.landscape": {
     "description": "Describes image layout when taking photo horizontally",
     "message": "ランドスケープ"
@@ -1631,9 +1542,6 @@
   "screens.PrivacyPolicy.performanceDataDescription": {
     "message": "起動時間、エネルギー使用量、アプリがフリーズ、応答性など。"
   },
-  "screens.PrivacyPolicy.privacyPolicyTitle": {
-    "message": "CoMapeo Data Privacy"
-  },
   "screens.PrivacyPolicy.privateByDefault": {
     "message": "デフォルトでは非公開"
   },
@@ -1709,9 +1617,6 @@
   "screens.Security.obscurePasscodeDescriptionActivated": {
     "message": "発作からデバイスを保護"
   },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
-  },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "パスコードが設定されていません"
   },
@@ -1748,14 +1653,8 @@
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
     "message": "端末名"
   },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Add Another Device"
-  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
     "message": "完了"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> がプロジェクトの一部になりました。"
@@ -1781,9 +1680,6 @@
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
     "message": "デバイスの招待、データの編集、削除、プロジェクトの詳細の管理ができます。"
   },
-  "screens.Setting.ProjectSettings.YourTeam.coordinators": {
-    "message": "Coordinators"
-  },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "デバイスを招待"
   },
@@ -1808,9 +1704,6 @@
   "screens.Settings.Collaborate.joinProject": {
     "message": "プロジェクトに参加"
   },
-  "screens.Settings.Collaborate.startNewProject": {
-    "message": "Create a Project"
-  },
   "screens.Settings.Collaborate.title": {
     "message": "共同作業"
   },
@@ -1823,29 +1716,14 @@
   "screens.Settings.Config.importSuccessTitle": {
     "message": "インポートされたカテゴリ："
   },
-  "screens.Settings.Config.name": {
-    "message": "Config Name:"
-  },
-  "screens.Settings.Config.navTitle": {
-    "message": "Configuration"
-  },
-  "screens.Settings.Config.okButton": {
-    "message": "OK"
-  },
   "screens.Settings.Config.projectName": {
     "message": "プロジェクト名:"
-  },
-  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "プロジェクトの名前"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "完了"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
-    "message": "Invite Device"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
     "message": "{projectName} がデバイスを招待する準備ができました。"
@@ -1855,12 +1733,6 @@
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "成功！"
-  },
-  "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
-  },
-  "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "既存のプロジェクト名を使用すると、同じプロジェクトにはなりません。"
@@ -1919,29 +1791,17 @@
   "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
     "message": "地図を削除"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
-  },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "ファイルをインポートできません。戻って再試行してください。"
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
     "message": "インポートエラー"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.megabytes": {
-    "message": "{size} MB"
-  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMap": {
     "message": "地図を削除"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "地図ファイルを削除"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
   },
   "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
     "message": "地図を送信"
@@ -1966,9 +1826,6 @@
   },
   "screens.Settings.StartNewProjectIntro.nextButton": {
     "message": "次へ"
-  },
-  "screens.Settings.StartNewProjectIntro.title": {
-    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "招待が拒否されました"
@@ -2006,26 +1863,11 @@
   "screens.ShareProjectStats.yesShare": {
     "message": "はい、統計情報を共有"
   },
-  "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
-  },
-  "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
-  },
-  "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
-  },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "全員追いついた！"
   },
-  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data synced"
-  },
   "screens.Sync.ProjectSyncDisplay.close": {
     "message": "閉じる"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
   },
   "screens.Sync.ProjectSyncDisplay.exchangeAction": {
     "message": "設定の変更"
@@ -2051,9 +1893,6 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
     "message": "デバイスが見つかりません。"
   },
-  "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No Wi-Fi."
-  },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "開始"
   },
@@ -2065,15 +1904,6 @@
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
     "message": "完了！他のデバイスの参加を待っています"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
-  },
-  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
@@ -2170,9 +2000,6 @@
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "問題が発生しました"
-  },
-  "sharedComponents.RoleWithIcon.coordinator": {
-    "message": "Coordinator"
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "参加者"

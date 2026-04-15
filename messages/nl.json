@@ -32,12 +32,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Ga terug"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Enable"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
-  },
   "Modal.GPSDisable.title": {
     "message": "GPS uitgeschakeld"
   },
@@ -52,9 +46,6 @@
   },
   "Navigation.Menu.Settings": {
     "message": "CoMapeo instellingen"
-  },
-  "Navigation.Menu.bgMap": {
-    "message": "Background Maps"
   },
   "Navigation.Menu.collaborate": {
     "message": "Samenwerken"
@@ -88,9 +79,6 @@
   },
   "Navigation.Menu.switchProject": {
     "message": "Wissel project"
-  },
-  "Navigation.Menu.team": {
-    "message": "Team"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -287,9 +275,6 @@
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coördinaat systeem"
   },
-  "Screens.Settings.AppSettings.coordinateSystemDesc": {
-    "message": "UTM,Lat/Lon,DMS"
-  },
   "Screens.Settings.AppSettings.deviceName": {
     "message": "Apparaat Naam"
   },
@@ -482,10 +467,6 @@
     "description": "Label for CoMapeo build number",
     "message": "CoMapeo maken"
   },
-  "screens.AboutSettings.CoMapeoType": {
-    "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)",
-    "message": "CoMapeo variant"
-  },
   "screens.AboutSettings.CoMapeoVersion": {
     "description": "Label for CoMapeo version",
     "message": "CoMapeo versie"
@@ -575,9 +556,6 @@
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
     "message": "Wachtwoord komt niet overeen"
-  },
-  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
-    "message": "Incorrect Passcode"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
     "message": "Deze toegangscode is vereist om de CoMapeo App te openen"
@@ -749,10 +727,6 @@
     "description": "Title coordinate format screen",
     "message": "Coördinaat formaat"
   },
-  "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
-  },
   "screens.DataAndPrivacy.appUsageId": {
     "message": "ID-nummers worden willekeurig gecodeerd en elke maand veranderd."
   },
@@ -872,12 +846,6 @@
   },
   "screens.EnterPassword.lockoutMessage": {
     "message": "Probeer het opnieuw in {minutes, plural, one {# minuut} other {# minuten}}"
-  },
-  "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect passcode, please try again"
-  },
-  "screens.Exchange.WifiCard.noWifi": {
-    "message": "No Wi-Fi"
   },
   "screens.ExchangeSettingsBottomSheet.close": {
     "message": "Afsluiten"
@@ -1061,15 +1029,8 @@
   "screens.LeaveProjectWarning.lastDeviceTitle": {
     "message": "Apparaat is laatste apparaat."
   },
-  "screens.LeftProjectConfirmation.openDefaultProject": {
-    "message": "Open {deviceName}"
-  },
   "screens.LeftProjectConfirmation.youveLeftProject": {
     "message": "Je hebt het project verlaten."
-  },
-  "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "Details"
   },
   "screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",
@@ -1133,9 +1094,6 @@
   "screens.ManualGpsScreen.DdForm.south": {
     "message": "Zuiden"
   },
-  "screens.ManualGpsScreen.DdForm.west": {
-    "message": "West"
-  },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
     "message": "{field} minuten invoer"
   },
@@ -1178,9 +1136,6 @@
   "screens.ManualGpsScreen.DmsForm.south": {
     "message": "Zuiden"
   },
-  "screens.ManualGpsScreen.DmsForm.west": {
-    "message": "West"
-  },
   "screens.ManualGpsScreen.coordinateFormat": {
     "message": "Coördinaat formaat"
   },
@@ -1193,24 +1148,15 @@
   "screens.ManualGpsScreen.easting": {
     "message": "Oost"
   },
-  "screens.ManualGpsScreen.eastingSuffix": {
-    "message": "mE"
-  },
   "screens.ManualGpsScreen.invalidCoordinates": {
     "message": "Ongeldige coördinaten. Breedtegraad moet tussen -90 en 90 zijn. Lengte moet tussen -180 en 180 zijn"
   },
   "screens.ManualGpsScreen.northing": {
     "message": "Noord"
   },
-  "screens.ManualGpsScreen.northingSuffix": {
-    "message": "mN"
-  },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
     "message": "Coördinaten invoeren"
-  },
-  "screens.ManualGpsScreen.universalTransverseMercator": {
-    "message": "Universal Transverse Mercator (UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "Zone letter"
@@ -1218,23 +1164,11 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone nummer"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
-  },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
-  },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is een beveiligingsfunctie waarmee je CoMapeo kunt openen in een decoy modus die al je gegevens verbergt. Het invoeren van de Obscure toegangscode op het intro scherm geeft een lege versie van CoMapeo weer die u in staat stelt demonstratie-waarnemingen te maken die niet in de CoMapeo database zijn opgeslagen."
   },
   "screens.ObscurePasscode.instructions": {
     "message": "Voer de bovenstaande code in om uw gegevens in CoMapeo te verbergen"
-  },
-  "screens.ObscurePasscode.title": {
-    "message": "Obscure Passcode"
   },
   "screens.ObscurePasscode.toggleMessage": {
     "message": "Gebruik Obscure wachtwoord"
@@ -1265,9 +1199,6 @@
     "description": "Button to cancel delete of observation",
     "message": "Annuleren"
   },
-  "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
-  },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
     "message": "Ja, verwijderen"
@@ -1281,9 +1212,6 @@
   },
   "screens.Observation.description": {
     "message": "Beschrijving:"
-  },
-  "screens.Observation.details": {
-    "message": "Details:"
   },
   "screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
@@ -1305,9 +1233,6 @@
   },
   "screens.Observation.shareMessageFooter": {
     "message": "Verzonden vanuit CoMapeo"
-  },
-  "screens.Observation.shareMessageTitle": {
-    "message": "CoMapeo Alert"
   },
   "screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
@@ -1383,10 +1308,6 @@
     "description": "Placeholder for description/notes field",
     "message": "Wat gebeurt er hier?"
   },
-  "screens.ObservationEdit.ObservationEditView.detailsButton": {
-    "description": "Button label to add details",
-    "message": "Details"
-  },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
     "message": "Foto"
@@ -1421,9 +1342,6 @@
   },
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Hoogte Nauwkeurigheid"
-  },
-  "screens.ObservationMetadataVerified.coMapeoMetadata": {
-    "message": "CoMapeo Metadata"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "Deze gegevens zijn handmatig ingevoerd."
@@ -1722,9 +1640,6 @@
   "screens.Security.obscurePasscodeDescriptionActivated": {
     "message": "Bescherm uw apparaat tegen aanvallen"
   },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
-  },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Toegangscode niet ingesteld"
   },
@@ -1761,14 +1676,8 @@
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
     "message": "Apparaat Naam"
   },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Add Another Device"
-  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
     "message": "Voltooid"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is nu onderdeel van uw project."
@@ -1812,17 +1721,11 @@
   "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
     "message": "De toestellen dragen niet meer bij aan dit project."
   },
-  "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "Team"
-  },
   "screens.Settings.Collaborate.inviteDevices": {
     "message": "Apparaten uitnodigen"
   },
   "screens.Settings.Collaborate.joinProject": {
     "message": "Deelnemen aan een project"
-  },
-  "screens.Settings.Collaborate.startNewProject": {
-    "message": "Create a Project"
   },
   "screens.Settings.Collaborate.title": {
     "message": "Samenwerken"
@@ -1836,29 +1739,14 @@
   "screens.Settings.Config.importSuccessTitle": {
     "message": "Categorieën succesvol geïmporteerd:"
   },
-  "screens.Settings.Config.name": {
-    "message": "Config Name:"
-  },
-  "screens.Settings.Config.navTitle": {
-    "message": "Configuration"
-  },
-  "screens.Settings.Config.okButton": {
-    "message": "OK"
-  },
   "screens.Settings.Config.projectName": {
     "message": "Project naam:"
-  },
-  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Benoem mijn project"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "Voltooid"
-  },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
-    "message": "Invite Device"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
     "message": "{projectName} is nu klaar om apparaten uit te nodigen."
@@ -1868,12 +1756,6 @@
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Voltooid!"
-  },
-  "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
-  },
-  "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Het gebruik van een bestaande projectnaam maakt ze niet hetzelfde project."
@@ -1932,12 +1814,6 @@
   "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
     "message": "Kaart verwijderen"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
-  },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "Kan het bestand niet importeren. Ga terug en probeer het opnieuw."
   },
@@ -1952,9 +1828,6 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Kaartbestand verwijderen"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
   },
   "screens.Settings.MapManagement.BackgroundMaps.sendMap": {
     "message": "Kaart verzenden"
@@ -1979,9 +1852,6 @@
   },
   "screens.Settings.StartNewProjectIntro.nextButton": {
     "message": "Volgende"
-  },
-  "screens.Settings.StartNewProjectIntro.title": {
-    "message": "Create a Project"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Uitnodiging geweigerd"
@@ -2019,26 +1889,11 @@
   "screens.ShareProjectStats.yesShare": {
     "message": "Ja, deel statistieken"
   },
-  "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
-  },
-  "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
-  },
-  "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
-  },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "Je bent allemaal verstrikt!"
   },
-  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data synced"
-  },
   "screens.Sync.ProjectSyncDisplay.close": {
     "message": "Afsluiten"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
   },
   "screens.Sync.ProjectSyncDisplay.exchangeAction": {
     "message": "Instellingen wijzigen"
@@ -2064,9 +1919,6 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
     "message": "Geen apparaten gevonden."
   },
-  "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No Wi-Fi."
-  },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Beginnen"
   },
@@ -2078,15 +1930,6 @@
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
     "message": "Voltooid! Wachten op andere apparaten"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
-  },
-  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
-  },
-  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"

@@ -16,6 +16,12 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Буцах"
   },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
   "Modal.GPSEnable.button.loading": {
     "message": "Ачааллаж байна"
   },
@@ -251,6 +257,9 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Бүсын дугаар"
   },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
   "screens.ObscurePasscode.title": {
     "message": "Тодорхой бус нууц үг"
   },
@@ -263,6 +272,10 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Сануулга"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Сануулгыг устгах уу?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
@@ -353,11 +366,32 @@
     "description": "Placeholder for description/notes field",
     "message": "Энд юу болоод байгаа юм бэ?"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
   "screens.Settings.Config.projectName": {
     "message": "Төслийн нэр:"
   },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
     "message": "Дараагийнх"
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
   },
   "screens.TrackRecordingActive.cancel": {
     "message": "Цуцлах"

@@ -1,0 +1,212 @@
+{
+  "AppContainer.EditHeader.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "සංස්කරණය කරගෙන යන්න"
+  },
+  "AppContainer.EditHeader.discardTitle": {
+    "description": "Title of dialog that shows when cancelling a new observation",
+    "message": "නිරීක්ෂණය ඉවතලන්නද?"
+  },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "අවලංගු කරන්න"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
+    "message": "කරුණාකර මුර කේතය ඇතුලත් කරන්න"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
+    "message": "මුරකේතය ඇතුල්කරන්න"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "අවලංගු කරන්න"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "ඊළඟ"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
+    "message": "වැරදි මුර කේතය"
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "අවලංගු කරන්න"
+  },
+  "screens.CoordinateFormat.dd": {
+    "description": "Decimal Degrees coordinate format",
+    "message": "දශම අංශක (DD)"
+  },
+  "screens.CoordinateFormat.dms": {
+    "description": "Degrees/Minutes/Seconds coordinate format",
+    "message": "උපාධි/මිනිත්තු/තත්පර (DMS)"
+  },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "Universal Transverse Mercator (UTM)"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Incorrect passcode, please try again"
+  },
+  "screens.ManualGpsScreen.DdForm.east": {
+    "message": "නැගෙනහිර"
+  },
+  "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
+    "message": "වලංගු නොවන ඛණ්ඩාංක"
+  },
+  "screens.ManualGpsScreen.DdForm.latInputLabel": {
+    "message": "අක්ෂාංශ අගය"
+  },
+  "screens.ManualGpsScreen.DdForm.latitude": {
+    "message": "අක්ෂාංශ"
+  },
+  "screens.ManualGpsScreen.DdForm.lonInputLabel": {
+    "message": "දේශාංශ අගය"
+  },
+  "screens.ManualGpsScreen.DdForm.longitude": {
+    "message": "දේශාංශ"
+  },
+  "screens.ManualGpsScreen.DdForm.north": {
+    "message": "උතුරු"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
+    "message": "අක්ෂාංශ කාර්ඩිනලිටි තෝරන්න"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
+    "message": "දේශාංශ කාඩිනලිටි තෝරන්න"
+  },
+  "screens.ManualGpsScreen.DdForm.south": {
+    "message": "දකුණ"
+  },
+  "screens.ManualGpsScreen.DdForm.west": {
+    "message": "බටහිර"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
+    "message": "{field} මිනිත්තු ආදානය"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
+    "message": "{field} තත්පර ආදානය"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
+    "message": "අංශක"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
+    "message": "{field} අංශක ආදානය"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
+    "message": "දිශාව"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
+    "message": "විනාඩි"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
+    "message": "තත්පර"
+  },
+  "screens.ManualGpsScreen.DmsForm.east": {
+    "message": "නැගෙනහිර"
+  },
+  "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
+    "message": "වලංගු නොවන ඛණ්ඩාංක"
+  },
+  "screens.ManualGpsScreen.DmsForm.latitude": {
+    "message": "අක්ෂාංශ"
+  },
+  "screens.ManualGpsScreen.DmsForm.longitude": {
+    "message": "දේශාංශ"
+  },
+  "screens.ManualGpsScreen.DmsForm.north": {
+    "message": "උතුරු"
+  },
+  "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
+    "message": "අක්ෂාංශ කාර්ඩිනලිටි තෝරන්න"
+  },
+  "screens.ManualGpsScreen.DmsForm.south": {
+    "message": "දකුණ"
+  },
+  "screens.ManualGpsScreen.DmsForm.west": {
+    "message": "බටහිර"
+  },
+  "screens.ManualGpsScreen.coordinateFormat": {
+    "message": "සම්බන්ධීකරණ ආකෘතිය"
+  },
+  "screens.ManualGpsScreen.decimalDegrees": {
+    "message": "දශම අංශක (DD)"
+  },
+  "screens.ManualGpsScreen.degreesMinutesSeconds": {
+    "message": "උපාධි/මිනිත්තු/තත්පර (DMS)"
+  },
+  "screens.ManualGpsScreen.easting": {
+    "message": "නැගෙනහිර"
+  },
+  "screens.ManualGpsScreen.eastingSuffix": {
+    "message": "mE"
+  },
+  "screens.ManualGpsScreen.northing": {
+    "message": "උතුරු"
+  },
+  "screens.ManualGpsScreen.northingSuffix": {
+    "message": "mN"
+  },
+  "screens.ManualGpsScreen.title": {
+    "description": "title of manual GPS screen",
+    "message": "ඛණ්ඩාංක ඇතුළත් කරන්න"
+  },
+  "screens.ManualGpsScreen.universalTransverseMercator": {
+    "message": "Universal Transverse Mercator (UTM)"
+  },
+  "screens.ManualGpsScreen.zoneLetter": {
+    "message": "කලාප ලිපිය"
+  },
+  "screens.ManualGpsScreen.zoneNumber": {
+    "message": "කලාප අංකය"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "නිරීක්ෂණ"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "නිරීක්ෂණය මකන්නද?"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "මෙතන මොකද වෙන්නේ?"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "නිරීක්ෂණය"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "ඔබගේ පළමු නිරීක්ෂණය වාර්තා කිරීමට සිතියමෙන් හෝ කැමරා දර්ශනයෙන් ආරම්භ කරන්න."
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "පූරණය වෙමින් පවතී... මෙය නව උපාංගයක් සමඟ සමමුහුර්ත කිරීමෙන් පසු යම් කාලයක් ගත විය හැක"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
+  }
+}

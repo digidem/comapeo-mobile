@@ -1,0 +1,92 @@
+{
+  "AppContainer.EditHeader.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "ဆက်လက်ပြင်ဆင်ခြင်း"
+  },
+  "AppContainer.EditHeader.discardTitle": {
+    "description": "Title of dialog that shows when cancelling a new observation",
+    "message": "လေ့လာထားရှိမှုများကို ဖျက်ပစ်မှာလား?"
+  },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "ပယ်ဖျက်သည်"
+  },
+  "screens.CoordinateFormat.dd": {
+    "description": "Decimal Degrees coordinate format",
+    "message": "ဒသမ ဒီဂရီ"
+  },
+  "screens.CoordinateFormat.dms": {
+    "description": "Degrees/Minutes/Seconds coordinate format",
+    "message": "ဒီဂရီ/ မိနစ်/ စက္ကန့်"
+  },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "UTM (Universal Transverse Mercator)"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Incorrect passcode, please try again"
+  },
+  "screens.ManualGpsScreen.decimalDegrees": {
+    "message": "ဒသမ ဒီဂရီ"
+  },
+  "screens.ManualGpsScreen.degreesMinutesSeconds": {
+    "message": "ဒီဂရီ/ မိနစ်/ စက္ကန့်"
+  },
+  "screens.ManualGpsScreen.easting": {
+    "message": "အရှေ့"
+  },
+  "screens.ManualGpsScreen.northing": {
+    "message": "မြောက်"
+  },
+  "screens.ManualGpsScreen.title": {
+    "description": "title of manual GPS screen",
+    "message": "ကိုဩဒိနိတ်အမှတ်များ ရိုက်ထည့်ပါ"
+  },
+  "screens.ManualGpsScreen.universalTransverseMercator": {
+    "message": "UTM (Universal Transverse Mercator)"
+  },
+  "screens.ManualGpsScreen.zoneNumber": {
+    "message": "ဇုန်နံပါတ်"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "လေ့လာတွေ့ရှိချက်များ"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "လေ့လာထားရှိမှုများကို ဖျက်ပစ်မှာလား?"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
+  }
+}

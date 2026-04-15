@@ -15,19 +15,16 @@ import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
 import {useDraftObservationState} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
-  // primary-string
   nextQuestion: {
     id: '$1screens.ObservationDetails.nextQuestion',
     defaultMessage: 'Next',
     description: 'Button text to navigate to next question',
   },
-  // primary-string
   done: {
     id: '$1screens.ObservationDetails.done',
     defaultMessage: 'Done',
     description: 'Button text when all questions are complete',
   },
-  // primary-string
   title: {
     id: '$1screens.ObservationDetails.title',
     defaultMessage: 'Question {current} of {total}',

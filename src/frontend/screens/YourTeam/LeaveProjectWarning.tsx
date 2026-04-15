@@ -20,7 +20,6 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 import MobilePhoneArrowIcon from '../../images/MobilePhoneArrow.svg';
-// primary-string ENTIRE
 const m = defineMessages({
   lastCoordinatorTitle: {
     id: '$1screens.LeaveProjectWarning.lastCoordinatorTitle',

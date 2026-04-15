@@ -5,7 +5,6 @@ import {OBSCURE_PASSCODE} from '../../constants';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {InputPasscode} from './InputPasscode';
 
-// primary-string ENTIRE SCREEN
 const m = defineMessages({
   titleSet: {
     id: '$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet',

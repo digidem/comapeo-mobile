@@ -18,7 +18,6 @@ import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
 import {useLocationState} from '../contexts/LocationContext';
 
 const m = defineMessages({
-  // primary-string
   gpsHeader: {
     id: '$1screens.LocationInfoScreen.gpsHeader',
     defaultMessage: 'Current GPS Location',
@@ -49,13 +48,11 @@ const m = defineMessages({
     defaultMessage: 'Details',
     description: 'Section title for details about current position',
   },
-  // primary-string
   yes: {
     id: '$1screens.LocationInfoScreen.yes',
     defaultMessage: 'Yes',
     description: 'if a location sensor is active yes/no',
   },
-  // primary-string
   no: {
     id: '$1screens.LocationInfoScreen.no',
     defaultMessage: 'No',

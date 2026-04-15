@@ -18,7 +18,6 @@ import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButt
 import {toError} from '../../utils/errors';
 
 const m = defineMessages({
-  // primary-string
   shareProjectStats: {
     id: '$1screens.ShareProjectStats.shareProjectStats',
     defaultMessage: 'Share Project Statistics',
@@ -36,12 +35,10 @@ const m = defineMessages({
     id: 'screens.ShareProjectStats.fullyEncrypted',
     defaultMessage: 'Your project will stay fully encrypted',
   },
-  // primary-string
   skip: {
     id: '$1screens.ShareProjectStats.skip',
     defaultMessage: 'No, Skip for Now',
   },
-  // primary-string
   yesShare: {
     id: '$1screens.ShareProjectStats.yesShare',
     defaultMessage: 'Yes, Share Stats',

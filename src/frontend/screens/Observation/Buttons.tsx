@@ -18,27 +18,22 @@ import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {useOpenShareDialog} from '../../hooks/share.ts';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.ts';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
-// primary-string ENTIRE
 const m = defineMessages({
-  // primary-string
   delete: {
     id: '$1screens.Observation.ObservationView.delete',
     defaultMessage: 'Delete',
     description: 'Button to delete an observation',
   },
-  // primary-string
   share: {
     id: '$1screens.Observation.ObservationView.share',
     defaultMessage: 'Share',
     description: 'Button to share an observation',
   },
-  // primary-string
   cancel: {
     id: '$1screens.Observation.cancel',
     defaultMessage: 'Cancel',
     description: 'Button to cancel delete of observation',
   },
-  // primary-string
   confirm: {
     id: '$1screens.Observation.confirm',
     defaultMessage: 'Yes, delete',
@@ -50,7 +45,6 @@ const m = defineMessages({
     description:
       'Title of observation screen showing (non-editable) view of observation with map and answered questions',
   },
-  // primary-string
   deleteTitle: {
     id: '$1screens.Observation.deleteTitle',
     defaultMessage: 'Delete observation?',

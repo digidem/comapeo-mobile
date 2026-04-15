@@ -46,17 +46,14 @@ import {DevicesAvailableHeader} from './DevicesAvailableHeader';
 import {STORAGE_QUERY_KEY} from '../../hooks/useStorageReadingQuery';
 
 const m = defineMessages({
-  // primary-string
   devicesFound: {
     id: '$1screens.Sync.ProjectSyncDisplay.devicesFound',
     defaultMessage: 'Devices found.',
   },
-  // primary-string
   noDevicesFound: {
     id: '$1screens.Sync.ProjectSyncDisplay.noDevicesFound',
     defaultMessage: 'No devices found.',
   },
-  // primary-string
   waitingForDevices: {
     id: '$1screens.Sync.ProjectSyncDisplay.waitingForDevices',
     defaultMessage: 'Waiting for devices...',
@@ -69,7 +66,6 @@ const m = defineMessages({
     id: 'screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers',
     defaultMessage: 'Complete! Waiting for other devices to join',
   },
-  // primary-string
   syncingFullyComplete: {
     id: '$1screens.Sync.ProjectSyncDisplay.syncingFullyComplete',
     defaultMessage: 'Complete!',
@@ -86,17 +82,14 @@ const m = defineMessages({
     id: 'screens.Sync.remoteArchiveConnected',
     defaultMessage: 'Remote Archive connected',
   },
-  // primary-string
   start: {
     id: '$1screens.Sync.ProjectSyncDisplay.start',
     defaultMessage: 'Start',
   },
-  // primary-string
   stop: {
     id: '$1screens.Sync.ProjectSyncDisplay.stop',
     defaultMessage: 'Stop',
   },
-  // primary-string
   close: {
     id: '$1screens.Sync.ProjectSyncDisplay.close',
     defaultMessage: 'Close',

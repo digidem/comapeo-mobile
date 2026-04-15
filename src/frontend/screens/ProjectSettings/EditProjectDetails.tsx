@@ -16,17 +16,14 @@ import * as Sentry from '@sentry/react-native';
 import {projectColors} from '../../constants';
 
 const m = defineMessages({
-  // primary-string
   projectName: {
     id: '$1screen.EditProjectDetails.projectName',
     defaultMessage: 'Project Name',
   },
-  // primary-string
   projectDescription: {
     id: '$1screen.EditProjectDetails.projectDescription',
     defaultMessage: 'Project Description',
   },
-  // primary-string
   navTitle: {
     id: '$1screen.EditProjectDetails.navTitle',
     defaultMessage: 'Edit Info',

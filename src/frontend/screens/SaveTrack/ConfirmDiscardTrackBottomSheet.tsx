@@ -14,7 +14,6 @@ import {
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useTrackActions} from '../../contexts/TrackStoreContext';
 
-// primary-string ENTIRE
 const m = defineMessages({
   discardTitle: {
     id: '$1SaveTrack.HeaderLeft.discardTitle',

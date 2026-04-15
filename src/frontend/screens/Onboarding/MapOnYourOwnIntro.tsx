@@ -20,7 +20,6 @@ import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreCont
 import {DARK_ORANGE, COMAPEO_BLUE, WHITE, DARK_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 
-// primary-string ENTIRE
 const m = defineMessages({
   title: {
     id: '$1screens.Onboarding.MapOnYourOwnIntro.title',

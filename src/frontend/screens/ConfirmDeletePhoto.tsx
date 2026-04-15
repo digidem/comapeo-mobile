@@ -12,17 +12,14 @@ import {useDraftObservationActions} from '../contexts/DraftObservationContext';
 import {toError} from '../utils/errors';
 
 const m = defineMessages({
-  // primary-string
   title: {
     id: '$1screens.ConfirmDeletePhoto.title',
     defaultMessage: 'Delete this photo?',
   },
-  // primary-string
   deletePhoto: {
     id: '$1screens.ConfirmDeletePhoto.deletePhoto',
     defaultMessage: 'Delete Photo',
   },
-  // primary-string
   cancel: {
     id: '$1screens.ConfirmDeletePhoto.cancel',
     defaultMessage: 'Cancel',

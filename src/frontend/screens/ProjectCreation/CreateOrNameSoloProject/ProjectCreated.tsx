@@ -14,7 +14,6 @@ import {BLACK, NEW_DARK_GREY} from '../../../lib/styles';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
-  // primary-string
   success: {
     id: '$1screens.Settings.CreateOrJoinProject.ProjectCreated.success',
     defaultMessage: 'Success!',
@@ -23,12 +22,10 @@ const m = defineMessages({
     id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady',
     defaultMessage: '{projectName} is now ready for you to invite devices.',
   },
-  // primary-string
   inviteDevice: {
     id: '$1screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice',
     defaultMessage: 'Invite a Device',
   },
-  // primary-string
   done: {
     id: '$1screens.Settings.CreateOrJoinProject.ProjectCreated.done',
     defaultMessage: 'Done',

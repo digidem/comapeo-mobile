@@ -19,7 +19,6 @@ import {NEW_DARK_GREY} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {m} from './DataPrivacyMessages';
 
-// primary-string ENTIRE SCREEN
 export const DataPrivacy = ({
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'DataPrivacy'>) => {

@@ -10,7 +10,6 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useFocusEffect} from '@react-navigation/native';
 
-// primary-string ENTIRE
 const m = defineMessages({
   youveLeftProject: {
     id: '$1screens.LeftProjectConfirmation.youveLeftProject',

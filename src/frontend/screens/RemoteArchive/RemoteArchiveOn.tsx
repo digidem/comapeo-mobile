@@ -8,12 +8,10 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
-  // primary-string
   navTitle: {
     id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle',
     defaultMessage: 'Remote Archive',
   },
-  // primary-string
   remoteArchiveOn: {
     id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn',
     defaultMessage: 'Remote Archive is On',
@@ -59,7 +57,6 @@ const m = defineMessages({
     id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.dateAdded',
     defaultMessage: 'Date Added',
   },
-  // primary-string
   removeServer: {
     id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOn.removeServer',
     defaultMessage: 'Remove Server',

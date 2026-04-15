@@ -16,7 +16,6 @@ import {SvgProps} from 'react-native-svg';
 import {DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
 
 const m = defineMessages({
-  // primary-string
   screenTitle: {
     id: '$1soloProject.startNewProject.title',
     defaultMessage: 'Start New Project',

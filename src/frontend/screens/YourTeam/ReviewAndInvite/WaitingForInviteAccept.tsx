@@ -9,7 +9,6 @@ import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {usePreventAndroidBackButton} from '../../../hooks/usePreventAndroidBackButton';
 
 const m = defineMessages({
-  // primary-string
   waitingMessage: {
     id: '$1screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage',
     defaultMessage: 'Waiting for Device to Accept Invite',
@@ -18,7 +17,6 @@ const m = defineMessages({
     id: 'screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage',
     defaultMessage: 'Invite sent {seconds}s ago',
   },
-  // primary-string
   cancelInvite: {
     id: '$1screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite',
     defaultMessage: 'Cancel Invite',

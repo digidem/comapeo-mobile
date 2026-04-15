@@ -23,17 +23,14 @@ import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
 
 const m = defineMessages({
-  // primary-string
   recordingSaved: {
     id: '$1screens.AudioPlaybackNew.recordingSaved',
     defaultMessage: 'Recording Saved!',
   },
-  // primary-string
   backToEditing: {
     id: '$1screens.AudioPlaybackNew.backToEditing',
     defaultMessage: 'Back to Editing',
   },
-  // primary-string
   delete: {
     id: '$1screens.AudioPlaybackNew.delete',
     defaultMessage: 'Delete',

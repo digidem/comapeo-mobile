@@ -10,7 +10,6 @@ import {RemoteArchiveOff} from './RemoteArchiveOff';
 import {RemoteArchiveOn} from './RemoteArchiveOn';
 
 const m = defineMessages({
-  // primary-string
   navTitle: {
     id: '$1ProjectSettings.RemoteArchive.navTitle',
     defaultMessage: 'Remote Archive',

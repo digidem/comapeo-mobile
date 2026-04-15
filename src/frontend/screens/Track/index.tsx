@@ -26,14 +26,12 @@ import {TrackStats} from '../../sharedComponents/TrackStats.tsx';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 
 const m = defineMessages({
-  // primary-string
   title: {
     id: '$1screens.Track.title',
     defaultMessage: 'Track',
     description:
       'Title of track screen showing (non-editable) view of observation with map',
   },
-  // primary-string
   deleteTitle: {
     id: '$1screens.Track.deleteTitle',
     defaultMessage: 'Delete track?',

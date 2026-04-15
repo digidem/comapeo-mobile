@@ -45,7 +45,6 @@ const m = defineMessages({
     defaultMessage: 'Delete observation?',
     description: 'Title of dialog asking confirmation to delete an observation',
   },
-  // primary-string
   title: {
     id: '$1screens.Observation.title',
     defaultMessage: 'Observation',

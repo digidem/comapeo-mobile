@@ -11,13 +11,11 @@ import {SelectOne} from '../../../sharedComponents/SelectOne';
 import {type NativeNavigationComponent} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
-  // primary-string
   title: {
     id: '$1screens.LanguageSettings.title',
     defaultMessage: 'Language',
     description: 'Title language settings screen',
   },
-  // primary-string
   followSystemPreferences: {
     id: '$1screens.LanguageSettings.followSystemPreferences',
     defaultMessage: 'Follow system preferences',

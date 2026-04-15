@@ -10,7 +10,6 @@ import {resetToYourTeam} from '../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
-  // primary-string
   inviteDeclined: {
     id: '$1screens.Settings.YourTeam.InviteDeclined',
     defaultMessage: 'Invitation Declined',
@@ -20,7 +19,6 @@ const m = defineMessages({
     defaultMessage:
       'This device has declined your invitation. They have not joined the project.',
   },
-  // primary-string
   close: {
     id: '$1screens.Settings.YourTeam.close',
     defaultMessage: 'Close',

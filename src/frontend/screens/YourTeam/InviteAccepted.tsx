@@ -14,17 +14,14 @@ const m = defineMessages({
     id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted',
     defaultMessage: 'Accepted!',
   },
-  // primary-string
   addAnotherDevice: {
     id: '$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice',
     defaultMessage: 'Invite Another Device',
   },
-  // primary-string
   done: {
     id: '$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done',
     defaultMessage: 'Done',
   },
-  // primary-string
   partOfProject: {
     id: '$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject',
     defaultMessage: '<bold>{deviceName}</bold> is now part of your project.',

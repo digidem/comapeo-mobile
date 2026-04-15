@@ -28,27 +28,22 @@ import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
 
 const m = defineMessages({
-  // primary-string
   title: {
     id: '$1screens.Settings.CreateOrJoinProject.CreateProject.title',
     defaultMessage: 'Start New Project',
   },
-  // primary-string
   titleSoloProject: {
     id: '$1screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject',
     defaultMessage: 'Name My Project',
   },
-  // primary-string
   enterName: {
     id: '$1screens.Settings.CreateOrJoinProject.enterName',
     defaultMessage: 'Project Name',
   },
-  // primary-string
   createProjectButton: {
     id: '$1screens.Settings.CreateOrJoinProject.createProjectButton',
     defaultMessage: 'Create',
   },
-  // primary-string
   saveProjectButton: {
     id: '$1screens.Settings.CreateOrJoinProject.saveProjectButton',
     defaultMessage: 'Save',

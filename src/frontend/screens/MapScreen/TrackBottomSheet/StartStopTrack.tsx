@@ -14,12 +14,10 @@ import {usePresetsQuery} from '../../../hooks/server/presets';
 import {useTrackState} from '../../../contexts/TrackStoreContext.tsx';
 
 const m = defineMessages({
-  // primary-string
   defaultButtonText: {
     id: '$1Modal.GPSEnable.button.default',
     defaultMessage: 'Start Tracks',
   },
-  // primary-string
   stopButtonText: {
     id: '$1Modal.GPSEnable.button.stop',
     defaultMessage: 'Stop Tracks',
@@ -28,7 +26,6 @@ const m = defineMessages({
     id: 'Modal.GPSEnable.button.loading',
     defaultMessage: 'Loading…',
   },
-  // primary-string
   trackingRequirement: {
     id: '$1TrackBottomSheet.StartStopTrack.trackingRequirement',
     defaultMessage: 'Move one meter to see track.',

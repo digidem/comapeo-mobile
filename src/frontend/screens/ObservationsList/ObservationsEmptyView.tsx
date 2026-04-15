@@ -9,7 +9,6 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
-  // primary-string
   noObservationsTitle: {
     id: '$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle',
     description:
@@ -23,7 +22,6 @@ const m = defineMessages({
     defaultMessage:
       'Start from map or camera view to record your first observation.',
   },
-  // primary-string
   backButton: {
     id: '$1screens.ObservationsList.ObservationsEmptyView.backButton',
     description:

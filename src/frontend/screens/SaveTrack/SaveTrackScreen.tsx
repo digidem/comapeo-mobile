@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
 });
 
 export const m = defineMessages({
-  // primary-string
   trackEditScreenTitle: {
     id: '$1screens.SaveTrack.TrackEditView.title',
     defaultMessage: 'New Track',

@@ -8,12 +8,10 @@ import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription'
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 
 const m = defineMessages({
-  // primary-string
   done: {
     id: '$1screens.InviteSuccess.done',
     defaultMessage: 'Done',
   },
-  // primary-string
   success: {
     id: '$1screens.InviteSuccess.success',
     defaultMessage: 'Success',

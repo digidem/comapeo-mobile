@@ -11,7 +11,6 @@ import ErrorIcon from '../../../images/Error.svg';
 import {StyleSheet, View} from 'react-native';
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 
-// primary-string ENTIRE
 const m = defineMessages({
   noTrackRecorded: {
     id: '$1TrackBottomSheet.DidNotMove.noTrackRecorded',

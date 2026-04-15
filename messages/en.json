@@ -1026,10 +1026,10 @@
     "message": "Cancel"
   },
   "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
-    "message": "Device will no longer be able to view, contribute to, or adjust the project {projectName}."
+    "message": "This device will no longer be able to view, contribute to, or adjust the project {projectName}."
   },
   "screens.LeaveProject.leaveProjectDescriptionParticipant": {
-    "message": "Device will no longer be able to view or contribute to the project {projectName}."
+    "message": "This device will no longer be able to view or contribute to the project {projectName}."
   },
   "screens.LeaveProject.leaveProjectTitle": {
     "message": "Leave this project?"

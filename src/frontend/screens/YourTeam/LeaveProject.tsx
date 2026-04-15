@@ -26,12 +26,12 @@ const m = defineMessages({
   leaveProjectDescriptionCoordinator: {
     id: 'screens.LeaveProject.leaveProjectDescriptionCoordinator',
     defaultMessage:
-      'Device will no longer be able to view, contribute to, or adjust the project {projectName}.',
+      'This device will no longer be able to view, contribute to, or adjust the project {projectName}.',
   },
   leaveProjectDescriptionParticipant: {
     id: 'screens.LeaveProject.leaveProjectDescriptionParticipant',
     defaultMessage:
-      'Device will no longer be able to view or contribute to the project {projectName}.',
+      'This device will no longer be able to view or contribute to the project {projectName}.',
   },
   yesLeave: {
     id: 'screens.LeaveProject.yesLeave',

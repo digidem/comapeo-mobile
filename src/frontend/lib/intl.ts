@@ -38,10 +38,10 @@ function getUsableLanguages(
   const result: Array<UsableLanguage> = [];
 
   for (const languageTag of translatedLanguageTags) {
-    const hasAtLeastOneTranslatedString =
-      Object.keys(MESSAGES[languageTag]).length > 0;
+    // const hasAtLeastOneTranslatedString =
+    //   Object.keys(MESSAGES[languageTag]).length > 0;
 
-    if (!hasAtLeastOneTranslatedString) continue;
+    // if (!hasAtLeastOneTranslatedString) continue;
 
     if (!isSupportedLanguageTag(languageTag)) {
       if (

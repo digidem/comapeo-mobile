@@ -394,5 +394,9 @@
   },
   "soloProject.startNewProject.goBack": {
     "message": "Rudi Nyuma"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Ungependa kufuta uchunguzi?"
   }
 }

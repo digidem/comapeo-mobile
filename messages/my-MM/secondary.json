@@ -132,6 +132,10 @@
     "description": "Default name of observation with no matching preset",
     "message": "လေ့လာတွေ့ရှိချက်များ"
   },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "လေ့လာထားရှိမှုများကို ဖျက်ပစ်မှာလား?"
+  },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "လေ့လာတွေ့ရှိချက်များ"

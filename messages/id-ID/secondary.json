@@ -731,6 +731,10 @@
     "description": "Default name of observation with no matching preset",
     "message": "Pengamatan"
   },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Menghapus pengamatan?"
+  },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Pengamatan"

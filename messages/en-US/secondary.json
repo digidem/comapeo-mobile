@@ -580,10 +580,10 @@
     "message": "You have joined {projectName}"
   },
   "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
-    "message": "Device will no longer be able to view, contribute to, or adjust this project."
+    "message": "This device will no longer be able to view, contribute to, or adjust the project {projectName}."
   },
   "screens.LeaveProject.leaveProjectDescriptionParticipant": {
-    "message": "Device will no longer be able to view or contribute to this project."
+    "message": "This device will no longer be able to view or contribute to the project {projectName}."
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",

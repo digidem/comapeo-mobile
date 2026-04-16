@@ -38,6 +38,16 @@ function getUsableLanguages(
   const result: Array<UsableLanguage> = [];
 
   for (const languageTag of translatedLanguageTags) {
+    // Commenting this out for now. Categories can be translated independently of this app/crowdin.
+    // The user might need translate the categories (which is done via this language code).
+    // So we need to make sure the user has access to languages even if there are no translations
+    // Previously we dealt with this by adding 1 translation to an appropriate language.
+    // We may still want to do that, but we intentionally took out any wrong translations.
+    // "api" had several portuguese translation, and I know understand that those
+    // "portuguese translation" were just for adding it onto the list of available languages,
+    // in order for users to translate there categories. Since we took out those translations
+    // commenting out this code allows for it to still show up in the app without adding "translations"
+
     // const hasAtLeastOneTranslatedString =
     //   Object.keys(MESSAGES[languageTag]).length > 0;
 

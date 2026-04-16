@@ -264,10 +264,6 @@
     "description": "Default name of observation with no matching preset",
     "message": "அவதானிப்புகள்"
   },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "அவதானிப்புகளை நீக்கவா?"
-  },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "அவதானிப்புகள்"

@@ -177,7 +177,9 @@ export const MapScreen = ({
             followUserLocation={false}
           />
 
-          {coords && <UserLocation minDisplacement={MIN_DISPLACEMENT} />}
+          {coords && (
+            <UserLocation minDisplacement={isTracking ? 0 : MIN_DISPLACEMENT} />
+          )}
 
           {isFinishedLoadingStyle && authState !== 'obscured' && (
             <>

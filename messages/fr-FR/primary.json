@@ -35,6 +35,9 @@
   "$1Navigation.Menu.mappingOnOwn": {
     "message": "Vous vous associez vous-même."
   },
+  "$1Navigation.Menu.participant": {
+    "message": "Participant"
+  },
   "$1Navigation.Menu.switchProject": {
     "message": "Changer de projet"
   },
@@ -188,6 +191,9 @@
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordonnateur"
   },
+  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
+    "message": "Participant"
+  },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Envoyer une invitation"
   },
@@ -264,6 +270,9 @@
   },
   "$1screens.AppPasscode.PasscodeIntro.description": {
     "message": "Le code d'accès de l'application vous permet d'ajouter une couche de sécurité supplémentaire en exigeant que vous saisissiez un code d'accès pour ouvrir l'application CoMapeo. Vous pouvez définir votre propre code d'accès à 5 chiffres en activant la fonction ci-dessous."
+  },
+  "$1screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "<bold>Veuillez noter que les codes oubliés ne peuvent pas être récupérés !</bold> Une fois cette fonctionnalité activée, si vous oubliez ou perdez votre code d’accès, vous ne pourrez plus ouvrir CoMapeo et perdrez l’accès à toutes les données CoMapeo qui n’ont pas été échangées avec d’autres participants au projet."
   },
   "$1screens.AppPasscode.TurnOffPasscode.changePasscode": {
     "message": "Changer le code d'accès de l'application"
@@ -478,6 +487,9 @@
     "description": "if a location sensor is active yes/no",
     "message": "Oui"
   },
+  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
+    "message": "Emplacement d’allumage"
+  },
   "$1screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
     "message": "Effacer"
@@ -496,6 +508,9 @@
   "$1screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "Annuler"
+  },
+  "$1screens.Observation.comapeoAlert": {
+    "message": "Données CoMapeo envoyées depuis *{projectName}*"
   },
   "$1screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",

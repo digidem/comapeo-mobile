@@ -487,6 +487,12 @@
     "description": "if a location sensor is active yes/no",
     "message": "Ja"
   },
+  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
+    "message": "Turn On"
+  },
+  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
+    "message": "Use Your Location"
+  },
   "$1screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
     "message": "Löschen"
@@ -665,6 +671,9 @@
   "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
     "message": "Gerätename"
   },
+  "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
+    "message": "Add Another Device"
+  },
   "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
     "message": "Fertig"
   },
@@ -698,6 +707,9 @@
   "$1screens.Settings.Collaborate.joinProject": {
     "message": "Einem Projekt beitreten"
   },
+  "$1screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
+  },
   "$1screens.Settings.Collaborate.title": {
     "message": "Mitarbeiten"
   },
@@ -709,6 +721,9 @@
   },
   "$1screens.Settings.Config.navTitle": {
     "message": "Configuration"
+  },
+  "$1screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Create a Project"
   },
   "$1screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Mein Projekt benennen"
@@ -776,6 +791,9 @@
   "$1screens.Settings.StartNewProjectIntro.nextButton": {
     "message": "Nächste Frage"
   },
+  "$1screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
+  },
   "$1screens.Settings.YourTeam.InviteDeclined": {
     "message": "Einladung abgelehnt"
   },
@@ -790,6 +808,12 @@
   },
   "$1screens.ShareProjectStats.yesShare": {
     "message": "Ja, Statistiken teilen"
+  },
+  "$1screens.Sync.NoWifiDisplay.buttonText": {
+    "message": "Open Settings"
+  },
+  "$1screens.Sync.NoWifiDisplay.title": {
+    "message": "No WiFi"
   },
   "$1screens.Sync.ProjectSyncDisplay.close": {
     "message": "Schließen"

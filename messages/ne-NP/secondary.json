@@ -228,9 +228,5 @@
   },
   "soloProject.startNewProject.goBack": {
     "message": "पछाडी जानुहाेस"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "अवलाेकन हटाउने?"
   }
 }

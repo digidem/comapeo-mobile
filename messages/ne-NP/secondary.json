@@ -139,6 +139,10 @@
     "description": "Default name of observation with no matching preset",
     "message": "अवलाेकन"
   },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "अवलाेकन हटाउने?"
+  },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "अवलाेकन"
@@ -228,9 +232,5 @@
   },
   "soloProject.startNewProject.goBack": {
     "message": "पछाडी जानुहाेस"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "अवलाेकन हटाउने?"
   }
 }

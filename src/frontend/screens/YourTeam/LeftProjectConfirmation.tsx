@@ -12,8 +12,8 @@ import {useFocusEffect} from '@react-navigation/native';
 
 const m = defineMessages({
   youveLeftProject: {
-    id: '$1screens.LeftProjectConfirmation.youveLeftProject',
-    defaultMessage: "You've left the project.",
+    id: '$1screens.LeftProjectConfirmation.youLeftProject',
+    defaultMessage: 'This device has left the project {projectName}.',
   },
   openDefaultProject: {
     id: '$1screens.LeftProjectConfirmation.openDefaultProject',
@@ -23,7 +23,9 @@ const m = defineMessages({
 
 export const LeftProjectConfirmation = ({
   navigation,
+  route,
 }: NativeRootNavigationProps<'LeftProjectConfirmation'>) => {
+  const projectName = route.params.projectName;
   const {formatMessage} = useIntl();
   const {data} = useOwnDeviceInfo();
   const deviceName = data?.name;
@@ -52,7 +54,7 @@ export const LeftProjectConfirmation = ({
           color={DARK_ORANGE}
         />
         <HeaderText variant="header2" style={styles.title}>
-          {formatMessage(m.youveLeftProject)}
+          {formatMessage(m.youveLeftProject, {projectName})}
         </HeaderText>
       </View>
 

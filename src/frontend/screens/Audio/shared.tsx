@@ -3,7 +3,11 @@ import {WHITE, BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
 
 export const PRIMARY_CONTROL_DIAMETER = 96;
 export const SIDE_ICON_BUTTON_WIDTH = 60;
-export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
+
+// Target 5 min max. Extra 150ms compensates for codec frame boundary loss,
+// which causes the final file to be ~50-150ms shorter than recorded duration.
+// which rounds only to 4:59 instead of 5:00 for display.
+export const MAX_RECORDING_DURATION_MS = 5 * 60_030;
 
 export const audioStyles = StyleSheet.create({
   basePressable: {

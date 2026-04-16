@@ -38,18 +38,22 @@ async function run() {
  */
 async function loadMessages() {
   const messagesDir = path.join(PROJECT_ROOT_DIR_PATH, 'messages');
-  const files = fs.readdirSync(messagesDir, {
+  const entries = fs.readdirSync(messagesDir, {
     withFileTypes: true,
   });
 
   /** @type {Array<[string, any]>} */
   const loadedMessages = await Promise.all(
-    files
-      .filter(file => file.isFile())
-      .map(async file => {
-        const lang = path.parse(file.name).name;
-        const msgs = JSON.parse(await readFile(path.join(messagesDir, file.name)));
-        return [lang, msgs];
+    entries
+      .filter(entry => entry.isDirectory())
+      .flatMap(entry => {
+        const lang = entry.name;
+        const langDir = path.join(messagesDir, entry.name);
+        const langFiles = fs.readdirSync(langDir).filter(f => f.endsWith('.json'));
+        return langFiles.map(async fileName => {
+          const msgs = JSON.parse(await readFile(path.join(langDir, fileName)));
+          return [lang, msgs];
+        });
       }),
   );
 

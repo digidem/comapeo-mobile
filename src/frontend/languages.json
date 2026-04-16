@@ -339,9 +339,13 @@
     "nativeName": "Avañe'ẽ",
     "englishName": "Guarani"
   },
-  "gu-IN": {
+  "gu": {
     "nativeName": "ગુજરાતી",
     "englishName": "Gujarati"
+  },
+  "gu-IN": {
+    "nativeName": "ગુજરાતી",
+    "englishName": "Gujarati (India)"
   },
   "gx-GR": {
     "nativeName": "Ἑλληνική ἀρχαία",
@@ -547,9 +551,13 @@
     "nativeName": "മലയാളം",
     "englishName": "Malayalam"
   },
-  "mn-MN": {
+  "mn": {
     "nativeName": "Монгол",
     "englishName": "Mongolian"
+  },
+  "mn-MN": {
+    "nativeName": "Монгол",
+    "englishName": "Mongolian (Mongolia)"
   },
   "mpq": {
     "nativeName": "Matis",
@@ -582,6 +590,10 @@
   "my": {
     "nativeName": "ဗမာစကာ",
     "englishName": "Burmese"
+  },
+  "my-MM": {
+    "nativeName": "ဗမာစကာ",
+    "englishName": "Burmese (Myanmar)"
   },
   "mzr": {
     "nativeName": "Marúbo",

@@ -103,7 +103,7 @@ describe('getSelectableDevicesForMapShare', () => {
   it('should include project member peers regardless of connection status', () => {
     const peers = [
       mockPeer('peer-1', 'Peer 1', 'mobile', 'connected'),
-      mockPeer('peer-2', 'Peer 2', 'desktop', 'disconnected'),
+      mockPeer('peer-2', 'Peer 2', 'mobile', 'disconnected'),
       mockPeer('peer-3', 'Peer 3', 'mobile', undefined),
     ];
 
@@ -118,5 +118,23 @@ describe('getSelectableDevicesForMapShare', () => {
 
     expect(result).toHaveLength(3);
     expect(result).toEqual(peers);
+  });
+
+  it('should exclude desktop and server peers even if they are project members', () => {
+    const peers = [
+      mockPeer('peer-1', 'Peer 1', 'mobile', 'connected'),
+      mockPeer('peer-2', 'Peer 2', 'desktop', 'connected'),
+    ];
+
+    const result = getSelectableDevicesForMapShare({
+      peers,
+      projectMembers: [
+        mockMember('peer-1', COORDINATOR_ROLE_ID),
+        mockMember('peer-2', COORDINATOR_ROLE_ID),
+      ],
+    });
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.deviceId).toBe('peer-1');
   });
 });

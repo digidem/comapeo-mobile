@@ -151,10 +151,6 @@
     "description": "Default name of observation with no matching preset",
     "message": "ការសង្កេត"
   },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "លុបការសង្កេត?"
-  },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "ការសង្កេត"

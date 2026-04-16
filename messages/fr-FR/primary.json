@@ -8,6 +8,9 @@
   "$1Navigation.Menu.Settings": {
     "message": "Paramètres de CoMapeo"
   },
+  "$1Navigation.Menu.bgMap": {
+    "message": "Background Maps"
+  },
   "$1Navigation.Menu.collaborate": {
     "message": "Collaborer"
   },
@@ -34,6 +37,9 @@
   },
   "$1Navigation.Menu.mappingOnOwn": {
     "message": "Vous vous associez vous-même."
+  },
+  "$1Navigation.Menu.participant": {
+    "message": "Participant"
   },
   "$1Navigation.Menu.switchProject": {
     "message": "Changer de projet"
@@ -131,6 +137,9 @@
   "$1Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Système de coordonnées"
   },
+  "$1Screens.Settings.AppSettings.coordinateSystemDesc": {
+    "message": "UTM, Lat/Lon, DMS"
+  },
   "$1Screens.Settings.AppSettings.deviceName": {
     "message": "Nom de l'appareil"
   },
@@ -187,6 +196,9 @@
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordonnateur"
+  },
+  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
+    "message": "Participant"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Envoyer une invitation"
@@ -264,6 +276,9 @@
   },
   "$1screens.AppPasscode.PasscodeIntro.description": {
     "message": "Le code d'accès de l'application vous permet d'ajouter une couche de sécurité supplémentaire en exigeant que vous saisissiez un code d'accès pour ouvrir l'application CoMapeo. Vous pouvez définir votre propre code d'accès à 5 chiffres en activant la fonction ci-dessous."
+  },
+  "$1screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "<bold>Veuillez noter que les codes oubliés ne peuvent pas être récupérés !</bold> Une fois cette fonctionnalité activée, si vous oubliez ou perdez votre code d’accès, vous ne pourrez plus ouvrir CoMapeo et perdrez l’accès à toutes les données CoMapeo qui n’ont pas été échangées avec d’autres participants au projet."
   },
   "$1screens.AppPasscode.TurnOffPasscode.changePasscode": {
     "message": "Changer le code d'accès de l'application"
@@ -478,6 +493,12 @@
     "description": "if a location sensor is active yes/no",
     "message": "Oui"
   },
+  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
+    "message": "Emplacement d’allumage"
+  },
+  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
+    "message": "Use Your Location"
+  },
   "$1screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
     "message": "Effacer"
@@ -497,6 +518,9 @@
     "description": "Button to cancel delete of observation",
     "message": "Annuler"
   },
+  "$1screens.Observation.comapeoAlert": {
+    "message": "Données CoMapeo envoyées depuis *{projectName}*"
+  },
   "$1screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
     "message": "Oui, supprimer"
@@ -508,8 +532,15 @@
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Supprimer l'observation?"
   },
+  "$1screens.Observation.description": {
+    "message": "Description :"
+  },
   "$1screens.Observation.details": {
     "message": "Détails:"
+  },
+  "$1screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Observation"
   },
   "$1screens.Observation.location": {
     "message": "Emplacement:"
@@ -524,9 +555,16 @@
   "$1screens.Observation.shareMessageFooter": {
     "message": "Envoyé depuis CoMapeo"
   },
+  "$1screens.Observation.shareMessageTitle": {
+    "message": "Alerte CoMapeo"
+  },
   "$1screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
     "message": "Texte de partage"
+  },
+  "$1screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Observation"
   },
   "$1screens.ObservationCreate.changePreset": {
     "message": "Modifier"
@@ -547,9 +585,17 @@
     "description": "Title of observation details screen showing question number and total",
     "message": "Question {current} sur {total}"
   },
+  "$1screens.ObservationEdit.ObservationEditView.audioButton": {
+    "description": "Button label for adding audio",
+    "message": "Audio"
+  },
   "$1screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
     "message": "Détails"
+  },
+  "$1screens.ObservationEdit.ObservationEditView.photoButton": {
+    "description": "Button label for adding photo",
+    "message": "Photo"
   },
   "$1screens.ObservationEdit.navTitle": {
     "description": "screen title for edit observation screen",
@@ -612,6 +658,9 @@
   "$1screens.Security.obscurePasscodeDescriptionActivated": {
     "message": "Protégez votre appareil contre la saisie"
   },
+  "$1screens.Security.obscurePasscodeHeader": {
+    "message": "Code d’accès obscur"
+  },
   "$1screens.Security.passDesriptionPassNotSet": {
     "message": "Code d'accès non défini"
   },
@@ -648,6 +697,9 @@
   "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
     "message": "Nom de l'appareil"
   },
+  "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
+    "message": "Add Another Device"
+  },
   "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
     "message": "Terminé"
   },
@@ -669,6 +721,9 @@
   "$1screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Inviter un appareil"
   },
+  "$1screens.Setting.ProjectSettings.YourTeam.participants": {
+    "message": "Participants"
+  },
   "$1screens.Setting.ProjectSettings.YourTeam.pastCollaborators": {
     "message": "Collaborateurs passés"
   },
@@ -680,6 +735,9 @@
   },
   "$1screens.Settings.Collaborate.joinProject": {
     "message": "Rejoindre un projet"
+  },
+  "$1screens.Settings.Collaborate.startNewProject": {
+    "message": "Create a Project"
   },
   "$1screens.Settings.Collaborate.title": {
     "message": "Collaborer"
@@ -696,14 +754,26 @@
   "$1screens.Settings.Config.okButton": {
     "message": "OK"
   },
+  "$1screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Create a Project"
+  },
   "$1screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Nommer mon projet"
   },
   "$1screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
     "message": "Terminé"
   },
+  "$1screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice": {
+    "message": "Inviter un appareil"
+  },
   "$1screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Succès !"
+  },
+  "$1screens.Settings.CreateOrJoinProject.createProjectButton": {
+    "message": "Create Project"
+  },
+  "$1screens.Settings.CreateOrJoinProject.enterName": {
+    "message": "Enter a name for the Project"
   },
   "$1screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "Enregistrer"
@@ -741,6 +811,9 @@
   "$1screens.Settings.MapManagement.BackgroundMaps.removeMap": {
     "message": "Supprimer la carte"
   },
+  "$1screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
+    "message": "Background Maps"
+  },
   "$1screens.Settings.MapManagement.BackgroundMaps.sendMap": {
     "message": "Envoyer la carte"
   },
@@ -752,6 +825,9 @@
   },
   "$1screens.Settings.StartNewProjectIntro.nextButton": {
     "message": "Suivant"
+  },
+  "$1screens.Settings.StartNewProjectIntro.title": {
+    "message": "Create a Project"
   },
   "$1screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitation refusée"
@@ -767,6 +843,12 @@
   },
   "$1screens.ShareProjectStats.yesShare": {
     "message": "Oui, Partager les statistiques"
+  },
+  "$1screens.Sync.NoWifiDisplay.buttonText": {
+    "message": "Open Settings"
+  },
+  "$1screens.Sync.NoWifiDisplay.title": {
+    "message": "No WiFi"
   },
   "$1screens.Sync.ProjectSyncDisplay.close": {
     "message": "Fermer"
@@ -791,6 +873,12 @@
   },
   "$1screens.Sync.headerTitle": {
     "message": "Échanger"
+  },
+  "$1screens.Track.ObservationList.observation": {
+    "message": "Observation"
+  },
+  "$1screens.Track.ObservationList.observations": {
+    "message": "Observations"
   },
   "$1screens.Track.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete a track",

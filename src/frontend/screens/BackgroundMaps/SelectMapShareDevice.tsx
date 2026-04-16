@@ -29,8 +29,10 @@ export function getSelectableDevicesForMapShare({
   peers: PublicPeerInfo[];
   projectMembers: MemberApi.ActiveMemberInfo[];
 }): PublicPeerInfo[] {
-  return peers.filter(device =>
-    projectMembers.some(member => member.deviceId === device.deviceId),
+  return peers.filter(
+    device =>
+      device.deviceType === 'mobile' &&
+      projectMembers.some(member => member.deviceId === device.deviceId),
   );
 }
 

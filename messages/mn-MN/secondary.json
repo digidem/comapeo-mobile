@@ -264,6 +264,10 @@
     "description": "Default name of observation with no matching preset",
     "message": "Сануулга"
   },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Сануулгыг устгах уу?"
+  },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Сануулга"
@@ -303,10 +307,6 @@
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Сануулга"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Сануулгыг устгах уу?"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

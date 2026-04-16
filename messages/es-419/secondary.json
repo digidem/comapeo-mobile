@@ -743,6 +743,10 @@
     "description": "Default name of observation with no matching preset",
     "message": "Observación"
   },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "¿Quieres borrar la observación?"
+  },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Observación"
@@ -1318,9 +1322,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Cada proyecto es único y separado."
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "¿Quieres borrar la observación?"
   }
 }

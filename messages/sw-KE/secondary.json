@@ -281,6 +281,10 @@
     "description": "Default name of observation with no matching preset",
     "message": "Uchunguzi"
   },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Ungependa kufuta uchunguzi?"
+  },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Uchunguzi"
@@ -394,9 +398,5 @@
   },
   "soloProject.startNewProject.goBack": {
     "message": "Rudi Nyuma"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Ungependa kufuta uchunguzi?"
   }
 }

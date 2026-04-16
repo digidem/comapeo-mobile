@@ -486,6 +486,9 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Contraseña incorrecta, inténtelo de nuevo"
   },
+  "screens.Exchange.WifiCard.noWifi": {
+    "message": "No Wifi"
+  },
   "screens.ExchangeSettingsBottomSheet.everythingDesc": {
     "message": "Las fotos de tamaño completo y  el audio, usan más almacenamiento."
   },
@@ -1201,6 +1204,9 @@
   "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyTitle": {
     "message": "Solo previsualizaciones de intercambio."
   },
+  "screens.Sync.ProjectSyncDisplay.noWifi": {
+    "message": "No Wifi."
+  },
   "screens.Sync.ProjectSyncDisplay.syncProgress": {
     "message": "{value}%"
   },
@@ -1318,9 +1324,5 @@
   },
   "soloProject.startNewProject.uniqueProject": {
     "message": "Cada proyecto es único y separado."
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "¿Quieres borrar la observación?"
   }
 }

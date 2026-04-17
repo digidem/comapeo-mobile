@@ -442,9 +442,6 @@
   "$1screens.LeaveProject.cancel": {
     "message": "Batalkan"
   },
-  "$1screens.LeaveProject.leaveProjectTitle": {
-    "message": "Pergi {projectName}?"
-  },
   "$1screens.LeaveProject.yesLeave": {
     "message": "Ya, Pergi"
   },
@@ -474,9 +471,6 @@
   },
   "$1screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Buka {deviceName}"
-  },
-  "$1screens.LeftProjectConfirmation.youveLeftProject": {
-    "message": "Anda telah meninggalkan proyek."
   },
   "$1screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",

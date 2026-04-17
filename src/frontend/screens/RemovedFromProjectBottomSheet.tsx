@@ -20,15 +20,15 @@ import {toError} from '../utils/errors';
 
 const m = defineMessages({
   close: {
-    id: 'screens.RemovedFromProjectBottomSheet.close',
+    id: '$1screens.RemovedFromProjectBottomSheet.close',
     defaultMessage: 'Close',
   },
   title: {
-    id: 'screens.RemovedFromProjectBottomSheet.title',
+    id: '$1screens.RemovedFromProjectBottomSheet.title',
     defaultMessage: 'THIS DEVICE REMOVED FROM…',
   },
   reasonLabel: {
-    id: 'screens.RemovedFromProjectBottomSheet.reasonLabel',
+    id: '$1screens.RemovedFromProjectBottomSheet.reasonLabel',
     defaultMessage: 'Reason: {reason}',
   },
 });

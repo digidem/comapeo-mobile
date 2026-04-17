@@ -37,7 +37,7 @@ import {useMutation} from '@tanstack/react-query';
 
 const m = defineMessages({
   screenTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.screenTitle',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.screenTitle',
     defaultMessage: 'Background Map',
   },
   description1: {
@@ -93,9 +93,8 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText',
     defaultMessage: 'Delete Map',
   },
-
   importErrorTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.importErrorTitle',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.importErrorTitle',
     defaultMessage: 'Import Error',
   },
   importErrorDesciption: {
@@ -103,11 +102,11 @@ const m = defineMessages({
     defaultMessage: 'Unable to import the file. Please go back and try again.',
   },
   sendMap: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.sendMap',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.sendMap',
     defaultMessage: 'Send Map',
   },
   removeMap: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.removeMap',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.removeMap',
     defaultMessage: 'Remove Map',
   },
   addedOn: {
@@ -119,7 +118,7 @@ const m = defineMessages({
     defaultMessage: '{size} MB',
   },
   chooseFile: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.chooseFile',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.chooseFile',
     defaultMessage: 'Choose File',
   },
   acceptedFileTypes: {

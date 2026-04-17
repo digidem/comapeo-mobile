@@ -20,7 +20,7 @@ import {toError} from '../../utils/errors';
 
 const m = defineMessages({
   leaveProjectTitle: {
-    id: 'screens.LeaveProject.leaveProjectTitle',
+    id: '$1screens.LeaveProject.leaveProjTitle',
     defaultMessage: 'Leave this project?',
   },
   leaveProjectDescriptionCoordinator: {
@@ -34,11 +34,11 @@ const m = defineMessages({
       'This device will no longer be able to view or contribute to the project {projectName}.',
   },
   yesLeave: {
-    id: 'screens.LeaveProject.yesLeave',
+    id: '$1screens.LeaveProject.yesLeave',
     defaultMessage: 'Yes, Leave',
   },
   cancel: {
-    id: 'screens.LeaveProject.cancel',
+    id: '$1screens.LeaveProject.cancel',
     defaultMessage: 'Cancel',
   },
 });

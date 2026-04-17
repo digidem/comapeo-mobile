@@ -13,15 +13,15 @@ import {toError} from '../utils/errors';
 
 const m = defineMessages({
   title: {
-    id: 'screens.ConfirmDeletePhoto.title',
+    id: '$1screens.ConfirmDeletePhoto.title',
     defaultMessage: 'Delete this photo?',
   },
   deletePhoto: {
-    id: 'screens.ConfirmDeletePhoto.deletePhoto',
+    id: '$1screens.ConfirmDeletePhoto.deletePhoto',
     defaultMessage: 'Delete Photo',
   },
   cancel: {
-    id: 'screens.ConfirmDeletePhoto.cancel',
+    id: '$1screens.ConfirmDeletePhoto.cancel',
     defaultMessage: 'Cancel',
   },
 });

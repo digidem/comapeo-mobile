@@ -12,11 +12,11 @@ import {useFocusEffect} from '@react-navigation/native';
 
 const m = defineMessages({
   youveLeftProject: {
-    id: 'screens.LeftProjectConfirmation.youveLeftProject',
+    id: '$1screens.LeftProjectConfirmation.youLeftProject',
     defaultMessage: 'This device has left the project {projectName}.',
   },
   openDefaultProject: {
-    id: 'screens.LeftProjectConfirmation.openDefaultProject',
+    id: '$1screens.LeftProjectConfirmation.openDefaultProject',
     defaultMessage: 'Open {deviceName}',
   },
 });

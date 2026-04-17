@@ -7,22 +7,21 @@ import {PrimaryButton} from '../../sharedComponents/Buttons';
 import ProjectCoordinator from '../../images/ProjectCoordinator.svg';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
-
 const m = defineMessages({
   title: {
-    id: 'screens.Settings.StartNewProjectIntro.title',
+    id: '$1screens.Settings.StartNewProjectIntro.title',
     defaultMessage: 'Start New Project',
   },
   heading: {
-    id: 'screens.Settings.StartNewProjectIntro.heading',
+    id: '$1screens.Settings.StartNewProjectIntro.heading',
     defaultMessage: 'Start a new project with no observations.',
   },
   description: {
-    id: 'screens.Settings.StartNewProjectIntro.description',
+    id: '$1screens.Settings.StartNewProjectIntro.description',
     defaultMessage: 'Invite devices to a separate and empty project.',
   },
   nextButton: {
-    id: 'screens.Settings.StartNewProjectIntro.nextButton',
+    id: '$1screens.Settings.StartNewProjectIntro.nextButton',
     defaultMessage: 'Next',
   },
 });

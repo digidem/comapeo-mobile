@@ -12,12 +12,12 @@ import {type NativeNavigationComponent} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
-    id: 'screens.LanguageSettings.title',
+    id: '$1screens.LanguageSettings.title',
     defaultMessage: 'Language',
     description: 'Title language settings screen',
   },
   followSystemPreferences: {
-    id: 'screens.LanguageSettings.followSystemPreferences',
+    id: '$1screens.LanguageSettings.followSystemPreferences',
     defaultMessage: 'Follow system preferences',
     description: 'Label for language option to follow system preferences',
   },

@@ -15,7 +15,7 @@ import {HookFormTextInput} from '../../sharedComponents/HookFormTextInput';
 
 const m = defineMessages({
   title: {
-    id: 'screens.YourTeam.RemoveDevice.title',
+    id: '$1screens.YourTeam.RemoveDevice.title',
     defaultMessage: 'Remove Device',
   },
   reasonLabel: {
@@ -23,7 +23,7 @@ const m = defineMessages({
     defaultMessage: 'Reason for removal?',
   },
   removeAndNotifyButton: {
-    id: 'screens.YourTeam.RemoveDevice.removeAndNotifyButton',
+    id: '$1screens.YourTeam.RemoveDevice.removeAndNotifyButton',
     defaultMessage: 'Remove & Notify',
   },
 });

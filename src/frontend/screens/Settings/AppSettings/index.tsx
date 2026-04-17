@@ -9,51 +9,51 @@ import {useEarlyAccessState} from '../../../contexts/EarlyAccessContext';
 
 const m = defineMessages({
   title: {
-    id: 'Screens.Settings.AppSettings.title',
+    id: '$1Screens.Settings.AppSettings.title',
     defaultMessage: 'CoMapeo Settings',
   },
   language: {
-    id: 'Screens.Settings.AppSettings.language',
+    id: '$1Screens.Settings.AppSettings.language',
     defaultMessage: 'Language',
   },
   languageDesc: {
-    id: 'Screens.Settings.AppSettings.languageDesc',
+    id: '$1Screens.Settings.AppSettings.languageDesc',
     defaultMessage: 'Display language for app',
   },
   coordinateSystem: {
-    id: 'Screens.Settings.AppSettings.coordinateSystem',
+    id: '$1Screens.Settings.AppSettings.coordinateSystem',
     defaultMessage: 'Coordinate System',
   },
   coordinateSystemDesc: {
-    id: 'Screens.Settings.AppSettings.coordinateSystemDesc',
+    id: '$1Screens.Settings.AppSettings.coordinateSystemDesc',
     defaultMessage: 'UTM,Lat/Lon,DMS',
   },
   security: {
-    id: 'Screens.Settings.AppSettings.Drawer.security',
+    id: '$1Screens.Settings.AppSettings.Drawer.security',
     defaultMessage: 'Security',
   },
   deviceName: {
-    id: 'Screens.Settings.AppSettings.deviceName',
+    id: '$1Screens.Settings.AppSettings.deviceName',
     defaultMessage: 'Device Name',
   },
   privacyPolicy: {
-    id: 'Screens.Settings.AppSettings.privacyPolicy',
+    id: '$1Screens.Settings.AppSettings.privacyPolicy',
     defaultMessage: 'Data & Privacy',
   },
   aboutCoMapeo: {
-    id: 'Screens.Settings.AppSettings.aboutCoMapeo',
+    id: '$1Screens.Settings.AppSettings.aboutCoMapeo',
     defaultMessage: 'About CoMapeo',
   },
   earlyAccessTitle: {
-    id: 'Screens.Settings.AppSettings.earlyAccess',
+    id: '$1Screens.Settings.AppSettings.earlyAccess',
     defaultMessage: 'Early Access Mode',
   },
   earlyAccessOn: {
-    id: 'Screens.Settings.AppSettings.earlyAccess.on',
+    id: '$1Screens.Settings.AppSettings.earlyAccess.on',
     defaultMessage: 'Early Access is ON',
   },
   earlyAccessOff: {
-    id: 'Screens.Settings.AppSettings.earlyAccess.off',
+    id: '$1Screens.Settings.AppSettings.earlyAccess.off',
     defaultMessage: 'Early Access is OFF',
   },
 });

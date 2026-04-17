@@ -14,7 +14,7 @@ import {type CoordinateFormat} from '../lib/coordinateFormat';
 const m = defineMessages({
   noAnswer: {
     // Keep original id to avoid re-translation
-    id: 'screens.Observation.ObservationView.noAnswer',
+    id: '$1screens.Observation.ObservationView.noAnswer',
     defaultMessage: 'No answer',
     description:
       'Placeholder text for fields on an observation which are not answered',

@@ -29,23 +29,23 @@ import {SvgProps} from 'react-native-svg';
 
 const m = defineMessages({
   title: {
-    id: 'screens.Settings.CreateOrJoinProject.CreateProject.title',
+    id: '$1screens.Settings.CreateOrJoinProject.CreateProject.title',
     defaultMessage: 'Start New Project',
   },
   titleSoloProject: {
-    id: 'screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject',
+    id: '$1screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject',
     defaultMessage: 'Name My Project',
   },
   enterName: {
-    id: 'screens.Settings.CreateOrJoinProject.enterName',
+    id: '$1screens.Settings.CreateOrJoinProject.enterName',
     defaultMessage: 'Project Name',
   },
   createProjectButton: {
-    id: 'screens.Settings.CreateOrJoinProject.createProjectButton',
+    id: '$1screens.Settings.CreateOrJoinProject.createProjectButton',
     defaultMessage: 'Create',
   },
   saveProjectButton: {
-    id: 'screens.Settings.CreateOrJoinProject.saveProjectButton',
+    id: '$1screens.Settings.CreateOrJoinProject.saveProjectButton',
     defaultMessage: 'Save',
   },
   keepInMind: {

@@ -18,11 +18,11 @@ import CheckMark from '../images/CheckMark.svg';
 
 const m = defineMessages({
   newCollab: {
-    id: 'allProjects.newCollab',
+    id: '$1allProjects.newCollab',
     defaultMessage: 'New Collaboration',
   },
   close: {
-    id: 'allProjects.close',
+    id: '$1allProjects.close',
     defaultMessage: 'Close',
   },
 });

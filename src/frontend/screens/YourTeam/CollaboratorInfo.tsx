@@ -23,7 +23,7 @@ import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
 const m = defineMessages({
   navTitle: {
-    id: 'screens.CollaboratorInfo.navTitle',
+    id: '$1screens.CollaboratorInfo.navTitle',
     defaultMessage: 'Collaborator Info',
   },
   addedOn: {

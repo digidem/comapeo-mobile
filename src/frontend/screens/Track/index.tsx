@@ -27,13 +27,13 @@ import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 
 const m = defineMessages({
   title: {
-    id: 'screens.Track.title',
+    id: '$1screens.Track.title',
     defaultMessage: 'Track',
     description:
       'Title of track screen showing (non-editable) view of observation with map',
   },
   deleteTitle: {
-    id: 'screens.Track.deleteTitle',
+    id: '$1screens.Track.deleteTitle',
     defaultMessage: 'Delete track?',
     description: 'Title of dialog asking confirmation to delete a track',
   },

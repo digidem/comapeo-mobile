@@ -25,63 +25,62 @@ import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
 
 const m = defineMessages({
   appSettings: {
-    id: 'Navigation.Menu.Settings',
+    id: '$1Navigation.Menu.Settings',
     defaultMessage: 'CoMapeo Settings',
   },
   bgMap: {
-    id: 'Navigation.Menu.bgMap',
+    id: '$1Navigation.Menu.bgMap',
     defaultMessage: 'Background Map',
   },
   gatherObservations: {
-    id: 'Navigation.Menu.gatherObservations',
+    id: '$1Navigation.Menu.gatherObservations',
     defaultMessage: 'Gather Observations',
   },
   currentProject: {
-    id: 'Navigation.Menu.currentProject',
+    id: '$1Navigation.Menu.currentProject',
     defaultMessage: 'Current Project',
   },
   exchange: {
-    id: 'Navigation.Menu.exchange',
+    id: '$1Navigation.Menu.exchange',
     defaultMessage: 'Exchange',
   },
   mappingOnOwn: {
-    id: 'Navigation.Menu.mappingOnOwn',
+    id: '$1Navigation.Menu.mappingOnOwn',
     defaultMessage: "You're mapping on your own.",
   },
   coordinator: {
-    id: 'Navigation.Menu.coordinator',
+    id: '$1Navigation.Menu.coordinator',
     defaultMessage: 'Coordinator',
   },
   participant: {
-    id: 'Navigation.Menu.participant',
+    id: '$1Navigation.Menu.participant',
     defaultMessage: 'Participant',
   },
   justYou: {
-    id: 'Navigation.Menu.justYou',
+    id: '$1Navigation.Menu.justYou',
     defaultMessage: 'Just You',
   },
   switchProject: {
-    id: 'Navigation.Menu.switchProject',
+    id: '$1Navigation.Menu.switchProject',
     defaultMessage: 'Switch Project',
   },
   earlyAccessLabel: {
-    id: 'Navigation.Menu.earlyAccessLabel',
+    id: '$1Navigation.Menu.earlyAccessLabel',
     defaultMessage: 'You are in Early Access Mode.',
   },
   team: {
-    id: 'Navigation.Menu.team',
+    id: '$1Navigation.Menu.team',
     defaultMessage: 'Team',
   },
   coordinatorTools: {
-    id: 'Navigation.Menu.coordinatorTools',
+    id: '$1Navigation.Menu.coordinatorTools',
     defaultMessage: 'Coordinator Tools',
   },
   collaborate: {
-    id: 'Navigation.Menu.collaborate',
+    id: '$1Navigation.Menu.collaborate',
     defaultMessage: 'Collaborate',
   },
 });
-
 export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();

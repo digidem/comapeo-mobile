@@ -16,32 +16,31 @@ import {OnboardingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   getStarted: {
-    id: 'screens.IntroToCoMapeo.getStarted',
+    id: '$1screens.IntroToCoMapeo.getStarted',
     defaultMessage: 'Get Started',
   },
   mapWorldTogether: {
-    id: 'screens.IntroToCoMapeo.mapWorldTogether',
+    id: '$1screens.IntroToCoMapeo.mapWorldTogether',
     defaultMessage: 'Map your world, together.',
   },
   mapAnywhere: {
-    id: 'screens.IntroToCoMapeo.mapAnywhere',
+    id: '$1screens.IntroToCoMapeo.mapAnywhere',
     defaultMessage: 'Map anywhere and everywhere',
   },
   collaborate: {
-    id: 'screens.IntroToCoMapeo.collaborate',
+    id: '$1screens.IntroToCoMapeo.collaborate',
     defaultMessage: 'Securely share with collaborators',
   },
   ownData: {
-    id: 'screens.IntroToCoMapeo.ownData',
+    id: '$1screens.IntroToCoMapeo.ownData',
     defaultMessage: 'Always own and control your data',
   },
   designedFor: {
-    id: 'screens.IntroToCoMapeo.designedFor',
+    id: '$1screens.IntroToCoMapeo.designedFor',
     defaultMessage:
       'Co-designed with and for Indigenous territory mappers & monitors.',
   },
 });
-
 export const IntroToCoMapeo = ({
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'IntroToCoMapeo'>) => {

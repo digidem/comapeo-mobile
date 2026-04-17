@@ -445,9 +445,6 @@
   "$1screens.LeaveProject.cancel": {
     "message": "Cancelar"
   },
-  "$1screens.LeaveProject.leaveProjectTitle": {
-    "message": "¿Abandonar {projectName}?"
-  },
   "$1screens.LeaveProject.yesLeave": {
     "message": "Sí, dejar"
   },
@@ -477,9 +474,6 @@
   },
   "$1screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Abrir {deviceName}"
-  },
-  "$1screens.LeftProjectConfirmation.youveLeftProject": {
-    "message": "Has abandonado el proyecto."
   },
   "$1screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",

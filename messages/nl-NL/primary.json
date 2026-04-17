@@ -436,9 +436,6 @@
   "$1screens.LeaveProject.cancel": {
     "message": "Annuleren"
   },
-  "$1screens.LeaveProject.leaveProjectTitle": {
-    "message": "Verlaat {projectName}?"
-  },
   "$1screens.LeaveProject.yesLeave": {
     "message": "Ja, verlaat"
   },
@@ -465,9 +462,6 @@
   },
   "$1screens.LeaveProjectWarning.lastDeviceTitle": {
     "message": "Apparaat is laatste apparaat."
-  },
-  "$1screens.LeftProjectConfirmation.youveLeftProject": {
-    "message": "Je hebt het project verlaten."
   },
   "$1screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",

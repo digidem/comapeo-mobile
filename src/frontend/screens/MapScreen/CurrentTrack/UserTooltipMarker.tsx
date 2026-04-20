@@ -14,6 +14,7 @@ export const UserTooltipMarker = () => {
     // We dont want to put this check in the parent because it will cause the parent (the map) to render too often
     location?.coords && (
       <PointAnnotation
+        key={`locationView-${timer}`}
         id="locationView"
         coordinate={[location.coords.longitude, location.coords.latitude]}
         anchor={{x: 0.5, y: 1.2}}>

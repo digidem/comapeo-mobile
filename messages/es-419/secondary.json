@@ -51,7 +51,7 @@
     "message": "URL no válida"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
-    "message": "Solo una persona coordinadora del proyecto puede desactivar el archivo remoto."
+    "message": "Solo un Coordinador del Proyecto puede desactivar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
     "message": "Archivo URL"
@@ -69,7 +69,7 @@
     "message": "No se han añadido servidores a este proyecto"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.coordinatorCanTurnOff": {
-    "message": "Solo una persona coordinadora del proyecto puede desactivar el archivo remoto."
+    "message": "Solo un Coordinador del proyecto puede desactivar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.dateAdded": {
     "message": "Fecha agregada"
@@ -233,7 +233,7 @@
     "message": "Rojo"
   },
   "projectInfoCard.coordinator": {
-    "message": "Eres coordinador de este proyecto."
+    "message": "Eres Coordinador de este proyecto."
   },
   "projectInfoCard.mappingOnOwn": {
     "message": "Estás mapeando por tu cuenta."
@@ -562,7 +562,7 @@
     "message": "Tu invitación a {projectName} ha sido cancelada."
   },
   "screens.InviteReceived.coordinatorRole": {
-    "message": "Persona coordinadora"
+    "message": "Coordinador"
   },
   "screens.InviteReceived.invitedToJoin": {
     "message": "Te invitaron a unirte a..."
@@ -1279,7 +1279,7 @@
     "message": "Avanzado"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
-    "message": "Persona coordinadora"
+    "message": "Coordinador"
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participante"

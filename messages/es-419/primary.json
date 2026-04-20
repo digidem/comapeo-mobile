@@ -15,7 +15,7 @@
     "message": "Colaborar"
   },
   "$1Navigation.Menu.coordinator": {
-    "message": "Persona Coordinadora"
+    "message": "Coordinador"
   },
   "$1Navigation.Menu.coordinatorTools": {
     "message": "Herramientas de Coordinador"
@@ -195,7 +195,7 @@
     "message": "Nombre del proyecto"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
-    "message": "Persona Coordinadora"
+    "message": "Coordinador"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
     "message": "Participante"
@@ -445,6 +445,9 @@
   "$1screens.LeaveProject.cancel": {
     "message": "Cancelar"
   },
+  "$1screens.LeaveProject.leaveProjTitle": {
+    "message": "¿Salir del proyecto?"
+  },
   "$1screens.LeaveProject.yesLeave": {
     "message": "Sí, dejar"
   },
@@ -474,6 +477,9 @@
   },
   "$1screens.LeftProjectConfirmation.openDefaultProject": {
     "message": "Abrir {deviceName}"
+  },
+  "$1screens.LeftProjectConfirmation.youLeftProject": {
+    "message": "Este dispositivo salió del proyecto {projectName}."
   },
   "$1screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",
@@ -710,7 +716,7 @@
     "message": "Esperando a que el dispositivo acepte la invitación"
   },
   "$1screens.Setting.ProjectSettings.YourTeam.coordinators": {
-    "message": "Persona Coordinadora"
+    "message": "Coordinadores"
   },
   "$1screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Invitar dispositivo"

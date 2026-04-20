@@ -18,7 +18,7 @@ import {
 } from '../../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../../tests/integration/helpers/react';
 
-jest.mock('@rnmapbox/maps', () => {
+jest.mock('@maplibre/maplibre-react-native', () => {
   const React = require('react');
   const {View} = require('react-native');
   const Stub = (

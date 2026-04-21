@@ -32,6 +32,7 @@ export function getSelectableDevicesForMapShare({
   return peers.filter(
     device =>
       device.deviceType === 'mobile' &&
+      device.supportedFeatures.mapShare &&
       projectMembers.some(member => member.deviceId === device.deviceId),
   );
 }

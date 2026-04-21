@@ -12,12 +12,14 @@ function mockPeer(
   name: string,
   deviceType: 'mobile' | 'desktop' = 'mobile',
   status: 'connected' | 'disconnected' | undefined = 'connected',
+  mapShareSupported: boolean = true,
 ): PublicPeerInfo {
   return {
     deviceId,
     name,
     deviceType,
     status,
+    supportedFeatures: {mapShare: mapShareSupported},
   } as PublicPeerInfo;
 }
 
@@ -118,6 +120,24 @@ describe('getSelectableDevicesForMapShare', () => {
 
     expect(result).toHaveLength(3);
     expect(result).toEqual(peers);
+  });
+
+  it('should exclude peers that do not support map share', () => {
+    const peers = [
+      mockPeer('peer-1', 'Peer 1', 'mobile', 'connected', true),
+      mockPeer('peer-2', 'Peer 2', 'mobile', 'connected', false),
+    ];
+
+    const result = getSelectableDevicesForMapShare({
+      peers,
+      projectMembers: [
+        mockMember('peer-1', COORDINATOR_ROLE_ID),
+        mockMember('peer-2', MEMBER_ROLE_ID),
+      ],
+    });
+
+    expect(result).toHaveLength(1);
+    expect(result[0]?.deviceId).toBe('peer-1');
   });
 
   it('should exclude desktop and server peers even if they are project members', () => {

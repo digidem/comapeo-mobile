@@ -15,6 +15,7 @@
       "reactCompiler": true
     },
     "plugins": [
+      "expo-system-ui",
       "expo-audio",
       "expo-localization",
       "expo-secure-store",

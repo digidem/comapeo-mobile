@@ -17,8 +17,8 @@ import {StopIcon} from '../../sharedComponents/icons';
 import PlayArrow from '../../images/PlayArrow.svg';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import * as FileSystem from 'expo-file-system/legacy';
-import Share from 'react-native-share';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {useOpenShareDialog} from '../../hooks/share';
 import {audioStyles, SIDE_ICON_BUTTON_WIDTH} from '../../screens/Audio/shared';
 import * as Sentry from '@sentry/react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -34,7 +34,7 @@ const m = defineMessages({
     defaultMessage: 'Audio Recording',
   },
   share: {
-    id: 'screens.AudioAttachmentPlayback.share',
+    id: '$1screens.AudioAttachmentPlayback.share',
     defaultMessage: 'Share',
   },
 });
@@ -60,7 +60,8 @@ export const AudioAttachmentPlaybackScreen = ({
   const status = useAudioPlayerStatus(player);
   const {formatMessage} = useIntl();
   const [localUri, setLocalUri] = React.useState<string | null>(null);
-  const [shareLoading, setShareLoading] = React.useState(false);
+  const {mutate: openShareDialog, isPending: shareLoading} =
+    useOpenShareDialog();
 
   const duration = status.duration * 1000;
   const currentPosition = status.currentTime * 1000;
@@ -87,8 +88,6 @@ export const AudioAttachmentPlaybackScreen = ({
   const progress = duration ? currentPosition / duration : 0;
 
   const handleShare = React.useCallback(async () => {
-    setShareLoading(true);
-
     try {
       let fileUri = localUri;
 
@@ -104,16 +103,24 @@ export const AudioAttachmentPlaybackScreen = ({
         setLocalUri(downloadedUri);
       }
 
-      await Share.open({url: fileUri, failOnCancel: false});
+      openShareDialog(
+        {url: fileUri, failOnCancel: false},
+        {
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet', {
+              error: toError(err, 'Error sharing audio'),
+            });
+          },
+        },
+      );
     } catch (err) {
       Sentry.captureException(err);
       navigation.navigate('ErrorBottomSheet', {
         error: toError(err, 'Error sharing audio'),
       });
-    } finally {
-      setShareLoading(false);
     }
-  }, [uri, localUri, navigation]);
+  }, [uri, localUri, navigation, openShareDialog]);
 
   React.useEffect(() => {
     return () => {

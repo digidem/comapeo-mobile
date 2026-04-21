@@ -47,19 +47,19 @@ export function getSelectableDevicesForInvite({
 
 const m = defineMessages({
   title: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.title',
+    id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title',
     defaultMessage: 'Select Device to Invite',
   },
   notSeeingDevice: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice',
+    id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice',
     defaultMessage: 'Not seeing a Device?',
   },
   sameWifi: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi',
+    id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi',
     defaultMessage: 'Make sure both devices are on the same Wi-Fi network ',
   },
   sameVersion: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion',
+    id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion',
     defaultMessage: 'Make sure both devices are on the same version of CoMapeo',
   },
 });

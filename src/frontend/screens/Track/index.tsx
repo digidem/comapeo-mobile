@@ -24,16 +24,17 @@ import {
 } from '../../utils/trackMetrics';
 import {TrackStats} from '../../sharedComponents/TrackStats.tsx';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 
 const m = defineMessages({
   title: {
-    id: 'screens.Track.title',
+    id: '$1screens.Track.title',
     defaultMessage: 'Track',
     description:
       'Title of track screen showing (non-editable) view of observation with map',
   },
   deleteTitle: {
-    id: 'screens.Track.deleteTitle',
+    id: '$1screens.Track.deleteTitle',
     defaultMessage: 'Delete track?',
     description: 'Title of dialog asking confirmation to delete a track',
   },
@@ -114,7 +115,9 @@ export const TrackScreen = ({
         <View style={styles.divider} />
         <ObservationList observations={trackObservations} />
         <View style={styles.divider} />
-        <Text style={styles.text}>{track.tags.notes}</Text>
+        <HeaderText variant="header3" style={styles.text}>
+          {track.tags.notes}
+        </HeaderText>
       </View>
     </ScreenContentWithDock>
   );

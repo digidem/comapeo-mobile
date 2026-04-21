@@ -45,7 +45,7 @@ const m = defineMessages({
     description: 'Default name of observation with no matching preset',
   },
   navTitle: {
-    id: 'screens.ObservationEdit.navTitle',
+    id: '$1screens.ObservationEdit.navTitle',
     defaultMessage: 'Edit Observation',
     description: 'screen title for edit observation screen',
   },

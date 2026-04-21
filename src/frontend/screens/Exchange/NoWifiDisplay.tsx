@@ -12,7 +12,7 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 const m = defineMessages({
   title: {
-    id: 'screens.Sync.NoWifiDisplay.title',
+    id: '$1screens.Sync.NoWifiDisplay.title',
     defaultMessage: 'No Wi-Fi.',
   },
   description: {
@@ -20,7 +20,7 @@ const m = defineMessages({
     defaultMessage: 'Check device’s settings and connectivity.',
   },
   buttonText: {
-    id: 'screens.Sync.NoWifiDisplay.buttonText',
+    id: '$1screens.Sync.NoWifiDisplay.buttonText',
     defaultMessage: 'Close',
   },
 });

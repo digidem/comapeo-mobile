@@ -25,7 +25,7 @@ import {formatCoords} from '../lib/coordinateFormat';
 
 const m = defineMessages({
   navTitle: {
-    id: 'screens.ObservationMetadataVerified.navTitle',
+    id: '$1screens.ObservationMetadataVerified.navTitle',
     defaultMessage: 'Observation Metadata',
   },
   howWeCheck: {

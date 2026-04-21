@@ -18,85 +18,84 @@ import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {useOpenShareDialog} from '../../hooks/share.ts';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.ts';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
-
 const m = defineMessages({
   delete: {
-    id: 'screens.Observation.ObservationView.delete',
+    id: '$1screens.Observation.ObservationView.delete',
     defaultMessage: 'Delete',
     description: 'Button to delete an observation',
   },
   share: {
-    id: 'screens.Observation.ObservationView.share',
+    id: '$1screens.Observation.ObservationView.share',
     defaultMessage: 'Share',
     description: 'Button to share an observation',
   },
   cancel: {
-    id: 'screens.Observation.cancel',
+    id: '$1screens.Observation.cancel',
     defaultMessage: 'Cancel',
     description: 'Button to cancel delete of observation',
   },
   confirm: {
-    id: 'screens.Observation.confirm',
+    id: '$1screens.Observation.confirm',
     defaultMessage: 'Yes, delete',
     description: 'Button to confirm delete of observation',
   },
   title: {
-    id: 'screens.Observation.title',
+    id: '$1screens.Observation.title',
     defaultMessage: 'Observation',
     description:
       'Title of observation screen showing (non-editable) view of observation with map and answered questions',
   },
   deleteTitle: {
-    id: 'screens.Observation.deleteTitle',
+    id: '$1screens.Observation.deleteTitle',
     defaultMessage: 'Delete observation?',
     description: 'Title of dialog asking confirmation to delete an observation',
   },
   shareTextTitle: {
-    id: 'screens.Observation.shareTextTitle',
+    id: '$1screens.Observation.shareTextTitle',
     defaultMessage: 'Sharing text',
     description: 'Title of dialog to share an observation without media',
   },
   shareMediaTitle: {
-    id: 'screens.Observation.shareMediaTitle',
+    id: '$1screens.Observation.shareMediaTitle',
     defaultMessage: 'Sharing image',
     description: 'Title of dialog to share an observation with media',
   },
   shareMessageTitle: {
-    id: 'screens.Observation.shareMessageTitle',
+    id: '$1screens.Observation.shareMessageTitle',
     defaultMessage: 'CoMapeo Alert',
   },
   shareMessageFooter: {
-    id: 'screens.Observation.shareMessageFooter',
+    id: '$1screens.Observation.shareMessageFooter',
     defaultMessage: 'Sent from CoMapeo',
   },
   fallbackCategoryName: {
-    id: 'screens.Observation.fallbackCategoryName',
+    id: '$1screens.Observation.fallbackCategoryName',
     defaultMessage: 'Observation',
     description:
       'Fallback name used when category name cannot be determined for observation',
   },
   comapeoData: {
-    id: 'screens.Observation.comapeoAlert',
+    id: '$1screens.Observation.comapeoAlert',
     defaultMessage: 'CoMapeo data sent from *{projectName}*',
   },
   defaultProjectName: {
-    id: 'screens.Observation.defaultProjectName',
+    id: '$1screens.Observation.defaultProjectName',
     defaultMessage: 'My Project',
   },
   location: {
-    id: 'screens.Observation.location',
+    id: '$1screens.Observation.location',
     defaultMessage: 'Location:',
   },
   precision: {
-    id: 'screens.Observation.precision',
+    id: '$1screens.Observation.precision',
     defaultMessage: 'Precision:',
   },
   details: {
-    id: 'screens.Observation.details',
+    id: '$1screens.Observation.details',
     defaultMessage: 'Details:',
   },
   description: {
-    id: 'screens.Observation.description',
+    id: '$1screens.Observation.description',
     defaultMessage: 'Description:',
   },
 });

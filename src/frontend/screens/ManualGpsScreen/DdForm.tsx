@@ -10,7 +10,7 @@ import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 
 import {Text} from '../../sharedComponents/Text';
 import {Select} from '../../sharedComponents/Select';
-import {BLACK, LIGHT_GREY} from '../../lib/styles';
+import {BLACK, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 import {
   POSITIVE_DECIMAL_REGEX,
   FormProps,
@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 20,
     marginTop: 10,
+    color: DARK_GREY,
   },
   row: {
     marginBottom: 40,

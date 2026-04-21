@@ -14,7 +14,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   aboutCoMapeoTitle: {
-    id: 'screens.AboutSettings.title',
+    id: '$1screens.AboutSettings.title',
     defaultMessage: 'About CoMapeo',
     description: "Title of 'About CoMapeo' screen",
   },
@@ -65,7 +65,7 @@ const m = defineMessages({
     description: 'Label for the release name',
   },
   seeUpdates: {
-    id: 'screens.AboutSettings.seeUpdates',
+    id: '$1screens.AboutSettings.seeUpdates',
     defaultMessage: 'See CoMapeo Updates',
   },
   earlyAccessBanner: {

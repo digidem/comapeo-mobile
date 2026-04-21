@@ -7,31 +7,31 @@ import {InputPasscode} from './InputPasscode';
 
 const m = defineMessages({
   titleSet: {
-    id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet',
+    id: '$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet',
     defaultMessage: 'Set App Passcode',
   },
   initialPassError: {
-    id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError',
+    id: '$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError',
     defaultMessage: 'Password must be 5 numbers',
   },
   titleConfirm: {
-    id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm',
+    id: '$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm',
     defaultMessage: 'Re-enter Passcode',
   },
   subTitleSet: {
-    id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet',
+    id: '$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet',
     defaultMessage: 'This passcode will be required to open the CoMapeo App',
   },
   passwordDoesNotMatch: {
-    id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch',
+    id: '$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch',
     defaultMessage: 'Password does not match',
   },
   obscurePasscodeError: {
-    id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError',
+    id: '$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError',
     defaultMessage: 'Cannot be used as a Passcode',
   },
   title: {
-    id: 'screens.AppPasscode.NewPasscode.SetPasscodeScreen.title',
+    id: '$1screens.AppPasscode.NewPasscode.SetPasscodeScreen.title',
     defaultMessage: 'Set Passcode',
   },
 });

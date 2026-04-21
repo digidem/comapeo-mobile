@@ -17,7 +17,7 @@ import {defineMessages} from 'react-intl';
 
 const m = defineMessages({
   exchangeTitle: {
-    id: 'screens.Sync.headerTitle',
+    id: '$1screens.Sync.headerTitle',
     defaultMessage: 'Exchange',
   },
 });

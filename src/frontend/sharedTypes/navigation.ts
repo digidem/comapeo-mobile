@@ -190,7 +190,7 @@ export type RootStackParamsList = {
   LeaveProject: {
     memberType: 'coordinator' | 'participant';
   };
-  LeftProjectConfirmation: undefined;
+  LeftProjectConfirmation: {projectName: string};
   CollaboratorInfo: {
     deviceId: string;
     isOwnDevice: boolean;

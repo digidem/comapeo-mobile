@@ -12,28 +12,27 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {toError} from '../../utils/errors';
-
 const m = defineMessages({
   title: {
-    id: 'screens.AppPasscode.ConfirmPasscodeSheet.title',
+    id: '$1screens.AppPasscode.ConfirmPasscodeSheet.title',
     defaultMessage:
       'App Passcodes can never be recovered if lost or forgotten!',
   },
   suggestion: {
-    id: 'screens.AppPasscode.ConfirmPasscodeSheet.suggestion',
+    id: '$1screens.AppPasscode.ConfirmPasscodeSheet.suggestion',
     defaultMessage:
       'Make sure to note your passcode in a secure location before saving.',
   },
   cancel: {
-    id: 'screens.AppPasscode.ConfirmPasscodeSheet.cancel',
+    id: '$1screens.AppPasscode.ConfirmPasscodeSheet.cancel',
     defaultMessage: 'Cancel',
   },
   saveAppPasscode: {
-    id: 'screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode',
+    id: '$1screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode',
     defaultMessage: 'Save App Passcode',
   },
   passcode: {
-    id: 'screens.AppPasscode.ConfirmPasscodeSheet.passcode',
+    id: '$1screens.AppPasscode.ConfirmPasscodeSheet.passcode',
     defaultMessage: 'Passcode: {passcode}',
     description: 'used to indicate to the user what the new passcode will be.',
   },

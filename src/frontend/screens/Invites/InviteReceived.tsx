@@ -21,11 +21,11 @@ import GraphIcon from '../../images/Graph.svg';
 
 const m = defineMessages({
   joinProject: {
-    id: 'screens.InviteReceived.joinProject',
+    id: '$1screens.InviteReceived.joinProject',
     defaultMessage: 'Join Project',
   },
   declineInvite: {
-    id: 'screens.InviteReceived.declineInvite',
+    id: '$1screens.InviteReceived.declineInvite',
     defaultMessage: 'Decline Invite',
   },
   invitedToJoin: {
@@ -33,7 +33,7 @@ const m = defineMessages({
     defaultMessage: "You've been invited to...",
   },
   joinAsRole: {
-    id: 'screens.InviteReceived.joinAsRole',
+    id: '$1screens.InviteReceived.joinAsRole',
     defaultMessage: 'Join as a {role}?',
   },
   coordinatorRole: {

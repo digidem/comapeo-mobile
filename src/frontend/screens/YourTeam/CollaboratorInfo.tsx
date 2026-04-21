@@ -16,7 +16,6 @@ import {SecondaryDestructiveButton} from '../../sharedComponents/Buttons';
 
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import {isActiveArchiveServerMember} from '../../hooks/server/projects';
 import {useIsLastCoordinator} from '../../hooks/useIsLastCoordinator';
 import {useIsLastMember} from '../../hooks/useIsLastMember';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
@@ -79,7 +78,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
     deviceId: route.params.deviceId,
   });
   const {name, joinedAt, deviceType} = member;
-  const isArchiveServer = isActiveArchiveServerMember(member);
+  const isArchiveServer = deviceType === 'selfHostedServer';
 
   const {data: ownRole} = useOwnRoleInProject({projectId});
 
@@ -89,14 +88,13 @@ export const CollaboratorInfo: NativeNavigationComponent<
     ownRole.roleId === CREATOR_ROLE_ID;
 
   const isDesktop = deviceType === 'desktop';
-  const isServer = isArchiveServer || deviceType === 'selfHostedServer';
 
   const isLastCoordinator = useIsLastCoordinator({
     deviceId: route.params.deviceId,
   });
   const isLastMember = useIsLastMember({deviceId: route.params.deviceId});
 
-  const canShowActionButton = !isServer && !isDesktop;
+  const canShowActionButton = !isArchiveServer && !isDesktop;
 
   return (
     <View style={styles.container}>

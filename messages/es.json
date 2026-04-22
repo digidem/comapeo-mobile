@@ -120,7 +120,7 @@
     "message": "Añadir archivo remoto"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
-    "message": "Solo una persona coordinadora del proyecto puede desactivar el archivo remoto."
+    "message": "Solo un coordinador del proyecto puede desactivar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
     "message": "Url"
@@ -147,7 +147,7 @@
     "message": "Archivo Remoto desactivado"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.coordinatorCanTurnOff": {
-    "message": "Solo una persona coordinadora del proyecto puede desactivar el archivo remoto."
+    "message": "Solo un coordinador del proyecto puede desactivar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.dateAdded": {
     "message": "Fecha agregada"
@@ -443,7 +443,7 @@
     "message": "Nombre del proyecto"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
-    "message": "Persona Coordinadora"
+    "message": "Coordinador"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
     "message": "Participante"
@@ -467,7 +467,7 @@
     "message": "Seleccionar dispositivo"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
-    "message": "Como persona Coordinadora, este dispositivo puede invitar y quitar dispositivos de este proyecto y administrar los detalles del Proyecto."
+    "message": "Como coordinador, este dispositivo puede invitar y quitar dispositivos de este proyecto y administrar los detalles del Proyecto."
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.participantDescription": {
     "message": "Como Participante, este dispositivo puede crear, editar, sincronizar y compartir observaciones. No puede administrar personas usuarias ni detalles del Proyecto."
@@ -711,7 +711,7 @@
     "message": "Añadido el {date}"
   },
   "screens.CollaboratorInfo.coordinator": {
-    "message": "Persona Coordinadora"
+    "message": "Coordinador"
   },
   "screens.CollaboratorInfo.leaveProject": {
     "message": "Abandonar proyecto"
@@ -982,7 +982,7 @@
     "message": "Tu invitación a {projectName} ha sido cancelada."
   },
   "screens.InviteReceived.coordinatorRole": {
-    "message": "Persona Coordinadora"
+    "message": "Coordinador"
   },
   "screens.InviteReceived.declineInvite": {
     "message": "Rechazar invitación"
@@ -1789,7 +1789,7 @@
     "message": "Puede invitar dispositivos, editar y eliminar datos y administrar los detalles del proyecto."
   },
   "screens.Setting.ProjectSettings.YourTeam.coordinators": {
-    "message": "Persona Coordinadora"
+    "message": "Coordinador"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Invitar dispositivo"
@@ -2176,7 +2176,7 @@
     "message": "Algo salió mal"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
-    "message": "Persona coordinadora"
+    "message": "Coordinador"
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participante"

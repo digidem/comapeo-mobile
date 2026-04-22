@@ -2,7 +2,6 @@ import React from 'react';
 import {
   GestureResponderEvent,
   StyleProp,
-  StyleSheet,
   TouchableOpacity,
   View,
   ViewStyle,
@@ -24,10 +23,7 @@ const AddButtonNoMemo = ({
   disabled,
   isLoading = false,
 }: AddButtonProps) => (
-  <View
-    testID={testID}
-    accessibilityLabel="Add Observation"
-    style={[styles.container, {bottom: isLoading ? 50 : 25}, style]}>
+  <View testID={testID} accessibilityLabel="Add Observation" style={style}>
     <TouchableOpacity disabled={disabled || isLoading} onPress={onPress}>
       {isLoading ? <UIActivityIndicator size={50} /> : <AddButtonSVG />}
     </TouchableOpacity>
@@ -38,10 +34,3 @@ const AddButtonNoMemo = ({
  * Button used on main map and camera mode to take observation
  */
 export const AddButton = React.memo(AddButtonNoMemo);
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    alignSelf: 'center',
-  },
-});

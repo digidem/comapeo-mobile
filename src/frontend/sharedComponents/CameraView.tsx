@@ -9,6 +9,7 @@ import {
 } from 'react-native-vision-camera';
 
 import {AddButton} from './AddButton';
+import {GPSPill} from './GPSPill';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
 import {useLocationState} from '../contexts/LocationContext';
@@ -124,12 +125,18 @@ export const CameraView = ({onAddPress}: Props) => {
         />
       )}
 
-      <AddButton
-        onPress={handleAddPress}
-        disabled={disableButton}
-        style={{opacity: disableButton ? 0.5 : 1}}
-        testID="addButtonCamera"
-      />
+      <View style={styles.bottomBar}>
+        <View style={styles.gpsPillContainer}>
+          <GPSPill onPress={() => navigation.navigate('GpsModal')} />
+        </View>
+        <AddButton
+          onPress={handleAddPress}
+          disabled={disableButton}
+          style={{opacity: disableButton ? 0.5 : 1}}
+          testID="addButtonCamera"
+        />
+        <View style={{flex: 1}} />
+      </View>
     </View>
   );
 };
@@ -143,5 +150,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+  },
+  bottomBar: {
+    position: 'absolute',
+    bottom: 25,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  gpsPillContainer: {
+    flex: 1,
+    alignItems: 'center',
   },
 });

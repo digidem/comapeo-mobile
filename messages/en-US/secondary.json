@@ -378,9 +378,6 @@
   "screens.AudioRecording.lessThan5": {
     "message": "Less than 5 minutes left"
   },
-  "screens.CameraScreen.allowCamera": {
-    "message": "Allow Camera"
-  },
   "screens.CameraScreen.noCameraAccess": {
     "message": "No access to camera. Please allow access in settings."
   },

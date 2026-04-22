@@ -4,7 +4,6 @@ import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useFocusEffect} from '@react-navigation/native';
 import {BackHandler} from 'react-native';
-import {Keyboard} from 'react-native';
 
 type HeaderLeftProps = {
   headerBackButtonProps: HeaderBackButtonProps;
@@ -14,7 +13,6 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   const navigation = useNavigationFromRoot();
 
   const handlePress = React.useCallback(() => {
-    Keyboard.dismiss();
     navigation.navigate('ConfirmDiscardObservationEditBottomSheet');
   }, [navigation]);
 

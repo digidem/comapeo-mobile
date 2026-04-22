@@ -20,7 +20,12 @@
       "expo-localization",
       "expo-secure-store",
       "expo-document-picker",
-      "react-native-vision-camera",
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "Allow $(PRODUCT_NAME) to take pictures?"
+        }
+      ],
       [
         "@rnmapbox/maps",
         {

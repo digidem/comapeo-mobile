@@ -16,17 +16,17 @@ import {useDraftObservationState} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   nextQuestion: {
-    id: 'screens.ObservationDetails.nextQuestion',
+    id: '$1screens.ObservationDetails.nextQuestion',
     defaultMessage: 'Next',
     description: 'Button text to navigate to next question',
   },
   done: {
-    id: 'screens.ObservationDetails.done',
+    id: '$1screens.ObservationDetails.done',
     defaultMessage: 'Done',
     description: 'Button text when all questions are complete',
   },
   title: {
-    id: 'screens.ObservationDetails.title',
+    id: '$1screens.ObservationDetails.title',
     defaultMessage: 'Question {current} of {total}',
     description:
       'Title of observation details screen showing question number and total',

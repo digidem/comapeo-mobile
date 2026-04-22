@@ -22,31 +22,31 @@ import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   title: {
-    id: 'screens.Onboarding.MapOnYourOwnIntro.title',
+    id: '$1screens.Onboarding.MapOnYourOwnIntro.title',
     defaultMessage: 'Map On Your Own',
   },
   description: {
-    id: 'screens.Onboarding.MapOnYourOwnIntro.description',
+    id: '$1screens.Onboarding.MapOnYourOwnIntro.description',
     defaultMessage: 'Explore CoMapeo—invite collaborators anytime.',
   },
   snapPhotos: {
-    id: 'screens.Onboarding.MapOnYourOwnIntro.snapPhotos',
+    id: '$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos',
     defaultMessage: 'Snap photos on-the-go.',
   },
   addAudio: {
-    id: 'screens.Onboarding.MapOnYourOwnIntro.addAudio',
+    id: '$1screens.Onboarding.MapOnYourOwnIntro.addAudio',
     defaultMessage: 'Add audio recordings.',
   },
   trackPaths: {
-    id: 'screens.Onboarding.MapOnYourOwnIntro.trackPaths',
+    id: '$1screens.Onboarding.MapOnYourOwnIntro.trackPaths',
     defaultMessage: 'Track paths walked.',
   },
   goToMap: {
-    id: 'screens.Onboarding.MapOnYourOwnIntro.goToMap',
+    id: '$1screens.Onboarding.MapOnYourOwnIntro.goToMap',
     defaultMessage: 'Go to Map',
   },
   close: {
-    id: 'screens.Onboarding.MapOnYourOwnIntro.close',
+    id: '$1screens.Onboarding.MapOnYourOwnIntro.close',
     defaultMessage: 'Close',
   },
 });

@@ -10,7 +10,7 @@ import {usePreventAndroidBackButton} from '../../../hooks/usePreventAndroidBackB
 
 const m = defineMessages({
   waitingMessage: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage',
+    id: '$1screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage',
     defaultMessage: 'Waiting for Device to Accept Invite',
   },
   timerMessage: {
@@ -18,7 +18,7 @@ const m = defineMessages({
     defaultMessage: 'Invite sent {seconds}s ago',
   },
   cancelInvite: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite',
+    id: '$1screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite',
     defaultMessage: 'Cancel Invite',
   },
 });

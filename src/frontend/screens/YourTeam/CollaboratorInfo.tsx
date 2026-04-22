@@ -16,14 +16,13 @@ import {SecondaryDestructiveButton} from '../../sharedComponents/Buttons';
 
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import {isActiveArchiveServerMember} from '../../hooks/server/projects';
 import {useIsLastCoordinator} from '../../hooks/useIsLastCoordinator';
 import {useIsLastMember} from '../../hooks/useIsLastMember';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 
 const m = defineMessages({
   navTitle: {
-    id: 'screens.CollaboratorInfo.navTitle',
+    id: '$1screens.CollaboratorInfo.navTitle',
     defaultMessage: 'Collaborator Info',
   },
   addedOn: {
@@ -79,7 +78,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
     deviceId: route.params.deviceId,
   });
   const {name, joinedAt, deviceType} = member;
-  const isArchiveServer = isActiveArchiveServerMember(member);
+  const isArchiveServer = deviceType === 'selfHostedServer';
 
   const {data: ownRole} = useOwnRoleInProject({projectId});
 

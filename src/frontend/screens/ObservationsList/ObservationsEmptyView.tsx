@@ -10,7 +10,7 @@ import {SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   noObservationsTitle: {
-    id: 'screens.ObservationsList.ObservationsEmptyView.noObservationsTitle',
+    id: '$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle',
     description:
       'Title of observation list view when the user has not yet recorded observations',
     defaultMessage: 'Add Observations',
@@ -23,7 +23,7 @@ const m = defineMessages({
       'Start from map or camera view to record your first observation.',
   },
   backButton: {
-    id: 'screens.ObservationsList.ObservationsEmptyView.backButton',
+    id: '$1screens.ObservationsList.ObservationsEmptyView.backButton',
     description:
       'Back button on observation list screen when no observations are yet recorded',
     defaultMessage: 'Go To Map',

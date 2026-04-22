@@ -501,13 +501,11 @@ export const createAppScreens = ({
         component={ProjectStatistics}
         options={{headerTitle: intl(ProjectStatistics.navTitle)}}
       />
-      {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && (
-        <RootStack.Screen
-          name="EarlyAccess"
-          component={EarlyAccess}
-          options={{headerTitle: intl(EarlyAccess.navTitle)}}
-        />
-      )}
+      <RootStack.Screen
+        name="EarlyAccess"
+        component={EarlyAccess}
+        options={{headerTitle: intl(EarlyAccess.navTitle)}}
+      />
       <RootStack.Screen
         name="StartNewProjectIntro"
         component={StartNewProjectIntro}
@@ -602,12 +600,10 @@ export const createAppScreens = ({
         name="ProjectStatsTurnedOff"
         component={ProjectStatsTurnedOffBottomSheet}
       />
-      {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && (
-        <RootStack.Screen
-          name="EarlyAccessOff"
-          component={EarlyAccessOffBottomSheet}
-        />
-      )}
+      <RootStack.Screen
+        name="EarlyAccessOff"
+        component={EarlyAccessOffBottomSheet}
+      />
       <RootStack.Screen
         name="AllProjects"
         component={AllProjects}

@@ -1,0 +1,218 @@
+{
+  "$1ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "निरन्तर सम्पादन"
+  },
+  "$1ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "परिवर्तन रद्द"
+  },
+  "$1ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "परिवर्तन रद्द?"
+  },
+  "$1SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "निरन्तर सम्पादन"
+  },
+  "$1Screens.Settings.AppSettings.language": {
+    "message": "भाषा"
+  },
+  "$1screens.AppPasscode": {
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "रद्द"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "एपकाे पासकाेड संग्रह गर्नुहाेस"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "पुनः पासकोड प्रविष्ट गर्नुहोस्"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "एपकाे पासकाेड बनाउनु हाेस"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "पासवर्ड अनिवार्य रूपमा ५ वटा नम्बरकाे हुनु पर्छ"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "पासकोडको रूपमा प्रयोग गर्न सकिँदैन"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "पासवर्ड मिलेन"
+  },
+  "$1screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "जारी राख्ने"
+  },
+  "$1screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "एपकाे पासकोड के हाे?"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "एपकाे पासकोड परिवर्तन गर्नुहोस्"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
+  },
+  "$1screens.AudioAttachmentPlayback.share": {
+    "message": "साझा गरियो"
+  },
+  "$1screens.AudioPlaybackNew.delete": {
+    "message": "मेटाउने"
+  },
+  "$1screens.ConfirmDeletePhoto.cancel": {
+    "message": "रद्द"
+  },
+  "$1screens.DataPrivacy.next": {
+    "message": "अर्काे"
+  },
+  "$1screens.DeviceNaming.Success.success": {
+    "message": "सफल!"
+  },
+  "$1screens.DeviceNaming.save": {
+    "message": "संग्रह"
+  },
+  "$1screens.ExchangeSettingsBottomSheet.save": {
+    "message": "संग्रह"
+  },
+  "$1screens.InviteSuccess.done": {
+    "message": "भयाे"
+  },
+  "$1screens.InviteSuccess.success": {
+    "message": "सफल"
+  },
+  "$1screens.LanguageSettings.title": {
+    "description": "Title language settings screen",
+    "message": "भाषा"
+  },
+  "$1screens.LeaveProject.cancel": {
+    "message": "रद्द"
+  },
+  "$1screens.LeaveProjectWarning.cancel": {
+    "message": "रद्द"
+  },
+  "$1screens.LeaveProjectWarning.continueButton": {
+    "message": "जारी राख्ने"
+  },
+  "$1screens.LocationInfoScreen.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "हालकाे GPS ठेगाना"
+  },
+  "$1screens.LocationInfoScreen.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "हाेइन"
+  },
+  "$1screens.LocationInfoScreen.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "हाे"
+  },
+  "$1screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "मेटाउने"
+  },
+  "$1screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "उत्तर छैन"
+  },
+  "$1screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "साझा गरियो"
+  },
+  "$1screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "रद्द"
+  },
+  "$1screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "हुन्छ, मेट्नु"
+  },
+  "$1screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "अवलाेकन हटाउने?"
+  },
+  "$1screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "अवलाेकन"
+  },
+  "$1screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "अवलाेकन"
+  },
+  "$1screens.ObservationCreate.changePreset": {
+    "message": "परिवर्तन"
+  },
+  "$1screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "यहाँ के भइ राखेकाे छ?"
+  },
+  "$1screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "भयाे"
+  },
+  "$1screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "अर्काे"
+  },
+  "$1screens.ObservationDetails.title": {
+    "description": "Title of observation details screen showing question number and total",
+    "message": "प्रश्न {हाल} मा {जम्मा}"
+  },
+  "$1screens.ObservationEdit.ObservationEditView.detailsButton": {
+    "description": "Button label to add details",
+    "message": "विवरणहरू"
+  },
+  "$1screens.ObservationEdit.navTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "अवलाेकन सम्पादन"
+  },
+  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "नक्सामा जानु हाेला"
+  },
+  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "अवलोकन थप्नुहोस"
+  },
+  "$1screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "आफ्नो यन्त्रलाई आक्रमणबाट सुरक्षित गर्नुहोस्"
+  },
+  "$1screens.Security.passcodeHeader": {
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "परिवर्तन रद्द?"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "भयाे"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "उपकरणलाई निमन्त्रणा"
+  },
+  "$1screens.Settings.Config.okButton": {
+    "message": "ठिक छ"
+  },
+  "$1screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "भयाे"
+  },
+  "$1screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
+    "message": "सफल!"
+  },
+  "$1screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "संग्रह"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
+    "message": "भित्राउनमा समस्या"
+  },
+  "$1screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "अर्काे"
+  },
+  "$1screens.Track.ObservationList.observation": {
+    "message": "अवलाेकन"
+  },
+  "$1screens.Track.ObservationList.observations": {
+    "message": "अवलाेकनहरू"
+  }
+}

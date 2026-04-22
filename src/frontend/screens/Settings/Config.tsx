@@ -19,7 +19,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   navTitle: {
-    id: 'screens.Settings.Config.navTitle',
+    id: '$1screens.Settings.Config.navTitle',
     defaultMessage: 'Categories',
   },
   name: {
@@ -35,15 +35,15 @@ const m = defineMessages({
     defaultMessage: 'Created {date} at {time}',
   },
   importCategories: {
-    id: 'screens.Settings.Config.importCategories',
+    id: '$1screens.Settings.Config.importCategories',
     defaultMessage: 'Import Categories',
   },
   categoryImportTitle: {
-    id: 'screens.Settings.Config.importSuccessTitle',
+    id: '$1screens.Settings.Config.importSuccessTitle',
     defaultMessage: 'Successfully imported categories:',
   },
   okButton: {
-    id: 'screens.Settings.Config.okButton',
+    id: '$1screens.Settings.Config.okButton',
     defaultMessage: 'OK',
   },
 });

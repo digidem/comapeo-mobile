@@ -17,7 +17,7 @@ import {DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
 
 const m = defineMessages({
   screenTitle: {
-    id: 'soloProject.startNewProject.title',
+    id: '$1soloProject.startNewProject.title',
     defaultMessage: 'Start New Project',
   },
   introText: {

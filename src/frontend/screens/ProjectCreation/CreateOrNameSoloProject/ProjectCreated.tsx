@@ -15,7 +15,7 @@ import {BodyText} from '../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   success: {
-    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.success',
+    id: '$1screens.Settings.CreateOrJoinProject.ProjectCreated.success',
     defaultMessage: 'Success!',
   },
   projectReady: {
@@ -23,11 +23,11 @@ const m = defineMessages({
     defaultMessage: '{projectName} is now ready for you to invite devices.',
   },
   inviteDevice: {
-    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice',
+    id: '$1screens.Settings.CreateOrJoinProject.ProjectCreated.inviteDevice',
     defaultMessage: 'Invite a Device',
   },
   done: {
-    id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.done',
+    id: '$1screens.Settings.CreateOrJoinProject.ProjectCreated.done',
     defaultMessage: 'Done',
   },
   sharedLine: {

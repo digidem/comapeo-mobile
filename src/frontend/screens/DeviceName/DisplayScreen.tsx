@@ -12,11 +12,11 @@ import {FieldRow} from './FieldRow';
 
 const m = defineMessages({
   title: {
-    id: 'screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title',
+    id: '$1screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title',
     defaultMessage: 'Device Name',
   },
   deviceNameLabel: {
-    id: 'screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel',
+    id: '$1screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel',
     defaultMessage: 'Your Device Name',
   },
 });

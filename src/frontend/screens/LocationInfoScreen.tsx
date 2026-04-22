@@ -19,7 +19,7 @@ import {useLocationState} from '../contexts/LocationContext';
 
 const m = defineMessages({
   gpsHeader: {
-    id: 'screens.LocationInfoScreen.gpsHeader',
+    id: '$1screens.LocationInfoScreen.gpsHeader',
     defaultMessage: 'Current GPS Location',
     description: 'Header for GPS screen',
   },
@@ -49,12 +49,12 @@ const m = defineMessages({
     description: 'Section title for details about current position',
   },
   yes: {
-    id: 'screens.LocationInfoScreen.yes',
+    id: '$1screens.LocationInfoScreen.yes',
     defaultMessage: 'Yes',
     description: 'if a location sensor is active yes/no',
   },
   no: {
-    id: 'screens.LocationInfoScreen.no',
+    id: '$1screens.LocationInfoScreen.no',
     defaultMessage: 'No',
     description: 'if a location sensor is active yes/no',
   },

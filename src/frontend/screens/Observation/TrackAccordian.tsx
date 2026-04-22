@@ -12,7 +12,7 @@ import {findAssociatedTrack} from './findAssociatedTrack.ts';
 
 const m = defineMessages({
   track: {
-    id: 'screens.Observation.TrackList.track',
+    id: '$1screens.Observation.TrackList.track',
     defaultMessage: 'Track',
   },
 });

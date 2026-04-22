@@ -46,7 +46,7 @@ const m = defineMessages({
     description: 'Title of dialog asking confirmation to delete an observation',
   },
   title: {
-    id: 'screens.Observation.title',
+    id: '$1screens.Observation.title',
     defaultMessage: 'Observation',
     description:
       'Title of observation screen showing (non-editable) view of observation with map and answered questions',

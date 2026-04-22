@@ -38,31 +38,48 @@ async function run() {
  */
 async function loadMessages() {
   const messagesDir = path.join(PROJECT_ROOT_DIR_PATH, 'messages');
-  const files = fs.readdirSync(messagesDir, {
+  const entries = fs.readdirSync(messagesDir, {
     withFileTypes: true,
   });
 
+  const dirs = entries.filter(entry => entry.isDirectory());
+
+  // Initialize all language folders (even those with no translations yet),
+  // and error if two folders map to the same base language code.
+  const result = {};
+  const langToFolder = {};
+  for (const entry of dirs) {
+    const lang = entry.name.split('-')[0];
+    if (result[lang]) {
+      throw new Error(
+        `Duplicate language code '${lang}': folders '${langToFolder[lang]}' and '${entry.name}' both map to the same code`,
+      );
+    }
+    result[lang] = {};
+    langToFolder[lang] = entry.name;
+  }
+
   /** @type {Array<[string, any]>} */
   const loadedMessages = await Promise.all(
-    files.map(async file => {
-      const lang = path.parse(file.name).name;
-      const msgs = JSON.parse(await readFile(path.join(messagesDir, file.name)));
-      return [lang, msgs];
+    dirs.flatMap(entry => {
+      const lang = entry.name.split('-')[0];
+      const langDir = path.join(messagesDir, entry.name);
+      const langFiles = fs
+        .readdirSync(langDir)
+        .filter(f => f.endsWith('.json'));
+      return langFiles.map(async fileName => {
+        const msgs = JSON.parse(await readFile(path.join(langDir, fileName)));
+        return [lang, msgs];
+      });
     }),
   );
-
-  const result = {};
 
   for (const [lang, msgs] of loadedMessages) {
     // If a language is added to Crowdin, but has no translated messages,
     // Crowdin still creates an empty file, so we just ignore it
     if (Object.keys(msgs).length === 0) continue;
 
-    if (!result[lang]) {
-      result[lang] = msgs;
-    } else {
-      result[lang] = {...result[lang], ...msgs};
-    }
+    result[lang] = {...result[lang], ...msgs};
   }
 
   return result;

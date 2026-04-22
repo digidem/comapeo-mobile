@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet, Text, StatusBar} from 'react-native';
+import {Linking, StyleSheet, View, StatusBar} from 'react-native';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 import {
   Camera,
@@ -7,10 +7,16 @@ import {
   useCameraPermission,
   type PhotoFile,
 } from 'react-native-vision-camera';
+import {
+  useCameraPermissionMutation,
+  useRequestCameraPermissionOnMount,
+} from '../hooks/useCameraPermissionTracker';
 
 import {AddButton} from './AddButton';
 import {GPSPill} from './GPSPill';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {PrimaryButton} from './Buttons';
+import {BodyText} from './Text/BodyText';
+import {defineMessages, useIntl} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
 import {useLocationState} from '../contexts/LocationContext';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
@@ -21,11 +27,11 @@ import {toError} from '../utils/errors';
 const m = defineMessages({
   noCameraAccess: {
     id: 'screens.CameraScreen.noCameraAccess',
-    defaultMessage: 'No access to camera. Please Allow access in setting',
+    defaultMessage: 'No access to camera. Please allow access in settings.',
   },
-  goToSettings: {
-    id: 'screens.CameraScreen.goToSettings',
-    defaultMessage: 'Go to Settings',
+  openSettings: {
+    id: 'screens.CameraScreen.openSettings',
+    defaultMessage: 'Open Settings',
   },
 });
 
@@ -40,10 +46,15 @@ export const CameraView = ({onAddPress}: Props) => {
   const accelerometerMeasurement =
     React.useRef<AccelerometerMeasurement | null>(null);
   const {hasPermission} = useCameraPermission();
+  useRequestCameraPermissionOnMount();
+  const {formatMessage} = useIntl();
   const camera = useRef<Camera>(null);
   const location = useLocationState(store => store.location);
   const navigation = useNavigationFromRoot();
   const device = useCameraDevice('back');
+  const openSettingsMutation = useCameraPermissionMutation(() =>
+    Linking.openSettings(),
+  );
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -109,9 +120,14 @@ export const CameraView = ({onAddPress}: Props) => {
       <StatusBar barStyle="light-content" />
       {!hasPermission || !device ? (
         <View style={styles.noPermissionContainer}>
-          <Text style={{marginBottom: 10}}>
-            <FormattedMessage {...m.noCameraAccess} />
-          </Text>
+          <BodyText variant="tinyMeta" style={styles.noPermissionText}>
+            {formatMessage(m.noCameraAccess)}
+          </BodyText>
+          <PrimaryButton
+            fullSize
+            text={formatMessage(m.openSettings)}
+            onPress={() => openSettingsMutation.mutateAsync()}
+          />
         </View>
       ) : (
         <Camera
@@ -147,9 +163,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   noPermissionContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    gap: 30,
+    paddingHorizontal: 40,
+  },
+  noPermissionText: {
+    color: 'white',
+    textAlign: 'center',
   },
   bottomBar: {
     position: 'absolute',

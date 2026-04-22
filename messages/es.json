@@ -120,7 +120,7 @@
     "message": "Añadir archivo remoto"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
-    "message": "Solo una coordinador del proyecto puede desactivar el archivo remoto."
+    "message": "Solo un coordinador del proyecto puede desactivar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
     "message": "Url"
@@ -147,7 +147,7 @@
     "message": "Archivo Remoto desactivado"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.coordinatorCanTurnOff": {
-    "message": "Solo una coordinador del proyecto puede desactivar el archivo remoto."
+    "message": "Solo un coordinador del proyecto puede desactivar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn.dateAdded": {
     "message": "Fecha agregada"

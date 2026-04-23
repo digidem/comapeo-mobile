@@ -203,9 +203,6 @@
   "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "招待するデバイスを選択"
   },
-  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "デバイスを選択"
-  },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "役割を選択"
   },

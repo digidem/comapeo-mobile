@@ -15,7 +15,7 @@ describe('Observations - Delete Observation Flow', () => {
     await expect(deleteBtn).toBeDisplayed();
   });
 
-  it('should open delete dialog and then cancel', async () => {
+  it('should open delete bottom sheet and then cancel', async () => {
     const deleteBtn = await $(byText('Delete'));
     await deleteBtn.click();
 
@@ -31,7 +31,8 @@ describe('Observations - Delete Observation Flow', () => {
     const deleteBtn = await $(byText('Delete'));
     await deleteBtn.click();
 
-    const confirmDelete = await $(byTextMatches('Yes, delete'));
+    await expect($(byTextMatches('Delete observation\\?'))).toBeDisplayed();
+    const confirmDelete = await $(byTextMatches('Delete'));
     await confirmDelete.click();
 
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();

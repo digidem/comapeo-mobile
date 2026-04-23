@@ -12,39 +12,55 @@ import {
   SecondaryButton,
 } from '../../sharedComponents/Buttons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
+import {useDeleteDocument} from '@comapeo/core-react';
+import * as Sentry from '@sentry/react-native';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
-  discardTitle: {
-    id: 'AppContainer.EditHeader.discardTitle',
-    defaultMessage: 'Discard observation?',
-    description: 'Title of dialog that shows when cancelling a new observation',
+  deleteTitle: {
+    id: '$1screens.Observation.deleteTitle',
+    defaultMessage: 'Delete observation?',
   },
-  discardObservationDescription: {
-    id: 'AppContainer.EditHeader.discardObservationDescription',
-    defaultMessage:
-      'Your Observation will not be saved. This cannot be undone.',
+  deleteDescription: {
+    id: '$1screens.Observation.deleteDescription',
+    defaultMessage: 'Your Observation will be deleted. This cannot be undone.',
   },
-  discardCancel: {
-    id: 'AppContainer.EditHeader.discardCancel',
-    defaultMessage: 'Continue editing',
-    description: 'Button on dialog to keep editing (cancelling close action)',
+  deleteButton: {
+    id: '$1screens.Observation.deleteButton',
+    defaultMessage: 'Delete',
   },
-  discardObservationButton: {
-    id: 'AppContainer.EditHeader.discardObservationButton',
-    defaultMessage: 'Discard',
-    description: 'Title of dialog that shows when cancelling observation edits',
+  cancel: {
+    id: '$1screens.Observation.deleteCancel',
+    defaultMessage: 'Cancel',
   },
 });
 
-export const ConfirmDiscardObservationBottomSheet = () => {
+export const ConfirmDeleteObservationBottomSheet = ({
+  route,
+}: NativeRootNavigationProps<'ConfirmDeleteObservationBottomSheet'>) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const {clearDraft} = useDraftObservationActions();
+  const {projectId} = useActiveProject();
+  const {observationId} = route.params;
+  const {mutate: deleteObservationMutation, error: deleteObservationError} =
+    useDeleteDocument({
+      docType: 'observation',
+      projectId,
+    });
 
-  function handleDiscard() {
-    clearDraft();
-    navigation.popTo('Home', {screen: 'Map'});
+  function handleDelete() {
+    deleteObservationMutation(
+      {docId: observationId},
+      {
+        onSuccess: () => {
+          navigation.pop(2);
+        },
+        onError: () => {
+          Sentry.captureException(deleteObservationError);
+        },
+      },
+    );
   }
 
   return (
@@ -55,23 +71,23 @@ export const ConfirmDiscardObservationBottomSheet = () => {
         </View>
 
         <HeaderText variant="header2" style={styles.title}>
-          {t(m.discardTitle)}
+          {t(m.deleteTitle)}
         </HeaderText>
 
         <BodyText variant="large" style={styles.description}>
-          {t(m.discardObservationDescription)}
+          {t(m.deleteDescription)}
         </BodyText>
 
         <View style={styles.buttonsContainer}>
           <DestructiveButton
             fullSize
-            text={t(m.discardObservationButton)}
+            text={t(m.deleteButton)}
             renderIcon={() => <DiscardIcon />}
-            onPress={handleDiscard}
+            onPress={handleDelete}
           />
           <SecondaryButton
             fullSize
-            text={t(m.discardCancel)}
+            text={t(m.cancel)}
             onPress={() => navigation.goBack()}
           />
         </View>

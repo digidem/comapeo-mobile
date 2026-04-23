@@ -31,7 +31,7 @@ const m = defineMessages({
   },
   discardTrackButton: {
     id: '$1SaveTrack.HeaderLeft.discardTrackButton',
-    defaultMessage: 'Discard Track',
+    defaultMessage: 'Discard',
     description: 'Button to confirm discarding the track',
   },
 });

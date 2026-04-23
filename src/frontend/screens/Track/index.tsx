@@ -4,11 +4,7 @@ import {BLUE_GREY, DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
 import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
-import {
-  useDeleteTrackMutation,
-  useTrackQuery,
-  useGetPresetById,
-} from '../../hooks/server/track.ts';
+import {useTrackQuery, useGetPresetById} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
@@ -16,7 +12,6 @@ import {ObservationList} from './ObservationList.tsx';
 import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
 import {TrackHeaderRight} from './TrackHeaderRight';
-import * as Sentry from '@sentry/react-native';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 import {
   getLocationHistoryFromTrack,
@@ -32,11 +27,6 @@ const m = defineMessages({
     defaultMessage: 'Track',
     description:
       'Title of track screen showing (non-editable) view of observation with map',
-  },
-  deleteTitle: {
-    id: '$1screens.Track.deleteTitle',
-    defaultMessage: 'Delete track?',
-    description: 'Title of dialog asking confirmation to delete a track',
   },
   tracks: {
     id: 'screens.Track.tracks',
@@ -55,25 +45,13 @@ export const TrackScreen = ({
   const trackObservations = observations.filter(observation =>
     track.observationRefs.some(ref => ref.docId === observation.docId),
   );
-  const {mutate: deleteTrackMutate} = useDeleteTrackMutation();
   const canDelete = useCanEditOrDelete(track.originalVersionId);
   const locationHistory = getLocationHistoryFromTrack(track);
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
   const preset = useGetPresetById(track?.presetRef?.docId);
 
-  function deleteTrack() {
-    deleteTrackMutate(
-      {docId: track.docId},
-      {
-        onSuccess: () => {
-          navigation.pop();
-        },
-        onError: err => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet', {error: err});
-        },
-      },
-    );
+  function handlePressDelete() {
+    navigation.navigate('ConfirmDeleteTrackBottomSheet', {trackId});
   }
 
   return (
@@ -81,11 +59,7 @@ export const TrackScreen = ({
       contentContainerStyle={{padding: 0}}
       dockContainerStyle={{padding: 0}}
       dockContent={
-        <ActionButtons
-          handleDelete={deleteTrack}
-          canDelete={canDelete}
-          deleteMessage={m.deleteTitle}
-        />
+        <ActionButtons handleDelete={handlePressDelete} canDelete={canDelete} />
       }>
       <View>
         <MapPreview

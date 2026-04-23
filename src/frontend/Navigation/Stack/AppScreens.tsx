@@ -140,6 +140,8 @@ import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsInclude
 import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
+import {ConfirmDeleteObservationBottomSheet} from '../../screens/Observation/ConfirmDeleteObservationBottomSheet.tsx';
+import {ConfirmDeleteTrackBottomSheet} from '../../screens/Track/ConfirmDeleteTrackBottomSheet.tsx';
 import {RootStack} from './RootStack.ts';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -638,6 +640,14 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ConfirmDiscardTrackBottomSheet"
         component={ConfirmDiscardTrackBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDeleteObservationBottomSheet"
+        component={ConfirmDeleteObservationBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDeleteTrackBottomSheet"
+        component={ConfirmDeleteTrackBottomSheet}
       />
     </RootStack.Group>
   </>

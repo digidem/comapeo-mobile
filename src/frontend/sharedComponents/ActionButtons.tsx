@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {Text} from './Text';
 import {DARK_GREY, LIGHT_GREY} from '../lib/styles';
-import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 
 const m = defineMessages({
   delete: {
@@ -17,16 +17,6 @@ const m = defineMessages({
     defaultMessage: 'Share',
     description: 'Button to share an observation',
   },
-  cancel: {
-    id: 'SharedComponents.ActionButtons.cancel',
-    defaultMessage: 'Cancel',
-    description: 'Button to cancel delete of observation',
-  },
-  confirm: {
-    id: 'SharedComponents.ActionButtons.confirm',
-    defaultMessage: 'Yes, delete',
-    description: 'Button to confirm delete of observation',
-  },
 });
 
 type ActionButtonsProps = {
@@ -34,7 +24,6 @@ type ActionButtonsProps = {
   handlePressShare?: () => void;
   canDelete: boolean;
   isShareButtonLoading?: boolean;
-  deleteMessage: MessageDescriptor;
 };
 
 export const ActionButtons = ({
@@ -42,31 +31,13 @@ export const ActionButtons = ({
   handlePressShare,
   canDelete,
   isShareButtonLoading,
-  deleteMessage,
 }: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
-
-  function pressDeleteAlert() {
-    Alert.alert(t(deleteMessage), undefined, [
-      {
-        text: t(m.cancel),
-        onPress: () => {},
-      },
-      {
-        text: t(m.confirm),
-        onPress: handleDelete,
-      },
-    ]);
-  }
 
   return (
     <View style={styles.buttonContainer}>
       {canDelete && (
-        <Button
-          iconName="delete"
-          title={t(m.delete)}
-          onPress={pressDeleteAlert}
-        />
+        <Button iconName="delete" title={t(m.delete)} onPress={handleDelete} />
       )}
       {handlePressShare && (
         <Button

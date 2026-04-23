@@ -206,9 +206,6 @@
   "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Selecteer apparaat om uit te nodigen"
   },
-  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "Selecteer apparaat"
-  },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Selecteer een rol"
   },

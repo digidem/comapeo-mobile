@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard Observation"
+    "message": "Discard"
   },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "Your Observation will not be saved. This cannot be undone."
@@ -164,14 +164,6 @@
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.title": {
     "description": "Text for title that asks about confirming archive server removal.",
     "message": "Remove {name} from project?"
-  },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Cancel"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
   },
   "SharedComponents.ActionButtons.delete": {
     "description": "Button to delete an observation",
@@ -745,10 +737,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Delete observation?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",

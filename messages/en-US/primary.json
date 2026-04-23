@@ -105,7 +105,7 @@
   },
   "$1SaveTrack.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard Track"
+    "message": "Discard"
   },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Your Track will not be saved. This cannot be undone."
@@ -514,22 +514,22 @@
   "$1screens.Observation.TrackList.track": {
     "message": "Track"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Cancel"
-  },
   "$1screens.Observation.comapeoAlert": {
     "message": "CoMapeo data sent from *{projectName}*"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
   },
   "$1screens.Observation.defaultProjectName": {
     "message": "My Project"
   },
+  "$1screens.Observation.deleteButton": {
+    "message": "Delete"
+  },
+  "$1screens.Observation.deleteCancel": {
+    "message": "Cancel"
+  },
+  "$1screens.Observation.deleteDescription": {
+    "message": "Your Observation will be deleted. This cannot be undone."
+  },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
   },
   "$1screens.Observation.description": {
@@ -880,8 +880,16 @@
   "$1screens.Track.ObservationList.observations": {
     "message": "Observations"
   },
+  "$1screens.Track.deleteButton": {
+    "message": "Delete"
+  },
+  "$1screens.Track.deleteCancel": {
+    "message": "Cancel"
+  },
+  "$1screens.Track.deleteDescription": {
+    "message": "Your Track will be deleted. This cannot be undone."
+  },
   "$1screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
     "message": "Delete track?"
   },
   "$1screens.Track.title": {

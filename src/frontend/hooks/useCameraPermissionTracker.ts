@@ -1,5 +1,5 @@
 import React from 'react';
-import {Camera, useCameraPermission} from 'react-native-vision-camera';
+import {useCameraPermission} from 'react-native-vision-camera';
 import {useMutation} from '@tanstack/react-query';
 
 // 'background' key prefix prevents passcode prompt during permission dialog (see AuthContext.tsx)
@@ -18,13 +18,12 @@ export function useCameraPermissionMutation<T>(fn: () => Promise<T>) {
 }
 
 export function useRequestCameraPermissionOnMount() {
-  const {requestPermission} = useCameraPermission();
+  const {hasPermission, requestPermission} = useCameraPermission();
   const {mutateAsync} = useCameraPermissionMutation(requestPermission);
 
   React.useEffect(() => {
-    const status = Camera.getCameraPermissionStatus();
-    if (status !== 'granted' && status !== 'restricted') {
+    if (!hasPermission) {
       mutateAsync();
     }
-  }, [mutateAsync]);
+  }, [hasPermission, mutateAsync]);
 }

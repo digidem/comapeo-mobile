@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 20,
     paddingTop: 80,
+    paddingBottom: 60,
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: WHITE,

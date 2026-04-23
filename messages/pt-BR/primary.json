@@ -215,9 +215,6 @@
   "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Selecione um dispositivo para convidar"
   },
-  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "Selecionar dispositivo"
-  },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Selecione uma função"
   },

@@ -19,7 +19,7 @@ describe('Observations - Delete Observation Flow', () => {
     const deleteBtn = await $(byText('Delete'));
     await deleteBtn.click();
 
-    await expect($(byTextMatches('Delete observation\\?'))).toBeDisplayed();
+    await expect($(byTextMatches('Delete observation?'))).toBeDisplayed();
 
     const cancelBtn = await $(byTextMatches('Cancel'));
     await cancelBtn.click();
@@ -31,8 +31,8 @@ describe('Observations - Delete Observation Flow', () => {
     const deleteBtn = await $(byText('Delete'));
     await deleteBtn.click();
 
-    await expect($(byTextMatches('Delete observation\\?'))).toBeDisplayed();
-    const confirmDelete = await $(byTextMatches('Delete'));
+    await expect($(byTextMatches('Delete observation?'))).toBeDisplayed();
+    const confirmDelete = await $(byResourceId('OBS.confirm-delete-btn'));
     await confirmDelete.click();
 
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();

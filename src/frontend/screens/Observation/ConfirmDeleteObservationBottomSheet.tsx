@@ -81,6 +81,7 @@ export const ConfirmDeleteObservationBottomSheet = ({
         <View style={styles.buttonsContainer}>
           <DestructiveButton
             fullSize
+            testID="OBS.confirm-delete-btn"
             text={t(m.deleteButton)}
             renderIcon={() => <DiscardIcon />}
             onPress={handleDelete}

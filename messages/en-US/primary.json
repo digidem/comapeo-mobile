@@ -434,9 +434,15 @@
   "$1screens.InviteSuccess.success": {
     "message": "Success"
   },
+  "$1screens.LanguageSettings.currentLang": {
+    "message": "Current Language"
+  },
   "$1screens.LanguageSettings.followSystemPreferences": {
     "description": "Label for language option to follow system preferences",
     "message": "Follow system preferences"
+  },
+  "$1screens.LanguageSettings.otherLang": {
+    "message": "Other Languages"
   },
   "$1screens.LanguageSettings.title": {
     "description": "Title language settings screen",

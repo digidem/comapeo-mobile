@@ -209,9 +209,6 @@
   "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Gerät zum Laden auswählen"
   },
-  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "Gerät auswählen"
-  },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Wählen Sie eine Rolle"
   },

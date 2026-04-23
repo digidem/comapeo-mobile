@@ -19,18 +19,20 @@ describe('Settings - Language Settings Flow', () => {
       byTextMatches('Follow system preferences'),
     );
     await expect(followSystemPreferences).toBeDisplayed();
-    await expect($(byResourceId('nullButton-selected'))).toBeDisplayed();
+    await expect($(byResourceId('nullRadioButton'))).toBeChecked();
+    // Assumes browserstack uses english as system pref
+    await expect($(byText('English'))).toBeDisplayed();
   });
 
   it('should scroll to Spanish, select it, and confirm language change', async () => {
-    await $(byTextMatches('Spanish')).scrollIntoView();
-    await $(byTextMatches('Spanish')).click();
-
-    const idiomaOption = await $(byTextMatches('Idioma'));
-    await expect(idiomaOption).toBeDisplayed();
-    await idiomaOption.click();
     await $(byTextMatches('Español')).scrollIntoView();
-    await expect($(byResourceId('esButton-selected'))).toBeDisplayed();
+    await $(byTextMatches('Español')).click();
+
+    // header should change
+    const idiomaHeader = await $(byTextMatches('Idioma'));
+    await expect(idiomaHeader).toBeDisplayed();
+
+    await expect($(byResourceId('esRadioButton'))).toBeChecked();
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
@@ -55,8 +57,8 @@ describe('Settings - Language Settings Flow', () => {
     await idiomaOption.click();
     const englishElem = await $(byTextMatches('English'));
     await englishElem.click();
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await $(byResourceId('observationsEmptyView')).click();
+
+    const englishHeader = await $(byTextMatches('English'));
+    await expect(englishHeader).toBeDisplayed();
   });
 });

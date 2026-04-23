@@ -97,6 +97,9 @@ export const LanguageSettings: NativeNavigationComponent<
             onPress={() => {
               setLanguageTag(item.value);
             }}
+            testID={`${item.value ?? 'null'}RadioButton`}
+            accessibilityRole="radio"
+            accessibilityState={{checked: isSelected}}
             style={styles.languageContainer}>
             <MaterialIcon
               name={
@@ -106,7 +109,9 @@ export const LanguageSettings: NativeNavigationComponent<
               color={'rgba(0, 0, 0, 0.54)'}
             />
             <View>
-              <HeaderText variant="header6">{item.label}</HeaderText>
+              <HeaderText testID="" variant="header6">
+                {item.label}
+              </HeaderText>
               {'hint' in item && (
                 <BodyText variant="tinyMeta">{item.hint}</BodyText>
               )}

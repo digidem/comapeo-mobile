@@ -24,7 +24,8 @@ import {
 } from '../../screens/ProjectCreation/CreateOrNameSoloProject';
 import {ProjectCreated} from '../../screens/ProjectCreation/CreateOrNameSoloProject/ProjectCreated';
 import {YourTeam} from '../../screens/YourTeam';
-import {SelectDevice} from '../../sharedComponents/SelectDevice';
+import {SelectInviteDevice} from '../../screens/YourTeam/SelectInviteDevice';
+import {SelectMapShareDevice} from '../../screens/BackgroundMaps/SelectMapShareDevice';
 import {SelectInviteeRole} from '../../screens/YourTeam/SelectInviteeRole';
 import {ReviewInvitation} from '../../screens/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/YourTeam/InviteAccepted';
@@ -142,6 +143,11 @@ import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCus
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
 import {ConfirmDeleteObservationBottomSheet} from '../../screens/Observation/ConfirmDeleteObservationBottomSheet.tsx';
 import {ConfirmDeleteTrackBottomSheet} from '../../screens/Track/ConfirmDeleteTrackBottomSheet.tsx';
+import {SendingBackgroundMap} from '../../screens/BackgroundMaps/SendingBackgroundMap.tsx';
+import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
+import {ReplaceBackgroundMap} from '../../screens/BackgroundMaps/ReplaceBackgroundMap.tsx';
+import {ReceivingBackgroundMap} from '../../screens/BackgroundMaps/ReceivingBackgroundMap.tsx';
+import {MapShareCanceledBottomSheet} from '../../screens/BackgroundMaps/MapShareCanceledBottomSheet.tsx';
 import {RootStack} from './RootStack.ts';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -273,13 +279,13 @@ export const createAppScreens = ({
       />
       <RootStack.Screen
         name="SelectDevice"
-        component={SelectDevice}
-        options={{headerTitle: intl(SelectDevice.navTitle)}}
+        component={SelectInviteDevice}
+        options={{headerTitle: intl(SelectInviteDevice.navTitle)}}
       />
       <RootStack.Screen
         name="SelectMapShareDevice"
-        component={SelectDevice}
-        options={{headerTitle: intl(SelectDevice.navTitleMapShare)}}
+        component={SelectMapShareDevice}
+        options={{headerTitle: intl(SelectMapShareDevice.navTitle)}}
       />
       <RootStack.Screen
         name="SelectInviteeRole"
@@ -400,6 +406,30 @@ export const createAppScreens = ({
         name="BackgroundMaps"
         component={BackgroundMapsScreen}
         options={createBackgroundMapsNavigationOptions({intl})}
+      />
+      <RootStack.Screen
+        name="SendingBackgroundMap"
+        component={SendingBackgroundMap}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="ReplaceBackgroundMap"
+        component={ReplaceBackgroundMap}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="ReceivingBackgroundMap"
+        component={ReceivingBackgroundMap}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="MapShareCanceledBottomSheet"
+        component={MapShareCanceledBottomSheet}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+          animation: 'fade',
+        }}
       />
 
       {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
@@ -648,6 +678,10 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ConfirmDeleteTrackBottomSheet"
         component={ConfirmDeleteTrackBottomSheet}
+      />
+      <RootStack.Screen
+        name="MapReceivedBottomSheet"
+        component={MapReceivedBottomSheet}
       />
     </RootStack.Group>
   </>

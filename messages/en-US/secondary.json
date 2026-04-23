@@ -233,6 +233,18 @@
   "projectInfoCard.participant": {
     "message": "You are a participant on this project."
   },
+  "screen.BackgroundMaps.SelectDevice.notSeeingDevice": {
+    "message": "Not seeing a Device?"
+  },
+  "screen.BackgroundMaps.SelectDevice.sameVersion": {
+    "message": "Make sure both devices are on the same version of CoMapeo"
+  },
+  "screen.BackgroundMaps.SelectDevice.sameWifi": {
+    "message": "Make sure both devices are on the same wifi network"
+  },
+  "screen.BackgroundMaps.SelectDevice.titleMapShare": {
+    "message": "Select Device"
+  },
   "screen.EditProjectDetails.descriptionPlaceholder": {
     "message": "Short Description of the Project, less than 60 characters."
   },
@@ -1103,6 +1115,12 @@
   "screens.Settings.CreateOrJoinProject.requestInvites": {
     "message": "Request invites to join existing projects."
   },
+  "screens.Settings.MapManagement.BackgroundMapUpdated.done": {
+    "message": "Done"
+  },
+  "screens.Settings.MapManagement.BackgroundMapUpdated.mapUpdated": {
+    "message": "Background map updated."
+  },
   "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Accepted file types are .smp"
   },
@@ -1147,6 +1165,84 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Remove Map File"
+  },
+  "screens.Settings.MapManagement.MapReceived.accept": {
+    "message": "Accept"
+  },
+  "screens.Settings.MapManagement.MapReceived.decline": {
+    "message": "Decline"
+  },
+  "screens.Settings.MapManagement.MapReceived.kmAway": {
+    "message": "{distance} km away"
+  },
+  "screens.Settings.MapManagement.MapReceived.locationNotCovered": {
+    "message": "Current location not covered!"
+  },
+  "screens.Settings.MapManagement.MapReceived.mbNeeded": {
+    "message": "{size} MB needed"
+  },
+  "screens.Settings.MapManagement.MapReceived.megabytes": {
+    "message": "{size} MB"
+  },
+  "screens.Settings.MapManagement.MapReceived.notEnoughSpace": {
+    "message": "Not enough free space!"
+  },
+  "screens.Settings.MapManagement.MapReceived.sharingDevice": {
+    "message": "{deviceName} wants to share..."
+  },
+  "screens.Settings.MapManagement.MapShareCanceled.close": {
+    "message": "Close"
+  },
+  "screens.Settings.MapManagement.MapShareCanceled.message": {
+    "message": "Collaborator canceled sharing before completing."
+  },
+  "screens.Settings.MapManagement.MapShareCanceled.title": {
+    "message": "Sharing Canceled"
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.replaceMapDescription": {
+    "message": "This device has a background map that will be replaced if you continue."
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.replaceMapTitle": {
+    "message": "Replace current background map?"
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.yesReplace": {
+    "message": "Yes, Replace"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.close": {
+    "message": "Close"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.deviceNoSpace": {
+    "message": "Device does not have enough space."
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.done": {
+    "message": "Done"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.mapDeclined": {
+    "message": "Map declined."
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.mapSent": {
+    "message": "Map sent!"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.sending": {
+    "message": "Sending..."
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.timerMessage": {
+    "message": "Map sent {time}s ago"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.waitingMessage": {
+    "message": "Waiting for Device to Accept Map"
+  },
+  "screens.Settings.MapManagement.UpdatingBackgroundMap.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Settings.MapManagement.UpdatingBackgroundMap.updating": {
+    "message": "Updating..."
   },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invite devices to a new project with all your observations."

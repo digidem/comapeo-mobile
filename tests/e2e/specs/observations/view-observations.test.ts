@@ -50,9 +50,12 @@ describe('Observations - View Observations Flow', () => {
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
   });
 
-  it('should toggle camera tab and back to confirm correct place', async () => {
+  it('should toggle camera tab and back to confirm correct place and UI of camera screen', async () => {
     const cameraTab = await $('~Go to camera.');
     await cameraTab.click();
+
+    await expect($(byResourceId('MAIN.camera-scrn'))).toBeDisplayed();
+    await expect($(byResourceId('MAP.gps-pill'))).toBeDisplayed();
 
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();

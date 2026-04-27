@@ -33,7 +33,9 @@ describe('Settings - Language Settings Flow', () => {
     await expect(idiomaHeader).toBeDisplayed();
 
     await expect($(byResourceId('esRadioButton'))).toBeChecked();
-    await expect($(byResourceId('currentLanguageLabel'))).toHaveText('Español');
+    const languageHeader = $(byResourceId('currentLanguageLabel'));
+    await languageHeader.scrollIntoView({direction: 'up'});
+    await expect(languageHeader).toHaveText('Español');
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();

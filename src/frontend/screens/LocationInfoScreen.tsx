@@ -14,6 +14,7 @@ import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {DateDistance} from '../sharedComponents/DateDistance';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
 import {BodyText} from '../sharedComponents/Text/BodyText';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
 import {useUnitSystem} from '../contexts/UnitSystemStoreContext';
 import {useLocationState} from '../contexts/LocationContext';
@@ -72,7 +73,9 @@ const m = defineMessages({
 
 const InfoRow = ({label, value}: {label: string; value: string}) => (
   <View style={styles.row}>
-    <BodyText style={styles.rowLabel}>{label}</BodyText>
+    <HeaderText variant="header5" style={styles.rowLabel}>
+      {label}
+    </HeaderText>
     <BodyText style={styles.rowValue}>{value}</BodyText>
   </View>
 );
@@ -107,18 +110,18 @@ export const LocationInfoScreen = () => {
   return (
     <ScrollView style={styles.container} testID="MAIN.gps-details-scrn">
       <View style={styles.infoArea}>
-        <BodyText style={styles.sectionTitle}>
+        <HeaderText variant="header5" style={styles.sectionTitle}>
           <FormattedMessage {...m.lastUpdate} />
-        </BodyText>
+        </HeaderText>
         <DateDistance
           style={styles.rowValue}
           date={locationTimestamp ? new Date(locationTimestamp) : new Date()}
         />
         {location && (
           <>
-            <BodyText style={styles.sectionTitle}>
+            <HeaderText variant="header5" style={styles.sectionTitle}>
               <FormattedMessage {...m[coordinateFormat]} />
-            </BodyText>
+            </HeaderText>
             <BodyText style={styles.rowValue}>
               <FormattedCoords
                 lon={location.coords.longitude}
@@ -126,9 +129,9 @@ export const LocationInfoScreen = () => {
                 format={coordinateFormat}
               />
             </BodyText>
-            <BodyText style={styles.sectionTitle}>
+            <HeaderText variant="header5" style={styles.sectionTitle}>
               <FormattedMessage {...m.details} />
-            </BodyText>
+            </HeaderText>
             {Object.entries(location.coords).map(([key, value]) => (
               <InfoRow
                 key={key}
@@ -142,9 +145,9 @@ export const LocationInfoScreen = () => {
         )}
         {provider && (
           <>
-            <BodyText style={styles.sectionTitle}>
+            <HeaderText variant="header5" style={styles.sectionTitle}>
               <FormattedMessage {...m.locationSensors} />
-            </BodyText>
+            </HeaderText>
             {Object.entries(provider).map(([key, value]) => (
               <InfoRow key={key} label={key} value={t(value ? m.yes : m.no)} />
             ))}
@@ -182,19 +185,15 @@ const styles = StyleSheet.create({
   row: {flexDirection: 'row'},
   sectionTitle: {
     color: 'white',
-    fontWeight: '700',
     marginTop: 10,
     marginBottom: 5,
-    fontSize: 16,
   },
   rowLabel: {
     color: 'white',
-    fontWeight: '700',
     minWidth: '50%',
   },
   rowValue: {
     color: 'white',
-    fontWeight: '400',
   },
   infoArea: {
     paddingLeft: 15,

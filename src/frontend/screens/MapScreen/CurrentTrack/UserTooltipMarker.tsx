@@ -4,11 +4,18 @@ import {StyleSheet, Text, View} from 'react-native';
 import {useTrackState} from '../../../contexts/TrackStoreContext';
 import {useLocationState} from '../../../contexts/LocationContext';
 import {useTrackTimer} from '../../../hooks/useTrackTimer.ts';
+import {useUnitSystem} from '../../../contexts/UnitSystemStoreContext';
+import {kmOrConversion} from '../../../lib/unitConversion';
 
 export const UserTooltipMarker = () => {
   const timer = useTrackTimer();
   const location = useLocationState(store => store.location);
   const totalDistance = useTrackState(state => state.distance);
+  const unitSystem = useUnitSystem();
+  const {value: distanceValue, unit: distanceUnit} = kmOrConversion(
+    totalDistance,
+    unitSystem,
+  );
 
   return (
     // We dont want to put this check in the parent because it will cause the parent (the map) to render too often
@@ -20,7 +27,9 @@ export const UserTooltipMarker = () => {
         <View style={styles.container}>
           <View style={styles.wrapper}>
             <View>
-              <Text style={styles.text}>{totalDistance.toFixed(2)}km</Text>
+              <Text style={styles.text}>
+                {distanceValue} {distanceUnit}
+              </Text>
             </View>
             <View style={styles.separator} />
             <View>

@@ -1181,8 +1181,8 @@
   "screens.Settings.MapManagement.MapReceived.decline": {
     "message": "Decline"
   },
-  "screens.Settings.MapManagement.MapReceived.kmAway": {
-    "message": "{distance} km away"
+  "screens.Settings.MapManagement.MapReceived.distanceAway": {
+    "message": "{distance} away"
   },
   "screens.Settings.MapManagement.MapReceived.locationNotCovered": {
     "message": "Current location not covered!"

@@ -31,6 +31,8 @@ import {
   getErrorCode,
   MapShareErrorCode,
 } from '@comapeo/core-react';
+import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
+import {kmOrConversion} from '../../lib/unitConversion';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
 
@@ -51,9 +53,9 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.MapReceived.locationNotCovered',
     defaultMessage: 'Current location not covered!',
   },
-  kmAway: {
-    id: 'screens.Settings.MapManagement.MapReceived.kmAway',
-    defaultMessage: '{distance} km away',
+  distanceAway: {
+    id: 'screens.Settings.MapManagement.MapReceived.distanceAway',
+    defaultMessage: '{distance} away',
   },
   notEnoughSpace: {
     id: 'screens.Settings.MapManagement.MapReceived.notEnoughSpace',
@@ -74,6 +76,7 @@ export function MapReceivedBottomSheet({
   navigation,
 }: NativeRootNavigationProps<'MapReceivedBottomSheet'>) {
   const {formatMessage: t} = useIntl();
+  const unitSystem = useUnitSystem();
   const {shareId} = route.params;
   const mapShare = useSingleReceivedMapShare({shareId});
 
@@ -222,9 +225,15 @@ export function MapReceivedBottomSheet({
                   </BodyText>
                   <BodyText style={styles.warningSubtitle}>
                     {warningInfo.warning === 'location'
-                      ? t(m.kmAway, {
-                          distance: warningInfo.distanceKm?.toFixed(1),
-                        })
+                      ? (() => {
+                          const {value, unit} = kmOrConversion(
+                            warningInfo.distanceKm ?? 0,
+                            unitSystem,
+                          );
+                          return t(m.distanceAway, {
+                            distance: `${value} ${unit}`,
+                          });
+                        })()
                       : t(m.mbNeeded, {size: warningInfo.mbNeeded})}
                   </BodyText>
                 </View>

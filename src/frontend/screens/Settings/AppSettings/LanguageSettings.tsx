@@ -99,7 +99,7 @@ export const LanguageSettings: NativeNavigationComponent<
             }}
             testID={`${item.value ?? 'null'}RadioButton`}
             accessibilityRole="radio"
-            accessibilityState={{checked: isSelected}}
+            accessibilityState={{checked: isSelected, selected: isSelected}}
             style={styles.languageContainer}>
             <MaterialIcon
               name={

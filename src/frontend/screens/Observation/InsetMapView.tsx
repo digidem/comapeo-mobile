@@ -1,5 +1,10 @@
-import {MapView, Camera, MarkerView} from '@maplibre/maplibre-react-native';
-import React from 'react';
+import {
+  MapView,
+  Camera,
+  MarkerView,
+  type CameraRef,
+} from '@maplibre/maplibre-react-native';
+import React, {useRef, useCallback} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {WHITE} from '../../lib/styles';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
@@ -22,8 +27,20 @@ type MapProps = {
 export const InsetMapView = React.memo<MapProps>(
   ({lon, lat, observationId, accuracy}: MapProps) => {
     const coordinateFormat = useCoordinateFormat();
-    const styleUrlQuery = useMapStyleJsonUrl();
+    const {data: styleUrl} = useMapStyleJsonUrl();
     const {navigate} = useNavigationFromRoot();
+    const cameraRef = useRef<CameraRef>(null);
+
+    // Center the map imperatively only after the style has loaded.
+    // Passing centerCoordinate as a prop triggers setNativeProps before the
+    // style is ready, which causes a native crash on Android/iOS.
+    const handleStyleLoaded = useCallback(() => {
+      cameraRef.current?.setCamera({
+        centerCoordinate: [lon, lat],
+        zoomLevel: 12,
+        animationDuration: 0,
+      });
+    }, [lon, lat]);
 
     return (
       <MapView
@@ -34,12 +51,10 @@ export const InsetMapView = React.memo<MapProps>(
         pitchEnabled={false}
         rotateEnabled={false}
         compassEnabled={false}
-        mapStyle={styleUrlQuery.data}>
-        <Camera
-          centerCoordinate={[lon, lat]}
-          zoomLevel={12}
-          animationMode="moveTo"
-        />
+        surfaceView={false}
+        mapStyle={styleUrl}
+        onDidFinishLoadingStyle={handleStyleLoaded}>
+        <Camera ref={cameraRef} />
         <MarkerView
           id="locationIndicator"
           anchor={{x: 0.5, y: 0.8}}

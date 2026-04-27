@@ -5,6 +5,8 @@ import {FormattedMessage, defineMessages} from 'react-intl';
 import LocationIcon from '../images/Location.svg';
 import {FormattedCoords} from './FormattedData';
 import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
+import {useUnitSystem} from '../contexts/UnitSystemStoreContext';
+import {metersOrConversion} from '../lib/unitConversion';
 
 const m = defineMessages({
   searching: {
@@ -22,6 +24,8 @@ type LocationViewProps = {
 
 export const LocationView = ({lat, lon, accuracy}: LocationViewProps) => {
   const coordinateFormat = useCoordinateFormat();
+  const unitSystem = useUnitSystem();
+
   return (
     <View style={styles.locationContainer}>
       {lat === undefined || lon === undefined ? (
@@ -34,11 +38,14 @@ export const LocationView = ({lat, lon, accuracy}: LocationViewProps) => {
           <Text style={styles.locationText}>
             <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
           </Text>
-          {accuracy === undefined ? null : (
-            <Text style={styles.accuracy}>
-              {' ±' + accuracy.toFixed(2) + 'm'}
-            </Text>
-          )}
+          {accuracy === undefined
+            ? null
+            : (() => {
+                const {value, unit} = metersOrConversion(accuracy, unitSystem);
+                return (
+                  <Text style={styles.accuracy}>{` ±${value} ${unit}`}</Text>
+                );
+              })()}
         </React.Fragment>
       )}
     </View>

@@ -164,6 +164,9 @@
   "$1Screens.Settings.AppSettings.title": {
     "message": "CoMapeo Settings"
   },
+  "$1Screens.Settings.AppSettings.unitSystem": {
+    "message": "Unit System"
+  },
   "$1TrackBottomSheet.DidNotMove.delete": {
     "message": "Exit Tracks"
   },
@@ -887,6 +890,24 @@
   },
   "$1screens.TrackCategoryChooser.title": {
     "message": "Choose a category"
+  },
+  "$1screens.UnitSystemSettings.imperial": {
+    "description": "Label for imperial unit system option",
+    "message": "Imperial"
+  },
+  "$1screens.UnitSystemSettings.imperialSubtitle": {
+    "message": "Display Information (ft, mi)"
+  },
+  "$1screens.UnitSystemSettings.metric": {
+    "description": "Label for metric unit system option",
+    "message": "Metric"
+  },
+  "$1screens.UnitSystemSettings.metricSubtitle": {
+    "message": "Display Information (km, m)"
+  },
+  "$1screens.UnitSystemSettings.title": {
+    "description": "Title for unit system settings screen",
+    "message": "Unit System"
   },
   "$1screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
     "message": "Remove & Notify"

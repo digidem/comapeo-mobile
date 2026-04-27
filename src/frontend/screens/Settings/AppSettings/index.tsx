@@ -5,6 +5,7 @@ import {useAuthContext} from '../../../contexts/AuthContext';
 import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
 import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
 import BlackShieldIcon from '../../../images/BlackShield.svg';
+import AngleRulerIcon from '../../../images/AngleRuler.svg';
 import {useEarlyAccessState} from '../../../contexts/EarlyAccessContext';
 
 const m = defineMessages({
@@ -27,6 +28,10 @@ const m = defineMessages({
   coordinateSystemDesc: {
     id: '$1Screens.Settings.AppSettings.coordinateSystemDesc',
     defaultMessage: 'UTM,Lat/Lon,DMS',
+  },
+  unitSystem: {
+    id: '$1Screens.Settings.AppSettings.unitSystem',
+    defaultMessage: 'Unit System',
   },
   security: {
     id: '$1Screens.Settings.AppSettings.Drawer.security',
@@ -90,6 +95,15 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
       secondaryText: formatMessage(m.coordinateSystemDesc),
       materialIconName: 'explore',
     },
+    {
+      onPress: () => {
+        navigation.navigate('UnitSystemSettings');
+      },
+      testID: 'unitSystemButton',
+      primaryText: formatMessage(m.unitSystem),
+      icon: <AngleRulerIcon width={24} height={24} />,
+    },
+
     {
       onPress: () => {
         navigation.navigate('DataAndPrivacy');

@@ -19,6 +19,7 @@ import {createDraftObservationStore} from './contexts/PersistedStores/DraftObser
 import {createTrackStore} from './contexts/TrackStoreContext';
 import {createSecurityStore} from './contexts/SecurityStoreContext';
 import {createCoordinateFormatStore} from './contexts/CoordinateFormatStoreContext';
+import {createUnitSystemStore} from './contexts/UnitSystemStoreContext';
 import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatStoreContext';
 import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
@@ -150,6 +151,7 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 const savedLocationStore = createSavedLocationStore({persist: true});
 const lowStorageBannerStore = createLowStorageBannerStore();
 const earlyAccessStore = createEarlyAccessStore({persist: true});
+const persistedUnitSystemStore = createUnitSystemStore({persist: true});
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
@@ -235,7 +237,8 @@ const App = () => {
                   metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
                   appUsageStatsStore={appUsagePromptStore}
                   lowStorageBannerStore={lowStorageBannerStore}
-                  earlyAccessStore={earlyAccessStore}>
+                  earlyAccessStore={earlyAccessStore}
+                  unitSystemStore={persistedUnitSystemStore}>
                   <AppNavigator
                     permissionAsked={permissionsAsked}
                     navigationIntegration={navigationIntegration}

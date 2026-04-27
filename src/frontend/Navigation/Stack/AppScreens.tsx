@@ -55,6 +55,7 @@ import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
+import {UnitSystemSettings} from '../../screens/Settings/AppSettings/UnitSystemSettings';
 import {
   ObservationCreate,
   createNavigationOptions as createObservationCreateNavigationOptions,
@@ -354,6 +355,11 @@ export const createAppScreens = ({
         name="LanguageSettings"
         component={LanguageSettings}
         options={{headerTitle: intl(LanguageSettings.navTitle)}}
+      />
+      <RootStack.Screen
+        name="UnitSystemSettings"
+        component={UnitSystemSettings}
+        options={{headerTitle: intl(UnitSystemSettings.navTitle)}}
       />
       <RootStack.Screen
         name="Track"

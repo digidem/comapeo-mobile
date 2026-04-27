@@ -4,6 +4,7 @@ import {SelectOne} from './SelectOne';
 import {SelectMultiple} from './SelectMultiple';
 import {TextArea} from './TextArea';
 import {Number} from './Number';
+import {DatePicker} from './Date';
 import {Field} from '@comapeo/schema';
 import {
   SelectMultipleField,
@@ -15,17 +16,18 @@ export type QuestionProps = {
 };
 
 export const Question = ({field}: QuestionProps) => {
-  if (field.type === 'selectOne' && Array.isArray(field.options)) {
-    return <SelectOne field={field as SelectOneField} />;
-  }
+  return <DatePicker />;
+  // if (field.type === 'selectOne' && Array.isArray(field.options)) {
+  //   return <SelectOne field={field as SelectOneField} />;
+  // }
 
-  if (field.type === 'selectMultiple' && Array.isArray(field.options)) {
-    return <SelectMultiple field={field as SelectMultipleField} />;
-  }
+  // if (field.type === 'selectMultiple' && Array.isArray(field.options)) {
+  //   return <SelectMultiple field={field as SelectMultipleField} />;
+  // }
 
-  if (field.type === 'number') {
-    return <Number field={field} />;
-  }
+  // if (field.type === 'number') {
+  //   return <Number field={field} />;
+  // }
 
-  return <TextArea field={field} />;
+  // return <TextArea field={field} />;
 };

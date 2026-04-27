@@ -28,6 +28,18 @@ describe('metersOrConversion', () => {
       unit: 'ft',
     });
   });
+
+  it('respects the decimals parameter', () => {
+    expect(metersOrConversion(10.75, 'metric', 2)).toEqual({
+      value: '10.75',
+      unit: 'm',
+    });
+    // 1m * 3.28084 = 3.28084 → '3.28'
+    expect(metersOrConversion(1, 'imperial', 2)).toEqual({
+      value: '3.28',
+      unit: 'ft',
+    });
+  });
 });
 
 describe('kmOrConversion', () => {

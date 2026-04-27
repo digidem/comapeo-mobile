@@ -8,11 +8,12 @@ const MS_TO_MPH = 2.23694;
 export function metersOrConversion(
   meters: number,
   unitSystem: UnitSystem,
+  decimals = 0,
 ): {value: string; unit: string} {
   if (unitSystem === 'imperial') {
-    return {value: (meters * M_TO_FT).toFixed(0), unit: 'ft'};
+    return {value: (meters * M_TO_FT).toFixed(decimals), unit: 'ft'};
   }
-  return {value: meters.toFixed(0), unit: 'm'};
+  return {value: meters.toFixed(decimals), unit: 'm'};
 }
 
 export function kmOrConversion(

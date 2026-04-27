@@ -17,6 +17,8 @@ import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {useOpenShareDialog} from '../../hooks/share.ts';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.ts';
+import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
+import {metersOrConversion} from '../../lib/unitConversion';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 const m = defineMessages({
   delete: {
@@ -111,6 +113,7 @@ export const ButtonFields = ({
   const navigation = useNavigationFromRoot();
   const {observation, preset} = useObservationWithPreset(observationId);
   const coordinateFormat = useCoordinateFormat();
+  const unitSystem = useUnitSystem();
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
   const {projectApi, projectId} = useActiveProject();
   const {
@@ -214,7 +217,13 @@ export const ButtonFields = ({
           : '';
 
       const precision = observation.metadata?.position?.coords?.accuracy
-        ? `${t(m.precision)} ${observation.metadata.position.coords.accuracy}m`
+        ? (() => {
+            const {value, unit} = metersOrConversion(
+              observation.metadata.position.coords.accuracy,
+              unitSystem,
+            );
+            return `${t(m.precision)} ${value} ${unit}`;
+          })()
         : '';
 
       const displayedFields = completedFields

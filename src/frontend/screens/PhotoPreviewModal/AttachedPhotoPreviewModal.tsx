@@ -24,6 +24,8 @@ import {
 import {CoreBlobImage} from '../../sharedComponents/Images/CoreBlobImage.tsx';
 import {ImageErrorPlaceholder} from '../../sharedComponents/Images/ImageErrorPlaceholder.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
+import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
+import {kmOrConversion} from '../../lib/unitConversion';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {sharedStyles} from './sharedStyles.ts';
@@ -94,6 +96,7 @@ export function AttachedPhotoPreviewModal({
   const {data: memberInfo} = useGetCreatedBy(observationOriginalVersionId);
 
   const {formatMessage, formatNumber} = useIntl();
+  const unitSystem = useUnitSystem();
 
   const photoTimeRelativeToObs = photoCreatedAt
     ? calcPhotoTimeRelativeToObs({
@@ -225,24 +228,28 @@ export function AttachedPhotoPreviewModal({
                         />
                       }>
                       <BodyText selectable style={sharedStyles.primaryInfoText}>
-                        {metersFromObservation < 1000
-                          ? formatMessage(m.distanceFromObs, {
-                              distance: formatNumber(metersFromObservation, {
-                                style: 'unit',
-                                unit: 'meter',
-                                maximumFractionDigits: 2,
-                              }),
-                            })
-                          : formatMessage(m.distanceFromObs, {
-                              distance: formatNumber(
+                        {formatMessage(m.distanceFromObs, {
+                          distance: (() => {
+                            if (unitSystem === 'imperial') {
+                              const {value, unit} = kmOrConversion(
                                 metersFromObservation / 1000,
-                                {
+                                unitSystem,
+                              );
+                              return `${value} ${unit}`;
+                            }
+                            return metersFromObservation < 1000
+                              ? formatNumber(metersFromObservation, {
+                                  style: 'unit',
+                                  unit: 'meter',
+                                  maximumFractionDigits: 2,
+                                })
+                              : formatNumber(metersFromObservation / 1000, {
                                   style: 'unit',
                                   unit: 'kilometer',
                                   maximumFractionDigits: 2,
-                                },
-                              ),
-                            })}
+                                });
+                          })(),
+                        })}
                       </BodyText>
                     </InfoItem>
                   )}

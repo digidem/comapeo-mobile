@@ -10,6 +10,8 @@ import OrangeDot from '../../images/OrangeDot.svg';
 import {MarkerView} from '@rnmapbox/maps';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext';
+import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
+import {metersOrConversion} from '../../lib/unitConversion';
 
 const MAP_HEIGHT = 175;
 
@@ -23,6 +25,7 @@ type MapProps = {
 export const InsetMapView = React.memo<MapProps>(
   ({lon, lat, observationId, accuracy}: MapProps) => {
     const coordinateFormat = useCoordinateFormat();
+    const unitSystem = useUnitSystem();
     const styleUrlQuery = useMapStyleJsonUrl();
     const {navigate} = useNavigationFromRoot();
 
@@ -57,7 +60,15 @@ export const InsetMapView = React.memo<MapProps>(
                   lat={lat}
                   lon={lon}
                 />
-                {accuracy && ` ± ${accuracy.toFixed(2)} m`}
+                {accuracy &&
+                  (() => {
+                    const {value, unit} = metersOrConversion(
+                      accuracy,
+                      unitSystem,
+                      2,
+                    );
+                    return ` ± ${value} ${unit}`;
+                  })()}
               </BodyText>
             </View>
             <View style={styles.arrow} />

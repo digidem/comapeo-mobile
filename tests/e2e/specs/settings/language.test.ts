@@ -21,7 +21,7 @@ describe('Settings - Language Settings Flow', () => {
     await expect(followSystemPreferences).toBeDisplayed();
     await expect($(byResourceId('nullRadioButton'))).toBeChecked();
     // Assumes browserstack uses english as system pref
-    await expect($(byText('English'))).toBeDisplayed();
+    await expect($(byResourceId('currentLanguageLabel'))).toHaveText('English');
   });
 
   it('should scroll to Spanish, select it, and confirm language change', async () => {
@@ -33,6 +33,7 @@ describe('Settings - Language Settings Flow', () => {
     await expect(idiomaHeader).toBeDisplayed();
 
     await expect($(byResourceId('esRadioButton'))).toBeChecked();
+    await expect($(byResourceId('currentLanguageLabel'))).toHaveText('Español');
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
@@ -58,7 +59,6 @@ describe('Settings - Language Settings Flow', () => {
     const englishElem = await $(byTextMatches('English'));
     await englishElem.click();
 
-    const englishHeader = await $(byTextMatches('English'));
-    await expect(englishHeader).toBeDisplayed();
+    await expect($(byResourceId('currentLanguageLabel'))).toHaveText('English');
   });
 });

@@ -77,7 +77,7 @@ export const LanguageSettings: NativeNavigationComponent<
               size={24}
               color={'rgba(0, 0, 0, 0.54)'}
             />
-            <HeaderText variant="header6">
+            <HeaderText testID="currentLanguageLabel" variant="header6">
               {LANGUAGE_OPTIONS.find(o => o.value === appLocale)?.label ??
                 appLocale}
             </HeaderText>
@@ -109,9 +109,7 @@ export const LanguageSettings: NativeNavigationComponent<
               color={'rgba(0, 0, 0, 0.54)'}
             />
             <View>
-              <HeaderText testID="" variant="header6">
-                {item.label}
-              </HeaderText>
+              <HeaderText variant="header6">{item.label}</HeaderText>
               {'hint' in item && (
                 <BodyText variant="tinyMeta">{item.hint}</BodyText>
               )}

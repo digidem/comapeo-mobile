@@ -22,8 +22,12 @@ type MapProps = {
 export const InsetMapView = React.memo<MapProps>(
   ({lon, lat, observationId, accuracy}: MapProps) => {
     const coordinateFormat = useCoordinateFormat();
-    const styleUrlQuery = useMapStyleJsonUrl();
+    const {data: styleUrl} = useMapStyleJsonUrl();
     const {navigate} = useNavigationFromRoot();
+
+    if (!styleUrl) {
+      return <View style={styles.map} />;
+    }
 
     return (
       <MapView
@@ -34,7 +38,7 @@ export const InsetMapView = React.memo<MapProps>(
         pitchEnabled={false}
         rotateEnabled={false}
         compassEnabled={false}
-        mapStyle={styleUrlQuery.data}>
+        mapStyle={styleUrl}>
         <Camera
           centerCoordinate={[lon, lat]}
           zoomLevel={12}

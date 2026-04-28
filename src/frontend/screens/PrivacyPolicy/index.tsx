@@ -1,5 +1,7 @@
 import * as React from 'react';
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {View, ScrollView, TouchableOpacity} from 'react-native';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useIntl} from 'react-intl';
 import {m} from './privacyPolicyMessages';
 import {PointContainer} from './PointContainer';
@@ -29,13 +31,15 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {
   return (
     <ScrollView>
       <View style={styles.overviewBox}>
-        <Text style={styles.overviewText}>{formatMessage(m.overview)}</Text>
+        <BodyText variant="smallMeta">{formatMessage(m.overview)}</BodyText>
       </View>
       <View style={[styles.toggleContainer, styles.topToggleContainer]}>
         <TouchableOpacity
           onPress={() => setAwanaExpanded(prev => !prev)}
           style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>{formatMessage(m.aboutAwana)}</Text>
+          <HeaderText variant="header5" style={styles.sectionTitle}>
+            {formatMessage(m.aboutAwana)}
+          </HeaderText>
           {awanaExpanded ? (
             <ChevronUp width={20} height={20} />
           ) : (
@@ -44,9 +48,9 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {
         </TouchableOpacity>
         {awanaExpanded && (
           <View style={styles.sectionContent}>
-            <Text style={styles.sectionText}>
+            <BodyText variant="smallMeta" style={styles.newDarkGrey}>
               {formatMessage(m.aboutAwanaContent)}
-            </Text>
+            </BodyText>
           </View>
         )}
       </View>
@@ -54,7 +58,9 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {
         <TouchableOpacity
           onPress={() => setOpenSourceExpanded(prev => !prev)}
           style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>{formatMessage(m.openSource)}</Text>
+          <HeaderText variant="header5" style={styles.sectionTitle}>
+            {formatMessage(m.openSource)}
+          </HeaderText>
           {openSourceExpanded ? (
             <ChevronUp width={20} height={20} />
           ) : (
@@ -63,13 +69,15 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {
         </TouchableOpacity>
         {openSourceExpanded && (
           <View style={styles.sectionContent}>
-            <Text style={styles.sectionText}>
+            <BodyText variant="smallMeta" style={styles.newDarkGrey}>
               {formatMessage(m.openSourceContent)}
-            </Text>
+            </BodyText>
           </View>
         )}
       </View>
-      <Text style={styles.header}>{formatMessage(m.privacyPolicyTitle)}</Text>
+      <HeaderText variant="header2" style={styles.header}>
+        {formatMessage(m.privacyPolicyTitle)}
+      </HeaderText>
       <PointContainer
         icon={RedDot}
         title={formatMessage(m.privateByDefault)}
@@ -86,16 +94,18 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {
         description={formatMessage(m.controlDescription)}
       />
       <View style={styles.horizontalLine} />
-      <Text style={styles.header}>{formatMessage(m.dataCollection)}</Text>
+      <HeaderText variant="header2" style={styles.header}>
+        {formatMessage(m.dataCollection)}
+      </HeaderText>
       <PointContainer
         icon={BarChart}
         title={formatMessage(m.whatIsCollected)}
         description={formatMessage(m.whatIsCollectedDescription)}
       />
       <View style={styles.diagnosticsContainer}>
-        <Text style={[styles.pointTitle, {marginTop: 20}]}>
+        <HeaderText variant="header5" style={styles.diagnosticsTitle}>
           {formatMessage(m.diagnosticsTitle)}
-        </Text>
+        </HeaderText>
         <View style={styles.diagnosticsContent}>
           <DiagnosticItem
             title={formatMessage(m.crashData)}
@@ -118,9 +128,9 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {
             description={formatMessage(m.appInfoDescription)}
           />
           <View style={styles.horizontalLineSmall} />
-          <Text style={[styles.pointTitle, {marginBottom: 20}]}>
+          <HeaderText variant="header5" style={styles.appUsageTitle}>
             {formatMessage(m.appUsageTitle)}
-          </Text>
+          </HeaderText>
           <DiagnosticItem
             title={formatMessage(m.userCount)}
             description={formatMessage(m.userCountDescription)}

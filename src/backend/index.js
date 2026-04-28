@@ -14,15 +14,22 @@ const DEFAULT_CONFIG_PATH = new URL(
   import.meta.url,
 ).pathname
 
+const OLD_MIGRATIONS_FOLDER_PATH = new URL(
+  './node_modules/comapeo-core-old/drizzle',
+  import.meta.url,
+).pathname
+
 try {
-  const { version, rootKey } = parseArgs()
+  const { version, rootKey, availableDiskSpace } = parseArgs()
 
   // Do not await this as we want this to run indefinitely
   init({
     version,
     rootKey: Buffer.from(rootKey, 'hex'),
     migrationsFolderPath: MIGRATIONS_FOLDER_PATH,
+    oldMigrationsFolderPath: OLD_MIGRATIONS_FOLDER_PATH,
     defaultConfigPath: DEFAULT_CONFIG_PATH,
+    availableDiskSpace,
   }).catch((err) => {
     console.error('Server startup error:', err)
   })

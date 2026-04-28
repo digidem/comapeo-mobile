@@ -3,6 +3,8 @@ import { join } from 'path'
 import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
 import { MapeoManager } from '@comapeo/core'
+import { MapeoManager as FallbackMapeoManager } from 'comapeo-core-old'
+import { checkShouldMigrate, migrateStorage } from '@comapeo/core/migration.js'
 import { createMapeoServer, createAppRpcServer } from '@comapeo/ipc/server.js'
 import { createServer as createMapServer } from '@comapeo/map-server'
 import { KeyManager } from '@mapeo/crypto'
@@ -59,6 +61,8 @@ process.on('exit', (code) => {
  * @param {string} [options.version] Device Version
  * @param {Buffer} options.rootKey
  * @param {string} options.migrationsFolderPath
+ * @param {string} options.oldMigrationsFolderPath Used as a fallback
+ * @param {number} options.availableDiskSpace How much space is left on the phone in case we want to migrate to new hypercore version
  * @param {string} options.defaultConfigPath
  */
 export async function init({
@@ -66,6 +70,8 @@ export async function init({
   rootKey,
   migrationsFolderPath,
   defaultConfigPath,
+  oldMigrationsFolderPath,
+  availableDiskSpace,
 }) {
   log('Starting app...')
   log(`Device version is ${version}`)
@@ -79,20 +85,36 @@ export async function init({
   mkdirSync(indexDir, { recursive: true })
   mkdirSync(customMapsDir, { recursive: true })
 
+  const { shouldUpgrade, useFallback } = await checkShouldMigrate(
+    indexDir,
+    availableDiskSpace,
+  )
+
+  if (shouldUpgrade) {
+    serverStatus.setState('MIGRATING')
+    await migrateStorage(indexDir)
+  }
+
   const fastify = Fastify()
 
-  const manager = new MapeoManager({
+  const ManagerClass = useFallback ? FallbackMapeoManager : MapeoManager
+  const migrationPath = useFallback
+    ? oldMigrationsFolderPath
+    : migrationsFolderPath
+
+  const manager = new ManagerClass({
     rootKey,
     dbFolder: dbDir,
     coreStorage: indexDir,
-    clientMigrationsFolder: join(migrationsFolderPath, 'client'),
-    projectMigrationsFolder: join(migrationsFolderPath, 'project'),
+    clientMigrationsFolder: join(migrationPath, 'client'),
+    projectMigrationsFolder: join(migrationPath, 'project'),
     fastify,
     defaultConfigPath,
     defaultIsArchiveDevice: true,
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
     customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
   })
+
   const { publicKey, secretKey } = new KeyManager(rootKey).getIdentityKeypair()
   const mapServer = createMapServer({
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,

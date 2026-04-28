@@ -2,6 +2,7 @@ import {getRandomBytes} from 'expo-crypto';
 import {getItemAsync, setItemAsync} from 'expo-secure-store';
 import nodejs from '@comapeo/nodejs-mobile-react-native';
 import {uint8ArrayToHex} from 'uint8array-extras';
+import {Paths} from 'expo-file-system';
 
 const ROOT_KEY = '__RootKey';
 
@@ -33,6 +34,7 @@ export async function initializeNodejs({
     `--rootKey=${rootKey}`,
     `--sentryEnvironment=${sentryEnvironment}`,
     `--sentryUserId=${sentryUserId}`,
+    `--availableDiskSpace=${Paths.availableDiskSpace}`,
   ];
 
   if (metricsIsEnabled) {

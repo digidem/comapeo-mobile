@@ -7,7 +7,7 @@ const rnBridge = require('rn-bridge')
 const log = debug('mapeo:status')
 
 /**
- * @typedef {'STARTING' | 'STARTED' | 'ERROR'} Status
+ * @typedef {'STARTING' | 'STARTED' | 'ERROR' | 'MIGRATING'} Status
  */
 /**
  * @typedef {{ value: Status, error?: string, context?: string }} StatusMessage

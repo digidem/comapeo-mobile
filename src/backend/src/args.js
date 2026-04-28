@@ -8,6 +8,7 @@ export default function args() {
       metricsIsEnabled: { type: 'boolean', default: false },
       version: { type: 'string' },
       rootKey: { type: 'string' },
+      availableDiskSpace: { type: 'string' },
     },
     strict: true,
   })
@@ -18,6 +19,7 @@ export default function args() {
     metricsIsEnabled,
     version,
     rootKey,
+    availableDiskSpace: availableDiskSpaceRaw,
   } = values
 
   if (typeof metricsIsEnabled !== 'boolean')
@@ -28,6 +30,20 @@ export default function args() {
     throw new Error('backend did not receive sentryEnvironment')
   if (typeof rootKey !== 'string')
     throw new Error('backend did not receive root key from front end')
+  if (typeof availableDiskSpaceRaw !== 'string')
+    throw new Error('backend did not receive availableDiskSpace')
+  const availableDiskSpace = parseInt(availableDiskSpaceRaw, 10)
+  if (isNaN(availableDiskSpace) || availableDiskSpace <= 0)
+    throw new Error(
+      'backend got invalid availableDiskSpace. Must be a positive base 10 number',
+    )
 
-  return { sentryEnvironment, sentryUserId, metricsIsEnabled, version, rootKey }
+  return {
+    sentryEnvironment,
+    sentryUserId,
+    metricsIsEnabled,
+    version,
+    rootKey,
+    availableDiskSpace,
+  }
 }

@@ -6,12 +6,19 @@ export const DatePicker = () => {
   const [selectedDate, setSelectedDate] = useState<
     DateData['dateString'] | null
   >(null);
+
+  function handleDayPress(date: DateData) {
+    if (selectedDate === date.dateString) {
+      setSelectedDate(null);
+      return;
+    }
+    setSelectedDate(date.dateString);
+  }
+
   return (
     <Calendar
       enableSwipeMonths
-      onDayPress={date => {
-        setSelectedDate(date.dateString);
-      }}
+      onDayPress={handleDayPress}
       markedDates={
         selectedDate
           ? {

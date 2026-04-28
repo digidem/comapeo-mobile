@@ -47,7 +47,9 @@ export const LanguageSettings: NativeNavigationComponent<
   'LanguageSettings'
 > = () => {
   const {formatMessage} = useIntl();
+  // locale can be null, indicating to follow system preference
   const locale = useLocaleState();
+  // app locale will return the language being used (eg if they are using system preference, returns what language that preference is)
   const appLocale = useAppLanguageTag();
   const {setLanguageTag} = useLocaleActions();
 
@@ -65,6 +67,7 @@ export const LanguageSettings: NativeNavigationComponent<
     <FlatList
       testID="languageScrollView"
       style={styles.container}
+      contentContainerStyle={{paddingBottom: 40}}
       data={options}
       ListHeaderComponent={
         <>

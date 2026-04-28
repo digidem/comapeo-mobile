@@ -33,18 +33,19 @@ describe('Settings - Language Settings Flow', () => {
     await expect(idiomaHeader).toBeDisplayed();
 
     await expect($(byResourceId('esRadioButton'))).toBeChecked();
-    const languageHeader = $(byResourceId('currentLanguageLabel'));
-    await languageHeader.scrollIntoView({direction: 'down'});
+    const languageHeader = $(
+      'android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().resourceId("currentLanguageLabel"))',
+    );
     await expect(languageHeader).toHaveText('Español');
 
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await backBtn.click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
     await $(byResourceId('MAIN.map-screen')).click();
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
     await expect($(byText('Añadir observaciones'))).toBeDisplayed();
+    await $('~Go to map.').click();
   });
 
   it('should switch back to English and confirm language revert', async () => {
@@ -62,5 +63,8 @@ describe('Settings - Language Settings Flow', () => {
     await englishElem.click();
 
     await expect($(byResourceId('currentLanguageLabel'))).toHaveText('English');
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await $(byResourceId('MAIN.map-screen')).click();
   });
 });

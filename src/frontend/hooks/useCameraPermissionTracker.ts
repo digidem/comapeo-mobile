@@ -26,4 +26,6 @@ export function useRequestCameraPermissionOnMount() {
       mutateAsync();
     }
   }, [hasPermission, mutateAsync]);
+
+  return {hasPermission};
 }

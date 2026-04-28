@@ -1,18 +1,17 @@
 import React, {useRef} from 'react';
-import {Linking, StyleSheet, View, StatusBar} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, StatusBar} from 'react-native';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 import {
   Camera,
   useCameraDevice,
-  useCameraPermission,
   type PhotoFile,
 } from 'react-native-vision-camera';
 import {
   useCameraPermissionMutation,
   useRequestCameraPermissionOnMount,
 } from '../hooks/useCameraPermissionTracker';
+import {openSettingsAndWait} from '../utils/linking';
 
-import {AddButton} from './AddButton';
 import {GPSPill} from './GPSPill';
 import {PrimaryButton} from './Buttons';
 import {BodyText} from './Text/BodyText';
@@ -23,6 +22,7 @@ import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import * as Sentry from '@sentry/react-native';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {toError} from '../utils/errors';
+import AddButtonSVG from '../images/AddButton.svg';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -45,16 +45,13 @@ export const CameraView = ({onAddPress}: Props) => {
   const [cameraReady, setCameraReady] = React.useState(false);
   const accelerometerMeasurement =
     React.useRef<AccelerometerMeasurement | null>(null);
-  const {hasPermission} = useCameraPermission();
-  useRequestCameraPermissionOnMount();
+  const {hasPermission} = useRequestCameraPermissionOnMount();
   const {formatMessage} = useIntl();
   const camera = useRef<Camera>(null);
   const location = useLocationState(store => store.location);
   const navigation = useNavigationFromRoot();
   const device = useCameraDevice('back');
-  const openSettingsMutation = useCameraPermissionMutation(() =>
-    Linking.openSettings(),
-  );
+  const openSettingsMutation = useCameraPermissionMutation(openSettingsAndWait);
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -113,7 +110,7 @@ export const CameraView = ({onAddPress}: Props) => {
       });
   }
 
-  const disableButton = capturing || !cameraReady;
+  const disableButton = capturing || !cameraReady || !hasPermission;
 
   return (
     <View style={styles.container} testID="MAIN.camera-scrn">
@@ -145,12 +142,14 @@ export const CameraView = ({onAddPress}: Props) => {
         <View style={styles.gpsPillContainer}>
           <GPSPill onPress={() => navigation.navigate('GpsModal')} />
         </View>
-        <AddButton
-          onPress={handleAddPress}
-          disabled={disableButton}
-          style={{opacity: disableButton ? 0.5 : 1}}
+        <View
           testID="addButtonCamera"
-        />
+          accessibilityLabel="Add Observation"
+          style={{opacity: disableButton ? 0.5 : 1}}>
+          <TouchableOpacity disabled={disableButton} onPress={handleAddPress}>
+            <AddButtonSVG />
+          </TouchableOpacity>
+        </View>
         <View style={{flex: 1}} />
       </View>
     </View>

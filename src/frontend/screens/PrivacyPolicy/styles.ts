@@ -29,6 +29,10 @@ export const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 30,
   },
+  collectionHeader: {
+    marginTop: 10,
+    marginBottom: 30,
+  },
   sectionHeader: {
     paddingHorizontal: 20,
     flexDirection: 'row',
@@ -59,9 +63,6 @@ export const styles = StyleSheet.create({
   },
   diagnosticsTitle: {
     marginTop: 20,
-  },
-  appUsageTitle: {
-    marginBottom: 20,
   },
   horizontalLine: {
     borderBottomColor: BLUE_GREY,

@@ -94,7 +94,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {
         description={formatMessage(m.controlDescription)}
       />
       <View style={styles.horizontalLine} />
-      <HeaderText variant="header2" style={styles.header}>
+      <HeaderText variant="header2" style={styles.collectionHeader}>
         {formatMessage(m.dataCollection)}
       </HeaderText>
       <PointContainer
@@ -128,7 +128,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {
             description={formatMessage(m.appInfoDescription)}
           />
           <View style={styles.horizontalLineSmall} />
-          <HeaderText variant="header5" style={styles.appUsageTitle}>
+          <HeaderText variant="header5">
             {formatMessage(m.appUsageTitle)}
           </HeaderText>
           <DiagnosticItem

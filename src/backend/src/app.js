@@ -93,6 +93,7 @@ export async function init({
   if (shouldUpgrade) {
     serverStatus.setState('MIGRATING')
     await migrateStorage(indexDir)
+    serverStatus.setState('STARTING')
   }
 
   const fastify = Fastify()

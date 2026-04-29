@@ -1378,6 +1378,9 @@
   "screens.YourTeam.TeamMemberCard.thisDevice": {
     "message": "This device"
   },
+  "screens.obsDetail.date": {
+    "message": "Date"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"

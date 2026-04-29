@@ -26,11 +26,11 @@ import AddButtonSVG from '../images/AddButton.svg';
 
 const m = defineMessages({
   noCameraAccess: {
-    id: 'screens.CameraScreen.noCameraAccess',
+    id: '$1screens.CameraScreen.noCameraAccess',
     defaultMessage: 'No access to camera. Please allow access in settings.',
   },
   openSettings: {
-    id: 'screens.CameraScreen.openSettings',
+    id: '$1screens.CameraScreen.openSettings',
     defaultMessage: 'Open Settings',
   },
 });

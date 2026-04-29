@@ -2,7 +2,9 @@ import {useState} from 'react';
 import {Calendar, type DateData} from 'react-native-calendars';
 import {TouchableOpacity, StyleSheet, View, Text} from 'react-native';
 import {BLACK, BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
+import IonIcon from '@react-native-vector-icons/ionicons';
 import {defineMessages, useIntl} from 'react-intl';
+import {Observation} from '@comapeo/schema';
 
 const m = defineMessages({
   date: {
@@ -11,26 +13,37 @@ const m = defineMessages({
   },
 });
 
-export const DatePicker = () => {
-  const [selectedDate, setSelectedDate] = useState<
-    DateData['dateString'] | null
-  >(null);
+type DatePickerProps = {
+  tagValue: Observation['tags'][number] | undefined;
+  updateTag: (newDate: string) => void;
+};
 
+/**
+ *
+ * @description the `tagValue`can be any type (not a date), but this component will only update it to date
+ *
+ */
+export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
   const [calendarVisible, setCalendarVisible] = useState(false);
   const {formatMessage, formatDate} = useIntl();
+  const valueAsDate = isISODateString(tagValue) ? tagValue : null;
 
   function handleDayPress(date: DateData) {
-    if (selectedDate === date.dateString) {
-      setSelectedDate(null);
+    // Appending T00:00:00 forces local midnight parsing; without it, date-only
+    // strings are parsed as UTC midnight and display as the previous day in
+    // timezones behind UTC.
+    const dateAsIso = new Date(date.dateString + 'T00:00:00').toISOString();
+    if (valueAsDate === dateAsIso) {
+      updateTag(dateAsIso);
       return;
     }
-    setSelectedDate(date.dateString);
+    updateTag(dateAsIso);
   }
 
   return (
     <>
       <View style={styles.container}>
-        {selectedDate && (
+        {valueAsDate && (
           <View style={styles.labelContainer}>
             <Text style={styles.labelText}>{formatMessage(m.date)}</Text>
           </View>
@@ -39,12 +52,12 @@ export const DatePicker = () => {
           style={styles.textInput}
           testID="OBS.DateInput"
           onPress={() => setCalendarVisible(val => !val)}>
-          <Text
-            style={selectedDate ? styles.valueText : styles.placeholderText}>
-            {selectedDate
-              ? //formatDate(selectedDate, {dateStyle: 'medium'})
-                selectedDate
-              : ''}
+          <Text style={valueAsDate ? styles.valueText : styles.placeholderText}>
+            {valueAsDate
+              ? formatDate(valueAsDate, {
+                  dateStyle: 'medium',
+                })
+              : formatMessage(m.date)}
           </Text>
         </TouchableOpacity>
       </View>
@@ -52,11 +65,21 @@ export const DatePicker = () => {
         <Calendar
           style={styles.calendarStyle}
           enableSwipeMonths
+          renderArrow={direction => (
+            <IonIcon
+              name={direction === 'left' ? 'chevron-back' : 'chevron-forward'}
+              size={20}
+              color={NEW_DARK_GREY}
+            />
+          )}
           onDayPress={handleDayPress}
           markedDates={
-            selectedDate
+            valueAsDate
               ? {
-                  [selectedDate]: {selected: true, selectedColor: COMAPEO_BLUE},
+                  [valueAsDate.slice(0, 10)]: {
+                    selected: true,
+                    selectedColor: COMAPEO_BLUE,
+                  },
                 }
               : undefined
           }
@@ -65,6 +88,13 @@ export const DatePicker = () => {
     </>
   );
 };
+
+function isISODateString(val: unknown): val is string {
+  return (
+    typeof val === 'string' &&
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/.test(val)
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

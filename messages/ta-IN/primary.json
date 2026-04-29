@@ -128,16 +128,7 @@
     "description": "Button to share an observation",
     "message": "பகிரவும்"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "ரத்து செய்க"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "ஆம், நீக்குக"
-  },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "அவதானிப்புகளை நீக்கவா?"
   },
   "$1screens.Observation.fallbackCategoryName": {

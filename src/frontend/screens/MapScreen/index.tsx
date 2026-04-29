@@ -1,22 +1,22 @@
 import * as React from 'react';
-import {Camera, MapView, UserLocation} from '@maplibre/maplibre-react-native';
+// import {Camera, MapView, UserLocation} from '@maplibre/maplibre-react-native';
 import {
   LocationFollowingIcon,
   LocationNoFollowIcon,
 } from '../../sharedComponents/icons';
 
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
+// import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
-import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
+// import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
-import {useMapStyleJsonUrl} from '../../hooks/server/maps';
-import {TracksMapLayer} from './MapLayers/TracksMapLayer';
+// import {useMapStyleJsonUrl} from '../../hooks/server/maps';
+// import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
-import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
+// import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {GPSPill} from '../../sharedComponents/GPSPill';
@@ -25,9 +25,9 @@ import {AuthState, useAuthContext} from '../../contexts/AuthContext';
 import {useLocationState} from '../../contexts/LocationContext';
 import {getCoords} from '../../lib/coordinateFormat';
 import {useTracking} from '../../hooks/useTracking';
-import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
-import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
-import {useResetMapLayout} from '../../hooks/useResetMapLayout';
+// import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
+// import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
+// import {useResetMapLayout} from '../../hooks/useResetMapLayout';
 import {
   useLowStorageBannerActions,
   useLowStorageBannerState,
@@ -49,13 +49,13 @@ import {
 const DEFAULT_ZOOM = 12;
 
 // Where Peru, Columbia, and Brazil Meet
-const FALLBACK_COORDINATE = [-69.945, -4.231944];
+// const FALLBACK_COORDINATE = [-69.945, -4.231944];
 
 assert(
   process.env.MAPBOX_ACCESS_TOKEN,
   'MAPBOX_ACCESS_TOKEN environment variable should be set',
 );
-const MIN_DISPLACEMENT = 3;
+// const MIN_DISPLACEMENT = 3;
 
 export const MapScreen = ({
   route,
@@ -63,9 +63,9 @@ export const MapScreen = ({
 }: NativeHomeTabsNavigationProps<'Map'>) => {
   const trackBottomSheetOpen = route.params?.trackingOpen;
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
-  const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
-    React.useState(false);
-  const {dimensions, mapKey, onLayout} = useResetMapLayout();
+  // const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
+  // React.useState(false);
+  // const {dimensions, mapKey, onLayout} = useResetMapLayout();
   const {createDraft} = useDraftObservationActions();
   const {navigate} = useNavigationFromHomeTabs();
   const {isTracking} = useTracking();
@@ -76,11 +76,11 @@ export const MapScreen = ({
   const [following, setFollowing] = React.useState(true);
   const appUsageStore = useAppUsageStatsStore();
 
-  const {data: styleUrl} = useMapStyleJsonUrl();
+  // const {data: styleUrl} = useMapStyleJsonUrl();
 
   const {authState} = useAuthContext();
-  const {savedLocation} = useNonReactiveSavedLocation();
-  const initialPositionSet = React.useRef(false);
+  // const {savedLocation} = useNonReactiveSavedLocation();
+  // const initialPositionSet = React.useRef(false);
   const dismissedMapBannerSession = useLowStorageBannerState(
     s => s.dismissedMapBannerSession,
   );
@@ -121,12 +121,12 @@ export const MapScreen = ({
     setFollowing(prev => !prev);
   }
 
-  function handleDidFinishLoadingStyle() {
-    setIsFinishedLoadingStyle(true);
-  }
+  // function handleDidFinishLoadingStyle() {
+  //   setIsFinishedLoadingStyle(true);
+  // }
 
   return (
-    <View style={{flex: 1}} onLayout={onLayout} testID="MAIN.map-screen">
+    <View style={{flex: 1}} testID="MAIN.map-screen">
       <View
         pointerEvents="box-none"
         style={[styles.lowStorageBanner, {top: BANNER_TOP}]}>
@@ -137,7 +137,8 @@ export const MapScreen = ({
           />
         )}
       </View>
-      {dimensions && (
+      <View style={{flex: 1}} />
+      {/* {dimensions && (
         <MapView
           key={mapKey}
           testID="MAIN.mapbox-map-view"
@@ -191,7 +192,7 @@ export const MapScreen = ({
             </>
           )}
         </MapView>
-      )}
+      )} */}
       <View style={styles.bottomContainer}>
         <View style={{flex: 1, alignItems: 'center'}}>
           <GPSPill onPress={() => navigation.navigate('GpsModal')} />

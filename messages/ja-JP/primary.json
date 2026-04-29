@@ -97,10 +97,6 @@
     "description": "Title of dialog that shows when cancelling track edits",
     "message": "トラックを破棄しますか？"
   },
-  "$1SaveTrack.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "トラックを破棄する"
-  },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "トラックは保存されません。元に戻すことはできません。"
   },
@@ -484,19 +480,10 @@
   "$1screens.Observation.TrackList.track": {
     "message": "トラック"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "取消"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "はい、削除します"
-  },
   "$1screens.Observation.defaultProjectName": {
     "message": "私のプロジェクト"
   },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "観察記録を削除しますか？"
   },
   "$1screens.Observation.description": {
@@ -791,7 +778,6 @@
     "message": "観察記録"
   },
   "$1screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
     "message": "トラックを削除しますか？"
   },
   "$1screens.Track.title": {

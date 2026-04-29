@@ -3,10 +3,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Continuar editando"
   },
-  "AppContainer.EditHeader.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Excluir observação"
-  },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "Suas observações não serão salvas. Isso não poderá ser desfeito."
   },
@@ -165,21 +161,9 @@
     "description": "Text for title that asks about confirming archive server removal.",
     "message": "Remover {name} do projeto?"
   },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Cancelar"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Sim, excluir"
-  },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
+    "description": "Button to delete a track",
     "message": "Excluir"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "Compartilhar"
   },
   "Storage.MapBanner.title": {
     "message": "O seu dispositivo tem pouco armazenamento."
@@ -377,12 +361,6 @@
   },
   "screens.AudioRecording.lessThan5": {
     "message": "Menos de 5 minutos restantes"
-  },
-  "screens.CameraScreen.goToSettings": {
-    "message": "Ir para Configurações"
-  },
-  "screens.CameraScreen.noCameraAccess": {
-    "message": "Sem acesso à câmera. Por favor, permita o acesso em Configurações"
   },
   "screens.CollaboratorInfo.addedOn": {
     "message": "Adicionado em {date}"
@@ -745,10 +723,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Observação"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Excluir observação?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",

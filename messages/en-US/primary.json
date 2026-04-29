@@ -105,7 +105,7 @@
   },
   "$1SaveTrack.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard Track"
+    "message": "Discard"
   },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Your Track will not be saved. This cannot be undone."
@@ -215,9 +215,6 @@
   "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Select Device to Invite"
   },
-  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "Select Device"
-  },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Select a Role"
   },
@@ -321,6 +318,12 @@
   },
   "$1screens.AudioRecording.nowRecording": {
     "message": "Now Recording..."
+  },
+  "$1screens.CameraScreen.noCameraAccess": {
+    "message": "No access to camera. Please allow access in settings."
+  },
+  "$1screens.CameraScreen.openSettings": {
+    "message": "Open Settings"
   },
   "$1screens.CollaboratorInfo.navTitle": {
     "message": "Collaborator Info"
@@ -434,9 +437,15 @@
   "$1screens.InviteSuccess.success": {
     "message": "Success"
   },
+  "$1screens.LanguageSettings.currentLang": {
+    "message": "Current Language"
+  },
   "$1screens.LanguageSettings.followSystemPreferences": {
     "description": "Label for language option to follow system preferences",
     "message": "Follow system preferences"
+  },
+  "$1screens.LanguageSettings.otherLang": {
+    "message": "Other Languages"
   },
   "$1screens.LanguageSettings.title": {
     "description": "Title language settings screen",
@@ -514,22 +523,22 @@
   "$1screens.Observation.TrackList.track": {
     "message": "Track"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Cancel"
-  },
   "$1screens.Observation.comapeoAlert": {
     "message": "CoMapeo data sent from *{projectName}*"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
   },
   "$1screens.Observation.defaultProjectName": {
     "message": "My Project"
   },
+  "$1screens.Observation.deleteButton": {
+    "message": "Delete"
+  },
+  "$1screens.Observation.deleteCancel": {
+    "message": "Cancel"
+  },
+  "$1screens.Observation.deleteDescription": {
+    "message": "Your Observation will be deleted. This cannot be undone."
+  },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
   },
   "$1screens.Observation.description": {
@@ -880,8 +889,16 @@
   "$1screens.Track.ObservationList.observations": {
     "message": "Observations"
   },
+  "$1screens.Track.deleteButton": {
+    "message": "Delete"
+  },
+  "$1screens.Track.deleteCancel": {
+    "message": "Cancel"
+  },
+  "$1screens.Track.deleteDescription": {
+    "message": "Your Track will be deleted. This cannot be undone."
+  },
   "$1screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
     "message": "Delete track?"
   },
   "$1screens.Track.title": {

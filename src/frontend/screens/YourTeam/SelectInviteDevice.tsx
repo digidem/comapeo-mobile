@@ -5,34 +5,50 @@ import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useManyMembers} from '@comapeo/core-react';
 import type {MemberApi} from '@comapeo/core';
 import {type MapeoClientApi} from '@comapeo/ipc';
-import {useLocalDiscoveryState} from '../hooks/useLocalDiscoveryState';
-import {useLocalPeers} from '../hooks/useLocalPeers';
-import WifiIcon from '../images/WifiIcon.svg';
-import {DeviceNameWithIcon} from './DeviceNameWithIcon';
-import {BodyText} from './Text/BodyText';
-import {HeaderText} from './Text/HeaderText';
-import {useActiveProject} from '../contexts/ActiveProjectContext';
-import {LIGHT_GREY} from '../lib/styles';
-import {ExhaustivenessError} from '../lib/ExhaustivenessError';
-import {type NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
+import WifiIcon from '../../images/WifiIcon.svg';
+import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {LIGHT_GREY} from '../../lib/styles';
+import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
+import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
   MEMBER_ROLE_ID,
-} from '../sharedTypes';
+} from '../../sharedTypes';
+import {useInitiallyConnectedPeers} from './useInitiallyConnectedPeers';
 
 type PublicPeerInfo = Awaited<
   ReturnType<MapeoClientApi['listLocalPeers']>
 >[number];
 
+export function getSelectableDevicesForInvite({
+  peers,
+  projectMembers,
+}: {
+  peers: PublicPeerInfo[];
+  projectMembers: MemberApi.MemberInfo[];
+}): PublicPeerInfo[] {
+  return peers.filter(device => {
+    const existingMember = projectMembers.some(
+      member =>
+        member.deviceId === device.deviceId &&
+        (member.role.roleId === COORDINATOR_ROLE_ID ||
+          member.role.roleId === CREATOR_ROLE_ID ||
+          member.role.roleId === MEMBER_ROLE_ID),
+    );
+
+    return !existingMember;
+  });
+}
+
 const m = defineMessages({
   title: {
     id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title',
     defaultMessage: 'Select Device to Invite',
-  },
-  titleMapShare: {
-    id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare',
-    defaultMessage: 'Select Device',
   },
   notSeeingDevice: {
     id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice',
@@ -48,12 +64,9 @@ const m = defineMessages({
   },
 });
 
-type SelectionMode = 'invites' | 'shareMap';
-
-export const SelectDevice = ({
+export const SelectInviteDevice = ({
   navigation,
-  route,
-}: NativeRootNavigationProps<'SelectDevice' | 'SelectMapShareDevice'>) => {
+}: NativeRootNavigationProps<'SelectDevice'>) => {
   const ssid = useLocalDiscoveryState(state => state.ssid);
   const {formatMessage: t} = useIntl();
 
@@ -62,17 +75,15 @@ export const SelectDevice = ({
   // includeLeft: false is explicit here to get only active members.
   const projectMembersQuery = useManyMembers({projectId, includeLeft: false});
 
-  const selectionMode: SelectionMode =
-    route.name === 'SelectMapShareDevice' ? 'shareMap' : 'invites';
-
-  const selectableDevices = getSelectableDevices({
+  const selectableDevices = getSelectableDevicesForInvite({
     peers: availablePeers,
     projectMembers: projectMembersQuery.data,
-    selectionMode,
   });
 
   return (
-    <ScrollView style={styles.container} testID="PROJECT.invite-device-scrn">
+    <ScrollView
+      style={styles.container}
+      testID="PROJECT.select-invite-device-scrn">
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <WifiIcon style={{marginRight: 10}} width={30} height={30} />
         <BodyText>{ssid}</BodyText>
@@ -83,7 +94,6 @@ export const SelectDevice = ({
       <BodyText style={{marginLeft: 10}}>{`\u2022 ${t(m.sameWifi)}`}</BodyText>
       <BodyText
         style={{marginLeft: 10}}>{`\u2022 ${t(m.sameVersion)}`}</BodyText>
-      {/* Divider */}
       <View style={{marginTop: 20}} />
 
       <View style={styles.deviceListContainer}>
@@ -104,16 +114,11 @@ export const SelectDevice = ({
           }
 
           const handlePress = () => {
-            if (selectionMode === 'shareMap') {
-              // TODO: Navigate to map sharing in subsequent PR
-              console.log('Share map with device:', deviceId);
-            } else {
-              navigation.navigate('SelectInviteeRole', {
-                name: name || '',
-                deviceId: deviceId,
-                deviceType: deviceType,
-              });
-            }
+            navigation.navigate('SelectInviteeRole', {
+              name: name || '',
+              deviceId: deviceId,
+              deviceType: deviceType,
+            });
           };
 
           return (
@@ -139,38 +144,7 @@ export const SelectDevice = ({
   );
 };
 
-SelectDevice.navTitle = m.title;
-SelectDevice.navTitleMapShare = m.titleMapShare;
-
-type GetSelectableDevicesParams = {
-  peers: PublicPeerInfo[];
-  projectMembers: MemberApi.ActiveMemberInfo[];
-  selectionMode: SelectionMode;
-};
-
-export function getSelectableDevices({
-  peers,
-  projectMembers,
-  selectionMode,
-}: GetSelectableDevicesParams): PublicPeerInfo[] {
-  if (selectionMode === 'shareMap') {
-    return peers.filter(device =>
-      projectMembers.some(member => member.deviceId === device.deviceId),
-    );
-  }
-
-  return peers.filter(device => {
-    const existingMember = projectMembers.some(
-      member =>
-        member.deviceId === device.deviceId &&
-        (member.role.roleId === COORDINATOR_ROLE_ID ||
-          member.role.roleId === CREATOR_ROLE_ID ||
-          member.role.roleId === MEMBER_ROLE_ID),
-    );
-
-    return !existingMember;
-  });
-}
+SelectInviteDevice.navTitle = m.title;
 
 const styles = StyleSheet.create({
   container: {
@@ -191,40 +165,3 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
-
-/**
- * Applies specialized, context-specific behavior on top of `useLocalPeers()`
- * by only including peers that were *initially* connected from the point of view of the consuming component.
- * If these included peers receive subsequent updates (e.g. disconnecting), they are still returned.
- * This hook only prevents *initially* returning peers that are disconnected.
- */
-function useInitiallyConnectedPeers() {
-  const peers = useLocalPeers();
-  const [relevantDeviceIds, setRelevantDeviceIds] = React.useState<
-    Array<string>
-  >(() => {
-    return peers.filter(p => p.status === 'connected').map(p => p.deviceId);
-  });
-
-  React.useEffect(() => {
-    setRelevantDeviceIds(prev => {
-      const next = [];
-
-      for (const p of peers) {
-        const included = prev.includes(p.deviceId);
-
-        if (included) {
-          next.push(p.deviceId);
-        } else {
-          if (p.status === 'connected') {
-            next.push(p.deviceId);
-          }
-        }
-      }
-
-      return next;
-    });
-  }, [peers, setRelevantDeviceIds]);
-
-  return peers.filter(p => relevantDeviceIds.includes(p.deviceId));
-}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
-import {AppState, Linking, StyleSheet, View} from 'react-native';
+import {AppState, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -12,6 +12,7 @@ import {
 } from 'expo-audio';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
+import {openSettingsAndWait} from '../../utils/linking';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {useAudioPermissionModalMutation} from '../../hooks/useAudioPermissionTracker';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
@@ -106,9 +107,10 @@ export const AudioAskPermissionBottomSheet = ({
     }
   });
 
-  const goToSettingsMutation = useAudioPermissionModalMutation(() =>
-    Linking.openSettings(),
-  );
+  const goToSettingsMutation = useAudioPermissionModalMutation(async () => {
+    await openSettingsAndWait();
+    checkAndNavigateIfGranted();
+  });
 
   return (
     <BottomSheetWrapper>

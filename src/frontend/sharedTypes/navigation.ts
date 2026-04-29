@@ -123,6 +123,19 @@ export type RootStackParamsList = {
   SettingsPrivacyPolicy: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   BackgroundMaps: undefined;
+  MapReceivedBottomSheet: {
+    shareId: string;
+  };
+  ReplaceBackgroundMap: {
+    shareId: string;
+  };
+  ReceivingBackgroundMap: {
+    shareId: string;
+  };
+  SendingBackgroundMap: {
+    shareId: string;
+  };
+  MapShareCanceledBottomSheet: undefined;
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: PermissionResponse;
@@ -191,6 +204,8 @@ export type RootStackParamsList = {
   ConfirmDiscardObservationEditBottomSheet: undefined;
   ConfirmDiscardTrackBottomSheet: undefined;
   TurnOffPasscodeBottomSheet: undefined;
+  ConfirmDeleteObservationBottomSheet: {observationId: string};
+  ConfirmDeleteTrackBottomSheet: {trackId: string};
 };
 
 export type OnboardingParamsList = {

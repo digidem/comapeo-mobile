@@ -93,7 +93,6 @@ export async function init({
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
     customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
   })
-
   const { publicKey, secretKey } = new KeyManager(rootKey).getIdentityKeypair()
   const mapServer = createMapServer({
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,

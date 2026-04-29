@@ -97,10 +97,6 @@
     "description": "Title of dialog that shows when cancelling track edits",
     "message": "Tracking verwijderen?"
   },
-  "$1SaveTrack.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Track weggooien"
-  },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Uw track wordt niet opgeslagen. Dit kan niet ongedaan worden gemaakt."
   },
@@ -487,19 +483,10 @@
   "$1screens.Observation.TrackList.track": {
     "message": "Bijhouden"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Annuleren"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Ja, verwijderen"
-  },
   "$1screens.Observation.defaultProjectName": {
     "message": "Mijn project"
   },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Waarneming verwijderen?"
   },
   "$1screens.Observation.description": {
@@ -790,7 +777,6 @@
     "message": "Waarnemingen"
   },
   "$1screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
     "message": "Verwijder track?"
   },
   "$1screens.Track.title": {

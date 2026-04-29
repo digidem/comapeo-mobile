@@ -103,10 +103,6 @@
     "description": "Title of dialog that shows when cancelling track edits",
     "message": "¿Quieres descartar el Trayecto?"
   },
-  "$1SaveTrack.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Descartar Trayecto"
-  },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Tu Trayecto no se guardará. Esto no se puede deshacer."
   },
@@ -511,22 +507,13 @@
   "$1screens.Observation.TrackList.track": {
     "message": "Trayecto"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Cancelar"
-  },
   "$1screens.Observation.comapeoAlert": {
     "message": "Datos de CoMapeo enviados desde {projectName}"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Si, borrar"
   },
   "$1screens.Observation.defaultProjectName": {
     "message": "Mi proyecto"
   },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "¿Quieres borrar la observación?"
   },
   "$1screens.Observation.description": {
@@ -878,7 +865,6 @@
     "message": "Observaciones"
   },
   "$1screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
     "message": "¿Eliminar trayecto?"
   },
   "$1screens.Track.title": {

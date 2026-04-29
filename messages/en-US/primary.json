@@ -319,6 +319,12 @@
   "$1screens.AudioRecording.nowRecording": {
     "message": "Now Recording..."
   },
+  "$1screens.CameraScreen.noCameraAccess": {
+    "message": "No access to camera. Please allow access in settings."
+  },
+  "$1screens.CameraScreen.openSettings": {
+    "message": "Open Settings"
+  },
   "$1screens.CollaboratorInfo.navTitle": {
     "message": "Collaborator Info"
   },

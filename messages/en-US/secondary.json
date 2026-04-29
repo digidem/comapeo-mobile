@@ -390,12 +390,6 @@
   "screens.AudioRecording.lessThan5": {
     "message": "Less than 5 minutes left"
   },
-  "screens.CameraScreen.goToSettings": {
-    "message": "Go to Settings"
-  },
-  "screens.CameraScreen.noCameraAccess": {
-    "message": "No access to camera. Please Allow access in setting"
-  },
   "screens.CollaboratorInfo.addedOn": {
     "message": "Added on {date}"
   },

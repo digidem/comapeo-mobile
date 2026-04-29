@@ -5,14 +5,14 @@ import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   useLocaleActions,
   useLocaleState,
-} from '../../../contexts/LocaleStoreContext';
-import {USABLE_LANGUAGES} from '../../../lib/intl';
-import {type NativeNavigationComponent} from '../../../sharedTypes/navigation';
+} from '../../contexts/LocaleStoreContext';
+import {USABLE_LANGUAGES} from '../../lib/intl';
+import {type NativeNavigationComponent} from '../../sharedTypes/navigation';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {BLUE_GREY} from '../../../lib/styles';
-import {useAppLanguageTag} from '../../../hooks/useAppLanguageTag';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {BLUE_GREY} from '../../lib/styles';
+import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
 
 const m = defineMessages({
   title: {

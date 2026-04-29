@@ -1,11 +1,11 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
-import {useAuthContext} from '../../../contexts/AuthContext';
-import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
-import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
-import BlackShieldIcon from '../../../images/BlackShield.svg';
-import {useEarlyAccessState} from '../../../contexts/EarlyAccessContext';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {useAuthContext} from '../../contexts/AuthContext';
+import {FullScreenMenuList} from '../../sharedComponents/MenuList/FullScreenMenuList';
+import {MenuListItemType} from '../../sharedComponents/MenuList/MenuListItem';
+import BlackShieldIcon from '../../images/BlackShield.svg';
+import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
 
 const m = defineMessages({
   title: {

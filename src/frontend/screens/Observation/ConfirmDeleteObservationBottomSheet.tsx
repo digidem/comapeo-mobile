@@ -5,8 +5,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import ErrorIcon from '../../images/Error.svg';
 import DiscardIcon from '../../images/delete.svg';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {
   DestructiveButton,
   SecondaryButton,
@@ -56,8 +55,9 @@ export const ConfirmDeleteObservationBottomSheet = ({
         onSuccess: () => {
           navigation.pop(2);
         },
-        onError: () => {
+        onError: err => {
           Sentry.captureException(deleteObservationError);
+          navigation.navigate('ErrorBottomSheet', {error: err});
         },
       },
     );
@@ -66,18 +66,11 @@ export const ConfirmDeleteObservationBottomSheet = ({
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
-        <View style={styles.icon}>
-          <ErrorIcon width={80} height={80} />
-        </View>
-
-        <HeaderText variant="header2" style={styles.title}>
-          {t(m.deleteTitle)}
-        </HeaderText>
-
-        <BodyText variant="large" style={styles.description}>
-          {t(m.deleteDescription)}
-        </BodyText>
-
+        <IconTitleDescription
+          icon={<ErrorIcon width={80} height={80} />}
+          title={t(m.deleteTitle)}
+          description={t(m.deleteDescription)}
+        />
         <View style={styles.buttonsContainer}>
           <DestructiveButton
             fullSize
@@ -100,15 +93,6 @@ export const ConfirmDeleteObservationBottomSheet = ({
 const styles = StyleSheet.create({
   container: {
     gap: 20,
-  },
-  icon: {
-    alignItems: 'center',
-  },
-  title: {
-    textAlign: 'center',
-  },
-  description: {
-    textAlign: 'center',
   },
   buttonsContainer: {
     gap: 16,

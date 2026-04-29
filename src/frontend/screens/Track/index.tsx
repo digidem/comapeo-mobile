@@ -1,15 +1,25 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-import {BLUE_GREY, DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles.ts';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {
+  BLUE_GREY,
+  DARK_GREY,
+  LIGHT_GREY,
+  VERY_LIGHT_GREY,
+} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
-import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
+import {
+  FormattedMessage,
+  MessageDescriptor,
+  defineMessages,
+  useIntl,
+} from 'react-intl';
 import {useTrackQuery, useGetPresetById} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
 import {ObservationList} from './ObservationList.tsx';
-import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
 import {TrackHeaderRight} from './TrackHeaderRight';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
@@ -20,6 +30,7 @@ import {
 import {TrackStats} from '../../sharedComponents/TrackStats.tsx';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
+import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 
 const m = defineMessages({
   title: {
@@ -32,6 +43,11 @@ const m = defineMessages({
     id: 'screens.Track.tracks',
     defaultMessage: 'Tracks',
   },
+  delete: {
+    id: 'SharedComponents.ActionButtons.delete',
+    defaultMessage: 'Delete',
+    description: 'Button to delete a track',
+  },
 });
 
 export const TrackScreen = ({
@@ -39,6 +55,7 @@ export const TrackScreen = ({
   navigation,
 }: NativeRootNavigationProps<'Track'>) => {
   const {trackId} = route.params;
+  const {formatMessage: t} = useIntl();
 
   const {data: track} = useTrackQuery(trackId);
   const {data: observations} = useObservations();
@@ -59,7 +76,18 @@ export const TrackScreen = ({
       contentContainerStyle={{padding: 0}}
       dockContainerStyle={{padding: 0}}
       dockContent={
-        <ActionButtons handleDelete={handlePressDelete} canDelete={canDelete} />
+        <View style={styles.buttonContainer}>
+          {canDelete && (
+            <TouchableOpacity onPress={handlePressDelete} style={{flex: 1}}>
+              <View style={styles.button}>
+                <MaterialIcons size={30} name="delete" color={DARK_GREY} />
+                <BodyText variant="smallMeta" style={styles.buttonText}>
+                  {t(m.delete)}
+                </BodyText>
+              </View>
+            </TouchableOpacity>
+          )}
+        </View>
       }>
       <View>
         <MapPreview
@@ -124,5 +152,19 @@ export const styles = StyleSheet.create({
   text: {
     margin: 10,
     fontSize: 22,
+  },
+  button: {
+    alignItems: 'center',
+  },
+  buttonText: {
+    textAlign: 'center',
+    marginTop: 5,
+  },
+  buttonContainer: {
+    paddingVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderTopColor: LIGHT_GREY,
+    borderTopWidth: 1,
   },
 });

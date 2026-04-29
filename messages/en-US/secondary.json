@@ -166,12 +166,8 @@
     "message": "Remove {name} from project?"
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
+    "description": "Button to delete a track",
     "message": "Delete"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "Share"
   },
   "Storage.MapBanner.title": {
     "message": "Your device has low storage."

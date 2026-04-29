@@ -141,6 +141,8 @@ import {WhatsIncludedBottomSheet} from '../../screens/RemoteArchive/WhatsInclude
 import {MapAddedBottomSheet} from '../../screens/BackgroundMaps/MapAddedBottomSheet.tsx';
 import {DeleteCustomMapBottomSheet} from '../../screens/BackgroundMaps/DeleteCustomMapBottomSheet.tsx';
 import {ConfirmDiscardTrackBottomSheet} from '../../screens/SaveTrack/ConfirmDiscardTrackBottomSheet.tsx';
+import {ConfirmDeleteObservationBottomSheet} from '../../screens/Observation/ConfirmDeleteObservationBottomSheet.tsx';
+import {ConfirmDeleteTrackBottomSheet} from '../../screens/Track/ConfirmDeleteTrackBottomSheet.tsx';
 import {SendingBackgroundMap} from '../../screens/BackgroundMaps/SendingBackgroundMap.tsx';
 import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBottomSheet.tsx';
 import {ReplaceBackgroundMap} from '../../screens/BackgroundMaps/ReplaceBackgroundMap.tsx';
@@ -668,6 +670,14 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="ConfirmDiscardTrackBottomSheet"
         component={ConfirmDiscardTrackBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDeleteObservationBottomSheet"
+        component={ConfirmDeleteObservationBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDeleteTrackBottomSheet"
+        component={ConfirmDeleteTrackBottomSheet}
       />
       <RootStack.Screen
         name="MapReceivedBottomSheet"

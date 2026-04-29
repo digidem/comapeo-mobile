@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Field} from '@comapeo/schema';
 import {DARK_GREY} from '../../lib/styles';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDeleteDocument, useProjectSettings} from '@comapeo/core-react';
+import {useProjectSettings} from '@comapeo/core-react';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/coordinateFormat.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -28,27 +28,6 @@ const m = defineMessages({
     id: '$1screens.Observation.ObservationView.share',
     defaultMessage: 'Share',
     description: 'Button to share an observation',
-  },
-  cancel: {
-    id: '$1screens.Observation.cancel',
-    defaultMessage: 'Cancel',
-    description: 'Button to cancel delete of observation',
-  },
-  confirm: {
-    id: '$1screens.Observation.confirm',
-    defaultMessage: 'Yes, delete',
-    description: 'Button to confirm delete of observation',
-  },
-  title: {
-    id: '$1screens.Observation.title',
-    defaultMessage: 'Observation',
-    description:
-      'Title of observation screen showing (non-editable) view of observation with map and answered questions',
-  },
-  deleteTitle: {
-    id: '$1screens.Observation.deleteTitle',
-    defaultMessage: 'Delete observation?',
-    description: 'Title of dialog asking confirmation to delete an observation',
   },
   shareTextTitle: {
     id: '$1screens.Observation.shareTextTitle',
@@ -116,37 +95,11 @@ export const ButtonFields = ({
   const {
     data: {name},
   } = useProjectSettings({projectId});
-  const {mutate: deleteObservationMutate, error: deleteObservationError} =
-    useDeleteDocument({
-      docType: 'observation',
-      projectId: projectId,
-    });
   const openShare = useOpenShareDialog();
   const canDelete = useCanEditOrDelete(observation.originalVersionId);
 
   function handlePressDelete() {
-    Alert.alert(t(m.deleteTitle), undefined, [
-      {
-        text: t(m.cancel),
-        onPress: () => {},
-      },
-      {
-        text: t(m.confirm),
-        onPress: () => {
-          deleteObservationMutate(
-            {docId: observationId},
-            {
-              onSuccess: () => {
-                navigation.pop();
-              },
-              onError: () => {
-                Sentry.captureException(deleteObservationError);
-              },
-            },
-          );
-        },
-      },
-    ]);
+    navigation.navigate('ConfirmDeleteObservationBottomSheet', {observationId});
   }
 
   async function fetchFreshUrls() {

@@ -3,10 +3,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Lanjutkan menyunting"
   },
-  "AppContainer.EditHeader.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Hapus pengamatan"
-  },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "Pengamatan Anda tidak akan disimpan. Ini tidak dapat dibatalkan."
   },
@@ -156,21 +152,9 @@
     "description": "Text for title that asks about confirming archive server removal.",
     "message": "Hapus {name} dari proyek?"
   },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Batal"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Ya, hapus"
-  },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
+    "description": "Button to delete a track",
     "message": "Hapus"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "Bagikan"
   },
   "Storage.MapBanner.title": {
     "message": "Perangkat Anda memiliki penyimpanan yang rendah."
@@ -365,12 +349,6 @@
   },
   "screens.AudioRecording.lessThan5": {
     "message": "Kurang dari 5 menit tersisa"
-  },
-  "screens.CameraScreen.goToSettings": {
-    "message": "Buka Pengaturan"
-  },
-  "screens.CameraScreen.noCameraAccess": {
-    "message": "Tidak ada akses ke kamera. Harap Izinkan akses dalam pengaturan"
   },
   "screens.CollaboratorInfo.addedOn": {
     "message": "Ditambahkan pada {date}"
@@ -730,10 +708,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Pengamatan"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Menghapus pengamatan?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",

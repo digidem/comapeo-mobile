@@ -26,21 +26,9 @@
     "description": "Text for cancel action button.",
     "message": "បោះបង់"
   },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "បោះបង់"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "បាទ/ចាស លុបចោល"
-  },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
+    "description": "Button to delete a track",
     "message": "លុប"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "ចែករំលែក"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -150,10 +138,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "ការសង្កេត"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "លុបការសង្កេត?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",

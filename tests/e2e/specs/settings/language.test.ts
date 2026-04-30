@@ -57,8 +57,8 @@ describe('Settings - Language Settings Flow', () => {
     const settingsInSpanish = $(byTextMatches('Ajustes de'));
     await settingsInSpanish.click();
 
-    const idiomaOption = await $(byTextMatches('Idioma'));
-    await idiomaOption.click();
+    const spanishLanguageOption = await $(byTextMatches('Español'));
+    await spanishLanguageOption.click();
     const englishElem = await $(byTextMatches('English'));
     await englishElem.click();
 

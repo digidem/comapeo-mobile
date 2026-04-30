@@ -18,11 +18,11 @@ import {USABLE_LANGUAGES} from '../../lib/intl';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {
   BLACK,
   BLUE_GREY,
   COMAPEO_BLUE,
-  DARK_GREY,
   NEW_DARK_GREY,
   VERY_LIGHT_BLUE,
 } from '../../lib/styles';
@@ -266,9 +266,9 @@ function SettingsRow({
         ) : icon ? (
           icon
         ) : null}
-        <BodyText variant="smallMeta" style={styles.rowLabel}>
+        <HeaderText variant="header6" style={styles.rowLabel}>
           {label}
-        </BodyText>
+        </HeaderText>
         {actionText ? (
           <BodyText variant="tinyMeta" style={styles.actionText}>
             {actionText}
@@ -305,8 +305,6 @@ const styles = StyleSheet.create({
   },
   rowLabel: {
     flex: 1,
-    color: DARK_GREY,
-    fontWeight: '500',
   },
   actionText: {
     color: COMAPEO_BLUE,

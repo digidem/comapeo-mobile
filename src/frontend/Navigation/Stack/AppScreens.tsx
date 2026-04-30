@@ -5,13 +5,13 @@ import {
   createNavigationOptions as createObservationEditNavOptions,
 } from '../../screens/ObservationEdit';
 import {AddPhotoScreen} from '../../screens/AddPhoto';
-import {AppPasscode} from '../../screens/AppPasscode';
-import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
-import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
-import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
-import {TurnOffPasscodeBottomSheet} from '../../screens/AppPasscode/TurnOffPasscodeBottomSheet';
+import {AppPasscode} from '../../screens/ComapeoSettings/Security/AppPasscode';
+import {EnterPassToTurnOff} from '../../screens/ComapeoSettings/Security/AppPasscode/EnterPassToTurnOff';
+import {SetPasscode} from '../../screens/ComapeoSettings/Security/AppPasscode/SetPasscode';
+import {TurnOffPasscode} from '../../screens/ComapeoSettings/Security/AppPasscode/TurnOffPasscode';
+import {TurnOffPasscodeBottomSheet} from '../../screens/ComapeoSettings/Security/AppPasscode/TurnOffPasscodeBottomSheet';
 import {Security} from '../../screens/ComapeoSettings/Security';
-import {ObscurePasscode} from '../../screens/ObscurePasscode';
+import {ObscurePasscode} from '../../screens/ComapeoSettings/Security/ObscurePasscode';
 import {ObservationCategoryChooser} from '../../screens/PresetChooser/ObservationCategoryChooser.tsx';
 import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
 import {ObservationScreen} from '../../screens/Observation';
@@ -114,7 +114,7 @@ import {
 } from '../../screens/PhotoPreviewModal/DraftPhotoPreviewModal.tsx';
 import {AttachedPhotoPreviewModal} from '../../screens/PhotoPreviewModal/AttachedPhotoPreviewModal.tsx';
 import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/sharedNavOptions.tsx';
-import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
+import {ConfirmPasscodeBottomSheet} from '../../screens/ComapeoSettings/Security/AppPasscode/ConfirmPasscodeSheet.tsx';
 import {ShareProjectStats} from '../../screens/ProjectCreation/ShareProjectStats.tsx';
 import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
 import {AppUsagePromptInterstitial} from '../../screens/AppUsagePromptInterstitial.tsx';

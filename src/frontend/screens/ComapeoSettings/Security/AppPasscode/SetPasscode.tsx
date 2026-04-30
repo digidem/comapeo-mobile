@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {OBSCURE_PASSCODE} from '../../constants';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {OBSCURE_PASSCODE} from '../../../../constants';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {InputPasscode} from './InputPasscode';
 
 const m = defineMessages({

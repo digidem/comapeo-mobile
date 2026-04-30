@@ -8,14 +8,14 @@ import {
   ListDivider,
   ListItem,
   ListItemText,
-} from '../../sharedComponents/List';
-import {MEDIUM_GREY, WHITE} from '../../lib/styles';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+} from '../../../../sharedComponents/List';
+import {MEDIUM_GREY, WHITE} from '../../../../lib/styles';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {useFocusEffect, StackActions} from '@react-navigation/native';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {CustomHeaderLeft} from '../../../../sharedComponents/CustomHeaderLeft';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {useSecurityState} from '../../contexts/SecurityStoreContext';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {useSecurityState} from '../../../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   appUsePasscode: {

@@ -20,21 +20,9 @@
     "description": "Text for cancel action button.",
     "message": "रद्द"
   },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "रद्द"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "हुन्छ, मेट्नु"
-  },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
+    "description": "Button to delete a track",
     "message": "मेटाउने"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "साझा गरियो"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -138,10 +126,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "अवलाेकन"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "अवलाेकन हटाउने?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",

@@ -158,16 +158,7 @@
     "description": "Button to share an observation",
     "message": "බෙදාගන්න"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "අවලංගු කරන්න"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "ඔව්, මකන්න"
-  },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "නිරීක්ෂණය මකන්නද?"
   },
   "$1screens.Observation.description": {

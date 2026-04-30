@@ -42,21 +42,9 @@ const m = defineMessages({
     id: '$1Screens.Settings.AppSettings.sharingPermissions',
     defaultMessage: 'SHARING PERMISSIONS',
   },
-  deviceName: {
-    id: '$1Screens.Settings.AppSettings.deviceName',
-    defaultMessage: 'Device Name',
-  },
   edit: {
     id: '$1Screens.Settings.AppSettings.edit',
     defaultMessage: 'Edit',
-  },
-  language: {
-    id: '$1Screens.Settings.AppSettings.language',
-    defaultMessage: 'Language',
-  },
-  coordinateSystem: {
-    id: '$1Screens.Settings.AppSettings.coordinateSystem',
-    defaultMessage: 'Coordinate System',
   },
   coordinateUtm: {
     id: '$1Screens.Settings.AppSettings.coordinateUtm',
@@ -139,12 +127,13 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
       <SettingsRow
         testID="device-name-list-item"
         onPress={() => navigation.navigate('DeviceNameDisplay')}
-        label={deviceInfo?.name ?? formatMessage(m.deviceName)}
+        label={deviceInfo.name ?? ''}
         actionText={formatMessage(m.edit)}
         materialIconName="phone-android"
       />
 
       <SettingsRow
+        testID="languageSettingsButton"
         onPress={() => navigation.navigate('LanguageSettings')}
         label={currentLanguageName}
         showArrow
@@ -302,6 +291,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 6,
+    minHeight: 54,
   },
   rowLabel: {
     flex: 1,

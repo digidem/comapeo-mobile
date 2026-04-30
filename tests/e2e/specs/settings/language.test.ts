@@ -10,7 +10,7 @@ describe('Settings - Language Settings Flow', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
-    const languageOption = await $(byTextMatches('Language'));
+    const languageOption = await $(byResourceId('languageSettingsButton'));
     await languageOption.click();
   });
 

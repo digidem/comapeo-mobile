@@ -137,17 +137,11 @@
   "$1Screens.Settings.AppSettings.coordinateDms": {
     "message": "Degrees/Min/Sec"
   },
-  "$1Screens.Settings.AppSettings.coordinateSystem": {
-    "message": "Coordinate System"
-  },
   "$1Screens.Settings.AppSettings.coordinateUtm": {
     "message": "UTM Coordinates"
   },
   "$1Screens.Settings.AppSettings.createTestData": {
     "message": "Create Test Data"
-  },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "Device Name"
   },
   "$1Screens.Settings.AppSettings.diagnosticInformation": {
     "message": "Diagnostic Information"
@@ -160,9 +154,6 @@
   },
   "$1Screens.Settings.AppSettings.edit": {
     "message": "Edit"
-  },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "Language"
   },
   "$1Screens.Settings.AppSettings.noPasscode": {
     "message": "No Passcode"

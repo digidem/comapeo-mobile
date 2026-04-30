@@ -150,6 +150,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
 
       {authState !== 'obscured' && (
         <SettingsRow
+          testID="securitySettingsButton"
           onPress={() => navigation.navigate('Security')}
           label={
             hasPasscode

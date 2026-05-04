@@ -61,17 +61,20 @@ function getInitialRoute(
 const PendingInviteNavigator = ({
   navigation,
   pendingInviteId,
+  onNavigated,
 }: {
   navigation: React.ComponentProps<NavigatorLayout>['navigation'];
   pendingInviteId: string | null;
+  onNavigated: () => void;
 }) => {
   React.useEffect(() => {
     if (!pendingInviteId) return;
     const handle = requestAnimationFrame(() => {
       navigation.navigate('InviteReceived', {inviteId: pendingInviteId});
+      onNavigated();
     });
     return () => cancelAnimationFrame(handle);
-  }, [pendingInviteId, navigation]);
+  }, [pendingInviteId, navigation, onNavigated]);
 
   return null;
 };
@@ -127,6 +130,7 @@ export const RootStackNavigator = () => {
           <PendingInviteNavigator
             navigation={navigation}
             pendingInviteId={pendingInviteId}
+            onNavigated={() => setPendingInviteId(null)}
           />
         )}
         {children}

@@ -8,7 +8,7 @@ export function useMapStyleJsonUrl() {
   // (see https://github.com/digidem/comapeo-mobile/issues/1008)
   if (process.env.EXPO_PUBLIC_E2E_TEST) {
     return {
-      data: 'mapbox://styles/mapbox/streets-v11',
+      data: 'https://api.mapbox.com/styles/v1/mapbox/outdoors-v11',
       error: null,
       isRefetching: false,
     };

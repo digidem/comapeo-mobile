@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {
-  NativeStackNavigationOptions,
-  NativeStackNavigationProp,
-} from '@react-navigation/native-stack';
+import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {WHITE, MEDIUM_GREY} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
@@ -18,10 +15,9 @@ import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 import {useIntl} from 'react-intl';
-import {useNavigation} from '@react-navigation/native';
 import {RootStack} from './RootStack';
-import {usePendingDeepLink} from '../../contexts/PendingDeepLinkContext';
-import {parseInviteUrl} from '../../lib/deepLinkConfig';
+import {parseInviteUrl, setDeepLinkReady} from '../../lib/deepLinkConfig';
+import * as ExpoLinking from 'expo-linking';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -57,22 +53,25 @@ function getInitialRoute(
   return 'Success';
 }
 
-// Gets and parses any deep link URL that arrived
-// while the app was not ready (passcode screen or mid-onboarding),
-// then clears the value.
-const PendingDeepLinkHandler = () => {
-  const {pendingUrl, clearPendingUrl} = usePendingDeepLink();
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AppStackParamsList>>();
-
+// Navigates to InviteReceived once the app navigator has mounted.
+// Uses requestAnimationFrame to wait until after the current render finishes
+// and the navigator's screens are set up — otherwise the navigation call
+// arrives before the screen exists (this happens when the passcode is cleared
+// and the app navigator mounts for the first time in the same render).
+const PendingInviteNavigator = ({
+  navigation,
+  pendingInviteId,
+}: {
+  navigation: React.ComponentProps<NavigatorLayout>['navigation'];
+  pendingInviteId: string | null;
+}) => {
   React.useEffect(() => {
-    if (!pendingUrl) return;
-    const inviteId = parseInviteUrl(pendingUrl);
-    if (inviteId) {
-      navigation.navigate('InviteReceived', {inviteId});
-    }
-    clearPendingUrl();
-  }, [pendingUrl, clearPendingUrl, navigation]);
+    if (!pendingInviteId) return;
+    const handle = requestAnimationFrame(() => {
+      navigation.navigate('InviteReceived', {inviteId: pendingInviteId});
+    });
+    return () => cancelAnimationFrame(handle);
+  }, [pendingInviteId, navigation]);
 
   return null;
 };
@@ -82,18 +81,30 @@ export const RootStackNavigator = () => {
   const {data: deviceInfo} = useOwnDeviceInfo();
   const activeProjectId = useActiveProjectId();
   const {formatMessage} = useIntl();
-  const {setNotReadyForInvite} = usePendingDeepLink();
+  const url = ExpoLinking.useURL();
 
   const isNotReadyForInvite =
     security.authState === 'unauthenticated' ||
     !deviceInfo.name ||
     !activeProjectId;
 
-  // Keep the deep link context in sync so it knows whether to stash
-  // incoming URLs or let React Navigation's linking prop handle them.
+  // Invite ID captured from a deep link URL. Survives the navigator remount
+  // when the app becomes ready so PendingInviteNavigator can act on it after unlock.
+  const [pendingInviteId, setPendingInviteId] = React.useState<string | null>(
+    null,
+  );
+
   React.useEffect(() => {
-    setNotReadyForInvite(isNotReadyForInvite);
-  }, [isNotReadyForInvite, setNotReadyForInvite]);
+    if (!url) return;
+    const inviteId = parseInviteUrl(url);
+    if (inviteId) {
+      setPendingInviteId(inviteId);
+    }
+  }, [url]);
+
+  React.useEffect(() => {
+    setDeepLinkReady(!isNotReadyForInvite);
+  }, [isNotReadyForInvite]);
 
   const layout: NavigatorLayout = ({children, state, navigation}) => (
     <SafeAreaView
@@ -112,7 +123,12 @@ export const RootStackNavigator = () => {
             navigation.navigate('MapReceivedBottomSheet', {shareId})
           }
         />
-        {!isNotReadyForInvite && <PendingDeepLinkHandler />}
+        {!isNotReadyForInvite && (
+          <PendingInviteNavigator
+            navigation={navigation}
+            pendingInviteId={pendingInviteId}
+          />
+        )}
         {children}
       </React.Suspense>
     </SafeAreaView>

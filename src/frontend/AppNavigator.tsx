@@ -1,6 +1,7 @@
 import {
   NavigationContainer,
   type NavigationContainerRef,
+  getStateFromPath,
 } from '@react-navigation/native';
 import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
@@ -10,8 +11,7 @@ import {RootStackNavigator} from './Navigation/Stack';
 import type Sentry from '@sentry/react-native';
 import {PostHogProvider} from 'posthog-react-native';
 import {postHog} from './lib/posthog';
-import {linking} from './lib/deepLinkConfig';
-import {PendingDeepLinkProvider} from './contexts/PendingDeepLinkContext';
+import {linking, deepLinkReady} from './lib/deepLinkConfig';
 
 export const AppNavigator = ({
   permissionAsked,
@@ -30,31 +30,40 @@ export const AppNavigator = ({
   }
 
   return (
-    <PendingDeepLinkProvider>
-      <NavigationContainer
-        ref={containerRef}
-        linking={linking}
-        onReady={() => {
-          navigationIntegration?.registerNavigationContainer(containerRef);
-        }}
-        onStateChange={state => {
-          if (postHog.optedOut) return;
-          if (!state) return;
-          const previousRouteName = state.routes[state.index - 1]?.name;
-          const currentRouteName = state.routes[state.index]?.name;
-          const params = state.routes[state.index]?.params;
-          if (previousRouteName !== currentRouteName && currentRouteName) {
-            postHog.screen(currentRouteName, {params: JSON.stringify(params)});
-          }
-        }}>
-        <PostHogProvider
-          client={postHog}
-          autocapture={{captureScreens: false, captureTouches: true}}>
-          <React.Suspense fallback={null}>
-            <RootStackNavigator />
-          </React.Suspense>
-        </PostHogProvider>
-      </NavigationContainer>
-    </PendingDeepLinkProvider>
+    <NavigationContainer
+      ref={containerRef}
+      linking={{
+        ...linking,
+        // Suppress React Navigation's automatic deep link navigation while the
+        // app is not ready (passcode screen or mid-onboarding). Returning
+        // undefined tells React Navigation to ignore the URL —
+        // PendingInviteNavigator in the navigator layout picks it up once
+        // the app is ready.
+        getStateFromPath: (path, options) => {
+          if (!deepLinkReady.appIsReady) return undefined;
+          return getStateFromPath(path, options);
+        },
+      }}
+      onReady={() => {
+        navigationIntegration?.registerNavigationContainer(containerRef);
+      }}
+      onStateChange={state => {
+        if (postHog.optedOut) return;
+        if (!state) return;
+        const previousRouteName = state.routes[state.index - 1]?.name;
+        const currentRouteName = state.routes[state.index]?.name;
+        const params = state.routes[state.index]?.params;
+        if (previousRouteName !== currentRouteName && currentRouteName) {
+          postHog.screen(currentRouteName, {params: JSON.stringify(params)});
+        }
+      }}>
+      <PostHogProvider
+        client={postHog}
+        autocapture={{captureScreens: false, captureTouches: true}}>
+        <React.Suspense fallback={null}>
+          <RootStackNavigator />
+        </React.Suspense>
+      </PostHogProvider>
+    </NavigationContainer>
   );
 };

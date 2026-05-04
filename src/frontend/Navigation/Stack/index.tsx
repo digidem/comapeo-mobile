@@ -1,5 +1,8 @@
 import * as React from 'react';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {
+  NativeStackNavigationOptions,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {WHITE, MEDIUM_GREY} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
@@ -15,7 +18,10 @@ import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 import {useIntl} from 'react-intl';
+import {useNavigation} from '@react-navigation/native';
 import {RootStack} from './RootStack';
+import {usePendingDeepLink} from '../../contexts/PendingDeepLinkContext';
+import {parseInviteUrl} from '../../lib/deepLinkConfig';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -51,11 +57,43 @@ function getInitialRoute(
   return 'Success';
 }
 
+// Gets and parses any deep link URL that arrived
+// while the app was not ready (passcode screen or mid-onboarding),
+// then clears the value.
+const PendingDeepLinkHandler = () => {
+  const {pendingUrl, clearPendingUrl} = usePendingDeepLink();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AppStackParamsList>>();
+
+  React.useEffect(() => {
+    if (!pendingUrl) return;
+    const inviteId = parseInviteUrl(pendingUrl);
+    if (inviteId) {
+      navigation.navigate('InviteReceived', {inviteId});
+    }
+    clearPendingUrl();
+  }, [pendingUrl, clearPendingUrl, navigation]);
+
+  return null;
+};
+
 export const RootStackNavigator = () => {
   const security = useAuthContext();
   const {data: deviceInfo} = useOwnDeviceInfo();
   const activeProjectId = useActiveProjectId();
   const {formatMessage} = useIntl();
+  const {setNotReadyForInvite} = usePendingDeepLink();
+
+  const isNotReadyForInvite =
+    security.authState === 'unauthenticated' ||
+    !deviceInfo.name ||
+    !activeProjectId;
+
+  // Keep the deep link context in sync so it knows whether to stash
+  // incoming URLs or let React Navigation's linking prop handle them.
+  React.useEffect(() => {
+    setNotReadyForInvite(isNotReadyForInvite);
+  }, [isNotReadyForInvite, setNotReadyForInvite]);
 
   const layout: NavigatorLayout = ({children, state, navigation}) => (
     <SafeAreaView
@@ -74,6 +112,7 @@ export const RootStackNavigator = () => {
             navigation.navigate('MapReceivedBottomSheet', {shareId})
           }
         />
+        {!isNotReadyForInvite && <PendingDeepLinkHandler />}
         {children}
       </React.Suspense>
     </SafeAreaView>
@@ -89,11 +128,7 @@ export const RootStackNavigator = () => {
     screenOptions: NavigatorScreenOptions,
   } as const;
 
-  if (
-    security.authState === 'unauthenticated' ||
-    !deviceInfo.name ||
-    !activeProjectId
-  ) {
+  if (isNotReadyForInvite) {
     const initialRouteName = getInitialRoute(
       security.authState,
       deviceInfo.name,

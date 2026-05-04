@@ -80,6 +80,7 @@
     "expo-image": "3.0.11",
     "expo-image-manipulator": "14.0.8",
     "expo-keep-awake": "15.0.8",
+    "expo-linking": "7.0.4",
     "expo-localization": "17.0.8",
     "expo-location": "19.0.8",
     "expo-secure-store": "15.0.8",

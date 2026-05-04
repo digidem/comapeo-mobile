@@ -43,40 +43,42 @@ export const InsetMapView = React.memo<MapProps>(
     }, [lon, lat]);
 
     return (
-      <View style={styles.mapWrapper}>
-        <MapView
-          style={styles.map}
-          zoomEnabled={false}
-          logoEnabled={false}
-          scrollEnabled={false}
-          pitchEnabled={false}
-          rotateEnabled={false}
-          compassEnabled={false}
-          surfaceView={true}
-          mapStyle={styleUrl}
-          onDidFinishLoadingStyle={handleStyleLoaded}>
-          <Camera ref={cameraRef} />
-          <MarkerView
-            id="locationIndicator"
-            anchor={{x: 0.5, y: 1.0}}
-            coordinate={[lon, lat]}>
-            <OrangeDot />
-          </MarkerView>
-        </MapView>
-        <TouchableOpacity
-          accessibilityLabel="Open observation metadata via map pin"
-          onPress={() => navigate('ObservationMetadata', {observationId})}
-          style={styles.markerOverlay}>
-          <View style={styles.coords}>
-            <MapPin style={{marginRight: 5}} />
-            <BodyText variant="tinyMeta">
-              <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
-              {accuracy && ` ± ${accuracy.toFixed(2)} m`}
-            </BodyText>
-          </View>
-          <View style={styles.arrow} />
-        </TouchableOpacity>
-      </View>
+      <MapView
+        style={styles.map}
+        zoomEnabled={false}
+        logoEnabled={false}
+        scrollEnabled={false}
+        pitchEnabled={false}
+        rotateEnabled={false}
+        compassEnabled={false}
+        surfaceView={false}
+        mapStyle={styleUrl}
+        onDidFinishLoadingStyle={handleStyleLoaded}>
+        <Camera ref={cameraRef} />
+        <MarkerView
+          id="locationIndicator"
+          anchor={{x: 0.5, y: 0.8}}
+          coordinate={[lon, lat]}>
+          <TouchableOpacity
+            accessibilityLabel="Open observation metadata via map pin"
+            onPress={() => navigate('ObservationMetadata', {observationId})}
+            style={{alignSelf: 'center'}}>
+            <View style={styles.coords}>
+              <MapPin style={{marginRight: 5}} />
+              <BodyText variant="tinyMeta">
+                <FormattedCoords
+                  format={coordinateFormat}
+                  lat={lat}
+                  lon={lon}
+                />
+                {accuracy && ` ± ${accuracy.toFixed(2)} m`}
+              </BodyText>
+            </View>
+            <View style={styles.arrow} />
+            <OrangeDot style={{alignSelf: 'center'}} />
+          </TouchableOpacity>
+        </MarkerView>
+      </MapView>
     );
   },
 );
@@ -103,15 +105,5 @@ const styles = StyleSheet.create({
   },
   map: {
     height: MAP_HEIGHT,
-  },
-  mapWrapper: {
-    height: MAP_HEIGHT,
-  },
-  markerOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: MAP_HEIGHT / 2,
-    alignItems: 'center',
   },
 });

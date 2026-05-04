@@ -7,8 +7,11 @@ export function useMapStyleJsonUrl() {
   // public Mapbox style rather than our local style server to avoid 502 errors.
   // (see https://github.com/digidem/comapeo-mobile/issues/1008)
   if (process.env.EXPO_PUBLIC_E2E_TEST) {
+    if (!process.env.MAPBOX_ACCESS_TOKEN) {
+      throw new Error('Missing mapbox access token');
+    }
     return {
-      data: 'https://api.mapbox.com/styles/v1/mapbox/outdoors-v11',
+      data: `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11?access_token=${process.env.MAPBOX_ACCESS_TOKEN}`,
       error: null,
       isRefetching: false,
     };

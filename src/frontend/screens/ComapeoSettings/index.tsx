@@ -1,11 +1,6 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {
-  ScrollView,
-  StyleSheet,
-  TouchableNativeFeedback,
-  View,
-} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -19,15 +14,8 @@ import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {
-  BLACK,
-  BLUE_GREY,
-  COMAPEO_BLUE,
-  NEW_DARK_GREY,
-  VERY_LIGHT_BLUE,
-} from '../../lib/styles';
+import {BLACK, BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import HeartCheckIcon from '../../images/HeartCheck.svg';
-import type {MaterialIconsIconName} from '@react-native-vector-icons/material-icons';
 
 const m = defineMessages({
   title: {
@@ -122,30 +110,42 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <SectionHeader label={formatMessage(m.thisDevice)} />
+      <BodyText variant="tinyMeta" style={styles.sectionHeader}>
+        {formatMessage(m.thisDevice)}
+      </BodyText>
 
       <SettingsRow
         testID="device-name-list-item"
         onPress={() => navigation.navigate('DeviceNameDisplay')}
-        label={deviceInfo.name ?? ''}
-        actionText={formatMessage(m.edit)}
-        materialIconName="phone-android"
+        label={deviceInfo?.name ?? ''}
+        Icon={
+          <MaterialIcon name="phone-android" size={24} color={NEW_DARK_GREY} />
+        }
+        EndContent={
+          <BodyText variant="tinyMeta" style={styles.actionText}>
+            {formatMessage(m.edit)}
+          </BodyText>
+        }
       />
 
       <SettingsRow
         testID="languageSettingsButton"
         onPress={() => navigation.navigate('LanguageSettings')}
         label={currentLanguageName}
-        showArrow
-        materialIconName="language"
+        Icon={<MaterialIcon name="language" size={24} color={NEW_DARK_GREY} />}
+        EndContent={
+          <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
+        }
       />
 
       <SettingsRow
         testID="settingsCoodinatesButton"
         onPress={() => navigation.navigate('CoordinateFormat')}
         label={coordinateLabel}
-        showArrow
-        materialIconName="explore"
+        Icon={<MaterialIcon name="explore" size={24} color={NEW_DARK_GREY} />}
+        EndContent={
+          <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
+        }
       />
 
       {authState !== 'obscured' && (
@@ -157,10 +157,14 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
               ? formatMessage(m.passcode)
               : formatMessage(m.noPasscode)
           }
-          actionText={
-            hasPasscode ? formatMessage(m.turnOff) : formatMessage(m.turnOn)
+          Icon={
+            <MaterialIcon name="security" size={24} color={NEW_DARK_GREY} />
           }
-          materialIconName="security"
+          EndContent={
+            <BodyText variant="tinyMeta" style={styles.actionText}>
+              {hasPasscode ? formatMessage(m.turnOff) : formatMessage(m.turnOn)}
+            </BodyText>
+          }
         />
       )}
 
@@ -172,43 +176,65 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
             ? formatMessage(m.earlyAccessOn)
             : formatMessage(m.earlyAccessOff)
         }
-        actionText={
-          isEarlyAccess ? formatMessage(m.turnOff) : formatMessage(m.turnOn)
+        Icon={<MaterialIcon name="flag" size={24} color={NEW_DARK_GREY} />}
+        EndContent={
+          <BodyText variant="tinyMeta" style={styles.actionText}>
+            {isEarlyAccess ? formatMessage(m.turnOff) : formatMessage(m.turnOn)}
+          </BodyText>
         }
-        materialIconName="flag"
       />
 
       <SettingsRow
         testID="aboutSettingsButton"
         onPress={() => navigation.navigate('AboutSettings')}
         label={formatMessage(m.aboutCoMapeo)}
-        showArrow
-        materialIconName="info-outline"
+        Icon={
+          <MaterialIcon name="info-outline" size={24} color={NEW_DARK_GREY} />
+        }
+        EndContent={
+          <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
+        }
       />
 
       {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
         <SettingsRow
           onPress={() => navigation.navigate('CreateTestData')}
           label={formatMessage(m.createTestData)}
-          showArrow
-          materialIconName="auto-fix-high"
+          Icon={
+            <MaterialIcon
+              name="auto-fix-high"
+              size={24}
+              color={NEW_DARK_GREY}
+            />
+          }
+          EndContent={
+            <MaterialIcon
+              name="chevron-right"
+              size={20}
+              color={NEW_DARK_GREY}
+            />
+          }
         />
       )}
 
       <View style={styles.divider} />
 
-      <SectionHeader label={formatMessage(m.sharingPermissions)} />
+      <BodyText variant="tinyMeta" style={styles.sectionHeader}>
+        {formatMessage(m.sharingPermissions)}
+      </BodyText>
 
       <SettingsRow
         testID="dataAndPrivacyButton"
         onPress={() => navigation.navigate('DataAndPrivacy')}
         label={formatMessage(m.diagnosticInformation)}
-        actionText={
-          diagnosticsEnabled
-            ? formatMessage(m.turnOff)
-            : formatMessage(m.turnOn)
+        Icon={<HeartCheckIcon width={24} height={24} />}
+        EndContent={
+          <BodyText variant="tinyMeta" style={styles.actionText}>
+            {diagnosticsEnabled
+              ? formatMessage(m.turnOff)
+              : formatMessage(m.turnOn)}
+          </BodyText>
         }
-        icon={<HeartCheckIcon width={24} height={24} />}
       />
     </ScrollView>
   );
@@ -216,58 +242,27 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
 
 AppSettings.navTitle = m.title;
 
-function SectionHeader({label}: {label: string}) {
-  return (
-    <BodyText variant="tinyMeta" style={styles.sectionHeader}>
-      {label}
-    </BodyText>
-  );
-}
-
 function SettingsRow({
   label,
   onPress,
-  actionText,
-  showArrow,
   testID,
-  materialIconName,
-  icon,
+  Icon,
+  EndContent,
 }: {
   label: string;
   onPress: () => void;
-  actionText?: string;
-  showArrow?: boolean;
   testID?: string;
-  materialIconName?: MaterialIconsIconName;
-  icon?: React.ReactNode;
+  Icon: React.ReactNode;
+  EndContent: React.ReactNode;
 }) {
   return (
-    <TouchableNativeFeedback
-      testID={testID}
-      onPress={onPress}
-      background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
-      <View style={styles.row}>
-        {materialIconName ? (
-          <MaterialIcon
-            name={materialIconName}
-            size={24}
-            color={NEW_DARK_GREY}
-          />
-        ) : icon ? (
-          icon
-        ) : null}
-        <HeaderText variant="header6" style={styles.rowLabel}>
-          {label}
-        </HeaderText>
-        {actionText ? (
-          <BodyText variant="tinyMeta" style={styles.actionText}>
-            {actionText}
-          </BodyText>
-        ) : showArrow ? (
-          <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
-        ) : null}
-      </View>
-    </TouchableNativeFeedback>
+    <TouchableOpacity testID={testID} onPress={onPress} style={styles.row}>
+      {Icon}
+      <HeaderText variant="header6" style={styles.rowLabel}>
+        {label}
+      </HeaderText>
+      {EndContent}
+    </TouchableOpacity>
   );
 }
 

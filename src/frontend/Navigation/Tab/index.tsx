@@ -13,7 +13,7 @@ import {TabBar} from './TabBar';
 import {Loading} from '../../sharedComponents/Loading';
 import {NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import {Drawer} from 'react-native-drawer-layout';
-import {DrawerMenu} from '../../screens/DrawerMenu';
+import {DrawerMenu} from '../../sharedComponents/DrawerMenu';
 import {useOpenDrawer} from '../../hooks/useOpenDrawer';
 import {ProjectRemovalListener} from '../../sharedComponents/ProjectRemovalListener';
 import {DownloadIcon} from '../../sharedComponents/icons';

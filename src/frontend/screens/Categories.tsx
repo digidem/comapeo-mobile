@@ -48,7 +48,9 @@ const m = defineMessages({
   },
 });
 
-export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
+export const Categories: NativeNavigationComponent<'Categories'> = ({
+  navigation,
+}) => {
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
   const {projectId} = useActiveProject();
@@ -157,7 +159,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   );
 };
 
-Config.navTitle = m.navTitle;
+Categories.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
   container: {

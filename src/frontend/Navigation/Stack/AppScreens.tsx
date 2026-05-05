@@ -69,7 +69,7 @@ import {DataAndPrivacy} from '../../screens/ComapeoSettings/DataAndPrivacy/DataA
 import {SettingsPrivacyPolicy} from '../../screens/ComapeoSettings/DataAndPrivacy/SettingsPrivacyPolicy';
 import {TrackEdit} from '../../screens/TrackEdit';
 import {HeaderLeft as HeaderLeftTrackEdit} from '../../screens/TrackEdit/HeaderLeft';
-import {Config} from '../../screens/Config.tsx';
+import {Categories} from '../../screens/Categories.tsx';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/RemoteArchive/AddRemoteArchive.tsx';
 import {SuccessfullyAddedArchive} from '../../screens/RemoteArchive/SuccessfullyAddedArchive.tsx';
@@ -398,9 +398,9 @@ export const createAppScreens = ({
         })}
       />
       <RootStack.Screen
-        name="Config"
-        component={Config}
-        options={{headerTitle: intl(Config.navTitle)}}
+        name="Categories"
+        component={Categories}
+        options={{headerTitle: intl(Categories.navTitle)}}
       />
       <RootStack.Screen
         name="BackgroundMaps"

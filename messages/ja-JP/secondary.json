@@ -3,10 +3,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "編集を続ける"
   },
-  "AppContainer.EditHeader.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "観察記録を破棄"
-  },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "観察記録は保存されません。元に戻すことはできません。"
   },
@@ -156,21 +152,9 @@
     "description": "Text for title that asks about confirming archive server removal.",
     "message": "プロジェクトから {name} を削除しますか？"
   },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "取消"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "はい、削除します"
-  },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
+    "description": "Button to delete a track",
     "message": "削除"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "共有"
   },
   "Storage.MapBanner.title": {
     "message": "デバイスのストレージ容量が少なくなっています。"
@@ -358,12 +342,6 @@
   },
   "screens.AudioRecording.lessThan5": {
     "message": "残り5分未満"
-  },
-  "screens.CameraScreen.goToSettings": {
-    "message": "設定に移動"
-  },
-  "screens.CameraScreen.noCameraAccess": {
-    "message": "カメラへのアクセスがありません。設定でアクセスを許可してください"
   },
   "screens.CollaboratorInfo.addedOn": {
     "message": "{date} に追加"
@@ -681,10 +659,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "観察記録"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "観察記録を削除しますか？"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",

@@ -42,10 +42,6 @@
   "$1screens.LeaveProjectWarning.continueButton": {
     "message": "Taastay"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Noomtee"
-  },
   "$1screens.Onboarding.MapOnYourOwnIntro.close": {
     "message": "Keer"
   },

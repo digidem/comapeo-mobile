@@ -1,12 +1,11 @@
 import MapboxGL from '@rnmapbox/maps';
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {WHITE} from '../../lib/styles';
+import {WHITE, DARK_ORANGE} from '../../lib/styles';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import MapPin from '../../images/MapPin.svg';
-import OrangeDot from '../../images/OrangeDot.svg';
 import {MarkerView} from '@rnmapbox/maps';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext';
@@ -18,10 +17,11 @@ type MapProps = {
   lat: number;
   observationId: string;
   accuracy?: number;
+  color?: string;
 };
 
 export const InsetMapView = React.memo<MapProps>(
-  ({lon, lat, observationId, accuracy}: MapProps) => {
+  ({lon, lat, observationId, accuracy, color}: MapProps) => {
     const coordinateFormat = useCoordinateFormat();
     const styleUrlQuery = useMapStyleJsonUrl();
     const {navigate} = useNavigationFromRoot();
@@ -61,7 +61,9 @@ export const InsetMapView = React.memo<MapProps>(
               </BodyText>
             </View>
             <View style={styles.arrow} />
-            <OrangeDot style={{alignSelf: 'center'}} />
+            <View
+              style={[styles.dot, {backgroundColor: color ?? DARK_ORANGE}]}
+            />
           </TouchableOpacity>
         </MarkerView>
       </MapboxGL.MapView>
@@ -91,5 +93,13 @@ const styles = StyleSheet.create({
   },
   map: {
     height: MAP_HEIGHT,
+  },
+  dot: {
+    alignSelf: 'center',
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: WHITE,
   },
 });

@@ -6,21 +6,14 @@ import type {AppStackParamsList} from '../sharedTypes/navigation';
 // App Links (https): https://app.comapeo.org/
 //
 // The hash fragment (#) is intentionally used for sensitive invite data in the
-// full invite-over-internet flow so it is never sent to the server. React
-// Navigation's linking config operates on the path portion only; the consuming
-// screen (InviteReceived?) is responsible for parsing window.location.hash / the raw URL when
-// needed to get the secret.
-//
-// Supported deep link paths:
-//   invite/<inviteId>  →  InviteReceived screen (onboarding + app contexts)
+// full invite-over-internet flow so it is never sent to the server (per
+// https://www.notion.so/digidem/Invite-over-the-internet-2e61b08162d580e9a861c3bf93c58d70#3281b08162d58094b975fbc2844511db ).
+// React Navigation's linking config operates on the path portion only; the consuming
+// screen (InviteReceived?) is responsible for parsing window.location.hash /
+// the raw URL when needed to get the secret.
 
 export const DEEP_LINK_HOST = 'app.comapeo.org';
 
-// Whether the app is ready to handle a deep link navigation.
-// When false (passcode screen or mid-onboarding), AppNavigator's
-// getStateFromPath returns undefined to suppress React Navigation's automatic
-// URL handling. RootStackNavigator updates this as auth state changes.
-// Plain object so it can be read and written outside React components.
 export const deepLinkReady = {appIsReady: false};
 
 export function setDeepLinkReady(appIsReady: boolean) {
@@ -36,9 +29,7 @@ export const linking: LinkingOptions<AppStackParamsList> = {
   },
 };
 
-// Parses an invite ID out of a deep link URL.
-// Returns null if the URL is not a recognised invite link.
-// Handles both custom scheme that is useful for preproduction
+// For now handles both custom scheme that is useful for preproduction
 // and testing: (comapeo://invite/<id>) and
 // Whatever we end up using (ex. https://app.comapeo.org/invite/<id>).
 export function parseInviteUrl(url: string): string | null {

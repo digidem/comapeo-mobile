@@ -53,11 +53,6 @@ function getInitialRoute(
   return 'Success';
 }
 
-// Navigates to InviteReceived once the app navigator has mounted.
-// Uses requestAnimationFrame to wait until after the current render finishes
-// and the navigator's screens are set up — otherwise the navigation call
-// arrives before the screen exists (this happens when the passcode is cleared
-// and the app navigator mounts for the first time in the same render).
 const PendingInviteNavigator = ({
   navigation,
   pendingInviteId,
@@ -69,11 +64,11 @@ const PendingInviteNavigator = ({
 }) => {
   React.useEffect(() => {
     if (!pendingInviteId) return;
-    const handle = requestAnimationFrame(() => {
+    const waitUntilMount = requestAnimationFrame(() => {
       navigation.navigate('InviteReceived', {inviteId: pendingInviteId});
       onNavigated();
     });
-    return () => cancelAnimationFrame(handle);
+    return () => cancelAnimationFrame(waitUntilMount);
   }, [pendingInviteId, navigation, onNavigated]);
 
   return null;
@@ -91,8 +86,6 @@ export const RootStackNavigator = () => {
     !deviceInfo.name ||
     !activeProjectId;
 
-  // Invite ID captured from a deep link URL. Survives the navigator remount
-  // when the app becomes ready so PendingInviteNavigator can act on it after unlock.
   const [pendingInviteId, setPendingInviteId] = React.useState<string | null>(
     null,
   );

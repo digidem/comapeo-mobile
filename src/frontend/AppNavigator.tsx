@@ -34,11 +34,6 @@ export const AppNavigator = ({
       ref={containerRef}
       linking={{
         ...linking,
-        // Suppress React Navigation's automatic deep link navigation while the
-        // app is not ready (passcode screen or mid-onboarding). Returning
-        // undefined tells React Navigation to ignore the URL —
-        // PendingInviteNavigator in the navigator layout picks it up once
-        // the app is ready.
         getStateFromPath: (path, options) => {
           if (!deepLinkReady.appIsReady) return undefined;
           return getStateFromPath(path, options);

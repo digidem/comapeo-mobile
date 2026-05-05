@@ -22,7 +22,6 @@ SettingsPrivacyPolicy.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
   scrollContent: {
-    backgroundColor: 'white',
     paddingVertical: 20,
     paddingHorizontal: 30,
   },

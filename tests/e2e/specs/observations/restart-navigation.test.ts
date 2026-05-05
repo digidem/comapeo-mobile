@@ -43,7 +43,7 @@ describe('MAIN - Observation Navigation Flow', () => {
     const closeIcon = await $(byResourceId('close-icon'));
     await closeIcon.click();
 
-    const discardObs = await $(byText('Discard Observation'));
+    const discardObs = await $(byText('Discard'));
     await discardObs.click();
 
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();

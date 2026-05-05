@@ -151,16 +151,7 @@
     "description": "Button to share an observation",
     "message": "Chia sẻ"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Hủy"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Có, xóa"
-  },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Xóa quan sát?"
   },
   "$1screens.Observation.description": {

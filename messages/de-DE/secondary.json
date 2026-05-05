@@ -3,10 +3,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Bearbeitung fortsetzen"
   },
-  "AppContainer.EditHeader.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Beobachtung verwerfen"
-  },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "Ihre Beobachtung wird nicht gespeichert. Dies kann nicht rückgängig gemacht werden."
   },
@@ -156,21 +152,9 @@
     "description": "Text for title that asks about confirming archive server removal.",
     "message": "{name} aus dem Projekt entfernen?"
   },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Abbrechen"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Ja, löschen"
-  },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
+    "description": "Button to delete a track",
     "message": "Löschen"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "Teilen"
   },
   "Storage.MapBanner.title": {
     "message": "Ihr Gerät hat wenig Speicherplatz."
@@ -355,12 +339,6 @@
   },
   "screens.AudioRecording.lessThan5": {
     "message": "Weniger als 5 Minuten verbleibend"
-  },
-  "screens.CameraScreen.goToSettings": {
-    "message": "Gehe zu Einstellungen"
-  },
-  "screens.CameraScreen.noCameraAccess": {
-    "message": "Kein Zugriff auf Kamera. Bitte erlauben Sie Zugriff in der Einstellung"
   },
   "screens.CollaboratorInfo.addedOn": {
     "message": "Hinzugefügt am {date}"
@@ -692,10 +670,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Beobachtung"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Beobachtung löschen?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",

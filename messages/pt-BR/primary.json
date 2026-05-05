@@ -103,10 +103,6 @@
     "description": "Title of dialog that shows when cancelling track edits",
     "message": "Excluir trilha?"
   },
-  "$1SaveTrack.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Excluir trilha"
-  },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Sua trilha não será salva. Isso não poderá ser desfeito."
   },
@@ -214,9 +210,6 @@
   },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Selecione um dispositivo para convidar"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "Selecionar dispositivo"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Selecione uma função"
@@ -499,22 +492,13 @@
   "$1screens.Observation.TrackList.track": {
     "message": "Trilha"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Cancelar"
-  },
   "$1screens.Observation.comapeoAlert": {
     "message": "Alerta CoMapeo"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Sim, excluir"
   },
   "$1screens.Observation.defaultProjectName": {
     "message": "Meu Projeto"
   },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Excluir observação?"
   },
   "$1screens.Observation.description": {
@@ -866,7 +850,6 @@
     "message": "Observações"
   },
   "$1screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
     "message": "Excluir trilha?"
   },
   "$1screens.Track.title": {

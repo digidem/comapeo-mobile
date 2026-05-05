@@ -73,9 +73,8 @@ describe('Observations - Filter Toggle (Early Access)', () => {
     const closeBtn = await $(byText('Close'));
     await closeBtn.click();
     await checkForElementGone(byResourceId('EA.turned-off-sheet'));
-    const backBtn = $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await backBtn.click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
     await $(byResourceId('MAIN.map-screen')).click();
   });
 

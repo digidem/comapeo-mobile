@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {styles} from './styles';
 import {NEW_DARK_GREY} from '../../lib/styles';
 
@@ -21,10 +22,10 @@ export const DiagnosticItem: React.FC<DiagnosticItemProps> = ({
         color={NEW_DARK_GREY}
         style={styles.bulletIcon}
       />
-      <Text style={styles.boldText}>
+      <HeaderText variant="header6" style={{color: NEW_DARK_GREY}}>
         {title}:{' '}
         <Text style={styles.diagnosticsDescription}>{description}</Text>
-      </Text>
+      </HeaderText>
     </View>
   );
 };

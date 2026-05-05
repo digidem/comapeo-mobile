@@ -18,7 +18,7 @@ describe('Observations - Create Observation Flow', () => {
     const closeIcon = await $(byResourceId('close-icon'));
     await closeIcon.click();
 
-    const discardObs = await $(byText('Discard Observation'));
+    const discardObs = await $(byText('Discard'));
     await expect(discardObs).toBeDisplayed();
 
     const continueEditing = await $(byTextMatches('Continue editing'));

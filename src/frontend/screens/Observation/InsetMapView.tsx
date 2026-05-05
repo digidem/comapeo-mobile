@@ -1,11 +1,10 @@
 import {MapView, Camera, MarkerView} from '@maplibre/maplibre-react-native';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {WHITE} from '../../lib/styles';
+import {WHITE, DARK_ORANGE} from '../../lib/styles';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import MapPin from '../../images/MapPin.svg';
-import OrangeDot from '../../images/OrangeDot.svg';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext';
 
@@ -16,9 +15,16 @@ type MapProps = {
   lat: number;
   observationId: string;
   accuracy?: number;
+  color?: string;
 };
 
-export const InsetMapView = ({lon, lat, observationId, accuracy}: MapProps) => {
+export const InsetMapView = ({
+  lon,
+  lat,
+  observationId,
+  accuracy,
+  color,
+}: MapProps) => {
   const coordinateFormat = useCoordinateFormat();
   const {data: styleUrl} = useMapStyleJsonUrl();
   const {navigate} = useNavigationFromRoot();
@@ -55,7 +61,7 @@ export const InsetMapView = ({lon, lat, observationId, accuracy}: MapProps) => {
             </BodyText>
           </View>
           <View style={styles.arrow} />
-          <OrangeDot style={{alignSelf: 'center'}} />
+          <View style={[styles.dot, {backgroundColor: color ?? DARK_ORANGE}]} />
         </TouchableOpacity>
       </MarkerView>
     </MapView>
@@ -84,5 +90,13 @@ const styles = StyleSheet.create({
   },
   map: {
     height: MAP_HEIGHT,
+  },
+  dot: {
+    alignSelf: 'center',
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: WHITE,
   },
 });

@@ -173,7 +173,6 @@ export const MapScreen = ({
             centerCoordinate={following ? coords : undefined}
             zoomLevel={DEFAULT_ZOOM}
             animationDuration={0}
-            // animationMode="none"
             followUserLocation={false}
           />
 

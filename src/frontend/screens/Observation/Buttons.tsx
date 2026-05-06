@@ -175,7 +175,7 @@ export const ButtonFields = ({
               observation.metadata.position.coords.accuracy,
               unitSystem,
             );
-            return `${t(m.precision)} ${value} ${unit}`;
+            return `${t(m.precision)} ${Math.round(value)} ${unit}`;
           })()
         : '';
 

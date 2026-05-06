@@ -3,35 +3,50 @@ import {type UnitSystem} from '../contexts/UnitSystemStoreContext';
 // --- Conversion factors ---
 const M_TO_FT = 3.28084;
 const KM_TO_MI = 0.621371;
-const MS_TO_MPH = 2.23694;
+const MS_TO_FTS = 3.28084;
+
+export type LengthUnit = 'ft' | 'm';
+export type DistanceUnit = 'mi' | 'km';
+export type SpeedUnit = 'ft/s' | 'm/s';
+
+export function getLengthUnit(unitSystem: UnitSystem): LengthUnit {
+  return unitSystem === 'imperial' ? 'ft' : 'm';
+}
+
+export function getDistanceUnit(unitSystem: UnitSystem): DistanceUnit {
+  return unitSystem === 'imperial' ? 'mi' : 'km';
+}
+
+export function getSpeedUnit(unitSystem: UnitSystem): SpeedUnit {
+  return unitSystem === 'imperial' ? 'ft/s' : 'm/s';
+}
 
 export function metersOrConversion(
   meters: number,
   unitSystem: UnitSystem,
-  decimals = 0,
-): {value: string; unit: string} {
+): {value: number; unit: LengthUnit} {
   if (unitSystem === 'imperial') {
-    return {value: (meters * M_TO_FT).toFixed(decimals), unit: 'ft'};
+    return {value: meters * M_TO_FT, unit: 'ft'};
   }
-  return {value: meters.toFixed(decimals), unit: 'm'};
+  return {value: meters, unit: 'm'};
 }
 
 export function kmOrConversion(
   km: number,
   unitSystem: UnitSystem,
-): {value: string; unit: string} {
+): {value: number; unit: DistanceUnit} {
   if (unitSystem === 'imperial') {
-    return {value: (km * KM_TO_MI).toFixed(2), unit: 'mi'};
+    return {value: km * KM_TO_MI, unit: 'mi'};
   }
-  return {value: km.toFixed(2), unit: 'km'};
+  return {value: km, unit: 'km'};
 }
 
 export function metersPerSecondOrConversion(
   mps: number,
   unitSystem: UnitSystem,
-): {value: string; unit: string} {
+): {value: number; unit: SpeedUnit} {
   if (unitSystem === 'imperial') {
-    return {value: (mps * MS_TO_MPH).toFixed(2), unit: 'mph'};
+    return {value: mps * MS_TO_FTS, unit: 'ft/s'};
   }
-  return {value: mps.toFixed(2), unit: 'm/s'};
+  return {value: mps, unit: 'm/s'};
 }

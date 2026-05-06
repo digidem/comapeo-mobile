@@ -65,9 +65,8 @@ export const InsetMapView = ({
                   const {value, unit} = metersOrConversion(
                     accuracy,
                     unitSystem,
-                    2,
                   );
-                  return ` ± ${value} ${unit}`;
+                  return ` ± ${value.toFixed(2)} ${unit}`;
                 })()}
             </BodyText>
           </View>

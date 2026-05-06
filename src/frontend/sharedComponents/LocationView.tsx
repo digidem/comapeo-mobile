@@ -46,7 +46,9 @@ export const LocationView = ({lat, lon, accuracy}: LocationViewProps) => {
                 return (
                   <BodyText
                     variant="tinyMeta"
-                    style={styles.accuracy}>{` ±${value} ${unit}`}</BodyText>
+                    style={
+                      styles.accuracy
+                    }>{` ±${Math.round(value)} ${unit}`}</BodyText>
                 );
               })()}
         </React.Fragment>

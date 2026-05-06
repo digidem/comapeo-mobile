@@ -6,7 +6,12 @@ import {
   useUnitSystem,
   useUnitSystemActions,
 } from '../../contexts/UnitSystemStoreContext';
-import {SelectOne} from '../../sharedComponents/SelectOne';
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+} from '../../sharedComponents/List';
 import {type NativeNavigationComponent} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
@@ -42,30 +47,38 @@ export const UnitSystemSettings: NativeNavigationComponent<
   const unitSystem = useUnitSystem();
   const {setUnitSystem} = useUnitSystemActions();
 
-  const options = [
-    {
-      value: 'metric' as const,
-      label: t(m.metric),
-      hint: t(m.metricSubtitle),
-    },
-    {
-      value: 'imperial' as const,
-      label: t(m.imperial),
-      hint: t(m.imperialSubtitle),
-    },
-  ];
+  const isMetric = unitSystem === 'metric';
+  const isImperial = unitSystem === 'imperial';
 
   return (
     <ScrollView
       testID="unitSystemScreen"
       contentContainerStyle={{paddingTop: 25}}>
-      <SelectOne
-        value={unitSystem}
-        options={options}
-        onChange={selected => {
-          setUnitSystem(selected);
-        }}
-      />
+      <List>
+        <ListItem
+          testID={isMetric ? 'metricButton-selected' : 'metricButton'}
+          onPress={() => !isMetric && setUnitSystem('metric')}>
+          <ListItemIcon
+            iconName={
+              isMetric ? 'radio-button-checked' : 'radio-button-unchecked'
+            }
+          />
+          <ListItemText primary={t(m.metric)} secondary={t(m.metricSubtitle)} />
+        </ListItem>
+        <ListItem
+          testID={isImperial ? 'imperialButton-selected' : 'imperialButton'}
+          onPress={() => !isImperial && setUnitSystem('imperial')}>
+          <ListItemIcon
+            iconName={
+              isImperial ? 'radio-button-checked' : 'radio-button-unchecked'
+            }
+          />
+          <ListItemText
+            primary={t(m.imperial)}
+            secondary={t(m.imperialSubtitle)}
+          />
+        </ListItem>
+      </List>
     </ScrollView>
   );
 };

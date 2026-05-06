@@ -16,6 +16,7 @@ export const UserTooltipMarker = () => {
     totalDistance,
     unitSystem,
   );
+  const formattedDistance = distanceValue.toFixed(2);
 
   return (
     // We dont want to put this check in the parent because it will cause the parent (the map) to render too often
@@ -29,7 +30,7 @@ export const UserTooltipMarker = () => {
           <View style={styles.wrapper}>
             <View>
               <Text style={styles.text}>
-                {distanceValue} {distanceUnit}
+                {formattedDistance} {distanceUnit}
               </Text>
             </View>
             <View style={styles.separator} />

@@ -235,7 +235,7 @@ export function AttachedPhotoPreviewModal({
                                 metersFromObservation / 1000,
                                 unitSystem,
                               );
-                              return `${value} ${unit}`;
+                              return `${value.toFixed(2)} ${unit}`;
                             }
                             return metersFromObservation < 1000
                               ? formatNumber(metersFromObservation, {

@@ -41,7 +41,7 @@ export const TrackStats = ({
       <View style={styles.dividerBlock}>
         <View style={styles.divider} />
         <BodyText variant="tinyMeta">
-          {displayDistance} {distanceUnit}
+          {displayDistance.toFixed(2)} {distanceUnit}
         </BodyText>
       </View>
     </View>

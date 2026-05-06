@@ -17,7 +17,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BLACK, BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import HeartCheckIcon from '../../images/HeartCheck.svg';
-import AngleRulerIcon from '../../../images/AngleRuler.svg';
+import AngleRulerIcon from '../../images/AngleRuler.svg';
 
 const m = defineMessages({
   title: {

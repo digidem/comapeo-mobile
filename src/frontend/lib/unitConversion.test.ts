@@ -5,99 +5,74 @@ import {
 } from './unitConversion';
 
 describe('metersOrConversion', () => {
-  it('returns meters with 0 decimal places in metric', () => {
-    expect(metersOrConversion(10, 'metric')).toEqual({value: '10', unit: 'm'});
+  it('returns meters in metric', () => {
+    expect(metersOrConversion(10, 'metric')).toEqual({value: 10, unit: 'm'});
     expect(metersOrConversion(10.75, 'metric')).toEqual({
-      value: '11',
+      value: 10.75,
       unit: 'm',
     });
-    expect(metersOrConversion(0.4, 'metric')).toEqual({value: '0', unit: 'm'});
+    expect(metersOrConversion(0.4, 'metric')).toEqual({value: 0.4, unit: 'm'});
   });
 
   it('converts to feet in imperial', () => {
-    // 1m * 3.28084 = 3.28084 → '3'
-    expect(metersOrConversion(1, 'imperial')).toEqual({value: '3', unit: 'ft'});
-    // 10m * 3.28084 = 32.8084 → '33'
+    expect(metersOrConversion(1, 'imperial')).toEqual({
+      value: 3.28084,
+      unit: 'ft',
+    });
     expect(metersOrConversion(10, 'imperial')).toEqual({
-      value: '33',
+      value: 32.8084,
       unit: 'ft',
     });
-    // 100m * 3.28084 = 328.084 → '328'
     expect(metersOrConversion(100, 'imperial')).toEqual({
-      value: '328',
-      unit: 'ft',
-    });
-  });
-
-  it('respects the decimals parameter', () => {
-    expect(metersOrConversion(10.75, 'metric', 2)).toEqual({
-      value: '10.75',
-      unit: 'm',
-    });
-    // 1m * 3.28084 = 3.28084 → '3.28'
-    expect(metersOrConversion(1, 'imperial', 2)).toEqual({
-      value: '3.28',
+      value: 328.084,
       unit: 'ft',
     });
   });
 });
 
 describe('kmOrConversion', () => {
-  it('returns km with 2 decimal places in metric', () => {
-    expect(kmOrConversion(1, 'metric')).toEqual({
-      value: '1.00',
-      unit: 'km',
-    });
-    expect(kmOrConversion(5.678, 'metric')).toEqual({
-      value: '5.68',
-      unit: 'km',
-    });
+  it('returns km in metric', () => {
+    expect(kmOrConversion(1, 'metric')).toEqual({value: 1, unit: 'km'});
+    expect(kmOrConversion(5.678, 'metric')).toEqual({value: 5.678, unit: 'km'});
   });
 
   it('converts to miles in imperial', () => {
-    // 1km * 0.621371 = 0.621371 → '0.62'
     expect(kmOrConversion(1, 'imperial')).toEqual({
-      value: '0.62',
+      value: 0.621371,
       unit: 'mi',
     });
-    // 10km * 0.621371 = 6.21371 → '6.21'
     expect(kmOrConversion(10, 'imperial')).toEqual({
-      value: '6.21',
+      value: 6.21371,
       unit: 'mi',
     });
-    expect(kmOrConversion(0, 'imperial')).toEqual({
-      value: '0.00',
-      unit: 'mi',
-    });
+    expect(kmOrConversion(0, 'imperial')).toEqual({value: 0, unit: 'mi'});
   });
 });
 
 describe('metersPerSecondOrConversion', () => {
-  it('returns m/s with 2 decimal places in metric', () => {
+  it('returns m/s in metric', () => {
     expect(metersPerSecondOrConversion(1, 'metric')).toEqual({
-      value: '1.00',
+      value: 1,
       unit: 'm/s',
     });
     expect(metersPerSecondOrConversion(9.81, 'metric')).toEqual({
-      value: '9.81',
+      value: 9.81,
       unit: 'm/s',
     });
   });
 
-  it('converts to mph in imperial', () => {
-    // 1 m/s * 2.23694 = 2.23694 → '2.24'
+  it('converts to ft/s in imperial', () => {
     expect(metersPerSecondOrConversion(1, 'imperial')).toEqual({
-      value: '2.24',
-      unit: 'mph',
+      value: 3.28084,
+      unit: 'ft/s',
     });
-    // 10 m/s * 2.23694 = 22.3694 → '22.37'
     expect(metersPerSecondOrConversion(10, 'imperial')).toEqual({
-      value: '22.37',
-      unit: 'mph',
+      value: 32.8084,
+      unit: 'ft/s',
     });
     expect(metersPerSecondOrConversion(0, 'imperial')).toEqual({
-      value: '0.00',
-      unit: 'mph',
+      value: 0,
+      unit: 'ft/s',
     });
   });
 });

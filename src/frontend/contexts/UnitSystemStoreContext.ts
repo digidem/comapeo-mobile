@@ -1,4 +1,4 @@
-import {createContext, useContext} from 'react';
+import React, {createContext, useContext} from 'react';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
   createJSONStorage,
@@ -54,7 +54,16 @@ export type UnitSystemStore = ReturnType<typeof createUnitSystemStore>;
 export const UnitSystemStoreContext = createContext<UnitSystemStore | null>(
   null,
 );
-export const UnitSystemStoreProvider = UnitSystemStoreContext.Provider;
+
+export function UnitSystemStoreProvider({
+  value,
+  children,
+}: {
+  value: UnitSystemStore;
+  children: React.ReactNode;
+}) {
+  return React.createElement(UnitSystemStoreContext, {value}, children);
+}
 
 function useUnitSystemStoreContext() {
   const value = useContext(UnitSystemStoreContext);

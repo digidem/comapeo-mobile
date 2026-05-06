@@ -231,7 +231,7 @@ export function MapReceivedBottomSheet({
                             unitSystem,
                           );
                           return t(m.distanceAway, {
-                            distance: `${value} ${unit}`,
+                            distance: `${value.toFixed(2)} ${unit}`,
                           });
                         })()
                       : t(m.mbNeeded, {size: warningInfo.mbNeeded})}

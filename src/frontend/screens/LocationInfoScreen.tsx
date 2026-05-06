@@ -98,11 +98,11 @@ export const LocationInfoScreen = () => {
       key === 'altitudeAccuracy'
     ) {
       const {value: v, unit} = metersOrConversion(value, unitSystem);
-      return `${v} ${unit}`;
+      return `${v.toFixed(0)} ${unit}`;
     }
     if (key === 'speed') {
       const {value: v, unit} = metersPerSecondOrConversion(value, unitSystem);
-      return `${v} ${unit}`;
+      return `${v.toFixed(2)} ${unit}`;
     }
     return value.toFixed(5);
   };

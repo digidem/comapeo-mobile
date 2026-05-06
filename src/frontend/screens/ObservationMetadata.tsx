@@ -23,6 +23,8 @@ import {useUnitSystem} from '../contexts/UnitSystemStoreContext';
 import {
   metersOrConversion,
   metersPerSecondOrConversion,
+  getLengthUnit,
+  getSpeedUnit,
 } from '../lib/unitConversion';
 import {useOpenShareDialog} from '../hooks/share';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
@@ -125,12 +127,12 @@ export const ObservationMetadata: NativeNavigationComponent<
   const openShare = useOpenShareDialog();
 
   const manualLocation = metadata?.manualLocation;
-  const lengthUnit = metersOrConversion(0, unitSystem).unit;
-  const speedUnit = metersPerSecondOrConversion(0, unitSystem).unit;
+  const lengthUnit = getLengthUnit(unitSystem);
+  const speedUnit = getSpeedUnit(unitSystem);
   const toMetersValue = (raw: number) =>
-    metersOrConversion(raw, unitSystem).value;
+    Math.round(metersOrConversion(raw, unitSystem).value).toString();
   const toSpeedValue = (raw: number) =>
-    metersPerSecondOrConversion(raw, unitSystem).value;
+    metersPerSecondOrConversion(raw, unitSystem).value.toFixed(2);
 
   const listData: {
     [key: string]: {

@@ -40,7 +40,7 @@ describe('Settings - Unit System Flow', () => {
     await $(byResourceId('MAP.gps-pill')).click();
     await expect($(byResourceId('MAIN.gps-details-scrn'))).toBeDisplayed();
     await expect($(byTextMatches('\\d+(\\.\\d+)? ft'))).toBeDisplayed();
-    await expect($(byTextMatches('\\d+\\.\\d+ mph'))).toBeDisplayed();
+    await expect($(byTextMatches('\\d+\\.\\d+ ft/s'))).toBeDisplayed();
   });
 
   it('should switch back to Metric via settings', async () => {

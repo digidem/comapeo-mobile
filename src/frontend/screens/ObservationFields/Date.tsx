@@ -34,7 +34,7 @@ export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
     // timezones behind UTC.
     const dateAsIso = new Date(date.dateString + 'T00:00:00').toISOString();
     if (valueAsDate === dateAsIso) {
-      // if user is selecting same date, unselect that date
+      // if user is pressing the same date it indicates they are unselecting that date
       updateTag(null);
       return;
     }

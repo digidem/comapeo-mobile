@@ -1,22 +1,27 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-import {BLUE_GREY, DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles.ts';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {
+  BLUE_GREY,
+  DARK_GREY,
+  LIGHT_GREY,
+  VERY_LIGHT_GREY,
+} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
-import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {
-  useDeleteTrackMutation,
-  useTrackQuery,
-  useGetPresetById,
-} from '../../hooks/server/track.ts';
+  FormattedMessage,
+  MessageDescriptor,
+  defineMessages,
+  useIntl,
+} from 'react-intl';
+import {useTrackQuery, useGetPresetById} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
 import {ObservationList} from './ObservationList.tsx';
-import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
 import {TrackHeaderRight} from './TrackHeaderRight';
-import * as Sentry from '@sentry/react-native';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 import {
   getLocationHistoryFromTrack,
@@ -25,6 +30,7 @@ import {
 import {TrackStats} from '../../sharedComponents/TrackStats.tsx';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
+import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 
 const m = defineMessages({
   title: {
@@ -33,14 +39,14 @@ const m = defineMessages({
     description:
       'Title of track screen showing (non-editable) view of observation with map',
   },
-  deleteTitle: {
-    id: '$1screens.Track.deleteTitle',
-    defaultMessage: 'Delete track?',
-    description: 'Title of dialog asking confirmation to delete a track',
-  },
   tracks: {
     id: 'screens.Track.tracks',
     defaultMessage: 'Tracks',
+  },
+  delete: {
+    id: 'SharedComponents.ActionButtons.delete',
+    defaultMessage: 'Delete',
+    description: 'Button to delete a track',
   },
 });
 
@@ -49,31 +55,20 @@ export const TrackScreen = ({
   navigation,
 }: NativeRootNavigationProps<'Track'>) => {
   const {trackId} = route.params;
+  const {formatMessage: t} = useIntl();
 
   const {data: track} = useTrackQuery(trackId);
   const {data: observations} = useObservations();
   const trackObservations = observations.filter(observation =>
     track.observationRefs.some(ref => ref.docId === observation.docId),
   );
-  const {mutate: deleteTrackMutate} = useDeleteTrackMutation();
   const canDelete = useCanEditOrDelete(track.originalVersionId);
   const locationHistory = getLocationHistoryFromTrack(track);
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
   const preset = useGetPresetById(track?.presetRef?.docId);
 
-  function deleteTrack() {
-    deleteTrackMutate(
-      {docId: track.docId},
-      {
-        onSuccess: () => {
-          navigation.pop();
-        },
-        onError: err => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet', {error: err});
-        },
-      },
-    );
+  function handlePressDelete() {
+    navigation.navigate('ConfirmDeleteTrackBottomSheet', {trackId});
   }
 
   return (
@@ -81,11 +76,18 @@ export const TrackScreen = ({
       contentContainerStyle={{padding: 0}}
       dockContainerStyle={{padding: 0}}
       dockContent={
-        <ActionButtons
-          handleDelete={deleteTrack}
-          canDelete={canDelete}
-          deleteMessage={m.deleteTitle}
-        />
+        <View style={styles.buttonContainer}>
+          {canDelete && (
+            <TouchableOpacity onPress={handlePressDelete} style={{flex: 1}}>
+              <View style={styles.button}>
+                <MaterialIcons size={30} name="delete" color={DARK_GREY} />
+                <BodyText variant="smallMeta" style={styles.buttonText}>
+                  {t(m.delete)}
+                </BodyText>
+              </View>
+            </TouchableOpacity>
+          )}
+        </View>
       }>
       <View>
         <MapPreview
@@ -150,5 +152,19 @@ export const styles = StyleSheet.create({
   text: {
     margin: 10,
     fontSize: 22,
+  },
+  button: {
+    alignItems: 'center',
+  },
+  buttonText: {
+    textAlign: 'center',
+    marginTop: 5,
+  },
+  buttonContainer: {
+    paddingVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderTopColor: LIGHT_GREY,
+    borderTopWidth: 1,
   },
 });

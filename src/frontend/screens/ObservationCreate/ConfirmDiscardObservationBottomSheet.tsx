@@ -32,7 +32,7 @@ const m = defineMessages({
   },
   discardObservationButton: {
     id: 'AppContainer.EditHeader.discardObservationButton',
-    defaultMessage: 'Discard Observation',
+    defaultMessage: 'Discard',
     description: 'Title of dialog that shows when cancelling observation edits',
   },
 });

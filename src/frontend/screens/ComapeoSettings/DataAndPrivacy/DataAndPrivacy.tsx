@@ -1,25 +1,25 @@
 import * as React from 'react';
 import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
-import CoMapeoShield from '../../images/CoMapeoShield.svg';
+import CoMapeoShield from '../../../images/CoMapeoShield.svg';
 import {
   BLUE_GREY,
   WHITE,
   BLACK,
   COMAPEO_BLUE,
   NEW_DARK_GREY,
-} from '../../lib/styles';
+} from '../../../lib/styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AppStackParamsList} from '../../sharedTypes/navigation';
+import {AppStackParamsList} from '../../../sharedTypes/navigation';
 import {useIntl, defineMessages} from 'react-intl';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import {MetricsDiagnosticsPermissionToggle} from '../../sharedComponents/MetricsDiagnosticsPermissionToggle';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {Checkbox} from '../../sharedComponents/Checkbox';
+import {MetricsDiagnosticsPermissionToggle} from '../../../sharedComponents/MetricsDiagnosticsPermissionToggle';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {Checkbox} from '../../../sharedComponents/Checkbox';
 import {
   useAppUsageStatsActions,
   useAppUsageStatsState,
-} from '../../contexts/AppUsageStatsContext';
+} from '../../../contexts/AppUsageStatsContext';
 const m = defineMessages({
   navTitle: {
     id: 'screens.DataAndPrivacy.navTitle',

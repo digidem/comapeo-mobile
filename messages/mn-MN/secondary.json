@@ -32,21 +32,9 @@
     "description": "Text for cancel action button.",
     "message": "Цуцлах"
   },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Цуцлах"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Тийм, устгах"
-  },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
+    "description": "Button to delete a track",
     "message": "Устгах"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "Хуваалцах"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -263,10 +251,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Сануулга"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Сануулгыг устгах уу?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",

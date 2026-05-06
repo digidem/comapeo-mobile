@@ -5,9 +5,9 @@ import {ScrollView} from 'react-native';
 import {
   useUnitSystem,
   useUnitSystemActions,
-} from '../../../contexts/UnitSystemStoreContext';
-import {SelectOne} from '../../../sharedComponents/SelectOne';
-import {type NativeNavigationComponent} from '../../../sharedTypes/navigation';
+} from '../../contexts/UnitSystemStoreContext';
+import {SelectOne} from '../../sharedComponents/SelectOne';
+import {type NativeNavigationComponent} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {

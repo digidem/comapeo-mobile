@@ -100,10 +100,6 @@
     "description": "Title of dialog that shows when cancelling track edits",
     "message": "Abandonner la piste?"
   },
-  "$1SaveTrack.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Abandonner la piste"
-  },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Votre Piste ne sera pas enregistrée. Cette action ne peut pas être annulée."
   },
@@ -208,9 +204,6 @@
   },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Sélectionnez l'appareil à inviter"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "Sélectionner un appareil"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Sélectionnez un rôle"
@@ -499,22 +492,13 @@
   "$1screens.Observation.TrackList.track": {
     "message": "Piste"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Annuler"
-  },
   "$1screens.Observation.comapeoAlert": {
     "message": "Données CoMapeo envoyées depuis *{projectName}*"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Oui, supprimer"
   },
   "$1screens.Observation.defaultProjectName": {
     "message": "Mon projet"
   },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Supprimer l'observation?"
   },
   "$1screens.Observation.details": {
@@ -802,7 +786,6 @@
     "message": "Échanger"
   },
   "$1screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
     "message": "Supprimer le parcours ?"
   },
   "$1screens.Track.title": {

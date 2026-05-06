@@ -134,16 +134,7 @@
     "description": "Button to share an observation",
     "message": "แบ่งปัน"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "ยกเลิก"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "ใช่ ลบได้"
-  },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "ยืนยันให้ลบการสังเกตนี้หรือไม่?"
   },
   "$1screens.Observation.description": {

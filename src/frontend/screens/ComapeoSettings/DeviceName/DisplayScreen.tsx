@@ -3,11 +3,11 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
-import {Text} from '../../sharedComponents/Text';
-import {IconButton} from '../../sharedComponents/IconButton';
-import {EditIcon} from '../../sharedComponents/icons';
+import {Text} from '../../../sharedComponents/Text';
+import {IconButton} from '../../../sharedComponents/IconButton';
+import {EditIcon} from '../../../sharedComponents/icons';
 import {FieldRow} from './FieldRow';
 
 const m = defineMessages({

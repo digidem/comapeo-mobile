@@ -40,11 +40,6 @@ import {useDraftObservationActions} from '../../contexts/DraftObservationContext
 import {SavedPhoto} from '../../sharedTypes/index.ts';
 
 const m = defineMessages({
-  deleteTitle: {
-    id: 'screens.Observation.deleteTitle',
-    defaultMessage: 'Delete observation?',
-    description: 'Title of dialog asking confirmation to delete an observation',
-  },
   title: {
     id: '$1screens.Observation.title',
     defaultMessage: 'Observation',
@@ -110,6 +105,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             observationId={observationId}
             lat={lat}
             lon={lon}
+            color={preset?.color}
           />
         )}
         <TouchableOpacity

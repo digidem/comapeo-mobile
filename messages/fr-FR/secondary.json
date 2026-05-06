@@ -3,10 +3,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Continuer la modification"
   },
-  "AppContainer.EditHeader.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Ignorer l’observation"
-  },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "Votre observation ne sera pas enregistrée. Cette action est irréversible."
   },
@@ -156,21 +152,9 @@
     "description": "Text for title that asks about confirming archive server removal.",
     "message": "Retirer {name} du projet ?"
   },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Annuler"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Oui, supprimer"
-  },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
+    "description": "Button to delete a track",
     "message": "Effacer"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "Partager"
   },
   "Storage.MapBanner.title": {
     "message": "Le stockage de votre appareil est faible."
@@ -361,12 +345,6 @@
   },
   "screens.AudioRecording.lessThan5": {
     "message": "Moins de 5 minutes restantes"
-  },
-  "screens.CameraScreen.goToSettings": {
-    "message": "Accéder aux paramètres"
-  },
-  "screens.CameraScreen.noCameraAccess": {
-    "message": "Aucun accès à la caméra. Veuillez autoriser l'accès dans les paramètres"
   },
   "screens.CollaboratorInfo.addedOn": {
     "message": "Ajouté le {date}"
@@ -708,10 +686,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Supprimer l'observation?"
   },
   "screens.ObservationCategoryChooser.title": {
     "message": "Choisissez une catégorie"

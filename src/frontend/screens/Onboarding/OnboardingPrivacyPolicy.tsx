@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {PrivacyPolicy} from '../PrivacyPolicy';
 import {BLUE_GREY, WHITE} from '../../lib/styles';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {MetricsDiagnosticsPermissionToggle} from '../../sharedComponents/MetricsDiagnosticsPermissionToggle';
 
 const m = defineMessages({
@@ -23,7 +24,9 @@ export const OnboardingPrivacyPolicy = () => {
     <ScrollView contentContainerStyle={styles.scrollContent}>
       <PrivacyPolicy />
       <View style={styles.horizontalLine} />
-      <Text style={styles.header}>{formatMessage(m.permissionsTitle)}</Text>
+      <HeaderText variant="header2" style={styles.header}>
+        {formatMessage(m.permissionsTitle)}
+      </HeaderText>
       <View style={styles.permissionToggleContainer}>
         <MetricsDiagnosticsPermissionToggle />
       </View>
@@ -35,7 +38,6 @@ OnboardingPrivacyPolicy.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
   scrollContent: {
-    backgroundColor: 'white',
     paddingVertical: 20,
     paddingHorizontal: 30,
   },
@@ -45,8 +47,6 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   header: {
-    fontSize: 24,
-    fontWeight: 'bold',
     marginBottom: 20,
   },
   permissionToggleContainer: {

@@ -53,7 +53,7 @@ export type RootStackParamsList = {
   Home: NavigatorScreenParams<HomeTabsParamsList>;
   GpsModal: undefined;
   Settings: undefined;
-  Config: undefined;
+  Categories: undefined;
   AboutSettings: undefined;
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
@@ -205,6 +205,8 @@ export type RootStackParamsList = {
   ConfirmDiscardObservationEditBottomSheet: undefined;
   ConfirmDiscardTrackBottomSheet: undefined;
   TurnOffPasscodeBottomSheet: undefined;
+  ConfirmDeleteObservationBottomSheet: {observationId: string};
+  ConfirmDeleteTrackBottomSheet: {trackId: string};
 };
 
 export type OnboardingParamsList = {

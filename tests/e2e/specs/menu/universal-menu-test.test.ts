@@ -49,8 +49,12 @@ describe('Menu - basic functionality of the menu', () => {
     await coMapeoSettings.click();
 
     await expect(await $(byText('CoMapeo Settings'))).toBeDisplayed();
-    await expect(await $(byText('Device Name'))).toBeDisplayed();
-    await expect(await $(byText('Language'))).toBeDisplayed();
+    await expect(
+      await $(byResourceId('device-name-list-item')),
+    ).toBeDisplayed();
+    await expect(
+      await $(byResourceId('languageSettingsButton')),
+    ).toBeDisplayed();
 
     await driver.back();
   });

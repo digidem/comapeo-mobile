@@ -4,13 +4,19 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
 
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {RED} from '../../lib/styles';
-import {SecondaryButton, PrimaryButton} from '../../sharedComponents/Buttons';
-import {CELL_COUNT, PasscodeInput} from '../../sharedComponents/PasscodeInput';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
+import {RED} from '../../../../lib/styles';
+import {
+  SecondaryButton,
+  PrimaryButton,
+} from '../../../../sharedComponents/Buttons';
+import {
+  CELL_COUNT,
+  PasscodeInput,
+} from '../../../../sharedComponents/PasscodeInput';
+import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   button: {

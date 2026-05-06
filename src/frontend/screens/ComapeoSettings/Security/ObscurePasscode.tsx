@@ -3,16 +3,16 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 
 import MaterialIcon from '@react-native-vector-icons/material-icons';
-import {OBSCURE_PASSCODE} from '../constants';
-import {LIGHT_GREY} from '../lib/styles';
-import {HeaderText} from '../sharedComponents/Text/HeaderText';
-import {BodyText} from '../sharedComponents/Text/BodyText';
+import {OBSCURE_PASSCODE} from '../../../constants';
+import {LIGHT_GREY} from '../../../lib/styles';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {
   useSecurityActions,
   useSecurityState,
-} from '../contexts/SecurityStoreContext';
-import {NativeNavigationComponent} from '../sharedTypes/navigation';
+} from '../../../contexts/SecurityStoreContext';
+import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {

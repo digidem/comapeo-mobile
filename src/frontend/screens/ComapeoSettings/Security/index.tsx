@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {FullScreenMenuList} from '../../sharedComponents/MenuList/FullScreenMenuList';
-import {MenuListItemType} from '../../sharedComponents/MenuList/MenuListItem';
-import {useSecurityState} from '../../contexts/SecurityStoreContext';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {MEDIUM_GREY, RED} from '../../lib/styles';
+import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
+import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
+import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
+import {useSecurityState} from '../../../contexts/SecurityStoreContext';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {MEDIUM_GREY, RED} from '../../../lib/styles';
 
 const m = defineMessages({
   title: {

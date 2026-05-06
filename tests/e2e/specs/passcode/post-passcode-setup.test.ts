@@ -11,7 +11,7 @@ describe('Passcode - Post Passcode Setup Flow', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
-    const securityOption = await $(byText('Security'));
+    const securityOption = await $(byResourceId('securitySettingsButton'));
     await securityOption.click();
 
     const appPasscodeItem = await $(byText('App Passcode'));
@@ -25,7 +25,7 @@ describe('Passcode - Post Passcode Setup Flow', () => {
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await expect(securityOption).toBeDisplayed();
+    await expect($(byTextMatches('Security'))).toBeDisplayed();
   });
 
   it('should cancel passcode entry, then try with wrong passcode, then correct passcode', async () => {

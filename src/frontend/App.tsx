@@ -1,5 +1,18 @@
 import * as React from 'react';
+import {Logger} from '@maplibre/maplibre-react-native';
 import {getLocales} from 'expo-localization';
+
+// Maplibre logs when tile request are cancelled, which is often.
+// this turns off the unneccessary noise in the console logs
+Logger.setLogCallback(log => {
+  if (
+    log.tag === 'Mbgl-HttpRequest' &&
+    log.message.startsWith('Request failed due to a permanent error: Canceled')
+  ) {
+    return true;
+  }
+  return false;
+});
 import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {initializeNodejs} from './initializeNodejs';

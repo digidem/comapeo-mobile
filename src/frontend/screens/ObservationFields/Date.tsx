@@ -15,7 +15,7 @@ const m = defineMessages({
 
 type DatePickerProps = {
   tagValue: Observation['tags'][number] | undefined;
-  updateTag: (newDate: string) => void;
+  updateTag: (newDate: string | null) => void;
 };
 
 /**
@@ -34,7 +34,8 @@ export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
     // timezones behind UTC.
     const dateAsIso = new Date(date.dateString + 'T00:00:00').toISOString();
     if (valueAsDate === dateAsIso) {
-      updateTag(dateAsIso);
+      // if user is selecting same date, unselect that date
+      updateTag(null);
       return;
     }
     updateTag(dateAsIso);

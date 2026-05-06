@@ -1,10 +1,13 @@
-import {LineLayer, ShapeSource} from '@rnmapbox/maps';
+import {
+  LineLayer,
+  ShapeSource,
+  type OnPressEvent,
+} from '@maplibre/maplibre-react-native';
 import * as React from 'react';
 
 import {FeatureCollection} from 'geojson';
 import {useTracks} from '../../../hooks/server/track';
 import {Track} from '@comapeo/schema';
-import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 import {SAVED_TRACK_LINE_STYLE} from '../../../lib/trackMapStyles';
 export const TracksMapLayer = () => {
@@ -23,7 +26,7 @@ export const TracksMapLayer = () => {
       onPress={handlePress}
       id="tracks"
       shape={convertTracksToFeatures(tracks)}>
-      <LineLayer id="trackLines" style={SAVED_TRACK_LINE_STYLE} existing />
+      <LineLayer id="trackLines" style={SAVED_TRACK_LINE_STYLE} />
     </ShapeSource>
   );
 };

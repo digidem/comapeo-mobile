@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Logger} from '@maplibre/maplibre-react-native';
 import {getLocales} from 'expo-localization';
 
-// Maplibre logs when tile request are cancelled, which is often.
+// Maplibre logs when tile requests are cancelled, which is often.
 // this turns off the unneccessary noise in the console logs
 Logger.setLogCallback(log => {
   if (

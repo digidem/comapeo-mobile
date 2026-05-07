@@ -188,6 +188,20 @@ export function MapReceivedBottomSheet({
     }
   };
 
+  let warningSubtitle = null;
+
+  if (warningInfo.warning === 'location') {
+    const {value: distanceValue, unit: distanceUnit} = kmOrConversion(
+      warningInfo.distanceKm ?? 0,
+      unitSystem,
+    );
+    warningSubtitle = t(m.distanceAway, {
+      distance: `${distanceValue.toFixed(2)} ${distanceUnit}`,
+    });
+  } else if (warningInfo.warning === 'space') {
+    warningSubtitle = t(m.mbNeeded, {size: warningInfo.mbNeeded});
+  }
+
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
@@ -224,17 +238,7 @@ export function MapReceivedBottomSheet({
                       : t(m.notEnoughSpace)}
                   </BodyText>
                   <BodyText style={styles.warningSubtitle}>
-                    {warningInfo.warning === 'location'
-                      ? (() => {
-                          const {value, unit} = kmOrConversion(
-                            warningInfo.distanceKm ?? 0,
-                            unitSystem,
-                          );
-                          return t(m.distanceAway, {
-                            distance: `${value.toFixed(2)} ${unit}`,
-                          });
-                        })()
-                      : t(m.mbNeeded, {size: warningInfo.mbNeeded})}
+                    {warningSubtitle}
                   </BodyText>
                 </View>
               </View>

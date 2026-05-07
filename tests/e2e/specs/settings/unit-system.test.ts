@@ -12,7 +12,7 @@ describe('Settings - Unit System Flow', () => {
   });
 
   it('should open Unit System screen', async () => {
-    const unitSystemOption = await $(byTextMatches('Unit System'));
+    const unitSystemOption = await $(byResourceId('unitSystemButton'));
     await unitSystemOption.click();
 
     await expect($(byTextMatches('Metric'))).toBeDisplayed();
@@ -43,7 +43,7 @@ describe('Settings - Unit System Flow', () => {
     await expect($(byTextMatches('\\d+\\.\\d+ ft/s'))).toBeDisplayed();
   });
 
-  it('should switch back to Metric via settings', async () => {
+  it('should display the unit system chosen on the settings menu', async () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
 
@@ -53,9 +53,10 @@ describe('Settings - Unit System Flow', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
-    const unitSystemOption = await $(byTextMatches('Unit System'));
+    const unitSystemOption = await $(byTextMatches('Imperial'));
     await unitSystemOption.click();
-
+  });
+  it('should display the unit system chosen on the settings menu', async () => {
     const imperialButton = await $(byResourceId('imperialButton-selected'));
     await expect(imperialButton).toBeDisplayed();
 

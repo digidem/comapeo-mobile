@@ -24,8 +24,11 @@ import {
 import {CoreBlobImage} from '../../sharedComponents/Images/CoreBlobImage.tsx';
 import {ImageErrorPlaceholder} from '../../sharedComponents/Images/ImageErrorPlaceholder.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
-import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
-import {kmOrConversion} from '../../lib/unitConversion';
+import {
+  useUnitSystem,
+  type UnitSystem,
+} from '../../contexts/UnitSystemStoreContext';
+import {kmOrConversion, metersOrConversion} from '../../lib/unitConversion';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {sharedStyles} from './sharedStyles.ts';
@@ -34,6 +37,33 @@ import {useSingleDocByDocId} from '@comapeo/core-react';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag.ts';
 import {Accordian} from '../../sharedComponents/Accordian.tsx';
 import Octicons from '@react-native-vector-icons/octicons';
+
+function formatDistance(
+  meters: number,
+  unitSystem: UnitSystem,
+  formatNumber: (value: number, opts: object) => string,
+): string {
+  if (unitSystem === 'imperial') {
+    if (meters < 1000) {
+      const {value, unit} = metersOrConversion(meters, unitSystem);
+      return `${formatNumber(value, {maximumFractionDigits: 2})} ${unit}`;
+    }
+    const {value, unit} = kmOrConversion(meters / 1000, unitSystem);
+    return `${formatNumber(value, {maximumFractionDigits: 2})} ${unit}`;
+  }
+  if (meters < 1000) {
+    return formatNumber(meters, {
+      style: 'unit',
+      unit: 'meter',
+      maximumFractionDigits: 2,
+    });
+  }
+  return formatNumber(meters / 1000, {
+    style: 'unit',
+    unit: 'kilometer',
+    maximumFractionDigits: 2,
+  });
+}
 
 const m = defineMessages({
   validatedByCoMapeo: {
@@ -142,6 +172,10 @@ export function AttachedPhotoPreviewModal({
       )
     : null;
 
+  const distance = metersFromObservation
+    ? formatDistance(metersFromObservation, unitSystem, formatNumber)
+    : null;
+
   return (
     <ScrollView contentContainerStyle={sharedStyles.container}>
       <View>
@@ -228,28 +262,7 @@ export function AttachedPhotoPreviewModal({
                         />
                       }>
                       <BodyText selectable style={sharedStyles.primaryInfoText}>
-                        {formatMessage(m.distanceFromObs, {
-                          distance: (() => {
-                            if (unitSystem === 'imperial') {
-                              const {value, unit} = kmOrConversion(
-                                metersFromObservation / 1000,
-                                unitSystem,
-                              );
-                              return `${value.toFixed(2)} ${unit}`;
-                            }
-                            return metersFromObservation < 1000
-                              ? formatNumber(metersFromObservation, {
-                                  style: 'unit',
-                                  unit: 'meter',
-                                  maximumFractionDigits: 2,
-                                })
-                              : formatNumber(metersFromObservation / 1000, {
-                                  style: 'unit',
-                                  unit: 'kilometer',
-                                  maximumFractionDigits: 2,
-                                });
-                          })(),
-                        })}
+                        {formatMessage(m.distanceFromObs, {distance})}
                       </BodyText>
                     </InfoItem>
                   )}

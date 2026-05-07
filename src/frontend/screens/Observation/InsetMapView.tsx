@@ -31,6 +31,11 @@ export const InsetMapView = ({
   const unitSystem = useUnitSystem();
   const {data: styleUrl} = useMapStyleJsonUrl();
   const {navigate} = useNavigationFromRoot();
+  let accuracyItem = '';
+  if (accuracy) {
+    const {value, unit} = metersOrConversion(accuracy, unitSystem);
+    accuracyItem = ` ± ${value.toFixed(2)} ${unit}`;
+  }
 
   return (
     <MapView
@@ -60,14 +65,7 @@ export const InsetMapView = ({
             <MapPin style={{marginRight: 5}} />
             <BodyText variant="tinyMeta">
               <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
-              {accuracy &&
-                (() => {
-                  const {value, unit} = metersOrConversion(
-                    accuracy,
-                    unitSystem,
-                  );
-                  return ` ± ${value.toFixed(2)} ${unit}`;
-                })()}
+              {accuracyItem}
             </BodyText>
           </View>
           <View style={styles.arrow} />

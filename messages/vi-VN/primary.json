@@ -18,12 +18,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Tiếp tục chỉnh sửa"
   },
-  "$1Screens.Settings.AppSettings.Drawer.security": {
-    "message": "Bảo mật"
-  },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "Tên thiết bị"
-  },
   "$1allProjects.close": {
     "message": "Đóng"
   },

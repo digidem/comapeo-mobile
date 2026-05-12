@@ -65,7 +65,7 @@ const config = {
   ],
   logLevel: 'error',
   waitforTimeout: 5000,
-  connectionRetryTimeout: 180000,
+  connectionRetryTimeout: 240000,
   connectionRetryCount: 3,
   framework: 'mocha',
   mochaOpts: {

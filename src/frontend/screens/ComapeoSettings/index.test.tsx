@@ -1,83 +1,26 @@
-import {render, screen, userEvent} from '@testing-library/react-native';
-import type {MapeoManager} from '@comapeo/core';
-import type {MapeoClientApi} from '@comapeo/ipc';
-import {
-  createManager,
-  setUpIPC,
-} from '../../../../tests/integration/helpers/core';
-import {createAppProvidersWrapper} from '../../../../tests/integration/helpers/react';
-import {MockedAppNavigator} from '../../../../tests/integration/helpers/navigation';
-import {sleep} from '../../lib/sleep';
-import React from 'react';
-
-jest.mock('../../hooks/useCurrentTime');
+import {screen, userEvent} from '@testing-library/react-native';
+import {setupIntegrationTest} from '../../../../tests/integration/helpers/setupIntegrationTest';
 
 describe('CoMapeo Settings Screen', () => {
-  let manager: MapeoManager;
-  let client: MapeoClientApi;
-  let onTeardown: Array<() => unknown> = [];
-  let projectId: string;
-
-  beforeEach(async () => {
-    onTeardown = [];
-
-    const managerSetup = await createManager({
-      name: 'test',
-      deviceType: 'mobile',
-    });
-    ({manager} = managerSetup);
-    const {fastifyController} = managerSetup;
-
-    const ipcSetup = setUpIPC({manager});
-    ({client} = ipcSetup);
-    const {stop} = ipcSetup;
-    onTeardown.push(stop);
-
-    await fastifyController.start();
-    onTeardown.push(() => fastifyController.stop());
-    projectId = await client.createProject({name: undefined});
-  });
-
-  afterEach(async () => {
-    for (const fn of onTeardown) await fn();
-  });
-
-  const renderNavigation = ({
-    isOnline = true,
-    activeProjectId = projectId,
-  }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
-    const appProviders = createAppProvidersWrapper({
-      mapeoApi: client,
-      isOnline,
-      activeProjectId,
-    });
-    onTeardown.push(appProviders.teardown);
-
-    const {unmount} = render(<MockedAppNavigator />, {
-      wrapper: appProviders.wrapper,
-    });
-    const actualTeardown = async () => {
-      unmount();
-      await sleep(0);
-    };
-
-    onTeardown.unshift(actualTeardown);
-
-    return () => {
-      const result = actualTeardown();
-      onTeardown = onTeardown.filter(fn => fn !== actualTeardown);
-      return result;
-    };
-  };
+  const integrationSetup = setupIntegrationTest();
 
   test('opens drawer when header button is pressed', async () => {
     const user = userEvent.setup();
-    renderNavigation({activeProjectId: projectId});
+    integrationSetup.renderNavigation({
+      activeProjectId: integrationSetup.projectId,
+    });
 
     const headerButton = await screen.findByTestId('HOME.header-button');
     await expect(headerButton).toBeVisible();
     await user.press(headerButton);
 
-    await screen.findByTestId('MENU.main-action-button');
+    const settings = await screen.findByText('CoMapeo Settings');
+
+    await expect(settings).toBeVisible();
+
+    await user.press(settings);
+
+    await expect(await screen.findByText('test')).toBeVisible();
+    expect(screen.queryByText('NOT HERE')).toBeNull();
   });
 });

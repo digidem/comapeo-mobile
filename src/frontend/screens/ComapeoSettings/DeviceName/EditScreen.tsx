@@ -5,14 +5,14 @@ import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {useForm} from 'react-hook-form';
 import {UIActivityIndicator} from 'react-native-indicators';
 
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {useOwnDeviceInfo, useSetOwnDeviceInfo} from '@comapeo/core-react';
-import {BLACK} from '../../lib/styles';
-import {HookFormTextInput} from '../../sharedComponents/HookFormTextInput';
-import {IconButton} from '../../sharedComponents/IconButton';
-import SaveIcon from '../../images/CheckMark.svg';
+import {BLACK} from '../../../lib/styles';
+import {HookFormTextInput} from '../../../sharedComponents/HookFormTextInput';
+import {IconButton} from '../../../sharedComponents/IconButton';
+import SaveIcon from '../../../images/CheckMark.svg';
 import {FieldRow} from './FieldRow';
-import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
+import {expoToCoreDeviceType} from '../../../lib/deviceTypeMap';
 import {deviceType} from 'expo-device';
 import * as Sentry from '@sentry/react-native';
 

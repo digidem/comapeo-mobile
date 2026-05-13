@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {BottomSheetWrapper} from '../../../sharedComponents/BottomSheetWrapper';
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {SecondaryButton} from '../../../sharedComponents/Buttons';
-import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
+import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
+import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {

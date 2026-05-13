@@ -2,12 +2,12 @@ import * as React from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {StyleSheet} from 'react-native';
 
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {PrimaryButton} from '../../sharedComponents/Buttons';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
+import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
+import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
+import {PrimaryButton} from '../../../../sharedComponents/Buttons';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   navTitle: {

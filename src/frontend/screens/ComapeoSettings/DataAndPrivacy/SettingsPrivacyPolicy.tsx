@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {PrivacyPolicy} from '../PrivacyPolicy';
+import {PrivacyPolicy} from '../../PrivacyPolicy';
 
 const m = defineMessages({
   navTitle: {
@@ -22,7 +22,6 @@ SettingsPrivacyPolicy.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
   scrollContent: {
-    backgroundColor: 'white',
     paddingVertical: 20,
     paddingHorizontal: 30,
   },

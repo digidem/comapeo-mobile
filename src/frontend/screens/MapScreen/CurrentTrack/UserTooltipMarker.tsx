@@ -1,4 +1,4 @@
-import {MarkerView} from '@rnmapbox/maps';
+import {PointAnnotation} from '@maplibre/maplibre-react-native';
 import {StyleSheet, Text, View} from 'react-native';
 
 import {useTrackState} from '../../../contexts/TrackStoreContext';
@@ -13,24 +13,21 @@ export const UserTooltipMarker = () => {
   return (
     // We dont want to put this check in the parent because it will cause the parent (the map) to render too often
     location?.coords && (
-      <MarkerView
+      <PointAnnotation
+        key={`locationView-${timer}`}
         id="locationView"
         coordinate={[location.coords.longitude, location.coords.latitude]}
-        anchor={{x: 0.5, y: 1}}>
-        <View style={styles.container}>
+        anchor={{x: 0.5, y: 1.2}}>
+        <View style={styles.container} collapsable={false}>
           <View style={styles.wrapper}>
-            <View>
-              <Text style={styles.text}>{totalDistance.toFixed(2)}km</Text>
-            </View>
+            <Text style={styles.text}>{totalDistance.toFixed(2)}km</Text>
             <View style={styles.separator} />
-            <View>
-              <Text style={styles.text}>{timer}</Text>
-            </View>
+            <Text style={styles.text}>{timer}</Text>
             <View style={styles.indicator} />
           </View>
           <View style={styles.arrow} />
         </View>
-      </MarkerView>
+      </PointAnnotation>
     )
   );
 };
@@ -39,6 +36,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
     marginBottom: 13,
   },
   wrapper: {

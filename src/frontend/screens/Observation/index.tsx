@@ -105,6 +105,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             observationId={observationId}
             lat={lat}
             lon={lon}
+            color={preset?.color}
           />
         )}
         <TouchableOpacity

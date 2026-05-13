@@ -3,10 +3,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Doorgaan met bewerken"
   },
-  "AppContainer.EditHeader.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Waarneming weggooien"
-  },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "Je waarneming wordt niet opgeslagen. Dit kan niet ongedaan worden gemaakt."
   },
@@ -159,21 +155,9 @@
     "description": "Text for title that asks about confirming archive server removal.",
     "message": "{name} uit het project verwijderen?"
   },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Annuleren"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Ja, verwijderen"
-  },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
+    "description": "Button to delete a track",
     "message": "Verwijderen"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "Delen"
   },
   "Storage.MapBanner.title": {
     "message": "Uw apparaat heeft een lage opslag."
@@ -364,12 +348,6 @@
   },
   "screens.AudioRecording.lessThan5": {
     "message": "Nog minder dan 5 minuten over"
-  },
-  "screens.CameraScreen.goToSettings": {
-    "message": "Ga naar Instellingen"
-  },
-  "screens.CameraScreen.noCameraAccess": {
-    "message": "Geen toegang tot camera. Geef toegang in instellingen"
   },
   "screens.CollaboratorInfo.addedOn": {
     "message": "Toegevoegd op {date}"
@@ -697,10 +675,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Waarneming"
-  },
-  "screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Waarneming verwijderen?"
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",

@@ -3,17 +3,17 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {UIActivityIndicator} from 'react-native-indicators';
 
-import {RED} from '../../lib/styles';
-import ErrorIcon from '../../images/Error.svg';
-import {useSecurityActions} from '../../contexts/SecurityStoreContext';
-import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {toError} from '../../utils/errors';
+import {RED} from '../../../../lib/styles';
+import ErrorIcon from '../../../../images/Error.svg';
+import {useSecurityActions} from '../../../../contexts/SecurityStoreContext';
+import {BottomSheetWrapper} from '../../../../sharedComponents/BottomSheetWrapper';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {toError} from '../../../../utils/errors';
 import {
   DestructiveButton,
   SecondaryButton,
-} from '../../sharedComponents/Buttons';
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+} from '../../../../sharedComponents/Buttons';
+import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 
 const m = defineMessages({
   turnOffConfirmation: {

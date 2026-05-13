@@ -1,7 +1,10 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import {SvgProps} from 'react-native-svg';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {styles} from './styles';
+import {BLACK, NEW_DARK_GREY} from '../../lib/styles';
 
 interface PointContainerProps {
   icon: React.FC<SvgProps>;
@@ -18,9 +21,13 @@ export const PointContainer: React.FC<PointContainerProps> = ({
     <View style={styles.pointContainer}>
       <View style={styles.pointHeader}>
         <IconComponent width={16} height={16} />
-        <Text style={styles.pointTitle}>{title}</Text>
+        <HeaderText variant="header5" style={{color: BLACK}}>
+          {title}
+        </HeaderText>
       </View>
-      <Text style={styles.pointDescription}>{description}</Text>
+      <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
+        {description}
+      </BodyText>
     </View>
   );
 };

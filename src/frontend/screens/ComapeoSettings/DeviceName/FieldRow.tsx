@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text} from '../../sharedComponents/Text';
+import {Text} from '../../../sharedComponents/Text';
 
 export const FieldRow = ({
   label,

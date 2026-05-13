@@ -100,10 +100,6 @@
     "description": "Title of dialog that shows when cancelling track edits",
     "message": "Track verwerfen?"
   },
-  "$1SaveTrack.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Track verwerfen"
-  },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Ihr Track wird nicht gespeichert. Dies kann nicht rückgängig gemacht werden."
   },
@@ -208,9 +204,6 @@
   },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Gerät zum Laden auswählen"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "Gerät auswählen"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Wählen Sie eine Rolle"
@@ -496,19 +489,10 @@
   "$1screens.Observation.TrackList.track": {
     "message": "Spur"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Abbrechen"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Ja, löschen"
-  },
   "$1screens.Observation.defaultProjectName": {
     "message": "Mein Projekt"
   },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Beobachtung löschen?"
   },
   "$1screens.Observation.description": {
@@ -813,7 +797,6 @@
     "message": "Beobachtungen"
   },
   "$1screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
     "message": "Track löschen?"
   },
   "$1screens.Track.title": {

@@ -103,10 +103,6 @@
     "description": "Title of dialog that shows when cancelling track edits",
     "message": "Buang Trek?"
   },
-  "$1SaveTrack.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Buang Trek"
-  },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Trek Anda tidak akan disimpan. Ini tidak dapat dibatalkan."
   },
@@ -211,9 +207,6 @@
   },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
     "message": "Pilih Perangkat yang Akan Diundang"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.titleMapShare": {
-    "message": "Pilih Perangkat"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Pilih Peran"
@@ -502,19 +495,10 @@
   "$1screens.Observation.TrackList.track": {
     "message": "Lacak"
   },
-  "$1screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Batal"
-  },
-  "$1screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Ya, hapus"
-  },
   "$1screens.Observation.defaultProjectName": {
     "message": "Proyek Saya"
   },
   "$1screens.Observation.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Menghapus pengamatan?"
   },
   "$1screens.Observation.description": {
@@ -850,7 +834,6 @@
     "message": "Pengamatan"
   },
   "$1screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
     "message": "Hapus trek?"
   },
   "$1screens.Track.title": {

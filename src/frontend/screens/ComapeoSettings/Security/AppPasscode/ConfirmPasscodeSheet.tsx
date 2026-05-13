@@ -1,17 +1,20 @@
 import * as React from 'react';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
-import {useSecurityActions} from '../../contexts/SecurityStoreContext';
-import ErrorIcon from '../../images/Error.svg';
-import {RED} from '../../lib/styles';
+import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
+import {BottomSheetWrapper} from '../../../../sharedComponents/BottomSheetWrapper';
+import {useSecurityActions} from '../../../../contexts/SecurityStoreContext';
+import ErrorIcon from '../../../../images/Error.svg';
+import {RED} from '../../../../lib/styles';
 import {useIntl, defineMessages} from 'react-intl';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {StyleSheet, View} from 'react-native';
 import * as Sentry from '@sentry/react-native';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
-import {toError} from '../../utils/errors';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from '../../../../sharedComponents/Buttons';
+import {toError} from '../../../../utils/errors';
 const m = defineMessages({
   title: {
     id: '$1screens.AppPasscode.ConfirmPasscodeSheet.title',

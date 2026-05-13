@@ -144,7 +144,7 @@ export const ProjectSettings = () => {
           title={formatMessage(m.configTitle)}
           subtitle={configData?.configMetadata?.name}
           buttonText={formatMessage(m.updateCategories)}
-          onPress={() => navigate('Config')}
+          onPress={() => navigate('Categories')}
         />
       )}
       {!isSolo && (

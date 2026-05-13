@@ -5,19 +5,19 @@ import {
   createNavigationOptions as createObservationEditNavOptions,
 } from '../../screens/ObservationEdit';
 import {AddPhotoScreen} from '../../screens/AddPhoto';
-import {AppPasscode} from '../../screens/AppPasscode';
-import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
-import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
-import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
-import {TurnOffPasscodeBottomSheet} from '../../screens/AppPasscode/TurnOffPasscodeBottomSheet';
-import {Security} from '../../screens/Security';
-import {ObscurePasscode} from '../../screens/ObscurePasscode';
+import {AppPasscode} from '../../screens/ComapeoSettings/Security/AppPasscode';
+import {EnterPassToTurnOff} from '../../screens/ComapeoSettings/Security/AppPasscode/EnterPassToTurnOff';
+import {SetPasscode} from '../../screens/ComapeoSettings/Security/AppPasscode/SetPasscode';
+import {TurnOffPasscode} from '../../screens/ComapeoSettings/Security/AppPasscode/TurnOffPasscode';
+import {TurnOffPasscodeBottomSheet} from '../../screens/ComapeoSettings/Security/AppPasscode/TurnOffPasscodeBottomSheet';
+import {Security} from '../../screens/ComapeoSettings/Security';
+import {ObscurePasscode} from '../../screens/ComapeoSettings/Security/ObscurePasscode';
 import {ObservationCategoryChooser} from '../../screens/PresetChooser/ObservationCategoryChooser.tsx';
 import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
 import {ObservationScreen} from '../../screens/Observation';
-import {AppSettings} from '../../screens/Settings/AppSettings';
+import {AppSettings} from '../../screens/ComapeoSettings/index.tsx';
 import {ProjectSettings} from '../../screens/ProjectSettings';
-import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
+import {CoordinateFormat} from '../../screens/ComapeoSettings/CoordinateFormat.tsx';
 import {
   CreateOrNameSoloProject,
   createNavigationOptions as createNameProjectNavOptions,
@@ -35,11 +35,11 @@ import {DeviceRemovedSuccess} from '../../screens/YourTeam/DeviceRemovedSuccess'
 import {
   DisplayScreen as DeviceNameDisplayScreen,
   createNavigationOptions as createDeviceNameDisplayNavOptions,
-} from '../../screens/DeviceName/DisplayScreen';
+} from '../../screens/ComapeoSettings/DeviceName/DisplayScreen';
 import {
   EditScreen as DeviceNameEditScreen,
   createNavigationOptions as createDeviceNameEditNavOptions,
-} from '../../screens/DeviceName/EditScreen';
+} from '../../screens/ComapeoSettings/DeviceName/EditScreen';
 import {
   LocationInfoScreen,
   createNavigationOptions as createLocationInfoNavOptions,
@@ -54,22 +54,22 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
-import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
+import {LanguageSettings} from '../../screens/ComapeoSettings/LanguageSettings.tsx';
 import {
   ObservationCreate,
   createNavigationOptions as createObservationCreateNavigationOptions,
 } from '../../screens/ObservationCreate';
-import {AboutSettings} from '../../screens/Settings/About';
-import {CreateTestDataScreen} from '../../screens/Settings/CreateTestData';
+import {AboutSettings} from '../../screens/ComapeoSettings/About.tsx';
+import {CreateTestDataScreen} from '../../screens/ComapeoSettings/CreateTestData.tsx';
 import {
   TrackScreen,
   createNavigationOptions as createTrackNavigationOptions,
 } from '../../screens/Track/index.tsx';
-import {DataAndPrivacy} from '../../screens/DataAndPrivacy/DataAndPrivacy';
-import {SettingsPrivacyPolicy} from '../../screens/DataAndPrivacy/SettingsPrivacyPolicy';
+import {DataAndPrivacy} from '../../screens/ComapeoSettings/DataAndPrivacy/DataAndPrivacy';
+import {SettingsPrivacyPolicy} from '../../screens/ComapeoSettings/DataAndPrivacy/SettingsPrivacyPolicy';
 import {TrackEdit} from '../../screens/TrackEdit';
 import {HeaderLeft as HeaderLeftTrackEdit} from '../../screens/TrackEdit/HeaderLeft';
-import {Config} from '../../screens/Settings/Config';
+import {Categories} from '../../screens/Categories.tsx';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/RemoteArchive/AddRemoteArchive.tsx';
 import {SuccessfullyAddedArchive} from '../../screens/RemoteArchive/SuccessfullyAddedArchive.tsx';
@@ -114,15 +114,15 @@ import {
 } from '../../screens/PhotoPreviewModal/DraftPhotoPreviewModal.tsx';
 import {AttachedPhotoPreviewModal} from '../../screens/PhotoPreviewModal/AttachedPhotoPreviewModal.tsx';
 import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/sharedNavOptions.tsx';
-import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
+import {ConfirmPasscodeBottomSheet} from '../../screens/ComapeoSettings/Security/AppPasscode/ConfirmPasscodeSheet.tsx';
 import {ShareProjectStats} from '../../screens/ProjectCreation/ShareProjectStats.tsx';
 import {ExportSuccess} from '../../screens/ExportSuccess.tsx';
 import {AppUsagePromptInterstitial} from '../../screens/AppUsagePromptInterstitial.tsx';
 import {AppUsageSharingSuccess} from '../../screens/AppUsageSharingSuccess.tsx';
 import {ProjectStatistics} from '../../screens/ProjectStatistics/index.tsx';
 import {ProjectStatsTurnedOffBottomSheet} from '../../screens/ProjectStatistics/ProjectStatsTurnedOffBottomSheet.tsx';
-import {EarlyAccessOffBottomSheet} from '../../screens/Settings/AppSettings/EarlyAccessOffBottomSheet.tsx';
-import {EarlyAccess} from '../../screens/Settings/AppSettings/EarlyAccess.tsx';
+import {EarlyAccessOffBottomSheet} from '../../screens/ComapeoSettings/EarlyAccessOffBottomSheet.tsx';
+import {EarlyAccess} from '../../screens/ComapeoSettings/EarlyAccess.tsx';
 import {Collaborate} from '../../screens/ProjectCreation/Collaborate.tsx';
 import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject.tsx';
 import {StartNewProjectIntro} from '../../screens/ProjectCreation/StartNewProjectIntro.tsx';
@@ -398,9 +398,9 @@ export const createAppScreens = ({
         })}
       />
       <RootStack.Screen
-        name="Config"
-        component={Config}
-        options={{headerTitle: intl(Config.navTitle)}}
+        name="Categories"
+        component={Categories}
+        options={{headerTitle: intl(Categories.navTitle)}}
       />
       <RootStack.Screen
         name="BackgroundMaps"

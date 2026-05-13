@@ -74,7 +74,15 @@ export const RootStackNavigator = () => {
             navigation.navigate('MapReceivedBottomSheet', {shareId})
           }
         />
-        {children}
+        {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.
+            activeProjectId is always set before any app screen renders. */}
+        {activeProjectId ? (
+          <ActiveProjectProvider activeProjectId={activeProjectId}>
+            {children}
+          </ActiveProjectProvider>
+        ) : (
+          children
+        )}
       </React.Suspense>
     </SafeAreaView>
   );
@@ -89,42 +97,30 @@ export const RootStackNavigator = () => {
     screenOptions: NavigatorScreenOptions,
   } as const;
 
-  if (
-    security.authState === 'unauthenticated' ||
-    !deviceInfo.name ||
-    !activeProjectId
-  ) {
-    const initialRouteName = getInitialRoute(
-      security.authState,
-      deviceInfo.name,
-      activeProjectId,
-    );
-
-    return (
-      <RootStack.Navigator
-        {...commonNavigatorProps}
-        initialRouteName={initialRouteName}>
-        {security.authState === 'unauthenticated' ? (
-          <RootStack.Screen
-            name="AuthScreen"
-            component={AuthScreen}
-            options={{
-              headerShown: false,
-              animation: 'fade',
-            }}
-          />
-        ) : (
-          createOnboardingScreens({intl: formatMessage})
-        )}
-      </RootStack.Navigator>
-    );
-  }
+  const initialRouteName = getInitialRoute(
+    security.authState,
+    deviceInfo.name,
+    activeProjectId,
+  );
 
   return (
-    <ActiveProjectProvider activeProjectId={activeProjectId}>
-      <RootStack.Navigator {...commonNavigatorProps}>
-        {createAppScreens({intl: formatMessage})}
-      </RootStack.Navigator>
-    </ActiveProjectProvider>
+    <RootStack.Navigator
+      {...commonNavigatorProps}
+      initialRouteName={initialRouteName}>
+      {security.authState === 'unauthenticated' ? (
+        <RootStack.Screen
+          name="AuthScreen"
+          component={AuthScreen}
+          options={{
+            headerShown: false,
+            animation: 'fade',
+          }}
+        />
+      ) : !deviceInfo.name || !activeProjectId ? (
+        createOnboardingScreens({intl: formatMessage})
+      ) : (
+        createAppScreens({intl: formatMessage})
+      )}
+    </RootStack.Navigator>
   );
 };

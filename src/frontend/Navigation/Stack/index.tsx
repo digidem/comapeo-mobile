@@ -48,7 +48,7 @@ function getInitialRoute(
   if (!projectId) {
     return 'Success';
   }
-  return 'Success';
+  return 'Home';
 }
 
 export const RootStackNavigator = () => {

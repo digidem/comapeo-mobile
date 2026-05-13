@@ -72,6 +72,10 @@ The next version of Mapeo Mobile
         npm run android-no-backend-rebuild
         ```
 
+## Ethos and Guidelines
+
+[See documentation](./docs/EthosAndGuidelines.md)
+
 ## E2E Testing
 
 This project is tested with BrowserStack.

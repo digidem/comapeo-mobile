@@ -27,6 +27,10 @@ export function useTracking() {
       accuracy: Location.Accuracy.Highest,
       activityType: Location.LocationActivityType.Fitness,
       distanceInterval: 1,
+      foregroundService: {
+        notificationTitle: 'CoMapeo is tracking your location',
+        notificationBody: 'Open CoMapeo to stop tracking at any time.',
+      },
     }).catch(err => {
       Sentry.captureException(err);
       setTracking(false);

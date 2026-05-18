@@ -16,8 +16,8 @@ import {AuthScreen} from '../../screens/AuthScreen';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 import {useIntl} from 'react-intl';
 import {RootStack} from './RootStack';
-import {parseInviteUrl, setDeepLinkReady} from '../../lib/deepLinkConfig';
-import * as ExpoLinking from 'expo-linking';
+import {setDeepLinkReady} from '../../lib/deepLinkConfig';
+import {DeepLinkListener} from './DeepLinkListener';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -53,50 +53,15 @@ function getInitialRoute(
   return 'Home';
 }
 
-const PendingInviteNavigator = ({
-  navigation,
-  pendingInviteId,
-  onNavigated,
-}: {
-  navigation: React.ComponentProps<NavigatorLayout>['navigation'];
-  pendingInviteId: string | null;
-  onNavigated: () => void;
-}) => {
-  React.useEffect(() => {
-    if (!pendingInviteId) return;
-    const waitUntilMount = requestAnimationFrame(() => {
-      navigation.navigate('InviteReceived', {inviteId: pendingInviteId});
-      onNavigated();
-    });
-    return () => cancelAnimationFrame(waitUntilMount);
-  }, [pendingInviteId, navigation, onNavigated]);
-
-  return null;
-};
-
 export const RootStackNavigator = () => {
   const security = useAuthContext();
   const {data: deviceInfo} = useOwnDeviceInfo();
   const activeProjectId = useActiveProjectId();
   const {formatMessage} = useIntl();
-  const url = ExpoLinking.useURL();
-
   const isNotReadyForInvite =
     security.authState === 'unauthenticated' ||
     !deviceInfo.name ||
     !activeProjectId;
-
-  const [pendingInviteId, setPendingInviteId] = React.useState<string | null>(
-    null,
-  );
-
-  React.useEffect(() => {
-    if (!url) return;
-    const inviteId = parseInviteUrl(url);
-    if (inviteId) {
-      setPendingInviteId(inviteId);
-    }
-  }, [url]);
 
   React.useEffect(() => {
     setDeepLinkReady(!isNotReadyForInvite);
@@ -119,13 +84,7 @@ export const RootStackNavigator = () => {
             navigation.navigate('MapReceivedBottomSheet', {shareId})
           }
         />
-        {!isNotReadyForInvite && (
-          <PendingInviteNavigator
-            navigation={navigation}
-            pendingInviteId={pendingInviteId}
-            onNavigated={() => setPendingInviteId(null)}
-          />
-        )}
+        {!isNotReadyForInvite && <DeepLinkListener />}
         {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.
             activeProjectId is always set before any app screen renders. */}
         {activeProjectId ? (

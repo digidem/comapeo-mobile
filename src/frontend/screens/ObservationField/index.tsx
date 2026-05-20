@@ -128,9 +128,15 @@ export const ObservationField = ({
           tagValue={fieldValue}
         />
       ) : field.type === 'number' ? (
-        <NumberField field={field} />
+        <NumberField
+          updateTag={val => updateTag(tagKey, val)}
+          tagValue={fieldValue}
+        />
       ) : (
-        <TextArea field={field} />
+        <TextArea
+          updateTag={val => updateTag(tagKey, val)}
+          tagValue={fieldValue}
+        />
       )}
     </ScrollView>
   );

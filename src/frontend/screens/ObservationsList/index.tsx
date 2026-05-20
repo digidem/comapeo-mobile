@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
 import {useFocusEffect} from '@react-navigation/native';
@@ -36,16 +36,7 @@ const m = defineMessages({
   },
 });
 
-const OBSERVATION_CELL_HEIGHT = 80;
 const ONE_HOUR = 60 * 60 * 1000;
-
-function getItemLayout(_data: unknown, index: number) {
-  return {
-    length: OBSERVATION_CELL_HEIGHT,
-    offset: OBSERVATION_CELL_HEIGHT * index,
-    index,
-  };
-}
 
 const keyExtractor = (item: Observation | Track) => item.docId;
 
@@ -79,10 +70,6 @@ export const ObservationsList: React.FC<
     setFilterMode(mode);
     lastInteractionRef.current = mode === 'mine' ? Date.now() : null;
   }
-
-  const rowsPerWindow = Math.ceil(
-    (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
-  );
 
   const filteredData = React.useMemo(() => {
     const allData = [...observations, ...tracks];
@@ -123,8 +110,6 @@ export const ObservationsList: React.FC<
       )}
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
       <FlatList
-        initialNumToRender={rowsPerWindow}
-        getItemLayout={getItemLayout}
         keyExtractor={keyExtractor}
         style={styles.container}
         windowSize={3}
@@ -173,6 +158,6 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
   listItem: {
-    height: OBSERVATION_CELL_HEIGHT,
+    minHeight: 80,
   },
 });

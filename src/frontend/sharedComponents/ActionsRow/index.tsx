@@ -9,7 +9,6 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import PhotoIcon from '../../images/observationEdit/Photo.svg';
 import AudioIcon from '../../images/observationEdit/Audio.svg';
 import DetailsIcon from '../../images/observationEdit/Details.svg';
-import {Preset} from '@comapeo/schema';
 import {HeaderText} from '../Text/HeaderText';
 import {CustomCircleIcon} from './CustomCircleIcon';
 import {useFocusEffect} from '@react-navigation/native';
@@ -32,14 +31,12 @@ const m = defineMessages({
   },
 });
 
-export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
+export function ActionsRow({fieldIds}: {fieldIds?: string[]}) {
   const {keyboardVisible, keyboardHeight} = useKeyboardListener();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const [audioPermission, setAudioPermission] =
     React.useState<PermissionResponse | null>(null);
-
-  const fieldIds = fieldRefs?.map(ref => ref.docId);
 
   // Audio permissions are granted on a different page. Since this page stays in the navigation stack,
   // it does not remount when permissions change, leading to stale permission data.
@@ -86,7 +83,7 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
       icon: <DetailsIcon width={30} height={30} />,
       label: t(m.detailsButton),
       onPress: () =>
-        navigation.navigate('ObservationField', {fieldIds: fieldIds}),
+        navigation.navigate('ObservationFields', {fieldIds: fieldIds}),
       testID: 'OBS.add-details-btn',
     });
   }

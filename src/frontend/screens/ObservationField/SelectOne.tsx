@@ -7,13 +7,13 @@ import {Field, Observation} from '@comapeo/schema';
 type SelectOneProps = {
   options: NonNullable<Field['options']>;
   updateTag: (value: Observation['tags'][number]) => void;
-  selectedValue: NonNullable<Field['options']>[number]['value'];
+  tagValue?: Observation['tags'][number];
 };
 
 export const SelectOne = ({
   options,
   updateTag,
-  selectedValue,
+  tagValue: selectedValue,
 }: SelectOneProps) => {
   return (
     <>

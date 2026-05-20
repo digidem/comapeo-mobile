@@ -38,31 +38,19 @@ import {useAppLanguageTag} from '../../hooks/useAppLanguageTag.ts';
 import {Accordian} from '../../sharedComponents/Accordian.tsx';
 import Octicons from '@react-native-vector-icons/octicons';
 
-function formatDistance(
-  meters: number,
-  unitSystem: UnitSystem,
-  formatNumber: (value: number, opts: object) => string,
-): string {
+function formatDistance(meters: number, unitSystem: UnitSystem): string {
   if (unitSystem === 'imperial') {
     if (meters < 1000) {
       const {value, unit} = metersOrConversion(meters, unitSystem);
-      return `${formatNumber(value, {maximumFractionDigits: 2})} ${unit}`;
+      return `${value.toFixed(2)} ${unit}`;
     }
     const {value, unit} = kmOrConversion(meters / 1000, unitSystem);
-    return `${formatNumber(value, {maximumFractionDigits: 2})} ${unit}`;
+    return `${value.toFixed(2)} ${unit}`;
   }
   if (meters < 1000) {
-    return formatNumber(meters, {
-      style: 'unit',
-      unit: 'meter',
-      maximumFractionDigits: 2,
-    });
+    return `${meters.toFixed(2)} m`;
   }
-  return formatNumber(meters / 1000, {
-    style: 'unit',
-    unit: 'kilometer',
-    maximumFractionDigits: 2,
-  });
+  return `${(meters / 1000).toFixed(2)} km`;
 }
 
 const m = defineMessages({
@@ -173,7 +161,7 @@ export function AttachedPhotoPreviewModal({
     : null;
 
   const distance = metersFromObservation
-    ? formatDistance(metersFromObservation, unitSystem, formatNumber)
+    ? formatDistance(metersFromObservation, unitSystem)
     : null;
 
   return (

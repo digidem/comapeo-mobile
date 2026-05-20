@@ -25,7 +25,7 @@ import {
 } from './CoordinateFormatStoreContext';
 import {
   type UnitSystemStore,
-  UnitSystemStoreProvider,
+  UnitSystemStoreContext,
 } from './UnitSystemStoreContext';
 import {
   type ManualEntryCoordinateFormatStore,
@@ -93,7 +93,7 @@ export const AppProviders = ({
   unitSystemStore,
 }: AppProvidersProps) => {
   return (
-    <UnitSystemStoreProvider value={unitSystemStore}>
+    <UnitSystemStoreContext value={unitSystemStore}>
       <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
         <AppUsageStatsProvider value={appUsageStatsStore}>
           <SecurityStoreProvider value={securityStore}>
@@ -142,7 +142,7 @@ export const AppProviders = ({
           </SecurityStoreProvider>
         </AppUsageStatsProvider>
       </MetricsDiagnosticsStoreProvider>
-    </UnitSystemStoreProvider>
+    </UnitSystemStoreContext>
   );
 };
 

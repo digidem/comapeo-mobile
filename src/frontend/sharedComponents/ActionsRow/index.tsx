@@ -39,6 +39,8 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
   const [audioPermission, setAudioPermission] =
     React.useState<PermissionResponse | null>(null);
 
+  const fieldIds = fieldRefs?.map(ref => ref.docId);
+
   // Audio permissions are granted on a different page. Since this page stays in the navigation stack,
   // it does not remount when permissions change, leading to stale permission data.
   // To ensure we always have the latest permission status, we check it whenever the page comes into focus.
@@ -54,9 +56,7 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
   const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
   };
-  const handleDetailsPress = () => {
-    navigation.navigate('ObservationFields', {question: 1});
-  };
+
   const handleAudioPress = () => {
     if (audioPermission === null) return;
     if (audioPermission.granted) {
@@ -81,11 +81,12 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
     },
   ];
 
-  if (fieldRefs?.length) {
+  if (fieldIds) {
     bottomSheetItems.unshift({
       icon: <DetailsIcon width={30} height={30} />,
       label: t(m.detailsButton),
-      onPress: handleDetailsPress,
+      onPress: () =>
+        navigation.navigate('ObservationField', {fieldIds: fieldIds}),
       testID: 'OBS.add-details-btn',
     });
   }

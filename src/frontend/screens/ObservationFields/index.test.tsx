@@ -33,5 +33,13 @@ describe('Observation Fields', () => {
 
     const animalCategory = await screen.findByText('Animal');
     expect(animalCategory).toBeVisible();
+
+    await user.press(animalCategory);
+
+    const details = await screen.findByText('Details');
+    await user.press(details);
+
+    const question1 = await screen.findByText('Common name of this thing');
+    await user.press(question1);
   });
 });

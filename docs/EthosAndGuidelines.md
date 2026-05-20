@@ -14,12 +14,16 @@ More testing means fewer bugs and frees up people's time. The testing suite need
     - These can be a replacement for some of the processes and paths of manual QA testing.
     - They are the closest to real user interaction and what a user actually experiences.
   - **Problems**
-    - Flaky — these tests will fail on BrowserStack often for no apparent reason
+    - Flaky — these tests fail on BrowserStack at least 50% of the time, often for no discernible reason
     - They take a long time to run, especially because we have to build an APK every time
     - Everything has to be done through user interaction, which can be verbose and add time to the test
     - A lot can't be done because of testing and BrowserStack limitations — e.g. take a photo, upload a file, do things with two devices, change location, change permissions
   - **Approach**
-    - Write E2E tests for as many paths as possible
+    - Developers should make sure the tests pass locally before finalizing PRs
+    - Run builds nightly on Browserstack through Github Actions (Monday through Thursday). That action includes the possibility to rerun the tests up to three times if they fail.
+    - Developers should check the tests the next day if they failed and make sure they understand why (is it Browserstack flakiness or something else?) and get them to pass on Browserstack
+    - Write additional End to End tests when possible
+    - Once possible, switch to a different method (not Browserstack) for running End to End tests
   - **Tools**
     - [Appium](https://appium.io), [WebdriverIO](https://webdriver.io), [Mocha](https://mochajs.org), and [BrowserStack](https://www.browserstack.com)
 - **Integration**
@@ -38,7 +42,7 @@ More testing means fewer bugs and frees up people's time. The testing suite need
     - No need to test basic functionality of libraries
     - Mount the app in the testing suite and do E2E-style actions that bring you to the screen under test. Better not to test each screen in isolation. ([Kent C. Dodds — Write fewer, longer tests](https://kentcdodds.com/blog/write-fewer-longer-tests))
     - Tests that it handles errors appropriately.
-    - Write integration tests for all screens where possible (but time box these to 1 day). Use for all situations that can't be tested with end-to-end tests. Focus on edge cases and errors.
+    - Write integration tests for all screens where possible (but time box these to 1 day). Especially focus on all situations that can't be tested with end-to-end tests as well as edge cases and errors.
   - **Tools**
     - [Jest](https://jestjs.io) and [React Native Testing Library](https://callstack.github.io/react-native-testing-library/)
 - **Unit**

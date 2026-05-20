@@ -24,6 +24,49 @@ jest.mock('expo/src/winter/ImportMetaRegistry', () => ({
 
 jest.mock('react-native-nitro-modules', () => {});
 
+jest.mock('expo-audio', () => {
+  const grantedPermission = {
+    status: 'granted',
+    expires: 'never',
+    granted: true,
+    canAskAgain: true,
+  };
+  const mockRecorder = {
+    prepareToRecordAsync: jest.fn(() => Promise.resolve()),
+    record: jest.fn(),
+    stop: jest.fn(() => Promise.resolve()),
+    uri: null,
+  };
+  return {
+    getRecordingPermissionsAsync: jest.fn(() =>
+      Promise.resolve(grantedPermission),
+    ),
+    requestRecordingPermissionsAsync: jest.fn(() =>
+      Promise.resolve(grantedPermission),
+    ),
+    useAudioRecorder: jest.fn(() => mockRecorder),
+    useAudioRecorderState: jest.fn(() => ({
+      isRecording: false,
+      durationMillis: 0,
+    })),
+    useAudioPlayer: jest.fn(() => ({
+      play: jest.fn(),
+      pause: jest.fn(),
+      seekTo: jest.fn(),
+    })),
+    useAudioPlayerStatus: jest.fn(() => ({
+      isLoaded: false,
+      isPlaying: false,
+      currentTime: 0,
+      duration: 0,
+    })),
+    RecordingPresets: {
+      HIGH_QUALITY: {ios: {}, android: {}, web: {}},
+      LOW_QUALITY: {ios: {}, android: {}, web: {}},
+    },
+  };
+});
+
 jest.mock('@lodev09/react-native-exify', () => ({
   read: jest.fn(() => Promise.resolve(null)),
 }));
@@ -50,6 +93,29 @@ NativeModules.FlagSecureModule = {
   activate: () => {},
   deactivate: () => {},
 };
+
+// MLRNModule crashes at load time when NativeModules.MLRNModule is absent.
+jest.mock('@maplibre/maplibre-react-native', () => ({
+  MapView: 'MapView',
+  Camera: 'Camera',
+  MarkerView: 'MarkerView',
+  UserLocation: 'UserLocation',
+  ShapeSource: 'ShapeSource',
+  LineLayer: 'LineLayer',
+  setAccessToken: jest.fn(),
+  setTelemetryEnabled: jest.fn(),
+  LineJoin: {Round: 'round', Bevel: 'bevel', Miter: 'miter'},
+  LineCap: {Round: 'round', Butt: 'butt', Square: 'square'},
+}));
+
+jest.mock('react-native-vision-camera', () => ({
+  Camera: 'Camera',
+  useCameraDevice: jest.fn(() => undefined),
+  useCameraPermission: jest.fn(() => ({
+    hasPermission: true,
+    requestPermission: jest.fn(() => Promise.resolve(true)),
+  })),
+}));
 
 function temporaryDirectory() {
   const result = path.join(

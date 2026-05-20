@@ -57,6 +57,7 @@ export type RootStackParamsList = {
   AboutSettings: undefined;
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
+  UnitSystemSettings: undefined;
   DraftPhotoPreviewModal: {
     photoMetadata: PhotoMetadata;
     photoExif?: PhotoEXIF;

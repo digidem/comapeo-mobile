@@ -6,10 +6,6 @@ import {SelectOne} from './SelectOne';
 import {SelectMultiple} from './SelectMultiple';
 import {Number as NumberField} from './Number';
 import {TextArea} from './TextArea';
-import {
-  SelectOneField,
-  SelectMultipleField,
-} from '../../sharedTypes/PresetTypes';
 
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useManyDocs} from '@comapeo/core-react';
@@ -109,6 +105,7 @@ export const ObservationField = ({
   }
 
   const tagKey = field.tagKey;
+  const fieldValue = tags?.[tagKey];
 
   return (
     <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
@@ -118,14 +115,18 @@ export const ObservationField = ({
         </HeaderText>
         {<HeaderText variant="header5">{field.helperText}</HeaderText>}
       </View>
-      {field.type === 'selectOne' && Array.isArray(field.options) ? (
+      {field.type === 'selectOne' && field.options ? (
         <SelectOne
           options={field.options}
           updateTag={val => updateTag(tagKey, val)}
-          selectedValue={tags?.[tagKey]}
+          tagValue={fieldValue}
         />
-      ) : field.type === 'selectMultiple' && Array.isArray(field.options) ? (
-        <SelectMultiple field={field as SelectMultipleField} />
+      ) : field.type === 'selectMultiple' && field.options ? (
+        <SelectMultiple
+          options={field.options}
+          updateTag={val => updateTag(tagKey, val)}
+          tagValue={fieldValue}
+        />
       ) : field.type === 'number' ? (
         <NumberField field={field} />
       ) : (

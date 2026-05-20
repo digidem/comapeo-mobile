@@ -10,11 +10,7 @@ type SelectOneProps = {
   tagValue?: Observation['tags'][number];
 };
 
-export const SelectOne = ({
-  options,
-  updateTag,
-  tagValue: selectedValue,
-}: SelectOneProps) => {
+export const SelectOne = ({options, updateTag, tagValue}: SelectOneProps) => {
   return (
     <>
       {options.map((item, index) => (
@@ -25,7 +21,7 @@ export const SelectOne = ({
             style={[styles.radioContainer, index === 0 ? styles.noBorder : {}]}>
             <MaterialIcon
               name={
-                item.value === selectedValue
+                item.value === tagValue
                   ? 'radio-button-checked'
                   : 'radio-button-unchecked'
               }

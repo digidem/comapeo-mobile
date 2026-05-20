@@ -1,18 +1,23 @@
 import React from 'react';
-import {StyleSheet, Platform, ScrollView} from 'react-native';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {defineMessages, useIntl} from 'react-intl';
 
-import {Text} from '../../sharedComponents/Text';
-import {TextButton} from '../../sharedComponents/TextButton';
-import {Question} from './Question';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {SelectOne} from './SelectOne';
+import {SelectMultiple} from './SelectMultiple';
+import {Number as NumberField} from './Number';
+import {TextArea} from './TextArea';
 
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
-import {useDraftObservationState} from '../../contexts/DraftObservationContext';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {FormattedFieldProp} from '../../sharedComponents/FormattedData';
 
 const m = defineMessages({
   nextQuestion: {
@@ -39,118 +44,109 @@ export const ObservationFields = ({
 }: NativeRootNavigationProps<'ObservationFields'>) => {
   const {projectId} = useActiveProject();
   const languageTag = useAppLanguageTag();
+  const [current, setCurrent] = React.useState(1);
+  const {fieldIds} = route.params;
+  const {formatMessage} = useIntl();
+  const observationId = useDraftObservationState(store => store.id?.docId);
 
   const {data: fields} = useManyDocs({
     projectId,
     docType: 'field',
     lang: languageTag,
   });
-  const preset = useDraftObservationState(store => store.value?.presetRef);
-  const current = route.params.question;
 
-  const onBackPress = React.useCallback(() => {
-    if (current === 1) {
-      navigation.goBack();
-      return;
-    }
-
-    navigation.popTo('ObservationFields', {
-      question: current - 1,
-    });
-  }, [current, navigation]);
+  const {updateTag} = useDraftObservationActions();
+  const tags = useDraftObservationState(state => state.value?.tags);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      headerTitle: formatMessage(m.title, {current, total: fieldIds.length}),
       headerLeft: props => (
-        <CustomHeaderLeft headerBackButtonProps={props} onPress={onBackPress} />
+        <CustomHeaderLeft
+          headerBackButtonProps={props}
+          onPress={() => {
+            if (current === 1) {
+              navigation.goBack();
+              return;
+            }
+            setCurrent(current - 1);
+          }}
+        />
       ),
-      headerTitle: () => <DetailsTitle questionNumber={current} />,
-      headerRight: () => <DetailsHeaderRight questionNumber={current} />,
-    });
-  }, [navigation, current, onBackPress]);
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => {
+            if (current === fieldIds.length) {
+              if (observationId) {
+                navigation.popTo('ObservationEdit');
+              } else {
+                navigation.popTo('ObservationCreate');
+              }
 
-  const fieldId = preset?.fieldRefs.map(({docId}) => docId)[current - 1];
-  const field = fields.find(val => val.docId === fieldId);
+              return;
+            }
+            setCurrent(current + 1);
+          }}>
+          <HeaderText variant="header3">
+            {current === fieldIds.length
+              ? formatMessage(m.done)
+              : formatMessage(m.nextQuestion)}
+          </HeaderText>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, current, formatMessage, fieldIds.length, observationId]);
+
+  const field = fields.find(val => val.docId === fieldIds[current - 1]);
 
   if (!field) {
+    // should throw error here
     return null;
   }
 
+  const tagKey = field.tagKey;
+  const tagValue = tags?.[tagKey];
+
   return (
     <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
-      <Question field={field} />
+      <View style={styles.labelContainer}>
+        <HeaderText variant="header3">
+          <FormattedFieldProp field={field} propName="label" />
+        </HeaderText>
+        {<HeaderText variant="header5">{field.helperText}</HeaderText>}
+      </View>
+      {field.type === 'selectOne' && field.options ? (
+        <SelectOne
+          options={field.options}
+          updateTag={val => updateTag(tagKey, val)}
+          tagValue={tagValue}
+        />
+      ) : field.type === 'selectMultiple' && field.options ? (
+        <SelectMultiple
+          options={field.options}
+          updateTag={val => updateTag(tagKey, val)}
+          tagValue={tagValue}
+        />
+      ) : field.type === 'number' ? (
+        <NumberField
+          updateTag={val => updateTag(tagKey, val)}
+          tagValue={tagValue}
+        />
+      ) : (
+        <TextArea
+          updateTag={val => updateTag(tagKey, val)}
+          tagValue={tagValue}
+        />
+      )}
     </ScrollView>
   );
 };
 
-const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
-  const {formatMessage: t} = useIntl();
-  const navigation = useNavigationFromRoot();
-  const preset = useDraftObservationState(store => store.value?.presetRef);
-  const observationId = useDraftObservationState(store => store.id?.docId);
-
-  const isLastQuestion =
-    questionNumber >= (preset ? preset.fieldRefs.length : 0);
-  const buttonText = isLastQuestion ? t(m.done) : t(m.nextQuestion);
-
-  const onPress = () =>
-    !isLastQuestion
-      ? navigation.popTo('ObservationFields', {
-          question: questionNumber + 1,
-        })
-      : observationId
-        ? navigation.popTo('ObservationEdit')
-        : navigation.popTo('ObservationCreate');
-
-  return (
-    <TextButton
-      onPress={onPress}
-      title={buttonText}
-      style={styles.headerButton}
-    />
-  );
-};
-
-const DetailsTitle = ({questionNumber}: {questionNumber: number}) => {
-  const preset = useDraftObservationState(store => store.value?.presetRef);
-
-  return (
-    <Text numberOfLines={1} style={styles.title}>
-      <FormattedMessage
-        {...m.title}
-        values={{
-          current: questionNumber,
-          total: preset?.fieldRefs.length || 0,
-        }}
-      />
-    </Text>
-  );
-};
-
 const styles = StyleSheet.create({
-  title: {
-    ...Platform.select({
-      ios: {
-        fontSize: 17,
-        fontWeight: '600',
-        color: 'rgba(0, 0, 0, .9)',
-        marginRight: 16,
-      },
-      android: {
-        fontSize: 20,
-        fontWeight: '500',
-        color: 'rgba(0, 0, 0, .9)',
-        marginRight: 16,
-      },
-      default: {
-        fontSize: 18,
-        fontWeight: '400',
-        color: '#3c4043',
-      },
-    }),
-  },
-  headerButton: {
-    paddingHorizontal: 20,
-    height: 60,
+  labelContainer: {
+    flex: 0,
+    padding: 20,
+    borderBottomWidth: 2,
+    borderColor: '#F3F3F3',
   },
 });

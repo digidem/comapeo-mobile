@@ -149,7 +149,6 @@ import {ReplaceBackgroundMap} from '../../screens/BackgroundMaps/ReplaceBackgrou
 import {ReceivingBackgroundMap} from '../../screens/BackgroundMaps/ReceivingBackgroundMap.tsx';
 import {MapShareCanceledBottomSheet} from '../../screens/BackgroundMaps/MapShareCanceledBottomSheet.tsx';
 import {RootStack} from './RootStack.ts';
-import {ObservationField} from '../../screens/ObservationField/index.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -574,7 +573,6 @@ export const createAppScreens = ({
         component={ExportObservations}
         options={{headerTitle: intl(ExportObservations.navTitle)}}
       />
-      <RootStack.Screen name="ObservationField" component={ObservationField} />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{

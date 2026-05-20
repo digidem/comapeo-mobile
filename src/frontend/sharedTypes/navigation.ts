@@ -83,8 +83,7 @@ export type RootStackParamsList = {
   CreateProject: undefined;
   NameSoloProject: undefined;
   Security: undefined;
-  ObservationFields: {question: number};
-  ObservationField: {
+  ObservationFields: {
     fieldIds: string[];
   };
   ObservationCreate: undefined;

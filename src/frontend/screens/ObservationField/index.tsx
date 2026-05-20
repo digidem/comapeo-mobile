@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, TouchableOpacity} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {SelectOne} from './SelectOne';
@@ -16,8 +16,12 @@ import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {useDraftObservationState} from '../../contexts/DraftObservationContext';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {FormattedFieldProp} from '../../sharedComponents/FormattedData';
 
 const m = defineMessages({
   nextQuestion: {
@@ -54,6 +58,9 @@ export const ObservationField = ({
     docType: 'field',
     lang: languageTag,
   });
+
+  const {updateTag} = useDraftObservationActions();
+  const tags = useDraftObservationState(state => state.value?.tags);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -101,10 +108,22 @@ export const ObservationField = ({
     return null;
   }
 
+  const tagKey = field.tagKey;
+
   return (
     <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
+      <View style={styles.labelContainer}>
+        <HeaderText variant="header3">
+          <FormattedFieldProp field={field} propName="label" />
+        </HeaderText>
+        {<HeaderText variant="header5">{field.helperText}</HeaderText>}
+      </View>
       {field.type === 'selectOne' && Array.isArray(field.options) ? (
-        <SelectOne field={field as SelectOneField} />
+        <SelectOne
+          options={field.options}
+          updateTag={val => updateTag(tagKey, val)}
+          selectedValue={tags?.[tagKey]}
+        />
       ) : field.type === 'selectMultiple' && Array.isArray(field.options) ? (
         <SelectMultiple field={field as SelectMultipleField} />
       ) : field.type === 'number' ? (
@@ -115,3 +134,12 @@ export const ObservationField = ({
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  labelContainer: {
+    flex: 0,
+    padding: 20,
+    borderBottomWidth: 2,
+    borderColor: '#F3F3F3',
+  },
+});

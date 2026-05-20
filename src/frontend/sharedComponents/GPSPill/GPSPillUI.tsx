@@ -2,6 +2,7 @@ import {type ReactNode} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialCommunityIcon from '@react-native-vector-icons/material-design-icons';
+import {type UnitSystem} from '../../contexts/UnitSystemStoreContext';
 
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
@@ -18,6 +19,7 @@ type Props = {
   onPress?: () => void;
   iconTestID?: string;
   testID?: string;
+  unitSystem: UnitSystem;
 } & (
   | {
       status: 'searching' | 'error';
@@ -78,7 +80,12 @@ export const GPSPillUI = (props: Props) => {
 
     case 'good': {
       backgroundColor = DARK_GREY;
-      text = `${Math.abs(Math.round(props.accuracy))} ±`;
+      const unit = props.unitSystem === 'imperial' ? 'ft' : 'm';
+      const accuracyValue =
+        props.unitSystem === 'imperial'
+          ? Math.abs(Math.round(props.accuracy * 3.28084))
+          : Math.abs(Math.round(props.accuracy));
+      text = `±${accuracyValue} ${unit}`;
       icon = (
         <View
           testID={props.iconTestID}

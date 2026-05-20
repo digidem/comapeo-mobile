@@ -28,6 +28,7 @@ import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLoca
 import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowStorageBannerContext';
 import {createEarlyAccessStore} from '../../../src/frontend/contexts/EarlyAccessContext';
 import {createAppUsageStatsStore} from '../../../src/frontend/contexts/AppUsageStatsContext';
+import {createUnitSystemStore} from '../../../src/frontend/contexts/UnitSystemStoreContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
@@ -166,6 +167,8 @@ export function createAppProvidersWrapper({
 
   const persistedEarlyAccessStore = createEarlyAccessStore({persist: false});
 
+  const unitSystemStore = createUnitSystemStore({persist: false});
+
   const lowStorageBannerStore = createLowStorageBannerStore();
 
   const appUsagePromptStore = createAppUsageStatsStore({
@@ -207,7 +210,8 @@ export function createAppProvidersWrapper({
           trackStore={persistedTrackStore}
           lowStorageBannerStore={lowStorageBannerStore}
           appUsageStatsStore={appUsagePromptStore}
-          earlyAccessStore={persistedEarlyAccessStore}>
+          earlyAccessStore={persistedEarlyAccessStore}
+          unitSystemStore={unitSystemStore}>
           {children}
         </AppProviders>
       </OuterWrapper>

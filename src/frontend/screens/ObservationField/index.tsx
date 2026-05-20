@@ -2,6 +2,15 @@ import React from 'react';
 import {ScrollView, TouchableOpacity} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
+import {SelectOne} from './SelectOne';
+import {SelectMultiple} from './SelectMultiple';
+import {Number as NumberField} from './Number';
+import {TextArea} from './TextArea';
+import {
+  SelectOneField,
+  SelectMultipleField,
+} from '../../sharedTypes/PresetTypes';
+
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -88,12 +97,21 @@ export const ObservationField = ({
   const field = fields.find(val => val.docId === fieldIds[current - 1]);
 
   if (!field) {
+    // should throw error here
     return null;
   }
 
   return (
     <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
-      <HeaderText variant="header2">{field.label}</HeaderText>
+      {field.type === 'selectOne' && Array.isArray(field.options) ? (
+        <SelectOne field={field as SelectOneField} />
+      ) : field.type === 'selectMultiple' && Array.isArray(field.options) ? (
+        <SelectMultiple field={field as SelectMultipleField} />
+      ) : field.type === 'number' ? (
+        <NumberField field={field} />
+      ) : (
+        <TextArea field={field} />
+      )}
     </ScrollView>
   );
 };

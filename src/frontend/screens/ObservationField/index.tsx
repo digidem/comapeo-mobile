@@ -105,7 +105,7 @@ export const ObservationField = ({
   }
 
   const tagKey = field.tagKey;
-  const fieldValue = tags?.[tagKey];
+  const tagValue = tags?.[tagKey];
 
   return (
     <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
@@ -119,23 +119,23 @@ export const ObservationField = ({
         <SelectOne
           options={field.options}
           updateTag={val => updateTag(tagKey, val)}
-          tagValue={fieldValue}
+          tagValue={tagValue}
         />
       ) : field.type === 'selectMultiple' && field.options ? (
         <SelectMultiple
           options={field.options}
           updateTag={val => updateTag(tagKey, val)}
-          tagValue={fieldValue}
+          tagValue={tagValue}
         />
       ) : field.type === 'number' ? (
         <NumberField
           updateTag={val => updateTag(tagKey, val)}
-          tagValue={fieldValue}
+          tagValue={tagValue}
         />
       ) : (
         <TextArea
           updateTag={val => updateTag(tagKey, val)}
-          tagValue={fieldValue}
+          tagValue={tagValue}
         />
       )}
     </ScrollView>

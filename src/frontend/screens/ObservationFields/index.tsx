@@ -18,6 +18,7 @@ import {
 } from '../../contexts/DraftObservationContext';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {FormattedFieldProp} from '../../sharedComponents/FormattedData';
+import {COMAPEO_BLUE} from '../../lib/styles';
 
 const m = defineMessages({
   nextQuestion: {
@@ -87,7 +88,9 @@ export const ObservationFields = ({
             }
             setCurrent(current + 1);
           }}>
-          <HeaderText variant="header3">
+          <HeaderText
+            variant="header5"
+            style={{color: COMAPEO_BLUE, marginRight: 10}}>
             {current === fieldIds.length
               ? formatMessage(m.done)
               : formatMessage(m.nextQuestion)}

@@ -39,7 +39,31 @@ describe('Observation Fields', () => {
     const details = await screen.findByText('Details');
     await user.press(details);
 
-    const question1 = await screen.findByText('Common name of this thing');
-    await user.press(question1);
+    // through manually clicking through the app, I know that this should be a text input
+    const textInput = await screen.findByTestId('OBS.text-inp');
+    expect(textInput).toBeVisible();
+
+    const nextButton = await screen.findByText('Next');
+    await user.press(nextButton);
+
+    const selectOne = await screen.findByTestId('OBS.select-one-inp');
+    expect(selectOne).toBeVisible();
+
+    await user.press(nextButton);
+    expect(selectOne).toBeVisible();
+
+    await user.press(nextButton);
+    expect(selectOne).toBeVisible();
+
+    await user.press(nextButton);
+    const selectMultiple = await screen.findByTestId('OBS.select-multiple-inp');
+
+    expect(selectMultiple).toBeVisible();
+
+    const doneButton = await screen.findByText('Done');
+    expect(doneButton).toBeVisible();
+
+    await user.press(doneButton);
+    expect(await screen.findByTestId('OBS.create-obs')).toBeVisible();
   });
 });

@@ -12,11 +12,10 @@ type SelectOneProps = {
 
 export const SelectOne = ({options, updateTag, tagValue}: SelectOneProps) => {
   return (
-    <>
+    <View testID="OBS.select-one-inp">
       {options.map((item, index) => (
         <TouchableOpacity
           key={item.label}
-          testID="OBS.select-one-inp"
           onPress={() => updateTag(item.value)}>
           <View
             style={[styles.radioContainer, index === 0 ? styles.noBorder : {}]}>
@@ -34,7 +33,7 @@ export const SelectOne = ({options, updateTag, tagValue}: SelectOneProps) => {
           </View>
         </TouchableOpacity>
       ))}
-    </>
+    </View>
   );
 };
 

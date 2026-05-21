@@ -77,6 +77,7 @@ export const ObservationCreate = ({
 
   return (
     <ScreenContentWithDock
+      testID="OBS.create-obs"
       dockContainerStyle={{padding: 0}}
       dockContent={
         <ActionsRow

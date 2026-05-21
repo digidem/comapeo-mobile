@@ -29,11 +29,10 @@ export const SelectMultiple = ({
   };
 
   return (
-    <>
+    <View testID="OBS.select-multiple-inp">
       {options.map((item, index) => (
         <TouchableOpacity
           key={item.label}
-          testID="OBS.select-mutiple-inp"
           onPress={() => handleChange(item.value)}>
           <View
             style={[styles.radioContainer, index === 0 ? styles.noBorder : {}]}>
@@ -51,7 +50,7 @@ export const SelectMultiple = ({
           </View>
         </TouchableOpacity>
       ))}
-    </>
+    </View>
   );
 };
 

@@ -16,6 +16,7 @@ export const SelectOne = ({options, updateTag, tagValue}: SelectOneProps) => {
       {options.map((item, index) => (
         <TouchableOpacity
           key={item.label}
+          testID="OBS.select-one-inp"
           onPress={() => updateTag(item.value)}>
           <View
             style={[styles.radioContainer, index === 0 ? styles.noBorder : {}]}>

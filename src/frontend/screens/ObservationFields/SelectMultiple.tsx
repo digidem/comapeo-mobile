@@ -33,6 +33,7 @@ export const SelectMultiple = ({
       {options.map((item, index) => (
         <TouchableOpacity
           key={item.label}
+          testID="OBS.select-mutiple-inp"
           onPress={() => handleChange(item.value)}>
           <View
             style={[styles.radioContainer, index === 0 ? styles.noBorder : {}]}>

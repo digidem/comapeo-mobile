@@ -10,7 +10,7 @@ type TextProps = {
 export const TextArea = ({updateTag, tagValue}: TextProps) => {
   return (
     <TextInput
-      testID="OBS.details-inp"
+      testID="OBS.text-inp"
       value={typeof tagValue === 'string' ? tagValue : ''}
       onChangeText={newVal => updateTag(newVal)}
       style={styles.textInput}

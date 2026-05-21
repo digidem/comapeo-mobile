@@ -11,7 +11,7 @@ export const Number = ({updateTag, tagValue}: NumberProps) => {
   return (
     <>
       <TextInput
-        testID="OBS.details-inp"
+        testID="OBS.number-inp"
         value={typeof tagValue === 'number' ? String(tagValue) : ''}
         onChangeText={newVal =>
           updateTag(

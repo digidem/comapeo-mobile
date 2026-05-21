@@ -85,6 +85,9 @@ export const InviteReceived = ({
       {inviteId: inviteId},
       {
         onSuccess: projectId => {
+          // In versions before v6, the user did not have to have a default project
+          // Now we would like the user to always have a default project
+          // This guarantees that
           if (!hasDefaultProject) {
             createProject.mutate(undefined, {
               onError: err => {
@@ -92,6 +95,21 @@ export const InviteReceived = ({
               },
             });
           }
+
+          const isInOnboarding = navigation
+            .getState()
+            .routes.find(route => route.name === 'JoinProjectIntro');
+
+          // If the user is on the onboarding screen, simply show the invites accepted modal
+          if (isInOnboarding) {
+            navigation.navigate('InviteSuccessfullyAccepted', {
+              projectId,
+              projectName: invite.projectName,
+            });
+            return;
+          }
+
+          // otherwise reset the navigation so that the stale project is no longer showing.
           navigation.reset({
             index: 1,
             routes: [

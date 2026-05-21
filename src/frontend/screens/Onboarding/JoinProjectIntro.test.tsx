@@ -1,4 +1,4 @@
-import {userEvent, screen, act} from '@testing-library/react-native';
+import {userEvent, screen} from '@testing-library/react-native';
 import {
   setupIntegrationTest,
   setupIntegrationTestWithoutProject,
@@ -44,11 +44,9 @@ describe('Onboarding Screens', () => {
     const joinButton = await screen.findByText('Join Project');
     expect(joinButton).toBeVisible();
 
-    await act(async () => {
-      await user.press(joinButton);
-      expect(
-        await screen.findByText('You have joined testProject'),
-      ).toBeVisible();
-    });
+    await user.press(joinButton);
+    expect(
+      await screen.findByText('You have joined testProject'),
+    ).toBeVisible();
   });
 });

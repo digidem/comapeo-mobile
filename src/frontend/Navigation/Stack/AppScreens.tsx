@@ -55,6 +55,7 @@ import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
 import {LanguageSettings} from '../../screens/ComapeoSettings/LanguageSettings.tsx';
+import {UnitSystemSettings} from '../../screens/ComapeoSettings/UnitSystemSettings';
 import {
   ObservationCreate,
   createNavigationOptions as createObservationCreateNavigationOptions,
@@ -356,6 +357,11 @@ export const createAppScreens = ({
         name="LanguageSettings"
         component={LanguageSettings}
         options={{headerTitle: intl(LanguageSettings.navTitle)}}
+      />
+      <RootStack.Screen
+        name="UnitSystemSettings"
+        component={UnitSystemSettings}
+        options={{headerTitle: intl(UnitSystemSettings.navTitle)}}
       />
       <RootStack.Screen
         name="Track"

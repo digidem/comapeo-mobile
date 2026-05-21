@@ -12,10 +12,12 @@ import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
 import {USABLE_LANGUAGES} from '../../lib/intl';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
+import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BLACK, BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import HeartCheckIcon from '../../images/HeartCheck.svg';
+import AngleRulerIcon from '../../images/AngleRuler.svg';
 
 const m = defineMessages({
   title: {
@@ -82,6 +84,14 @@ const m = defineMessages({
     id: '$1Screens.Settings.AppSettings.diagnosticInformation',
     defaultMessage: 'Diagnostic Information',
   },
+  metric: {
+    id: '$1Screens.Settings.AppSettings.metric',
+    defaultMessage: 'Metric',
+  },
+  imperial: {
+    id: '$1Screens.Settings.AppSettings.imperial',
+    defaultMessage: 'Imperial',
+  },
 });
 
 export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
@@ -95,6 +105,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   const appLocale = useAppLanguageTag();
   const passcode = useSecurityState(s => s.passcode);
   const {data: deviceInfo} = useOwnDeviceInfo();
+  const unitSystem = useUnitSystem();
 
   const currentLanguageName =
     USABLE_LANGUAGES.find(l => l.languageTag === appLocale)?.nativeName ??
@@ -143,6 +154,22 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
         onPress={() => navigation.navigate('CoordinateFormat')}
         label={coordinateLabel}
         Icon={<MaterialIcon name="explore" size={24} color={NEW_DARK_GREY} />}
+        EndContent={
+          <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
+        }
+      />
+
+      <SettingsRow
+        testID="unitSystemButton"
+        onPress={() => {
+          navigation.navigate('UnitSystemSettings');
+        }}
+        label={
+          unitSystem === 'metric'
+            ? formatMessage(m.metric)
+            : formatMessage(m.imperial)
+        }
+        Icon={<AngleRulerIcon width={24} height={24} />}
         EndContent={
           <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
         }

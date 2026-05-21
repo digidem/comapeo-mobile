@@ -19,7 +19,7 @@ describe('Settings - Language Settings Flow', () => {
       byTextMatches('Follow system preferences'),
     );
     await expect(followSystemPreferences).toBeDisplayed();
-    await expect($(byResourceId('nullRadioButton'))).toBeChecked();
+    await expect($(byResourceId('SystemPreferenceRadioButton'))).toBeChecked();
     // Assumes browserstack uses english as system pref
     await expect($(byResourceId('currentLanguageLabel'))).toHaveText('English');
   });

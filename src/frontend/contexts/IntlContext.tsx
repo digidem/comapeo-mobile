@@ -4,7 +4,7 @@ import {StyleSheet, Text} from 'react-native';
 import {useLocales} from 'expo-localization';
 
 import messages from '../../../translations/messages.json';
-import {useAppLanguageTag} from '../hooks/useAppLanguageTag';
+import {useLocaleState} from './LocaleStoreContext';
 import {extractLanguageCode, TranslatedLanguageTag} from '../lib/intl';
 
 export const formats: CustomFormats = {
@@ -26,7 +26,7 @@ const DEFAULT_RICH_TEXT_MAPPINGS: NonNullable<
 };
 
 export const IntlProvider = ({children}: {children: React.ReactNode}) => {
-  const languageTag = useAppLanguageTag();
+  const languageTag = useLocaleState(s => s.languageTag);
   const systemLocales = useLocales();
 
   const messagesToUse = React.useMemo(() => {

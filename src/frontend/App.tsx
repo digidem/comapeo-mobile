@@ -39,7 +39,6 @@ import {
   createLocaleStore,
   LocaleStoreProvider,
 } from './contexts/LocaleStoreContext';
-import {getAppLanguageTag} from './lib/intl';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
@@ -97,15 +96,10 @@ const persistedLocaleStore = createLocaleStore({
 const appDiagnosticMetrics = new AppDiagnosticMetrics({
   getLocaleInfo: () => {
     const systemLocales = getLocales();
-    const localeState = persistedLocaleStore.instance.getState();
-
-    const appLanguageTag = getAppLanguageTag({
-      localeState,
-      systemLanguageTags: systemLocales.map(l => l.languageTag),
-    }).value;
+    const {languageTag} = persistedLocaleStore.instance.getState();
 
     return {
-      appLanguageTag,
+      appLanguageTag: languageTag,
       deviceLanguageTag: systemLocales[0]!.languageTag,
     };
   },

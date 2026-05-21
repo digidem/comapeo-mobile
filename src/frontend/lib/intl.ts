@@ -2,7 +2,6 @@
 import MESSAGES from '../../../translations/messages.json';
 // Mapping of language tag to corresponding native and english names
 import LANGUAGES from '../languages.json';
-import {type LocaleState} from '../sharedTypes/locale';
 
 // Language tag that has corresponding translations
 export type TranslatedLanguageTag = keyof typeof MESSAGES;
@@ -113,45 +112,21 @@ function getUsableLanguageTag(languageTag: string) {
   }
 }
 
-type ResolvedLanguageTag = {
-  // Where the `value` comes from. Not really used in the app (yet),
-  // but it's useful for understanding the resolution implementation and for debugging purposes.
-  source: 'fallback' | 'system' | 'selected';
-  value: SupportedLanguageTag;
-};
-
 /**
- * Determines the language tag that the app should use based on what is supported.
- * If no supported value can be determined, falls back to using `'en'` as the resolved language tag value.
+ * Resolves a language tag from a list of system-preferred language tags.
+ * Falls back to `'en'` if no supported tag can be found.
  *
- * If a language has explicitly been selected, returns that value. If following system preferences, tries to find a supported value.
- * If no supported language tag can be determined from the system settings, falls back to using `'en'`.
- *
- * @returns The resolved language tag. `source` represents where the tag comes from and `value` represents the actual tag string
+ * @param systemLanguageTags Ordered list of language tags from system preferences (most preferred first)
+ * @returns A resolved SupportedLanguageTag
  */
-export function getAppLanguageTag({
-  localeState,
-  systemLanguageTags,
-}: {
-  localeState: LocaleState;
-  systemLanguageTags: Array<string>;
-}): ResolvedLanguageTag {
-  if (!localeState.useSystemPreferences) {
-    return {
-      source: 'selected',
-      value: localeState.languageTag,
-    };
-  }
-
+export function getUsableLanguageTagFromSystemPreferences(
+  systemLanguageTags: Array<string>,
+): SupportedLanguageTag {
   for (const t of systemLanguageTags) {
-    const usableSystemLanguageTag = getUsableLanguageTag(t);
-
-    if (usableSystemLanguageTag) {
-      return {source: 'system', value: usableSystemLanguageTag};
-    }
+    const usable = getUsableLanguageTag(t);
+    if (usable) return usable;
   }
-
-  return {source: 'fallback', value: 'en'};
+  return 'en';
 }
 
 /**

@@ -4,14 +4,8 @@ import SimpleTrackIcon from '../images/SimpleTrack.svg';
 import {millisecondsToHHMMSS} from '../lib/millisecondsToFormattedTime';
 import {BLUE_GREY} from '../lib/styles';
 import {BodyText} from './Text/BodyText';
-import {defineMessages, useIntl} from 'react-intl';
-
-const m = defineMessages({
-  kilometers: {
-    id: 'TrackStats.kilometers',
-    defaultMessage: 'km',
-  },
-});
+import {useUnitSystem} from '../contexts/UnitSystemStoreContext';
+import {kmOrConversion} from '../lib/unitConversion';
 
 type TrackStatsProps = {
   distance: number;
@@ -26,9 +20,12 @@ export const TrackStats = ({
   backgroundColor,
   center = false,
 }: TrackStatsProps) => {
-  const {formatMessage} = useIntl();
+  const unitSystem = useUnitSystem();
   const totalTime = millisecondsToHHMMSS(durationMs);
-  const totalKm = distance.toFixed(2);
+  const {value: displayDistance, unit: distanceUnit} = kmOrConversion(
+    distance,
+    unitSystem,
+  );
 
   return (
     <View
@@ -44,7 +41,7 @@ export const TrackStats = ({
       <View style={styles.dividerBlock}>
         <View style={styles.divider} />
         <BodyText variant="tinyMeta">
-          {totalKm} {formatMessage(m.kilometers)}
+          {displayDistance.toFixed(2)} {distanceUnit}
         </BodyText>
       </View>
     </View>

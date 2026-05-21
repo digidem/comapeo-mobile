@@ -7,6 +7,8 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import MapPin from '../../images/MapPin.svg';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext';
+import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
+import {metersOrConversion} from '../../lib/unitConversion';
 
 const MAP_HEIGHT = 175;
 
@@ -26,8 +28,14 @@ export const InsetMapView = ({
   color,
 }: MapProps) => {
   const coordinateFormat = useCoordinateFormat();
+  const unitSystem = useUnitSystem();
   const {data: styleUrl} = useMapStyleJsonUrl();
   const {navigate} = useNavigationFromRoot();
+  let accuracyItem = '';
+  if (accuracy) {
+    const {value, unit} = metersOrConversion(accuracy, unitSystem);
+    accuracyItem = ` ± ${value.toFixed(2)} ${unit}`;
+  }
 
   return (
     <MapView
@@ -57,7 +65,7 @@ export const InsetMapView = ({
             <MapPin style={{marginRight: 5}} />
             <BodyText variant="tinyMeta">
               <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
-              {accuracy && ` ± ${accuracy.toFixed(2)} m`}
+              {accuracyItem}
             </BodyText>
           </View>
           <View style={styles.arrow} />

@@ -24,6 +24,10 @@ import {
   CoordinateFormatStoreProvider,
 } from './CoordinateFormatStoreContext';
 import {
+  type UnitSystemStore,
+  UnitSystemStoreContext,
+} from './UnitSystemStoreContext';
+import {
   type ManualEntryCoordinateFormatStore,
   ManualEntryCoordinateFormatStoreProvider,
 } from './ManualEntryCoordinateFormatStoreContext';
@@ -66,6 +70,7 @@ type AppProvidersProps = {
   lowStorageBannerStore: LowStorageBannerStore;
   appUsageStatsStore: AppUsageStatsStore;
   earlyAccessStore: EarlyAccessStore;
+  unitSystemStore: UnitSystemStore;
 };
 
 export const AppProviders = ({
@@ -85,54 +90,59 @@ export const AppProviders = ({
   lowStorageBannerStore,
   earlyAccessStore,
   appUsageStatsStore,
+  unitSystemStore,
 }: AppProvidersProps) => {
   return (
-    <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
-      <AppUsageStatsProvider value={appUsageStatsStore}>
-        <SecurityStoreProvider value={securityStore}>
-          <CoordinateFormatStoreProvider value={coordinateFormatStore}>
-            <ManualEntryCoordinateFormatStoreProvider
-              value={manualEntryCoordinateFormatStore}>
-              <TrackStoreProvider value={trackStore}>
-                <QueryClientProvider client={queryClient}>
-                  <LowStorageBannerStoreProvider value={lowStorageBannerStore}>
-                    <SafeAreaProvider>
-                      <GestureHandlerRootView style={styles.flex}>
-                        <SavedLocationStoreProvider value={savedLocationStore}>
-                          <LocationProvider>
-                            <LocalDiscoveryProvider
-                              value={localDiscoveryController}>
-                              <ComapeoCoreProvider
-                                clientApi={mapeoApi}
-                                getMapServerBaseUrl={mapServerApi.getBaseUrl}
-                                fetch={fetch}
-                                queryClient={queryClient}>
-                                <ActiveProjectIdStoreProvider
-                                  store={activeProjectIdStore}>
-                                  <DraftObservationProvider
-                                    draftObservationStore={
-                                      persistedDrafObservationStore
-                                    }>
-                                    <EarlyAccessStoreProvider
-                                      value={earlyAccessStore}>
-                                      <AuthProvider>{children}</AuthProvider>
-                                    </EarlyAccessStoreProvider>
-                                  </DraftObservationProvider>
-                                </ActiveProjectIdStoreProvider>
-                              </ComapeoCoreProvider>
-                            </LocalDiscoveryProvider>
-                          </LocationProvider>
-                        </SavedLocationStoreProvider>
-                      </GestureHandlerRootView>
-                    </SafeAreaProvider>
-                  </LowStorageBannerStoreProvider>
-                </QueryClientProvider>
-              </TrackStoreProvider>
-            </ManualEntryCoordinateFormatStoreProvider>
-          </CoordinateFormatStoreProvider>
-        </SecurityStoreProvider>
-      </AppUsageStatsProvider>
-    </MetricsDiagnosticsStoreProvider>
+    <UnitSystemStoreContext value={unitSystemStore}>
+      <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
+        <AppUsageStatsProvider value={appUsageStatsStore}>
+          <SecurityStoreProvider value={securityStore}>
+            <CoordinateFormatStoreProvider value={coordinateFormatStore}>
+              <ManualEntryCoordinateFormatStoreProvider
+                value={manualEntryCoordinateFormatStore}>
+                <TrackStoreProvider value={trackStore}>
+                  <QueryClientProvider client={queryClient}>
+                    <LowStorageBannerStoreProvider
+                      value={lowStorageBannerStore}>
+                      <SafeAreaProvider>
+                        <GestureHandlerRootView style={styles.flex}>
+                          <SavedLocationStoreProvider
+                            value={savedLocationStore}>
+                            <LocationProvider>
+                              <LocalDiscoveryProvider
+                                value={localDiscoveryController}>
+                                <ComapeoCoreProvider
+                                  clientApi={mapeoApi}
+                                  getMapServerBaseUrl={mapServerApi.getBaseUrl}
+                                  fetch={fetch}
+                                  queryClient={queryClient}>
+                                  <ActiveProjectIdStoreProvider
+                                    store={activeProjectIdStore}>
+                                    <DraftObservationProvider
+                                      draftObservationStore={
+                                        persistedDrafObservationStore
+                                      }>
+                                      <EarlyAccessStoreProvider
+                                        value={earlyAccessStore}>
+                                        <AuthProvider>{children}</AuthProvider>
+                                      </EarlyAccessStoreProvider>
+                                    </DraftObservationProvider>
+                                  </ActiveProjectIdStoreProvider>
+                                </ComapeoCoreProvider>
+                              </LocalDiscoveryProvider>
+                            </LocationProvider>
+                          </SavedLocationStoreProvider>
+                        </GestureHandlerRootView>
+                      </SafeAreaProvider>
+                    </LowStorageBannerStoreProvider>
+                  </QueryClientProvider>
+                </TrackStoreProvider>
+              </ManualEntryCoordinateFormatStoreProvider>
+            </CoordinateFormatStoreProvider>
+          </SecurityStoreProvider>
+        </AppUsageStatsProvider>
+      </MetricsDiagnosticsStoreProvider>
+    </UnitSystemStoreContext>
   );
 };
 

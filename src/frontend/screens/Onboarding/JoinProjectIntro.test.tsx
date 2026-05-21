@@ -1,4 +1,10 @@
-import {userEvent, screen} from '@testing-library/react-native';
+import {
+  userEvent,
+  screen,
+  within,
+  act,
+  waitFor,
+} from '@testing-library/react-native';
 import {
   setupIntegrationTest,
   setupIntegrationTestWithoutProject,
@@ -48,5 +54,20 @@ describe('Onboarding Screens', () => {
     expect(
       await screen.findByText('You have joined testProject'),
     ).toBeVisible();
-  });
+
+    const doneButton = await screen.findByText('Done');
+
+    expect(doneButton).toBeVisible();
+
+    await user.press(doneButton);
+    const header = await screen.findByTestId(
+      'HOME.header-button',
+      {},
+      {timeout: 7000},
+    );
+    expect(header).toBeVisible();
+
+    // const textInHeader = within(header).getByText('testProject');
+    // expect(textInHeader).toBeVisible();
+  }, 10000);
 });

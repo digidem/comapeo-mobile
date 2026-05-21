@@ -44,7 +44,7 @@ export const InviteSuccessfullyAccepted = ({
             fullSize
             onPress={() => {
               setActiveProjectId(route.params.projectId);
-              navigation.goBack();
+              // navigation.goBack();
             }}
             text={formatMessage(m.done)}
           />

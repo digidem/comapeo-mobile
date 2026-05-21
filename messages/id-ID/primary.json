@@ -124,38 +124,8 @@
   "$1Screens.ProjectSettings.title": {
     "message": "Alat Koordinator"
   },
-  "$1Screens.Settings.AppSettings.Drawer.security": {
-    "message": "Keamanan"
-  },
   "$1Screens.Settings.AppSettings.aboutCoMapeo": {
     "message": "Tentang CoMapeo"
-  },
-  "$1Screens.Settings.AppSettings.coordinateSystem": {
-    "message": "Sistem Koordinat"
-  },
-  "$1Screens.Settings.AppSettings.coordinateSystemDesc": {
-    "message": "UTM, Lat / Lon, DMS"
-  },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "Nama Perangkat"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess": {
-    "message": "Mode Akses Awal"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess.off": {
-    "message": "Akses Awal MATI"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess.on": {
-    "message": "Akses Awal ON"
-  },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "Bahasa"
-  },
-  "$1Screens.Settings.AppSettings.languageDesc": {
-    "message": "Bahasa tampilan untuk aplikasi"
-  },
-  "$1Screens.Settings.AppSettings.privacyPolicy": {
-    "message": "Data & Privasi"
   },
   "$1Screens.Settings.AppSettings.title": {
     "message": "Pengaturan CoMapeo"

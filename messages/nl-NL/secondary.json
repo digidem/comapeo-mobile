@@ -192,9 +192,6 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Uw wijzigingen worden niet opgeslagen. Dit kan niet ongedaan worden gemaakt."
   },
-  "TrackStats.kilometers": {
-    "message": "km"
-  },
   "constants.blue": {
     "message": "Blauw"
   },

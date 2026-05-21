@@ -18,15 +18,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "ทำการแก้ไขต่อ"
   },
-  "$1Screens.Settings.AppSettings.Drawer.security": {
-    "message": "ความปลอดภัย"
-  },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "ชื่ออุปกรณ์"
-  },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "ภาษา"
-  },
   "$1allProjects.close": {
     "message": "ปิด"
   },

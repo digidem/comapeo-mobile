@@ -15,9 +15,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "निरन्तर सम्पादन"
   },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "भाषा"
-  },
   "$1screens.AppPasscode": {
     "message": "एपकाे पासकाेड प्रयाेग गर्नु"
   },

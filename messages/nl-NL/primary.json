@@ -118,35 +118,8 @@
   "$1Screens.ProjectSettings.title": {
     "message": "Coördinator Tools"
   },
-  "$1Screens.Settings.AppSettings.Drawer.security": {
-    "message": "Beveiliging"
-  },
   "$1Screens.Settings.AppSettings.aboutCoMapeo": {
     "message": "Over CoMapeo"
-  },
-  "$1Screens.Settings.AppSettings.coordinateSystem": {
-    "message": "Coördinaat systeem"
-  },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "Apparaat Naam"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess": {
-    "message": "Vroegtijdige toegangsmodus"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess.off": {
-    "message": "Vroegtijdige toegang is UIT"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess.on": {
-    "message": "Vroegtijdige toegang is AAN"
-  },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "Taal"
-  },
-  "$1Screens.Settings.AppSettings.languageDesc": {
-    "message": "Taal voor app weergeven"
-  },
-  "$1Screens.Settings.AppSettings.privacyPolicy": {
-    "message": "Gegevens & Privacy"
   },
   "$1Screens.Settings.AppSettings.title": {
     "message": "CoMapeo instellingen"

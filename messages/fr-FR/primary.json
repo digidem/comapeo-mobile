@@ -121,35 +121,8 @@
   "$1Screens.ProjectSettings.title": {
     "message": "Outils de coordinator"
   },
-  "$1Screens.Settings.AppSettings.Drawer.security": {
-    "message": "Sécurité"
-  },
   "$1Screens.Settings.AppSettings.aboutCoMapeo": {
     "message": "À propos de CoMapeo"
-  },
-  "$1Screens.Settings.AppSettings.coordinateSystem": {
-    "message": "Système de coordonnées"
-  },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "Nom de l'appareil"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess": {
-    "message": "Mode d'accès anticipé"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess.off": {
-    "message": "Accès anticipé DÉSACTIVÉ"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess.on": {
-    "message": "Accès anticipé activé"
-  },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "Langage"
-  },
-  "$1Screens.Settings.AppSettings.languageDesc": {
-    "message": "Afficher la langue pour l'application"
-  },
-  "$1Screens.Settings.AppSettings.privacyPolicy": {
-    "message": "Données & Confidentialité"
   },
   "$1Screens.Settings.AppSettings.title": {
     "message": "Paramètres de CoMapeo"

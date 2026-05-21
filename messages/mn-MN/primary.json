@@ -18,15 +18,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Үргэлжлүүлэн засварлах"
   },
-  "$1Screens.Settings.AppSettings.Drawer.security": {
-    "message": "Аюулгүй байдал"
-  },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "Төхөөрөмжний нэр"
-  },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "Хэл"
-  },
   "$1allProjects.close": {
     "message": "Хаах"
   },

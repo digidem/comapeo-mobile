@@ -18,15 +18,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Endelea kuhariri"
   },
-  "$1Screens.Settings.AppSettings.Drawer.security": {
-    "message": "Usalama"
-  },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "Jina la Kifaa"
-  },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "Lugha"
-  },
   "$1allProjects.close": {
     "message": "Funga"
   },

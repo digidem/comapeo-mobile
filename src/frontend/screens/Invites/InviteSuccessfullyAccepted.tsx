@@ -44,7 +44,12 @@ export const InviteSuccessfullyAccepted = ({
             fullSize
             onPress={() => {
               setActiveProjectId(route.params.projectId);
-              // navigation.goBack();
+              requestAnimationFrame(() => {
+                navigation.reset({
+                  index: 0,
+                  routes: [{name: 'Home'}],
+                });
+              });
             }}
             text={formatMessage(m.done)}
           />

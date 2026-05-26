@@ -102,7 +102,7 @@ export const InviteReceived = ({
 
           // If the user is on the onboarding screen, simply show the invites accepted modal
           if (isInOnboarding) {
-            navigation.navigate('InviteSuccessfullyAccepted', {
+            navigation.replace('InviteSuccessfullyAccepted', {
               projectId,
               projectName: invite.projectName,
             });

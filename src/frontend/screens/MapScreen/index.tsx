@@ -154,6 +154,9 @@ export const MapScreen = ({
             if (event.properties.isUserInteraction && following) {
               setFollowing(false);
             }
+          }}
+          onRegionDidChange={event => {
+            setZoom(event.properties.zoomLevel);
           }}>
           <Camera
             ref={cam => {

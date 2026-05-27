@@ -38,32 +38,6 @@ export function getUsableLanguageTagFromSystemPreferences(
 }
 
 /**
- * @param translatedLanguageTags List of language tags that may have translated messages
- * @returns List of languages that are usable within the app (see {@link UsableLanguage})
- */
-function getUsableLanguages(
-  translatedLanguageTags: Array<TranslatedLanguageTag>,
-): Array<UsableLanguage> {
-  const result: Array<UsableLanguage> = [];
-
-  for (const languageTag of translatedLanguageTags) {
-    const {englishName, nativeName} = LANGUAGES[languageTag];
-
-    result.push({
-      englishName,
-      languageTag,
-      nativeName,
-    });
-  }
-
-  result.sort((a, b) => {
-    return a.englishName.localeCompare(b.englishName);
-  });
-
-  return result;
-}
-
-/**
  * Returns the variant of a language tag that the app can use to show translated messages.
  * If we have translations that match the primary language code component of a specified language tag,
  * we return the language code as the language tag (since all language codes are valid language tags).
@@ -87,6 +61,32 @@ export function getUsableLanguageTag(languageTag: string) {
       return supported.languageTag;
     }
   }
+}
+
+/**
+ * @param translatedLanguageTags List of language tags that may have translated messages
+ * @returns List of languages that are usable within the app (see {@link UsableLanguage})
+ */
+function getUsableLanguages(
+  translatedLanguageTags: Array<TranslatedLanguageTag>,
+): Array<UsableLanguage> {
+  const result: Array<UsableLanguage> = [];
+
+  for (const languageTag of translatedLanguageTags) {
+    const {englishName, nativeName} = LANGUAGES[languageTag];
+
+    result.push({
+      englishName,
+      languageTag,
+      nativeName,
+    });
+  }
+
+  result.sort((a, b) => {
+    return a.englishName.localeCompare(b.englishName);
+  });
+
+  return result;
 }
 
 /**

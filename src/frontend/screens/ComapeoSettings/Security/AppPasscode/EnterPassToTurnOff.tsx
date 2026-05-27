@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {InputPasscode} from './InputPasscode';
-import {useSecurityState} from '../../contexts/SecurityStoreContext';
-import {verifyPasscode} from '../../lib/security';
+import {useSecurityState} from '../../../../contexts/SecurityStoreContext';
+import {verifyPasscode} from '../../../../lib/security';
 
 const m = defineMessages({
   titleEnter: {

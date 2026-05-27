@@ -1,17 +1,17 @@
 import * as React from 'react';
 import {Linking, Pressable, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
-import {SecondaryButton} from '../../../sharedComponents/Buttons';
-import {Checkbox} from '../../../sharedComponents/Checkbox';
-import {BLUE_GREY, COMAPEO_BLUE, VERY_LIGHT_GREY} from '../../../lib/styles';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {Checkbox} from '../../sharedComponents/Checkbox';
+import {BLUE_GREY, COMAPEO_BLUE, VERY_LIGHT_GREY} from '../../lib/styles';
 import {
   useEarlyAccessActions,
   useEarlyAccessState,
-} from '../../../contexts/EarlyAccessContext';
-import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+} from '../../contexts/EarlyAccessContext';
+import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 
 const m = defineMessages({
   navTitle: {

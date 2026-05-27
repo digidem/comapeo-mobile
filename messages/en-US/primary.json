@@ -128,41 +128,59 @@
   "$1Screens.ProjectSettings.title": {
     "message": "Coordinator Tools"
   },
-  "$1Screens.Settings.AppSettings.Drawer.security": {
-    "message": "Security"
-  },
   "$1Screens.Settings.AppSettings.aboutCoMapeo": {
     "message": "About CoMapeo"
   },
-  "$1Screens.Settings.AppSettings.coordinateSystem": {
-    "message": "Coordinate System"
+  "$1Screens.Settings.AppSettings.coordinateDd": {
+    "message": "Decimal Degrees"
   },
-  "$1Screens.Settings.AppSettings.coordinateSystemDesc": {
-    "message": "UTM,Lat/Lon,DMS"
+  "$1Screens.Settings.AppSettings.coordinateDms": {
+    "message": "Degrees/Min/Sec"
   },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "Device Name"
+  "$1Screens.Settings.AppSettings.coordinateUtm": {
+    "message": "UTM Coordinates"
   },
-  "$1Screens.Settings.AppSettings.earlyAccess": {
-    "message": "Early Access Mode"
+  "$1Screens.Settings.AppSettings.createTestData": {
+    "message": "Create Test Data"
   },
-  "$1Screens.Settings.AppSettings.earlyAccess.off": {
-    "message": "Early Access is OFF"
+  "$1Screens.Settings.AppSettings.diagnosticInformation": {
+    "message": "Diagnostic Information"
   },
-  "$1Screens.Settings.AppSettings.earlyAccess.on": {
-    "message": "Early Access is ON"
+  "$1Screens.Settings.AppSettings.earlyAccessOff": {
+    "message": "Early Access OFF"
   },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "Language"
+  "$1Screens.Settings.AppSettings.earlyAccessOn": {
+    "message": "Early Access ON"
   },
-  "$1Screens.Settings.AppSettings.languageDesc": {
-    "message": "Display language for app"
+  "$1Screens.Settings.AppSettings.edit": {
+    "message": "Edit"
   },
-  "$1Screens.Settings.AppSettings.privacyPolicy": {
-    "message": "Data & Privacy"
+  "$1Screens.Settings.AppSettings.imperial": {
+    "message": "Imperial"
+  },
+  "$1Screens.Settings.AppSettings.metric": {
+    "message": "Metric"
+  },
+  "$1Screens.Settings.AppSettings.noPasscode": {
+    "message": "No Passcode"
+  },
+  "$1Screens.Settings.AppSettings.passcode": {
+    "message": "Passcode"
+  },
+  "$1Screens.Settings.AppSettings.sharingPermissions": {
+    "message": "SHARING PERMISSIONS"
+  },
+  "$1Screens.Settings.AppSettings.thisDevice": {
+    "message": "THIS DEVICE"
   },
   "$1Screens.Settings.AppSettings.title": {
     "message": "CoMapeo Settings"
+  },
+  "$1Screens.Settings.AppSettings.turnOff": {
+    "message": "Turn Off"
+  },
+  "$1Screens.Settings.AppSettings.turnOn": {
+    "message": "Turn On"
   },
   "$1TrackBottomSheet.DidNotMove.delete": {
     "message": "Exit Tracks"
@@ -907,6 +925,24 @@
   },
   "$1screens.TrackCategoryChooser.title": {
     "message": "Choose a category"
+  },
+  "$1screens.UnitSystemSettings.imperial": {
+    "description": "Label for imperial unit system option",
+    "message": "Imperial"
+  },
+  "$1screens.UnitSystemSettings.imperialSubtitle": {
+    "message": "Display Information (ft, mi)"
+  },
+  "$1screens.UnitSystemSettings.metric": {
+    "description": "Label for metric unit system option",
+    "message": "Metric"
+  },
+  "$1screens.UnitSystemSettings.metricSubtitle": {
+    "message": "Display Information (km, m)"
+  },
+  "$1screens.UnitSystemSettings.title": {
+    "description": "Title for unit system settings screen",
+    "message": "Unit System"
   },
   "$1screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
     "message": "Remove & Notify"

@@ -53,10 +53,11 @@ export type RootStackParamsList = {
   Home: NavigatorScreenParams<HomeTabsParamsList>;
   GpsModal: undefined;
   Settings: undefined;
-  Config: undefined;
+  Categories: undefined;
   AboutSettings: undefined;
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
+  UnitSystemSettings: undefined;
   DraftPhotoPreviewModal: {
     photoMetadata: PhotoMetadata;
     photoExif?: PhotoEXIF;

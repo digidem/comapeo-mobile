@@ -81,6 +81,12 @@ Unfortunately this can't be totally controlled through Appium tests. It does sho
 - Cannot test the actual view on the screen when devices are available
 - Cannot test the sync/ exchange process itself
 
+#### Map Sharing
+
+- Cannot upload a map onto a device
+- Cannot run two devices at once, so cannot test sharing
+- Basically nothing about it can be tested
+
 #### Other
 
 - If category names are long, text wraps using hyphenation at expected points (none are long enough to wrap)

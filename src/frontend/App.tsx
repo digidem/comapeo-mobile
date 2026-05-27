@@ -1,9 +1,21 @@
 import * as React from 'react';
+import {Logger} from '@maplibre/maplibre-react-native';
 import {getLocales} from 'expo-localization';
+
+// Maplibre logs when tile requests are cancelled, which is often.
+// this turns off the unneccessary noise in the console logs
+Logger.setLogCallback(log => {
+  if (
+    log.tag === 'Mbgl-HttpRequest' &&
+    log.message.startsWith('Request failed due to a permanent error: Canceled')
+  ) {
+    return true;
+  }
+  return false;
+});
 import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {initializeNodejs} from './initializeNodejs';
-import Mapbox from '@rnmapbox/maps';
 import {PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
@@ -19,6 +31,7 @@ import {createDraftObservationStore} from './contexts/PersistedStores/DraftObser
 import {createTrackStore} from './contexts/TrackStoreContext';
 import {createSecurityStore} from './contexts/SecurityStoreContext';
 import {createCoordinateFormatStore} from './contexts/CoordinateFormatStoreContext';
+import {createUnitSystemStore} from './contexts/UnitSystemStoreContext';
 import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatStoreContext';
 import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
@@ -76,8 +89,6 @@ if (appMetricsOptIn) {
   });
   Sentry.getClient()?.addIntegration(navigationIntegration);
 }
-
-Mapbox.setTelemetryEnabled(false);
 
 const persistedLocaleStore = createLocaleStore({
   persist: true,
@@ -150,6 +161,7 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 const savedLocationStore = createSavedLocationStore({persist: true});
 const lowStorageBannerStore = createLowStorageBannerStore();
 const earlyAccessStore = createEarlyAccessStore({persist: true});
+const persistedUnitSystemStore = createUnitSystemStore({persist: true});
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
@@ -235,7 +247,8 @@ const App = () => {
                   metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
                   appUsageStatsStore={appUsagePromptStore}
                   lowStorageBannerStore={lowStorageBannerStore}
-                  earlyAccessStore={earlyAccessStore}>
+                  earlyAccessStore={earlyAccessStore}
+                  unitSystemStore={persistedUnitSystemStore}>
                   <AppNavigator
                     permissionAsked={permissionsAsked}
                     navigationIntegration={navigationIntegration}

@@ -12,7 +12,9 @@ describe('Settings - Coordinates Settings Flow', () => {
   });
 
   it('should open Coordinate System screen', async () => {
-    const coordinateSystemOption = await $(byTextMatches('Coordinate System'));
+    const coordinateSystemOption = await $(
+      byResourceId('settingsCoodinatesButton'),
+    );
     await coordinateSystemOption.click();
 
     await expect($(byTextMatches('Decimal Degrees'))).toBeDisplayed();

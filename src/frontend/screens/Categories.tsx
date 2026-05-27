@@ -3,19 +3,19 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {useImportProjectCategories} from '@comapeo/core-react';
 import {Alert, StyleSheet, View} from 'react-native';
-import {useSelectFile} from '../../hooks/files';
-import {useProjectSettings, useGetOwnRole} from '../../hooks/server/projects';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {MEDIUM_GREY} from '../../lib/styles';
+import {useSelectFile} from '../hooks/files';
+import {useProjectSettings, useGetOwnRole} from '../hooks/server/projects';
+import {NativeNavigationComponent} from '../sharedTypes/navigation';
+import {MEDIUM_GREY} from '../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
-import {convertFileUriToPosixPath} from '../../lib/file-system';
-import noop from '../../lib/noop';
-import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../sharedTypes';
+import {convertFileUriToPosixPath} from '../lib/file-system';
+import noop from '../lib/noop';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
-import {SecondaryButton} from '../../sharedComponents/Buttons';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {SecondaryButton} from '../sharedComponents/Buttons';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
+import {BodyText} from '../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   navTitle: {
@@ -48,7 +48,9 @@ const m = defineMessages({
   },
 });
 
-export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
+export const Categories: NativeNavigationComponent<'Categories'> = ({
+  navigation,
+}) => {
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
   const {projectId} = useActiveProject();
@@ -157,7 +159,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   );
 };
 
-Config.navTitle = m.navTitle;
+Categories.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
   container: {

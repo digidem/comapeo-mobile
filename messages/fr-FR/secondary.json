@@ -189,9 +189,6 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Vos modifications ne seront pas enregistrées. Cela ne peut pas être annulé."
   },
-  "TrackStats.kilometers": {
-    "message": "Km"
-  },
   "constants.blue": {
     "message": "Bleu"
   },

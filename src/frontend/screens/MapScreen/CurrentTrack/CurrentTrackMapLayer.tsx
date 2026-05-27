@@ -1,4 +1,4 @@
-import {LineLayer, ShapeSource} from '@rnmapbox/maps';
+import {LineLayer, ShapeSource} from '@maplibre/maplibre-react-native';
 import * as React from 'react';
 
 import {useTrackState} from '../../../contexts/TrackStoreContext';
@@ -40,15 +40,14 @@ export const CurrentTrackMapLayer = ({
       }>
       <LineLayer
         id="currentTrackBase"
-        belowLayerID="mapboxUserLocationPulseCircle"
+        // map libre's bottom-most user location layer
+        belowLayerID="mlrn-user-location-puck-pulse"
         style={BASE_TRACK_LINE_STYLE}
-        existing
       />
       <LineLayer
         id="currentTrackOverlay"
-        belowLayerID="mapboxUserLocationPulseCircle"
+        belowLayerID="mlrn-user-location-puck-pulse"
         style={OVERLAY_TRACK_LINE_STYLE}
-        existing
       />
     </ShapeSource>
   );

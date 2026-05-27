@@ -23,12 +23,12 @@ export function createObservationMapLayerStyle(presets: Preset[]) {
   return {
     circleColor:
       categoryColorPairs.length > 0
-        ? [
+        ? ([
             'match',
             ['get', 'presetName'],
             ...categoryColorPairs,
             DEFAULT_MARKER_COLOR,
-          ]
+          ] as const)
         : DEFAULT_MARKER_COLOR,
     circleRadius: 5,
     circleStrokeColor: '#fff',

@@ -9,7 +9,7 @@ import {
 import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
 import {
   getUsableLanguageTagFromSystemPreferences,
-  SupportedLanguageTag,
+  TranslatedLanguageTag,
 } from '../lib/intl';
 import {type LocaleState} from '../sharedTypes/locale';
 
@@ -34,6 +34,7 @@ function migrate(persistedState: unknown, version: number): LocaleState {
   }
   // version 0: languageTag was null | SupportedLanguageTag
   const legacy = persistedState as {
+    // @ts-expect-error will change
     languageTag: SupportedLanguageTag | null;
     useSystemPreferences: boolean;
   };
@@ -65,7 +66,7 @@ export function createLocaleStore({persist} = {persist: false}) {
 
   const actions = {
     setLanguageTag: (
-      languageTag: SupportedLanguageTag | 'SystemPreference',
+      languageTag: TranslatedLanguageTag | 'SystemPreference',
     ) => {
       if (languageTag === 'SystemPreference') {
         const systemLanguageTags = getLocales().map(l => l.languageTag);

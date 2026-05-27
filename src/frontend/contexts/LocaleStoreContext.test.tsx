@@ -34,7 +34,7 @@ test('usage of state and actions hooks', () => {
   });
 
   act(() => {
-    actionsHook.result.current.setLanguageTag('pt-BR');
+    actionsHook.result.current.setLanguageTag('pt');
   });
 
   expect(stateHook.result.current).toStrictEqual({

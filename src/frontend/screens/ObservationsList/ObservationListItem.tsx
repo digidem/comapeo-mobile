@@ -43,7 +43,7 @@ function ObservationListItemNotMemoized({
     <TouchableOpacity
       onPress={() => onPress(observation.docId)}
       testID={testID}
-      style={{flex: 1, height: 80}}>
+      style={{flex: 1, minHeight: 80}}>
       <React.Suspense
         fallback={
           <View style={[styles.container, style]}>
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
     flex: 1,
-    height: 80,
+    minHeight: 80,
   },
   text: {
     flex: 1,

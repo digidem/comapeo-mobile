@@ -198,9 +198,6 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Suas alterações não serão salvas. Isso não poderá ser desfeito."
   },
-  "TrackStats.kilometers": {
-    "message": "km"
-  },
   "constants.blue": {
     "message": "Azul"
   },

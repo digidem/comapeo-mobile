@@ -18,9 +18,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "បន្តកែសម្រួល"
   },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "ភាសា"
-  },
   "$1allProjects.close": {
     "message": "បិទ"
   },

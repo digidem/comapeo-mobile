@@ -13,9 +13,15 @@ import {GPS_MODAL_TEXT, WHITE} from '../lib/styles';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {DateDistance} from '../sharedComponents/DateDistance';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
-import {Text} from '../sharedComponents/Text';
+import {BodyText} from '../sharedComponents/Text/BodyText';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
+import {useUnitSystem} from '../contexts/UnitSystemStoreContext';
 import {useLocationState} from '../contexts/LocationContext';
+import {
+  metersOrConversion,
+  metersPerSecondOrConversion,
+} from '../lib/unitConversion';
 
 const m = defineMessages({
   gpsHeader: {
@@ -67,8 +73,10 @@ const m = defineMessages({
 
 const InfoRow = ({label, value}: {label: string; value: string}) => (
   <View style={styles.row}>
-    <Text style={styles.rowLabel}>{label}</Text>
-    <Text style={styles.rowValue}>{value}</Text>
+    <HeaderText variant="header5" style={styles.rowLabel}>
+      {label}
+    </HeaderText>
+    <BodyText style={styles.rowValue}>{value}</BodyText>
   </View>
 );
 
@@ -77,50 +85,69 @@ export const LocationInfoScreen = () => {
   const lastKnownLocationQuery = useLastKnownLocation();
   const provider = useLocationState(store => store.providerStatus);
   const coordinateFormat = useCoordinateFormat();
+  const unitSystem = useUnitSystem();
   const {formatMessage: t} = useIntl();
 
   const locationTimestamp =
     location?.timestamp || lastKnownLocationQuery.data?.timestamp;
 
+  const formatCoordValue = (key: string, value: number): string => {
+    if (
+      key === 'accuracy' ||
+      key === 'altitude' ||
+      key === 'altitudeAccuracy'
+    ) {
+      const {value: v, unit} = metersOrConversion(value, unitSystem);
+      return `${v.toFixed(0)} ${unit}`;
+    }
+    if (key === 'speed') {
+      const {value: v, unit} = metersPerSecondOrConversion(value, unitSystem);
+      return `${v.toFixed(2)} ${unit}`;
+    }
+    return value.toFixed(5);
+  };
+
   return (
     <ScrollView style={styles.container} testID="MAIN.gps-details-scrn">
       <View style={styles.infoArea}>
-        <Text style={styles.sectionTitle}>
+        <HeaderText variant="header5" style={styles.sectionTitle}>
           <FormattedMessage {...m.lastUpdate} />
-        </Text>
+        </HeaderText>
         <DateDistance
           style={styles.rowValue}
           date={locationTimestamp ? new Date(locationTimestamp) : new Date()}
         />
         {location && (
           <>
-            <Text style={styles.sectionTitle}>
+            <HeaderText variant="header5" style={styles.sectionTitle}>
               <FormattedMessage {...m[coordinateFormat]} />
-            </Text>
-            <Text style={styles.rowValue}>
+            </HeaderText>
+            <BodyText style={styles.rowValue}>
               <FormattedCoords
                 lon={location.coords.longitude}
                 lat={location.coords.latitude}
                 format={coordinateFormat}
               />
-            </Text>
-            <Text style={styles.sectionTitle}>
+            </BodyText>
+            <HeaderText variant="header5" style={styles.sectionTitle}>
               <FormattedMessage {...m.details} />
-            </Text>
+            </HeaderText>
             {Object.entries(location.coords).map(([key, value]) => (
               <InfoRow
                 key={key}
                 label={key}
-                value={typeof value === 'number' ? value.toFixed(5) : ''}
+                value={
+                  typeof value === 'number' ? formatCoordValue(key, value) : ''
+                }
               />
             ))}
           </>
         )}
         {provider && (
           <>
-            <Text style={styles.sectionTitle}>
+            <HeaderText variant="header5" style={styles.sectionTitle}>
               <FormattedMessage {...m.locationSensors} />
-            </Text>
+            </HeaderText>
             {Object.entries(provider).map(([key, value]) => (
               <InfoRow key={key} label={key} value={t(value ? m.yes : m.no)} />
             ))}
@@ -158,19 +185,15 @@ const styles = StyleSheet.create({
   row: {flexDirection: 'row'},
   sectionTitle: {
     color: 'white',
-    fontWeight: '700',
     marginTop: 10,
     marginBottom: 5,
-    fontSize: 16,
   },
   rowLabel: {
     color: 'white',
-    fontWeight: '700',
     minWidth: '50%',
   },
   rowValue: {
     color: 'white',
-    fontWeight: '400',
   },
   infoArea: {
     paddingLeft: 15,

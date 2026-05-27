@@ -202,9 +202,6 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
   },
-  "TrackStats.kilometers": {
-    "message": "km"
-  },
   "constants.blue": {
     "message": "Blue"
   },
@@ -1162,8 +1159,8 @@
   "screens.Settings.MapManagement.MapReceived.decline": {
     "message": "Decline"
   },
-  "screens.Settings.MapManagement.MapReceived.kmAway": {
-    "message": "{distance} km away"
+  "screens.Settings.MapManagement.MapReceived.distanceAway": {
+    "message": "{distance} away"
   },
   "screens.Settings.MapManagement.MapReceived.locationNotCovered": {
     "message": "Current location not covered!"

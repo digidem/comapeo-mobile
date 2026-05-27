@@ -39,7 +39,7 @@ test('usage of state and actions hooks', () => {
 
   expect(stateHook.result.current).toStrictEqual({
     useSystemPreferences: false,
-    languageTag: 'pt-BR',
+    languageTag: 'pt',
   });
 
   act(() => {

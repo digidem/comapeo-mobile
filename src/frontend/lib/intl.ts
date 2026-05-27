@@ -15,7 +15,7 @@ interface UsableLanguage {
 // Language tag that has corresponding translations
 export type TranslatedLanguageTag = keyof typeof MESSAGES;
 
-// A subset of supported languages that have at least one translated message
+// All supported languages
 export const USABLE_LANGUAGES = getUsableLanguages(
   Object.keys(MESSAGES) as Array<TranslatedLanguageTag>,
 );

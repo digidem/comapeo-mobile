@@ -1,4 +1,4 @@
-import * as ExpoLinking from 'expo-linking';
+import {parse} from 'expo-linking';
 import type {LinkingOptions} from '@react-navigation/native';
 import type {AppStackParamsList} from '../sharedTypes/navigation';
 
@@ -15,7 +15,7 @@ import type {AppStackParamsList} from '../sharedTypes/navigation';
 export const DEEP_LINK_HOST = 'app.comapeo.org';
 
 export const linking: LinkingOptions<AppStackParamsList> = {
-  prefixes: [ExpoLinking.createURL('/'), `https://${DEEP_LINK_HOST}`],
+  prefixes: ['comapeo://', `https://${DEEP_LINK_HOST}`],
 };
 
 // For now handles both custom scheme that is useful for preproduction
@@ -23,7 +23,7 @@ export const linking: LinkingOptions<AppStackParamsList> = {
 // Whatever we end up using (ex. https://app.comapeo.org/invite/<id>).
 export function parseInviteUrl(url: string): string | null {
   try {
-    const parsed = ExpoLinking.parse(url);
+    const parsed = parse(url);
     // https URLs: scheme=https, hostname=app.comapeo.org, path=invite/abc123
     const pathMatch = (parsed.path || '').match(/^invite\/(.+)$/);
     if (pathMatch) return pathMatch[1] ?? null;

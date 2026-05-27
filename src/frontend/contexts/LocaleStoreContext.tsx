@@ -61,6 +61,16 @@ export function createLocaleStore({persist} = {persist: false}) {
         storage: createJSONStorage(() => MMKVStoreInitializer),
         version: 1,
         migrate,
+        // usable language tags can change between app boot ups
+        // this just makes sure the language tag is still usable
+        // if not, then use system preferences
+        onRehydrateStorage: () => state => {
+          if (!state) return;
+          const usable = getUsableLanguageTag(state.languageTag);
+          if (!usable) {
+            store.setState(createInitialState());
+          }
+        },
       }),
     );
   } else {

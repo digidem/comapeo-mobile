@@ -12,6 +12,7 @@ import {
   useOwnRoleInProject,
   useProjectSettings,
 } from '@comapeo/core-react';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ColorCard} from '../sharedComponents/ColorCard';
@@ -34,11 +35,10 @@ const m = defineMessages({
 });
 
 export const RemovedFromProjectBottomSheet = ({
-  route,
   navigation,
 }: NativeRootNavigationProps<'RemovedFromProjectBottomSheet'>) => {
   const {formatMessage} = useIntl();
-  const {projectId} = route.params;
+  const {projectId} = useActiveProject();
   const {
     data: {reason},
   } = useOwnRoleInProject({projectId});
@@ -72,42 +72,46 @@ export const RemovedFromProjectBottomSheet = ({
         </ColorCard>
 
         <View style={styles.buttonContainer}>
-          {createProject.status === 'pending' ? (
+          {leaveProject.status === 'pending' ||
+          createProject.status === 'pending' ? (
             <UIActivityIndicator style={{margin: 20}} />
           ) : (
             <SecondaryButton
               fullSize
               onPress={() => {
-                if (defaultProject) {
-                  setActiveProjectId(defaultProject.projectId);
-                  // Navigate away before leaveProject closes the hypercores on
-                  // the backend in order to unmount subscribed components
-                  // and run cleanup, avoiding SESSION_CLOSED errors
-                  navigation.popToTop();
-                  leaveProject.mutate({projectId});
-                  return;
-                }
-                // The user should ALWAYS have a default (solo) project. This was
-                // not implemented until after v6. So this creates one if it does not exist
-                createProject.mutate(undefined, {
-                  onError: err => {
-                    const firstProject = projects[0];
-                    if (firstProject) {
-                      setActiveProjectId(firstProject.projectId);
+                leaveProject.mutate(
+                  {projectId},
+                  {
+                    onSuccess: () => {
+                      if (!defaultProject) {
+                        // The user should ALWAYS have a default (solo) project. This was not implemented until after v6. So this creates one if it does not exist
+                        createProject.mutate(undefined, {
+                          onError: err => {
+                            const firstProject = projects[0];
+                            if (firstProject) {
+                              setActiveProjectId(firstProject.projectId);
+                              navigation.popToTop();
+                              return;
+                            }
+                            navigation.navigate('ErrorBottomSheet', {
+                              error: toError(
+                                err,
+                                'Error creating default project',
+                              ),
+                            });
+                          },
+                          onSuccess: newDefaultProjectId => {
+                            setActiveProjectId(newDefaultProjectId);
+                            navigation.popToTop();
+                          },
+                        });
+                        return;
+                      }
+                      setActiveProjectId(defaultProject.projectId);
                       navigation.popToTop();
-                      leaveProject.mutate({projectId});
-                      return;
-                    }
-                    navigation.navigate('ErrorBottomSheet', {
-                      error: toError(err, 'Error creating default project'),
-                    });
+                    },
                   },
-                  onSuccess: newDefaultProjectId => {
-                    setActiveProjectId(newDefaultProjectId);
-                    navigation.popToTop();
-                    leaveProject.mutate({projectId});
-                  },
-                });
+                );
               }}
               text={formatMessage(m.close)}
             />

@@ -8,21 +8,28 @@ type NumberProps = {
 };
 
 export const Number = ({updateTag, tagValue}: NumberProps) => {
+  const [text, setText] = React.useState(() => {
+    if (typeof tagValue === 'number') return String(tagValue);
+    if (typeof tagValue === 'string' && !isNaN(parseFloat(tagValue)))
+      return tagValue;
+    return '';
+  });
+
   return (
     <>
       <TextInput
         testID="OBS.number-inp"
-        value={typeof tagValue === 'number' ? String(tagValue) : ''}
-        onChangeText={newVal =>
-          updateTag(
-            parseFloat(
-              newVal
-                .replace(/[^0-9.-]/g, '') // Allow digits, decimal, and negative sign
-                .replace(/(?!^)-/g, '') // Remove any minus sign that is not at the start
-                .replace(/(\..*?)\./g, '$1'), // Remove additional decimal points
-            ),
-          )
-        }
+        value={text}
+        onChangeText={newVal => {
+          const sanitized = newVal
+            .replace(/[^0-9.-]/g, '') // Allow digits, decimal, and negative sign
+            .replace(/(?!^)-/g, '') // Remove any minus sign that is not at the start
+            .replace(/(\..*?)\./g, '$1') // Remove additional decimal points
+            .replace(/^(-?)\./, '$10.'); // Prefix bare decimal with 0
+          setText(sanitized);
+          const parsed = parseFloat(sanitized);
+          if (!isNaN(parsed)) updateTag(parsed);
+        }}
         keyboardType="numeric"
         style={styles.textInput}
         underlineColorAndroid="transparent"

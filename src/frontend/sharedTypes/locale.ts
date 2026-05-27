@@ -3,6 +3,7 @@ import * as v from 'valibot';
 import {TranslatedLanguageTag} from '../lib/intl';
 
 import LANGUAGES from '../languages.json';
+import MESSAGES from '../../../translations/messages.json';
 
 type LegacySupportedLanguageTag = keyof typeof LANGUAGES;
 
@@ -33,9 +34,11 @@ export const LocaleStateSchemaV0 = v.variant('languageTag', [
 
 // Do not change! Bump version in LocaleStoreContext when modifying this schema.
 export const LocaleStateSchema = v.object({
-  languageTag: v.pipe(
-    v.string(),
-    v.transform(value => value as TranslatedLanguageTag),
+  languageTag: v.picklist(
+    Object.keys(MESSAGES) as [
+      TranslatedLanguageTag,
+      ...TranslatedLanguageTag[],
+    ],
   ),
   useSystemPreferences: v.boolean(),
 });

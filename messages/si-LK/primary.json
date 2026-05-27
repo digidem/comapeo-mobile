@@ -18,15 +18,6 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "සංස්කරණය කරගෙන යන්න"
   },
-  "$1Screens.Settings.AppSettings.Drawer.security": {
-    "message": "ආරක්ෂාව"
-  },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "උපාංගයේ නම"
-  },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "භාෂාව"
-  },
   "$1allProjects.close": {
     "message": "වසන්න"
   },

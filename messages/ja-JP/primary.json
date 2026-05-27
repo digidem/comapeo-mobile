@@ -118,35 +118,8 @@
   "$1Screens.ProjectSettings.title": {
     "message": "コーディネータツール"
   },
-  "$1Screens.Settings.AppSettings.Drawer.security": {
-    "message": "セキュリティ"
-  },
   "$1Screens.Settings.AppSettings.aboutCoMapeo": {
     "message": "CoMapeoについて"
-  },
-  "$1Screens.Settings.AppSettings.coordinateSystem": {
-    "message": "座標系"
-  },
-  "$1Screens.Settings.AppSettings.deviceName": {
-    "message": "端末名"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess": {
-    "message": "アーリーアクセスモード"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess.off": {
-    "message": "アーリーアクセスはOFFです"
-  },
-  "$1Screens.Settings.AppSettings.earlyAccess.on": {
-    "message": "アーリーアクセスはオンです"
-  },
-  "$1Screens.Settings.AppSettings.language": {
-    "message": "言語"
-  },
-  "$1Screens.Settings.AppSettings.languageDesc": {
-    "message": "アプリの言語を表示する"
-  },
-  "$1Screens.Settings.AppSettings.privacyPolicy": {
-    "message": "データ & プライバシー"
   },
   "$1Screens.Settings.AppSettings.title": {
     "message": "CoMapeoの設定"

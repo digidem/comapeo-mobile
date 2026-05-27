@@ -1,31 +1,24 @@
 import * as React from 'react';
-import * as ExpoLinking from 'expo-linking';
+import {useLinkingURL} from 'expo-linking';
 import {parseInviteUrl} from '../../lib/deepLinkConfig';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {isInviteScreen, isEditingScreen} from '../../lib/screenNameChecks';
 
-export const DeepLinkListener = () => {
+export const DeepLinkListener = ({
+  currentRouteName,
+}: {
+  currentRouteName: string | undefined;
+}) => {
   const navigation = useNavigationFromRoot();
-  const url = ExpoLinking.useURL();
-  const [pendingInviteId, setPendingInviteId] = React.useState<string | null>(
-    null,
-  );
+  const url = useLinkingURL();
+  const pendingInviteId = url ? parseInviteUrl(url) : null;
 
   React.useEffect(() => {
-    if (!url) return;
-    const inviteId = parseInviteUrl(url);
-    if (inviteId) {
-      setPendingInviteId(inviteId);
-    }
-  }, [url]);
-
-  React.useEffect(() => {
-    if (!pendingInviteId) return;
-    const waitUntilMount = requestAnimationFrame(() => {
-      navigation.navigate('InviteReceived', {inviteId: pendingInviteId});
-      setPendingInviteId(null);
-    });
-    return () => cancelAnimationFrame(waitUntilMount);
-  }, [pendingInviteId, navigation]);
+    if (!pendingInviteId || !currentRouteName) return;
+    if (isInviteScreen(currentRouteName)) return;
+    if (isEditingScreen(currentRouteName)) return;
+    navigation.navigate('InviteReceived', {inviteId: pendingInviteId});
+  }, [pendingInviteId, currentRouteName, navigation]);
 
   return null;
 };

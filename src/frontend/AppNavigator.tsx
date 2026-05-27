@@ -1,7 +1,6 @@
 import {
   NavigationContainer,
   type NavigationContainerRef,
-  getStateFromPath,
 } from '@react-navigation/native';
 import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
@@ -11,7 +10,7 @@ import {RootStackNavigator} from './Navigation/Stack';
 import type Sentry from '@sentry/react-native';
 import {PostHogProvider} from 'posthog-react-native';
 import {postHog} from './lib/posthog';
-import {linking, deepLinkReady} from './lib/deepLinkConfig';
+import {linking} from './lib/deepLinkConfig';
 
 export const AppNavigator = ({
   permissionAsked,
@@ -34,10 +33,9 @@ export const AppNavigator = ({
       ref={containerRef}
       linking={{
         ...linking,
-        getStateFromPath: (path, options) => {
-          if (!deepLinkReady.appIsReady) return undefined;
-          return getStateFromPath(path, options);
-        },
+        // Always return undefined so React Navigation never auto-navigates
+        // from a URL. DeepLinkListener handles all deep link navigation.
+        getStateFromPath: () => undefined,
       }}
       onReady={() => {
         navigationIntegration?.registerNavigationContainer(containerRef);

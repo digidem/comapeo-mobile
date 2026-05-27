@@ -16,7 +16,6 @@ import {AuthScreen} from '../../screens/AuthScreen';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 import {useIntl} from 'react-intl';
 import {RootStack} from './RootStack';
-import {setDeepLinkReady} from '../../lib/deepLinkConfig';
 import {DeepLinkListener} from './DeepLinkListener';
 
 export type NavigatorLayout = NonNullable<
@@ -63,10 +62,6 @@ export const RootStackNavigator = () => {
     !deviceInfo.name ||
     !activeProjectId;
 
-  React.useEffect(() => {
-    setDeepLinkReady(!isNotReadyForInvite);
-  }, [isNotReadyForInvite]);
-
   const layout: NavigatorLayout = ({children, state, navigation}) => (
     <SafeAreaView
       edges={['bottom']}
@@ -84,7 +79,11 @@ export const RootStackNavigator = () => {
             navigation.navigate('MapReceivedBottomSheet', {shareId})
           }
         />
-        {!isNotReadyForInvite && <DeepLinkListener />}
+        {!isNotReadyForInvite && (
+          <DeepLinkListener
+            currentRouteName={state.routes[state.index]?.name}
+          />
+        )}
         {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.
             activeProjectId is always set before any app screen renders. */}
         {activeProjectId ? (

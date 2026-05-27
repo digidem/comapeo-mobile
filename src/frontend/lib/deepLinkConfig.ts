@@ -14,19 +14,8 @@ import type {AppStackParamsList} from '../sharedTypes/navigation';
 
 export const DEEP_LINK_HOST = 'app.comapeo.org';
 
-export const deepLinkReady = {appIsReady: false};
-
-export function setDeepLinkReady(appIsReady: boolean) {
-  deepLinkReady.appIsReady = appIsReady;
-}
-
 export const linking: LinkingOptions<AppStackParamsList> = {
   prefixes: [ExpoLinking.createURL('/'), `https://${DEEP_LINK_HOST}`],
-  config: {
-    screens: {
-      InviteReceived: 'invite/:inviteId',
-    },
-  },
 };
 
 // For now handles both custom scheme that is useful for preproduction

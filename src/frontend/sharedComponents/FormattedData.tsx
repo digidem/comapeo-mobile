@@ -44,29 +44,6 @@ export const FormattedCoords = ({
   return <>{formatCoords({lon, lat, format})}</>;
 };
 
-// Render the value of a Field property (one of `label`, `placeholder` or
-// `helperText`). Core is responsible for translation, so just uses the plain
-// string value. `label` will always render something: if it is undefined or an
-// empty string, then it will use the field key as the label. `placeholder` and
-// `helperText` will render to null if they are not defined.
-export const FormattedFieldProp = ({
-  field,
-  propName,
-}: {
-  field: Field;
-  propName: 'label' | 'placeholder' | 'helperText';
-}) => {
-  const fieldKey = field.tagKey;
-  const value = field[propName]
-    ? field[propName]
-    : // Never show a blank label, fall back to field.key, otherwise return null
-      propName === 'label'
-      ? fieldKey
-      : undefined;
-  if (!value) return null;
-  return <>{value}</>;
-};
-
 // Render a field value as a string. If the value is an array, convert to string
 // and join with `, `. If the field is a select_one or select_multiple field,
 // then use `field.option.label` to display the value, if a label is defined.

@@ -1,14 +1,21 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {MEDIUM_GREY} from '../../lib/styles';
-import {
-  FormattedFieldProp,
-  FormattedFieldValue,
-} from '../../sharedComponents/FormattedData';
+import {getValueLabel} from '../../sharedComponents/FormattedData';
 import {Field, Observation} from '@comapeo/schema';
 import {ViewStyleProp} from '../../sharedTypes';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {defineMessages, useIntl} from 'react-intl';
+
+const m = defineMessages({
+  noAnswer: {
+    id: '$1screens.Observation.ObservationView.noAnswer',
+    defaultMessage: 'No answer',
+    description:
+      'Placeholder text for fields on an observation which are not answered',
+  },
+});
 
 export const FieldDetails = ({
   fields,
@@ -19,6 +26,7 @@ export const FieldDetails = ({
   observation: Observation;
   style?: ViewStyleProp;
 }) => {
+  const {formatMessage} = useIntl();
   return (
     <View>
       {fields.map(field => {
@@ -26,12 +34,26 @@ export const FieldDetails = ({
         return (
           <View key={field.docId} style={[styles.section, style]}>
             <HeaderText variant="header3" style={styles.fieldTitle}>
-              <FormattedFieldProp field={field} propName="label" />
+              {field.label}
             </HeaderText>
-            <BodyText
-              style={value === undefined ? {color: MEDIUM_GREY} : undefined}>
-              <FormattedFieldValue value={value} field={field} />
-            </BodyText>
+            {!value ? (
+              <BodyText style={{color: MEDIUM_GREY}}>
+                {formatMessage(m.noAnswer)}
+              </BodyText>
+            ) : (
+              <BodyText>
+                {(Array.isArray(value) ? value : [value])
+                  .filter(
+                    formattedValue =>
+                      typeof formattedValue !== 'undefined' &&
+                      formattedValue !== '',
+                  )
+                  .map(formattedValue =>
+                    getValueLabel(formattedValue, field).trim(),
+                  )
+                  .join(', ')}
+              </BodyText>
+            )}
           </View>
         );
       })}

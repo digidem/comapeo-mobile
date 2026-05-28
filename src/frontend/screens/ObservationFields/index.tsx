@@ -17,7 +17,6 @@ import {
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
-import {FormattedFieldProp} from '../../sharedComponents/FormattedData';
 import {COMAPEO_BLUE} from '../../lib/styles';
 
 const m = defineMessages({
@@ -113,10 +112,10 @@ export const ObservationFields = ({
   return (
     <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
       <View style={styles.labelContainer}>
-        <HeaderText variant="header3">
-          <FormattedFieldProp field={field} propName="label" />
-        </HeaderText>
-        {<HeaderText variant="header5">{field.helperText}</HeaderText>}
+        <HeaderText variant="header3">{field.label}</HeaderText>
+        {field.helperText && (
+          <HeaderText variant="header5">{field.helperText}</HeaderText>
+        )}
       </View>
       {field.type === 'selectOne' && field.options ? (
         <SelectOne

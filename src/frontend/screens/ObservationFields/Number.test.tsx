@@ -136,3 +136,27 @@ test('handles 0', () => {
 
   expect(updateTag).toHaveBeenCalledWith(0);
 });
+
+test('handles -0{someNumber}', () => {
+  const updateTag = jest.fn();
+
+  render(<Number updateTag={updateTag} tagValue={undefined} />);
+
+  fireEvent.changeText(screen.getByDisplayValue(''), '-05');
+
+  expect(screen.getByTestId('OBS.number-inp').props.value).toBe('-5');
+
+  expect(updateTag).toHaveBeenCalledWith(-5);
+});
+
+test('handles -0', () => {
+  const updateTag = jest.fn();
+
+  render(<Number updateTag={updateTag} tagValue={undefined} />);
+
+  fireEvent.changeText(screen.getByDisplayValue(''), '-0');
+
+  expect(screen.getByTestId('OBS.number-inp').props.value).toBe('-0');
+
+  expect(updateTag).toHaveBeenCalledWith(0);
+});

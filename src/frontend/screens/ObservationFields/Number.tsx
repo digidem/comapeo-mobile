@@ -25,10 +25,11 @@ export const Number = ({updateTag, tagValue}: NumberProps) => {
             .replace(/[^0-9.-]/g, '') // Allow digits, decimal, and negative sign
             .replace(/(?!^)-/g, '') // Remove any minus sign that is not at the start
             .replace(/(\..*?)\./g, '$1') // Remove additional decimal points
-            .replace(/^(-?)\./, '$10.'); // Prefix bare decimal with 0
+            .replace(/^(-?)\./, '$10.') // Prefix bare decimal with 0
+            .replace(/^(-?)0+([1-9])/, '$1$2'); // Remove leading zeros before non-zero digit
           setText(sanitized);
           const parsed = parseFloat(sanitized);
-          if (!isNaN(parsed)) updateTag(parsed);
+          if (!isNaN(parsed)) updateTag(parsed || 0); // "|| 0" normalized -0 to 0
         }}
         keyboardType="numeric"
         style={styles.textInput}

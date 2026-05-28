@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {MEDIUM_GREY} from '../../lib/styles';
-import {getValueLabel} from '../../sharedComponents/FormattedData';
 import {Field, Observation} from '@comapeo/schema';
 import {ViewStyleProp} from '../../sharedTypes';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {defineMessages, useIntl} from 'react-intl';
+import {getFieldAnswerText} from '../../sharedComponents/FormattedData';
 
 const m = defineMessages({
   noAnswer: {
@@ -19,40 +19,34 @@ const m = defineMessages({
 
 export const FieldDetails = ({
   fields,
-  observation,
+  tags,
   style,
 }: {
   fields: Field[];
-  observation: Observation;
+  tags: Observation['tags'];
   style?: ViewStyleProp;
 }) => {
   const {formatMessage} = useIntl();
+
   return (
     <View>
       {fields.map(field => {
-        const value = observation.tags[field.tagKey];
+        const tagValue = tags[field.tagKey];
+        const answers = getFieldAnswerText({
+          tagValue,
+          fieldOptions: field.options,
+        });
         return (
           <View key={field.docId} style={[styles.section, style]}>
             <HeaderText variant="header3" style={styles.fieldTitle}>
               {field.label}
             </HeaderText>
-            {!value ? (
+            {!answers ? (
               <BodyText style={{color: MEDIUM_GREY}}>
                 {formatMessage(m.noAnswer)}
               </BodyText>
             ) : (
-              <BodyText>
-                {(Array.isArray(value) ? value : [value])
-                  .filter(
-                    formattedValue =>
-                      typeof formattedValue !== 'undefined' &&
-                      formattedValue !== '',
-                  )
-                  .map(formattedValue =>
-                    getValueLabel(formattedValue, field).trim(),
-                  )
-                  .join(', ')}
-              </BodyText>
+              <BodyText>{answers}</BodyText>
             )}
           </View>
         );

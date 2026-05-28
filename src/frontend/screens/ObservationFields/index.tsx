@@ -16,8 +16,8 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {COMAPEO_BLUE} from '../../lib/styles';
+import {usePreventRemove} from '@react-navigation/native';
 
 const m = defineMessages({
   nextQuestion: {
@@ -58,21 +58,13 @@ export const ObservationFields = ({
   const {updateTag} = useDraftObservationActions();
   const tags = useDraftObservationState(state => state.value?.tags);
 
+  usePreventRemove(current !== 1, () => {
+    setCurrent(current - 1);
+  });
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: formatMessage(m.title, {current, total: fieldIds.length}),
-      headerLeft: props => (
-        <CustomHeaderLeft
-          headerBackButtonProps={props}
-          onPress={() => {
-            if (current === 1) {
-              navigation.goBack();
-              return;
-            }
-            setCurrent(current - 1);
-          }}
-        />
-      ),
       headerRight: () => (
         <TouchableOpacity
           onPress={() => {

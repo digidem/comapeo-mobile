@@ -7,7 +7,7 @@ import {storage} from '../hooks/persistedState/createPersistedState';
 import {assert} from '../lib/assert';
 import {MINUTE_MS, formatIsoUtc, parseIsoUtc} from '../lib/date';
 import {first} from '../lib/first';
-import {type SupportedLanguageTag} from '../lib/intl';
+import {type AvailableLanguageTag} from '../lib/intl';
 import {last} from '../lib/last';
 import {maybeJsonParse} from '../lib/maybeJsonParse';
 import {OneAtATimeQueue} from '../lib/OneAtATimeQueue';
@@ -50,7 +50,7 @@ async function generateAppDiagnosticMetricsData({
   appLanguageTag,
   deviceLanguageTag,
 }: {
-  appLanguageTag: SupportedLanguageTag;
+  appLanguageTag: AvailableLanguageTag;
   deviceLanguageTag: string;
 }): Promise<AppDiagnosticMetricsReport> {
   const result: AppDiagnosticMetricsReport = {
@@ -94,7 +94,7 @@ export class AppDiagnosticMetrics {
     getLocaleInfo,
   }: {
     getLocaleInfo: () => {
-      appLanguageTag: SupportedLanguageTag;
+      appLanguageTag: AvailableLanguageTag;
       deviceLanguageTag: string;
     };
   }) {

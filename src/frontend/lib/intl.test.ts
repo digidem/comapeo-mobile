@@ -1,37 +1,7 @@
 import {
-  extractLanguageCode,
   getUsableLanguageTagFromSystemPreferences,
-  isSupportedLanguageTag,
   USABLE_LANGUAGES,
 } from './intl';
-
-describe('extractLanguageCode()', () => {
-  test('works with single component language tag', () => {
-    expect(extractLanguageCode('pt')).toBe('pt');
-  });
-
-  test('works with two component language tag', () => {
-    expect(extractLanguageCode('pt-BR')).toBe('pt');
-  });
-});
-
-describe('isSupportedLanguageTag()', () => {
-  test('returns true for a known supported tag', () => {
-    expect(isSupportedLanguageTag('en')).toBe(true);
-  });
-
-  test('returns true for a known regional tag in languages.json', () => {
-    expect(isSupportedLanguageTag('pt-BR')).toBe(true);
-  });
-
-  test('returns false for an unsupported tag', () => {
-    expect(isSupportedLanguageTag('__')).toBe(false);
-  });
-
-  test('returns false for empty string', () => {
-    expect(isSupportedLanguageTag('')).toBe(false);
-  });
-});
 
 describe('USABLE_LANGUAGES', () => {
   test('always includes English', () => {
@@ -43,12 +13,6 @@ describe('USABLE_LANGUAGES', () => {
       expect(typeof lang.languageTag).toBe('string');
       expect(typeof lang.nativeName).toBe('string');
       expect(typeof lang.englishName).toBe('string');
-    }
-  });
-
-  test('every entry has a tag that passes isSupportedLanguageTag', () => {
-    for (const lang of USABLE_LANGUAGES) {
-      expect(isSupportedLanguageTag(lang.languageTag)).toBe(true);
     }
   });
 
@@ -86,10 +50,5 @@ describe('getUsableLanguageTagFromSystemPreferences()', () => {
 
   test('falls back to en when all preferences are unsupported', () => {
     expect(getUsableLanguageTagFromSystemPreferences(['__', '^^'])).toBe('en');
-  });
-
-  test('returned tag passes isSupportedLanguageTag', () => {
-    const result = getUsableLanguageTagFromSystemPreferences(['es-MX']);
-    expect(isSupportedLanguageTag(result)).toBe(true);
   });
 });

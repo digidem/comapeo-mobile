@@ -3,87 +3,38 @@ import MESSAGES from '../../../translations/messages.json';
 // Mapping of language tag to corresponding native and english names
 import LANGUAGES from '../languages.json';
 
-// Language tag that has corresponding translations
-export type TranslatedLanguageTag = keyof typeof MESSAGES;
-// Language tag that the app claims to support
-export type SupportedLanguageTag = keyof typeof LANGUAGES;
-
-// A subset of supported languages that have at least one translated message
-export const USABLE_LANGUAGES = getUsableLanguages(
-  Object.keys(MESSAGES) as Array<TranslatedLanguageTag>,
-);
-
 interface UsableLanguage {
   /** IETF BCP 47 language tag (https://en.wikipedia.org/wiki/IETF_language_tag) */
-  languageTag: SupportedLanguageTag;
+  languageTag: AvailableLanguageTag;
   /** Localized name for language */
   nativeName: string;
   /** English name for language */
   englishName: string;
 }
 
+// Language tag that has corresponding translations
+export type AvailableLanguageTag = keyof typeof MESSAGES;
+
+// All supported languages
+export const USABLE_LANGUAGES = getUsableLanguages(
+  Object.keys(MESSAGES) as Array<AvailableLanguageTag>,
+);
+
 /**
- * Gets the languages that are usable within the app, meaning:
+ * Resolves a language tag from a list of system-preferred language tags.
+ * Falls back to `'en'` if no supported tag can be found.
  *
- * 1. They have at least one translated string
- * 2. They match a language that is found in the [supported languages file](../languages.json)
- *
- * @param translatedLanguageTags List of language tags that may have translated messages
- * @returns List of languages that are usable within the app (see {@link UsableLanguage})
+ * @param systemLanguageTags Ordered list of language tags from system preferences (most preferred first)
+ * @returns an AvailableLanguageTag
  */
-function getUsableLanguages(
-  translatedLanguageTags: Array<TranslatedLanguageTag>,
-): Array<UsableLanguage> {
-  const result: Array<UsableLanguage> = [];
-
-  for (const languageTag of translatedLanguageTags) {
-    // Commenting this out for now. Categories can be translated independently of this app/crowdin.
-    // The user might need translate the categories (which is done via this language code).
-    // So we need to make sure the user has access to languages even if there are no translations
-    // Previously we dealt with this by adding 1 translation to an appropriate language.
-    // We may still want to do that, but we intentionally took out any wrong translations.
-    // "api" had several portuguese translation, and I know understand that those
-    // "portuguese translation" were just for adding it onto the list of available languages,
-    // in order for users to translate there categories. Since we took out those translations
-    // commenting out this code allows for it to still show up in the app without adding "translations"
-
-    // const hasAtLeastOneTranslatedString =
-    //   Object.keys(MESSAGES[languageTag]).length > 0;
-
-    // if (!hasAtLeastOneTranslatedString) continue;
-
-    if (!isSupportedLanguageTag(languageTag)) {
-      if (
-        process.env.APP_VARIANT === 'development' &&
-        process.env.NODE_ENV !== 'test'
-      ) {
-        console.warn(
-          `Language "${languageTag}" is not available in CoMapeo (see \`src/frontend/languages.json\`)`,
-        );
-      }
-      continue;
-    }
-
-    const {englishName, nativeName} = LANGUAGES[languageTag];
-
-    result.push({
-      englishName,
-      languageTag,
-      nativeName,
-    });
+export function getUsableLanguageTagFromSystemPreferences(
+  systemLanguageTags: Array<string>,
+): AvailableLanguageTag {
+  for (const t of systemLanguageTags) {
+    const usable = getUsableLanguageTag(t);
+    if (usable) return usable;
   }
-
-  result.sort((a, b) => {
-    return a.englishName.localeCompare(b.englishName);
-  });
-
-  return result;
-}
-
-export function isSupportedLanguageTag(
-  value: string,
-): value is SupportedLanguageTag {
-  return value in LANGUAGES;
+  return 'en';
 }
 
 /**
@@ -96,7 +47,7 @@ export function isSupportedLanguageTag(
  * @param languageTag Language tag
  * @returns The usable language tag
  */
-function getUsableLanguageTag(languageTag: string) {
+export function getUsableLanguageTag(languageTag: string) {
   for (const supported of USABLE_LANGUAGES) {
     // Check if the language tag has a matching language tag that we support
     if (languageTag === supported.languageTag) {
@@ -113,20 +64,29 @@ function getUsableLanguageTag(languageTag: string) {
 }
 
 /**
- * Resolves a language tag from a list of system-preferred language tags.
- * Falls back to `'en'` if no supported tag can be found.
- *
- * @param systemLanguageTags Ordered list of language tags from system preferences (most preferred first)
- * @returns A resolved SupportedLanguageTag
+ * @param translatedLanguageTags List of language tags that may have translated messages
+ * @returns List of languages that are usable within the app (see {@link UsableLanguage})
  */
-export function getUsableLanguageTagFromSystemPreferences(
-  systemLanguageTags: Array<string>,
-): SupportedLanguageTag {
-  for (const t of systemLanguageTags) {
-    const usable = getUsableLanguageTag(t);
-    if (usable) return usable;
+function getUsableLanguages(
+  translatedLanguageTags: Array<AvailableLanguageTag>,
+): Array<UsableLanguage> {
+  const result: Array<UsableLanguage> = [];
+
+  for (const languageTag of translatedLanguageTags) {
+    const {englishName, nativeName} = LANGUAGES[languageTag];
+
+    result.push({
+      englishName,
+      languageTag,
+      nativeName,
+    });
   }
-  return 'en';
+
+  result.sort((a, b) => {
+    return a.englishName.localeCompare(b.englishName);
+  });
+
+  return result;
 }
 
 /**
@@ -135,7 +95,7 @@ export function getUsableLanguageTagFromSystemPreferences(
  * @param languageTag Language tag
  * @returns Language code
  */
-export function extractLanguageCode(languageTag: string): string {
+function extractLanguageCode(languageTag: string): string {
   // The language code is always the first component of a the language tag
   // (https://en.wikipedia.org/wiki/IETF_language_tag#Syntax_of_language_tags)
   return languageTag.split('-')[0]!;

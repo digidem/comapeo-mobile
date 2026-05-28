@@ -11,7 +11,7 @@ import {
 } from 'zustand/middleware';
 import type {LocationObject, LocationProviderStatus} from 'expo-location';
 import type {AccelerometerMeasurement} from 'expo-sensors';
-import {manipulateAsync} from 'expo-image-manipulator';
+import {ImageManipulator, type SaveOptions} from 'expo-image-manipulator';
 import {excludeKeys} from 'filter-obj';
 import type {Attachment, Position} from '../../sharedTypes/index.ts';
 import {throwIfAborted} from '../../lib/throwIfAborted.ts';
@@ -182,19 +182,19 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
       if (original.processingState === 'complete' && original.uri) {
         // Original already processed, use existing URI
         // We need dimensions for thumbnail/preview, so fetch from the image
-        const result = await manipulateAsync(original.uri, []);
+        const result = await manipulate(original.uri, {});
         originalUri = result.uri;
         width = result.width;
         height = result.height;
       } else {
-        // Note: Expo Camera with skipProcessing: false automatically rotates photos
-        // to the correct orientation; no further rotation needed.
         const result = await _processPhotoAttachment({
           id,
           outputKey: 'original',
-          processPromise: manipulateAsync(raw.uri, [{rotate: 0}], {
-            compress: ORIGINAL_COMPRESSION,
-          }),
+          processPromise: manipulate(
+            raw.uri,
+            {rotate: 0},
+            {compress: ORIGINAL_COMPRESSION},
+          ),
         });
         originalUri = result.uri;
         width = result.width;
@@ -208,9 +208,9 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         await _processPhotoAttachment({
           id,
           outputKey: 'thumbnail',
-          processPromise: manipulateAsync(
+          processPromise: manipulate(
             originalUri,
-            [{resize: thumbnailDimensions}],
+            {resize: thumbnailDimensions},
             {compress: THUMBNAIL_COMPRESSION},
           ),
         });
@@ -223,9 +223,9 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         await _processPhotoAttachment({
           id,
           outputKey: 'preview',
-          processPromise: manipulateAsync(
+          processPromise: manipulate(
             originalUri,
-            [{resize: previewDimensions}],
+            {resize: previewDimensions},
             {compress: PREVIEW_COMPRESSION},
           ),
         });
@@ -571,6 +571,21 @@ function valueOf<T extends MapeoDoc>(doc: T & {forks?: string[]}) {
     'updatedAt',
     'deleted',
   ]);
+}
+
+async function manipulate(
+  uri: string,
+  actions: {rotate?: number; resize?: {width?: number; height?: number}},
+  saveOptions?: SaveOptions,
+): Promise<{uri: string; width: number; height: number}> {
+  let imageManipulatorContext = ImageManipulator.manipulate(uri);
+  if (actions.rotate !== undefined)
+    imageManipulatorContext = imageManipulatorContext.rotate(actions.rotate);
+  if (actions.resize !== undefined)
+    imageManipulatorContext = imageManipulatorContext.resize(actions.resize);
+  const ref = await imageManipulatorContext.renderAsync();
+  const result = await ref.saveAsync(saveOptions);
+  return result;
 }
 
 function hasIncompleteProcessing(attachment: UnsavedPhotoAttachment): boolean {

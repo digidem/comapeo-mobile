@@ -25,7 +25,7 @@ export const USABLE_LANGUAGES = getUsableLanguages(
  * Falls back to `'en'` if no supported tag can be found.
  *
  * @param systemLanguageTags Ordered list of language tags from system preferences (most preferred first)
- * @returns A resolved SupportedLanguageTag
+ * @returns an AvailableLanguageTag
  */
 export function getUsableLanguageTagFromSystemPreferences(
   systemLanguageTags: Array<string>,

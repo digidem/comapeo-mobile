@@ -39,7 +39,7 @@ describe('Observation Fields', () => {
     const details = await screen.findByText('Details');
     await user.press(details);
 
-    // through manually clicking through the app, I know that this should be a text input
+    // category type Animal's first field is a text input
     const textInput = await screen.findByTestId('OBS.text-inp');
     expect(textInput).toBeVisible();
 

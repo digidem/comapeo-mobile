@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
+import * as Sentry from '@sentry/react-native';
 
 import {SelectOne} from './SelectOne';
 import {SelectMultiple} from './SelectMultiple';
@@ -94,7 +95,9 @@ export const ObservationFields = ({
   const field = fields.find(val => val.docId === fieldIds[current - 1]);
 
   if (!field) {
-    // should throw error here
+    // should not get here as fieldId is a param of this page. But ts can't know
+    Sentry.captureException('navigated to ObservationField with no fields');
+    navigation.goBack();
     return null;
   }
 

@@ -1,6 +1,6 @@
 import * as v from 'valibot';
 
-import {TranslatedLanguageTag} from '../lib/intl';
+import {AvailableLanguageTag} from '../lib/intl';
 
 import LANGUAGES from '../languages.json';
 import MESSAGES from '../../../translations/messages.json';
@@ -35,10 +35,7 @@ export const LocaleStateSchemaV0 = v.variant('languageTag', [
 // Do not change! Bump version in LocaleStoreContext when modifying this schema.
 export const LocaleStateSchema = v.object({
   languageTag: v.picklist(
-    Object.keys(MESSAGES) as [
-      TranslatedLanguageTag,
-      ...TranslatedLanguageTag[],
-    ],
+    Object.keys(MESSAGES) as [AvailableLanguageTag, ...AvailableLanguageTag[]],
   ),
   useSystemPreferences: v.boolean(),
 });

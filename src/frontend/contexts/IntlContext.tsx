@@ -5,7 +5,7 @@ import {useLocales} from 'expo-localization';
 
 import messages from '../../../translations/messages.json';
 import {useLocaleState} from './LocaleStoreContext';
-import {getUsableLanguageTag, TranslatedLanguageTag} from '../lib/intl';
+import {getUsableLanguageTag, AvailableLanguageTag} from '../lib/intl';
 
 export const formats: CustomFormats = {
   date: {
@@ -32,7 +32,7 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
   const messagesToUse = React.useMemo(() => {
     const usableSystemLanguageTags = systemLocales
       .map(l => getUsableLanguageTag(l.languageTag))
-      .filter((tag): tag is TranslatedLanguageTag => tag !== undefined);
+      .filter((tag): tag is AvailableLanguageTag => tag !== undefined);
     const languages = [languageTag, ...usableSystemLanguageTags];
     const merged = {};
     // Merge messages in order of priority: specific system locales, app language code, full app language tag

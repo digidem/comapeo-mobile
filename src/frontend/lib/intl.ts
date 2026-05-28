@@ -5,7 +5,7 @@ import LANGUAGES from '../languages.json';
 
 interface UsableLanguage {
   /** IETF BCP 47 language tag (https://en.wikipedia.org/wiki/IETF_language_tag) */
-  languageTag: TranslatedLanguageTag;
+  languageTag: AvailableLanguageTag;
   /** Localized name for language */
   nativeName: string;
   /** English name for language */
@@ -13,11 +13,11 @@ interface UsableLanguage {
 }
 
 // Language tag that has corresponding translations
-export type TranslatedLanguageTag = keyof typeof MESSAGES;
+export type AvailableLanguageTag = keyof typeof MESSAGES;
 
 // All supported languages
 export const USABLE_LANGUAGES = getUsableLanguages(
-  Object.keys(MESSAGES) as Array<TranslatedLanguageTag>,
+  Object.keys(MESSAGES) as Array<AvailableLanguageTag>,
 );
 
 /**
@@ -29,7 +29,7 @@ export const USABLE_LANGUAGES = getUsableLanguages(
  */
 export function getUsableLanguageTagFromSystemPreferences(
   systemLanguageTags: Array<string>,
-): TranslatedLanguageTag {
+): AvailableLanguageTag {
   for (const t of systemLanguageTags) {
     const usable = getUsableLanguageTag(t);
     if (usable) return usable;
@@ -68,7 +68,7 @@ export function getUsableLanguageTag(languageTag: string) {
  * @returns List of languages that are usable within the app (see {@link UsableLanguage})
  */
 function getUsableLanguages(
-  translatedLanguageTags: Array<TranslatedLanguageTag>,
+  translatedLanguageTags: Array<AvailableLanguageTag>,
 ): Array<UsableLanguage> {
   const result: Array<UsableLanguage> = [];
 

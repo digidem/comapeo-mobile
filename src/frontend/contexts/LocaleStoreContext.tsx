@@ -11,7 +11,7 @@ import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState
 import {
   getUsableLanguageTag,
   getUsableLanguageTagFromSystemPreferences,
-  TranslatedLanguageTag,
+  AvailableLanguageTag,
 } from '../lib/intl';
 import {
   LocaleStateSchema,
@@ -79,7 +79,7 @@ export function createLocaleStore({persist} = {persist: false}) {
 
   const actions = {
     setLanguageTag: (
-      languageTag: TranslatedLanguageTag | 'SystemPreference',
+      languageTag: AvailableLanguageTag | 'SystemPreference',
     ) => {
       if (languageTag === 'SystemPreference') {
         const systemLanguageTags = getLocales().map(l => l.languageTag);

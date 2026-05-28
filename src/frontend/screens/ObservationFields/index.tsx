@@ -59,8 +59,13 @@ export const ObservationFields = ({
   const {updateTag} = useDraftObservationActions();
   const tags = useDraftObservationState(state => state.value?.tags);
 
-  usePreventRemove(current !== 1, () => {
-    setCurrent(current - 1);
+  usePreventRemove(current !== 1, ({data}) => {
+    if (current === fieldIds.length && data.action.type === 'POP_TO') {
+      navigation.dispatch(data.action);
+      return;
+    }
+
+    setCurrent(val => val - 1);
   });
 
   React.useLayoutEffect(() => {

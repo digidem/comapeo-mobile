@@ -35,9 +35,13 @@ const m = defineMessages({
   },
 });
 
+export type TakenPhoto = {
+  filePath: string;
+  accelerometer?: AccelerometerMeasurement;
+};
+
 type Props = {
-  // Called when the user takes a picture.
-  onAddPress: (photo: {photo: PhotoFile; metadata: PhotoMetadata}) => void;
+  onAddPress: (photo: {photo: TakenPhoto; metadata: PhotoMetadata}) => void;
 };
 
 export const CameraView = ({onAddPress}: Props) => {
@@ -90,9 +94,12 @@ export const CameraView = ({onAddPress}: Props) => {
 
     camera.current
       .takePhoto({enableShutterSound: false})
-      .then(async photo => {
+      .then((photoFile: PhotoFile) => {
         onAddPress({
-          photo,
+          photo: {
+            filePath: photoFile.path,
+            accelerometer: accelerometerMeasurement.current || undefined,
+          },
           metadata: {
             location,
             accelerometer: accelerometerMeasurement.current || undefined,

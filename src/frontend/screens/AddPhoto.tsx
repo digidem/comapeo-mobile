@@ -7,7 +7,7 @@ import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {useDraftObservationActions} from '../contexts/DraftObservationContext';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
-import type {PhotoFile} from 'react-native-vision-camera';
+import type {TakenPhoto} from '../sharedComponents/CameraView';
 
 const m = defineMessages({
   cancel: {
@@ -21,11 +21,11 @@ export const AddPhotoScreen = ({
 }: NativeRootNavigationProps<'AddPhoto'>) => {
   const {addPhoto} = useDraftObservationActions();
 
-  const handleAddPress = (capture: {
-    photo: PhotoFile;
+  const handleAddPress = (takenPhoto: {
+    photo: TakenPhoto;
     metadata: PhotoMetadata;
   }) => {
-    addPhoto(capture.photo, capture.metadata);
+    addPhoto(takenPhoto.photo, takenPhoto.metadata);
     navigation.pop();
   };
 

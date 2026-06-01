@@ -19,7 +19,7 @@ import {parse} from 'valibot';
 import {PhotoEXIFSchema} from '../../lib/exif.ts';
 import * as Sentry from '@sentry/react-native';
 import {MMKVStoreInitializer} from '../../hooks/persistedState/createPersistedState';
-import type {PhotoFile} from 'react-native-vision-camera';
+import type {TakenPhoto} from '../../sharedComponents/CameraView';
 import * as Exify from '@lodev09/react-native-exify';
 
 export type DraftObservationStore = ReturnType<
@@ -161,7 +161,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
    * Only processes steps that are not already complete.
    */
   async function processPhoto(attachment: UnsavedPhotoAttachment) {
-    const {id, raw, original, thumbnail, preview} = attachment;
+    const {id, raw, original, thumbnail, preview, accelerometer} = attachment;
 
     if (raw.processingState !== 'complete' || !raw.uri) {
       throw new Error('Cannot process photo without raw image');
@@ -187,12 +187,15 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         width = result.width;
         height = result.height;
       } else {
+        // Reset EXIF orientation so Glide loads raw sensor pixels, then rotate
+        // using accelerometer. Fixes devices where vision camera writes wrong EXIF.
+        await Exify.write(raw.uri, {Orientation: 1});
         const result = await _processPhotoAttachment({
           id,
           outputKey: 'original',
           processPromise: manipulate(
             raw.uri,
-            {rotate: 0},
+            {rotate: getPhotoRotation(accelerometer)},
             {compress: ORIGINAL_COMPRESSION},
           ),
         });
@@ -238,11 +241,11 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     }
   }
 
-  async function addPhoto(picture: PhotoFile, metadata: PhotoMetadata) {
+  async function addPhoto(photo: TakenPhoto, metadata: PhotoMetadata) {
     const newAttachment = await createNewPhotoAttachment({
       id: nextAttachmentId++,
       metadata,
-      picture,
+      photo,
     });
     _addAttachment(newAttachment);
     await processPhoto(newAttachment);
@@ -522,13 +525,13 @@ function createEmptyObservationValue(): ObservationValueWithPreset {
 async function createNewPhotoAttachment({
   id,
   metadata,
-  picture,
+  photo,
 }: {
   id: number;
   metadata: PhotoMetadata;
-  picture: PhotoFile;
+  photo: TakenPhoto;
 }): Promise<UnsavedPhotoAttachment> {
-  const uri = `file://${picture.path}`;
+  const uri = `file://${photo.filePath}`;
   const exif = await Exify.read(uri);
   return {
     id,
@@ -586,6 +589,20 @@ async function manipulate(
   const ref = await imageManipulatorContext.renderAsync();
   const result = await ref.saveAsync(saveOptions);
   return result;
+}
+
+const ACC_AT_45_DEG = Math.sin(Math.PI / 4);
+
+// Rotation needed to correctly orient raw sensor pixels (sensor is 90° CW from device).
+function getPhotoRotation(acc?: AccelerometerMeasurement): number {
+  if (!acc) return 90;
+  const {x, y, z} = acc;
+  if (z < -ACC_AT_45_DEG || z > ACC_AT_45_DEG) {
+    if (Math.abs(y) > Math.abs(x)) return y <= 0 ? -90 : 90;
+    return x >= 0 ? 0 : 180;
+  }
+  if (x > -ACC_AT_45_DEG && x < ACC_AT_45_DEG) return y <= 0 ? -90 : 90;
+  return x >= 0 ? 0 : 180;
 }
 
 function hasIncompleteProcessing(attachment: UnsavedPhotoAttachment): boolean {

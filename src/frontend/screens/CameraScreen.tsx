@@ -6,7 +6,7 @@ import {CameraView} from '../sharedComponents/CameraView';
 import {NativeHomeTabsNavigationProps} from '../sharedTypes/navigation';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import {useDraftObservationActions} from '../contexts/DraftObservationContext';
-import {PhotoFile} from 'react-native-vision-camera';
+import type {TakenPhoto} from '../sharedComponents/CameraView';
 
 export const CameraScreen = ({
   navigation,
@@ -14,12 +14,9 @@ export const CameraScreen = ({
   const isFocused = useIsFocused();
   const {createDraft, addPhoto} = useDraftObservationActions();
 
-  function handleAddPress(capture: {
-    photo: PhotoFile;
-    metadata: PhotoMetadata;
-  }) {
+  function handleAddPress(taken: {photo: TakenPhoto; metadata: PhotoMetadata}) {
     createDraft();
-    addPhoto(capture.photo, capture.metadata);
+    addPhoto(taken.photo, taken.metadata);
     navigation.navigate('ObservationCategoryChooser');
   }
 

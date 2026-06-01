@@ -52,15 +52,14 @@ export function getDraftPhotoInfo({
 }): DisplayablePhotoInfo {
   const exifBasedInfo = photoExif ? extractInfoFromEXIF(photoExif) : undefined;
 
-  // With orientationSource="custom", vision camera writes a neutral EXIF tag so
-  // exifBasedInfo.layout is unreliable. Derive layout from the accelerometer instead.
+  // Derive layout from accelerometer; EXIF orientation is zeroed out before processing.
   const layout =
     getLayoutFromAccelerometer(photoMetadata.accelerometer) ??
     exifBasedInfo?.layout;
 
   return {
     ...exifBasedInfo,
-    layout,
+    ...(layout !== undefined && {layout}),
     coordinates:
       typeof photoMetadata.location?.coords.longitude === 'number' &&
       typeof photoMetadata.location?.coords.latitude === 'number'

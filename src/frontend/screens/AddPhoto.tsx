@@ -21,11 +21,11 @@ export const AddPhotoScreen = ({
 }: NativeRootNavigationProps<'AddPhoto'>) => {
   const {addPhoto} = useDraftObservationActions();
 
-  const handleAddPress = (takenPhoto: {
+  const handleAddPress = (capture: {
     photo: TakenPhoto;
     metadata: PhotoMetadata;
   }) => {
-    addPhoto(takenPhoto.photo, takenPhoto.metadata);
+    addPhoto(capture.photo, capture.metadata);
     navigation.pop();
   };
 

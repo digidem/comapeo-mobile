@@ -14,9 +14,12 @@ export const CameraScreen = ({
   const isFocused = useIsFocused();
   const {createDraft, addPhoto} = useDraftObservationActions();
 
-  function handleAddPress(taken: {photo: TakenPhoto; metadata: PhotoMetadata}) {
+  function handleAddPress(capture: {
+    photo: TakenPhoto;
+    metadata: PhotoMetadata;
+  }) {
     createDraft();
-    addPhoto(taken.photo, taken.metadata);
+    addPhoto(capture.photo, capture.metadata);
     navigation.navigate('ObservationCategoryChooser');
   }
 

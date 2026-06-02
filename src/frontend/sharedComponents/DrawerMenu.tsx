@@ -11,7 +11,13 @@ import Exchange from '../images/Exchange.svg';
 import CollaborateIcon from '../images/ProjectParticipant.svg';
 import {BodyText} from '../sharedComponents/Text/BodyText.tsx';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
-import {BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY, WHITE} from '../lib/styles.ts';
+import {
+  BLUE_GREY,
+  COMAPEO_BLUE,
+  LIGHT_ORANGE,
+  NEW_DARK_GREY,
+  WHITE,
+} from '../lib/styles.ts';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
 import {MenuLowStorageAlert} from '../sharedComponents/Storage/MenuLowStorageAlert.tsx';
 import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery.ts';
@@ -64,9 +70,13 @@ const m = defineMessages({
     id: '$1Navigation.Menu.switchProject',
     defaultMessage: 'Switch Project',
   },
-  earlyAccessLabel: {
-    id: '$1Navigation.Menu.earlyAccessLabel',
-    defaultMessage: 'You are in Early Access Mode.',
+  earlyAccessOn: {
+    id: '$1Navigation.Menu.earlyAccessOn',
+    defaultMessage: 'Early Access ON',
+  },
+  earlyAccessTurnOff: {
+    id: '$1Navigation.Menu.earlyAccessTurnOff',
+    defaultMessage: 'Turn Off',
   },
   team: {
     id: '$1Navigation.Menu.team',
@@ -101,13 +111,29 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {isLow && (
-          <MenuLowStorageAlert
-            freeBytes={freeBytes}
-            percentUsed={percentUsed}
-          />
-        )}
-        <View>
+        <View style={styles.topCardsContainer}>
+          {isLow && (
+            <MenuLowStorageAlert
+              freeBytes={freeBytes}
+              percentUsed={percentUsed}
+            />
+          )}
+          {isEarly ? (
+            <View style={styles.earlyAccessAlert}>
+              <View style={styles.earlyAccessRow}>
+                <MaterialIcon name="flag" size={20} color={NEW_DARK_GREY} />
+                <HeaderText variant="header6" style={styles.earlyAccessLabel}>
+                  {formatMessage(m.earlyAccessOn)}
+                </HeaderText>
+                <BodyText
+                  variant="tinyMeta"
+                  style={styles.earlyAccessTurnOff}
+                  onPress={() => navigation.navigate('EarlyAccess')}>
+                  {formatMessage(m.earlyAccessTurnOff)}
+                </BodyText>
+              </View>
+            </View>
+          ) : null}
           <ColorCard backgroundColor={projectColor}>
             <View style={{padding: 20, gap: 12}}>
               <HeaderText variant="header2">{projectHeader}</HeaderText>
@@ -170,13 +196,6 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
             </View>
           </ColorCard>
         </View>
-
-        {isEarly ? (
-          <View style={styles.label}>
-            <MaterialIcon name="flag" size={20} />
-            <BodyText>{formatMessage(m.earlyAccessLabel)}</BodyText>
-          </View>
-        ) : null}
 
         <View style={styles.bottomItemsContainer}>
           {role !== 'solo' && (
@@ -280,6 +299,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
+  topCardsContainer: {
+    gap: 12,
+  },
   bottomItemsContainer: {
     gap: 20,
     paddingBottom: 20,
@@ -291,10 +313,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  label: {
-    gap: 10,
-    alignSelf: 'center',
-    alignItems: 'center',
+  earlyAccessAlert: {
+    backgroundColor: LIGHT_ORANGE,
+    borderWidth: 0.5,
+    borderColor: BLUE_GREY,
+    borderRadius: 6,
+    padding: 15,
+  },
+  earlyAccessRow: {
     flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  earlyAccessLabel: {
+    flex: 1,
+  },
+  earlyAccessTurnOff: {
+    color: COMAPEO_BLUE,
   },
 });

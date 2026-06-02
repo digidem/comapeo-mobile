@@ -1,127 +1,54 @@
-import {extractLanguageCode, getAppLanguageTag} from './intl';
+import {
+  getUsableLanguageTagFromSystemPreferences,
+  USABLE_LANGUAGES,
+} from './intl';
 
-describe('extractLanguageCode()', () => {
-  test('works with single component language tag', () => {
-    const result = extractLanguageCode('pt');
-
-    expect(result).toBe('pt');
+describe('USABLE_LANGUAGES', () => {
+  test('always includes English', () => {
+    expect(USABLE_LANGUAGES.some(l => l.languageTag === 'en')).toBe(true);
   });
 
-  test('works with two component language tag', () => {
-    const result = extractLanguageCode('pt-BR');
+  test('every entry has required fields', () => {
+    for (const lang of USABLE_LANGUAGES) {
+      expect(typeof lang.languageTag).toBe('string');
+      expect(typeof lang.nativeName).toBe('string');
+      expect(typeof lang.englishName).toBe('string');
+    }
+  });
 
-    expect(result).toBe('pt');
+  test('is sorted alphabetically by englishName', () => {
+    const names = USABLE_LANGUAGES.map(l => l.englishName);
+    const sorted = [...names].sort((a, b) => a.localeCompare(b));
+    expect(names).toEqual(sorted);
   });
 });
 
-describe('getAppLanguageTag()', () => {
-  test('use system - unsupported system preference', () => {
-    const result = getAppLanguageTag({
-      localeState: {
-        useSystemPreferences: true,
-        languageTag: null,
-      },
-      systemLanguageTags: ['__'],
-    });
-
-    expect(result).toStrictEqual({
-      source: 'fallback',
-      value: 'en',
-    });
+describe('getUsableLanguageTagFromSystemPreferences()', () => {
+  test('falls back to en with no preferences', () => {
+    expect(getUsableLanguageTagFromSystemPreferences([])).toBe('en');
   });
 
-  test('use system - supported system preference (base language code only)', () => {
-    const result = getAppLanguageTag({
-      localeState: {
-        useSystemPreferences: true,
-        languageTag: null,
-      },
-      systemLanguageTags: ['es'],
-    });
-
-    expect(result).toStrictEqual({
-      source: 'system',
-      value: 'es',
-    });
+  test('falls back to en with unsupported preference', () => {
+    expect(getUsableLanguageTagFromSystemPreferences(['__'])).toBe('en');
   });
 
-  // TODO: Not sure if the truncation is a desired outcome, but it matches pre-existing behavior
-  test('use system - supported system preference (base + regional code)', () => {
-    const result = getAppLanguageTag({
-      localeState: {
-        useSystemPreferences: true,
-        languageTag: null,
-      },
-      systemLanguageTags: ['es-MX'],
-    });
-
-    expect(result).toStrictEqual({
-      source: 'system',
-      value: 'es',
-    });
+  test('returns supported base language code', () => {
+    expect(getUsableLanguageTagFromSystemPreferences(['es'])).toBe('es');
   });
 
-  test('use system - multiple supported system preferences', () => {
-    {
-      const result = getAppLanguageTag({
-        localeState: {
-          useSystemPreferences: true,
-          languageTag: null,
-        },
-        systemLanguageTags: ['pt', 'es'],
-      });
-
-      expect(result).toStrictEqual({
-        source: 'system',
-        value: 'pt',
-      });
-    }
-
-    {
-      const result = getAppLanguageTag({
-        localeState: {
-          useSystemPreferences: true,
-          languageTag: null,
-        },
-        systemLanguageTags: ['__', 'pt'],
-      });
-
-      expect(result).toStrictEqual({
-        source: 'system',
-        value: 'pt',
-      });
-    }
+  test('strips regional code to find supported language', () => {
+    expect(getUsableLanguageTagFromSystemPreferences(['es-MX'])).toBe('es');
   });
 
-  test('use selected - supported selected locale', () => {
-    {
-      const result = getAppLanguageTag({
-        localeState: {
-          useSystemPreferences: false,
-          languageTag: 'pt',
-        },
-        systemLanguageTags: [],
-      });
+  test('respects ordering — returns first match', () => {
+    expect(getUsableLanguageTagFromSystemPreferences(['pt', 'es'])).toBe('pt');
+  });
 
-      expect(result).toStrictEqual({
-        source: 'selected',
-        value: 'pt',
-      });
-    }
+  test('skips unsupported entries to find first supported one', () => {
+    expect(getUsableLanguageTagFromSystemPreferences(['__', 'pt'])).toBe('pt');
+  });
 
-    {
-      const result = getAppLanguageTag({
-        localeState: {
-          useSystemPreferences: false,
-          languageTag: 'pt-BR',
-        },
-        systemLanguageTags: [],
-      });
-
-      expect(result).toStrictEqual({
-        source: 'selected',
-        value: 'pt-BR',
-      });
-    }
+  test('falls back to en when all preferences are unsupported', () => {
+    expect(getUsableLanguageTagFromSystemPreferences(['__', '^^'])).toBe('en');
   });
 });

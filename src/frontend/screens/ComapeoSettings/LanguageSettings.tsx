@@ -12,8 +12,6 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLUE_GREY} from '../../lib/styles';
-import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
-
 const m = defineMessages({
   title: {
     id: '$1screens.LanguageSettings.title',
@@ -47,16 +45,14 @@ export const LanguageSettings: NativeNavigationComponent<
   'LanguageSettings'
 > = () => {
   const {formatMessage} = useIntl();
-  // locale can be null, indicating to follow system preference
   const locale = useLocaleState();
-  // app locale will return the language being used (eg if they are using system preference, returns what language that preference is)
-  const appLocale = useAppLanguageTag();
+  const appLocale = locale.languageTag;
   const {setLanguageTag} = useLocaleActions();
 
   const options = React.useMemo(() => {
     return [
       {
-        value: null,
+        value: 'SystemPreference' as const,
         label: formatMessage(m.followSystemPreferences),
       },
       ...LANGUAGE_OPTIONS,
@@ -94,13 +90,16 @@ export const LanguageSettings: NativeNavigationComponent<
         </>
       }
       renderItem={({item}) => {
-        const isSelected = item.value === locale.languageTag;
+        const isSelected =
+          item.value === 'SystemPreference'
+            ? locale.useSystemPreferences
+            : !locale.useSystemPreferences && item.value === locale.languageTag;
         return (
           <TouchableOpacity
             onPress={() => {
               setLanguageTag(item.value);
             }}
-            testID={`${item.value ?? 'null'}RadioButton`}
+            testID={`${item.value}RadioButton`}
             accessibilityRole="radio"
             accessibilityState={{checked: isSelected, selected: isSelected}}
             style={styles.languageContainer}>

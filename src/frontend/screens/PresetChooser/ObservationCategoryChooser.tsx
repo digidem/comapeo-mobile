@@ -9,7 +9,7 @@ import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClos
 import {Preset} from '@comapeo/schema';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
+import {useLocaleState} from '../../contexts/LocaleStoreContext';
 import {
   useDraftObservationActions,
   useDraftObservationState,
@@ -26,7 +26,7 @@ export const ObservationCategoryChooser: NativeNavigationComponent<
   'ObservationCategoryChooser'
 > = ({navigation}) => {
   const {projectId} = useActiveProject();
-  const languageTag = useAppLanguageTag();
+  const languageTag = useLocaleState(s => s.languageTag);
   const presets = usePresetsSelection({
     projectId: projectId,
     dataType: 'observation',

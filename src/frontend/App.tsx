@@ -35,10 +35,7 @@ import {createUnitSystemStore} from './contexts/UnitSystemStoreContext';
 import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatStoreContext';
 import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
-import {
-  createLocaleStore,
-  LocaleStoreProvider,
-} from './contexts/LocaleStoreContext';
+import {createLocaleStore, LocaleContext} from './contexts/LocaleStoreContext';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
@@ -218,7 +215,7 @@ const App = () => {
 
   return (
     <Sentry.ErrorBoundary fallback={<FatalErrorUntranslated />}>
-      <LocaleStoreProvider value={persistedLocaleStore}>
+      <LocaleContext value={persistedLocaleStore}>
         <IntlProvider>
           {/* This fatal error requires internationalization to be set up */}
           <Sentry.ErrorBoundary fallback={<FatalError />}>
@@ -252,7 +249,7 @@ const App = () => {
             </ServerLoading>
           </Sentry.ErrorBoundary>
         </IntlProvider>
-      </LocaleStoreProvider>
+      </LocaleContext>
     </Sentry.ErrorBoundary>
   );
 };

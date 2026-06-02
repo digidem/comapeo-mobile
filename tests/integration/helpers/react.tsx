@@ -11,8 +11,8 @@ import type {
 } from '../../../src/frontend/contexts/LocalDiscoveryContext';
 import {
   createLocaleStore,
+  LocaleContext,
   LocaleStore,
-  LocaleStoreProvider,
 } from '../../../src/frontend/contexts/LocaleStoreContext';
 import {createManualEntryCoordinateFormatStore} from '../../../src/frontend/contexts/ManualEntryCoordinateFormatStoreContext';
 import {createMetricsDiagnosticsStore} from '../../../src/frontend/contexts/MetricsDiagnosticsStoreContext';
@@ -54,9 +54,9 @@ export function createMinimalWrapper() {
 
   return ({children}: {children: ReactNode}) => {
     return (
-      <LocaleStoreProvider value={localeStore}>
+      <LocaleContext value={localeStore}>
         <IntlProvider>{children}</IntlProvider>
-      </LocaleStoreProvider>
+      </LocaleContext>
     );
   };
 }

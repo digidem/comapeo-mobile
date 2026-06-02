@@ -102,9 +102,7 @@ export function createLocaleStore({persist} = {persist: false}) {
 
 export type LocaleStore = ReturnType<typeof createLocaleStore>;
 
-const LocaleContext = createContext<LocaleStore | null>(null);
-
-export const LocaleStoreProvider = LocaleContext;
+export const LocaleContext = createContext<LocaleStore | null>(null);
 
 function useLocaleContext() {
   const value = useContext(LocaleContext);

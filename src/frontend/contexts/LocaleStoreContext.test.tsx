@@ -3,15 +3,15 @@ import {type ReactNode} from 'react';
 
 import {
   createLocaleStore,
+  LocaleContext,
   LocaleStore,
-  LocaleStoreProvider,
   useLocaleActions,
   useLocaleState,
 } from './LocaleStoreContext';
 
 function createWrapper(store: LocaleStore) {
   return ({children}: {children: ReactNode}) => {
-    return <LocaleStoreProvider value={store}>{children}</LocaleStoreProvider>;
+    return <LocaleContext value={store}>{children}</LocaleContext>;
   };
 }
 

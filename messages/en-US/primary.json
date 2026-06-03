@@ -23,8 +23,11 @@
   "$1Navigation.Menu.currentProject": {
     "message": "Current Project"
   },
-  "$1Navigation.Menu.earlyAccessLabel": {
-    "message": "You are in Early Access Mode."
+  "$1Navigation.Menu.earlyAccessOn": {
+    "message": "Early Access ON"
+  },
+  "$1Navigation.Menu.earlyAccessTurnOff": {
+    "message": "Turn Off"
   },
   "$1Navigation.Menu.exchange": {
     "message": "Exchange"

@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import IonIcon from '@react-native-vector-icons/ionicons';
@@ -119,20 +125,25 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
             />
           )}
           {isEarly ? (
-            <View style={styles.earlyAccessAlert}>
-              <View style={styles.earlyAccessRow}>
-                <MaterialIcon name="flag" size={20} color={NEW_DARK_GREY} />
-                <HeaderText variant="header6" style={styles.earlyAccessLabel}>
-                  {formatMessage(m.earlyAccessOn)}
-                </HeaderText>
-                <BodyText
-                  variant="tinyMeta"
-                  style={styles.earlyAccessTurnOff}
-                  onPress={() => navigation.navigate('EarlyAccess')}>
-                  {formatMessage(m.earlyAccessTurnOff)}
-                </BodyText>
+            <ColorCard backgroundColor={LIGHT_ORANGE}>
+              <View style={styles.earlyAccessAlert}>
+                <View style={styles.earlyAccessRow}>
+                  <MaterialIcon name="flag" size={20} color={NEW_DARK_GREY} />
+                  <HeaderText variant="header6" style={styles.earlyAccessLabel}>
+                    {formatMessage(m.earlyAccessOn)}
+                  </HeaderText>
+                  <Pressable
+                    onPress={() => navigation.navigate('EarlyAccess')}
+                    hitSlop={{top: 12, bottom: 12, left: 12, right: 12}}>
+                    <BodyText
+                      variant="tinyMeta"
+                      style={styles.earlyAccessTurnOff}>
+                      {formatMessage(m.earlyAccessTurnOff)}
+                    </BodyText>
+                  </Pressable>
+                </View>
               </View>
-            </View>
+            </ColorCard>
           ) : null}
           <ColorCard backgroundColor={projectColor}>
             <View style={{padding: 20, gap: 12}}>
@@ -314,10 +325,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   earlyAccessAlert: {
-    backgroundColor: LIGHT_ORANGE,
-    borderWidth: 0.5,
-    borderColor: BLUE_GREY,
-    borderRadius: 6,
     padding: 15,
   },
   earlyAccessRow: {

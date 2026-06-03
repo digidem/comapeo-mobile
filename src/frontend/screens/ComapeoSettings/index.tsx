@@ -109,7 +109,7 @@ const m = defineMessages({
   },
   testData: {
     id: 'Screens.Settings.AppSettings.testData',
-    defaultMessage: 'Create Test Data',
+    defaultMessage: 'Test Data',
   },
 });
 

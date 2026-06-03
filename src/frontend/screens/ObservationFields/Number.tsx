@@ -3,7 +3,7 @@ import {StyleSheet, TextInput} from 'react-native';
 import {Observation} from '@comapeo/schema';
 
 type NumberProps = {
-  updateTag: (value: number) => void;
+  updateTag: (value: number | undefined) => void;
   tagValue?: Observation['tags'][number];
 };
 
@@ -28,6 +28,10 @@ export const Number = ({updateTag, tagValue}: NumberProps) => {
             .replace(/^(-?)\./, '$10.') // Prefix bare decimal with 0
             .replace(/^(-?)0+([1-9])/, '$1$2'); // Remove leading zeros before non-zero digit
           setText(sanitized);
+          if (sanitized === '') {
+            updateTag(undefined);
+            return;
+          }
           const parsed = parseFloat(sanitized);
           if (!isNaN(parsed)) updateTag(parsed || 0); // "|| 0" normalized -0 to 0
         }}

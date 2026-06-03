@@ -55,8 +55,8 @@ test('strips non-numeric characters', () => {
   //user should not see strings
   expect(screen.getByDisplayValue('')).toBeVisible();
 
-  //update tag should not be called
-  expect(updateTag).not.toHaveBeenCalled();
+  //update tag should be called with null
+  expect(updateTag).toHaveBeenCalledWith(null);
 
   fireEvent.changeText(screen.getByDisplayValue(''), 'abc123');
 

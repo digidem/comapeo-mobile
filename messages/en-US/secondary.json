@@ -153,7 +153,7 @@
     "message": "Create Test Data"
   },
   "Screens.Settings.AppSettings.testData": {
-    "message": "Create Test Data"
+    "message": "Test Data"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",

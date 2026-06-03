@@ -17,9 +17,6 @@
   "$1Navigation.Menu.currentProject": {
     "message": "現在のプロジェクト"
   },
-  "$1Navigation.Menu.earlyAccessLabel": {
-    "message": "アーリーアクセスモードに入っています。"
-  },
   "$1Navigation.Menu.exchange": {
     "message": "交換"
   },

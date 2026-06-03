@@ -149,6 +149,12 @@
   "Screens.ProjectSettings.viewDetails": {
     "message": "View Details"
   },
+  "Screens.Settings.AppSettings.createTestData": {
+    "message": "Create Test Data"
+  },
+  "Screens.Settings.AppSettings.testData": {
+    "message": "Test Data"
+  },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
     "message": "Cancel"

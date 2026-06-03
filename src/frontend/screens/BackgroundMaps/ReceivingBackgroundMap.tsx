@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, Pressable} from 'react-native';
+import {StyleSheet, View, Pressable, AppState} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import * as Sentry from '@sentry/react-native';
@@ -84,6 +84,15 @@ export function ReceivingBackgroundMap({
       },
     );
   }, [abortDownload, shareId, navigation]);
+
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextState => {
+      if (nextState === 'background') {
+        handleCancel();
+      }
+    });
+    return () => subscription.remove();
+  }, [handleCancel]);
 
   const handleDone = () => {
     navigation.goBack();

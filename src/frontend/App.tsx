@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Logger} from '@maplibre/maplibre-react-native';
+import {Logger, setConnected} from '@maplibre/maplibre-react-native';
 import {getLocales} from 'expo-localization';
 
 // Maplibre logs when tile requests are cancelled, which is often.
@@ -13,6 +13,12 @@ Logger.setLogCallback(log => {
   }
   return false;
 });
+
+// All styles are served via localhost and we need to bypass the internal connectivity manager in MapLibre React Native
+// in order for things to work while the app is offline.
+// https://github.com/maplibre/maplibre-react-native/blob/6f99de530eec2e06de485ef86f4be61f941e0e09/docs/content/modules/mlrn-module.md#setconnectedconnected
+setConnected(true);
+
 import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {initializeNodejs} from './initializeNodejs';
@@ -35,11 +41,7 @@ import {createUnitSystemStore} from './contexts/UnitSystemStoreContext';
 import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatStoreContext';
 import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
-import {
-  createLocaleStore,
-  LocaleStoreProvider,
-} from './contexts/LocaleStoreContext';
-import {getAppLanguageTag} from './lib/intl';
+import {createLocaleStore, LocaleContext} from './contexts/LocaleStoreContext';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
@@ -97,15 +99,10 @@ const persistedLocaleStore = createLocaleStore({
 const appDiagnosticMetrics = new AppDiagnosticMetrics({
   getLocaleInfo: () => {
     const systemLocales = getLocales();
-    const localeState = persistedLocaleStore.instance.getState();
-
-    const appLanguageTag = getAppLanguageTag({
-      localeState,
-      systemLanguageTags: systemLocales.map(l => l.languageTag),
-    }).value;
+    const {languageTag} = persistedLocaleStore.instance.getState();
 
     return {
-      appLanguageTag,
+      appLanguageTag: languageTag,
       deviceLanguageTag: systemLocales[0]!.languageTag,
     };
   },
@@ -224,7 +221,7 @@ const App = () => {
 
   return (
     <Sentry.ErrorBoundary fallback={<FatalErrorUntranslated />}>
-      <LocaleStoreProvider value={persistedLocaleStore}>
+      <LocaleContext value={persistedLocaleStore}>
         <IntlProvider>
           {/* This fatal error requires internationalization to be set up */}
           <Sentry.ErrorBoundary fallback={<FatalError />}>
@@ -258,7 +255,7 @@ const App = () => {
             </ServerLoading>
           </Sentry.ErrorBoundary>
         </IntlProvider>
-      </LocaleStoreProvider>
+      </LocaleContext>
     </Sentry.ErrorBoundary>
   );
 };

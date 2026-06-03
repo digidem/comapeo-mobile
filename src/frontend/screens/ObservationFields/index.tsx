@@ -11,7 +11,6 @@ import {TextArea} from './TextArea';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {
   useDraftObservationActions,
@@ -19,6 +18,7 @@ import {
 } from '../../contexts/DraftObservationContext';
 import {COMAPEO_BLUE} from '../../lib/styles';
 import {usePreventRemove} from '@react-navigation/native';
+import {useLocaleState} from '../../contexts/LocaleStoreContext';
 
 const m = defineMessages({
   nextQuestion: {
@@ -44,11 +44,11 @@ export const ObservationFields = ({
   route,
 }: NativeRootNavigationProps<'ObservationFields'>) => {
   const {projectId} = useActiveProject();
-  const languageTag = useAppLanguageTag();
   const [current, setCurrent] = React.useState(1);
   const {fieldIds} = route.params;
   const {formatMessage} = useIntl();
   const observationId = useDraftObservationState(store => store.id?.docId);
+  const languageTag = useLocaleState(s => s.languageTag);
 
   const {data: fields} = useManyDocs({
     projectId,

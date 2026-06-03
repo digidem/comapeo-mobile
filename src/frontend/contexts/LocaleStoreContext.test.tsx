@@ -3,15 +3,15 @@ import {type ReactNode} from 'react';
 
 import {
   createLocaleStore,
+  LocaleContext,
   LocaleStore,
-  LocaleStoreProvider,
   useLocaleActions,
   useLocaleState,
 } from './LocaleStoreContext';
 
 function createWrapper(store: LocaleStore) {
   return ({children}: {children: ReactNode}) => {
-    return <LocaleStoreProvider value={store}>{children}</LocaleStoreProvider>;
+    return <LocaleContext value={store}>{children}</LocaleContext>;
   };
 }
 
@@ -27,27 +27,28 @@ test('usage of state and actions hooks', () => {
     wrapper,
   });
 
-  // Initial state
+  // Initial state: languageTag is resolved from system preferences (falls back to 'en' in test environment)
   expect(stateHook.result.current).toStrictEqual({
-    languageTag: null,
+    languageTag: 'en',
     useSystemPreferences: true,
   });
 
   act(() => {
-    actionsHook.result.current.setLanguageTag('pt-BR');
+    actionsHook.result.current.setLanguageTag('pt');
   });
 
   expect(stateHook.result.current).toStrictEqual({
     useSystemPreferences: false,
-    languageTag: 'pt-BR',
+    languageTag: 'pt',
   });
 
   act(() => {
-    actionsHook.result.current.setLanguageTag(null);
+    actionsHook.result.current.setLanguageTag('SystemPreference');
   });
 
+  // Back to system preference — resolved from system locales (falls back to 'en' in test environment)
   expect(stateHook.result.current).toStrictEqual({
-    languageTag: null,
+    languageTag: 'en',
     useSystemPreferences: true,
   });
 });

@@ -7,7 +7,7 @@ import {
 } from '@comapeo/core-react';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useAppLanguageTag} from '../useAppLanguageTag';
+import {useLocaleState} from '../../contexts/LocaleStoreContext';
 import {usePresetsQuery} from './presets';
 
 export function useTracks() {
@@ -45,7 +45,7 @@ export function useDeleteTrackMutation() {
 
 export function useTrackPresets() {
   const {projectId} = useActiveProject();
-  const lang = useAppLanguageTag();
+  const lang = useLocaleState(s => s.languageTag);
   const tracks = usePresetsSelection({
     projectId: projectId,
     dataType: 'track',

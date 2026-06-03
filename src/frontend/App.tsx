@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Logger} from '@maplibre/maplibre-react-native';
+import {Logger, setConnected} from '@maplibre/maplibre-react-native';
 import {getLocales} from 'expo-localization';
 
 // Maplibre logs when tile requests are cancelled, which is often.
@@ -13,6 +13,12 @@ Logger.setLogCallback(log => {
   }
   return false;
 });
+
+// All styles are served via localhost and we need to bypass the internal connectivity manager in MapLibre React Native
+// in order for things to work while the app is offline.
+// https://github.com/maplibre/maplibre-react-native/blob/6f99de530eec2e06de485ef86f4be61f941e0e09/docs/content/modules/mlrn-module.md#setconnectedconnected
+setConnected(true);
+
 import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {initializeNodejs} from './initializeNodejs';

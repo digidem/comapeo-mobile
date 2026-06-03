@@ -49,6 +49,7 @@ describe('Settings - Early Access Mode', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
     const aboutComapeoOption = await $(byResourceId('aboutSettingsButton'));
+    await aboutComapeoOption.scrollIntoView();
     await aboutComapeoOption.click();
     await expect(
       $(byTextMatches('You are in Early Access Mode.')),

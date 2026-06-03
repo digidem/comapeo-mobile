@@ -13,7 +13,7 @@ import {MEMBER_ROLE_ID} from '../../sharedTypes';
 import {saveDocuments} from '@react-native-documents/picker';
 import {Exports} from '../../sharedTypes/navigation';
 import * as FileSystem from 'expo-file-system/legacy';
-import {useAppLanguageTag} from '../useAppLanguageTag';
+import {useLocaleState} from '../../contexts/LocaleStoreContext';
 import {useIntl} from 'react-intl';
 import noop from '../../lib/noop';
 
@@ -97,7 +97,7 @@ const EXPORT_MUTATION_KEY = ['background', 'export', 'observations'] as const;
 export function useExportObservations({projectId}: {projectId: string}) {
   const exportNoMedia = useExportGeoJSON({projectId});
   const exportWithMedia = useExportZipFile({projectId});
-  const lang = useAppLanguageTag();
+  const lang = useLocaleState(s => s.languageTag);
   const {formatDate} = useIntl();
 
   return useMutation({

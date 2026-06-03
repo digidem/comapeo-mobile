@@ -8,7 +8,7 @@ import {useAuthContext} from '../../contexts/AuthContext';
 import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext';
 import {useMetricsDiagnosticsEnabled} from '../../contexts/MetricsDiagnosticsStoreContext';
-import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
+import {useLocaleState} from '../../contexts/LocaleStoreContext';
 import {USABLE_LANGUAGES} from '../../lib/intl';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
@@ -102,7 +102,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   const isEarlyAccess = useEarlyAccessState(s => s.isEarlyAccessEnabled);
   const coordinateFormat = useCoordinateFormat();
   const diagnosticsEnabled = useMetricsDiagnosticsEnabled();
-  const appLocale = useAppLanguageTag();
+  const appLocale = useLocaleState(s => s.languageTag);
   const passcode = useSecurityState(s => s.passcode);
   const {data: deviceInfo} = useOwnDeviceInfo();
   const unitSystem = useUnitSystem();

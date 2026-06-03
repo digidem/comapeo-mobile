@@ -438,11 +438,8 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respects Your Privacy & Autonomy"
   },
-  "screens.EarlyAccess.feedbackLink": {
-    "message": "Share it here"
-  },
   "screens.EarlyAccess.feedbackPrefix": {
-    "message": "Have feedback?"
+    "message": "Have feedback? Share it at"
   },
   "screens.EarlyAccess.infoBox": {
     "message": "Data from Early Access won't be visible to collaborators who haven't opted in."

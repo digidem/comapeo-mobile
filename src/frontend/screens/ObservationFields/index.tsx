@@ -11,7 +11,7 @@ import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
+import {useLocaleState} from '../../contexts/LocaleStoreContext';
 import {useDraftObservationState} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
@@ -38,7 +38,7 @@ export const ObservationFields = ({
   route,
 }: NativeRootNavigationProps<'ObservationFields'>) => {
   const {projectId} = useActiveProject();
-  const languageTag = useAppLanguageTag();
+  const languageTag = useLocaleState(s => s.languageTag);
 
   const {data: fields} = useManyDocs({
     projectId,

@@ -4,20 +4,18 @@ import {
   type Locale,
 } from 'expo-localization';
 
-import {extractLanguageCode} from '../lib/intl';
-
 export const getLocales: typeof _getLocales = () => {
-  return [createBaseLocale('en-US')];
+  return [createBaseLocale('en')];
 };
 
 export const useLocales: typeof _useLocales = () => {
-  return [createBaseLocale('en-US')];
+  return [createBaseLocale('en')];
 };
 
 function createBaseLocale(languageTag: string): Locale {
   return {
     languageTag,
-    languageCode: extractLanguageCode(languageTag),
+    languageCode: languageTag,
     languageCurrencyCode: null,
     languageCurrencySymbol: null,
     languageRegionCode: null,

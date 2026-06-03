@@ -140,14 +140,20 @@
   "$1Screens.Settings.AppSettings.coordinateDms": {
     "message": "Degrees/Min/Sec"
   },
+  "$1Screens.Settings.AppSettings.coordinateSystem": {
+    "message": "Coordinate System"
+  },
   "$1Screens.Settings.AppSettings.coordinateUtm": {
     "message": "UTM Coordinates"
   },
-  "$1Screens.Settings.AppSettings.createTestData": {
-    "message": "Create Test Data"
+  "$1Screens.Settings.AppSettings.dataAndPrivacy": {
+    "message": "Data & Privacy"
   },
-  "$1Screens.Settings.AppSettings.diagnosticInformation": {
-    "message": "Diagnostic Information"
+  "$1Screens.Settings.AppSettings.deviceName": {
+    "message": "Device Name"
+  },
+  "$1Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Early Access"
   },
   "$1Screens.Settings.AppSettings.earlyAccessOff": {
     "message": "Early Access OFF"
@@ -161,6 +167,12 @@
   "$1Screens.Settings.AppSettings.imperial": {
     "message": "Imperial"
   },
+  "$1Screens.Settings.AppSettings.language": {
+    "message": "Language"
+  },
+  "$1Screens.Settings.AppSettings.learnMore": {
+    "message": "Learn More"
+  },
   "$1Screens.Settings.AppSettings.metric": {
     "message": "Metric"
   },
@@ -170,12 +182,6 @@
   "$1Screens.Settings.AppSettings.passcode": {
     "message": "Passcode"
   },
-  "$1Screens.Settings.AppSettings.sharingPermissions": {
-    "message": "SHARING PERMISSIONS"
-  },
-  "$1Screens.Settings.AppSettings.thisDevice": {
-    "message": "THIS DEVICE"
-  },
   "$1Screens.Settings.AppSettings.title": {
     "message": "CoMapeo Settings"
   },
@@ -184,6 +190,9 @@
   },
   "$1Screens.Settings.AppSettings.turnOn": {
     "message": "Turn On"
+  },
+  "$1Screens.Settings.AppSettings.unitSystem": {
+    "message": "Unit System"
   },
   "$1TrackBottomSheet.DidNotMove.delete": {
     "message": "Exit Tracks"

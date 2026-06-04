@@ -265,7 +265,7 @@ describe('Observation Fields', () => {
       const user = userEvent.setup();
       await navigateToObservationDetails(user);
       // first details screen
-      expect(await screen.findByText('Field test details'));
+      expect(await screen.findByText('Field test details')).toBeVisible();
       const backHeaderButton = await screen.findByTestId(
         'MAIN.header-back-btn',
       );
@@ -279,29 +279,29 @@ describe('Observation Fields', () => {
       const detailsButton = await screen.findByText('Details');
       await user.press(detailsButton);
       await user.press(await screen.findByText('Next'));
-      expect(await screen.findByText('Measurement Value'));
+      expect(await screen.findByText('Measurement Value')).toBeVisible();
 
       //should go back to first detail screen
       await user.press(await screen.findByTestId('MAIN.header-back-btn'));
-      expect(await screen.findByText('Field test details'));
+      expect(await screen.findByText('Field test details')).toBeVisible();
 
-      //third detial screen
+      //third detail screen
       await user.press(await screen.findByText('Next'));
       await user.press(await screen.findByText('Next'));
-      expect(await screen.findByText('Conditions'));
+      expect(await screen.findByText('Conditions')).toBeVisible();
 
       //should go back to second detail screen
       await user.press(await screen.findByTestId('MAIN.header-back-btn'));
-      expect(await screen.findByText('Measurement Value'));
+      expect(await screen.findByText('Measurement Value')).toBeVisible();
 
       //4th detail screen
       await user.press(await screen.findByText('Next'));
       await user.press(await screen.findByText('Next'));
-      expect(await screen.findByText('Cultural activity'));
+      expect(await screen.findByText('Cultural activity')).toBeVisible();
 
       //should go back to 3rd detal
       await user.press(await screen.findByTestId('MAIN.header-back-btn'));
-      expect(await screen.findByText('Conditions'));
+      expect(await screen.findByText('Conditions')).toBeVisible();
 
       //go back to 4th detail screen
       await user.press(await screen.findByText('Next'));

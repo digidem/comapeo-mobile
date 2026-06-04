@@ -20,9 +20,6 @@
   "$1Navigation.Menu.currentProject": {
     "message": "Huidig project"
   },
-  "$1Navigation.Menu.earlyAccessLabel": {
-    "message": "U bent in de Vroegtijdige toegangsmodus."
-  },
   "$1Navigation.Menu.exchange": {
     "message": "Ruil"
   },

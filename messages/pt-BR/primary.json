@@ -23,9 +23,6 @@
   "$1Navigation.Menu.currentProject": {
     "message": "Projeto Atual"
   },
-  "$1Navigation.Menu.earlyAccessLabel": {
-    "message": "Você está no Modo de Acesso Antecipado."
-  },
   "$1Navigation.Menu.exchange": {
     "message": "Trocar"
   },

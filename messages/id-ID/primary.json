@@ -23,9 +23,6 @@
   "$1Navigation.Menu.currentProject": {
     "message": "Proyek Saat Ini"
   },
-  "$1Navigation.Menu.earlyAccessLabel": {
-    "message": "Anda berada dalam Mode Akses Awal."
-  },
   "$1Navigation.Menu.exchange": {
     "message": "Pertukaran"
   },

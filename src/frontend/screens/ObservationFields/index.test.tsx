@@ -175,8 +175,8 @@ describe('Observation Fields', () => {
     test('expects select one to be visible and is able to select', async () => {
       const user = userEvent.setup();
       await navigateToSelectOne(user);
-      const option = await screen.findByText('Expected');
-      await user.press(option);
+      const optionExpected = await screen.findByText('Expected');
+      await user.press(optionExpected);
       const inputExpected = await screen.findByTestId(
         'OBS.select-one-inp-Expected',
       );
@@ -185,63 +185,132 @@ describe('Observation Fields', () => {
         'OBS.select-one-inp-Unusual',
       );
       expect(inputUnusual).not.toBeChecked();
-      // await user.press(await screen.findByText('expected'));
+      const optionUnusual = await screen.findByText('Unusual');
+      await user.press(optionUnusual);
+      expect(inputExpected).not.toBeChecked();
+      expect(inputUnusual).toBeChecked();
+    });
+  });
+
+  describe('Select Multiple', () => {
+    const integrationSetup = setupIntegrationTest();
+
+    async function navigateToSelectMultiple(
+      user: ReturnType<typeof userEvent.setup>,
+    ) {
+      const project = await integrationSetup.manager.getProject(
+        integrationSetup.projectId,
+      );
+      await project.$importCategories({filePath: DEFAULT_CONFIG_PATH});
+
+      await integrationSetup.renderNavigation({
+        activeProjectId: integrationSetup.projectId,
+      });
+
+      await user.press(await screen.findByTestId('MAIN.add-observation-btn'));
+      // category set in assets folder has a category "Comprehensive Test" with all fields
+      await user.press(await screen.findByText('Comprehensive Test'));
+      await user.press(await screen.findByText('Details'));
+      await user.press(await screen.findByText('Next'));
+      await user.press(await screen.findByText('Next'));
+      await user.press(await screen.findByText('Next'));
+    }
+
+    test('expects select one to be visible and is able to select', async () => {
+      const user = userEvent.setup();
+      await navigateToSelectMultiple(user);
+      const optionHistory = await screen.findByText('History');
+
+      await user.press(optionHistory);
+      const inputHistory = await screen.findByTestId(
+        'OBS.select-multiple-inp-History',
+      );
+      const inputMythology = await screen.findByTestId(
+        'OBS.select-multiple-inp-Mythology',
+      );
+      expect(inputHistory).toBeSelected();
+      expect(inputMythology).not.toBeSelected();
+
+      const optionMythology = await screen.findByText('Mythology');
+      await user.press(optionMythology);
+
+      //expect both to still be selected
+      expect(inputHistory).toBeSelected();
+      expect(inputMythology).toBeSelected();
+    });
+  });
+
+  describe('navigates in and out of the observation fields', () => {
+    const integrationSetup = setupIntegrationTest();
+
+    async function navigateToObservationDetails(
+      user: ReturnType<typeof userEvent.setup>,
+    ) {
+      const project = await integrationSetup.manager.getProject(
+        integrationSetup.projectId,
+      );
+      await project.$importCategories({filePath: DEFAULT_CONFIG_PATH});
+
+      await integrationSetup.renderNavigation({
+        activeProjectId: integrationSetup.projectId,
+      });
+
+      await user.press(await screen.findByTestId('MAIN.add-observation-btn'));
+      // category set in assets folder has a category "Comprehensive Test" with all fields
+      await user.press(await screen.findByText('Comprehensive Test'));
+      await user.press(await screen.findByText('Details'));
+    }
+
+    test('correct back button behaviour', async () => {
+      const user = userEvent.setup();
+      await navigateToObservationDetails(user);
+      // first details screen
+      expect(await screen.findByText('Field test details'));
+      const backHeaderButton = await screen.findByTestId(
+        'MAIN.header-back-btn',
+      );
+      await user.press(backHeaderButton);
+      //should go back to observation create screen
+      const createObservationScreen =
+        await screen.findByTestId('OBS.create-obs');
+      expect(createObservationScreen).toBeOnTheScreen();
+
+      //second detail screen
+      const detailsButton = await screen.findByText('Details');
+      await user.press(detailsButton);
+      await user.press(await screen.findByText('Next'));
+      expect(await screen.findByText('Measurement Value'));
+
+      //should go back to first detail screen
+      await user.press(await screen.findByTestId('MAIN.header-back-btn'));
+      expect(await screen.findByText('Field test details'));
+
+      //third detial screen
+      await user.press(await screen.findByText('Next'));
+      await user.press(await screen.findByText('Next'));
+      expect(await screen.findByText('Conditions'));
+
+      //should go back to second detail screen
+      await user.press(await screen.findByTestId('MAIN.header-back-btn'));
+      expect(await screen.findByText('Measurement Value'));
+
+      //4th detail screen
+      await user.press(await screen.findByText('Next'));
+      await user.press(await screen.findByText('Next'));
+      expect(await screen.findByText('Cultural activity'));
+
+      //should go back to 3rd detal
+      await user.press(await screen.findByTestId('MAIN.header-back-btn'));
+      expect(await screen.findByText('Conditions'));
+
+      //go back to 4th detail screen
+      await user.press(await screen.findByText('Next'));
+      const doneButton = await screen.findByText('Done');
+      expect(doneButton).toBeVisible();
+
+      //should navigate back to create observation screen when done clicked
+      await user.press(doneButton);
+      expect(await screen.findByTestId('OBS.create-obs')).toBeVisible();
     });
   });
 });
-
-// test('has the correct fields', async () => {
-//     const user = userEvent.setup();
-
-//     const project = await integrationSetup.manager.getProject(
-//       integrationSetup.projectId,
-//     );
-//     await project.$importCategories({filePath: DEFAULT_CONFIG_PATH});
-
-//     await integrationSetup.renderNavigation({
-//       activeProjectId: integrationSetup.projectId,
-//     });
-
-//     const observationButton = await screen.findByTestId(
-//       'MAIN.add-observation-btn',
-//     );
-//     expect(observationButton).toBeVisible();
-
-//     await user.press(observationButton);
-//     const categoryScreen = await screen.findByTestId('MAIN.categories-scrn');
-//     expect(categoryScreen).toBeVisible();
-
-//     // category set in assets folder has a category "Comprehensive Test" with all fields
-//     const catWithAllFields = await screen.findByText('Comprehensive Test');
-//     expect(catWithAllFields).toBeVisible();
-
-//     await user.press(catWithAllFields);
-
-//     const details = await screen.findByText('Details');
-//     await user.press(details);
-
-//     const textInput = await screen.findByTestId('OBS.text-inp');
-//     expect(textInput).toBeVisible();
-
-//     const nextButton = await screen.findByText('Next');
-//     await user.press(nextButton);
-
-//     const number = await screen.findByTestId('OBS.number-inp');
-//     expect(number).toBeVisible();
-
-//     await user.press(nextButton);
-
-//     const selectOne = await screen.findByTestId('OBS.select-one-inp');
-//     expect(selectOne).toBeVisible();
-
-//     await user.press(nextButton);
-
-//     const selectMultiple = await screen.findByTestId('OBS.select-multiple-inp');
-//     expect(selectMultiple).toBeVisible();
-
-//     const doneButton = await screen.findByText('Done');
-//     expect(doneButton).toBeVisible();
-
-//     await user.press(doneButton);
-//     expect(await screen.findByTestId('OBS.create-obs')).toBeVisible();
-//   });

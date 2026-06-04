@@ -403,12 +403,6 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeoはあなたのプライバシーと自律性を尊重します"
   },
-  "screens.EarlyAccess.feedbackLink": {
-    "message": "ここで共有"
-  },
-  "screens.EarlyAccess.feedbackPrefix": {
-    "message": "フィードバックがありますか？"
-  },
   "screens.EarlyAccess.infoBox": {
     "message": "アーリーアクセスからのデータは、未登録のコラボレーターには表示されません。"
   },

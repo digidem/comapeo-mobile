@@ -80,6 +80,7 @@ jobs:
   comment:
     name: Comment
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
     needs: build
 
     steps:
@@ -185,10 +186,10 @@ jobs:
           while true; do
             status=$(eas build:view "$BUILD_ID" --json | jq -r '.status')
             echo "Build status: $status"
-            if [ "$status" = "FINISHED" ]; then
+            if [ "$status" = "finished" ]; then
               echo "Build finished successfully"
               break
-            elif [ "$status" = "ERRORED" ] || [ "$status" = "CANCELLED" ]; then
+            elif [ "$status" = "errored" ] || [ "$status" = "canceled" ]; then
               echo "Build failed with status: $status"
               exit 1
             fi
@@ -225,10 +226,13 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           VERSION: ${{ steps.inputs.outputs.version }}
           RELEASE_BODY: ${{ steps.release_notes.outputs.body }}
+          # On workflow_dispatch the tag job doesn't run, so we create the tag here
+          CREATE_TAG: ${{ github.event_name == 'workflow_dispatch' && '--create-tag' || '' }}
         run: |
           gh release create "v${VERSION}" \
             --title "CoMapeo v${VERSION}" \
             --notes "$RELEASE_BODY" \
+            $CREATE_TAG \
             "comapeo-v${VERSION}.apk#CoMapeo Android APK"
 
   submit:

@@ -403,12 +403,6 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo respektiert Ihre Privatsphäre und Unabhängigkeit"
   },
-  "screens.EarlyAccess.feedbackLink": {
-    "message": "Teilen Sie es hier"
-  },
-  "screens.EarlyAccess.feedbackPrefix": {
-    "message": "Haben Sie Feedback?"
-  },
   "screens.EarlyAccess.infoBox": {
     "message": "Daten von Early Access sind für Mitarbeiter, die sich nicht für diesen Zugang entschieden haben, nicht sichtbar."
   },

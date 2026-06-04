@@ -58,7 +58,7 @@ export const RootStackNavigator = () => {
   const activeProjectId = useActiveProjectId();
   const {formatMessage} = useIntl();
   const isNotReadyForInvite =
-    security.authState === 'unauthenticated' ||
+    security.authState !== 'authenticated' ||
     !deviceInfo.name ||
     !activeProjectId;
 

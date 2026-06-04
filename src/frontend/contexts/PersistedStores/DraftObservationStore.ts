@@ -161,7 +161,8 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
    * Only processes steps that are not already complete.
    */
   async function processPhoto(attachment: UnsavedPhotoAttachment) {
-    const {id, raw, original, thumbnail, preview, accelerometer} = attachment;
+    const {id, raw, original, thumbnail, preview, accelerometer, photoExif} =
+      attachment;
 
     if (raw.processingState !== 'complete' || !raw.uri) {
       throw new Error('Cannot process photo without raw image');
@@ -187,8 +188,19 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         width = result.width;
         height = result.height;
       } else {
-        // Reset EXIF orientation so Glide loads raw sensor pixels, then rotate
-        // using accelerometer. Fixes devices where vision camera writes wrong EXIF.
+        // Zero out EXIF so Glide loads raw sensor pixels without auto-rotating,
+        // then apply rotation derived from accelerometer.
+        Sentry.addBreadcrumb({
+          category: 'photo-orientation',
+          level: 'info',
+          data: {
+            exifOrientation: photoExif?.Orientation ?? null,
+            accelerometer: accelerometer
+              ? {x: accelerometer.x, y: accelerometer.y, z: accelerometer.z}
+              : null,
+            rotation: getPhotoRotation(accelerometer),
+          },
+        });
         await Exify.write(raw.uri, {Orientation: 1});
         const result = await _processPhotoAttachment({
           id,

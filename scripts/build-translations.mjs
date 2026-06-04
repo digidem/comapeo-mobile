@@ -3,6 +3,7 @@
 import path from 'node:path';
 import fs from 'node:fs';
 import {readFile, writeFile} from 'node:fs/promises';
+import {parse} from '@formatjs/icu-messageformat-parser';
 
 import LANGUAGE_NAME_TRANSLATIONS from '../src/frontend/languages.json' with {type: 'json'};
 
@@ -102,7 +103,7 @@ in order to allow users to select '${lang}' in CoMapeo`);
     const msgs = messages[lang];
     Object.keys(msgs).forEach(key => {
       if (!msgs[key].message) return;
-      result[lang][key] = msgs[key].message;
+      result[lang][key] = parse(msgs[key].message, {captureLocation: false});
     });
   }
 

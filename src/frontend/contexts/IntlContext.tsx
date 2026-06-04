@@ -37,7 +37,7 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
     const merged = {};
     // Merge messages in order of priority: specific system locales, app language code, full app language tag
     for (const tag of languages.reverse()) {
-      Object.assign(merged, messages[tag] || {});
+      Object.assign(merged, messages[tag]);
     }
 
     return merged;

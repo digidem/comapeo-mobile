@@ -410,12 +410,6 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Menghormati Privasi & Otonomi Anda"
   },
-  "screens.EarlyAccess.feedbackLink": {
-    "message": "Bagikan di sini"
-  },
-  "screens.EarlyAccess.feedbackPrefix": {
-    "message": "Punya umpan balik?"
-  },
   "screens.EarlyAccess.infoBox": {
     "message": "Data dari Akses Awal tidak akan terlihat oleh kolaborator yang belum ikut serta."
   },

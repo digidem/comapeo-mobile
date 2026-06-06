@@ -8,7 +8,7 @@ const defaultBlockList = Array.isArray(config.resolver.blockList)
   ? config.resolver.blockList
   : [config.resolver.blockList];
 
-module.exports = {
+const finalConfig = {
   ...config,
   transformer: {
     ...config.transformer,
@@ -31,3 +31,18 @@ module.exports = {
     unstable_enablePackageExports: true,
   },
 };
+
+let withStorybook;
+try {
+  withStorybook =
+    require('@storybook/react-native/metro/withStorybook').withStorybook;
+} catch {
+  // Storybook not installed or not available — skip wrapper
+}
+
+module.exports =
+  withStorybook && process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true'
+    ? withStorybook(finalConfig, {
+        enabled: process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true',
+      })
+    : finalConfig;

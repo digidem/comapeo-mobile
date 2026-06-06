@@ -30,7 +30,10 @@
     "upgrade-deps:dev": "npm-check --update --save-exact --dev-only",
     "test:jest": "dotenv -- jest",
     "test:e2e:nobuild": "wdio run ./wdio.local.config.js",
-    "test:e2e:build": "npm run build:android:e2e && npm run test:e2e:nobuild"
+    "test:e2e:build": "npm run build:android:e2e && npm run test:e2e:nobuild",
+    "storybook-generate": "sb-rn-get-stories",
+    "storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true npm run storybook-generate && EXPO_PUBLIC_STORYBOOK_ENABLED=true npm run prestart && EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start",
+    "storybook:android": "npm run build:backend && EXPO_PUBLIC_STORYBOOK_ENABLED=true npm run storybook-generate && EXPO_PUBLIC_STORYBOOK_ENABLED=true expo run:android"
   },
   "dependencies": {
     "@comapeo/core-react": "11.0.4",
@@ -138,10 +141,12 @@
     "@eslint/js": "9.39.2",
     "@formatjs/cli": "6.8.2",
     "@mapeo/mock-data": "5.0.0",
+    "@react-native-async-storage/async-storage": "^3.1.1",
     "@react-native/metro-babel-transformer": "0.76.9",
     "@react-native/metro-config": "0.79.5",
     "@react-native/typescript-config": "0.76.9",
     "@react-navigation/native-stack": "7.3.21",
+    "@storybook/react-native": "^10.4.4",
     "@tanstack/eslint-plugin-query": "5.91.2",
     "@testing-library/react-native": "13.2.0",
     "@turf/distance": "7.3.1",
@@ -192,6 +197,7 @@
     "react-native-svg-transformer": "1.5.2",
     "react-test-renderer": "19.1.4",
     "semver": "7.7.3",
+    "storybook": "^10.4.2",
     "type-fest": "4.41.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.50.0",

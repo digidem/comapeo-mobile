@@ -96,3 +96,6 @@ logs/*.log
 logs/*.json
 local.log
 test-results/
+
+# Storybook (auto-generated)
+.rnstorybook/storybook.requires.ts

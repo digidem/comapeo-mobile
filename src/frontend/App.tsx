@@ -57,6 +57,7 @@ import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {createAppRpc} from './lib/createAppRpc.ts';
 import {postHog} from './lib/posthog.ts';
 import {APP_VARIANT} from './lib/appVariant.ts';
+import StorybookUIRoot from '../../.rnstorybook';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -209,6 +210,8 @@ const appUsagePromptStore = createAppUsageStatsStore({
 
 const queryClient = new QueryClient();
 
+const isStorybook = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true';
+
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -246,10 +249,14 @@ const App = () => {
                   lowStorageBannerStore={lowStorageBannerStore}
                   earlyAccessStore={earlyAccessStore}
                   unitSystemStore={persistedUnitSystemStore}>
-                  <AppNavigator
-                    permissionAsked={permissionsAsked}
-                    navigationIntegration={navigationIntegration}
-                  />
+                  {isStorybook ? (
+                    <StorybookUIRoot />
+                  ) : (
+                    <AppNavigator
+                      permissionAsked={permissionsAsked}
+                      navigationIntegration={navigationIntegration}
+                    />
+                  )}
                 </AppProviders>
               </Suspense>
             </ServerLoading>

@@ -190,10 +190,9 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
       } else {
         // Zero out EXIF so Glide loads raw sensor pixels without auto-rotating,
         // then apply rotation derived from accelerometer.
-        Sentry.addBreadcrumb({
-          category: 'photo-orientation',
+        Sentry.captureMessage('photo-orientation', {
           level: 'info',
-          data: {
+          extra: {
             exifOrientation: photoExif?.Orientation ?? null,
             accelerometer: accelerometer
               ? {x: accelerometer.x, y: accelerometer.y, z: accelerometer.z}

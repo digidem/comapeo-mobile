@@ -17,10 +17,6 @@ import {isUserCancelled, useExportObservations} from '../hooks/server/projects';
 import {toError} from '../utils/errors';
 
 const m = defineMessages({
-  close: {
-    id: 'screens.ExportObservations.close',
-    defaultMessage: 'Close',
-  },
   download: {
     id: 'screens.ExportObservations.download',
     defaultMessage: 'Download',

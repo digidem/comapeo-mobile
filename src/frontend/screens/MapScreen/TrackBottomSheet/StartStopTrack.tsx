@@ -22,10 +22,6 @@ const m = defineMessages({
     id: '$1Modal.GPSEnable.button.stop',
     defaultMessage: 'Stop Tracks',
   },
-  loadingButtonText: {
-    id: 'Modal.GPSEnable.button.loading',
-    defaultMessage: 'Loading…',
-  },
   trackingRequirement: {
     id: '$1TrackBottomSheet.StartStopTrack.trackingRequirement',
     defaultMessage: 'Move one meter to see track.',

@@ -228,13 +228,10 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           VERSION: ${{ steps.eas_version.outputs.version }}
           RELEASE_BODY: ${{ steps.release_notes.outputs.body }}
-          # On workflow_dispatch the tag job doesn't run, so we create the tag here
-          CREATE_TAG: ${{ github.event_name == 'workflow_dispatch' && '--create-tag' || '' }}
         run: |
           gh release create "v${VERSION}" \
             --title "CoMapeo v${VERSION}" \
             --notes "$RELEASE_BODY" \
-            $CREATE_TAG \
             "comapeo-v${VERSION}.apk#CoMapeo Android APK"
 
   submit:

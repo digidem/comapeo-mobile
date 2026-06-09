@@ -179,10 +179,10 @@ jobs:
           while true; do
             status=$(eas build:view "$BUILD_ID" --json | jq -r '.status')
             echo "Build status: $status"
-            if [ "$status" = "finished" ]; then
+            if [ "$status" = "FINISHED" ]; then
               echo "Build finished successfully"
               break
-            elif [ "$status" = "errored" ] || [ "$status" = "canceled" ]; then
+            elif [ "$status" = "ERRORED" ] || [ "$status" = "CANCELED" ]; then
               echo "Build failed with status: $status"
               exit 1
             fi

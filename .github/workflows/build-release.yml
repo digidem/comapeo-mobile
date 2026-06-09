@@ -29,10 +29,6 @@ on:
         description: 'EAS build ID (UUID from expo.dev build URL)'
         required: true
         type: string
-      version:
-        description: 'Release version short form (e.g. 10.5)'
-        required: true
-        type: string
 
 jobs:
   build:
@@ -106,8 +102,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
     needs: build
-    outputs:
-      release_version_short: ${{ steps.version.outputs.release_version_short }}
 
     steps:
       - name: Create GitHub App Token
@@ -149,7 +143,6 @@ jobs:
         id: inputs
         run: |
           echo "build_id=${{ inputs.build_id || needs.build.outputs.build_id }}" >> $GITHUB_OUTPUT
-          echo "version=${{ inputs.version || needs.tag.outputs.release_version_short }}" >> $GITHUB_OUTPUT
 
       - name: Create GitHub App Token
         uses: actions/create-github-app-token@v1
@@ -196,9 +189,17 @@ jobs:
             sleep 60
           done
 
+      - name: Extract version from EAS build
+        id: eas_version
+        env:
+          BUILD_ID: ${{ steps.inputs.outputs.build_id }}
+        run: |
+          version=$(eas build:view "$BUILD_ID" --json | jq -r '.appVersion')
+          echo "version=$version" >> $GITHUB_OUTPUT
+
       - name: Download APK from R2
         env:
-          VERSION: ${{ steps.inputs.outputs.version }}
+          VERSION: ${{ steps.eas_version.outputs.version }}
         run: |
           APK_URL="https://downloads.comapeo.app/android/release/comapeo-v${VERSION}.apk"
           echo "Downloading APK from $APK_URL"
@@ -207,7 +208,7 @@ jobs:
       - name: Read release notes
         id: release_notes
         env:
-          VERSION: ${{ steps.inputs.outputs.version }}
+          VERSION: ${{ steps.eas_version.outputs.version }}
         run: |
           MINOR_VERSION=$(echo "$VERSION" | cut -d. -f1)
           NOTES_FILE="release-notes/closed-prs-v${MINOR_VERSION}.md"
@@ -224,7 +225,7 @@ jobs:
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          VERSION: ${{ steps.inputs.outputs.version }}
+          VERSION: ${{ steps.eas_version.outputs.version }}
           RELEASE_BODY: ${{ steps.release_notes.outputs.body }}
           # On workflow_dispatch the tag job doesn't run, so we create the tag here
           CREATE_TAG: ${{ github.event_name == 'workflow_dispatch' && '--create-tag' || '' }}

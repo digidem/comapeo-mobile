@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-check
 /**
  * ESLint rules for react-intl message descriptors.
  *
@@ -8,7 +8,7 @@
  * no-duplicate-message-descriptor-ids: error when two descriptors in the same
  *   file share the same `id` string.
  */
-
+/** @type {import('eslint').Rule.RuleModule} */
 const noUnusedMessageDescriptors = {
   meta: {
     type: 'problem',
@@ -20,6 +20,7 @@ const noUnusedMessageDescriptors = {
   create(context) {
     const defined = new Map();
     const used = new Set();
+    /** @type {string | null} */
     let descriptorVar = null;
     // If m is exported, usages live in other files — skip the unused check
     let descriptorVarIsExported = false;
@@ -95,6 +96,7 @@ const noUnusedMessageDescriptors = {
   },
 };
 
+/** @type {import('eslint').Rule.RuleModule} */
 const noDuplicateMessageDescriptorIds = {
   meta: {
     type: 'problem',
@@ -119,8 +121,12 @@ const noDuplicateMessageDescriptorIds = {
         if (arg?.type !== 'ObjectExpression') return;
 
         for (const descriptor of arg.properties) {
-          if (descriptor.type !== 'Property') continue;
-          for (const prop of descriptor.value.properties ?? []) {
+          if (
+            descriptor.type !== 'Property' ||
+            descriptor.value.type !== 'ObjectExpression'
+          )
+            continue;
+          for (const prop of descriptor.value.properties) {
             if (
               prop.type === 'Property' &&
               prop.key.type === 'Identifier' &&

@@ -8,10 +8,6 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
-  navTitle: {
-    id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle',
-    defaultMessage: 'Remote Archive',
-  },
   remoteArchiveOn: {
     id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn',
     defaultMessage: 'Remote Archive is On',

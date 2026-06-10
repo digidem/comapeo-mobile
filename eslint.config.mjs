@@ -14,6 +14,8 @@ import pluginReactHooks from 'eslint-plugin-react-hooks';
 import pluginReactCompiler from 'eslint-plugin-react-compiler';
 import globals from 'globals';
 import pluginTs from 'typescript-eslint';
+import {createRequire} from 'node:module';
+const pluginIntl = createRequire(import.meta.url)('./eslint-rules/intl.js');
 
 const gitignorePath = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -80,7 +82,12 @@ const frontendConfig = pluginTs.config(
         rules: pluginReactNative.configs.all.rules,
       },
     ],
+    plugins: {
+      intl: pluginIntl,
+    },
     rules: {
+      'intl/no-unused-message-descriptors': 'error',
+      'intl/no-duplicate-message-descriptor-ids': 'error',
       // More noise than signal
       '@eslint-react/hooks-extra/no-direct-set-state-in-use-effect': 'off',
       // Some React Native libraries use the subscription return approach

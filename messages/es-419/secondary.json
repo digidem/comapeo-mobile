@@ -422,12 +422,6 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo respeta tu privacidad y autonomía"
   },
-  "screens.EarlyAccess.feedbackLink": {
-    "message": "Compartir aquí"
-  },
-  "screens.EarlyAccess.feedbackPrefix": {
-    "message": "¿Tienes comentarios?"
-  },
   "screens.EarlyAccess.infoBox": {
     "message": "Los datos de acceso anticipado no serán visibles para los colaboradores que no hayan optado por participar."
   },

@@ -41,10 +41,6 @@ const m = defineMessages({
     defaultMessage: 'Sharing image',
     description: 'Title of dialog to share an observation with media',
   },
-  shareMessageTitle: {
-    id: '$1screens.Observation.shareMessageTitle',
-    defaultMessage: 'CoMapeo Alert',
-  },
   shareMessageFooter: {
     id: '$1screens.Observation.shareMessageFooter',
     defaultMessage: 'Sent from CoMapeo',
@@ -70,10 +66,6 @@ const m = defineMessages({
   precision: {
     id: '$1screens.Observation.precision',
     defaultMessage: 'Precision:',
-  },
-  details: {
-    id: '$1screens.Observation.details',
-    defaultMessage: 'Details:',
   },
   description: {
     id: '$1screens.Observation.description',

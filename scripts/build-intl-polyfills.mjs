@@ -5,7 +5,17 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 
 import languages from '../src/frontend/languages.json' with {type: 'json'};
-import messages from '../translations/messages.json' with {type: 'json'};
+
+const TRANSLATIONS_DIR = new URL('../translations/', import.meta.url).pathname;
+const messages = Object.fromEntries(
+  fs
+    .readdirSync(TRANSLATIONS_DIR)
+    .filter(f => f.endsWith('.json'))
+    .map(f => [
+      f.replace(/\.json$/, ''),
+      JSON.parse(fs.readFileSync(path.join(TRANSLATIONS_DIR, f), 'utf-8')),
+    ]),
+);
 
 const relativeTimeFormatSupportedLocales = getSupportedLocalesFromDir(
   path.dirname(fileURLToPath(import.meta.resolve('@formatjs/intl-relativetimeformat/polyfill-force.js'))),

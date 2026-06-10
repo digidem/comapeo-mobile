@@ -10,11 +10,6 @@ import LANGUAGE_NAME_TRANSLATIONS from '../src/frontend/languages.json' with {ty
 const PROJECT_ROOT_DIR_PATH = new URL('../', import.meta.url).pathname;
 const TRANSLATIONS_DIR_PATH = path.join(PROJECT_ROOT_DIR_PATH, 'translations');
 
-const TRANSLATIONS_OUTPUT_PATH = path.join(
-  TRANSLATIONS_DIR_PATH,
-  'messages.json',
-);
-
 await run();
 
 async function run() {
@@ -23,13 +18,34 @@ async function run() {
 
   const messages = await loadMessages();
   const translations = convertMessagesToTranslations(messages);
+  const locales = Object.keys(translations);
 
-  await writeFile(
-    TRANSLATIONS_OUTPUT_PATH,
-    JSON.stringify(translations, null, 2),
+  await Promise.all(
+    locales.map(lang =>
+      writeFile(
+        path.join(TRANSLATIONS_DIR_PATH, `${lang}.json`),
+        JSON.stringify(translations[lang]),
+      ),
+    ),
   );
 
-  console.log(`Successfully built translations to ${TRANSLATIONS_OUTPUT_PATH}`);
+  const importLines = locales
+    .map(lang => `  ${lang}: () => import('./${lang}.json'),`)
+    .join('\n');
+
+  await writeFile(
+    path.join(TRANSLATIONS_DIR_PATH, 'index.ts'),
+    `// AUTO-GENERATED — do not edit manually, run \`npm run build:translations\`
+
+export const localeImports = {
+${importLines}
+} as const;
+
+export type AvailableLanguageTag = keyof typeof localeImports;
+`,
+  );
+
+  console.log(`Successfully built translations to ${TRANSLATIONS_DIR_PATH}`);
 }
 
 ////////////////////////////// Helpers //////////////////////////////

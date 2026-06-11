@@ -116,6 +116,22 @@ describe('useEnsureDefaultProject', () => {
     expect(projects).toHaveLength(1);
   });
 
+  // Regression test for #1940: e.g. the invite-accept flow and the
+  // removed-from-project flow each deciding to create a default project
+  test('concurrent calls from separately mounted components create exactly one project', async () => {
+    const ensureFromComponentA = renderEnsureDefaultProject(client);
+    const ensureFromComponentB = renderEnsureDefaultProject(client);
+
+    const [first, second] = await Promise.all([
+      ensureFromComponentA(),
+      ensureFromComponentB(),
+    ]);
+
+    expect(second).toEqual(first);
+    const projects = await client.listProjects();
+    expect(projects).toHaveLength(1);
+  });
+
   test('falls back to another joined project if creation fails', async () => {
     const namedProjectId = await client.createProject({name: 'named project'});
 

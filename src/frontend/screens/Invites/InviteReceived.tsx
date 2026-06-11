@@ -7,9 +7,8 @@ import {
   useAcceptInvite,
   useRejectInvite,
   useSingleInvite,
-  useCreateProject,
-  useManyProjects,
 } from '@comapeo/core-react';
+import {useEnsureDefaultProject} from '../../hooks/server/useEnsureDefaultProject';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -64,11 +63,8 @@ export const InviteReceived = ({
 
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
-  const createProject = useCreateProject();
+  const ensureDefaultProject = useEnsureDefaultProject();
   const {isTracking} = useTracking();
-  const {data: allProjects} = useManyProjects();
-
-  const hasDefaultProject = allProjects.some(proj => !proj.name);
 
   const projectColor = invite.projectColor;
   const statsShared = invite.sendStats;
@@ -85,13 +81,11 @@ export const InviteReceived = ({
       {inviteId: inviteId},
       {
         onSuccess: projectId => {
-          if (!hasDefaultProject) {
-            createProject.mutate(undefined, {
-              onError: err => {
-                Sentry.captureException(err);
-              },
-            });
-          }
+          // The user should ALWAYS have a default (solo) project. This was
+          // not implemented until after v6, so create one if it is missing
+          ensureDefaultProject({excludeProjectId: projectId}).catch(err => {
+            Sentry.captureException(err);
+          });
           navigation.reset({
             index: 1,
             routes: [

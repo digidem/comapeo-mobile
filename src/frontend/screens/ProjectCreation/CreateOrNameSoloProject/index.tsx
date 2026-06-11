@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateProject, useUpdateProjectSettings} from '@comapeo/core-react';
+import {useEnsureDefaultProject} from '../../../hooks/server/useEnsureDefaultProject';
 import {HookFormTextInput} from '../../../sharedComponents/HookFormTextInput';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
@@ -82,6 +83,7 @@ export const CreateOrNameSoloProject = ({
 
   const {setActiveProjectId} = useActiveProjectIdActions();
   const createProjectMutation = useCreateProject();
+  const ensureDefaultProject = useEnsureDefaultProject();
   const {projectId} = useActiveProject();
   const updateSettingsMutation = useUpdateProjectSettings({
     projectId: projectId,
@@ -130,10 +132,12 @@ export const CreateOrNameSoloProject = ({
         {name: projectName},
         {
           onSuccess: () => {
-            createProjectMutation.mutate(undefined, {
-              onError: err => {
-                Sentry.captureException(err);
-              },
+            // Naming the solo project means there is no longer an unnamed
+            // (default) project, so create a new one to take its place.
+            // Exclude the renamed project in case the rename is not yet
+            // reflected in listProjects()
+            ensureDefaultProject({excludeProjectId: projectId}).catch(err => {
+              Sentry.captureException(err);
             });
 
             navigation.replace('ShareProjectStats', {

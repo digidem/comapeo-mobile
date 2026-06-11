@@ -53,7 +53,12 @@ export const ProjectRemovalListener = () => {
 
   React.useEffect(() => {
     function handleRoleChange(event: RoleChangeEvent) {
-      if (event.role.roleId === BLOCKED_ROLE_ID) {
+      // Re-dispatching while the bottom sheet is open would remount it,
+      // discarding any in-progress leave and re-enabling its button (#1940)
+      if (
+        event.role.roleId === BLOCKED_ROLE_ID &&
+        currentRouteName !== 'RemovedFromProjectBottomSheet'
+      ) {
         dispatchToRemovedProjectBottomSheet();
       }
     }
@@ -63,7 +68,7 @@ export const ProjectRemovalListener = () => {
     return () => {
       projectApi.removeListener('own-role-change', handleRoleChange);
     };
-  }, [projectApi, dispatchToRemovedProjectBottomSheet]);
+  }, [projectApi, dispatchToRemovedProjectBottomSheet, currentRouteName]);
 
   return null;
 };

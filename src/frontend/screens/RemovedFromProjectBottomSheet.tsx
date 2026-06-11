@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
 import {StyleSheet, View} from 'react-native';
 import {SecondaryButton} from '../sharedComponents/Buttons';
@@ -6,14 +7,14 @@ import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BLACK} from '../lib/styles';
 import {
-  useCreateProject,
   useLeaveProject,
-  useManyProjects,
   useOwnRoleInProject,
   useProjectSettings,
 } from '@comapeo/core-react';
+import * as Sentry from '@sentry/react-native';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
+import {useEnsureDefaultProject} from '../hooks/server/useEnsureDefaultProject';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ColorCard} from '../sharedComponents/ColorCard';
 import {DEFAULT_PROJECT_COLOR} from '../constants';
@@ -45,11 +46,45 @@ export const RemovedFromProjectBottomSheet = ({
   const {
     data: {name, projectColor},
   } = useProjectSettings({projectId});
-  const {data: projects} = useManyProjects();
-  const defaultProject = projects.find(proj => !proj.name);
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const createProject = useCreateProject();
+  const ensureDefaultProject = useEnsureDefaultProject();
   const leaveProject = useLeaveProject();
+  const [isFinalizing, setIsFinalizing] = React.useState(false);
+  // Guards against a second tap landing before the re-render that hides the
+  // button — each tap would otherwise leave and create a project (#1940)
+  const hasPressedRef = React.useRef(false);
+
+  function handleClose() {
+    if (hasPressedRef.current) return;
+    hasPressedRef.current = true;
+    leaveProject.mutate(
+      {projectId},
+      {
+        onSuccess: async () => {
+          setIsFinalizing(true);
+          try {
+            const defaultProjectId = await ensureDefaultProject({
+              excludeProjectId: projectId,
+            });
+            setActiveProjectId(defaultProjectId);
+            navigation.popToTop();
+          } catch (err) {
+            hasPressedRef.current = false;
+            setIsFinalizing(false);
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet', {
+              error: toError(err, 'Error creating default project'),
+            });
+          }
+        },
+        onError: err => {
+          hasPressedRef.current = false;
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet', {error: err});
+        },
+      },
+    );
+  }
 
   return (
     <BottomSheetWrapper>
@@ -72,47 +107,12 @@ export const RemovedFromProjectBottomSheet = ({
         </ColorCard>
 
         <View style={styles.buttonContainer}>
-          {leaveProject.status === 'pending' ||
-          createProject.status === 'pending' ? (
+          {leaveProject.status === 'pending' || isFinalizing ? (
             <UIActivityIndicator style={{margin: 20}} />
           ) : (
             <SecondaryButton
               fullSize
-              onPress={() => {
-                leaveProject.mutate(
-                  {projectId},
-                  {
-                    onSuccess: () => {
-                      if (!defaultProject) {
-                        // The user should ALWAYS have a default (solo) project. This was not implemented until after v6. So this creates one if it does not exist
-                        createProject.mutate(undefined, {
-                          onError: err => {
-                            const firstProject = projects[0];
-                            if (firstProject) {
-                              setActiveProjectId(firstProject.projectId);
-                              navigation.popToTop();
-                              return;
-                            }
-                            navigation.navigate('ErrorBottomSheet', {
-                              error: toError(
-                                err,
-                                'Error creating default project',
-                              ),
-                            });
-                          },
-                          onSuccess: newDefaultProjectId => {
-                            setActiveProjectId(newDefaultProjectId);
-                            navigation.popToTop();
-                          },
-                        });
-                        return;
-                      }
-                      setActiveProjectId(defaultProject.projectId);
-                      navigation.popToTop();
-                    },
-                  },
-                );
-              }}
+              onPress={handleClose}
               text={formatMessage(m.close)}
             />
           )}

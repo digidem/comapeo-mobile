@@ -17,9 +17,6 @@
   "$1Navigation.Menu.coordinatorTools": {
     "message": "Coördinator Tools"
   },
-  "$1Navigation.Menu.currentProject": {
-    "message": "Huidig project"
-  },
   "$1Navigation.Menu.exchange": {
     "message": "Ruil"
   },
@@ -67,9 +64,6 @@
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff": {
     "message": "Extern archief staat uit"
-  },
-  "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
-    "message": "Extern archief"
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
     "message": "Extern archief staat aan"
@@ -150,12 +144,6 @@
   },
   "$1screen.EditProjectDetails.projectName": {
     "message": "Project Naam"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
-    "message": "Coördinator"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
-    "message": "Deelnemer"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Uitnodiging sturen"
@@ -328,9 +316,6 @@
   "$1screens.DeviceNaming.Success.mapOnYourOwn": {
     "message": "Kaart op uw eigen"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "Voltooid!"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "Verschillende namen helpen medewerkers om CoMapeo te herkennen."
   },
@@ -487,13 +472,6 @@
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Waarneming"
   },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "Wijzigen"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Wat gebeurt er hier?"
-  },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
     "message": "Voltooid"
@@ -583,9 +561,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "App toegangscode"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "Apparaat beveiliging"
   },
   "$1screens.Security.title": {
     "message": "Beveiliging"

@@ -61,9 +61,6 @@
   "$1screens.DeviceNaming.Success.joinProject": {
     "message": "திட்டத்தில் சேரவும்"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "வெற்றி!"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "சாதனத்தின் பெயர்"
   },
@@ -130,13 +127,6 @@
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "அவதானிப்புகள்"
   },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "மாற்றுக"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "இங்கே என்ன நடக்கிறது?"
-  },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
     "message": "முடிந்தது"
@@ -182,9 +172,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "App கடவுக்குறியீடு"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "சாதனப் பாதுகாப்பு"
   },
   "$1screens.Security.title": {
     "message": "பாதுகாப்பு"

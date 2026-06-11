@@ -94,14 +94,6 @@ const m = defineMessages({
     id: '$1screens.Sync.ProjectSyncDisplay.close',
     defaultMessage: 'Close',
   },
-  wifiCardPlaceholder: {
-    id: 'screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder',
-    defaultMessage: '{ssid}',
-  },
-  noWifi: {
-    id: 'screens.Sync.ProjectSyncDisplay.noWifi',
-    defaultMessage: 'No Wi-Fi.',
-  },
   allCaughtUp: {
     id: 'screens.Sync.ProjectSyncDisplay.allCaughtUp',
     defaultMessage: "You're all caught up!",
@@ -129,10 +121,6 @@ const m = defineMessages({
   exchangePreviewsOnlyAudioDescription: {
     id: 'screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyAudioDescription',
     defaultMessage: 'No audio included.',
-  },
-  exchangeAction: {
-    id: 'screens.Sync.ProjectSyncDisplay.exchangeAction',
-    defaultMessage: 'Change Settings',
   },
 });
 

@@ -405,12 +405,6 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respecteert uw Privacy & Autonomie"
   },
-  "screens.EarlyAccess.feedbackLink": {
-    "message": "Deel het hier"
-  },
-  "screens.EarlyAccess.feedbackPrefix": {
-    "message": "Heeft u feedback?"
-  },
   "screens.EarlyAccess.infoBox": {
     "message": "Gegevens uit Vroegtijdige Toegang zullen niet zichtbaar zijn voor medewerkers die niet hebben gekozen."
   },

@@ -13,10 +13,6 @@ const m = defineMessages({
     id: '$1screens.Security.title',
     defaultMessage: 'Security',
   },
-  securitySubheader: {
-    id: '$1screens.Security.securitySubheader',
-    defaultMessage: 'Device Security',
-  },
   passcodeHeader: {
     id: '$1screens.Security.passcodeHeader',
     defaultMessage: 'App Passcode',

@@ -23,9 +23,6 @@
   "$1Navigation.Menu.currentProject": {
     "message": "Aktuelles Projekt"
   },
-  "$1Navigation.Menu.earlyAccessLabel": {
-    "message": "Sie befinden sich im Frühzugriffsmodus."
-  },
   "$1Navigation.Menu.exchange": {
     "message": "Umtausch"
   },

@@ -71,7 +71,10 @@ const config = {
       'babel-jest',
       {
         extends: './babel.config.js',
-        plugins: [['babel-plugin-transform-import-meta', {module: 'ES6'}]],
+        plugins: [
+          ['babel-plugin-transform-import-meta', {module: 'ES6'}],
+          '@babel/plugin-transform-class-static-block',
+        ],
       },
     ],
   },

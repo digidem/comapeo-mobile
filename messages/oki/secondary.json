@@ -42,9 +42,6 @@
   "screens.EarlyAccessTurnedOff.close": {
     "message": "Keer"
   },
-  "screens.ExportObservations.close": {
-    "message": "Keer"
-  },
   "screens.InviteCancelled.close": {
     "message": "Keer"
   },

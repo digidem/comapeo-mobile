@@ -60,7 +60,7 @@ export const SelectMultiple = React.memo<Props>(({field}) => {
       <QuestionLabel field={field} />
       {field.options.map((item, index) => (
         <CheckItem
-          key={item.label}
+          key={`${item.value}-${index}`}
           onPress={() => handleChange(item.value)}
           checked={valueAsArray.includes(item.value)}
           label={item.label}

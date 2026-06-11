@@ -49,7 +49,7 @@ export const SelectOne = React.memo<Props>(({field}) => {
       <QuestionLabel field={field} />
       {field.options.map((item, index) => (
         <RadioItem
-          key={item.label}
+          key={`${item.value}-${index}`}
           onPress={() => updateTag(field.tagKey, item.value)}
           checked={tags && item.value === tags[field.tagKey] ? true : false}
           label={item.label}

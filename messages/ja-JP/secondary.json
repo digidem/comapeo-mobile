@@ -475,9 +475,6 @@
   "screens.ExportObservations.allObservationsDescription": {
     "message": "GeoJSONファイルとしてのみテキスト"
   },
-  "screens.ExportObservations.close": {
-    "message": "閉じる"
-  },
   "screens.ExportObservations.download": {
     "message": "ダウンロード"
   },
@@ -701,13 +698,6 @@
     "description": "Placeholder for description/notes field",
     "message": "何がここで起こっているか?"
   },
-  "screens.ObservationEdit.changePreset": {
-    "message": "変更"
-  },
-  "screens.ObservationEdit.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "何がここで起こっているか?"
-  },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "観察記録"
@@ -736,9 +726,6 @@
   },
   "screens.ObservationMetadataVerified.date": {
     "message": "日付"
-  },
-  "screens.ObservationMetadataVerified.howWeCheck": {
-    "message": "検証方法"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "緯度："
@@ -770,10 +757,6 @@
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
     "description": "Description of observation list view when the user has not yet recorded observations",
     "message": "最初の観察記録を記録するには、マップまたはカメラビューから開始します。"
-  },
-  "screens.ObservationsList.error": {
-    "description": "message shown when there is an unexpected error when loading observations",
-    "message": "観察記録の読み込み中にエラーが発生しました。CoMapeoを終了して再起動してください。"
   },
   "screens.ObservationsList.filter.all": {
     "message": "すべて"
@@ -1059,9 +1042,6 @@
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "全員追いついた！"
   },
-  "screens.Sync.ProjectSyncDisplay.exchangeAction": {
-    "message": "設定の変更"
-  },
   "screens.Sync.ProjectSyncDisplay.exchangeEverythingMediaDescription": {
     "message": "フルサイズの写真とオーディオ。"
   },
@@ -1085,9 +1065,6 @@
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
     "message": "完了！他のデバイスの参加を待っています"
-  },
-  "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
-    "message": "{ssid}"
   },
   "screens.Sync.remoteArchiveConnected": {
     "message": "リモートアーカイブに接続"

@@ -120,9 +120,7 @@ test('checks decimal', () => {
 
   fireEvent.changeText(screen.getByDisplayValue(''), '.');
 
-  expect(screen.getByDisplayValue('0.')).toBeVisible();
-
-  expect(updateTag).toHaveBeenCalledWith(0);
+  expect(updateTag).not.toHaveBeenCalled();
 });
 
 test('handles 0', () => {

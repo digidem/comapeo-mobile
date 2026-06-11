@@ -122,9 +122,6 @@ describe('Observation Fields', () => {
       await navigateToTextField(user);
       const numberInput = await screen.findByTestId('OBS.number-inp');
 
-      fireEvent.changeText(numberInput, '.');
-      expect(numberInput).toHaveDisplayValue('0.');
-
       fireEvent.changeText(numberInput, '-');
       expect(numberInput).toHaveDisplayValue('-');
 

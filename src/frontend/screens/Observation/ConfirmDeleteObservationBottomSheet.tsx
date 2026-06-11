@@ -12,6 +12,7 @@ import {
 } from '../../sharedComponents/Buttons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteDocument} from '@comapeo/core-react';
+import {DocAlreadyDeletedError, getErrorCode} from '@comapeo/core/errors.js';
 import * as Sentry from '@sentry/react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -42,11 +43,10 @@ export const ConfirmDeleteObservationBottomSheet = ({
   const navigation = useNavigationFromRoot();
   const {projectId} = useActiveProject();
   const {observationId} = route.params;
-  const {mutate: deleteObservationMutation, error: deleteObservationError} =
-    useDeleteDocument({
-      docType: 'observation',
-      projectId,
-    });
+  const {mutate: deleteObservationMutation} = useDeleteDocument({
+    docType: 'observation',
+    projectId,
+  });
 
   function handleDelete() {
     deleteObservationMutation(
@@ -56,7 +56,13 @@ export const ConfirmDeleteObservationBottomSheet = ({
           navigation.pop(2);
         },
         onError: err => {
-          Sentry.captureException(deleteObservationError);
+          // Already deleted (double-tap, or deleted on another device and
+          // synced) — the user's intent is satisfied, so finish quietly.
+          if (getErrorCode(err) === DocAlreadyDeletedError.code) {
+            navigation.pop(2);
+            return;
+          }
+          Sentry.captureException(err);
           navigation.navigate('ErrorBottomSheet', {error: err});
         },
       },

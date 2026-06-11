@@ -11,9 +11,10 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLUE_GREY} from '../../lib/styles';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
-import {useLeaveProject, useManyProjects} from '@comapeo/core-react';
+import {useClientApi, useLeaveProject} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectSettings} from '../../hooks/server/projects';
+import {useEnsureDefaultProject} from '../../hooks/server/useEnsureDefaultProject';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -53,45 +54,64 @@ export const LeaveProject = ({
   const {data: projectSettings} = useProjectSettings();
   const leaveProject = useLeaveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const {data: projects} = useManyProjects();
+  const ensureDefaultProject = useEnsureDefaultProject();
+  const clientApi = useClientApi();
+  const [isFinalizing, setIsFinalizing] = React.useState(false);
 
   const isCoordinator = route.params.memberType === 'coordinator';
+
+  async function finalizeLeave() {
+    try {
+      const defaultProjectId = await ensureDefaultProject({
+        excludeProjectId: projectId,
+      });
+      setActiveProjectId(defaultProjectId);
+      // Reset (rather than replace) so that no screen with queries
+      // scoped to the left project stays mounted — refetching them
+      // errors because leaving closes the project's data stores.
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [
+            {name: 'Home'},
+            {
+              name: 'LeftProjectConfirmation',
+              params: {projectName: projectSettings.name ?? ''},
+            },
+          ],
+        }),
+      );
+    } catch (err) {
+      setIsFinalizing(false);
+      Sentry.captureException(err);
+      navigation.replace('ErrorBottomSheet', {
+        error: toError(err, 'Error updating active project'),
+      });
+    }
+  }
 
   function handleLeaveProject() {
     leaveProject.mutate(
       {projectId},
       {
         onSuccess: () => {
-          try {
-            const defaultProject = projects?.find(
-              project => project.name === undefined,
-            );
-            if (defaultProject?.projectId) {
-              setActiveProjectId(defaultProject.projectId);
-            }
-            // Reset (rather than replace) so that no screen with queries
-            // scoped to the left project stays mounted — refetching them
-            // errors because leaving closes the project's data stores.
-            navigation.dispatch(
-              CommonActions.reset({
-                index: 1,
-                routes: [
-                  {name: 'Home'},
-                  {
-                    name: 'LeftProjectConfirmation',
-                    params: {projectName: projectSettings.name ?? ''},
-                  },
-                ],
-              }),
-            );
-          } catch (err) {
-            Sentry.captureException(err);
-            navigation.replace('ErrorBottomSheet', {
-              error: toError(err, 'Error updating active project'),
-            });
-          }
+          setIsFinalizing(true);
+          finalizeLeave();
         },
-        onError: err => {
+        onError: async err => {
+          // Core marks the project left locally before waiting for sync, so a
+          // sync timeout can reject after the project has actually been left.
+          setIsFinalizing(true);
+          const wasActuallyLeft = await clientApi.listProjects().then(
+            projects =>
+              !projects.some(project => project.projectId === projectId),
+            () => false,
+          );
+          if (wasActuallyLeft) {
+            finalizeLeave();
+            return;
+          }
+          setIsFinalizing(false);
           Sentry.captureException(err);
           navigation.replace('ErrorBottomSheet', {error: err});
         },
@@ -119,7 +139,7 @@ export const LeaveProject = ({
       </View>
 
       <View style={styles.buttons}>
-        {leaveProject.status === 'pending' ? (
+        {leaveProject.status === 'pending' || isFinalizing ? (
           <UIActivityIndicator style={{marginVertical: 20}} />
         ) : (
           <>

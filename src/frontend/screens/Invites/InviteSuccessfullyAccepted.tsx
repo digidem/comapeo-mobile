@@ -24,7 +24,6 @@ const m = defineMessages({
 
 export const InviteSuccessfullyAccepted = ({
   route,
-  navigation,
 }: NativeRootNavigationProps<'InviteSuccessfullyAccepted'>) => {
   const {formatMessage} = useIntl();
   const {setActiveProjectId} = useActiveProjectIdActions();
@@ -44,12 +43,6 @@ export const InviteSuccessfullyAccepted = ({
             fullSize
             onPress={() => {
               setActiveProjectId(route.params.projectId);
-              requestAnimationFrame(() => {
-                navigation.reset({
-                  index: 0,
-                  routes: [{name: 'Home'}],
-                });
-              });
             }}
             text={formatMessage(m.done)}
           />

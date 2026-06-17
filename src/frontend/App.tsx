@@ -216,7 +216,16 @@ const App = () => {
       'android.permission.CAMERA',
       'android.permission.ACCESS_FINE_LOCATION',
       'android.permission.ACCESS_COARSE_LOCATION',
-    ]).then(() => setPermissionsAsked(true));
+    ])
+      .catch(err => {
+        // Rejects when no Activity is attached (e.g. launched in the
+        // background)
+        Sentry.captureException(err);
+      })
+      // Always dismiss the splash, regardless of outcome — this startup ask
+      // is only an eager prompt; each feature re-requests its own permission
+      // on demand. Never gate splash dismissal on the request succeeding.
+      .finally(() => setPermissionsAsked(true));
   }, []);
 
   return (

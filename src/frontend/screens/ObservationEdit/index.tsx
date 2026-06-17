@@ -49,15 +49,6 @@ const m = defineMessages({
     defaultMessage: 'Edit Observation',
     description: 'screen title for edit observation screen',
   },
-  changePreset: {
-    id: 'screens.ObservationEdit.changePreset',
-    defaultMessage: 'Change',
-  },
-  descriptionPlaceholder: {
-    id: 'screens.ObservationEdit.descriptionPlaceholder',
-    defaultMessage: 'What is happening here?',
-    description: 'Placeholder for description/notes field',
-  },
 });
 
 export const ObservationEdit = ({
@@ -81,7 +72,11 @@ export const ObservationEdit = ({
   return (
     <ScreenContentWithDock
       dockContainerStyle={{padding: 0}}
-      dockContent={<ActionsRow fieldRefs={preset?.fieldRefs} />}>
+      dockContent={
+        <ActionsRow
+          fieldIds={preset ? preset.fieldRefs.map(val => val.docId) : undefined}
+        />
+      }>
       <View style={styles.container}>
         <View
           style={{

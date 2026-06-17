@@ -61,39 +61,6 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.removeMapFile',
     defaultMessage: 'Remove Map File',
   },
-
-  customMapAddedTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle',
-    defaultMessage: 'Custom Map Added',
-  },
-  customMapAddedDescription: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription',
-    defaultMessage:
-      'You will see this map when you are offline, but you will not see a map outside the area defined in your custom map.',
-  },
-  close: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.close',
-    defaultMessage: 'Close',
-  },
-
-  deleteCustomMapTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle',
-    defaultMessage: 'Delete Custom Map?',
-  },
-  deleteCustomMapDescription: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription',
-    defaultMessage:
-      'This will delete the map and its offline areas. No collected observation data will be deleted.',
-  },
-  // TODO: Merge into deleteCustomMapDescription when https://github.com/digidem/comapeo-mobile/issues/669 is addressed
-  cannotBeUndone: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone',
-    defaultMessage: 'This cannot be undone.',
-  },
-  deleteMapButtonText: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText',
-    defaultMessage: 'Delete Map',
-  },
   importErrorTitle: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.importErrorTitle',
     defaultMessage: 'Import Error',

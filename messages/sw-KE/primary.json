@@ -91,9 +91,6 @@
   "$1screens.DeviceNaming.Success.joinProject": {
     "message": "Jiunge na Mradi"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "Imefaulu!"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Jina la Kifaa"
   },
@@ -158,9 +155,6 @@
   "$1screens.Observation.description": {
     "message": "Maelezo:"
   },
-  "$1screens.Observation.details": {
-    "message": "Maelezo:"
-  },
   "$1screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Uchunguzi"
@@ -168,13 +162,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Uchunguzi"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "Badilisha"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Ni nini kinachofanyika hapa?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -224,9 +211,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "Nambari ya siri ya Programu"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "Usalama wa Kifaa"
   },
   "$1screens.Security.title": {
     "message": "Usalama"

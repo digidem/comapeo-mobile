@@ -66,9 +66,6 @@
   "$1screens.DataPrivacy.next": {
     "message": "अर्काे"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "सफल!"
-  },
   "$1screens.DeviceNaming.save": {
     "message": "संग्रह"
   },
@@ -128,13 +125,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "अवलाेकन"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "परिवर्तन"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "यहाँ के भइ राखेकाे छ?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",

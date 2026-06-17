@@ -91,9 +91,6 @@
   "$1screens.Observation.deleteTitle": {
     "message": "លុបការសង្កេត?"
   },
-  "$1screens.Observation.details": {
-    "message": "ព័ត៌មានលម្អិត:"
-  },
   "$1screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "ការសង្កេត"
@@ -104,13 +101,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "ការតាមដាន"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "ផ្លាស់ប្តូរ"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "តើមានអ្វីកំពុងកើតឡើងនៅទីនេះ?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",

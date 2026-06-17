@@ -171,13 +171,6 @@
     "description": "Placeholder for description/notes field",
     "message": "यहाँ के भइ राखेकाे छ?"
   },
-  "screens.ObservationEdit.changePreset": {
-    "message": "परिवर्तन"
-  },
-  "screens.ObservationEdit.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "यहाँ के भइ राखेकाे छ?"
-  },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "अवलाेकन"
@@ -189,10 +182,6 @@
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
     "description": "Description of observation list view when the user has not yet recorded observations",
     "message": "पहिलो अवलोकन रेकर्ड गर्न नक्सा वा क्यामेरा दृश्यबाट सुरू गर्नु."
-  },
-  "screens.ObservationsList.loading": {
-    "description": "message shown whilst observations are loading",
-    "message": "लाेड हुँदै... नयाँ उपकरणसँग सिंक्राेनाइज हुन केहि समय लाग्न सक्छ"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

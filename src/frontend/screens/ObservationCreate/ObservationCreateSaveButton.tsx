@@ -117,7 +117,18 @@ export const ObservationCreateSaveButton = () => {
   const finalizeSave = () => {
     queryClient.invalidateQueries({queryKey: STORAGE_QUERY_KEY});
     clearDraft();
-    navigation.popTo('Home', {screen: 'Map'});
+    const homeTabRoute = navigation
+      .getState()
+      .routes.find(route => route.name === 'Home');
+    // the home screen is a nested navigator (the tabs)
+    // find the latest open tab in the nested tab navigator
+    const lastOpenedTab =
+      homeTabRoute?.state?.routes[homeTabRoute.state.index || 0]?.name;
+    // This assumes that the user can only navigate to this screen via the Camera or Map Screen
+    // If that changes, this will naively go back to the map screen.
+    navigation.popTo('Home', {
+      screen: lastOpenedTab === 'Camera' ? 'Camera' : 'Map',
+    });
   };
 
   const addObservationRefToTrack = (observation: Observation) => {

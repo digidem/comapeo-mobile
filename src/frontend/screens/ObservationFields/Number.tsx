@@ -1,31 +1,39 @@
 import * as React from 'react';
 import {StyleSheet, TextInput} from 'react-native';
-import {QuestionLabel} from './QuestionLabel';
-import {Field} from '@comapeo/schema';
-import {
-  useDraftObservationActions,
-  useDraftObservationState,
-} from '../../contexts/DraftObservationContext';
+import {Observation} from '@comapeo/schema';
 
-export const Number = React.memo<{field: Field}>(({field}) => {
-  const tags = useDraftObservationState(store => store.value?.tags);
-  const {updateTag} = useDraftObservationActions();
-  const value = tags ? tags[field.tagKey] : '';
+type NumberProps = {
+  updateTag: (value: number | null) => void;
+  tagValue?: Observation['tags'][number];
+};
+
+export const Number = ({updateTag, tagValue}: NumberProps) => {
+  const [text, setText] = React.useState(() => {
+    if (typeof tagValue === 'number') return String(tagValue);
+    if (typeof tagValue === 'string' && !isNaN(parseFloat(tagValue)))
+      return tagValue;
+    return '';
+  });
+
   return (
-    <React.Fragment>
-      <QuestionLabel field={field} />
+    <>
       <TextInput
-        testID="OBS.details-inp"
-        value={typeof value === 'string' ? value : ''}
-        onChangeText={newVal =>
-          updateTag(
-            field.tagKey,
-            newVal
-              .replace(/[^0-9.-]/g, '') // Allow digits, decimal, and negative sign
-              .replace(/(?!^)-/g, '') // Remove any minus sign that is not at the start
-              .replace(/(\..*?)\./g, '$1'), // Remove additional decimal points
-          )
-        }
+        testID="OBS.number-inp"
+        value={text}
+        onChangeText={newVal => {
+          const sanitized = newVal
+            .replace(/[^0-9.-]/g, '') // Allow digits, decimal, and negative sign
+            .replace(/(?!^)-/g, '') // Remove any minus sign that is not at the start
+            .replace(/(\..*?)\./g, '$1') // Remove additional decimal points
+            .replace(/^(-?)0+([1-9])/, '$1$2'); // Remove leading zeros before non-zero digit
+          setText(sanitized);
+          if (sanitized === '') {
+            updateTag(null);
+            return;
+          }
+          const parsed = parseFloat(sanitized);
+          if (!isNaN(parsed)) updateTag(parsed || 0); // "|| 0" normalized -0 to 0
+        }}
         keyboardType="numeric"
         style={styles.textInput}
         underlineColorAndroid="transparent"
@@ -34,9 +42,9 @@ export const Number = React.memo<{field: Field}>(({field}) => {
         textContentType="none"
         autoFocus
       />
-    </React.Fragment>
+    </>
   );
-});
+};
 
 const styles = StyleSheet.create({
   textInput: {

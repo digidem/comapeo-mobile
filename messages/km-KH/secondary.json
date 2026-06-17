@@ -10,9 +10,6 @@
   "ExportSuccess.done": {
     "message": "រួចរាល់"
   },
-  "Modal.GPSEnable.button.loading": {
-    "message": "កំពុង​ផ្ទុក..."
-  },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
     "message": "បិទ"
   },
@@ -74,9 +71,6 @@
     "message": "រួចរាល់"
   },
   "screens.EarlyAccessTurnedOff.close": {
-    "message": "បិទ"
-  },
-  "screens.ExportObservations.close": {
     "message": "បិទ"
   },
   "screens.ExportObservations.download": {
@@ -183,13 +177,6 @@
     "description": "Placeholder for description/notes field",
     "message": "តើមានអ្វីកំពុងកើតឡើងនៅទីនេះ?"
   },
-  "screens.ObservationEdit.changePreset": {
-    "message": "ផ្លាស់ប្តូរ"
-  },
-  "screens.ObservationEdit.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "តើមានអ្វីកំពុងកើតឡើងនៅទីនេះ?"
-  },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "ការសង្កេត"
@@ -207,10 +194,6 @@
   },
   "screens.ObservationsList.filter.all": {
     "message": "ទាំងអស់"
-  },
-  "screens.ObservationsList.loading": {
-    "description": "message shown whilst observations are loading",
-    "message": "កំពុងធ្វើការ ... វាត្រូវការពេលមួយរយៈ បន្ទាប់ពីធ្វើសមកាលកម្មជាមួយឧបករណ៍ថ្មីរួចរាល់"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
     "message": "បិទ"

@@ -20,6 +20,7 @@ import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessful
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
+import {DeepLinkListener} from './DeepLinkListener';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -60,6 +61,10 @@ export const RootStackNavigator = () => {
   const {data: deviceInfo} = useOwnDeviceInfo();
   const activeProjectId = useActiveProjectId();
   const {formatMessage} = useIntl();
+  const isNotReadyForInvite =
+    security.authState !== 'authenticated' ||
+    !deviceInfo.name ||
+    !activeProjectId;
 
   const layout: NavigatorLayout = ({children, state, navigation}) => (
     <SafeAreaView
@@ -78,6 +83,11 @@ export const RootStackNavigator = () => {
             navigation.navigate('MapReceivedBottomSheet', {shareId})
           }
         />
+        {!isNotReadyForInvite && (
+          <DeepLinkListener
+            currentRouteName={state.routes[state.index]?.name}
+          />
+        )}
         {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.
             activeProjectId is always set before any app screen renders. */}
         {activeProjectId ? (

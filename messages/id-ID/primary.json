@@ -20,12 +20,6 @@
   "$1Navigation.Menu.coordinatorTools": {
     "message": "Alat Koordinator"
   },
-  "$1Navigation.Menu.currentProject": {
-    "message": "Proyek Saat Ini"
-  },
-  "$1Navigation.Menu.earlyAccessLabel": {
-    "message": "Anda berada dalam Mode Akses Awal."
-  },
   "$1Navigation.Menu.exchange": {
     "message": "Pertukaran"
   },
@@ -76,9 +70,6 @@
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff": {
     "message": "Arsip Jarak Jauh Dinonaktifkan"
-  },
-  "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
-    "message": "Arsip Jarak Jauh"
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
     "message": "Arsip Jarak Jauh Aktif"
@@ -156,12 +147,6 @@
   },
   "$1screen.EditProjectDetails.projectName": {
     "message": "Nama proyek"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
-    "message": "Koordinator"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
-    "message": "Peserta"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Kirim Undangan"
@@ -334,9 +319,6 @@
   "$1screens.DeviceNaming.Success.mapOnYourOwn": {
     "message": "Peta Sendiri"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "Berhasil!"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "Nama yang berbeda membantu kolaborator yang menggunakan CoMapeo untuk mengenali Anda."
   },
@@ -474,9 +456,6 @@
   "$1screens.Observation.description": {
     "message": "Deskripsi:"
   },
-  "$1screens.Observation.details": {
-    "message": "Rincian:"
-  },
   "$1screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Pengamatan"
@@ -494,9 +473,6 @@
   "$1screens.Observation.shareMessageFooter": {
     "message": "Dikirim dari CoMapeo"
   },
-  "$1screens.Observation.shareMessageTitle": {
-    "message": "Peringatan CoMapeo"
-  },
   "$1screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
     "message": "Berbagi teks"
@@ -504,13 +480,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Pengamatan"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "Ubah"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Apa yang terjadi di sini?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -604,9 +573,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "Kode Sandi Aplikasi"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "Keamanan Perangkat"
   },
   "$1screens.Security.title": {
     "message": "Keamanan"

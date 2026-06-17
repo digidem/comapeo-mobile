@@ -28,7 +28,7 @@ describe('Settings - Early Access Mode', () => {
       ),
     ).toBeDisplayed();
     await expect($(byTextMatches('Have feedback?'))).toBeDisplayed();
-    await expect($(byTextMatches('Share it here'))).toBeDisplayed();
+    await expect($(byTextMatches('Share it at'))).toBeDisplayed();
   });
 
   it('should show ON in the App Settings list item text', async () => {
@@ -45,12 +45,11 @@ describe('Settings - Early Access Mode', () => {
     await backBtn.click();
     const backBtnAgain = await $(byResourceId('MAIN.header-back-btn'));
     await backBtnAgain.click();
-    await expect(
-      $(byTextMatches('You are in Early Access Mode')),
-    ).toBeDisplayed();
+    await expect($(byTextMatches('Early Access ON'))).toBeDisplayed();
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
     const aboutComapeoOption = await $(byResourceId('aboutSettingsButton'));
+    await aboutComapeoOption.scrollIntoView();
     await aboutComapeoOption.click();
     await expect(
       $(byTextMatches('You are in Early Access Mode.')),

@@ -34,7 +34,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {sharedStyles} from './sharedStyles.ts';
 import {useGetCreatedBy} from '../../hooks/server/useGetCreatedBy.ts';
 import {useSingleDocByDocId} from '@comapeo/core-react';
-import {useAppLanguageTag} from '../../hooks/useAppLanguageTag.ts';
+import {useLocaleState} from '../../contexts/LocaleStoreContext.tsx';
 import {Accordian} from '../../sharedComponents/Accordian.tsx';
 import Octicons from '@react-native-vector-icons/octicons';
 
@@ -96,7 +96,7 @@ export function AttachedPhotoPreviewModal({
   const {createdAt: photoCreatedAt, coordinates: photoCoordinates} = photoInfo;
 
   const {projectId} = useActiveProject();
-  const lang = useAppLanguageTag();
+  const lang = useLocaleState(s => s.languageTag);
   const {
     data: {
       originalVersionId: observationOriginalVersionId,

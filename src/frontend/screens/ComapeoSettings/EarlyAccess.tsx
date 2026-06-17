@@ -38,11 +38,7 @@ const m = defineMessages({
   },
   feedbackPrefix: {
     id: 'screens.EarlyAccess.feedbackPrefix',
-    defaultMessage: 'Have feedback? ',
-  },
-  feedbackLink: {
-    id: 'screens.EarlyAccess.feedbackLink',
-    defaultMessage: 'Share it here',
+    defaultMessage: 'Have feedback? Share it at ',
   },
 });
 
@@ -103,14 +99,10 @@ export const EarlyAccess = ({
         <View style={styles.feedbackRow}>
           <BodyText>{formatMessage(m.feedbackPrefix)}</BodyText>
           <Pressable
-            onPress={() =>
-              Linking.openURL(
-                'https://docs.google.com/forms/d/10r8wJ7WuZ5PMR7Gbx9aKcWTq-IFXz2ZcPKvk7bP0K4Q/edit',
-              )
-            }
+            onPress={() => Linking.openURL('mailto:feedback@comapeo.app')}
             accessibilityRole="link">
             <HeaderText variant="header5" style={styles.feedbackLinkText}>
-              {formatMessage(m.feedbackLink)}
+              {'feedback@comapeo.app'}
             </HeaderText>
           </Pressable>
         </View>

@@ -7,8 +7,7 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext';
-import {useMetricsDiagnosticsEnabled} from '../../contexts/MetricsDiagnosticsStoreContext';
-import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
+import {useLocaleState} from '../../contexts/LocaleStoreContext';
 import {USABLE_LANGUAGES} from '../../lib/intl';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
@@ -23,14 +22,6 @@ const m = defineMessages({
   title: {
     id: '$1Screens.Settings.AppSettings.title',
     defaultMessage: 'CoMapeo Settings',
-  },
-  thisDevice: {
-    id: '$1Screens.Settings.AppSettings.thisDevice',
-    defaultMessage: 'THIS DEVICE',
-  },
-  sharingPermissions: {
-    id: '$1Screens.Settings.AppSettings.sharingPermissions',
-    defaultMessage: 'SHARING PERMISSIONS',
   },
   edit: {
     id: '$1Screens.Settings.AppSettings.edit',
@@ -77,12 +68,12 @@ const m = defineMessages({
     defaultMessage: 'About CoMapeo',
   },
   createTestData: {
-    id: '$1Screens.Settings.AppSettings.createTestData',
+    id: 'Screens.Settings.AppSettings.createTestData',
     defaultMessage: 'Create Test Data',
   },
-  diagnosticInformation: {
-    id: '$1Screens.Settings.AppSettings.diagnosticInformation',
-    defaultMessage: 'Diagnostic Information',
+  dataAndPrivacy: {
+    id: '$1Screens.Settings.AppSettings.dataAndPrivacy',
+    defaultMessage: 'Data & Privacy',
   },
   metric: {
     id: '$1Screens.Settings.AppSettings.metric',
@@ -91,6 +82,34 @@ const m = defineMessages({
   imperial: {
     id: '$1Screens.Settings.AppSettings.imperial',
     defaultMessage: 'Imperial',
+  },
+  deviceName: {
+    id: '$1Screens.Settings.AppSettings.deviceName',
+    defaultMessage: 'Device Name',
+  },
+  language: {
+    id: '$1Screens.Settings.AppSettings.language',
+    defaultMessage: 'Language',
+  },
+  coordinateSystem: {
+    id: '$1Screens.Settings.AppSettings.coordinateSystem',
+    defaultMessage: 'Coordinate System',
+  },
+  unitSystem: {
+    id: '$1Screens.Settings.AppSettings.unitSystem',
+    defaultMessage: 'Unit System',
+  },
+  earlyAccess: {
+    id: '$1Screens.Settings.AppSettings.earlyAccess',
+    defaultMessage: 'Early Access',
+  },
+  learnMore: {
+    id: '$1Screens.Settings.AppSettings.learnMore',
+    defaultMessage: 'Learn More',
+  },
+  testData: {
+    id: 'Screens.Settings.AppSettings.testData',
+    defaultMessage: 'Test Data',
   },
 });
 
@@ -101,8 +120,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   const {authState} = useAuthContext();
   const isEarlyAccess = useEarlyAccessState(s => s.isEarlyAccessEnabled);
   const coordinateFormat = useCoordinateFormat();
-  const diagnosticsEnabled = useMetricsDiagnosticsEnabled();
-  const appLocale = useAppLanguageTag();
+  const appLocale = useLocaleState(s => s.languageTag);
   const passcode = useSecurityState(s => s.passcode);
   const {data: deviceInfo} = useOwnDeviceInfo();
   const unitSystem = useUnitSystem();
@@ -122,7 +140,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <BodyText variant="tinyMeta" style={styles.sectionHeader}>
-        {formatMessage(m.thisDevice)}
+        {formatMessage(m.deviceName)}
       </BodyText>
 
       <SettingsRow
@@ -138,7 +156,9 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
           </BodyText>
         }
       />
-
+      <BodyText variant="tinyMeta" style={styles.sectionHeader}>
+        {formatMessage(m.language)}
+      </BodyText>
       <SettingsRow
         testID="languageSettingsButton"
         onPress={() => navigation.navigate('LanguageSettings')}
@@ -148,7 +168,9 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
           <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
         }
       />
-
+      <BodyText variant="tinyMeta" style={styles.sectionHeader}>
+        {formatMessage(m.coordinateSystem)}
+      </BodyText>
       <SettingsRow
         testID="settingsCoodinatesButton"
         onPress={() => navigation.navigate('CoordinateFormat')}
@@ -158,7 +180,9 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
           <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
         }
       />
-
+      <BodyText variant="tinyMeta" style={styles.sectionHeader}>
+        {formatMessage(m.unitSystem)}
+      </BodyText>
       <SettingsRow
         testID="unitSystemButton"
         onPress={() => {
@@ -174,27 +198,64 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
           <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
         }
       />
-
-      {authState !== 'obscured' && (
-        <SettingsRow
-          testID="securitySettingsButton"
-          onPress={() => navigation.navigate('Security')}
-          label={
-            hasPasscode
-              ? formatMessage(m.passcode)
-              : formatMessage(m.noPasscode)
-          }
-          Icon={
-            <MaterialIcon name="security" size={24} color={NEW_DARK_GREY} />
-          }
-          EndContent={
-            <BodyText variant="tinyMeta" style={styles.actionText}>
-              {hasPasscode ? formatMessage(m.turnOff) : formatMessage(m.turnOn)}
-            </BodyText>
-          }
-        />
+      {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+        <>
+          <BodyText variant="tinyMeta" style={styles.sectionHeader}>
+            {formatMessage(m.testData)}
+          </BodyText>
+          <SettingsRow
+            onPress={() => navigation.navigate('CreateTestData')}
+            label={formatMessage(m.createTestData)}
+            Icon={
+              <MaterialIcon
+                name="auto-fix-high"
+                size={24}
+                color={NEW_DARK_GREY}
+              />
+            }
+            EndContent={
+              <MaterialIcon
+                name="chevron-right"
+                size={20}
+                color={NEW_DARK_GREY}
+              />
+            }
+          />
+        </>
       )}
 
+      <View style={styles.divider} />
+
+      {authState !== 'obscured' && (
+        <>
+          <BodyText variant="tinyMeta" style={styles.sectionHeader}>
+            {formatMessage(m.passcode)}
+          </BodyText>
+          <SettingsRow
+            testID="securitySettingsButton"
+            onPress={() => navigation.navigate('Security')}
+            label={
+              hasPasscode
+                ? formatMessage(m.passcode)
+                : formatMessage(m.noPasscode)
+            }
+            Icon={
+              <MaterialIcon name="security" size={24} color={NEW_DARK_GREY} />
+            }
+            EndContent={
+              <BodyText variant="tinyMeta" style={styles.actionText}>
+                {hasPasscode
+                  ? formatMessage(m.turnOff)
+                  : formatMessage(m.turnOn)}
+              </BodyText>
+            }
+          />
+        </>
+      )}
+
+      <BodyText variant="tinyMeta" style={styles.sectionHeader}>
+        {formatMessage(m.earlyAccess)}
+      </BodyText>
       <SettingsRow
         testID="earlyAccessFlag"
         onPress={() => navigation.navigate('EarlyAccess')}
@@ -211,6 +272,28 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
         }
       />
 
+      <View style={styles.divider} />
+
+      <BodyText variant="tinyMeta" style={styles.sectionHeader}>
+        {formatMessage(m.dataAndPrivacy)}
+      </BodyText>
+
+      <SettingsRow
+        testID="dataAndPrivacyButton"
+        onPress={() => navigation.navigate('DataAndPrivacy')}
+        label={formatMessage(m.dataAndPrivacy)}
+        Icon={<HeartCheckIcon width={24} height={24} />}
+        EndContent={
+          <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
+        }
+      />
+
+      <View style={styles.divider} />
+
+      <BodyText variant="tinyMeta" style={styles.sectionHeader}>
+        {formatMessage(m.learnMore)}
+      </BodyText>
+
       <SettingsRow
         testID="aboutSettingsButton"
         onPress={() => navigation.navigate('AboutSettings')}
@@ -220,47 +303,6 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
         }
         EndContent={
           <MaterialIcon name="chevron-right" size={20} color={NEW_DARK_GREY} />
-        }
-      />
-
-      {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
-        <SettingsRow
-          onPress={() => navigation.navigate('CreateTestData')}
-          label={formatMessage(m.createTestData)}
-          Icon={
-            <MaterialIcon
-              name="auto-fix-high"
-              size={24}
-              color={NEW_DARK_GREY}
-            />
-          }
-          EndContent={
-            <MaterialIcon
-              name="chevron-right"
-              size={20}
-              color={NEW_DARK_GREY}
-            />
-          }
-        />
-      )}
-
-      <View style={styles.divider} />
-
-      <BodyText variant="tinyMeta" style={styles.sectionHeader}>
-        {formatMessage(m.sharingPermissions)}
-      </BodyText>
-
-      <SettingsRow
-        testID="dataAndPrivacyButton"
-        onPress={() => navigation.navigate('DataAndPrivacy')}
-        label={formatMessage(m.diagnosticInformation)}
-        Icon={<HeartCheckIcon width={24} height={24} />}
-        EndContent={
-          <BodyText variant="tinyMeta" style={styles.actionText}>
-            {diagnosticsEnabled
-              ? formatMessage(m.turnOff)
-              : formatMessage(m.turnOn)}
-          </BodyText>
         }
       />
     </ScrollView>

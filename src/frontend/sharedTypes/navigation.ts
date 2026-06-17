@@ -84,7 +84,9 @@ export type RootStackParamsList = {
   CreateProject: undefined;
   NameSoloProject: undefined;
   Security: undefined;
-  ObservationFields: {question: number};
+  ObservationFields: {
+    fieldIds: string[];
+  };
   ObservationCreate: undefined;
   AuthScreen: undefined;
   AppPasscode: undefined;
@@ -157,7 +159,7 @@ export type RootStackParamsList = {
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string; projectId: string};
   InviteCanceled: {projectName: string};
-  RemovedFromProjectBottomSheet: {projectId: string};
+  RemovedFromProjectBottomSheet: undefined;
   ObservationMetadata: {observationId: string};
   ErrorBottomSheet: {error: Error};
   BackgroundMapErrorBottomSheet: {title: string; description: string};

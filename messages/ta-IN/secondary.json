@@ -16,9 +16,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "பின் செல்"
   },
-  "Modal.GPSEnable.button.loading": {
-    "message": "ஏற்றுகிறது..."
-  },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
     "message": "மூடுக"
   },
@@ -102,9 +99,6 @@
   },
   "screens.ExchangeSoloScreen.goBack": {
     "message": "பின் செல்"
-  },
-  "screens.ExportObservations.close": {
-    "message": "மூடுக"
   },
   "screens.ExportObservations.download": {
     "message": "பதிவிறக்கு"
@@ -296,13 +290,6 @@
     "description": "Placeholder for description/notes field",
     "message": "இங்கே என்ன நடக்கிறது?"
   },
-  "screens.ObservationEdit.changePreset": {
-    "message": "மாற்றுக"
-  },
-  "screens.ObservationEdit.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "இங்கே என்ன நடக்கிறது?"
-  },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "அவதானிப்புகள்"
@@ -323,10 +310,6 @@
   },
   "screens.ObservationsList.filter.all": {
     "message": "அனைத்தும்"
-  },
-  "screens.ObservationsList.loading": {
-    "description": "message shown whilst observations are loading",
-    "message": "ஏற்றுகிறது... புதிய சாதனத்துடன் ஒத்திசைத்த பிறகு இதற்கு சிறிது நேரம் ஆகலாம்"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
     "message": "மூடுக"

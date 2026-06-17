@@ -11,15 +11,14 @@ import type {
 } from '../../../src/frontend/contexts/LocalDiscoveryContext';
 import {
   createLocaleStore,
+  LocaleContext,
   LocaleStore,
-  LocaleStoreProvider,
 } from '../../../src/frontend/contexts/LocaleStoreContext';
 import {createManualEntryCoordinateFormatStore} from '../../../src/frontend/contexts/ManualEntryCoordinateFormatStoreContext';
 import {createMetricsDiagnosticsStore} from '../../../src/frontend/contexts/MetricsDiagnosticsStoreContext';
 import {createDraftObservationStore} from '../../../src/frontend/contexts/PersistedStores/DraftObservationStore';
 import {createSecurityStore} from '../../../src/frontend/contexts/SecurityStoreContext';
 import {createTrackStore} from '../../../src/frontend/contexts/TrackStoreContext';
-import {getAppLanguageTag} from '../../../src/frontend/lib/intl';
 import {AppDiagnosticMetrics} from '../../../src/frontend/metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
@@ -55,9 +54,9 @@ export function createMinimalWrapper() {
 
   return ({children}: {children: ReactNode}) => {
     return (
-      <LocaleStoreProvider value={localeStore}>
+      <LocaleContext value={localeStore}>
         <IntlProvider>{children}</IntlProvider>
-      </LocaleStoreProvider>
+      </LocaleContext>
     );
   };
 }
@@ -91,15 +90,10 @@ export function createAppProvidersWrapper({
   const appDiagnosticMetrics = new AppDiagnosticMetrics({
     getLocaleInfo: () => {
       const systemLocales = getLocales();
-      const localeState = persistedLocaleStore.instance.getState();
-
-      const appLanguageTag = getAppLanguageTag({
-        localeState,
-        systemLanguageTags: systemLocales.map(l => l.languageTag),
-      }).value;
+      const {languageTag} = persistedLocaleStore.instance.getState();
 
       return {
-        appLanguageTag,
+        appLanguageTag: languageTag,
         deviceLanguageTag: systemLocales[0]!.languageTag,
       };
     },

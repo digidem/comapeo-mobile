@@ -1,50 +1,23 @@
 import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
-import {Text} from '../../sharedComponents/Text';
-import {TouchableNativeFeedback} from '../../sharedComponents/Touchables';
-import {VERY_LIGHT_BLUE} from '../../lib/styles';
-import {QuestionLabel} from './QuestionLabel';
-
-import type {QuestionProps} from './Question';
 import {SelectMultipleField} from '../../sharedTypes/PresetTypes';
-import {ViewStyleProp} from '../../sharedTypes';
-import {Observation} from '@comapeo/schema';
-import {
-  useDraftObservationActions,
-  useDraftObservationState,
-} from '../../contexts/DraftObservationContext';
+import {Field, Observation} from '@comapeo/schema';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 
-interface Props extends QuestionProps {
-  field: SelectMultipleField;
-}
-
-type CheckItemProps = {
-  checked: boolean;
-  onPress: () => void;
-  label: string;
-  style: ViewStyleProp;
+type SelectMultipleProps = {
+  options: NonNullable<Field['options']>;
+  updateTag: (value: Observation['tags'][number]) => void;
+  tagValue?: Observation['tags'][number];
 };
 
-const CheckItem = ({checked, onPress, label, style}: CheckItemProps) => (
-  <TouchableNativeFeedback
-    onPress={onPress}
-    background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
-    <View style={style}>
-      <MaterialIcon
-        name={checked ? 'check-box' : 'check-box-outline-blank'}
-        size={30}
-      />
-      <Text style={styles.itemLabel}>{label}</Text>
-    </View>
-  </TouchableNativeFeedback>
-);
-
-export const SelectMultiple = React.memo<Props>(({field}) => {
-  const tags = useDraftObservationState(val => val.value?.tags);
-  const valueAsArray = toArray(tags ? tags[field.tagKey] : undefined);
-  const {updateTag} = useDraftObservationActions();
+export const SelectMultiple = ({
+  options,
+  updateTag,
+  tagValue,
+}: SelectMultipleProps) => {
+  const valueAsArray = toArray(tagValue ?? undefined);
 
   const handleChange = (
     itemValue: SelectMultipleField['options'][0]['value'],
@@ -52,24 +25,37 @@ export const SelectMultiple = React.memo<Props>(({field}) => {
     const updatedValue = valueAsArray.includes(itemValue)
       ? valueAsArray.filter(d => d !== itemValue)
       : [...valueAsArray, itemValue];
-    updateTag(field.tagKey, updatedValue);
+    updateTag(updatedValue);
   };
 
   return (
-    <>
-      <QuestionLabel field={field} />
-      {field.options.map((item, index) => (
-        <CheckItem
+    <View testID="OBS.select-multiple-inp">
+      {options.map((item, index) => (
+        <TouchableOpacity
           key={item.label}
-          onPress={() => handleChange(item.value)}
-          checked={valueAsArray.includes(item.value)}
-          label={item.label}
-          style={[styles.radioContainer, index === 0 ? styles.noBorder : {}]}
-        />
+          accessibilityRole="checkbox"
+          testID={`OBS.select-multiple-inp-${item.label}`}
+          accessibilityState={{selected: valueAsArray.includes(item.value)}}
+          onPress={() => handleChange(item.value)}>
+          <View
+            style={[styles.radioContainer, index === 0 ? styles.noBorder : {}]}>
+            <MaterialIcon
+              name={
+                valueAsArray.includes(item.value)
+                  ? 'check-box'
+                  : 'check-box-outline-blank'
+              }
+              size={30}
+            />
+            <HeaderText variant="header4" style={styles.itemLabel}>
+              {item.label}
+            </HeaderText>
+          </View>
+        </TouchableOpacity>
       ))}
-    </>
+    </View>
   );
-});
+};
 
 function toArray(value?: Observation['tags'][0]) {
   // null or undefined
@@ -92,11 +78,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
   },
   itemLabel: {
-    fontSize: 18,
-    lineHeight: 24,
     marginLeft: 20,
     flex: 1,
-    color: 'black',
-    fontWeight: '700',
   },
 });

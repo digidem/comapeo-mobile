@@ -20,12 +20,6 @@
   "$1Navigation.Menu.coordinatorTools": {
     "message": "Coordinator-Tools"
   },
-  "$1Navigation.Menu.currentProject": {
-    "message": "Aktuelles Projekt"
-  },
-  "$1Navigation.Menu.earlyAccessLabel": {
-    "message": "Sie befinden sich im Frühzugriffsmodus."
-  },
   "$1Navigation.Menu.exchange": {
     "message": "Umtausch"
   },
@@ -73,9 +67,6 @@
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff": {
     "message": "Remote-Archiv ist aus"
-  },
-  "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
-    "message": "Entferntes Archiv"
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
     "message": "Remote-Archiv ist an"
@@ -156,12 +147,6 @@
   },
   "$1screen.EditProjectDetails.projectName": {
     "message": "Name des Projektes"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
-    "message": "Koordinator"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
-    "message": "Teilnehmer"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Einladung senden"
@@ -334,9 +319,6 @@
   "$1screens.DeviceNaming.Success.mapOnYourOwn": {
     "message": "Karte auf Ihrem eigenen"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "Erfolg!"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "Unterschiedliche Namen helfen Kollaborateuren mit CoMapeo Sie zu erkennen."
   },
@@ -496,13 +478,6 @@
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Beobachtung"
   },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "Bearbeiten"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Was passiert hier?"
-  },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
     "message": "Fertig"
@@ -588,9 +563,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "App-Passwort"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "Gerätesicherheit"
   },
   "$1screens.Security.title": {
     "message": "Sicherheit"

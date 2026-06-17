@@ -20,11 +20,11 @@
   "$1Navigation.Menu.coordinatorTools": {
     "message": "Coordinator Tools"
   },
-  "$1Navigation.Menu.currentProject": {
-    "message": "Current Project"
+  "$1Navigation.Menu.earlyAccessOn": {
+    "message": "Early Access ON"
   },
-  "$1Navigation.Menu.earlyAccessLabel": {
-    "message": "You are in Early Access Mode."
+  "$1Navigation.Menu.earlyAccessTurnOff": {
+    "message": "Turn Off"
   },
   "$1Navigation.Menu.exchange": {
     "message": "Exchange"
@@ -76,9 +76,6 @@
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff": {
     "message": "Remote Archive is Off"
-  },
-  "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
-    "message": "Remote Archive"
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
     "message": "Remote Archive is On"
@@ -137,14 +134,20 @@
   "$1Screens.Settings.AppSettings.coordinateDms": {
     "message": "Degrees/Min/Sec"
   },
+  "$1Screens.Settings.AppSettings.coordinateSystem": {
+    "message": "Coordinate System"
+  },
   "$1Screens.Settings.AppSettings.coordinateUtm": {
     "message": "UTM Coordinates"
   },
-  "$1Screens.Settings.AppSettings.createTestData": {
-    "message": "Create Test Data"
+  "$1Screens.Settings.AppSettings.dataAndPrivacy": {
+    "message": "Data & Privacy"
   },
-  "$1Screens.Settings.AppSettings.diagnosticInformation": {
-    "message": "Diagnostic Information"
+  "$1Screens.Settings.AppSettings.deviceName": {
+    "message": "Device Name"
+  },
+  "$1Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Early Access"
   },
   "$1Screens.Settings.AppSettings.earlyAccessOff": {
     "message": "Early Access OFF"
@@ -158,6 +161,12 @@
   "$1Screens.Settings.AppSettings.imperial": {
     "message": "Imperial"
   },
+  "$1Screens.Settings.AppSettings.language": {
+    "message": "Language"
+  },
+  "$1Screens.Settings.AppSettings.learnMore": {
+    "message": "Learn More"
+  },
   "$1Screens.Settings.AppSettings.metric": {
     "message": "Metric"
   },
@@ -167,12 +176,6 @@
   "$1Screens.Settings.AppSettings.passcode": {
     "message": "Passcode"
   },
-  "$1Screens.Settings.AppSettings.sharingPermissions": {
-    "message": "SHARING PERMISSIONS"
-  },
-  "$1Screens.Settings.AppSettings.thisDevice": {
-    "message": "THIS DEVICE"
-  },
   "$1Screens.Settings.AppSettings.title": {
     "message": "CoMapeo Settings"
   },
@@ -181,6 +184,9 @@
   },
   "$1Screens.Settings.AppSettings.turnOn": {
     "message": "Turn On"
+  },
+  "$1Screens.Settings.AppSettings.unitSystem": {
+    "message": "Unit System"
   },
   "$1TrackBottomSheet.DidNotMove.delete": {
     "message": "Exit Tracks"
@@ -211,12 +217,6 @@
   },
   "$1screen.EditProjectDetails.projectName": {
     "message": "Project Name"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
-    "message": "Coordinator"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
-    "message": "Participant"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Send Invite"
@@ -395,9 +395,6 @@
   "$1screens.DeviceNaming.Success.mapOnYourOwn": {
     "message": "Map On Your Own"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "Success!"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "Distinct names help collaborators using CoMapeo to recognize you."
   },
@@ -562,9 +559,6 @@
   "$1screens.Observation.description": {
     "message": "Description:"
   },
-  "$1screens.Observation.details": {
-    "message": "Details:"
-  },
   "$1screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Observation"
@@ -582,9 +576,6 @@
   "$1screens.Observation.shareMessageFooter": {
     "message": "Sent from CoMapeo"
   },
-  "$1screens.Observation.shareMessageTitle": {
-    "message": "CoMapeo Alert"
-  },
   "$1screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
     "message": "Sharing text"
@@ -592,13 +583,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Observation"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "Change"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -696,9 +680,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "App Passcode"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "Device Security"
   },
   "$1screens.Security.title": {
     "message": "Security"

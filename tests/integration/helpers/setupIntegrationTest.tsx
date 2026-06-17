@@ -1,4 +1,4 @@
-import {render, renderAsync} from '@testing-library/react-native';
+import {renderAsync} from '@testing-library/react-native';
 import type {MapeoManager} from '@comapeo/core';
 import type {MapeoClientApi} from '@comapeo/ipc';
 import {createManager, setUpIPC} from './core';
@@ -37,7 +37,7 @@ export function setupIntegrationTest() {
     for (const fn of onTeardown) await fn();
   });
 
-  const renderNavigation = ({
+  const renderNavigation = async ({
     isOnline = true,
     activeProjectId = projectId,
   }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
@@ -48,11 +48,11 @@ export function setupIntegrationTest() {
     });
     onTeardown.push(appProviders.teardown);
 
-    const {unmount} = render(<MockedAppNavigator />, {
+    const {unmountAsync} = await renderAsync(<MockedAppNavigator />, {
       wrapper: appProviders.wrapper,
     });
     const actualTeardown = async () => {
-      unmount();
+      await unmountAsync();
       await sleep(0);
     };
 

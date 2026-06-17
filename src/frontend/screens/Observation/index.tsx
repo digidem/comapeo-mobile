@@ -183,7 +183,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             <Divider />
             <FieldDetails
               style={{paddingHorizontal: 20}}
-              observation={observation}
+              tags={observation.tags}
               fields={fields}
             />
           </>

@@ -33,7 +33,7 @@ describe('Observations - Edit Observation Flow', () => {
     await addDetailsBtn.click();
     await expect($(byTextMatches('Question [0-9] of [0-9]'))).toBeDisplayed();
 
-    const detailInput = await $(byResourceId('OBS.details-inp'));
+    const detailInput = await $(byResourceId('OBS.text-inp'));
     await detailInput.setValue('New detail');
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();

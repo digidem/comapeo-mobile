@@ -17,7 +17,7 @@ export const SelectOne = ({options, updateTag, tagValue}: SelectOneProps) => {
         const isSelected = item.value === tagValue;
         return (
           <TouchableOpacity
-            key={item.label}
+            key={String(item.value)}
             accessibilityRole="radio"
             testID={`OBS.select-one-inp-${item.label}`}
             accessibilityState={{checked: isSelected, selected: isSelected}}

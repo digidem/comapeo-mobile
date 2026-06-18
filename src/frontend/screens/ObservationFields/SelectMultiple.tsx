@@ -32,7 +32,7 @@ export const SelectMultiple = ({
     <View testID="OBS.select-multiple-inp">
       {options.map((item, index) => (
         <TouchableOpacity
-          key={item.label}
+          key={String(item.value)}
           accessibilityRole="checkbox"
           testID={`OBS.select-multiple-inp-${item.label}`}
           accessibilityState={{selected: valueAsArray.includes(item.value)}}

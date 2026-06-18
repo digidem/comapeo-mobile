@@ -69,7 +69,7 @@
     "message": "Extern archief staat uit"
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
-    "message": "Extern archief"
+    "message": "Externe archief"
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
     "message": "Extern archief staat aan"

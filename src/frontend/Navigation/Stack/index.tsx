@@ -137,7 +137,7 @@ export const RootStackNavigator = () => {
             : createAppScreens({intl: formatMessage})}
           {/* Shared screen */}
           <RootStack.Group
-            navigationKey={activeProjectId ? 'onboarded' : 'onboarding'}
+            navigationKey={activeProjectId}
             screenOptions={{
               presentation: 'transparentModal',
               headerShown: false,

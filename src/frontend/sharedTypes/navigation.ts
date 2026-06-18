@@ -80,7 +80,6 @@ export type RootStackParamsList = {
   Observation: {observationId: string};
   ObservationEdit: undefined;
   ManualGpsScreen: undefined;
-  ObservationDetails: {question: number};
   CreateProject: undefined;
   NameSoloProject: undefined;
   Security: undefined;

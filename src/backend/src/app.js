@@ -4,7 +4,11 @@ import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
 import { MapeoManager } from '@comapeo/core'
 import { MapeoManager as FallbackMapeoManager } from 'comapeo-core-old'
-import { checkShouldMigrate, migrateStorage } from '@comapeo/core/migration.js'
+import {
+  checkShouldMigrate,
+  migrateStorage,
+  MIGRATION_REASON_NO_SPACE,
+} from '@comapeo/core/migration.js'
 import { createMapeoServer, createAppRpcServer } from '@comapeo/ipc/server.js'
 import { createServer as createMapServer } from '@comapeo/map-server'
 import { KeyManager } from '@mapeo/crypto'
@@ -64,6 +68,7 @@ process.on('exit', (code) => {
  * @param {string} options.oldMigrationsFolderPath Used as a fallback
  * @param {number} options.availableDiskSpace How much space is left on the phone in case we want to migrate to new hypercore version
  * @param {string} options.defaultConfigPath
+ * @param {boolean} options.forceSkipMigrate
  */
 export async function init({
   version,
@@ -72,6 +77,7 @@ export async function init({
   defaultConfigPath,
   oldMigrationsFolderPath,
   availableDiskSpace,
+  forceSkipMigrate,
 }) {
   log('Starting app...')
   log(`Device version is ${version}`)
@@ -85,20 +91,43 @@ export async function init({
   mkdirSync(indexDir, { recursive: true })
   mkdirSync(customMapsDir, { recursive: true })
 
-  const { shouldUpgrade, useFallback } = await checkShouldMigrate(
+  const { shouldUpgrade, useFallback, reason } = await checkShouldMigrate(
     indexDir,
     availableDiskSpace,
   )
 
   if (shouldUpgrade) {
-    serverStatus.setState('MIGRATING')
-    await migrateStorage(indexDir)
-    serverStatus.setState('STARTING')
+    serverStatus.setState('MIGRATING', { context: '' })
+    try {
+      await migrateStorage(indexDir, (doneSoFar, totalCores) => {
+        serverStatus.setState('MIGRATING', {
+          context: `${doneSoFar}/${totalCores}`,
+        })
+      })
+      serverStatus.setState('STARTING')
+    } catch (reason) {
+      let error
+      if (reason instanceof Error) {
+        error = reason
+      } else {
+        error = new Error(
+          typeof reason === 'string' ? reason : 'unknown rejection',
+        )
+      }
+      serverStatus.setState('MIGRATION_ERROR', { error })
+      return
+    }
+  } else {
+    if (reason === MIGRATION_REASON_NO_SPACE) {
+      serverStatus.setState('LOW_SPACE')
+      return
+    }
   }
 
   const fastify = Fastify()
 
-  const ManagerClass = useFallback ? FallbackMapeoManager : MapeoManager
+  const ManagerClass =
+    useFallback || forceSkipMigrate ? FallbackMapeoManager : MapeoManager
   const migrationPath = useFallback
     ? oldMigrationsFolderPath
     : migrationsFolderPath
@@ -145,6 +174,7 @@ export async function init({
   })
 
   const messagePort = new MessagePortLike()
+  // @ts-expect-error Older manager is missing some fields
   createMapeoServer(manager, messagePort, {
     onRequestHook: (request, next) => {
       const sentryTrace = request.metadata?.['sentry-trace']

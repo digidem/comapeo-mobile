@@ -20,7 +20,7 @@ const OLD_MIGRATIONS_FOLDER_PATH = new URL(
 ).pathname
 
 try {
-  const { version, rootKey, availableDiskSpace } = parseArgs()
+  const { version, rootKey, availableDiskSpace, forceSkipMigrate } = parseArgs()
 
   // Do not await this as we want this to run indefinitely
   init({
@@ -30,6 +30,7 @@ try {
     oldMigrationsFolderPath: OLD_MIGRATIONS_FOLDER_PATH,
     defaultConfigPath: DEFAULT_CONFIG_PATH,
     availableDiskSpace,
+    forceSkipMigrate,
   }).catch((err) => {
     console.error('Server startup error:', err)
   })

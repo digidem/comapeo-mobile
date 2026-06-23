@@ -14,7 +14,21 @@ export const ServerLoading = ({
 
   // TODO: We could now render the app during the server startup, however
   // leaving as-is for now since this is the current behavior.
-  if (serverState.value === 'STARTING') {
+  if (serverState.value === 'STARTING' || serverState.value === 'CHECKING') {
+    return null;
+  }
+
+  if (serverState.value === 'MIGRATING') {
+    return null;
+  }
+
+  if (serverState.value === 'LOW_SPACE') {
+    // TODO: You can "skip" migrating when there's low space by calling
+    // `initializeNodejs` with `forceSkipMigrate`
+    return null;
+  }
+
+  if (serverState.value === 'MIGRATION_ERROR') {
     return null;
   }
 

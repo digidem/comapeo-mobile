@@ -6,6 +6,7 @@ export default function args() {
       sentryEnvironment: { type: 'string' },
       sentryUserId: { type: 'string' },
       metricsIsEnabled: { type: 'boolean', default: false },
+      forceSkipMigrate: { type: 'boolean', default: false },
       version: { type: 'string' },
       rootKey: { type: 'string' },
       availableDiskSpace: { type: 'string' },
@@ -17,6 +18,7 @@ export default function args() {
     sentryEnvironment,
     sentryUserId,
     metricsIsEnabled,
+    forceSkipMigrate,
     version,
     rootKey,
     availableDiskSpace: availableDiskSpaceRaw,
@@ -24,6 +26,8 @@ export default function args() {
 
   if (typeof metricsIsEnabled !== 'boolean')
     throw new Error('backend did not receive metricsIsEnabled')
+  if (typeof forceSkipMigrate !== 'boolean')
+    throw new Error('backend did not receive forceSkipMigrate')
   if (typeof sentryUserId !== 'string')
     throw new Error('backend did not receive sentryUserId')
   if (typeof sentryEnvironment !== 'string')
@@ -45,5 +49,6 @@ export default function args() {
     version,
     rootKey,
     availableDiskSpace,
+    forceSkipMigrate,
   }
 }

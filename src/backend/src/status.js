@@ -7,8 +7,21 @@ const rnBridge = require('rn-bridge')
 const log = debug('mapeo:status')
 
 /**
- * @typedef {'STARTING' | 'STARTED' | 'ERROR' | 'MIGRATING'} Status
+ * @typedef {'CHECKING' | 'STARTING' | 'STARTED' | 'ERROR' | 'MIGRATING' | 'MIGRATION_ERROR' | 'LOW_SPACE'} Status
  */
+
+/*
+  CHECKING ──► STARTING ──► STARTED
+     │             │
+     │             └──► ERROR
+     │
+     ├──► LOW_SPACE ──────────────────┐
+     │                                ▼
+     └──► MIGRATING ─────────────► STARTING
+              │
+              └──► MIGRATION_ERROR
+*/
+
 /**
  * @typedef {{ value: Status, error?: string, context?: string }} StatusMessage
  */
@@ -44,7 +57,8 @@ export class ServerStatus {
    * @returns
    */
   setState(nextState, { error, context } = {}) {
-    if (nextState === this.state) return
+    // Allow updating the MIGRATING state with progress
+    if (nextState === this.state && nextState !== 'MIGRATING') return
     log('state changed', nextState)
 
     // Once we have an uncaught error, don't try to pretend it's gone away

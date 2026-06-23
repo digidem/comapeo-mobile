@@ -333,11 +333,8 @@ describe('Exchange screen', () => {
     // Tear down the UI (and its project); it should not have synced to the other manager
 
     await unmount();
-    // Access the project directly on the manager (not via IPC) to avoid a race
-    // between the unmount's in-flight disconnectServers() RPC call and close().
-    const managerProject = await manager.getProject(projectId);
-    managerProject.$sync.stop();
-    await managerProject.close();
+    project.$sync.stop();
+    await project.close();
 
     expect(await hasObservationSyncedToOtherProject()).toBe(false);
 
@@ -362,6 +359,5 @@ describe('Exchange screen', () => {
       await syncStateIterator.next();
     }
     expect(await hasObservationSyncedToOtherProject()).toBe(true);
-    // This test needs more than the default 5 second Jest timeout.
-  }, 30_000);
+  });
 });

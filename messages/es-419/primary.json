@@ -20,9 +20,6 @@
   "$1Navigation.Menu.coordinatorTools": {
     "message": "Herramientas de Coordinador"
   },
-  "$1Navigation.Menu.currentProject": {
-    "message": "Proyecto actual"
-  },
   "$1Navigation.Menu.exchange": {
     "message": "Intercambiar"
   },
@@ -73,9 +70,6 @@
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff": {
     "message": "Archivo Remoto desactivado"
-  },
-  "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
-    "message": "Archivo Remoto"
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
     "message": "El archivo remoto está activado"
@@ -156,12 +150,6 @@
   },
   "$1screen.EditProjectDetails.projectName": {
     "message": "Nombre del proyecto"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
-    "message": "Coordinador"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
-    "message": "Participante"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Enviar invitación"
@@ -334,9 +322,6 @@
   "$1screens.DeviceNaming.Success.mapOnYourOwn": {
     "message": "Mapea por tu cuenta"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "¡Éxito!"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "Los nombres distintivos ayudan a los colaboradores que utilizan CoMapeo a reconocerte."
   },
@@ -486,9 +471,6 @@
   "$1screens.Observation.description": {
     "message": "Descripción:"
   },
-  "$1screens.Observation.details": {
-    "message": "Detalles:"
-  },
   "$1screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Observación"
@@ -506,9 +488,6 @@
   "$1screens.Observation.shareMessageFooter": {
     "message": "Enviado desde CoMapeo"
   },
-  "$1screens.Observation.shareMessageTitle": {
-    "message": "Alerta de CoMapeo"
-  },
   "$1screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
     "message": "Compartir texto"
@@ -516,13 +495,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Observación"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "Cambiar"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "¿Qué está pasando aquí?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -620,9 +592,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "Contraseña de la aplicación"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "Seguridad del dispositivo"
   },
   "$1screens.Security.title": {
     "message": "Seguridad"

@@ -21,9 +21,11 @@ const SECONDARY_FILE = path.join(OUT_DIR, 'secondary.json');
 
 fs.mkdirSync(OUT_DIR, {recursive: true});
 
-// Extract all messages into a temporary combined file using the crowdin format
+// Extract all messages into a temporary combined file using the crowdin format.
+// --throws causes the command to fail if two files define the same id with different
+// defaultMessage or description (identical duplicates are harmless and allowed).
 execSync(
-  `npx formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --out-file '${TEMP_FILE}'`,
+  `npx formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --throws --out-file '${TEMP_FILE}'`,
   {cwd: PROJECT_ROOT, stdio: 'inherit'},
 );
 

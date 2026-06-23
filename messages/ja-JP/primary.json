@@ -14,9 +14,6 @@
   "$1Navigation.Menu.coordinatorTools": {
     "message": "コーディネータツール"
   },
-  "$1Navigation.Menu.currentProject": {
-    "message": "現在のプロジェクト"
-  },
   "$1Navigation.Menu.exchange": {
     "message": "交換"
   },
@@ -67,9 +64,6 @@
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff": {
     "message": "リモートアーカイブはオフです"
-  },
-  "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
-    "message": "リモートアーカイブ"
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
     "message": "リモートアーカイブはオンです"
@@ -150,9 +144,6 @@
   },
   "$1screen.EditProjectDetails.projectName": {
     "message": "プロジェクト名"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
-    "message": "参加者"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "招待を送信"
@@ -322,9 +313,6 @@
   "$1screens.DeviceNaming.Success.mapOnYourOwn": {
     "message": "自分自身の地図を作成"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "成功！"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "固有の名前は、CoMapeoを使用してコラボレーターがあなたを認識するのに役立ちます。"
   },
@@ -459,9 +447,6 @@
   "$1screens.Observation.description": {
     "message": "説明:"
   },
-  "$1screens.Observation.details": {
-    "message": "詳細情報:"
-  },
   "$1screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "観察記録"
@@ -486,13 +471,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "観察記録"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "変更"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "何がここで起こっているか?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -584,9 +562,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "アプリのパスコード"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "デバイスのセキュリティ"
   },
   "$1screens.Security.title": {
     "message": "セキュリティ"

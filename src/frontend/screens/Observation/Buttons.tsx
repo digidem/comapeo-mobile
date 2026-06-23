@@ -11,7 +11,7 @@ import {formatCoords} from '../../lib/coordinateFormat.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
 import * as Sentry from '@sentry/react-native';
-import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
+import {getFieldAnswerText} from '../../sharedComponents/FormattedData.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
@@ -41,10 +41,6 @@ const m = defineMessages({
     defaultMessage: 'Sharing image',
     description: 'Title of dialog to share an observation with media',
   },
-  shareMessageTitle: {
-    id: '$1screens.Observation.shareMessageTitle',
-    defaultMessage: 'CoMapeo Alert',
-  },
   shareMessageFooter: {
     id: '$1screens.Observation.shareMessageFooter',
     defaultMessage: 'Sent from CoMapeo',
@@ -70,10 +66,6 @@ const m = defineMessages({
   precision: {
     id: '$1screens.Observation.precision',
     defaultMessage: 'Precision:',
-  },
-  details: {
-    id: '$1screens.Observation.details',
-    defaultMessage: 'Details:',
   },
   description: {
     id: '$1screens.Observation.description',
@@ -142,13 +134,12 @@ export const ButtonFields = ({
       for (const field of fields) {
         const value = observation.tags[field.tagKey];
 
-        if (value === undefined || value === null || value === '') {
-          continue;
-        }
+        const displayedValue = getFieldAnswerText({
+          fieldOptions: field.options,
+          tagValue: value,
+        });
 
-        const displayedValue = (Array.isArray(value) ? value : [value])
-          .map(v => getValueLabel(v, field).trim())
-          .join(', ');
+        if (!displayedValue) continue;
 
         completedFields.push({label: field.label, value: displayedValue});
       }

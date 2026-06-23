@@ -136,13 +136,6 @@
     "description": "Placeholder for description/notes field",
     "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
   },
-  "screens.ObservationEdit.changePreset": {
-    "message": "ပြောင်းလဲသည်"
-  },
-  "screens.ObservationEdit.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
-  },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "လေ့လာတွေ့ရှိချက်များ"

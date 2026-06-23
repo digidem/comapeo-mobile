@@ -66,13 +66,6 @@
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "လေ့လာတွေ့ရှိချက်များ"
   },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "ပြောင်းလဲသည်"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
-  },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
     "message": "ပြီးသွားပြီ"

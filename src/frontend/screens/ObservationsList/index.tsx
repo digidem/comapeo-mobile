@@ -16,19 +16,6 @@ import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
 import {ObservationFilterToggle} from './ObservationFilterToggle';
 
 const m = defineMessages({
-  loading: {
-    id: 'screens.ObservationsList.loading',
-    defaultMessage:
-      'Loading… this can take a while after synchronizing with a new device',
-    description: 'message shown whilst observations are loading',
-  },
-  error: {
-    id: 'screens.ObservationsList.error',
-    defaultMessage:
-      'Error loading observations. Try quitting and restarting CoMapeo.',
-    description:
-      'message shown when there is an unexpected error when loading observations',
-  },
   observationListTitle: {
     id: 'screens.ObservationList.observationListTitle',
     defaultMessage: 'Observations',

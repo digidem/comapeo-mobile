@@ -35,10 +35,10 @@ const m = defineMessages({
     id: '$1screens.ObservationMetadataVerified.navTitle',
     defaultMessage: 'Observation Metadata',
   },
-  howWeCheck: {
-    id: 'screens.ObservationMetadataVerified.howWeCheck',
-    defaultMessage: 'How we validate',
-  },
+  // howWeCheck: {
+  //   id: 'screens.ObservationMetadataVerified.howWeCheck',
+  //   defaultMessage: 'How we validate',
+  // },
   latitude: {
     id: 'screens.ObservationMetadataVerified.latitude',
     defaultMessage: 'Latitude',

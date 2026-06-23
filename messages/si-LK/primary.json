@@ -88,9 +88,6 @@
   "$1screens.DeviceNaming.Success.joinProject": {
     "message": "ව්යාපෘතියකට සම්බන්ධ වන්න"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "සාර්ථකයි!"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "උපාංගයේ නම"
   },
@@ -155,9 +152,6 @@
   "$1screens.Observation.description": {
     "message": "විස්තර:"
   },
-  "$1screens.Observation.details": {
-    "message": "විස්තරය:"
-  },
   "$1screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "නිරීක්ෂණ"
@@ -165,13 +159,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "නිරීක්ෂණ"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "වෙනස් කරන්න"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "මෙතන මොකද වෙන්නේ?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -218,9 +205,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "යෙදුම් මුර කේතය"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "උපාංග ආරක්ෂාව"
   },
   "$1screens.Security.title": {
     "message": "ආරක්ෂාව"

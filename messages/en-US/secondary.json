@@ -41,9 +41,6 @@
   "Modal.GPSDisable.title": {
     "message": "GPS Disabled"
   },
-  "Modal.GPSEnable.button.loading": {
-    "message": "Loading…"
-  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "When project participants exchange their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
   },
@@ -525,9 +522,6 @@
   "screens.ExportObservations.allObservationsDescription": {
     "message": "Text only as a GeoJSON file"
   },
-  "screens.ExportObservations.close": {
-    "message": "Close"
-  },
   "screens.ExportObservations.download": {
     "message": "Download"
   },
@@ -787,13 +781,6 @@
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
   },
-  "screens.ObservationEdit.changePreset": {
-    "message": "Change"
-  },
-  "screens.ObservationEdit.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
-  },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
@@ -822,9 +809,6 @@
   },
   "screens.ObservationMetadataVerified.date": {
     "message": "Date"
-  },
-  "screens.ObservationMetadataVerified.howWeCheck": {
-    "message": "How we validate"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "Latitude"
@@ -857,19 +841,11 @@
     "description": "Description of observation list view when the user has not yet recorded observations",
     "message": "Start from map or camera view to record your first observation."
   },
-  "screens.ObservationsList.error": {
-    "description": "message shown when there is an unexpected error when loading observations",
-    "message": "Error loading observations. Try quitting and restarting CoMapeo."
-  },
   "screens.ObservationsList.filter.all": {
     "message": "All"
   },
   "screens.ObservationsList.filter.justYou": {
     "message": "Just You"
-  },
-  "screens.ObservationsList.loading": {
-    "description": "message shown whilst observations are loading",
-    "message": "Loading… this can take a while after synchronizing with a new device"
   },
   "screens.Onboarding.JoinProjectIntro.close": {
     "message": "Close"
@@ -1117,29 +1093,14 @@
   "screens.Settings.MapManagement.BackgroundMaps.addedOn": {
     "message": "Added on {date}"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
-    "message": "This cannot be undone."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.close": {
-    "message": "Close"
-  },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
     "message": "You will see this map when you are offline, but you will not see a map outside the area defined in your custom map."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle": {
-    "message": "Custom Map Added"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapInfoLoadError": {
     "message": "Could not get custom map information from file. Please remove it or choose a different file."
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription": {
     "message": "This will delete the map and its offline areas. No collected observation data will be deleted."
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle": {
-    "message": "Delete Custom Map?"
-  },
-  "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
-    "message": "Delete Map"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
     "message": "Custom background maps let you view maps offline."
@@ -1279,9 +1240,6 @@
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
     "message": "Up to date!"
   },
-  "screens.Sync.ProjectSyncDisplay.exchangeAction": {
-    "message": "Change Settings"
-  },
   "screens.Sync.ProjectSyncDisplay.exchangeEverythingMediaDescription": {
     "message": "Full size photos and audio."
   },
@@ -1300,9 +1258,6 @@
   "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyTitle": {
     "message": "Exchange previews only."
   },
-  "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No Wi-Fi."
-  },
   "screens.Sync.ProjectSyncDisplay.syncProgress": {
     "message": "{value}%"
   },
@@ -1311,9 +1266,6 @@
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
     "message": "Exchanging..."
-  },
-  "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
-    "message": "{ssid}"
   },
   "screens.Sync.remoteArchiveConnected": {
     "message": "Remote Archive connected"

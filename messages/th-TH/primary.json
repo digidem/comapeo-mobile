@@ -64,9 +64,6 @@
   "$1screens.DeviceNaming.Success.joinProject": {
     "message": "เข้าร่วมโครงการ"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "เสร็จสมบูรณ์!"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "ชื่ออุปกรณ์"
   },
@@ -131,9 +128,6 @@
   "$1screens.Observation.description": {
     "message": "รายละเอียด:"
   },
-  "$1screens.Observation.details": {
-    "message": "รายละเอียด:"
-  },
   "$1screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "การสังเกต"
@@ -141,13 +135,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "การสังเกต"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "แก้ไข"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "เกิดอะไรขึ้นที่นี่?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -194,9 +181,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "รหัสผ่านแอป"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "ความปลอดภัยอุปกรณ์"
   },
   "$1screens.Security.title": {
     "message": "ความปลอดภัย"

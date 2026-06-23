@@ -50,6 +50,7 @@ export const EDITING_SCREEN_NAMES: (
   'ErrorBottomSheet',
   'ConfirmDiscardObservationBottomSheet',
   'ConfirmDiscardObservationEditBottomSheet',
+  'MapOnYourOwnIntro',
 ];
 
 export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [

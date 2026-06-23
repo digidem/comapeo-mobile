@@ -3,7 +3,7 @@ import {IntlProvider as ReactIntlProvider, CustomFormats} from 'react-intl';
 import {StyleSheet, Text} from 'react-native';
 import {useLocales} from 'expo-localization';
 import {useQuery, keepPreviousData} from '@tanstack/react-query';
-import type {MessageFormatElement} from '@formatjs/icu-messageformat-parser';
+import type {MessageFormatElement} from 'react-intl';
 
 import {localeImports} from '../../../translations/index';
 import {useLocaleState} from './LocaleStoreContext';

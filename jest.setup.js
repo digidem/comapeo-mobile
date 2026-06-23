@@ -8,8 +8,7 @@ jest.mock('./translations/index', () => {
         key,
         () =>
           Promise.resolve({
-            default:
-              key === 'en' ? jest.requireActual('./translations/en.json') : {},
+            default: jest.requireActual('./translations/en.json'),
           }),
       ]),
     ),

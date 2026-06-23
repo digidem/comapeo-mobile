@@ -9,6 +9,8 @@ import {useTracks} from '../../hooks/server/track.ts';
 import {View} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles.ts';
 import {findAssociatedTrack} from './findAssociatedTrack.ts';
+import {usePresetsQuery} from '../../hooks/server/presets.ts';
+import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
 
 const m = defineMessages({
   track: {
@@ -20,10 +22,12 @@ const m = defineMessages({
 export function TrackAccordian({observationId}: {observationId: string}) {
   const navigation = useNavigationFromRoot();
   const {data: allTracks} = useTracks();
+  const {data: allPresets} = usePresetsQuery();
   const track =
     allTracks === undefined
       ? undefined
       : findAssociatedTrack({tracks: allTracks, observationId});
+  const isMine = useIsMyDocument(track?.originalVersionId ?? '');
   const {formatMessage} = useIntl();
 
   if (!track) return null;
@@ -48,6 +52,8 @@ export function TrackAccordian({observationId}: {observationId: string}) {
         innerAccordianDetails={
           <TrackListItem
             track={track}
+            allPresets={allPresets}
+            isMine={isMine}
             onPress={() => {
               navigation.push('Track', {trackId: track.docId});
             }}

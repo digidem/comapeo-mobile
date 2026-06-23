@@ -7,6 +7,9 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {defineMessages, useIntl} from 'react-intl';
 import {Accordian} from '../../sharedComponents/Accordian.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
+import {usePresetsQuery} from '../../hooks/server/presets.ts';
+import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
+import {matchPreset} from '../../lib/utils.ts';
 
 interface TrackObservation {
   observations: Observation[];
@@ -26,6 +29,7 @@ const m = defineMessages({
 export function ObservationList({observations}: TrackObservation) {
   const navigation = useNavigationFromRoot();
   const {formatMessage} = useIntl();
+  const {data: allPresets} = usePresetsQuery();
   const numberOfObservations = observations.length;
 
   return (
@@ -43,9 +47,10 @@ export function ObservationList({observations}: TrackObservation) {
         </>
       }
       innerAccordianDetails={observations.map((observation, index) => (
-        <ObservationListItem
+        <TrackObservationListItem
           key={observation.docId}
           observation={observation}
+          allPresets={allPresets}
           onPress={() => {
             navigation.push('Observation', {
               observationId: observation.docId,
@@ -54,6 +59,29 @@ export function ObservationList({observations}: TrackObservation) {
           testID={'id' + index}
         />
       ))}
+    />
+  );
+}
+
+function TrackObservationListItem({
+  observation,
+  allPresets,
+  onPress,
+  testID,
+}: {
+  observation: Observation;
+  allPresets: ReturnType<typeof usePresetsQuery>['data'];
+  onPress: () => void;
+  testID: string;
+}) {
+  const isMine = useIsMyDocument(observation.originalVersionId);
+  return (
+    <ObservationListItem
+      observation={observation}
+      preset={matchPreset(observation.tags, allPresets)}
+      isMine={isMine}
+      onPress={onPress}
+      testID={testID}
     />
   );
 }

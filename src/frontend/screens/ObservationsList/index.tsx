@@ -97,8 +97,6 @@ export const ObservationsList: React.FC<
         keyExtractor={keyExtractor}
         style={styles.container}
         windowSize={7}
-        initialNumToRender={10}
-        maxToRenderPerBatch={10}
         updateCellsBatchingPeriod={20}
         renderItem={({item, index}) => {
           const isMine = 'createdBy' in item && item.createdBy === myDeviceId;

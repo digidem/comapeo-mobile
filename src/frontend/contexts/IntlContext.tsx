@@ -2,13 +2,11 @@ import * as React from 'react';
 import {IntlProvider as ReactIntlProvider, CustomFormats} from 'react-intl';
 import {StyleSheet, Text} from 'react-native';
 import {useLocales} from 'expo-localization';
-import {useQuery, keepPreviousData} from '@tanstack/react-query';
-import type {MessageFormatElement} from 'react-intl';
 
-import {localeImports} from '../../../translations/index';
 import {useLocaleState} from './LocaleStoreContext';
 import {getUsableLanguageTag, type AvailableLanguageTag} from '../lib/intl';
 import {Loading} from '../sharedComponents/Loading';
+import {useLanguageQueries} from '../hooks/useLanguageQueries';
 
 export const formats: CustomFormats = {
   date: {
@@ -32,36 +30,14 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
   const languageTag = useLocaleState(s => s.languageTag);
   const systemLocales = useLocales();
 
-  const languages = React.useMemo(() => {
+  const languageCodes = React.useMemo(() => {
     const usableSystemLanguageTags = systemLocales
       .map(l => getUsableLanguageTag(l.languageTag))
       .filter((tag): tag is AvailableLanguageTag => tag !== undefined);
-    return [languageTag, ...usableSystemLanguageTags];
+    return Array.from(new Set([languageTag, ...usableSystemLanguageTags]));
   }, [languageTag, systemLocales]);
 
-  const {data: messagesToUse, isPending} = useQuery({
-    queryKey: ['messages', ...languages],
-    queryFn: async () => {
-      const results = await Promise.all(
-        // reversing languages mean the highest priority languages get merged last and overwites the lower priority languages
-        languages
-          .reverse()
-          .map(
-            tag =>
-              localeImports[tag]?.().then(m => m.default) ??
-              Promise.resolve({}),
-          ),
-      );
-      const merged: Record<string, MessageFormatElement[]> = {};
-      for (const msgs of results) {
-        Object.assign(merged, msgs);
-      }
-      return merged;
-    },
-    staleTime: Infinity,
-    // see: https://tanstack.com/query/latest/docs/react/guides/paginated-queries#better-paginated-queries-with-placeholderdata
-    placeholderData: keepPreviousData,
-  });
+  const {data: messagesToUse, isPending} = useLanguageQueries(languageCodes);
 
   if (isPending) {
     return <Loading />;

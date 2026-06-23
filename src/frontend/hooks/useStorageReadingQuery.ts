@@ -15,5 +15,6 @@ export function useStorageReadingQuery() {
   return useSuspenseQuery({
     queryKey: STORAGE_QUERY_KEY,
     queryFn: getReading,
+    refetchOnWindowFocus: true,
   });
 }

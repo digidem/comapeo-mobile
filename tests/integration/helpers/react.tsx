@@ -49,21 +49,14 @@ jest.mock('expo/fetch', () => ({
   fetch: globalThis.fetch,
 }));
 
-const queryClient = new QueryClient({
-  // Disable garbage collection, so that no "collect garbage" timers are
-  // started, which would otherwise leave an open handle, giving a Jest
-  // warning. See [this tip in the Tanstack Query docs][0] and [this cache
-  // example scenario][1].
-  // [0]: https://tanstack.com/query/latest/docs/framework/react/guides/testing#set-gctime-to-infinity-with-jest
-  // [1]: https://tanstack.com/query/latest/docs/framework/react/guides/caching
-  defaultOptions: {
-    queries: {gcTime: Infinity},
-    mutations: {gcTime: Infinity},
-  },
-});
-
 export function createMinimalWrapper() {
   const localeStore = createLocaleStore({persist: false});
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {gcTime: Infinity},
+      mutations: {gcTime: Infinity},
+    },
+  });
 
   return ({children}: {children: ReactNode}) => {
     return (
@@ -85,6 +78,19 @@ export function createAppProvidersWrapper({
   isOnline?: boolean;
   activeProjectId?: string;
 }) {
+  const queryClient = new QueryClient({
+    // Disable garbage collection, so that no "collect garbage" timers are
+    // started, which would otherwise leave an open handle, giving a Jest
+    // warning. See [this tip in the Tanstack Query docs][0] and [this cache
+    // example scenario][1].
+    // [0]: https://tanstack.com/query/latest/docs/framework/react/guides/testing#set-gctime-to-infinity-with-jest
+    // [1]: https://tanstack.com/query/latest/docs/framework/react/guides/caching
+    defaultOptions: {
+      queries: {gcTime: Infinity},
+      mutations: {gcTime: Infinity},
+    },
+  });
+
   const persistedLocaleStore = createLocaleStore({
     persist: true,
   });

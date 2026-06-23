@@ -1,16 +1,14 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData.tsx';
-import {Track} from '@comapeo/schema';
+import {Preset, Track} from '@comapeo/schema';
 import {ViewStyleProp} from '../../sharedTypes/index';
 import {defineMessages, useIntl} from 'react-intl';
 import TrackIcon from '../../images/Track.svg';
 import {sharedStyles} from './SharedStyle.ts';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
-import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
-import {usePresetsQuery} from '../../hooks/server/presets.ts';
 
 const m = defineMessages({
   track: {
@@ -22,6 +20,8 @@ const m = defineMessages({
 interface ObservationListItemProps {
   style?: ViewStyleProp;
   track: Track;
+  allPresets: Preset[];
+  isMine: boolean;
   testID: string;
   onPress: () => void;
 }
@@ -29,12 +29,12 @@ interface ObservationListItemProps {
 const TrackObservationItemNotMemoized = ({
   style,
   track,
+  allPresets,
+  isMine,
   testID,
   onPress,
 }: ObservationListItemProps) => {
   const {formatMessage} = useIntl();
-  const isMine = useIsMyDocument(track.originalVersionId);
-  const {data: allPresets} = usePresetsQuery();
   const matchedPreset =
     track.presetRef && allPresets.find(p => p.docId === track.presetRef?.docId);
 

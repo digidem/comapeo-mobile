@@ -333,8 +333,11 @@ describe('Exchange screen', () => {
     // Tear down the UI (and its project); it should not have synced to the other manager
 
     await unmount();
-    project.$sync.stop();
-    await project.close();
+    // Access the project directly on the manager (not via IPC) to avoid a race
+    // between the unmount's in-flight disconnectServers() RPC call and close().
+    const managerProject = await manager.getProject(projectId);
+    managerProject.$sync.stop();
+    await managerProject.close();
 
     expect(await hasObservationSyncedToOtherProject()).toBe(false);
 

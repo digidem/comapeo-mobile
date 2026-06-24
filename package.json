@@ -99,6 +99,7 @@
     "react-hook-form": "7.76.0",
     "react-intl": "10.1.8",
     "react-native": "0.81.6",
+    "react-native-calendars": "1.1314.0",
     "react-native-confirmation-code-field": "9.0.0",
     "react-native-device-info": "15.0.2",
     "react-native-drawer-layout": "4.2.4",

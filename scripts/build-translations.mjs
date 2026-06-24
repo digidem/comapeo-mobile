@@ -33,12 +33,7 @@ await Promise.all(
   languageSourceDirectories.map(async directory => {
     const languageCode = directory.name;
 
-    if (
-      !Object.prototype.hasOwnProperty.call(
-        LANGUAGE_NAME_TRANSLATIONS,
-        languageCode,
-      )
-    ) {
+    if (!(languageCode in LANGUAGE_NAME_TRANSLATIONS)) {
       console.warn(`Locale '${languageCode}' has no language name defined in \`src/frontend/languages.json\`,
 so it will not appear as a language option in CoMapeo.
 Add the language name in English and the native language to \`languages.json\`

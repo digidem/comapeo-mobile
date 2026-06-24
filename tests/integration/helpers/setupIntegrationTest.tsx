@@ -109,7 +109,7 @@ export function setupIntegrationTestWithoutProject() {
 
   const renderNavigationAsync = async ({
     isOnline = true,
-  }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
+  }: Readonly<{isOnline?: boolean}> = {}) => {
     const appProviders = createAppProvidersWrapper({
       mapeoApi: client,
       isOnline,

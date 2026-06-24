@@ -168,12 +168,11 @@ export async function inviteToProject(
 
 export const createTestServer = (): Promise<{
   serverBaseUrl: string;
-  close: () => void;
+  close: () => Promise<void>;
 }> =>
   new Promise((resolve, reject) => {
-    const startServerPath = require.resolve(
-      '../../../tests/integration/helpers/startTestCloudServer.mjs',
-    );
+    const startServerPath =
+      require.resolve('../../../tests/integration/helpers/startTestCloudServer.mjs');
     const childProcess = spawn('node', [startServerPath], {
       stdio: ['ignore', 'pipe', 'inherit'],
     });
@@ -186,9 +185,11 @@ export const createTestServer = (): Promise<{
       if (urlIsValid(url)) {
         resolve({
           serverBaseUrl: url,
-          close: () => {
-            childProcess.kill('SIGTERM');
-          },
+          close: () =>
+            new Promise<void>(resolveClose => {
+              childProcess.once('close', () => resolveClose());
+              childProcess.kill('SIGTERM');
+            }),
         });
       } else {
         childProcess.kill();

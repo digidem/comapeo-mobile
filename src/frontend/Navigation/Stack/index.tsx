@@ -16,6 +16,10 @@ import {AuthScreen} from '../../screens/AuthScreen';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 import {useIntl} from 'react-intl';
 import {RootStack} from './RootStack';
+import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {InviteReceived} from '../../screens/Invites/InviteReceived';
+import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
 
 export type NavigatorLayout = NonNullable<
@@ -126,10 +130,38 @@ export const RootStackNavigator = () => {
             animation: 'fade',
           }}
         />
-      ) : !deviceInfo.name || !activeProjectId ? (
-        createOnboardingScreens({intl: formatMessage})
       ) : (
-        createAppScreens({intl: formatMessage})
+        <>
+          {!deviceInfo.name || !activeProjectId
+            ? createOnboardingScreens({intl: formatMessage})
+            : createAppScreens({intl: formatMessage})}
+          {/* Shared screen */}
+          <RootStack.Group
+            navigationKey={activeProjectId}
+            screenOptions={{
+              presentation: 'transparentModal',
+              headerShown: false,
+              animation: 'none',
+              contentStyle: {backgroundColor: 'transparent'},
+            }}>
+            <RootStack.Screen
+              name="ErrorBottomSheet"
+              component={ErrorBottomSheet}
+            />
+            <RootStack.Screen
+              name="InviteReceived"
+              component={InviteReceived}
+            />
+            <RootStack.Screen
+              name="InviteSuccessfullyAccepted"
+              component={InviteSuccessfullyAccepted}
+            />
+            <RootStack.Screen
+              name="InviteCanceled"
+              component={InviteCanceled}
+            />
+          </RootStack.Group>
+        </>
       )}
     </RootStack.Navigator>
   );

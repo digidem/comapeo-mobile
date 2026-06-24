@@ -26,15 +26,17 @@ export const FieldDetails = ({
   tags: Observation['tags'];
   style?: ViewStyleProp;
 }) => {
-  const {formatMessage} = useIntl();
+  const {formatMessage, formatDate} = useIntl();
 
   return (
     <View>
       {fields.map(field => {
         const tagValue = tags[field.tagKey];
+        console.log(field.tagKey);
         const answers = getFieldAnswerText({
           tagValue,
           fieldOptions: field.options,
+          formatDate,
         });
         return (
           <View key={field.docId} style={[styles.section, style]}>

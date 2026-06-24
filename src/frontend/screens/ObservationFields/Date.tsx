@@ -5,6 +5,7 @@ import {BLACK, BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import IonIcon from '@react-native-vector-icons/ionicons';
 import {defineMessages, useIntl} from 'react-intl';
 import {Observation} from '@comapeo/schema';
+import {isISODateString} from '../../sharedComponents/FormattedData';
 
 const m = defineMessages({
   date: {
@@ -89,13 +90,6 @@ export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
     </>
   );
 };
-
-function isISODateString(val: unknown): val is string {
-  return (
-    typeof val === 'string' &&
-    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/.test(val)
-  );
-}
 
 const styles = StyleSheet.create({
   container: {

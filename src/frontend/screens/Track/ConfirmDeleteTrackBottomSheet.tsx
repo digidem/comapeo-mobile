@@ -12,6 +12,7 @@ import {
 } from '../../sharedComponents/Buttons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteTrackMutation} from '../../hooks/server/track';
+import {DocAlreadyDeletedError, getErrorCode} from '@comapeo/core/errors.js';
 import * as Sentry from '@sentry/react-native';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
@@ -50,6 +51,12 @@ export const ConfirmDeleteTrackBottomSheet = ({
           navigation.pop(2);
         },
         onError: err => {
+          // Already deleted (double-tap, or deleted on another device and
+          // synced) — the user's intent is satisfied, so finish quietly.
+          if (getErrorCode(err) === DocAlreadyDeletedError.code) {
+            navigation.pop(2);
+            return;
+          }
           Sentry.captureException(err);
           navigation.navigate('ErrorBottomSheet', {error: err});
         },

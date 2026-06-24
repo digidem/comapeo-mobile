@@ -19,6 +19,7 @@ import {
 import {COMAPEO_BLUE} from '../../lib/styles';
 import {usePreventRemove} from '@react-navigation/native';
 import {useLocaleState} from '../../contexts/LocaleStoreContext';
+import {DatePicker} from './Date';
 
 const m = defineMessages({
   nextQuestion: {
@@ -131,6 +132,11 @@ export const ObservationFields = ({
         />
       ) : field.type === 'number' ? (
         <NumberField
+          updateTag={val => updateTag(tagKey, val)}
+          tagValue={tagValue}
+        />
+      ) : field.type === 'date' ? (
+        <DatePicker
           updateTag={val => updateTag(tagKey, val)}
           tagValue={tagValue}
         />

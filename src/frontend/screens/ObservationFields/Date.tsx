@@ -8,7 +8,7 @@ import {Observation} from '@comapeo/schema';
 
 const m = defineMessages({
   date: {
-    id: '$screens.obsDetail.date',
+    id: '$1screens.obsDetail.date',
     defaultMessage: 'Date',
   },
 });

@@ -15,7 +15,7 @@ const m = defineMessages({
 });
 
 type DatePickerProps = {
-  tagValue: Observation['tags'][number] | undefined;
+  tagValue?: Observation['tags'][number];
   updateTag: (newDate: string | null) => void;
 };
 

@@ -32,7 +32,8 @@ export const SelectMultiple = ({
     <View testID="OBS.select-multiple-inp">
       {options.map((item, index) => (
         <TouchableOpacity
-          key={String(item.value)}
+          // eslint-disable-next-line @eslint-react/no-array-index-key
+          key={`${index}-${String(item.value)}`}
           accessibilityRole="checkbox"
           testID={`OBS.select-multiple-inp-${item.label}`}
           accessibilityState={{selected: valueAsArray.includes(item.value)}}

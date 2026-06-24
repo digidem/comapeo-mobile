@@ -52,6 +52,10 @@ import {
   EarlyAccessStoreProvider,
   type EarlyAccessStore,
 } from './EarlyAccessContext';
+import {
+  QADeviceNameStoreProvider,
+  type QADeviceNameStore,
+} from './QADeviceNameStoreContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -71,6 +75,7 @@ type AppProvidersProps = {
   appUsageStatsStore: AppUsageStatsStore;
   earlyAccessStore: EarlyAccessStore;
   unitSystemStore: UnitSystemStore;
+  qaDeviceNameStore: QADeviceNameStore;
 };
 
 export const AppProviders = ({
@@ -91,6 +96,7 @@ export const AppProviders = ({
   earlyAccessStore,
   appUsageStatsStore,
   unitSystemStore,
+  qaDeviceNameStore,
 }: AppProvidersProps) => {
   return (
     <UnitSystemStoreContext value={unitSystemStore}>
@@ -124,7 +130,12 @@ export const AppProviders = ({
                                       }>
                                       <EarlyAccessStoreProvider
                                         value={earlyAccessStore}>
-                                        <AuthProvider>{children}</AuthProvider>
+                                        <QADeviceNameStoreProvider
+                                          value={qaDeviceNameStore}>
+                                          <AuthProvider>
+                                            {children}
+                                          </AuthProvider>
+                                        </QADeviceNameStoreProvider>
                                       </EarlyAccessStoreProvider>
                                     </DraftObservationProvider>
                                   </ActiveProjectIdStoreProvider>

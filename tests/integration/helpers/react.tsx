@@ -28,6 +28,7 @@ import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowSto
 import {createEarlyAccessStore} from '../../../src/frontend/contexts/EarlyAccessContext';
 import {createAppUsageStatsStore} from '../../../src/frontend/contexts/AppUsageStatsContext';
 import {createUnitSystemStore} from '../../../src/frontend/contexts/UnitSystemStoreContext';
+import {createQADeviceNameStore} from '../../../src/frontend/contexts/QADeviceNameStoreContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
@@ -163,6 +164,8 @@ export function createAppProvidersWrapper({
 
   const unitSystemStore = createUnitSystemStore({persist: false});
 
+  const qaDeviceNameStore = createQADeviceNameStore({persist: false});
+
   const lowStorageBannerStore = createLowStorageBannerStore();
 
   const appUsagePromptStore = createAppUsageStatsStore({
@@ -205,7 +208,8 @@ export function createAppProvidersWrapper({
           lowStorageBannerStore={lowStorageBannerStore}
           appUsageStatsStore={appUsagePromptStore}
           earlyAccessStore={persistedEarlyAccessStore}
-          unitSystemStore={unitSystemStore}>
+          unitSystemStore={unitSystemStore}
+          qaDeviceNameStore={qaDeviceNameStore}>
           {children}
         </AppProviders>
       </OuterWrapper>

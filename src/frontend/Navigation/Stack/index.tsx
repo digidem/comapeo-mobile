@@ -21,6 +21,9 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
+import {useQADeviceName} from '../../contexts/QADeviceNameStoreContext';
+import {APP_VARIANT} from '../../lib/appVariant';
+import {SetQADeviceNameScreen} from '../../screens/SetQADeviceName';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -39,13 +42,20 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   statusBarStyle: 'dark',
 };
 
+const isQABuild =
+  APP_VARIANT === 'releaseCandidate' || APP_VARIANT === 'preRelease';
+
 function getInitialRoute(
   authState: 'authenticated' | 'unauthenticated' | 'obscured',
   deviceName: string | undefined,
   projectId: string | undefined,
+  qaDeviceName: string | null,
 ): keyof AppStackParamsList {
   if (authState === 'unauthenticated') {
     return 'AuthScreen';
+  }
+  if (isQABuild && !qaDeviceName) {
+    return 'SetQADeviceName';
   }
   if (!deviceName) {
     return 'IntroToCoMapeo';
@@ -61,6 +71,7 @@ export const RootStackNavigator = () => {
   const {data: deviceInfo} = useOwnDeviceInfo();
   const activeProjectId = useActiveProjectId();
   const {formatMessage} = useIntl();
+  const qaDeviceName = useQADeviceName();
   const isNotReadyForInvite =
     security.authState !== 'authenticated' ||
     !deviceInfo.name ||
@@ -115,6 +126,7 @@ export const RootStackNavigator = () => {
     security.authState,
     deviceInfo.name,
     activeProjectId,
+    qaDeviceName,
   );
 
   return (
@@ -129,6 +141,12 @@ export const RootStackNavigator = () => {
             headerShown: false,
             animation: 'fade',
           }}
+        />
+      ) : isQABuild && !qaDeviceName ? (
+        <RootStack.Screen
+          name="SetQADeviceName"
+          component={SetQADeviceNameScreen}
+          options={{headerTitle: 'QA Device Name', headerShown: true}}
         />
       ) : (
         <>

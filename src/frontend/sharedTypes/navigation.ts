@@ -184,6 +184,7 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
+  SetQADeviceName: undefined;
   LeaveProjectWarning: {
     memberType: 'coordinator' | 'participant';
     warningType: 'lastCoordinator' | 'lastDevice';

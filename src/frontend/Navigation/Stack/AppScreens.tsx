@@ -81,12 +81,8 @@ import {
 import {ExchangeSettingsBottomSheet} from '../../screens/Exchange/ExchangeSettingsBottomSheet.tsx';
 import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
 import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
-import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
-import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
-import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
 import {RemovedFromProjectBottomSheet} from '../../screens/RemovedFromProjectBottomSheet.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/BackgroundMaps/ErrorBottomSheet.tsx';
 import {InviteCollaboratorsScreen} from '../../screens/YourTeam/InviteCollaborators.tsx';
 import {StartNewProjectScreen} from '../../screens/ProjectSettings/StartNewProject.tsx';
@@ -595,17 +591,10 @@ export const createAppScreens = ({
         name="AudioAskPermissionBottomSheet"
         component={AudioAskPermissionBottomSheet}
       />
-      <RootStack.Screen name="InviteReceived" component={InviteReceived} />
-      <RootStack.Screen
-        name="InviteSuccessfullyAccepted"
-        component={InviteSuccessfullyAccepted}
-      />
-      <RootStack.Screen name="InviteCanceled" component={InviteCanceled} />
       <RootStack.Screen
         name="RemovedFromProjectBottomSheet"
         component={RemovedFromProjectBottomSheet}
       />
-      <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
       <RootStack.Screen
         name="BackgroundMapErrorBottomSheet"
         component={BackgroundMapErrorBottomSheet}

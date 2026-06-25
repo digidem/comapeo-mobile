@@ -5,7 +5,11 @@ import {useLocales} from 'expo-localization';
 
 import messages from '../../../translations/messages.json';
 import {useLocaleState} from './LocaleStoreContext';
-import {getUsableLanguageTag, AvailableLanguageTag} from '../lib/intl';
+import {
+  getUsableLanguageTag,
+  configureCalendarLocale,
+  AvailableLanguageTag,
+} from '../lib/intl';
 
 export const formats: CustomFormats = {
   date: {
@@ -42,6 +46,10 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
 
     return merged;
   }, [languageTag, systemLocales]);
+
+  React.useEffect(() => {
+    configureCalendarLocale(languageTag);
+  }, [languageTag]);
 
   return (
     <ReactIntlProvider

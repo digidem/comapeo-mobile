@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
 
 import {useQADeviceNameActions} from '../contexts/QADeviceNameStoreContext';
 import {LIGHT_GREY, RED, DARK_GREY} from '../lib/styles';
@@ -19,6 +19,7 @@ export function SetQADeviceNameScreen() {
     setSubmitted(true);
     if (name.trim().length === 0) return;
     setQADeviceName(name.trim());
+    ToastAndroid.show('QA device name saved', ToastAndroid.SHORT);
   }
 
   return (
@@ -30,9 +31,9 @@ export function SetQADeviceNameScreen() {
       <View style={styles.section}>
         <HeaderText variant="header2">Set QA Device Name</HeaderText>
         <BodyText style={styles.description}>
-          This name is used to tag error reports in Sentry so developers can
-          find issues reported from your specific device. Please write down this
-          name and share it with the development team when reporting bugs.
+          This name is used for the developers to be able to search through
+          events in Sentry and identify the relevant device. Spaces are allowed
+          and there is a maximum of 200 characters and no new lines.
         </BodyText>
       </View>
 
@@ -43,7 +44,7 @@ export function SetQADeviceNameScreen() {
           style={[styles.input, hasError && styles.inputError]}
           value={name}
           onChangeText={setName}
-          placeholder="e.g. cindy-pixel-7"
+          placeholder="e.g. Motorola Moto G4"
           placeholderTextColor={LIGHT_GREY}
           autoCapitalize="none"
           autoCorrect={false}

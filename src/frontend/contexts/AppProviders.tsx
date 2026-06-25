@@ -53,7 +53,7 @@ import {
   type EarlyAccessStore,
 } from './EarlyAccessContext';
 import {
-  QADeviceNameStoreProvider,
+  QADeviceNameStoreContext,
   type QADeviceNameStore,
 } from './QADeviceNameStoreContext';
 
@@ -130,12 +130,12 @@ export const AppProviders = ({
                                       }>
                                       <EarlyAccessStoreProvider
                                         value={earlyAccessStore}>
-                                        <QADeviceNameStoreProvider
+                                        <QADeviceNameStoreContext
                                           value={qaDeviceNameStore}>
                                           <AuthProvider>
                                             {children}
                                           </AuthProvider>
-                                        </QADeviceNameStoreProvider>
+                                        </QADeviceNameStoreContext>
                                       </EarlyAccessStoreProvider>
                                     </DraftObservationProvider>
                                   </ActiveProjectIdStoreProvider>

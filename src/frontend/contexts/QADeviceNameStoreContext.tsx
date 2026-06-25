@@ -7,7 +7,7 @@ import {
 import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
 
 // NOTE: Do not change!
-export const STORAGE_KEY = 'QADeviceNameStore' as const;
+const STORAGE_KEY = 'QADeviceNameStore' as const;
 
 export type QADeviceNameState = {
   qaDeviceName: string | null;
@@ -47,13 +47,13 @@ export function createQADeviceNameStore({persist} = {persist: false}) {
 
 export type QADeviceNameStore = ReturnType<typeof createQADeviceNameStore>;
 
-const QADeviceNameStoreContext = createContext<QADeviceNameStore | null>(null);
-
-export const QADeviceNameStoreProvider = QADeviceNameStoreContext.Provider;
+export const QADeviceNameStoreContext = createContext<QADeviceNameStore | null>(
+  null,
+);
 
 function useQADeviceNameStoreContext() {
   const value = useContext(QADeviceNameStoreContext);
-  if (!value) throw new Error('QADeviceNameStoreProvider missing');
+  if (!value) throw new Error('Must set up the QADeviceNameStoreContext first');
   return value;
 }
 

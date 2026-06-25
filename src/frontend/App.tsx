@@ -93,6 +93,18 @@ if (appMetricsOptIn) {
   Sentry.getClient()?.addIntegration(navigationIntegration);
 }
 
+const qaDeviceNameStore = createQADeviceNameStore({persist: true});
+
+const initialQADeviceName = qaDeviceNameStore.instance.getState().qaDeviceName;
+if (initialQADeviceName) {
+  Sentry.setTag('QA_Device_Name', initialQADeviceName);
+}
+qaDeviceNameStore.instance.subscribe((current, previous) => {
+  if (current.qaDeviceName !== previous.qaDeviceName && current.qaDeviceName) {
+    Sentry.setTag('QA_Device_Name', current.qaDeviceName);
+  }
+});
+
 const persistedLocaleStore = createLocaleStore({
   persist: true,
 });
@@ -160,18 +172,6 @@ const savedLocationStore = createSavedLocationStore({persist: true});
 const lowStorageBannerStore = createLowStorageBannerStore();
 const earlyAccessStore = createEarlyAccessStore({persist: true});
 const persistedUnitSystemStore = createUnitSystemStore({persist: true});
-const qaDeviceNameStore = createQADeviceNameStore({persist: true});
-
-// Set the Sentry tag whenever the QA device name changes (including on startup if already set)
-qaDeviceNameStore.instance.subscribe((current, previous) => {
-  if (current.qaDeviceName !== previous.qaDeviceName && current.qaDeviceName) {
-    Sentry.setTag('QA_Device_Name', current.qaDeviceName);
-  }
-});
-const initialQADeviceName = qaDeviceNameStore.instance.getState().qaDeviceName;
-if (initialQADeviceName) {
-  Sentry.setTag('QA_Device_Name', initialQADeviceName);
-}
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =

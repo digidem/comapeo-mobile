@@ -17,6 +17,8 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BLACK, BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import HeartCheckIcon from '../../images/HeartCheck.svg';
 import AngleRulerIcon from '../../images/AngleRuler.svg';
+import {APP_VARIANT} from '../../lib/appVariant';
+import {useQADeviceName} from '../../contexts/QADeviceNameStoreContext';
 
 const m = defineMessages({
   title: {
@@ -111,6 +113,10 @@ const m = defineMessages({
     id: 'Screens.Settings.AppSettings.testData',
     defaultMessage: 'Test Data',
   },
+  qaDeviceName: {
+    id: 'Screens.Settings.AppSettings.qaDeviceName',
+    defaultMessage: 'QA Device Name',
+  },
 });
 
 export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
@@ -136,6 +142,9 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   }[coordinateFormat];
 
   const hasPasscode = passcode !== null;
+  const qaDeviceName = useQADeviceName();
+  const isQABuild =
+    APP_VARIANT === 'releaseCandidate' || APP_VARIANT === 'preRelease';
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -222,6 +231,20 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
             }
           />
         </>
+      )}
+      {isQABuild && (
+        <SettingsRow
+          onPress={() => navigation.navigate('SetQADeviceName')}
+          label={`${formatMessage(m.qaDeviceName)}${qaDeviceName ? `: ${qaDeviceName}` : ''}`}
+          Icon={<MaterialIcon name="devices" size={24} color={NEW_DARK_GREY} />}
+          EndContent={
+            <MaterialIcon
+              name="chevron-right"
+              size={20}
+              color={NEW_DARK_GREY}
+            />
+          }
+        />
       )}
 
       <View style={styles.divider} />

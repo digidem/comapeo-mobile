@@ -146,6 +146,7 @@ import {ReplaceBackgroundMap} from '../../screens/BackgroundMaps/ReplaceBackgrou
 import {ReceivingBackgroundMap} from '../../screens/BackgroundMaps/ReceivingBackgroundMap.tsx';
 import {MapShareCanceledBottomSheet} from '../../screens/BackgroundMaps/MapShareCanceledBottomSheet.tsx';
 import {SetQADeviceNameScreen} from '../../screens/SetQADeviceName.tsx';
+import {APP_VARIANT} from '../../lib/appVariant';
 import {RootStack} from './RootStack.ts';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -442,6 +443,13 @@ export const createAppScreens = ({
           options={{headerTitle: 'Create Test Data'}}
         />
       )}
+      {(APP_VARIANT === 'releaseCandidate' || APP_VARIANT === 'preRelease') && (
+        <RootStack.Screen
+          name="SetQADeviceName"
+          component={SetQADeviceNameScreen}
+          options={{headerTitle: 'QA Device Name'}}
+        />
+      )}
       <RootStack.Screen
         name="RemoteArchive"
         component={RemoteArchiveScreen}
@@ -678,11 +686,6 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="MapReceivedBottomSheet"
         component={MapReceivedBottomSheet}
-      />
-      <RootStack.Screen
-        name="SetQADeviceName"
-        component={SetQADeviceNameScreen}
-        options={{headerTitle: 'QA Device Name', headerShown: true}}
       />
     </RootStack.Group>
   </>

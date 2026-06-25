@@ -66,10 +66,12 @@ export function createAppProvidersWrapper({
   mapeoApi,
   isOnline = true,
   activeProjectId,
+  qaDeviceNameStore: qaDeviceNameStoreOverride,
 }: {
   mapeoApi: MapeoClientApi;
   isOnline?: boolean;
   activeProjectId?: string;
+  qaDeviceNameStore?: ReturnType<typeof createQADeviceNameStore>;
 }) {
   const queryClient = new QueryClient({
     // Disable garbage collection, so that no "collect garbage" timers are
@@ -164,7 +166,8 @@ export function createAppProvidersWrapper({
 
   const unitSystemStore = createUnitSystemStore({persist: false});
 
-  const qaDeviceNameStore = createQADeviceNameStore({persist: false});
+  const qaDeviceNameStore =
+    qaDeviceNameStoreOverride ?? createQADeviceNameStore({persist: false});
 
   const lowStorageBannerStore = createLowStorageBannerStore();
 

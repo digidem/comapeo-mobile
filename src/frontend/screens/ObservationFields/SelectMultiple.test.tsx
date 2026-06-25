@@ -86,6 +86,38 @@ test('works when tagValue is a scalar string', () => {
   expect(updateTag).toHaveBeenCalledWith(['a', 'b']);
 });
 
+test('re-renders correctly when swapped to a field with duplicate labels', () => {
+  const DUPLICATE_LABEL_OPTIONS = [
+    {label: 'Same', value: 'x'},
+    {label: 'Same', value: 'y'},
+  ];
+  const NEXT_OPTIONS = [
+    {label: 'Red', value: 'red'},
+    {label: 'Blue', value: 'blue'},
+  ];
+  const updateTag = jest.fn();
+
+  const {rerender} = render(
+    <SelectMultiple
+      options={DUPLICATE_LABEL_OPTIONS}
+      updateTag={updateTag}
+      tagValue={[]}
+    />,
+  );
+
+  rerender(
+    <SelectMultiple
+      options={NEXT_OPTIONS}
+      updateTag={updateTag}
+      tagValue={[]}
+    />,
+  );
+
+  expect(screen.getByText('Red')).toBeOnTheScreen();
+  expect(screen.getByText('Blue')).toBeOnTheScreen();
+  expect(screen.queryByText('Same')).toBeNull();
+});
+
 test('multiple options can be selected', () => {
   const updateTag = jest.fn();
   const {rerender} = render(

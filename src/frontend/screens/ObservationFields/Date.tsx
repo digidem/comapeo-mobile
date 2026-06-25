@@ -65,6 +65,7 @@ export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
       </View>
       {calendarVisible && (
         <Calendar
+          testID="FIELD.date-calendar"
           style={styles.calendarStyle}
           enableSwipeMonths
           renderArrow={direction => (

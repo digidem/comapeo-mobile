@@ -220,6 +220,64 @@
   "constants.red": {
     "message": "Red"
   },
+  "lib.intl.calendarDayShort.friday": {
+    "message": "Fri"
+  },
+  "lib.intl.calendarDayShort.monday": {
+    "message": "Mon"
+  },
+  "lib.intl.calendarDayShort.saturday": {
+    "message": "Sat"
+  },
+  "lib.intl.calendarDayShort.sunday": {
+    "message": "Sun"
+  },
+  "lib.intl.calendarDayShort.thursday": {
+    "message": "Thu"
+  },
+  "lib.intl.calendarDayShort.tuesday": {
+    "message": "Tue"
+  },
+  "lib.intl.calendarDayShort.wednesday": {
+    "message": "Wed"
+  },
+  "lib.intl.calendarMonth.april": {
+    "message": "April"
+  },
+  "lib.intl.calendarMonth.august": {
+    "message": "August"
+  },
+  "lib.intl.calendarMonth.december": {
+    "message": "December"
+  },
+  "lib.intl.calendarMonth.february": {
+    "message": "February"
+  },
+  "lib.intl.calendarMonth.january": {
+    "description": "This is automatically translated for most languages and should only be translated to ",
+    "message": "January"
+  },
+  "lib.intl.calendarMonth.july": {
+    "message": "July"
+  },
+  "lib.intl.calendarMonth.june": {
+    "message": "June"
+  },
+  "lib.intl.calendarMonth.march": {
+    "message": "March"
+  },
+  "lib.intl.calendarMonth.may": {
+    "message": "May"
+  },
+  "lib.intl.calendarMonth.november": {
+    "message": "November"
+  },
+  "lib.intl.calendarMonth.october": {
+    "message": "October"
+  },
+  "lib.intl.calendarMonth.september": {
+    "message": "September"
+  },
   "projectInfoCard.coordinator": {
     "message": "You are a coordinator on this project."
   },

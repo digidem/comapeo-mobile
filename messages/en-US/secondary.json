@@ -220,6 +220,27 @@
   "constants.red": {
     "message": "Red"
   },
+  "lib.intl.calendarDay.friday": {
+    "message": "Friday"
+  },
+  "lib.intl.calendarDay.monday": {
+    "message": "Monday"
+  },
+  "lib.intl.calendarDay.saturday": {
+    "message": "Saturday"
+  },
+  "lib.intl.calendarDay.sunday": {
+    "message": "Sunday"
+  },
+  "lib.intl.calendarDay.thursday": {
+    "message": "Thursday"
+  },
+  "lib.intl.calendarDay.tuesday": {
+    "message": "Tuesday"
+  },
+  "lib.intl.calendarDay.wednesday": {
+    "message": "Wednesday"
+  },
   "lib.intl.calendarDayShort.friday": {
     "message": "Fri"
   },

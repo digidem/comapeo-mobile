@@ -172,6 +172,27 @@ const calendarMessages = defineMessages({
     id: 'lib.intl.calendarDayShort.saturday',
     defaultMessage: 'Sat',
   },
+  // react-native-calendars also needs full day names: it builds each day
+  // cell's accessibility label from a format string that includes `dddd`.
+  sundayFull: {id: 'lib.intl.calendarDay.sunday', defaultMessage: 'Sunday'},
+  mondayFull: {id: 'lib.intl.calendarDay.monday', defaultMessage: 'Monday'},
+  tuesdayFull: {
+    id: 'lib.intl.calendarDay.tuesday',
+    defaultMessage: 'Tuesday',
+  },
+  wednesdayFull: {
+    id: 'lib.intl.calendarDay.wednesday',
+    defaultMessage: 'Wednesday',
+  },
+  thursdayFull: {
+    id: 'lib.intl.calendarDay.thursday',
+    defaultMessage: 'Thursday',
+  },
+  fridayFull: {id: 'lib.intl.calendarDay.friday', defaultMessage: 'Friday'},
+  saturdayFull: {
+    id: 'lib.intl.calendarDay.saturday',
+    defaultMessage: 'Saturday',
+  },
 });
 
 const CALENDAR_MONTH_MESSAGE_ORDER = [
@@ -200,21 +221,34 @@ const CALENDAR_DAY_SHORT_MESSAGE_ORDER = [
   calendarMessages.saturday,
 ];
 
+const CALENDAR_DAY_MESSAGE_ORDER = [
+  calendarMessages.sundayFull,
+  calendarMessages.mondayFull,
+  calendarMessages.tuesdayFull,
+  calendarMessages.wednesdayFull,
+  calendarMessages.thursdayFull,
+  calendarMessages.fridayFull,
+  calendarMessages.saturdayFull,
+];
+
 /**
- * Registers month names and short day names for `languageTag` with
- * `react-native-calendars` (the only two name sets the `Calendar` component
- * we use actually renders). Prefers a translated message where one exists,
- * and otherwise falls back to the same `Intl` API react-intl's `formatDate`
- * uses, so most languages need no translation effort at all.
+ * Registers month and day names for `languageTag` with `react-native-calendars`.
+ * Prefers a translated message where one exists, and otherwise falls back to
+ * the same `Intl` API react-intl's `formatDate` uses, so most languages need
+ * no translation effort at all.
  */
 export function configureCalendarLocale(languageTag: AvailableLanguageTag) {
   const translated: Record<string, string> = MESSAGES[languageTag] || {};
   const fallbackMonthNames = getMonthNames(languageTag, 'long');
+  const fallbackDayNames = getDayNames(languageTag, 'long');
   const fallbackDayNamesShort = getDayNames(languageTag, 'short');
 
   LocaleConfig.locales[languageTag] = {
     monthNames: CALENDAR_MONTH_MESSAGE_ORDER.map(
       (message, i) => translated[message.id] ?? fallbackMonthNames[i],
+    ),
+    dayNames: CALENDAR_DAY_MESSAGE_ORDER.map(
+      (message, i) => translated[message.id] ?? fallbackDayNames[i],
     ),
     dayNamesShort: CALENDAR_DAY_SHORT_MESSAGE_ORDER.map(
       (message, i) => translated[message.id] ?? fallbackDayNamesShort[i],

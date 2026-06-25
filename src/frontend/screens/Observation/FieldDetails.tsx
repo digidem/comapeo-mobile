@@ -32,7 +32,6 @@ export const FieldDetails = ({
     <View>
       {fields.map(field => {
         const tagValue = tags[field.tagKey];
-        console.log(field.tagKey);
         const answers = getFieldAnswerText({
           tagValue,
           fieldOptions: field.options,

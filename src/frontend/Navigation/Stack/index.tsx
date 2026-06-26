@@ -129,8 +129,11 @@ export const RootStackNavigator = () => {
     qaDeviceName,
   );
 
+  const navigatorKey = isQABuild && !qaDeviceName ? 'qa-gate' : 'app';
+
   return (
     <RootStack.Navigator
+      key={navigatorKey}
       {...commonNavigatorProps}
       initialRouteName={initialRouteName}>
       {security.authState === 'unauthenticated' ? (

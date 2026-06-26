@@ -1,7 +1,11 @@
-import React, {useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
-import {useQADeviceNameActions} from '../contexts/QADeviceNameStoreContext';
+import {
+  useQADeviceName,
+  useQADeviceNameActions,
+} from '../contexts/QADeviceNameStoreContext';
 import {LIGHT_GREY, RED, DARK_GREY} from '../lib/styles';
 import {PrimaryButton} from '../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
@@ -9,9 +13,17 @@ import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 
 export function SetQADeviceNameScreen() {
-  const [name, setName] = useState('');
+  const currentName = useQADeviceName();
+  const [name, setName] = useState(currentName ?? '');
   const [submitted, setSubmitted] = useState(false);
   const {setQADeviceName} = useQADeviceNameActions();
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    if (!navigation.canGoBack()) {
+      navigation.setOptions({headerBackVisible: false});
+    }
+  }, [navigation]);
 
   const hasError = submitted && name.trim().length === 0;
 

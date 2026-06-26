@@ -22,7 +22,7 @@ import {createTrackStore} from '../../../src/frontend/contexts/TrackStoreContext
 import {AppDiagnosticMetrics} from '../../../src/frontend/metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
-import {QueryClient} from '@tanstack/react-query';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
 import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowStorageBannerContext';
 import {createEarlyAccessStore} from '../../../src/frontend/contexts/EarlyAccessContext';
@@ -52,12 +52,20 @@ jest.mock('expo/fetch', () => ({
 
 export function createMinimalWrapper() {
   const localeStore = createLocaleStore({persist: false});
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {gcTime: Infinity},
+      mutations: {gcTime: Infinity},
+    },
+  });
 
   return ({children}: {children: ReactNode}) => {
     return (
-      <LocaleContext value={localeStore}>
-        <IntlProvider>{children}</IntlProvider>
-      </LocaleContext>
+      <QueryClientProvider client={queryClient}>
+        <LocaleContext value={localeStore}>
+          <IntlProvider>{children}</IntlProvider>
+        </LocaleContext>
+      </QueryClientProvider>
     );
   };
 }

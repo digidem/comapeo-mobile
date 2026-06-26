@@ -33,7 +33,7 @@
     "test:e2e:build": "npm run build:android:e2e && npm run test:e2e:nobuild"
   },
   "dependencies": {
-    "@comapeo/core-react": "11.0.5",
+    "@comapeo/core-react": "11.0.6",
     "@comapeo/ipc": "8.0.0",
     "@comapeo/nodejs-mobile-react-native": "18.20.4-2",
     "@expo-google-fonts/rubik": "0.4.2",
@@ -137,6 +137,7 @@
     "@eslint/eslintrc": "3.3.3",
     "@eslint/js": "9.39.2",
     "@formatjs/cli": "6.8.2",
+    "@formatjs/cli-lib": "8.7.10",
     "@mapeo/mock-data": "5.0.0",
     "@react-native/metro-babel-transformer": "0.76.9",
     "@react-native/metro-config": "0.79.5",

@@ -19,11 +19,13 @@ export function SetQADeviceNameScreen() {
   const {setQADeviceName} = useQADeviceNameActions();
   const navigation = useNavigation();
 
+  const canGoBack = navigation.canGoBack();
+
   useLayoutEffect(() => {
-    if (!navigation.canGoBack()) {
-      navigation.setOptions({headerBackVisible: false});
+    if (!canGoBack) {
+      navigation.setOptions({headerLeft: () => null});
     }
-  }, [navigation]);
+  }, [navigation, canGoBack]);
 
   const hasError = submitted && name.trim().length === 0;
 
@@ -32,6 +34,9 @@ export function SetQADeviceNameScreen() {
     if (name.trim().length === 0) return;
     setQADeviceName(name.trim());
     ToastAndroid.show('QA device name saved', ToastAndroid.SHORT);
+    if (canGoBack) {
+      navigation.goBack();
+    }
   }
 
   return (

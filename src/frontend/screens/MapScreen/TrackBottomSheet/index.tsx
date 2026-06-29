@@ -2,6 +2,7 @@ import React from 'react';
 import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled';
 import * as Location from 'expo-location';
 import {Linking, StyleSheet, View, AppState} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
 import {Loading} from '../../../sharedComponents/Loading';
 import {StartStopTrack} from './StartStopTrack';
@@ -15,6 +16,10 @@ const handleOpenSettings = () => {
 };
 
 export const TrackBottomSheet = React.memo(() => {
+  // The sheet anchors to the bottom of the (tab-bar-inset) scene; without the
+  // bottom inset its content sits flush against the tab bar and the action
+  // button reads as tucked under it on devices with a home indicator.
+  const insets = useSafeAreaInsets();
   const [foregroundPermission, setForegroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
   const [backgroundPermission, setBackgroundPermission] =
@@ -105,11 +110,16 @@ export const TrackBottomSheet = React.memo(() => {
     return <StartStopTrack />;
   };
 
+  const sheetStyle = [
+    styles.animatedBackground,
+    {paddingBottom: 30 + insets.bottom},
+  ];
+
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   if (isE2E) {
     return (
       <View style={styles.container}>
-        <View style={styles.animatedBackground}>{renderContent()}</View>
+        <View style={sheetStyle}>{renderContent()}</View>
       </View>
     );
   } else
@@ -117,7 +127,7 @@ export const TrackBottomSheet = React.memo(() => {
       // Semi hacky, but without this <View> the animated view bounces too far initially and then bounces back down to adjust.
       <View style={styles.container}>
         <Animated.View
-          style={styles.animatedBackground}
+          style={sheetStyle}
           entering={SlideInDown.duration(250)}
           exiting={SlideOutDown.duration(250)}>
           {renderContent()}

@@ -10,9 +10,7 @@ describe('Onboarding - Device Naming Test', () => {
   });
 
   it('should input a device name and verify success message', async () => {
-    const deviceNameInput = await $(
-      'android=resourceId("ONBOARDING.device-name-inp")',
-    );
+    const deviceNameInput = await $(byResourceId('ONBOARDING.device-name-inp'));
     await expect(deviceNameInput).toBeDisplayed();
     const addNameButton = await $(byResourceId('ONBOARDING.add-name-btn'));
 
@@ -33,6 +31,9 @@ describe('Onboarding - Device Naming Test', () => {
     });
 
     await deviceNameInput.setValue(output.names.device);
+    // On iOS the software keyboard overlays the Save button; dismiss it so the
+    // tap lands. Safe no-op when no keyboard is shown (e.g. Android).
+    await driver.hideKeyboard().catch(() => {});
     await addNameButton.click();
     const deviceReadyMessage = await $(
       byTextMatches(`${output.names.device} is ready`),

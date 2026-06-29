@@ -87,7 +87,7 @@ export const DeviceNaming = ({
 
   return (
     <KeyboardAvoidingView style={{width: '100%', height: '100%'}}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.headerArea}>
             <DeviceIcon width={39} height={60} />

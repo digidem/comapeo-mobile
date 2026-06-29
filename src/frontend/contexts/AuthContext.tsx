@@ -45,10 +45,12 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const queryClient = useQueryClient();
 
   React.useEffect(() => {
+    // FlagSecure is an Android-only native module (screen-capture blocking);
+    // it's absent on iOS, so guard every call.
     if (passcode !== null && !isE2E) {
-      FlagSecureModule.activate();
+      FlagSecureModule?.activate();
     } else {
-      FlagSecureModule.deactivate();
+      FlagSecureModule?.deactivate();
     }
   }, [passcode, isE2E]);
 

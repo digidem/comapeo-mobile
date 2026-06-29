@@ -17,20 +17,25 @@ Logger.setLogCallback(log => {
 // All styles are served via localhost and we need to bypass the internal connectivity manager in MapLibre React Native
 // in order for things to work while the app is offline.
 // https://github.com/maplibre/maplibre-react-native/blob/6f99de530eec2e06de485ef86f4be61f941e0e09/docs/content/modules/mlrn-module.md#setconnectedconnected
-setConnected(true);
+// `setConnected` is backed by the Android-only MLRNModule.setConnected; it's
+// undefined on iOS (no equivalent connectivity manager), so guard the call.
+setConnected?.(true);
 
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
-import {initializeNodejs} from './initializeNodejs';
-import {PermissionsAndroid} from 'react-native';
+import {
+  comapeo as mapeoApi,
+  comapeoServicesClient,
+} from '@comapeo/core-react-native';
+import {PermissionsAndroid, Platform} from 'react-native';
+import {requestForegroundPermissionsAsync} from 'expo-location';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
-import {storage} from './hooks/persistedState/createPersistedState';
-import {getSentryUserId} from './metrics/getSentryUserId';
+import {initSentry} from '@comapeo/core-react-native/sentry';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 import {createDraftObservationStore} from './contexts/PersistedStores/DraftObservationStore';
@@ -45,8 +50,6 @@ import {createLocaleStore, LocaleContext} from './contexts/LocaleStoreContext';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
-import {createServerStateStore} from './lib/ServerStateStore.ts';
-import {createMapeoApi} from './lib/createMapeoApi.ts';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
 import {Suspense} from 'react';
@@ -54,43 +57,31 @@ import {Loading} from './sharedComponents/Loading.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
-import {createAppRpc} from './lib/createAppRpc.ts';
 import {postHog} from './lib/posthog.ts';
 import {APP_VARIANT} from './lib/appVariant.ts';
 
-type SentryEnvironment = 'development' | 'qa' | 'production';
-
-const sentryEnvironment: SentryEnvironment =
-  APP_VARIANT === 'releaseCandidate'
-    ? 'qa'
-    : APP_VARIANT === 'production'
-      ? 'production'
-      : 'development';
-
-const appMetricsOptIn = sentryEnvironment !== 'production';
+// DSN / environment / tracesSampleRate are baked into the native config by the
+// @comapeo/core-react-native plugin (app.config.js) and locked by initSentry,
+// which owns the Sentry.init call across the RN, Node, and Android-FGS hubs —
+// we pass only the allowlisted extensions. Tracing stays env-gated via the
+// plugin's tracesSampleRate; the full runtime consent model (and a stable user
+// id) migrates later with an updated core-react-native.
+const appMetricsOptIn = APP_VARIANT !== 'production';
 let navigationIntegration:
   | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
   | undefined = undefined;
-const sentryUserId = getSentryUserId({now: new Date(), storage});
 
-Sentry.init({
-  dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
-  tracesSampleRate: appMetricsOptIn ? 1.0 : 0, // Only enable tracing once we have user consent
-  enableUserInteractionTracing: appMetricsOptIn, // Only enable user interaction tracing once we have user consent
-  environment: sentryEnvironment,
-  debug: false, // this added alot of unneccesary noise to the console.
-  initialScope: {user: {id: sentryUserId}},
-  enableMetrics: false,
+initSentry({
+  integrations: defaults => {
+    if (!appMetricsOptIn) return defaults;
+    navigationIntegration = Sentry.reactNavigationIntegration({
+      enableTimeToInitialDisplay: true,
+      ignoreEmptyBackNavigationTransactions: false,
+    });
+    return [...defaults, navigationIntegration];
+  },
+  tags: appMetricsOptIn ? {appMetricsOptIn: 'true'} : undefined,
 });
-
-if (appMetricsOptIn) {
-  Sentry.setTag('appMetricsOptIn', 'true');
-  navigationIntegration = Sentry.reactNavigationIntegration({
-    enableTimeToInitialDisplay: true,
-    ignoreEmptyBackNavigationTransactions: false,
-  });
-  Sentry.getClient()?.addIntegration(navigationIntegration);
-}
 
 const persistedLocaleStore = createLocaleStore({
   persist: true,
@@ -108,14 +99,9 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
   },
 });
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
-const serverStateStore = createServerStateStore();
-const mapeoApi = createMapeoApi({serverStateStore});
-const appRpc = createAppRpc({serverStateStore});
-const mapServerListenPromise = appRpc.mapServer.listen();
 const mapServerApi = {
   async getBaseUrl() {
-    const {localPort} = await mapServerListenPromise;
-    return new URL(`http://127.0.0.1:${localPort}`);
+    return new URL(await comapeoServicesClient.mapServer.getBaseUrl());
   },
 };
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
@@ -174,9 +160,6 @@ persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
   }
 });
 
-// Need to know if metrics are enabled before starting node
-initializeNodejs({metricsIsEnabled, sentryEnvironment, sentryUserId});
-
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(
   LOCATION_TASK_NAME,
@@ -212,11 +195,19 @@ const queryClient = new QueryClient();
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
-    PermissionsAndroid.requestMultiple([
-      'android.permission.CAMERA',
-      'android.permission.ACCESS_FINE_LOCATION',
-      'android.permission.ACCESS_COARSE_LOCATION',
-    ])
+    // PermissionsAndroid is Android-only (no-op on iOS), so iOS needs its own
+    // path or location is never requested. Camera on iOS is requested on
+    // demand by the camera screen, so the eager ask is location-only there.
+    const askStartupPermissions =
+      Platform.OS === 'android'
+        ? PermissionsAndroid.requestMultiple([
+            'android.permission.CAMERA',
+            'android.permission.ACCESS_FINE_LOCATION',
+            'android.permission.ACCESS_COARSE_LOCATION',
+          ])
+        : requestForegroundPermissionsAsync();
+
+    Promise.resolve(askStartupPermissions)
       .catch(err => {
         // Rejects when no Activity is attached (e.g. launched in the
         // background)
@@ -230,45 +221,41 @@ const App = () => {
 
   return (
     <Sentry.ErrorBoundary fallback={<FatalErrorUntranslated />}>
-      <QueryClientProvider client={queryClient}>
-        <LocaleContext value={persistedLocaleStore}>
-          <IntlProvider>
-            {/* This fatal error requires internationalization to be set up */}
-            <Sentry.ErrorBoundary fallback={<FatalError />}>
-              <ServerLoading serverStateStore={serverStateStore}>
-                <Suspense fallback={<Loading />}>
-                  <AppProviders
-                    queryClient={queryClient}
-                    localDiscoveryController={localDiscoveryController}
-                    mapeoApi={mapeoApi}
-                    mapServerApi={mapServerApi}
-                    persistedDrafObservationStore={
-                      persistedDraftObservationStore
-                    }
-                    trackStore={persistedTrackStore}
-                    securityStore={persistedSecurityStore}
-                    coordinateFormatStore={persistedCoordinateFormatStore}
-                    manualEntryCoordinateFormatStore={
-                      persistedManualEntryCoordinateFormatStore
-                    }
-                    savedLocationStore={savedLocationStore}
-                    activeProjectIdStore={persistedActiveProjectIdStore}
-                    metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-                    appUsageStatsStore={appUsagePromptStore}
-                    lowStorageBannerStore={lowStorageBannerStore}
-                    earlyAccessStore={earlyAccessStore}
-                    unitSystemStore={persistedUnitSystemStore}>
-                    <AppNavigator
-                      permissionAsked={permissionsAsked}
-                      navigationIntegration={navigationIntegration}
-                    />
-                  </AppProviders>
-                </Suspense>
-              </ServerLoading>
-            </Sentry.ErrorBoundary>
-          </IntlProvider>
-        </LocaleContext>
-      </QueryClientProvider>
+      <LocaleContext value={persistedLocaleStore}>
+        <IntlProvider>
+          {/* This fatal error requires internationalization to be set up */}
+          <Sentry.ErrorBoundary fallback={<FatalError />}>
+            <ServerLoading>
+              <Suspense fallback={<Loading />}>
+                <AppProviders
+                  queryClient={queryClient}
+                  localDiscoveryController={localDiscoveryController}
+                  mapeoApi={mapeoApi}
+                  mapServerApi={mapServerApi}
+                  persistedDrafObservationStore={persistedDraftObservationStore}
+                  trackStore={persistedTrackStore}
+                  securityStore={persistedSecurityStore}
+                  coordinateFormatStore={persistedCoordinateFormatStore}
+                  manualEntryCoordinateFormatStore={
+                    persistedManualEntryCoordinateFormatStore
+                  }
+                  savedLocationStore={savedLocationStore}
+                  activeProjectIdStore={persistedActiveProjectIdStore}
+                  metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+                  appUsageStatsStore={appUsagePromptStore}
+                  lowStorageBannerStore={lowStorageBannerStore}
+                  earlyAccessStore={earlyAccessStore}
+                  unitSystemStore={persistedUnitSystemStore}>
+                  <AppNavigator
+                    permissionAsked={permissionsAsked}
+                    navigationIntegration={navigationIntegration}
+                  />
+                </AppProviders>
+              </Suspense>
+            </ServerLoading>
+          </Sentry.ErrorBoundary>
+        </IntlProvider>
+      </LocaleContext>
     </Sentry.ErrorBoundary>
   );
 };

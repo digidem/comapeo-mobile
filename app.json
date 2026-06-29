@@ -1,7 +1,5 @@
 {
   "expo": {
-    "newArchEnabled": false,
-    "jsEngine": "hermes",
     "name": "CoMapeo",
     "slug": "comapeo",
     "scheme": "comapeo",
@@ -78,6 +76,7 @@
       ["./expo-config-plugins/flagSecure/index.js"],
       ["./expo-config-plugins/customPermissionText.js"],
       ["./expo-config-plugins/removeMediaPlaybackPermission.js"],
+      ["./expo-config-plugins/mergeBackupRules.js"],
       [
         "react-native-share",
         {

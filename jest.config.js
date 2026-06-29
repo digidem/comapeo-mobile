@@ -100,7 +100,6 @@ const config = {
   modulePathIgnorePatterns: [
     '<rootDir>/android',
     '<rootDir>/ios',
-    '<rootDir>/nodejs-assets',
     '<rootDir>/assets',
   ],
   testPathIgnorePatterns: ['<rootDir>/tests/e2e/'],

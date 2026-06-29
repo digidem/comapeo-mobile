@@ -41,7 +41,10 @@ export function SetQADeviceNameScreen() {
 
   return (
     <ScreenContentWithDock
-      contentContainerStyle={styles.content}
+      contentContainerStyle={{
+        gap: 24,
+        ...(!isEditingExisting && {marginTop: 24}),
+      }}
       dockContent={
         <PrimaryButton fullSize text="Save Name" onPress={handleSave} />
       }>
@@ -77,9 +80,6 @@ export function SetQADeviceNameScreen() {
 }
 
 const styles = StyleSheet.create({
-  content: {
-    gap: 24,
-  },
   section: {
     gap: 12,
   },

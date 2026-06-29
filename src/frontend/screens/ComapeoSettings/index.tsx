@@ -234,7 +234,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
       )}
       {isQABuild && (
         <SettingsRow
-          onPress={() => navigation.navigate('SetQADeviceName')}
+          onPress={() => navigation.navigate('EditQADeviceName')}
           label={`${formatMessage(m.qaDeviceName)}${qaDeviceName ? `: ${qaDeviceName}` : ''}`}
           Icon={<MaterialIcon name="devices" size={24} color={NEW_DARK_GREY} />}
           EndContent={

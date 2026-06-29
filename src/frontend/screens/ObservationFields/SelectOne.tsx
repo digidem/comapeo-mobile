@@ -17,7 +17,8 @@ export const SelectOne = ({options, updateTag, tagValue}: SelectOneProps) => {
         const isSelected = item.value === tagValue;
         return (
           <TouchableOpacity
-            key={item.label}
+            // eslint-disable-next-line @eslint-react/no-array-index-key
+            key={`${index}-${String(item.value)}`}
             accessibilityRole="radio"
             testID={`OBS.select-one-inp-${item.label}`}
             accessibilityState={{checked: isSelected, selected: isSelected}}

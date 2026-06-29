@@ -43,7 +43,7 @@ export function SetQADeviceNameScreen() {
     <ScreenContentWithDock
       contentContainerStyle={{
         gap: 24,
-        ...(!isEditingExisting && {marginTop: 24}),
+        ...(!isEditingExisting && {marginTop: 60}),
       }}
       dockContent={
         <PrimaryButton fullSize text="Save Name" onPress={handleSave} />

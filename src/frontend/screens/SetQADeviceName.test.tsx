@@ -143,10 +143,9 @@ describe('On QA Device require existence of a QA Device name', () => {
     );
 
     // Gate is cleared — SetQADeviceName should be gone and onboarding should appear.
-    // Mock has device name but no project, so navigator lands on Success screen.
     await waitFor(() => {
       expect(screen.queryByText('Set QA Device Name')).not.toBeOnTheScreen();
     });
-    expect(screen.getByText('Map On Your Own')).toBeOnTheScreen();
+    expect(screen.getByText('Get Started')).toBeOnTheScreen();
   });
 });

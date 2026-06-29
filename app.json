@@ -121,7 +121,13 @@
       "package": "com.comapeo"
     },
     "ios": {
-      "bundleIdentifier": "com.comapeo"
+      "bundleIdentifier": "com.comapeo",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSLocalNetworkUsageDescription": "CoMapeo uses the local network to discover and sync with nearby devices in your project.",
+        "NSBonjourServices": ["_comapeo._tcp"],
+        "UIViewControllerBasedStatusBarAppearance": true
+      }
     },
     "extra": {
       "eas": {

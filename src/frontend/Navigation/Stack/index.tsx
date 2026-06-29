@@ -149,20 +149,13 @@ export const RootStackNavigator = () => {
         <RootStack.Screen
           name="SetQADeviceName"
           component={SetQADeviceNameScreen}
-          options={{headerTitle: 'QA Device Name', headerShown: true}}
+          options={{headerShown: false}}
         />
       ) : (
         <>
           {!deviceInfo.name || !activeProjectId
             ? createOnboardingScreens({intl: formatMessage})
             : createAppScreens({intl: formatMessage})}
-          {isQABuild && (
-            <RootStack.Screen
-              name="SetQADeviceName"
-              component={SetQADeviceNameScreen}
-              options={{headerTitle: 'QA Device Name'}}
-            />
-          )}
           {/* Shared screen */}
           <RootStack.Group
             navigationKey={activeProjectId}

@@ -9,7 +9,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from './Text/HeaderText';
 import {BodyText} from './Text/BodyText';
 import {SecondaryButton} from './Buttons';
-import {BLUE_GREY} from '../lib/styles';
+import {BLUE_GREY, NEW_DARK_GREY} from '../lib/styles';
 import {APP_VARIANT} from '../lib/appVariant';
 import {useQADeviceName} from '../contexts/QADeviceNameStoreContext';
 
@@ -46,11 +46,11 @@ function QAInfoSection() {
 
   return (
     <View style={styles.qaInfoSection} testID="EBS.qa-info-section">
-      <BodyText variant="tinyMeta" style={styles.qaInfoText}>
+      <BodyText variant="smallMeta" style={styles.qaInfoText}>
         {timestamp}
       </BodyText>
       {qaDeviceName && (
-        <BodyText variant="tinyMeta" style={styles.qaInfoText}>
+        <BodyText variant="smallMeta" style={styles.qaInfoText}>
           {qaDeviceName}
         </BodyText>
       )}
@@ -188,6 +188,6 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   qaInfoText: {
-    color: '#807F82',
+    color: NEW_DARK_GREY,
   },
 });

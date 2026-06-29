@@ -33,11 +33,14 @@ function isQABuild() {
 }
 
 function formatUTCTimestamp(date: Date): string {
+  const month = date.toLocaleString('en-US', {month: 'short', timeZone: 'UTC'});
+  const day = date.getUTCDate();
+  let hours = date.getUTCHours();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
   const pad = (n: number) => String(n).padStart(2, '0');
-  return (
-    `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())} ` +
-    `${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())} UTC`
-  );
+  const ms = String(date.getUTCMilliseconds()).padStart(3, '0');
+  return `${month} ${day}, ${hours}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}.${ms} ${ampm} UTC`;
 }
 
 function QAInfoSection() {

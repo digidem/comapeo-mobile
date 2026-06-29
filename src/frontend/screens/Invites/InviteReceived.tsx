@@ -12,7 +12,7 @@ import {
 } from '@comapeo/core-react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import * as Sentry from '@sentry/react-native';
 import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
@@ -174,7 +174,7 @@ export const InviteReceived = ({
         <View style={styles.buttonContainer}>
           {acceptInvite.status === 'pending' ||
           rejectInvite.status === 'pending' ? (
-            <UIActivityIndicator style={{marginVertical: 20}} />
+            <LoadingIndicator style={{marginVertical: 20}} />
           ) : (
             <>
               <SecondaryButton

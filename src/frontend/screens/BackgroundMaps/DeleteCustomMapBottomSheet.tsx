@@ -14,7 +14,7 @@ import {
 } from '../../sharedComponents/Buttons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useRemoveCustomMapFile} from '@comapeo/core-react';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 const m = defineMessages({
   deleteCustomMapTitle: {
@@ -64,7 +64,7 @@ export const DeleteCustomMapBottomSheet = () => {
 
         {removeCustomMapMutation.status === 'pending' ? (
           <View style={styles.loading}>
-            <UIActivityIndicator size={40} />
+            <LoadingIndicator size={40} />
           </View>
         ) : (
           <View style={styles.buttonsContainer}>

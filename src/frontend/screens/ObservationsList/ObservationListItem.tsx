@@ -15,7 +15,7 @@ import {sharedStyles} from './SharedStyle.ts';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {usePresetsQuery} from '../../hooks/server/presets.ts';
 
 interface ObservationListItemProps {
@@ -47,7 +47,7 @@ function ObservationListItemNotMemoized({
       <React.Suspense
         fallback={
           <View style={[styles.container, style]}>
-            <UIActivityIndicator />
+            <LoadingIndicator />
           </View>
         }>
         <ObservationListItemInner observation={observation} style={style} />

@@ -4,7 +4,7 @@ import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {File} from 'expo-file-system';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 import {FILE_SELECT_MUTATION_KEY} from '../../hooks/files';
 import {
@@ -213,7 +213,7 @@ function NoMapScreen({
       </View>
       <View style={{gap: 20, marginTop: 40, alignItems: 'center'}}>
         {isUploading ? (
-          <UIActivityIndicator size={32} />
+          <LoadingIndicator size={32} />
         ) : (
           <SecondaryButton
             fullSize

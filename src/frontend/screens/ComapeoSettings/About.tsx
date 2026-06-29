@@ -5,7 +5,7 @@ import {defineMessages, useIntl} from 'react-intl';
 
 import {List, ListItem, ListItemText} from '../../sharedComponents/List';
 import {MethodName, useDeviceInfo} from '../../hooks/useDeviceInfo';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {BLUE_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
@@ -94,7 +94,7 @@ const DeviceInfoListItem = ({
         primary={label}
         secondary={
           isPending ? (
-            <UIActivityIndicator />
+            <LoadingIndicator />
           ) : error || typeof data !== 'string' ? (
             formatMessage(m.unknown)
           ) : (

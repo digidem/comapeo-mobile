@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {View, StyleSheet, Easing} from 'react-native';
-import {DotIndicator} from 'react-native-indicators';
+import {View, StyleSheet} from 'react-native';
 import {ViewStyleProp} from '../sharedTypes';
+import {LoadingIndicator} from './LoadingIndicator';
 
 export const Loading = ({
   color,
@@ -13,13 +13,7 @@ export const Loading = ({
   style?: ViewStyleProp;
 }) => (
   <View style={[styles.root, style]}>
-    <DotIndicator
-      color={color}
-      count={3}
-      animationDuration={1500}
-      size={size || 10}
-      animationEasing={Easing.ease}
-    />
+    <LoadingIndicator color={color} size={size} />
   </View>
 );
 

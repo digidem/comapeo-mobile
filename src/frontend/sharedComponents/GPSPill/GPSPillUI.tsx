@@ -1,7 +1,7 @@
 import {type ReactNode} from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialCommunityIcon from '@react-native-vector-icons/material-design-icons';
+import {LoadingIndicator} from '../LoadingIndicator';
 import {type UnitSystem} from '../../contexts/UnitSystemStoreContext';
 
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
@@ -64,13 +64,12 @@ export const GPSPillUI = (props: Props) => {
       text = '--';
       icon = (
         <View testID={props.iconTestID}>
-          <UIActivityIndicator
+          <LoadingIndicator
             // Animations seem to cause issues with test performance on Browserstack
             animating={!isE2E}
             hidesWhenStopped={false}
             size={12}
             color={WHITE}
-            style={{flex: 0}}
           />
         </View>
       );

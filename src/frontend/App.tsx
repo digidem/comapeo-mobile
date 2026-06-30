@@ -81,6 +81,18 @@ Sentry.init({
   debug: false, // this added alot of unneccesary noise to the console.
   initialScope: {user: {id: sentryUserId}},
   enableMetrics: false,
+  replaysSessionSampleRate: 0,
+  replaysOnErrorSampleRate: sentryEnvironment === 'qa' ? 1.0 : 0,
+  integrations:
+    sentryEnvironment === 'qa'
+      ? [
+          Sentry.mobileReplayIntegration({
+            maskAllText: false,
+            maskAllImages: false,
+            maskAllVectors: false,
+          }),
+        ]
+      : [],
 });
 
 if (appMetricsOptIn) {

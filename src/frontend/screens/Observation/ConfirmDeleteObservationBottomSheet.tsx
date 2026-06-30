@@ -16,6 +16,7 @@ import {DocAlreadyDeletedError, getErrorCode} from '@comapeo/core/errors.js';
 import * as Sentry from '@sentry/react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   deleteTitle: {
@@ -43,7 +44,7 @@ export const ConfirmDeleteObservationBottomSheet = ({
   const navigation = useNavigationFromRoot();
   const {projectId} = useActiveProject();
   const {observationId} = route.params;
-  const {mutate: deleteObservationMutation} = useDeleteDocument({
+  const {mutate: deleteObservationMutation, status} = useDeleteDocument({
     docType: 'observation',
     projectId,
   });
@@ -78,18 +79,24 @@ export const ConfirmDeleteObservationBottomSheet = ({
           description={t(m.deleteDescription)}
         />
         <View style={styles.buttonsContainer}>
-          <DestructiveButton
-            fullSize
-            testID="OBS.confirm-delete-btn"
-            text={t(m.deleteButton)}
-            renderIcon={() => <DiscardIcon />}
-            onPress={handleDelete}
-          />
-          <SecondaryButton
-            fullSize
-            text={t(m.cancel)}
-            onPress={() => navigation.goBack()}
-          />
+          {status === 'pending' ? (
+            <UIActivityIndicator style={{marginVertical: 20}} />
+          ) : (
+            <>
+              <DestructiveButton
+                fullSize
+                testID="OBS.confirm-delete-btn"
+                text={t(m.deleteButton)}
+                renderIcon={() => <DiscardIcon />}
+                onPress={handleDelete}
+              />
+              <SecondaryButton
+                fullSize
+                text={t(m.cancel)}
+                onPress={() => navigation.goBack()}
+              />
+            </>
+          )}
         </View>
       </View>
     </BottomSheetWrapper>

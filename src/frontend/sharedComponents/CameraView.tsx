@@ -1,30 +1,37 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet, Text, StatusBar} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, StatusBar} from 'react-native';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 import {
   Camera,
   useCameraDevice,
-  useCameraPermission,
   type PhotoFile,
 } from 'react-native-vision-camera';
+import {
+  useCameraPermissionMutation,
+  useRequestCameraPermissionOnMount,
+} from '../hooks/useCameraPermissionTracker';
+import {openSettingsAndWait} from '../utils/linking';
 
-import {AddButton} from './AddButton';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {GPSPill} from './GPSPill';
+import {PrimaryButton} from './Buttons';
+import {BodyText} from './Text/BodyText';
+import {defineMessages, useIntl} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
 import {useLocationState} from '../contexts/LocationContext';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import * as Sentry from '@sentry/react-native';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {toError} from '../utils/errors';
+import AddButtonSVG from '../images/AddButton.svg';
 
 const m = defineMessages({
   noCameraAccess: {
-    id: 'screens.CameraScreen.noCameraAccess',
-    defaultMessage: 'No access to camera. Please Allow access in setting',
+    id: '$1screens.CameraScreen.noCameraAccess',
+    defaultMessage: 'No access to camera. Please allow access in settings.',
   },
-  goToSettings: {
-    id: 'screens.CameraScreen.goToSettings',
-    defaultMessage: 'Go to Settings',
+  openSettings: {
+    id: '$1screens.CameraScreen.openSettings',
+    defaultMessage: 'Open Settings',
   },
 });
 
@@ -38,11 +45,13 @@ export const CameraView = ({onAddPress}: Props) => {
   const [cameraReady, setCameraReady] = React.useState(false);
   const accelerometerMeasurement =
     React.useRef<AccelerometerMeasurement | null>(null);
-  const {hasPermission} = useCameraPermission();
+  const {hasPermission} = useRequestCameraPermissionOnMount();
+  const {formatMessage} = useIntl();
   const camera = useRef<Camera>(null);
   const location = useLocationState(store => store.location);
   const navigation = useNavigationFromRoot();
   const device = useCameraDevice('back');
+  const openSettingsMutation = useCameraPermissionMutation(openSettingsAndWait);
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -101,16 +110,21 @@ export const CameraView = ({onAddPress}: Props) => {
       });
   }
 
-  const disableButton = capturing || !cameraReady;
+  const disableButton = capturing || !cameraReady || !hasPermission;
 
   return (
     <View style={styles.container} testID="MAIN.camera-scrn">
       <StatusBar barStyle="light-content" />
       {!hasPermission || !device ? (
         <View style={styles.noPermissionContainer}>
-          <Text style={{marginBottom: 10}}>
-            <FormattedMessage {...m.noCameraAccess} />
-          </Text>
+          <BodyText variant="tinyMeta" style={styles.noPermissionText}>
+            {formatMessage(m.noCameraAccess)}
+          </BodyText>
+          <PrimaryButton
+            fullSize
+            text={formatMessage(m.openSettings)}
+            onPress={() => openSettingsMutation.mutateAsync()}
+          />
         </View>
       ) : (
         <Camera
@@ -124,12 +138,20 @@ export const CameraView = ({onAddPress}: Props) => {
         />
       )}
 
-      <AddButton
-        onPress={handleAddPress}
-        disabled={disableButton}
-        style={{opacity: disableButton ? 0.5 : 1}}
-        testID="addButtonCamera"
-      />
+      <View style={styles.bottomBar}>
+        <View style={styles.gpsPillContainer}>
+          <GPSPill onPress={() => navigation.navigate('GpsModal')} />
+        </View>
+        <View
+          testID="addButtonCamera"
+          accessibilityLabel="Add Observation"
+          style={{opacity: disableButton ? 0.5 : 1}}>
+          <TouchableOpacity disabled={disableButton} onPress={handleAddPress}>
+            <AddButtonSVG />
+          </TouchableOpacity>
+        </View>
+        <View style={{flex: 1}} />
+      </View>
     </View>
   );
 };
@@ -140,8 +162,25 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   noPermissionContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    gap: 30,
+    paddingHorizontal: 40,
+  },
+  noPermissionText: {
+    color: 'white',
+    textAlign: 'center',
+  },
+  bottomBar: {
+    position: 'absolute',
+    bottom: 25,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  gpsPillContainer: {
     flex: 1,
+    alignItems: 'center',
   },
 });

@@ -9,11 +9,11 @@ import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreCont
 
 const m = defineMessages({
   done: {
-    id: 'screens.InviteSuccess.done',
+    id: '$1screens.InviteSuccess.done',
     defaultMessage: 'Done',
   },
   success: {
-    id: 'screens.InviteSuccess.success',
+    id: '$1screens.InviteSuccess.success',
     defaultMessage: 'Success',
   },
   youHaveJoined: {
@@ -24,7 +24,6 @@ const m = defineMessages({
 
 export const InviteSuccessfullyAccepted = ({
   route,
-  navigation,
 }: NativeRootNavigationProps<'InviteSuccessfullyAccepted'>) => {
   const {formatMessage} = useIntl();
   const {setActiveProjectId} = useActiveProjectIdActions();
@@ -44,7 +43,6 @@ export const InviteSuccessfullyAccepted = ({
             fullSize
             onPress={() => {
               setActiveProjectId(route.params.projectId);
-              navigation.goBack();
             }}
             text={formatMessage(m.done)}
           />

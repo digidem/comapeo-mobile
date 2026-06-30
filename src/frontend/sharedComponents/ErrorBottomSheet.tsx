@@ -13,7 +13,7 @@ import {BLUE_GREY} from '../lib/styles';
 
 const m = defineMessages({
   somethingWrong: {
-    id: 'sharedComponents.ErrorBottomSheet.somethingWrong',
+    id: '$1sharedComponents.ErrorBottomSheet.somethingWrong',
     defaultMessage: 'Something Went Wrong',
   },
   advanced: {
@@ -21,7 +21,7 @@ const m = defineMessages({
     defaultMessage: 'Advanced',
   },
   close: {
-    id: 'sharedComponents.ErrorBottomSheet.close',
+    id: '$1sharedComponents.ErrorBottomSheet.close',
     defaultMessage: 'Close',
   },
 });

@@ -1,4 +1,3 @@
-import React from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -10,8 +9,9 @@ import {MAX_RECORDING_DURATION_MS} from '../shared';
 import {COMAPEO_BLUE} from '../../../lib/styles';
 
 export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
-  const {top, bottom} = useSafeAreaInsets();
+  const {bottom} = useSafeAreaInsets();
   const {height} = Dimensions.get('window');
+  const targetHeight = height - bottom;
 
   const elapsedTimeValue = useDerivedValue(() => {
     return withTiming(timeElapsed, {duration: 500});
@@ -19,8 +19,7 @@ export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
 
   const animatedStyles = useAnimatedStyle(() => ({
     height:
-      (height + top + bottom) *
-      (elapsedTimeValue.value * (1 / MAX_RECORDING_DURATION_MS)),
+      targetHeight * (elapsedTimeValue.value * (1 / MAX_RECORDING_DURATION_MS)),
     backgroundColor: COMAPEO_BLUE,
   }));
 

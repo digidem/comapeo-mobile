@@ -11,7 +11,7 @@ import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription'
 
 const m = defineMessages({
   archiveAdded: {
-    id: 'ProjectSettings.RemoteArchive.Success.archiveAdded',
+    id: '$1ProjectSettings.RemoteArchive.Success.archiveAdded',
     defaultMessage: 'Remote Archive Added',
   },
   canSyncOnInternet: {
@@ -20,7 +20,7 @@ const m = defineMessages({
       'All project devices can exchange with this Archive, sharing data over the internet.',
   },
   close: {
-    id: 'ProjectSettings.RemoteArchive.Success.close',
+    id: '$1ProjectSettings.RemoteArchive.Success.close',
     defaultMessage: 'Close',
   },
 });

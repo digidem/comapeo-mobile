@@ -11,7 +11,7 @@ import {Checkbox} from './Checkbox';
 
 const m = defineMessages({
   shareDiagnostics: {
-    id: 'screens.OnboardingPrivacyPolicy.shareDiagnostics',
+    id: '$1screens.OnboardingPrivacyPolicy.shareDiagnostics',
     defaultMessage: 'Share Diagnostic Information',
   },
 });

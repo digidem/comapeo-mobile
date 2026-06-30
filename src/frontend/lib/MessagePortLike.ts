@@ -1,6 +1,7 @@
 import {EventSubscription} from 'react-native';
 import EventEmitter from 'eventemitter3';
 import nodejs from '@comapeo/nodejs-mobile-react-native';
+import * as Sentry from '@sentry/react-native';
 import type {ServerStateStore, ServerState} from './ServerStateStore.ts';
 import {ExhaustivenessError} from './ExhaustivenessError.ts';
 
@@ -13,6 +14,7 @@ export class MessagePortLike extends EventEmitter {
   #state: MessagePortState = 'idle';
   #incomingQueue: unknown[] = [];
   #outgoingQueue: unknown[] = [];
+  #reportedErrorDrop = false;
   #handleChannelMessage;
 
   #handleServerStateChange = (serverState: ServerState) => {
@@ -61,7 +63,23 @@ export class MessagePortLike extends EventEmitter {
         nodejs.channel.post(this.#API_EVENT_NAME, message);
         break;
       case 'ERROR':
-        throw new Error(serverState.error || 'Unknown server error');
+        // The backend has latched into a permanent ERROR state, already surfaced
+        // to the user via ServerStateStore. Routine teardown RPC sends (e.g.
+        // rpc-reflector OFF/unsubscribe during unmount) must not throw here, or a
+        // single backend error becomes a storm of fatal frontend crashes. Drop
+        // the send; the error UI is driven by the server-state subscription.
+        // Leave one breadcrumb so dropped sends are diagnosable without
+        // re-introducing an (even non-fatal) event storm — the backend already
+        // captures the underlying cause.
+        if (!this.#reportedErrorDrop) {
+          this.#reportedErrorDrop = true;
+          Sentry.addBreadcrumb({
+            category: 'ipc',
+            level: 'warning',
+            message: 'Dropping RPC send; backend is in ERROR state',
+          });
+        }
+        break;
       default:
         throw new ExhaustivenessError(serverState.value);
     }

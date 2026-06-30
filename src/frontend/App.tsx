@@ -1,9 +1,27 @@
 import * as React from 'react';
+import {Logger, setConnected} from '@maplibre/maplibre-react-native';
 import {getLocales} from 'expo-localization';
-import {QueryClient} from '@tanstack/react-query';
+
+// Maplibre logs when tile requests are cancelled, which is often.
+// this turns off the unneccessary noise in the console logs
+Logger.setLogCallback(log => {
+  if (
+    log.tag === 'Mbgl-HttpRequest' &&
+    log.message.startsWith('Request failed due to a permanent error: Canceled')
+  ) {
+    return true;
+  }
+  return false;
+});
+
+// All styles are served via localhost and we need to bypass the internal connectivity manager in MapLibre React Native
+// in order for things to work while the app is offline.
+// https://github.com/maplibre/maplibre-react-native/blob/6f99de530eec2e06de485ef86f4be61f941e0e09/docs/content/modules/mlrn-module.md#setconnectedconnected
+setConnected(true);
+
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {initializeNodejs} from './initializeNodejs';
-import Mapbox from '@rnmapbox/maps';
 import {PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
@@ -19,14 +37,11 @@ import {createDraftObservationStore} from './contexts/PersistedStores/DraftObser
 import {createTrackStore} from './contexts/TrackStoreContext';
 import {createSecurityStore} from './contexts/SecurityStoreContext';
 import {createCoordinateFormatStore} from './contexts/CoordinateFormatStoreContext';
+import {createUnitSystemStore} from './contexts/UnitSystemStoreContext';
 import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatStoreContext';
 import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
-import {
-  createLocaleStore,
-  LocaleStoreProvider,
-} from './contexts/LocaleStoreContext';
-import {getAppLanguageTag} from './lib/intl';
+import {createLocaleStore, LocaleContext} from './contexts/LocaleStoreContext';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
@@ -77,8 +92,6 @@ if (appMetricsOptIn) {
   Sentry.getClient()?.addIntegration(navigationIntegration);
 }
 
-Mapbox.setTelemetryEnabled(false);
-
 const persistedLocaleStore = createLocaleStore({
   persist: true,
 });
@@ -86,15 +99,10 @@ const persistedLocaleStore = createLocaleStore({
 const appDiagnosticMetrics = new AppDiagnosticMetrics({
   getLocaleInfo: () => {
     const systemLocales = getLocales();
-    const localeState = persistedLocaleStore.instance.getState();
-
-    const appLanguageTag = getAppLanguageTag({
-      localeState,
-      systemLanguageTags: systemLocales.map(l => l.languageTag),
-    }).value;
+    const {languageTag} = persistedLocaleStore.instance.getState();
 
     return {
-      appLanguageTag,
+      appLanguageTag: languageTag,
       deviceLanguageTag: systemLocales[0]!.languageTag,
     };
   },
@@ -150,6 +158,7 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 const savedLocationStore = createSavedLocationStore({persist: true});
 const lowStorageBannerStore = createLowStorageBannerStore();
 const earlyAccessStore = createEarlyAccessStore({persist: true});
+const persistedUnitSystemStore = createUnitSystemStore({persist: true});
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
@@ -207,45 +216,59 @@ const App = () => {
       'android.permission.CAMERA',
       'android.permission.ACCESS_FINE_LOCATION',
       'android.permission.ACCESS_COARSE_LOCATION',
-    ]).then(() => setPermissionsAsked(true));
+    ])
+      .catch(err => {
+        // Rejects when no Activity is attached (e.g. launched in the
+        // background)
+        Sentry.captureException(err);
+      })
+      // Always dismiss the splash, regardless of outcome — this startup ask
+      // is only an eager prompt; each feature re-requests its own permission
+      // on demand. Never gate splash dismissal on the request succeeding.
+      .finally(() => setPermissionsAsked(true));
   }, []);
 
   return (
     <Sentry.ErrorBoundary fallback={<FatalErrorUntranslated />}>
-      <LocaleStoreProvider value={persistedLocaleStore}>
-        <IntlProvider>
-          {/* This fatal error requires internationalization to be set up */}
-          <Sentry.ErrorBoundary fallback={<FatalError />}>
-            <ServerLoading serverStateStore={serverStateStore}>
-              <Suspense fallback={<Loading />}>
-                <AppProviders
-                  queryClient={queryClient}
-                  localDiscoveryController={localDiscoveryController}
-                  mapeoApi={mapeoApi}
-                  mapServerApi={mapServerApi}
-                  persistedDrafObservationStore={persistedDraftObservationStore}
-                  trackStore={persistedTrackStore}
-                  securityStore={persistedSecurityStore}
-                  coordinateFormatStore={persistedCoordinateFormatStore}
-                  manualEntryCoordinateFormatStore={
-                    persistedManualEntryCoordinateFormatStore
-                  }
-                  savedLocationStore={savedLocationStore}
-                  activeProjectIdStore={persistedActiveProjectIdStore}
-                  metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-                  appUsageStatsStore={appUsagePromptStore}
-                  lowStorageBannerStore={lowStorageBannerStore}
-                  earlyAccessStore={earlyAccessStore}>
-                  <AppNavigator
-                    permissionAsked={permissionsAsked}
-                    navigationIntegration={navigationIntegration}
-                  />
-                </AppProviders>
-              </Suspense>
-            </ServerLoading>
-          </Sentry.ErrorBoundary>
-        </IntlProvider>
-      </LocaleStoreProvider>
+      <QueryClientProvider client={queryClient}>
+        <LocaleContext value={persistedLocaleStore}>
+          <IntlProvider>
+            {/* This fatal error requires internationalization to be set up */}
+            <Sentry.ErrorBoundary fallback={<FatalError />}>
+              <ServerLoading serverStateStore={serverStateStore}>
+                <Suspense fallback={<Loading />}>
+                  <AppProviders
+                    queryClient={queryClient}
+                    localDiscoveryController={localDiscoveryController}
+                    mapeoApi={mapeoApi}
+                    mapServerApi={mapServerApi}
+                    persistedDrafObservationStore={
+                      persistedDraftObservationStore
+                    }
+                    trackStore={persistedTrackStore}
+                    securityStore={persistedSecurityStore}
+                    coordinateFormatStore={persistedCoordinateFormatStore}
+                    manualEntryCoordinateFormatStore={
+                      persistedManualEntryCoordinateFormatStore
+                    }
+                    savedLocationStore={savedLocationStore}
+                    activeProjectIdStore={persistedActiveProjectIdStore}
+                    metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+                    appUsageStatsStore={appUsagePromptStore}
+                    lowStorageBannerStore={lowStorageBannerStore}
+                    earlyAccessStore={earlyAccessStore}
+                    unitSystemStore={persistedUnitSystemStore}>
+                    <AppNavigator
+                      permissionAsked={permissionsAsked}
+                      navigationIntegration={navigationIntegration}
+                    />
+                  </AppProviders>
+                </Suspense>
+              </ServerLoading>
+            </Sentry.ErrorBoundary>
+          </IntlProvider>
+        </LocaleContext>
+      </QueryClientProvider>
     </Sentry.ErrorBoundary>
   );
 };

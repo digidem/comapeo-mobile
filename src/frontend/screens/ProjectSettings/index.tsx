@@ -25,7 +25,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   title: {
-    id: 'Screens.ProjectSettings.title',
+    id: '$1Screens.ProjectSettings.title',
     defaultMessage: 'Coordinator Tools',
   },
   soloDescription: {
@@ -37,7 +37,7 @@ const m = defineMessages({
     defaultMessage: 'Invite Collaborators',
   },
   configTitle: {
-    id: 'Screens.ProjectSettings.configTitle',
+    id: '$1Screens.ProjectSettings.configTitle',
     defaultMessage: 'Project Categories',
   },
   updateCategories: {
@@ -49,11 +49,11 @@ const m = defineMessages({
     defaultMessage: 'Edit Info',
   },
   remoteArchiveOn: {
-    id: 'Screens.ProjectSettings.remoteArchiveOn',
+    id: '$1Screens.ProjectSettings.remoteArchiveOn',
     defaultMessage: 'Remote Archive  |  ON',
   },
   remoteArchiveOff: {
-    id: 'Screens.ProjectSettings.remoteArchiveOff',
+    id: '$1Screens.ProjectSettings.remoteArchiveOff',
     defaultMessage: 'Remote Archive  |  OFF',
   },
   remoteArchiveDesc: {
@@ -66,11 +66,11 @@ const m = defineMessages({
     defaultMessage: 'View Details',
   },
   projectStatsOn: {
-    id: 'Screens.ProjectSettings.projectStatsOn',
+    id: '$1Screens.ProjectSettings.projectStatsOn',
     defaultMessage: 'Project Statistics  |  ON',
   },
   projectStatsOff: {
-    id: 'Screens.ProjectSettings.projectStatsOff',
+    id: '$1Screens.ProjectSettings.projectStatsOff',
     defaultMessage: 'Project Statistics  |  OFF',
   },
   projectStatsOnDesc: {
@@ -144,7 +144,7 @@ export const ProjectSettings = () => {
           title={formatMessage(m.configTitle)}
           subtitle={configData?.configMetadata?.name}
           buttonText={formatMessage(m.updateCategories)}
-          onPress={() => navigate('Config')}
+          onPress={() => navigate('Categories')}
         />
       )}
       {!isSolo && (

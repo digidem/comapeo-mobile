@@ -1,9 +1,4 @@
-import {
-  BLACK,
-  BLUE_GREY,
-  NEW_DARK_GREY,
-  VERY_LIGHT_GREY,
-} from '../../lib/styles';
+import {BLUE_GREY, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -14,10 +9,6 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: VERY_LIGHT_GREY,
     marginBottom: 20,
-  },
-  overviewText: {
-    fontSize: 14,
-    marginBottom: 10,
   },
   toggleContainer: {
     borderWidth: 1,
@@ -36,8 +27,10 @@ export const styles = StyleSheet.create({
   },
   header: {
     marginTop: 50,
-    fontSize: 24,
-    fontWeight: 'bold',
+    marginBottom: 30,
+  },
+  collectionHeader: {
+    marginTop: 10,
     marginBottom: 30,
   },
   sectionHeader: {
@@ -48,7 +41,6 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
   },
   sectionTitle: {
-    fontSize: 16,
     textAlign: 'left',
     width: '75%',
   },
@@ -57,8 +49,7 @@ export const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
   },
-  sectionText: {
-    fontSize: 14,
+  newDarkGrey: {
     color: NEW_DARK_GREY,
   },
   pointContainer: {
@@ -70,13 +61,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-  pointTitle: {
-    fontSize: 16,
-    color: BLACK,
-  },
-  pointDescription: {
-    fontSize: 14,
-    color: NEW_DARK_GREY,
+  diagnosticsTitle: {
+    marginTop: 20,
   },
   horizontalLine: {
     borderBottomColor: BLUE_GREY,
@@ -104,15 +90,11 @@ export const styles = StyleSheet.create({
   bulletIcon: {
     marginTop: 8,
   },
-  boldText: {
-    fontWeight: 'bold',
-    color: NEW_DARK_GREY,
-  },
   diagnosticsDescription: {
     fontSize: 14,
     color: NEW_DARK_GREY,
-    textAlign: 'left',
     fontWeight: 'normal',
+    fontFamily: undefined,
   },
   horizontalLineSmall: {
     borderBottomColor: BLUE_GREY,

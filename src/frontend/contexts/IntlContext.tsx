@@ -3,9 +3,10 @@ import {IntlProvider as ReactIntlProvider, CustomFormats} from 'react-intl';
 import {StyleSheet, Text} from 'react-native';
 import {useLocales} from 'expo-localization';
 
-import messages from '../../../translations/messages.json';
-import {useAppLanguageTag} from '../hooks/useAppLanguageTag';
-import {extractLanguageCode, TranslatedLanguageTag} from '../lib/intl';
+import {useLocaleState} from './LocaleStoreContext';
+import {getUsableLanguageTag, type AvailableLanguageTag} from '../lib/intl';
+import {Loading} from '../sharedComponents/Loading';
+import {useLanguageQueries} from '../hooks/useLanguageQueries';
 
 export const formats: CustomFormats = {
   date: {
@@ -26,28 +27,21 @@ const DEFAULT_RICH_TEXT_MAPPINGS: NonNullable<
 };
 
 export const IntlProvider = ({children}: {children: React.ReactNode}) => {
-  const languageTag = useAppLanguageTag();
+  const languageTag = useLocaleState(s => s.languageTag);
   const systemLocales = useLocales();
 
-  const messagesToUse = React.useMemo(() => {
-    // A list of languages in order of preference - regional variants first over general language codes
-    const languages: string[] = [];
-    const systemLanguageTags = systemLocales.map(l => l.languageTag);
-    for (const tag of [languageTag, ...systemLanguageTags]) {
-      languages.push(tag);
-      const languageCode = extractLanguageCode(tag);
-      if (languageCode !== tag) {
-        languages.push(languageCode);
-      }
-    }
-    const merged = {};
-    // Merge messages in order of priority: specific system locales, app language code, full app language tag
-    for (const tag of languages.reverse()) {
-      Object.assign(merged, messages[tag as TranslatedLanguageTag] || {});
-    }
-
-    return merged;
+  const languageCodes = React.useMemo(() => {
+    const usableSystemLanguageTags = systemLocales
+      .map(l => getUsableLanguageTag(l.languageTag))
+      .filter((tag): tag is AvailableLanguageTag => tag !== undefined);
+    return Array.from(new Set([languageTag, ...usableSystemLanguageTags]));
   }, [languageTag, systemLocales]);
+
+  const {data: messagesToUse, isPending} = useLanguageQueries(languageCodes);
+
+  if (isPending) {
+    return <Loading />;
+  }
 
   return (
     <ReactIntlProvider

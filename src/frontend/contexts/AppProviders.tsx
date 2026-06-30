@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ComapeoCoreProvider} from '@comapeo/core-react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {QueryClient} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {fetch} from 'expo/fetch';
@@ -23,6 +23,10 @@ import {
   type CoordinateFormatStore,
   CoordinateFormatStoreProvider,
 } from './CoordinateFormatStoreContext';
+import {
+  type UnitSystemStore,
+  UnitSystemStoreContext,
+} from './UnitSystemStoreContext';
 import {
   type ManualEntryCoordinateFormatStore,
   ManualEntryCoordinateFormatStoreProvider,
@@ -66,6 +70,7 @@ type AppProvidersProps = {
   lowStorageBannerStore: LowStorageBannerStore;
   appUsageStatsStore: AppUsageStatsStore;
   earlyAccessStore: EarlyAccessStore;
+  unitSystemStore: UnitSystemStore;
 };
 
 export const AppProviders = ({
@@ -85,16 +90,17 @@ export const AppProviders = ({
   lowStorageBannerStore,
   earlyAccessStore,
   appUsageStatsStore,
+  unitSystemStore,
 }: AppProvidersProps) => {
   return (
-    <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
-      <AppUsageStatsProvider value={appUsageStatsStore}>
-        <SecurityStoreProvider value={securityStore}>
-          <CoordinateFormatStoreProvider value={coordinateFormatStore}>
-            <ManualEntryCoordinateFormatStoreProvider
-              value={manualEntryCoordinateFormatStore}>
-              <TrackStoreProvider value={trackStore}>
-                <QueryClientProvider client={queryClient}>
+    <UnitSystemStoreContext value={unitSystemStore}>
+      <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
+        <AppUsageStatsProvider value={appUsageStatsStore}>
+          <SecurityStoreProvider value={securityStore}>
+            <CoordinateFormatStoreProvider value={coordinateFormatStore}>
+              <ManualEntryCoordinateFormatStoreProvider
+                value={manualEntryCoordinateFormatStore}>
+                <TrackStoreProvider value={trackStore}>
                   <LowStorageBannerStoreProvider value={lowStorageBannerStore}>
                     <SafeAreaProvider>
                       <GestureHandlerRootView style={styles.flex}>
@@ -126,13 +132,13 @@ export const AppProviders = ({
                       </GestureHandlerRootView>
                     </SafeAreaProvider>
                   </LowStorageBannerStoreProvider>
-                </QueryClientProvider>
-              </TrackStoreProvider>
-            </ManualEntryCoordinateFormatStoreProvider>
-          </CoordinateFormatStoreProvider>
-        </SecurityStoreProvider>
-      </AppUsageStatsProvider>
-    </MetricsDiagnosticsStoreProvider>
+                </TrackStoreProvider>
+              </ManualEntryCoordinateFormatStoreProvider>
+            </CoordinateFormatStoreProvider>
+          </SecurityStoreProvider>
+        </AppUsageStatsProvider>
+      </MetricsDiagnosticsStoreProvider>
+    </UnitSystemStoreContext>
   );
 };
 

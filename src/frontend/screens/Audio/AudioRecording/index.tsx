@@ -30,7 +30,7 @@ const m = defineMessages({
     defaultMessage: 'Less than a minute left',
   },
   nowRecording: {
-    id: 'screens.AudioRecording.nowRecording',
+    id: '$1screens.AudioRecording.nowRecording',
     defaultMessage: 'Now Recording...',
   },
 });

@@ -24,15 +24,15 @@ import {toError} from '../../utils/errors';
 
 const m = defineMessages({
   recordingSaved: {
-    id: 'screens.AudioPlaybackNew.recordingSaved',
+    id: '$1screens.AudioPlaybackNew.recordingSaved',
     defaultMessage: 'Recording Saved!',
   },
   backToEditing: {
-    id: 'screens.AudioPlaybackNew.backToEditing',
+    id: '$1screens.AudioPlaybackNew.backToEditing',
     defaultMessage: 'Back to Editing',
   },
   delete: {
-    id: 'screens.AudioPlaybackNew.delete',
+    id: '$1screens.AudioPlaybackNew.delete',
     defaultMessage: 'Delete',
   },
 });

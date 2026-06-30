@@ -23,7 +23,7 @@ import {sharedStyles} from './sharedStyles.ts';
 
 const m = defineMessages({
   headerDeleteButtonText: {
-    id: 'screens.PhotoPreviewModal.headerButtonText',
+    id: '$1screens.PhotoPreviewModal.headerButtonText',
     defaultMessage: 'Delete Photo',
   },
 });

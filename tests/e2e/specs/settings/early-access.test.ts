@@ -10,7 +10,7 @@ describe('Settings - Early Access Mode', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
     const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
-    await expect($(byTextMatches('Early Access is OFF'))).toBeDisplayed();
+    await expect($(byTextMatches('Early Access OFF'))).toBeDisplayed();
     await earlyAccessItem.click();
     await expect($(byTextMatches('Early Access Mode'))).toBeDisplayed();
     await expect($(byText('See CoMapeo Updates'))).toBeDisplayed();
@@ -28,13 +28,13 @@ describe('Settings - Early Access Mode', () => {
       ),
     ).toBeDisplayed();
     await expect($(byTextMatches('Have feedback?'))).toBeDisplayed();
-    await expect($(byTextMatches('Share it here'))).toBeDisplayed();
+    await expect($(byTextMatches('Share it at'))).toBeDisplayed();
   });
 
   it('should show ON in the App Settings list item text', async () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await expect($(byTextMatches('Early Access is ON'))).toBeDisplayed();
+    await expect($(byTextMatches('Early Access ON'))).toBeDisplayed();
     const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
     await earlyAccessItem.click();
     await expect($(byResourceId('EA.checkbox-on'))).toBeDisplayed();
@@ -45,12 +45,11 @@ describe('Settings - Early Access Mode', () => {
     await backBtn.click();
     const backBtnAgain = await $(byResourceId('MAIN.header-back-btn'));
     await backBtnAgain.click();
-    await expect(
-      $(byTextMatches('You are in Early Access Mode')),
-    ).toBeDisplayed();
+    await expect($(byTextMatches('Early Access ON'))).toBeDisplayed();
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
     const aboutComapeoOption = await $(byResourceId('aboutSettingsButton'));
+    await aboutComapeoOption.scrollIntoView();
     await aboutComapeoOption.click();
     await expect(
       $(byTextMatches('You are in Early Access Mode.')),
@@ -73,7 +72,7 @@ describe('Settings - Early Access Mode', () => {
     await expect($(byResourceId('EA.checkbox-off'))).toBeDisplayed();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await expect($(byTextMatches('Early Access is OFF'))).toBeDisplayed();
+    await expect($(byTextMatches('Early Access OFF'))).toBeDisplayed();
     await backBtn.click();
     await $(byResourceId('MAIN.map-screen')).click();
   });

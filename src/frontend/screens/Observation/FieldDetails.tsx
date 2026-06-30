@@ -1,37 +1,53 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {MEDIUM_GREY} from '../../lib/styles';
-import {
-  FormattedFieldProp,
-  FormattedFieldValue,
-} from '../../sharedComponents/FormattedData';
 import {Field, Observation} from '@comapeo/schema';
 import {ViewStyleProp} from '../../sharedTypes';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {defineMessages, useIntl} from 'react-intl';
+import {getFieldAnswerText} from '../../sharedComponents/FormattedData';
+
+const m = defineMessages({
+  noAnswer: {
+    id: '$1screens.Observation.ObservationView.noAnswer',
+    defaultMessage: 'No answer',
+    description:
+      'Placeholder text for fields on an observation which are not answered',
+  },
+});
 
 export const FieldDetails = ({
   fields,
-  observation,
+  tags,
   style,
 }: {
   fields: Field[];
-  observation: Observation;
+  tags: Observation['tags'];
   style?: ViewStyleProp;
 }) => {
+  const {formatMessage} = useIntl();
+
   return (
     <View>
       {fields.map(field => {
-        const value = observation.tags[field.tagKey];
+        const tagValue = tags[field.tagKey];
+        const answers = getFieldAnswerText({
+          tagValue,
+          fieldOptions: field.options,
+        });
         return (
           <View key={field.docId} style={[styles.section, style]}>
             <HeaderText variant="header3" style={styles.fieldTitle}>
-              <FormattedFieldProp field={field} propName="label" />
+              {field.label}
             </HeaderText>
-            <BodyText
-              style={{color: value === undefined ? MEDIUM_GREY : undefined}}>
-              <FormattedFieldValue value={value} field={field} />
-            </BodyText>
+            {!answers ? (
+              <BodyText style={{color: MEDIUM_GREY}}>
+                {formatMessage(m.noAnswer)}
+              </BodyText>
+            ) : (
+              <BodyText>{answers}</BodyText>
+            )}
           </View>
         );
       })}

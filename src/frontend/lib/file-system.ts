@@ -65,7 +65,7 @@ export async function selectFile({
  */
 export async function getExpoImageStorageSize(
   imageURL: string,
-): Promise<number> {
+): Promise<number | null> {
   let fileInfo: FileSystem.FileInfo;
 
   if (imageURL.startsWith('file://')) {
@@ -73,16 +73,14 @@ export async function getExpoImageStorageSize(
   } else {
     const cachePath = await ExpoImage.getCachePathAsync(imageURL);
 
-    if (!cachePath) {
-      throw new Error(`Could not get size for image at ${imageURL}`);
-    }
+    // null when the image isn't in expo-image's disk cache (served from memory,
+    // not yet written, or evicted) — a benign miss, not an error.
+    if (!cachePath) return null;
 
     fileInfo = await FileSystem.getInfoAsync(`file://${cachePath}`);
   }
 
-  if (!fileInfo.exists) {
-    throw new Error(`Could not get size for image at ${imageURL}`);
-  }
+  if (!fileInfo.exists) return null;
 
   return fileInfo.size;
 }

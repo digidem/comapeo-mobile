@@ -13,7 +13,7 @@ import {MEMBER_ROLE_ID} from '../../sharedTypes';
 import {saveDocuments} from '@react-native-documents/picker';
 import {Exports} from '../../sharedTypes/navigation';
 import * as FileSystem from 'expo-file-system/legacy';
-import {useAppLanguageTag} from '../useAppLanguageTag';
+import {useLocaleState} from '../../contexts/LocaleStoreContext';
 import {useIntl} from 'react-intl';
 import noop from '../../lib/noop';
 
@@ -94,10 +94,36 @@ export function useFindRemoteArchive({url}: {url?: string}) {
 // 'background' key prefix prevents passcode prompt during permission dialog (see AuthContext.tsx)
 const EXPORT_MUTATION_KEY = ['background', 'export', 'observations'] as const;
 
+export class ExportFileMissingError extends Error {
+  name = 'ExportFileMissingError';
+}
+
+/**
+ * Copy the exported file to the user-chosen destination via the SAF dialog. If
+ * the source file is gone by the time the copy runs (the SAF dialog can stay
+ * open for a while), the native layer throws an ENOENT FileNotFoundException —
+ * surface a clear domain error rather than the opaque native one. (We check the
+ * error from the operation rather than pre-checking existence, which would be a
+ * TOCTOU race.)
+ */
+async function saveExportDocument(
+  args: Parameters<typeof saveDocuments>[0],
+  filepath: string,
+) {
+  try {
+    return await saveDocuments(args);
+  } catch (err) {
+    if (err instanceof Error && err.message.includes('ENOENT')) {
+      throw new ExportFileMissingError(`Export file is missing: ${filepath}`);
+    }
+    throw err;
+  }
+}
+
 export function useExportObservations({projectId}: {projectId: string}) {
   const exportNoMedia = useExportGeoJSON({projectId});
   const exportWithMedia = useExportZipFile({projectId});
-  const lang = useAppLanguageTag();
+  const lang = useLocaleState(s => s.languageTag);
   const {formatDate} = useIntl();
 
   return useMutation({
@@ -105,14 +131,19 @@ export function useExportObservations({projectId}: {projectId: string}) {
     retry: false,
     networkMode: 'always',
     mutationFn: async ({exportType}: {exportType: Exports}) => {
-      const exportDir = FileSystem.cacheDirectory + 'exports/';
+      // Use the persistent document directory, not the volatile cache: the
+      // export file must survive while the SAF "Save As" dialog is open, or
+      // Android cache eviction can delete it before the copy runs.
+      const exportDir = FileSystem.documentDirectory + 'exports/';
       const exportDirectory = await FileSystem.getInfoAsync(exportDir);
 
       if (!exportDirectory.exists) {
         await FileSystem.makeDirectoryAsync(exportDir);
       }
 
-      const fileName = `CoMapeo_Obsvns_${formatDate(Date.now())}`;
+      const filePrefix =
+        exportType === 'Tracks' ? 'CoMapeo_Tracks' : 'CoMapeo_Obsvns';
+      const fileName = `${filePrefix}_${formatDate(Date.now())}`;
 
       if (exportType === 'Observation' || exportType === 'Tracks') {
         return exportNoMedia
@@ -126,18 +157,21 @@ export function useExportObservations({projectId}: {projectId: string}) {
           })
           .then(async path => {
             const filepath = `file://${path}`;
-            const results = await saveDocuments({
-              sourceUris: [filepath],
-              mimeType: 'application/geo+json',
-              fileName: `${fileName}.geojson`,
-            });
-
-            FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
-              //do nothing as it is a temp file system that will eventually delete itself
-              noop();
-            });
-
-            return results;
+            try {
+              return await saveExportDocument(
+                {
+                  sourceUris: [filepath],
+                  mimeType: 'application/geo+json',
+                  fileName: `${fileName}.geojson`,
+                },
+                filepath,
+              );
+            } finally {
+              // documentDirectory is not auto-reclaimed by the OS, so always
+              // remove the export source — even if the SAF copy was cancelled
+              // or failed — so exports don't accumulate on the device.
+              FileSystem.deleteAsync(filepath, {idempotent: true}).catch(noop);
+            }
           });
       }
 
@@ -153,18 +187,21 @@ export function useExportObservations({projectId}: {projectId: string}) {
         })
         .then(async path => {
           const filepath = `file://${path}`;
-          const results = await saveDocuments({
-            sourceUris: [filepath],
-            mimeType: 'application/zip',
-            fileName: `${fileName}.zip`,
-          });
-
-          FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
-            //do nothing as it is a temp file system that will eventually delete itself
-            noop();
-          });
-
-          return results;
+          try {
+            return await saveExportDocument(
+              {
+                sourceUris: [filepath],
+                mimeType: 'application/zip',
+                fileName: `${fileName}.zip`,
+              },
+              filepath,
+            );
+          } finally {
+            // documentDirectory is not auto-reclaimed by the OS, so always
+            // remove the export source — even if the SAF copy was cancelled or
+            // failed — so exports don't accumulate on the device.
+            FileSystem.deleteAsync(filepath, {idempotent: true}).catch(noop);
+          }
         });
     },
   });

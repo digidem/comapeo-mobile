@@ -19,6 +19,10 @@ export function useKeyboardListener() {
       });
 
       return () => {
+        // when the user navigates away, close keyboard
+        Keyboard.dismiss();
+        setKeyboardVisible(false);
+        setKeyboardHeight(0);
         keyboardHideUnsub.remove();
         keyboardShowUnsub.remove();
       };

@@ -36,8 +36,8 @@ export const EDITING_SCREEN_NAMES: (
   'ObservationCategoryChooser',
   'ManualGpsScreen',
   'ObservationCreate',
-  'ObservationDetails',
   'ObservationEdit',
+  'ObservationFields',
   'SaveTrack',
   'TrackEdit',
   'Camera',
@@ -50,6 +50,7 @@ export const EDITING_SCREEN_NAMES: (
   'ErrorBottomSheet',
   'ConfirmDiscardObservationBottomSheet',
   'ConfirmDiscardObservationEditBottomSheet',
+  'MapOnYourOwnIntro',
 ];
 
 export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [
@@ -57,6 +58,14 @@ export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [
   'InviteCanceled',
   'InviteSuccessfullyAccepted',
   'TrackRecordingActive',
+];
+
+export const MAP_SHARE_SCREEN_NAMES: (keyof AppStackParamsList)[] = [
+  'MapReceivedBottomSheet',
+  'ReplaceBackgroundMap',
+  'ReceivingBackgroundMap',
+  'SendingBackgroundMap',
+  'MapShareCanceledBottomSheet',
 ];
 
 // Replicates the root query key from comapeo/core-react v3.3.0

@@ -11,7 +11,7 @@ import {RemoteArchiveOn} from './RemoteArchiveOn';
 
 const m = defineMessages({
   navTitle: {
-    id: 'ProjectSettings.RemoteArchive.navTitle',
+    id: '$1ProjectSettings.RemoteArchive.navTitle',
     defaultMessage: 'Remote Archive',
   },
 });

@@ -11,7 +11,7 @@ import {toError} from '../../../utils/errors';
 
 const m = defineMessages({
   title: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.title',
+    id: '$1screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.title',
     defaultMessage: 'Review Invitation',
   },
 });

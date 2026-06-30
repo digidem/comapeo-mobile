@@ -33,7 +33,7 @@ export type HomeTabsParamsList = {
 export type TabName = keyof HomeTabsParamsList;
 
 // --- Early Access routing pattern -----------------------------------------
-// Require { isEarlyAdopter: true } (literal true, not boolean) for any *early-access-only* screen.
+// Require { isEarlyAccess: true } (literal true, not boolean) for any *early-access-only* screen.
 //
 // Example usage when you add the first early-only screen:
 //
@@ -47,16 +47,17 @@ export type TabName = keyof HomeTabsParamsList;
 // surface all call sites for cleanup.
 // ---------------------------------------------------------------------------
 
-export type EarlyOnlyParam = {readonly isEarlyAdopter: true};
+export type EarlyOnlyParam = {readonly isEarlyAccess: true};
 
 export type RootStackParamsList = {
   Home: NavigatorScreenParams<HomeTabsParamsList>;
   GpsModal: undefined;
   Settings: undefined;
-  Config: undefined;
+  Categories: undefined;
   AboutSettings: undefined;
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
+  UnitSystemSettings: undefined;
   DraftPhotoPreviewModal: {
     photoMetadata: PhotoMetadata;
     photoExif?: PhotoEXIF;
@@ -79,11 +80,12 @@ export type RootStackParamsList = {
   Observation: {observationId: string};
   ObservationEdit: undefined;
   ManualGpsScreen: undefined;
-  ObservationDetails: {question: number};
   CreateProject: undefined;
   NameSoloProject: undefined;
   Security: undefined;
-  ObservationFields: {question: number};
+  ObservationFields: {
+    fieldIds: string[];
+  };
   ObservationCreate: undefined;
   AuthScreen: undefined;
   AppPasscode: undefined;
@@ -123,6 +125,19 @@ export type RootStackParamsList = {
   SettingsPrivacyPolicy: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   BackgroundMaps: undefined;
+  MapReceivedBottomSheet: {
+    shareId: string;
+  };
+  ReplaceBackgroundMap: {
+    shareId: string;
+  };
+  ReceivingBackgroundMap: {
+    shareId: string;
+  };
+  SendingBackgroundMap: {
+    shareId: string;
+  };
+  MapShareCanceledBottomSheet: undefined;
   ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: PermissionResponse;
@@ -143,7 +158,7 @@ export type RootStackParamsList = {
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string; projectId: string};
   InviteCanceled: {projectName: string};
-  RemovedFromProjectBottomSheet: {projectId: string};
+  RemovedFromProjectBottomSheet: undefined;
   ObservationMetadata: {observationId: string};
   ErrorBottomSheet: {error: Error};
   BackgroundMapErrorBottomSheet: {title: string; description: string};
@@ -177,7 +192,7 @@ export type RootStackParamsList = {
   LeaveProject: {
     memberType: 'coordinator' | 'participant';
   };
-  LeftProjectConfirmation: undefined;
+  LeftProjectConfirmation: {projectName: string};
   CollaboratorInfo: {
     deviceId: string;
     isOwnDevice: boolean;
@@ -191,6 +206,8 @@ export type RootStackParamsList = {
   ConfirmDiscardObservationEditBottomSheet: undefined;
   ConfirmDiscardTrackBottomSheet: undefined;
   TurnOffPasscodeBottomSheet: undefined;
+  ConfirmDeleteObservationBottomSheet: {observationId: string};
+  ConfirmDeleteTrackBottomSheet: {trackId: string};
 };
 
 export type OnboardingParamsList = {

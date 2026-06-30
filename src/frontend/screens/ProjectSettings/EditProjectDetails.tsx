@@ -17,15 +17,15 @@ import {projectColors} from '../../constants';
 
 const m = defineMessages({
   projectName: {
-    id: 'screen.EditProjectDetails.projectName',
+    id: '$1screen.EditProjectDetails.projectName',
     defaultMessage: 'Project Name',
   },
   projectDescription: {
-    id: 'screen.EditProjectDetails.projectDescription',
+    id: '$1screen.EditProjectDetails.projectDescription',
     defaultMessage: 'Project Description',
   },
   navTitle: {
-    id: 'screen.EditProjectDetails.navTitle',
+    id: '$1screen.EditProjectDetails.navTitle',
     defaultMessage: 'Edit Info',
   },
   projectColors: {

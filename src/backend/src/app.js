@@ -36,6 +36,9 @@ const serverStatus = new ServerStatus()
 
 process.on('uncaughtException', (error) => {
   log('uncaught exception')
+  // setState only forwards error.message to the frontend; capture here so the
+  // original stack is preserved for diagnosing the underlying failure.
+  Sentry.captureException(error)
   serverStatus.setState('ERROR', { error, context: 'uncaughtException' })
 })
 process.on('unhandledRejection', (reason) => {
@@ -46,6 +49,7 @@ process.on('unhandledRejection', (reason) => {
   } else {
     error = new Error(typeof reason === 'string' ? reason : 'unknown rejection')
   }
+  Sentry.captureException(error)
   serverStatus.setState('ERROR', { error, context: 'unhandledRejection' })
 })
 process.on('exit', (code) => {
@@ -93,7 +97,6 @@ export async function init({
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
     customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
   })
-
   const { publicKey, secretKey } = new KeyManager(rootKey).getIdentityKeypair()
   const mapServer = createMapServer({
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,

@@ -22,7 +22,7 @@ export function Accordian({
   style,
 }: AccordianProps) {
   const [expanded, setExpanded] = useState(false);
-  const Icon = expanded ? Chevrondown : ChevrondownDefault;
+  const Icon = expanded ? ChevrondownDefault : Chevrondown;
 
   return (
     <Animated.View

@@ -9,12 +9,18 @@ import {Loading} from '../../sharedComponents/Loading';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {createAppScreens} from './AppScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
+import {PendingMapSharesListener} from '../../sharedComponents/PendingMapSharesListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 import {useIntl} from 'react-intl';
 import {RootStack} from './RootStack';
+import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {InviteReceived} from '../../screens/Invites/InviteReceived';
+import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
+import {DeepLinkListener} from './DeepLinkListener';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -47,7 +53,7 @@ function getInitialRoute(
   if (!projectId) {
     return 'Success';
   }
-  return 'Success';
+  return 'Home';
 }
 
 export const RootStackNavigator = () => {
@@ -55,6 +61,10 @@ export const RootStackNavigator = () => {
   const {data: deviceInfo} = useOwnDeviceInfo();
   const activeProjectId = useActiveProjectId();
   const {formatMessage} = useIntl();
+  const isNotReadyForInvite =
+    security.authState !== 'authenticated' ||
+    !deviceInfo.name ||
+    !activeProjectId;
 
   const layout: NavigatorLayout = ({children, state, navigation}) => (
     <SafeAreaView
@@ -67,7 +77,26 @@ export const RootStackNavigator = () => {
             navigation.navigate('InviteReceived', {inviteId})
           }
         />
-        {children}
+        <PendingMapSharesListener
+          currentRouteName={state.routes[state.index]?.name}
+          navigateToMapShareScreen={shareId =>
+            navigation.navigate('MapReceivedBottomSheet', {shareId})
+          }
+        />
+        {!isNotReadyForInvite && (
+          <DeepLinkListener
+            currentRouteName={state.routes[state.index]?.name}
+          />
+        )}
+        {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.
+            activeProjectId is always set before any app screen renders. */}
+        {activeProjectId ? (
+          <ActiveProjectProvider activeProjectId={activeProjectId}>
+            {children}
+          </ActiveProjectProvider>
+        ) : (
+          children
+        )}
       </React.Suspense>
     </SafeAreaView>
   );
@@ -82,42 +111,58 @@ export const RootStackNavigator = () => {
     screenOptions: NavigatorScreenOptions,
   } as const;
 
-  if (
-    security.authState === 'unauthenticated' ||
-    !deviceInfo.name ||
-    !activeProjectId
-  ) {
-    const initialRouteName = getInitialRoute(
-      security.authState,
-      deviceInfo.name,
-      activeProjectId,
-    );
-
-    return (
-      <RootStack.Navigator
-        {...commonNavigatorProps}
-        initialRouteName={initialRouteName}>
-        {security.authState === 'unauthenticated' ? (
-          <RootStack.Screen
-            name="AuthScreen"
-            component={AuthScreen}
-            options={{
-              headerShown: false,
-              animation: 'fade',
-            }}
-          />
-        ) : (
-          createOnboardingScreens({intl: formatMessage})
-        )}
-      </RootStack.Navigator>
-    );
-  }
+  const initialRouteName = getInitialRoute(
+    security.authState,
+    deviceInfo.name,
+    activeProjectId,
+  );
 
   return (
-    <ActiveProjectProvider activeProjectId={activeProjectId}>
-      <RootStack.Navigator {...commonNavigatorProps}>
-        {createAppScreens({intl: formatMessage})}
-      </RootStack.Navigator>
-    </ActiveProjectProvider>
+    <RootStack.Navigator
+      {...commonNavigatorProps}
+      initialRouteName={initialRouteName}>
+      {security.authState === 'unauthenticated' ? (
+        <RootStack.Screen
+          name="AuthScreen"
+          component={AuthScreen}
+          options={{
+            headerShown: false,
+            animation: 'fade',
+          }}
+        />
+      ) : (
+        <>
+          {!deviceInfo.name || !activeProjectId
+            ? createOnboardingScreens({intl: formatMessage})
+            : createAppScreens({intl: formatMessage})}
+          {/* Shared screen */}
+          <RootStack.Group
+            navigationKey={activeProjectId}
+            screenOptions={{
+              presentation: 'transparentModal',
+              headerShown: false,
+              animation: 'none',
+              contentStyle: {backgroundColor: 'transparent'},
+            }}>
+            <RootStack.Screen
+              name="ErrorBottomSheet"
+              component={ErrorBottomSheet}
+            />
+            <RootStack.Screen
+              name="InviteReceived"
+              component={InviteReceived}
+            />
+            <RootStack.Screen
+              name="InviteSuccessfullyAccepted"
+              component={InviteSuccessfullyAccepted}
+            />
+            <RootStack.Screen
+              name="InviteCanceled"
+              component={InviteCanceled}
+            />
+          </RootStack.Group>
+        </>
+      )}
+    </RootStack.Navigator>
   );
 };

@@ -19,7 +19,7 @@ import {toError} from '../../utils/errors';
 
 const m = defineMessages({
   shareProjectStats: {
-    id: 'screens.ShareProjectStats.shareProjectStats',
+    id: '$1screens.ShareProjectStats.shareProjectStats',
     defaultMessage: 'Share Project Statistics',
   },
   description: {
@@ -36,11 +36,11 @@ const m = defineMessages({
     defaultMessage: 'Your project will stay fully encrypted',
   },
   skip: {
-    id: 'screens.ShareProjectStats.skip',
+    id: '$1screens.ShareProjectStats.skip',
     defaultMessage: 'No, Skip for Now',
   },
   yesShare: {
-    id: 'screens.ShareProjectStats.yesShare',
+    id: '$1screens.ShareProjectStats.yesShare',
     defaultMessage: 'Yes, Share Stats',
   },
 });

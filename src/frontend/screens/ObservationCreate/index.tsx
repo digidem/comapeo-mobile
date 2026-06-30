@@ -47,15 +47,6 @@ const m = defineMessages({
     defaultMessage: 'New Observation',
     description: 'screen title for new observation screen',
   },
-  changePreset: {
-    id: 'screens.ObservationCreate.changePreset',
-    defaultMessage: 'Change',
-  },
-  descriptionPlaceholder: {
-    id: 'screens.ObservationCreate.descriptionPlaceholder',
-    defaultMessage: 'What is happening here?',
-    description: 'Placeholder for description/notes field',
-  },
 });
 
 export const ObservationCreate = ({
@@ -77,8 +68,13 @@ export const ObservationCreate = ({
 
   return (
     <ScreenContentWithDock
+      testID="OBS.create-obs"
       dockContainerStyle={{padding: 0}}
-      dockContent={<ActionsRow fieldRefs={preset?.fieldRefs} />}>
+      dockContent={
+        <ActionsRow
+          fieldIds={preset ? preset.fieldRefs.map(val => val.docId) : undefined}
+        />
+      }>
       <View style={styles.container}>
         <View
           style={{

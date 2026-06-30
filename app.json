@@ -4,6 +4,7 @@
     "jsEngine": "hermes",
     "name": "CoMapeo",
     "slug": "comapeo",
+    "scheme": "comapeo",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,18 +16,13 @@
       "reactCompiler": true
     },
     "plugins": [
+      "expo-system-ui",
       "expo-audio",
       "expo-localization",
       "expo-secure-store",
       "expo-document-picker",
       "react-native-vision-camera",
-      [
-        "@rnmapbox/maps",
-        {
-          "RNMapboxMapsImpl": "mapbox",
-          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiYnN0ZWZhbmN6eWsiLCJhIjoiY2x1dXV1NHNlMGU5dzJqcnh1Zno4YW4xcyJ9.P_LsVHh_HWTh25x5rRdrQg"
-        }
-      ],
+      ["@maplibre/maplibre-react-native"],
       [
         "expo-splash-screen",
         {
@@ -100,6 +96,19 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#050F77"
       },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "app.comapeo.org"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",

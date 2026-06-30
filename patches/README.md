@@ -74,19 +74,11 @@ Refer to https://github.com/n4kz/react-native-indicators/issues/43 for details.
 
 ## `react-native-confirmation-code-field`
 
-### [Fix mask symbol logic issue](./react-native-confirmation-code-field+8.0.1+001+fix-mask-symbol-logic-issue.patch)
+### [Fix mask symbol logic issue](./react-native-confirmation-code-field+9.0.0+001+fix-mask-symbol-logic-issue.patch)
 
 Fixes a bug in the `MaskSymbol` component where the mask (`*`) briefly un-hides when typing quickly. This patch sets the `visibleFlag` to `false` immediately, preventing the undesired flicker.
 
 See: [Reviewer context](https://github.com/digidem/comapeo-mobile/pull/1225).
-
-## @comapeo/core-react
-
-### [Fix @comapeo/map-server root import and members-related read hooks invalidation](./@comapeo+core-react+10.0.1.patch)
-
-`@comapeo/core-react` imports from the root of `@comapeo/map-server`, which pulls in Node.js-only server code that cannot be bundled for React Native. This patch redirects both the ESM and CJS builds to import from `@comapeo/map-server/constants.js` instead.
-
-Fixes an issue where member-related write hooks do not properly invalidate the relevant read hooks.
 
 ## expo
 

@@ -12,6 +12,7 @@ import {
   useOwnRoleInProject,
   useProjectSettings,
 } from '@comapeo/core-react';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ColorCard} from '../sharedComponents/ColorCard';
@@ -20,25 +21,24 @@ import {toError} from '../utils/errors';
 
 const m = defineMessages({
   close: {
-    id: 'screens.RemovedFromProjectBottomSheet.close',
+    id: '$1screens.RemovedFromProjectBottomSheet.close',
     defaultMessage: 'Close',
   },
   title: {
-    id: 'screens.RemovedFromProjectBottomSheet.title',
+    id: '$1screens.RemovedFromProjectBottomSheet.title',
     defaultMessage: 'THIS DEVICE REMOVED FROM…',
   },
   reasonLabel: {
-    id: 'screens.RemovedFromProjectBottomSheet.reasonLabel',
+    id: '$1screens.RemovedFromProjectBottomSheet.reasonLabel',
     defaultMessage: 'Reason: {reason}',
   },
 });
 
 export const RemovedFromProjectBottomSheet = ({
-  route,
   navigation,
 }: NativeRootNavigationProps<'RemovedFromProjectBottomSheet'>) => {
   const {formatMessage} = useIntl();
-  const {projectId} = route.params;
+  const {projectId} = useActiveProject();
   const {
     data: {reason},
   } = useOwnRoleInProject({projectId});
@@ -88,7 +88,6 @@ export const RemovedFromProjectBottomSheet = ({
                         createProject.mutate(undefined, {
                           onError: err => {
                             const firstProject = projects[0];
-                            //if there is a project just open that project
                             if (firstProject) {
                               setActiveProjectId(firstProject.projectId);
                               navigation.popToTop();

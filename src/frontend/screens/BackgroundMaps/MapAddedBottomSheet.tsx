@@ -11,7 +11,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   customMapAddedTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle',
     defaultMessage: 'Custom Map Added',
   },
   customMapAddedDescription: {
@@ -20,7 +20,7 @@ const m = defineMessages({
       'You will see this map when you are offline, but you will not see a map outside the area defined in your custom map.',
   },
   close: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.close',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.close',
     defaultMessage: 'Close',
   },
 });

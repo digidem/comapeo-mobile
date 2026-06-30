@@ -16,15 +16,15 @@ import {useIsArchiveDevice, useSetIsArchiveDevice} from '@comapeo/core-react';
 
 const m = defineMessages({
   save: {
-    id: 'screens.ExchangeSettingsBottomSheet.save',
+    id: '$1screens.ExchangeSettingsBottomSheet.save',
     defaultMessage: 'Save',
   },
   close: {
-    id: 'screens.ExchangeSettingsBottomSheet.close',
+    id: '$1screens.ExchangeSettingsBottomSheet.close',
     defaultMessage: 'Close',
   },
   everythingTitle: {
-    id: 'screens.ExchangeSettingsBottomSheet.everythingTitle',
+    id: '$1screens.ExchangeSettingsBottomSheet.everythingTitle',
     defaultMessage: 'Exchange Everything',
   },
   everythingDesc: {
@@ -32,7 +32,7 @@ const m = defineMessages({
     defaultMessage: 'Full size photos and audio. Uses more storage.',
   },
   previewsTitle: {
-    id: 'screens.ExchangeSettingsBottomSheet.previewsTitle',
+    id: '$1screens.ExchangeSettingsBottomSheet.previewsTitle',
     defaultMessage: 'Exchange Previews Only',
   },
   previewsDesc: {

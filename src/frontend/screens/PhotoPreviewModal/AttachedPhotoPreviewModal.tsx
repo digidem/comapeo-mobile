@@ -24,14 +24,34 @@ import {
 import {CoreBlobImage} from '../../sharedComponents/Images/CoreBlobImage.tsx';
 import {ImageErrorPlaceholder} from '../../sharedComponents/Images/ImageErrorPlaceholder.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
+import {
+  useUnitSystem,
+  type UnitSystem,
+} from '../../contexts/UnitSystemStoreContext';
+import {kmOrConversion, metersOrConversion} from '../../lib/unitConversion';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {sharedStyles} from './sharedStyles.ts';
 import {useGetCreatedBy} from '../../hooks/server/useGetCreatedBy.ts';
 import {useSingleDocByDocId} from '@comapeo/core-react';
-import {useAppLanguageTag} from '../../hooks/useAppLanguageTag.ts';
+import {useLocaleState} from '../../contexts/LocaleStoreContext.tsx';
 import {Accordian} from '../../sharedComponents/Accordian.tsx';
 import Octicons from '@react-native-vector-icons/octicons';
+
+function formatDistance(meters: number, unitSystem: UnitSystem): string {
+  if (unitSystem === 'imperial') {
+    if (meters < 1000) {
+      const {value, unit} = metersOrConversion(meters, unitSystem);
+      return `${value.toFixed(2)} ${unit}`;
+    }
+    const {value, unit} = kmOrConversion(meters / 1000, unitSystem);
+    return `${value.toFixed(2)} ${unit}`;
+  }
+  if (meters < 1000) {
+    return `${meters.toFixed(2)} m`;
+  }
+  return `${(meters / 1000).toFixed(2)} km`;
+}
 
 const m = defineMessages({
   validatedByCoMapeo: {
@@ -76,7 +96,7 @@ export function AttachedPhotoPreviewModal({
   const {createdAt: photoCreatedAt, coordinates: photoCoordinates} = photoInfo;
 
   const {projectId} = useActiveProject();
-  const lang = useAppLanguageTag();
+  const lang = useLocaleState(s => s.languageTag);
   const {
     data: {
       originalVersionId: observationOriginalVersionId,
@@ -94,6 +114,7 @@ export function AttachedPhotoPreviewModal({
   const {data: memberInfo} = useGetCreatedBy(observationOriginalVersionId);
 
   const {formatMessage, formatNumber} = useIntl();
+  const unitSystem = useUnitSystem();
 
   const photoTimeRelativeToObs = photoCreatedAt
     ? calcPhotoTimeRelativeToObs({
@@ -137,6 +158,10 @@ export function AttachedPhotoPreviewModal({
         {...photoDimensions, storageSize: imageLoadInfo?.storageSize},
         formatMessage,
       )
+    : null;
+
+  const distance = metersFromObservation
+    ? formatDistance(metersFromObservation, unitSystem)
     : null;
 
   return (
@@ -225,24 +250,7 @@ export function AttachedPhotoPreviewModal({
                         />
                       }>
                       <BodyText selectable style={sharedStyles.primaryInfoText}>
-                        {metersFromObservation < 1000
-                          ? formatMessage(m.distanceFromObs, {
-                              distance: formatNumber(metersFromObservation, {
-                                style: 'unit',
-                                unit: 'meter',
-                                maximumFractionDigits: 2,
-                              }),
-                            })
-                          : formatMessage(m.distanceFromObs, {
-                              distance: formatNumber(
-                                metersFromObservation / 1000,
-                                {
-                                  style: 'unit',
-                                  unit: 'kilometer',
-                                  maximumFractionDigits: 2,
-                                },
-                              ),
-                            })}
+                        {formatMessage(m.distanceFromObs, {distance})}
                       </BodyText>
                     </InfoItem>
                   )}

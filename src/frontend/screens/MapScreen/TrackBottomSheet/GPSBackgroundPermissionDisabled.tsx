@@ -8,7 +8,7 @@ import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescripti
 
 const m = defineMessages({
   appUseLocation: {
-    id: 'screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation',
+    id: '$1screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation',
     defaultMessage: 'Use Location?',
   },
   collectsLocation: {
@@ -17,7 +17,7 @@ const m = defineMessages({
       'Use Location? Tracks location even when closed. Data remains on device only.',
   },
   turnOn: {
-    id: 'screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn',
+    id: '$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn',
     defaultMessage: 'Turn On Location',
   },
 });

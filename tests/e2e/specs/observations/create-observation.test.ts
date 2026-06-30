@@ -18,7 +18,7 @@ describe('Observations - Create Observation Flow', () => {
     const closeIcon = await $(byResourceId('close-icon'));
     await closeIcon.click();
 
-    const discardObs = await $(byText('Discard Observation'));
+    const discardObs = await $(byText('Discard'));
     await expect(discardObs).toBeDisplayed();
 
     const continueEditing = await $(byTextMatches('Continue editing'));
@@ -91,5 +91,24 @@ describe('Observations - Create Observation Flow', () => {
     await handleGPSAlert();
     const mapBtn = await $('~Go to map.');
     await mapBtn.click();
+  });
+
+  it('should return to camera screen when discarding an observation', async () => {
+    const cameraBtn = await $('~Go to camera.');
+    await cameraBtn.click();
+    const addObsBtn = await $('~Add Observation');
+    await addObsBtn.click();
+    await expect($(byTextMatches('Choose a category'))).toBeDisplayed();
+    const closeIcon = await $(byResourceId('close-icon'));
+    await closeIcon.click();
+
+    const discardObs = await $(byText('Discard'));
+    await expect(discardObs).toBeDisplayed();
+
+    await discardObs.click();
+
+    await expect($(byResourceId('MAIN.mapbox-map-view'))).not.toBeDisplayed();
+
+    await expect($(byResourceId('MAIN.camera-scrn'))).toBeDisplayed();
   });
 });

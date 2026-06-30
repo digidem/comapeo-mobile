@@ -1,3 +1,8 @@
 files:
-  - source: /messages/en.json
-    translation: /messages/%two_letters_code%.json
+  - source: /messages/en-US/primary.json
+    dest: /mobile/primary.json
+    translation: /messages/%locale%/primary.json
+
+  - source: /messages/en-US/secondary.json
+    dest: /mobile/secondary.json
+    translation: /messages/%locale%/secondary.json

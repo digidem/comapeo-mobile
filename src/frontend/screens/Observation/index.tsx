@@ -40,13 +40,8 @@ import {useDraftObservationActions} from '../../contexts/DraftObservationContext
 import {SavedPhoto} from '../../sharedTypes/index.ts';
 
 const m = defineMessages({
-  deleteTitle: {
-    id: 'screens.Observation.deleteTitle',
-    defaultMessage: 'Delete observation?',
-    description: 'Title of dialog asking confirmation to delete an observation',
-  },
   title: {
-    id: 'screens.Observation.title',
+    id: '$1screens.Observation.title',
     defaultMessage: 'Observation',
     description:
       'Title of observation screen showing (non-editable) view of observation with map and answered questions',
@@ -110,6 +105,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             observationId={observationId}
             lat={lat}
             lon={lon}
+            color={preset?.color}
           />
         )}
         <TouchableOpacity
@@ -187,7 +183,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             <Divider />
             <FieldDetails
               style={{paddingHorizontal: 20}}
-              observation={observation}
+              tags={observation.tags}
               fields={fields}
             />
           </>

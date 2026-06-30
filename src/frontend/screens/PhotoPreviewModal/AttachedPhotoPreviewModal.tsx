@@ -32,8 +32,7 @@ import {kmOrConversion, metersOrConversion} from '../../lib/unitConversion';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {sharedStyles} from './sharedStyles.ts';
-import {useGetCreatedBy} from '../../hooks/server/useGetCreatedBy.ts';
-import {useSingleDocByDocId} from '@comapeo/core-react';
+import {useSingleDocByDocId, useSingleMember} from '@comapeo/core-react';
 import {useLocaleState} from '../../contexts/LocaleStoreContext.tsx';
 import {Accordian} from '../../sharedComponents/Accordian.tsx';
 import Octicons from '@react-native-vector-icons/octicons';
@@ -98,12 +97,7 @@ export function AttachedPhotoPreviewModal({
   const {projectId} = useActiveProject();
   const lang = useLocaleState(s => s.languageTag);
   const {
-    data: {
-      originalVersionId: observationOriginalVersionId,
-      createdAt: observationCreatedAt,
-      lat,
-      lon,
-    },
+    data: {createdBy, createdAt: observationCreatedAt, lat, lon},
   } = useSingleDocByDocId({
     projectId,
     docType: 'observation',
@@ -111,7 +105,7 @@ export function AttachedPhotoPreviewModal({
     lang,
   });
 
-  const {data: memberInfo} = useGetCreatedBy(observationOriginalVersionId);
+  const {data: memberInfo} = useSingleMember({projectId, deviceId: createdBy});
 
   const {formatMessage, formatNumber} = useIntl();
   const unitSystem = useUnitSystem();

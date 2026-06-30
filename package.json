@@ -194,7 +194,7 @@
     "react-test-renderer": "19.1.4",
     "semver": "7.8.5",
     "type-fest": "5.7.0",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "typescript-eslint": "8.62.1",
     "webdriverio": "9.29.1"
   },

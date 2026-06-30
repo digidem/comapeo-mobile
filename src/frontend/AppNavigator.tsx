@@ -18,8 +18,7 @@ export const AppNavigator = ({
 }: {
   permissionAsked: boolean;
   navigationIntegration:
-    | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
-    | undefined;
+    ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined;
 }) => {
   const containerRef =
     React.useRef<NavigationContainerRef<AppStackParamsList>>(null);

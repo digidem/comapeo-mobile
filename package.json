@@ -185,7 +185,7 @@
     "lint-staged": "16.4.0",
     "metro": "0.83.7",
     "npm-check": "6.0.1",
-    "p-event": "6.0.1",
+    "p-event": "7.1.0",
     "p-every": "2.0.0",
     "patch-package": "8.0.1",
     "prettier": "3.9.4",

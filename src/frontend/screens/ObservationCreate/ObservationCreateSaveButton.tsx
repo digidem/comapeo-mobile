@@ -1,5 +1,4 @@
 import {useCreateDocument} from '@comapeo/core-react';
-import {Observation} from '@comapeo/schema';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {
   useCreatePhotoAttachment,

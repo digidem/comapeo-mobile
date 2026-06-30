@@ -15,6 +15,7 @@ import {useDeleteTrackMutation} from '../../hooks/server/track';
 import {DocAlreadyDeletedError, getErrorCode} from '@comapeo/core/errors.js';
 import * as Sentry from '@sentry/react-native';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   deleteTitle: {
@@ -41,7 +42,7 @@ export const ConfirmDeleteTrackBottomSheet = ({
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const {trackId} = route.params;
-  const {mutate: deleteTrackMutation} = useDeleteTrackMutation();
+  const {mutate: deleteTrackMutation, status} = useDeleteTrackMutation();
 
   function handleDelete() {
     deleteTrackMutation(
@@ -73,17 +74,23 @@ export const ConfirmDeleteTrackBottomSheet = ({
           description={t(m.deleteDescription)}
         />
         <View style={styles.buttonsContainer}>
-          <DestructiveButton
-            fullSize
-            text={t(m.deleteButton)}
-            renderIcon={() => <DiscardIcon />}
-            onPress={handleDelete}
-          />
-          <SecondaryButton
-            fullSize
-            text={t(m.cancel)}
-            onPress={() => navigation.goBack()}
-          />
+          {status === 'pending' ? (
+            <UIActivityIndicator style={{marginVertical: 20}} />
+          ) : (
+            <>
+              <DestructiveButton
+                fullSize
+                text={t(m.deleteButton)}
+                renderIcon={() => <DiscardIcon />}
+                onPress={handleDelete}
+              />
+              <SecondaryButton
+                fullSize
+                text={t(m.cancel)}
+                onPress={() => navigation.goBack()}
+              />
+            </>
+          )}
         </View>
       </View>
     </BottomSheetWrapper>

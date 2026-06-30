@@ -255,7 +255,7 @@ describe('ErrorBottomSheet in QA builds', () => {
     expect(screen.getByText('my-qa-device')).toBeOnTheScreen();
   });
 
-  it('timestamp matches UTC format YYYY-MM-DD HH:MM:SS UTC', async () => {
+  it('timestamp matches UTC format MMM D, H:MM:SS.mmm AM/PM UTC', async () => {
     appVariantModule.APP_VARIANT = 'releaseCandidate';
     qaDeviceNameModule.useQADeviceName = () => null;
 
@@ -264,7 +264,9 @@ describe('ErrorBottomSheet in QA builds', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} UTC$/),
+        screen.getByText(
+          /^[A-Z][a-z]{2} \d{1,2}, \d{1,2}:\d{2}:\d{2}\.\d{3} (AM|PM) UTC$/,
+        ),
       ).toBeOnTheScreen();
     });
   });

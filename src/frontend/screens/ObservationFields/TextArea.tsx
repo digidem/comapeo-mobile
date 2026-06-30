@@ -1,33 +1,27 @@
 import * as React from 'react';
 import {StyleSheet, TextInput} from 'react-native';
-import {QuestionLabel} from './QuestionLabel';
-import {Field} from '@comapeo/schema';
-import {
-  useDraftObservationActions,
-  useDraftObservationState,
-} from '../../contexts/DraftObservationContext';
+import {Observation} from '@comapeo/schema';
 
-export const TextArea = React.memo<{field: Field}>(({field}) => {
-  const tags = useDraftObservationState(store => store.value?.tags);
-  const {updateTag} = useDraftObservationActions();
-  const value = tags ? tags[field.tagKey] : '';
+type TextProps = {
+  updateTag: (value: string) => void;
+  tagValue?: Observation['tags'][number];
+};
+
+export const TextArea = ({updateTag, tagValue}: TextProps) => {
   return (
-    <React.Fragment>
-      <QuestionLabel field={field} />
-      <TextInput
-        testID="OBS.details-inp"
-        value={typeof value === 'string' ? value : ''}
-        onChangeText={newVal => updateTag(field.tagKey, newVal)}
-        style={styles.textInput}
-        underlineColorAndroid="transparent"
-        multiline
-        scrollEnabled={false}
-        textContentType="none"
-        autoFocus
-      />
-    </React.Fragment>
+    <TextInput
+      testID="OBS.text-inp"
+      value={typeof tagValue === 'string' ? tagValue : ''}
+      onChangeText={newVal => updateTag(newVal)}
+      style={styles.textInput}
+      underlineColorAndroid="transparent"
+      multiline
+      scrollEnabled={false}
+      textContentType="none"
+      autoFocus
+    />
   );
-});
+};
 
 const styles = StyleSheet.create({
   textInput: {

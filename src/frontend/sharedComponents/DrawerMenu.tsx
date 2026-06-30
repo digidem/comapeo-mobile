@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import IonIcon from '@react-native-vector-icons/ionicons';
@@ -9,79 +15,84 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import Exchange from '../images/Exchange.svg';
 import CollaborateIcon from '../images/ProjectParticipant.svg';
-import {BodyText} from './Text/BodyText.tsx';
+import {BodyText} from '../sharedComponents/Text/BodyText.tsx';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
-import {BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY, WHITE} from '../lib/styles.ts';
+import {
+  BLUE_GREY,
+  COMAPEO_BLUE,
+  LIGHT_ORANGE,
+  NEW_DARK_GREY,
+  WHITE,
+} from '../lib/styles.ts';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
-import {MenuLowStorageAlert} from './Storage/MenuLowStorageAlert.tsx';
+import {MenuLowStorageAlert} from '../sharedComponents/Storage/MenuLowStorageAlert.tsx';
 import {useStorageReadingQuery} from '../hooks/useStorageReadingQuery.ts';
-import {ColorCard} from './ColorCard.tsx';
-import {HeaderText} from './Text/HeaderText.tsx';
+import {ColorCard} from '../sharedComponents/ColorCard.tsx';
+import {HeaderText} from '../sharedComponents/Text/HeaderText.tsx';
 import {useManyProjects} from '@comapeo/core-react';
-import {buttonStyles, PrimaryButton} from './Buttons.tsx';
+import {buttonStyles, PrimaryButton} from '../sharedComponents/Buttons.tsx';
 import DownArrow from '../images/DownArrow.svg';
 import {isLowStorage, calcUsedPercentage} from '../lib/storage';
 import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
 
 const m = defineMessages({
   appSettings: {
-    id: 'Navigation.Menu.Settings',
+    id: '$1Navigation.Menu.Settings',
     defaultMessage: 'CoMapeo Settings',
   },
   bgMap: {
-    id: 'Navigation.Menu.bgMap',
+    id: '$1Navigation.Menu.bgMap',
     defaultMessage: 'Background Map',
   },
   gatherObservations: {
-    id: 'Navigation.Menu.gatherObservations',
+    id: '$1Navigation.Menu.gatherObservations',
     defaultMessage: 'Gather Observations',
   },
-  currentProject: {
-    id: 'Navigation.Menu.currentProject',
-    defaultMessage: 'Current Project',
-  },
   exchange: {
-    id: 'Navigation.Menu.exchange',
+    id: '$1Navigation.Menu.exchange',
     defaultMessage: 'Exchange',
   },
   mappingOnOwn: {
-    id: 'Navigation.Menu.mappingOnOwn',
+    id: '$1Navigation.Menu.mappingOnOwn',
     defaultMessage: "You're mapping on your own.",
   },
   coordinator: {
-    id: 'Navigation.Menu.coordinator',
+    id: '$1Navigation.Menu.coordinator',
     defaultMessage: 'Coordinator',
   },
   participant: {
-    id: 'Navigation.Menu.participant',
+    id: '$1Navigation.Menu.participant',
     defaultMessage: 'Participant',
   },
   justYou: {
-    id: 'Navigation.Menu.justYou',
+    id: '$1Navigation.Menu.justYou',
     defaultMessage: 'Just You',
   },
   switchProject: {
-    id: 'Navigation.Menu.switchProject',
+    id: '$1Navigation.Menu.switchProject',
     defaultMessage: 'Switch Project',
   },
-  earlyAccessLabel: {
-    id: 'Navigation.Menu.earlyAccessLabel',
-    defaultMessage: 'You are in Early Access Mode.',
+  earlyAccessOn: {
+    id: '$1Navigation.Menu.earlyAccessOn',
+    defaultMessage: 'Early Access ON',
+  },
+  earlyAccessTurnOff: {
+    id: '$1Navigation.Menu.earlyAccessTurnOff',
+    defaultMessage: 'Turn Off',
   },
   team: {
-    id: 'Navigation.Menu.team',
+    id: '$1Navigation.Menu.team',
     defaultMessage: 'Team',
   },
   coordinatorTools: {
-    id: 'Navigation.Menu.coordinatorTools',
+    id: '$1Navigation.Menu.coordinatorTools',
     defaultMessage: 'Coordinator Tools',
   },
   collaborate: {
-    id: 'Navigation.Menu.collaborate',
+    id: '$1Navigation.Menu.collaborate',
     defaultMessage: 'Collaborate',
   },
 });
-
 export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
@@ -102,13 +113,34 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {isLow && (
-          <MenuLowStorageAlert
-            freeBytes={freeBytes}
-            percentUsed={percentUsed}
-          />
-        )}
-        <View>
+        <View style={styles.topCardsContainer}>
+          {isLow && (
+            <MenuLowStorageAlert
+              freeBytes={freeBytes}
+              percentUsed={percentUsed}
+            />
+          )}
+          {isEarly ? (
+            <ColorCard backgroundColor={LIGHT_ORANGE}>
+              <View style={styles.earlyAccessAlert}>
+                <View style={styles.earlyAccessRow}>
+                  <MaterialIcon name="flag" size={20} color={NEW_DARK_GREY} />
+                  <HeaderText variant="header6" style={styles.earlyAccessLabel}>
+                    {formatMessage(m.earlyAccessOn)}
+                  </HeaderText>
+                  <Pressable
+                    onPress={() => navigation.navigate('EarlyAccess')}
+                    hitSlop={{top: 12, bottom: 12, left: 12, right: 12}}>
+                    <BodyText
+                      variant="tinyMeta"
+                      style={styles.earlyAccessTurnOff}>
+                      {formatMessage(m.earlyAccessTurnOff)}
+                    </BodyText>
+                  </Pressable>
+                </View>
+              </View>
+            </ColorCard>
+          ) : null}
           <ColorCard backgroundColor={projectColor}>
             <View style={{padding: 20, gap: 12}}>
               <HeaderText variant="header2">{projectHeader}</HeaderText>
@@ -171,13 +203,6 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
             </View>
           </ColorCard>
         </View>
-
-        {process.env.EXPO_PUBLIC_FEATURE_EARLY_ACCESS && isEarly ? (
-          <View style={styles.label}>
-            <MaterialIcon name="flag" size={20} />
-            <BodyText>{formatMessage(m.earlyAccessLabel)}</BodyText>
-          </View>
-        ) : null}
 
         <View style={styles.bottomItemsContainer}>
           {role !== 'solo' && (
@@ -281,6 +306,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
+  topCardsContainer: {
+    gap: 12,
+  },
   bottomItemsContainer: {
     gap: 20,
     paddingBottom: 20,
@@ -292,10 +320,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  label: {
-    gap: 10,
-    alignSelf: 'center',
-    alignItems: 'center',
+  earlyAccessAlert: {
+    padding: 15,
+  },
+  earlyAccessRow: {
     flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  earlyAccessLabel: {
+    flex: 1,
+  },
+  earlyAccessTurnOff: {
+    color: COMAPEO_BLUE,
   },
 });

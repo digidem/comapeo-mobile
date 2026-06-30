@@ -194,7 +194,7 @@ export function useImageLoadInfo() {
       setImageLoadInfo({
         height: event.source.height,
         width: event.source.width,
-        storageSize,
+        storageSize: storageSize ?? undefined,
       });
     } catch (err) {
       captureException(err);

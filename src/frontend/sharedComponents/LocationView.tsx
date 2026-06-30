@@ -1,10 +1,13 @@
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {BLACK} from '../lib/styles';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import LocationIcon from '../images/Location.svg';
 import {FormattedCoords} from './FormattedData';
 import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
+import {useUnitSystem} from '../contexts/UnitSystemStoreContext';
+import {metersOrConversion} from '../lib/unitConversion';
+import {BodyText} from './Text/BodyText';
 
 const m = defineMessages({
   searching: {
@@ -22,23 +25,32 @@ type LocationViewProps = {
 
 export const LocationView = ({lat, lon, accuracy}: LocationViewProps) => {
   const coordinateFormat = useCoordinateFormat();
+  const unitSystem = useUnitSystem();
+
   return (
     <View style={styles.locationContainer}>
       {lat === undefined || lon === undefined ? (
-        <Text>
+        <BodyText>
           <FormattedMessage {...m.searching} />
-        </Text>
+        </BodyText>
       ) : (
         <React.Fragment>
           <LocationIcon style={{marginRight: 10}} />
-          <Text style={styles.locationText}>
+          <BodyText variant="tinyMeta" style={styles.locationText}>
             <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
-          </Text>
-          {accuracy === undefined ? null : (
-            <Text style={styles.accuracy}>
-              {' ±' + accuracy.toFixed(2) + 'm'}
-            </Text>
-          )}
+          </BodyText>
+          {accuracy === undefined
+            ? null
+            : (() => {
+                const {value, unit} = metersOrConversion(accuracy, unitSystem);
+                return (
+                  <BodyText
+                    variant="tinyMeta"
+                    style={
+                      styles.accuracy
+                    }>{` ±${Math.round(value)} ${unit}`}</BodyText>
+                );
+              })()}
         </React.Fragment>
       )}
     </View>
@@ -55,11 +67,9 @@ const styles = StyleSheet.create({
   },
   locationText: {
     color: BLACK,
-    fontSize: 12,
     flex: 1,
   },
   accuracy: {
     color: BLACK,
-    fontSize: 12,
   },
 });

@@ -4,6 +4,7 @@ import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {File} from 'expo-file-system';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FILE_SELECT_MUTATION_KEY} from '../../hooks/files';
 import {
@@ -37,7 +38,7 @@ import {useMutation} from '@tanstack/react-query';
 
 const m = defineMessages({
   screenTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.screenTitle',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.screenTitle',
     defaultMessage: 'Background Map',
   },
   description1: {
@@ -60,42 +61,8 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.removeMapFile',
     defaultMessage: 'Remove Map File',
   },
-
-  customMapAddedTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle',
-    defaultMessage: 'Custom Map Added',
-  },
-  customMapAddedDescription: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription',
-    defaultMessage:
-      'You will see this map when you are offline, but you will not see a map outside the area defined in your custom map.',
-  },
-  close: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.close',
-    defaultMessage: 'Close',
-  },
-
-  deleteCustomMapTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle',
-    defaultMessage: 'Delete Custom Map?',
-  },
-  deleteCustomMapDescription: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription',
-    defaultMessage:
-      'This will delete the map and its offline areas. No collected observation data will be deleted.',
-  },
-  // TODO: Merge into deleteCustomMapDescription when https://github.com/digidem/comapeo-mobile/issues/669 is addressed
-  cannotBeUndone: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone',
-    defaultMessage: 'This cannot be undone.',
-  },
-  deleteMapButtonText: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText',
-    defaultMessage: 'Delete Map',
-  },
-
   importErrorTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.importErrorTitle',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.importErrorTitle',
     defaultMessage: 'Import Error',
   },
   importErrorDesciption: {
@@ -103,11 +70,11 @@ const m = defineMessages({
     defaultMessage: 'Unable to import the file. Please go back and try again.',
   },
   sendMap: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.sendMap',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.sendMap',
     defaultMessage: 'Send Map',
   },
   removeMap: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.removeMap',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.removeMap',
     defaultMessage: 'Remove Map',
   },
   addedOn: {
@@ -119,7 +86,7 @@ const m = defineMessages({
     defaultMessage: '{size} MB',
   },
   chooseFile: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.chooseFile',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.chooseFile',
     defaultMessage: 'Choose File',
   },
   acceptedFileTypes: {
@@ -160,7 +127,12 @@ export function BackgroundMapsScreen() {
   });
   const importCustomMapMutation = useImportCustomMapFile();
   const removeCustomMapMutation = useRemoveCustomMapFile();
-  const {data: customMapInfo, isRefetching, error} = useGetCustomMapInfo();
+  const {
+    data: customMapInfo,
+    isRefetching,
+    status: mapInfoStatus,
+    error: mapInfoError,
+  } = useGetCustomMapInfo();
 
   const handleChooseFile = () => {
     selectFileMutation.mutate(undefined, {
@@ -193,11 +165,11 @@ export function BackgroundMapsScreen() {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-        {isRefetching ? (
-          <Loading size={20} />
-        ) : error || !customMapInfo ? (
+        {isRefetching || mapInfoStatus === 'pending' ? (
+          <Loading size={12} />
+        ) : mapInfoStatus !== 'success' || !customMapInfo ? (
           <NoMapScreen
-            error={error}
+            error={mapInfoError}
             onChooseFile={handleChooseFile}
             isUploading={isUploading}
             onRemoveMapFile={() => {
@@ -241,7 +213,7 @@ function NoMapScreen({
       </View>
       <View style={{gap: 20, marginTop: 40, alignItems: 'center'}}>
         {isUploading ? (
-          <Loading size={12} />
+          <UIActivityIndicator size={32} />
         ) : (
           <SecondaryButton
             fullSize
@@ -282,6 +254,7 @@ function MapInfoScreen({
   onRemoveMap: () => void;
 }) {
   const {formatMessage: t} = useIntl();
+  const {navigate} = useNavigationFromRoot();
 
   const calculatedSize = customMapInfo.size
     ? bytesToMegabytes(customMapInfo.size).toFixed(0)
@@ -324,16 +297,16 @@ function MapInfoScreen({
           })}
         </BodyText>
 
-        {/* <SecondaryButton
+        <SecondaryButton
           fullSize
           text={t(m.sendMap)}
           onPress={() => {
-            // navigate('SelectMapShareDevice');
+            navigate('SelectMapShareDevice');
           }}
           renderIcon={({color, size}) => (
             <MaterialIcon name="send" size={size} color={color} />
           )}
-        /> */}
+        />
       </View>
       <DestructiveButton
         fullSize

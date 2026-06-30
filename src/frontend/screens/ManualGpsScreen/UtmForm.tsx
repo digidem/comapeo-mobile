@@ -4,7 +4,7 @@ import {View, TextInput, StyleSheet} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
 import {Text} from '../../sharedComponents/Text';
-import {BLACK, LIGHT_GREY} from '../../lib/styles';
+import {BLACK, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 import {FormProps, parseNumber} from './shared';
 
 const m = defineMessages({
@@ -283,6 +283,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 20,
     marginTop: 10,
+    color: DARK_GREY,
   },
   row: {
     flexDirection: 'row',

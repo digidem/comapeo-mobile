@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
 
 export const m = defineMessages({
   trackEditScreenTitle: {
-    id: 'screens.SaveTrack.TrackEditView.title',
+    id: '$1screens.SaveTrack.TrackEditView.title',
     defaultMessage: 'New Track',
     description: 'Title for new track screen',
   },

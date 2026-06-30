@@ -12,6 +12,7 @@ describe('Settings - About CoMapeo Flow', () => {
     await appSettingsOption.click();
 
     const aboutComapeoOption = await $(byResourceId('aboutSettingsButton'));
+    await aboutComapeoOption.scrollIntoView();
     await aboutComapeoOption.click();
   });
 

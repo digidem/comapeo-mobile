@@ -12,7 +12,7 @@ import {useTrackPresets} from '../../hooks/server/track';
 
 const m = defineMessages({
   title: {
-    id: 'screens.TrackCategoryChooser.title',
+    id: '$1screens.TrackCategoryChooser.title',
     defaultMessage: 'Choose a category',
   },
 });

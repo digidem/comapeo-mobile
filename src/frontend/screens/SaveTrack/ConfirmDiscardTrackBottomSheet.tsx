@@ -16,22 +16,22 @@ import {useTrackActions} from '../../contexts/TrackStoreContext';
 
 const m = defineMessages({
   discardTitle: {
-    id: 'SaveTrack.HeaderLeft.discardTitle',
+    id: '$1SaveTrack.HeaderLeft.discardTitle',
     defaultMessage: 'Discard Track?',
     description: 'Title of dialog that shows when cancelling track edits',
   },
   discardTrackDescription: {
-    id: 'SaveTrack.HeaderLeft.discardTrackDescription',
+    id: '$1SaveTrack.HeaderLeft.discardTrackDescription',
     defaultMessage: 'Your Track will not be saved. This cannot be undone.',
   },
   discardCancel: {
-    id: 'SaveTrack.HeaderLeft.discardCancel',
+    id: '$1SaveTrack.HeaderLeft.discardCancel',
     defaultMessage: 'Continue editing',
     description: 'Button on dialog to keep editing (cancelling close action)',
   },
   discardTrackButton: {
-    id: 'SaveTrack.HeaderLeft.discardTrackButton',
-    defaultMessage: 'Discard Track',
+    id: '$1SaveTrack.HeaderLeft.discardTrackButton',
+    defaultMessage: 'Discard',
     description: 'Button to confirm discarding the track',
   },
 });

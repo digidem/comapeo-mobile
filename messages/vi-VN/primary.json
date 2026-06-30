@@ -1,0 +1,271 @@
+{
+  "$1ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Tiếp tục chỉnh sửa"
+  },
+  "$1ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Button to confirm discarding the observation edits",
+    "message": "Hủy bỏ thay đổi"
+  },
+  "$1ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Hủy bỏ thay đổi?"
+  },
+  "$1ProjectSettings.RemoteArchive.Success.close": {
+    "message": "Đóng"
+  },
+  "$1SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Tiếp tục chỉnh sửa"
+  },
+  "$1allProjects.close": {
+    "message": "Đóng"
+  },
+  "$1screen.EditProjectDetails.projectName": {
+    "message": "Tên dự án"
+  },
+  "$1screens.AppPasscode": {
+    "message": "Mật khẩu Ứng dụng"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Hủy"
+  },
+  "$1screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "Lưu mật khẩu ứng dụng"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "Nhập lại mật khẩu"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "Thiết lập mật khauar ứng dụng"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "Mật khẩu phải có 5 số"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "Không thể sử dụng làm mật khẩu"
+  },
+  "$1screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "Mật khẩu không khớp"
+  },
+  "$1screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Tiếp tục"
+  },
+  "$1screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "Mật khẩu Ứng dụng là gì?"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "Đổi mật khẩu ứng dụng"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
+    "message": "Bạn đang sử dụng Mật khẩu ứng dụng. Xem bên dưới để ngừng sử dụng hoặc thay đổi mật khẩu của bạn."
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "Mật khẩu Ứng dụng"
+  },
+  "$1screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "Sử dụng mật khẩu ứng dụng"
+  },
+  "$1screens.AudioAttachmentPlayback.share": {
+    "message": "Chia sẻ"
+  },
+  "$1screens.AudioPlaybackNew.delete": {
+    "message": "Xóa"
+  },
+  "$1screens.ConfirmDeletePhoto.cancel": {
+    "message": "Hủy"
+  },
+  "$1screens.ConfirmDeletePhoto.title": {
+    "message": "Xóa ảnh này?"
+  },
+  "$1screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "Định dạng tọa độ"
+  },
+  "$1screens.DataPrivacy.next": {
+    "message": "Tiếp theo"
+  },
+  "$1screens.DeviceNaming.Success.joinProject": {
+    "message": "Tham gia một dự án"
+  },
+  "$1screens.DeviceNaming.placeholder": {
+    "message": "Tên thiết bị"
+  },
+  "$1screens.DeviceNaming.save": {
+    "message": "Print"
+  },
+  "$1screens.ExchangeSettingsBottomSheet.close": {
+    "message": "Đóng"
+  },
+  "$1screens.ExchangeSettingsBottomSheet.save": {
+    "message": "Print"
+  },
+  "$1screens.InviteReceived.declineInvite": {
+    "message": "Từ chối lời mời"
+  },
+  "$1screens.InviteSuccess.done": {
+    "message": "Hoàn thành"
+  },
+  "$1screens.InviteSuccess.success": {
+    "message": "Thành công"
+  },
+  "$1screens.LeaveProject.cancel": {
+    "message": "Hủy"
+  },
+  "$1screens.LeaveProjectWarning.cancel": {
+    "message": "Hủy"
+  },
+  "$1screens.LeaveProjectWarning.continueButton": {
+    "message": "Tiếp tục"
+  },
+  "$1screens.LocationInfoScreen.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "Vị trí GPS hiện tại"
+  },
+  "$1screens.LocationInfoScreen.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Không"
+  },
+  "$1screens.LocationInfoScreen.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Có"
+  },
+  "$1screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Xóa"
+  },
+  "$1screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "Không có câu trả lời"
+  },
+  "$1screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "Chia sẻ"
+  },
+  "$1screens.Observation.deleteTitle": {
+    "message": "Xóa quan sát?"
+  },
+  "$1screens.Observation.description": {
+    "message": "Mô tả:"
+  },
+  "$1screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Quan sát"
+  },
+  "$1screens.Observation.location": {
+    "message": "Vị trí:"
+  },
+  "$1screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Quan sát"
+  },
+  "$1screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "Hoàn thành"
+  },
+  "$1screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "Tiếp theo"
+  },
+  "$1screens.ObservationDetails.title": {
+    "description": "Title of observation details screen showing question number and total",
+    "message": "Câu hỏi {current} của {total}"
+  },
+  "$1screens.ObservationEdit.ObservationEditView.detailsButton": {
+    "description": "Button label to add details",
+    "message": "Chi tiết"
+  },
+  "$1screens.ObservationEdit.navTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "Chỉnh sửa quan sát"
+  },
+  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "Đến Bản đồ"
+  },
+  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "Thêm Quan sát"
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
+    "message": "Đóng"
+  },
+  "$1screens.RemovedFromProjectBottomSheet.close": {
+    "message": "Đóng"
+  },
+  "$1screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "Bảo vệ thiế bị của bạn khỏi bị tịch thu"
+  },
+  "$1screens.Security.passDesriptionPassNotSet": {
+    "message": "Mật khẩu chưa được đặt"
+  },
+  "$1screens.Security.passDesriptionPassSet": {
+    "message": "Mật khẩu đã được đặt"
+  },
+  "$1screens.Security.passcodeHeader": {
+    "message": "Mật khẩu Ứng dụng"
+  },
+  "$1screens.Security.title": {
+    "message": "Bảo mật"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title": {
+    "message": "Tên thiết bị"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "Hủy bỏ thay đổi?"
+  },
+  "$1screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
+    "message": "Tên thiết bị"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.InviteAccepted.done": {
+    "message": "Hoàn thành"
+  },
+  "$1screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "Mời thiết bị tham gia"
+  },
+  "$1screens.Settings.Collaborate.joinProject": {
+    "message": "Tham gia một dự án"
+  },
+  "$1screens.Settings.CreateOrJoinProject.ProjectCreated.done": {
+    "message": "Hoàn thành"
+  },
+  "$1screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
+    "message": "Thành công!"
+  },
+  "$1screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "Print"
+  },
+  "$1screens.Settings.JoinAProject.title": {
+    "message": "Tham gia một dự án"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.close": {
+    "message": "Đóng"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
+    "message": "Xoá bản đồ"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
+    "message": "Lỗi nhập"
+  },
+  "$1screens.Settings.MapManagement.BackgroundMaps.removeMap": {
+    "message": "Gỡ bỏ bản đồ"
+  },
+  "$1screens.Settings.StartNewProjectIntro.nextButton": {
+    "message": "Tiếp theo"
+  },
+  "$1screens.Settings.YourTeam.close": {
+    "message": "Đóng"
+  },
+  "$1screens.Sync.ProjectSyncDisplay.close": {
+    "message": "Đóng"
+  },
+  "$1screens.Track.ObservationList.observation": {
+    "message": "Quan sát"
+  },
+  "$1screens.Track.ObservationList.observations": {
+    "message": "Các quan sát"
+  },
+  "$1sharedComponents.ErrorBottomSheet.close": {
+    "message": "Đóng"
+  }
+}

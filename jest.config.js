@@ -8,7 +8,6 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   '@?react-navigation',
   '@sentry/react-native',
   'native-base',
-  '@rnmapbox/maps',
   // Awana modules distributed as ESM
   '@comapeo/',
   '@mapeo/',
@@ -66,13 +65,16 @@ const config = {
   setupFiles: [
     './node_modules/@react-native-documents/picker/jest/build/jest/setup.js',
   ],
-  setupFilesAfterEnv: ['@rnmapbox/maps/setup-jest', './jest.setup.js'],
+  setupFilesAfterEnv: ['./jest.setup.js'],
   transform: {
     '\\.[jt]sx?$': [
       'babel-jest',
       {
         extends: './babel.config.js',
-        plugins: [['babel-plugin-transform-import-meta', {module: 'ES6'}]],
+        plugins: [
+          ['babel-plugin-transform-import-meta', {module: 'ES6'}],
+          '@babel/plugin-transform-class-static-block',
+        ],
       },
     ],
   },

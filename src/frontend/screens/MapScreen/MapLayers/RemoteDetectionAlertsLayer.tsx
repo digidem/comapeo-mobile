@@ -1,5 +1,11 @@
 import React from 'react';
-import MapboxGL from '@rnmapbox/maps';
+import {
+  CircleLayer,
+  FillLayer,
+  LineLayer,
+  ShapeSource,
+  SymbolLayer,
+} from '@maplibre/maplibre-react-native';
 
 import {RemoteDetectionAlert} from '@comapeo/schema';
 import {FeatureCollection} from 'geojson';
@@ -20,15 +26,25 @@ const LABEL_FILTER = [
   ['has', 'alertType'],
   ['has', 'monthDetec'],
   ['has', 'yearDetec'],
-];
+] as const;
 
-const POINT_FILTER = ['in', '$type', 'Point', 'MultiPoint'];
+const POINT_FILTER = ['in', '$type', 'Point', 'MultiPoint'] as const;
 
-const LINESTRING_FILTER = ['in', '$type', 'LineString', 'MultiLineString'];
+const LINESTRING_FILTER = [
+  'in',
+  '$type',
+  'LineString',
+  'MultiLineString',
+] as const;
 
-const POLYGON_STROKE_FILTER = ['in', '$type', 'Polygon', 'MultiPolygon'];
+const POLYGON_STROKE_FILTER = [
+  'in',
+  '$type',
+  'Polygon',
+  'MultiPolygon',
+] as const;
 
-const POLYGON_FILL_FILTER = ['in', '$type', 'Polygon', 'MultiPolygon'];
+const POLYGON_FILL_FILTER = ['in', '$type', 'Polygon', 'MultiPolygon'] as const;
 
 export const RemoteDetectionAlertsMapLayer = () => {
   const {data: alerts} = useRemoteDetectionAlerts();
@@ -38,11 +54,11 @@ export const RemoteDetectionAlertsMapLayer = () => {
   }
 
   return (
-    <MapboxGL.ShapeSource
+    <ShapeSource
       id="alerts-source"
       shape={convertRemoteDetectionAlertsToFeatures(alerts)}>
       {/* Fill Layer for Polygon Fill */}
-      <MapboxGL.FillLayer
+      <FillLayer
         id="comapeo-alerts-polygon-fill"
         filter={POLYGON_FILL_FILTER}
         style={{
@@ -52,7 +68,7 @@ export const RemoteDetectionAlertsMapLayer = () => {
       />
 
       {/* Line Layer for Polygon Stroke */}
-      <MapboxGL.LineLayer
+      <LineLayer
         id="comapeo-alerts-polygon-stroke"
         filter={POLYGON_STROKE_FILTER}
         style={{
@@ -62,7 +78,7 @@ export const RemoteDetectionAlertsMapLayer = () => {
       />
 
       {/* Line Layer for LineStrings and MultiLineStrings */}
-      <MapboxGL.LineLayer
+      <LineLayer
         id="comapeo-alerts-linestring"
         filter={LINESTRING_FILTER}
         style={{
@@ -73,7 +89,7 @@ export const RemoteDetectionAlertsMapLayer = () => {
       />
 
       {/* Circle Layer for Points */}
-      <MapboxGL.CircleLayer
+      <CircleLayer
         id="comapeo-alerts-point"
         filter={POINT_FILTER}
         style={{
@@ -83,7 +99,7 @@ export const RemoteDetectionAlertsMapLayer = () => {
       />
 
       {/* Symbol Layer for Labels */}
-      <MapboxGL.SymbolLayer
+      <SymbolLayer
         id="comapeo-alerts-label"
         filter={LABEL_FILTER}
         style={{
@@ -105,7 +121,7 @@ export const RemoteDetectionAlertsMapLayer = () => {
           textHaloBlur: 1,
         }}
       />
-    </MapboxGL.ShapeSource>
+    </ShapeSource>
   );
 };
 

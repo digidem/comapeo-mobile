@@ -1,0 +1,147 @@
+import * as React from 'react';
+import {BackHandler, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
+
+import {
+  List,
+  ListDivider,
+  ListItem,
+  ListItemText,
+} from '../../../../sharedComponents/List';
+import {MEDIUM_GREY, WHITE} from '../../../../lib/styles';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
+import {useFocusEffect, StackActions} from '@react-navigation/native';
+import {CustomHeaderLeft} from '../../../../sharedComponents/CustomHeaderLeft';
+import {HeaderBackButtonProps} from '@react-navigation/elements';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {useSecurityState} from '../../../../contexts/SecurityStoreContext';
+
+const m = defineMessages({
+  appUsePasscode: {
+    id: '$1screens.AppPasscode.TurnOffPasscode.usePasscode',
+    defaultMessage: 'Use App Passcode',
+  },
+  changePasscode: {
+    id: '$1screens.AppPasscode.TurnOffPasscode.changePasscode',
+    defaultMessage: 'Change App Passcode',
+  },
+  description: {
+    id: '$1screens.AppPasscode.TurnOffPasscode.description',
+    defaultMessage:
+      'App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app.',
+  },
+  currentlyUsing: {
+    id: '$1screens.AppPasscode.TurnOffPasscode.currentlyUsing',
+    defaultMessage:
+      'You are currently using App Passcode. See below to stop using or change your passcode.',
+  },
+  title: {
+    id: '$1screens.AppPasscode.TurnOffPasscode.title',
+    defaultMessage: 'App Passcode',
+  },
+});
+
+export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
+  navigation,
+}) => {
+  const passcodeSet = useSecurityState(state => state.passcode !== null);
+  const {formatMessage: t} = useIntl();
+
+  // These next three function forces the user to go back to the setting page instead of the "EnterPassToTurnOff" screen
+  const backPress = React.useCallback(() => {
+    const popAction = StackActions.pop(2);
+    navigation.dispatch(popAction);
+  }, [navigation]);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: (props: HeaderBackButtonProps) => (
+        <CustomHeaderLeft headerBackButtonProps={props} onPress={backPress} />
+      ),
+    });
+  }, [backPress, navigation]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        backPress();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => subscription.remove();
+    }, [backPress]),
+  );
+
+  function openTurnOffPasscodeSheet() {
+    navigation.navigate('TurnOffPasscodeBottomSheet');
+  }
+
+  return (
+    <View style={styles.pageContainer}>
+      <BodyText style={styles.description}>{t(m.description)}</BodyText>
+      <BodyText style={{marginBottom: 20}}>{t(m.currentlyUsing)}</BodyText>
+      <List>
+        <ListItem
+          style={styles.checkBoxContainer}
+          onPress={openTurnOffPasscodeSheet}>
+          <ListItemText
+            style={styles.text}
+            primary={<FormattedMessage {...m.appUsePasscode} />}
+          />
+          <TouchableOpacity onPress={openTurnOffPasscodeSheet}>
+            <MaterialIcon
+              name={passcodeSet ? 'check-box' : 'check-box-outline-blank'}
+              testID={passcodeSet ? 'SETTINGS.passcode-checked' : ''}
+              size={24}
+              color={MEDIUM_GREY}
+            />
+          </TouchableOpacity>
+        </ListItem>
+        <ListDivider />
+
+        {/* User is not able to see this option unless they already have a pass */}
+        {passcodeSet && (
+          <ListItem
+            onPress={() => {
+              navigation.navigate('SetPasscode');
+            }}
+            style={{marginTop: 20}}>
+            <ListItemText
+              style={styles.text}
+              primary={<FormattedMessage {...m.changePasscode} />}
+            />
+          </ListItem>
+        )}
+      </List>
+    </View>
+  );
+};
+
+TurnOffPasscode.navTitle = m.title;
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  checkBoxContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  description: {
+    marginTop: 40,
+    marginBottom: 20,
+  },
+  pageContainer: {
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+    flex: 1,
+    backgroundColor: WHITE,
+  },
+});

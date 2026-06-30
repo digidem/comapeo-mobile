@@ -11,8 +11,8 @@ import {
   DestructiveButton,
   SecondaryButton,
 } from '../../sharedComponents/Buttons';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   discardTitle: {
@@ -32,19 +32,32 @@ const m = defineMessages({
   },
   discardObservationButton: {
     id: 'AppContainer.EditHeader.discardObservationButton',
-    defaultMessage: 'Discard Observation',
+    defaultMessage: 'Discard',
     description: 'Title of dialog that shows when cancelling observation edits',
   },
 });
 
-export const ConfirmDiscardObservationBottomSheet = () => {
+export const ConfirmDiscardObservationBottomSheet = ({
+  navigation,
+}: NativeRootNavigationProps<'ConfirmDiscardObservationBottomSheet'>) => {
   const {formatMessage: t} = useIntl();
-  const navigation = useNavigationFromRoot();
   const {clearDraft} = useDraftObservationActions();
 
   function handleDiscard() {
     clearDraft();
-    navigation.popTo('Home', {screen: 'Map'});
+    // find the screen with the name "home"
+    const homeTabRoute = navigation
+      .getState()
+      .routes.find(route => route.name === 'Home');
+    // the home screen is a nested navigator (the tabs)
+    // find the latest open tab in the nested tab navigator
+    const lastOpenedTab =
+      homeTabRoute?.state?.routes[homeTabRoute.state.index || 0]?.name;
+    // This assumes that the user can only navigate to this screen via the Camera or Map Screen
+    // If that changes, this will naively go back to the map screen.
+    navigation.popTo('Home', {
+      screen: lastOpenedTab === 'Camera' ? 'Camera' : 'Map',
+    });
   }
 
   return (

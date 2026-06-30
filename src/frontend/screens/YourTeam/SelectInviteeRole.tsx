@@ -13,7 +13,7 @@ import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title',
+    id: '$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title',
     defaultMessage: 'Select a Role',
   },
   selectingDevice: {

@@ -14,6 +14,7 @@ export const ProjectRemovalListener = () => {
   const {projectId} = useActiveProject();
   const {
     data: {roleId},
+    isRefetching: isRoleRefetching,
   } = useOwnRoleInProject({projectId});
 
   const navigation = useNavigationFromHomeTabs();
@@ -25,26 +26,26 @@ export const ProjectRemovalListener = () => {
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [
-          {name: 'Home'},
-          {
-            name: 'RemovedFromProjectBottomSheet',
-            params: {projectId},
-          },
-        ],
+        routes: [{name: 'Home'}, {name: 'RemovedFromProjectBottomSheet'}],
       }),
     );
-  }, [projectId, navigation]);
+  }, [navigation]);
 
   //checks on first open of project that the user has not been blocked
   React.useEffect(() => {
     if (
       roleId === BLOCKED_ROLE_ID &&
+      !isRoleRefetching &&
       currentRouteName !== 'RemovedFromProjectBottomSheet'
     ) {
       dispatchToRemovedProjectBottomSheet();
     }
-  }, [roleId, dispatchToRemovedProjectBottomSheet, currentRouteName]);
+  }, [
+    roleId,
+    isRoleRefetching,
+    dispatchToRemovedProjectBottomSheet,
+    currentRouteName,
+  ]);
 
   useProjectOwnRoleChangeListener({projectId});
 

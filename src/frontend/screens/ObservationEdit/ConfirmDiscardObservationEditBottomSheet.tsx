@@ -16,21 +16,21 @@ import {useDraftObservationActions} from '../../contexts/DraftObservationContext
 
 const m = defineMessages({
   discardTitle: {
-    id: 'ObservationEdit.HeaderLeft.discardTitle',
+    id: '$1ObservationEdit.HeaderLeft.discardTitle',
     defaultMessage: 'Discard changes?',
     description: 'Title of dialog that shows when cancelling observation edits',
   },
   discardObservationDescription: {
-    id: 'ObservationEdit.HeaderLeft.discardObservationDescription',
+    id: '$1ObservationEdit.HeaderLeft.discardObservationDescription',
     defaultMessage: 'Your changes will not be saved. This cannot be undone.',
   },
   discardCancel: {
-    id: 'ObservationEdit.HeaderLeft.discardCancel',
+    id: '$1ObservationEdit.HeaderLeft.discardCancel',
     defaultMessage: 'Continue editing',
     description: 'Button on dialog to keep editing (cancelling close action)',
   },
   discardObservationButton: {
-    id: 'ObservationEdit.HeaderLeft.discardObservationButton',
+    id: '$1ObservationEdit.HeaderLeft.discardObservationButton',
     defaultMessage: 'Discard changes',
     description: 'Button to confirm discarding the observation edits',
   },

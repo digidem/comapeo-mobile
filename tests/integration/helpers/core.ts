@@ -58,7 +58,7 @@ export function setUpIPC({manager}: {manager: MapeoManager}) {
   const {port1, port2} = new MessageChannel();
 
   const server = createMapeoServer(manager, port1);
-  const client = createMapeoClient(port2);
+  const client = createMapeoClient(port2, {timeout: 30_000});
 
   return {
     client,
@@ -171,9 +171,8 @@ export const createTestServer = (): Promise<{
   close: () => void;
 }> =>
   new Promise((resolve, reject) => {
-    const startServerPath = require.resolve(
-      '../../../tests/integration/helpers/startTestCloudServer.mjs',
-    );
+    const startServerPath =
+      require.resolve('../../../tests/integration/helpers/startTestCloudServer.mjs');
     const childProcess = spawn('node', [startServerPath], {
       stdio: ['ignore', 'pipe', 'inherit'],
     });

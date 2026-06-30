@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
+import {useFocusEffect} from '@react-navigation/native';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {ObservationListItem} from './ObservationListItem';
 import {ObservationEmptyView} from './ObservationsEmptyView';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
@@ -10,21 +12,10 @@ import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
 import {useAuthContext} from '../../contexts/AuthContext';
+import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
+import {ObservationFilterToggle} from './ObservationFilterToggle';
 
 const m = defineMessages({
-  loading: {
-    id: 'screens.ObservationsList.loading',
-    defaultMessage:
-      'Loading… this can take a while after synchronizing with a new device',
-    description: 'message shown whilst observations are loading',
-  },
-  error: {
-    id: 'screens.ObservationsList.error',
-    defaultMessage:
-      'Error loading observations. Try quitting and restarting CoMapeo.',
-    description:
-      'message shown when there is an unexpected error when loading observations',
-  },
   observationListTitle: {
     id: 'screens.ObservationList.observationListTitle',
     defaultMessage: 'Observations',
@@ -32,15 +23,7 @@ const m = defineMessages({
   },
 });
 
-const OBSERVATION_CELL_HEIGHT = 80;
-
-function getItemLayout(data: unknown, index: number) {
-  return {
-    length: OBSERVATION_CELL_HEIGHT,
-    offset: OBSERVATION_CELL_HEIGHT * index,
-    index,
-  };
-}
+const ONE_HOUR = 60 * 60 * 1000;
 
 const keyExtractor = (item: Observation | Track) => item.docId;
 
@@ -52,10 +35,49 @@ export const ObservationsList: React.FC<
   const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
   const {authState} = useAuthContext();
+  const isEarlyAccessEnabled = useEarlyAccessState(s => s.isEarlyAccessEnabled);
+  const {data: deviceInfo} = useOwnDeviceInfo();
 
-  const rowsPerWindow = Math.ceil(
-    (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
+  const [filterMode, setFilterMode] = React.useState<'all' | 'mine'>('all');
+  const lastInteractionRef = React.useRef<number | null>(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (
+        lastInteractionRef.current !== null &&
+        Date.now() - lastInteractionRef.current > ONE_HOUR
+      ) {
+        setFilterMode('all');
+        lastInteractionRef.current = null;
+      }
+    }, []),
   );
+
+  function handleFilterModeChange(mode: 'all' | 'mine') {
+    setFilterMode(mode);
+    lastInteractionRef.current = mode === 'mine' ? Date.now() : null;
+  }
+
+  const filteredData = React.useMemo(() => {
+    const allData = [...observations, ...tracks];
+
+    if (!isEarlyAccessEnabled || filterMode === 'all') {
+      return allData.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+    }
+
+    const myDeviceId = deviceInfo?.deviceId;
+    const filtered = allData.filter(
+      item => 'createdBy' in item && item.createdBy === myDeviceId,
+    );
+
+    return filtered.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  }, [
+    observations,
+    tracks,
+    isEarlyAccessEnabled,
+    filterMode,
+    deviceInfo?.deviceId,
+  ]);
 
   if ((!observations.length && !tracks.length) || authState === 'obscured') {
     return (
@@ -67,10 +89,14 @@ export const ObservationsList: React.FC<
 
   return (
     <View style={styles.container} testID="OBS.list-scrn">
+      {isEarlyAccessEnabled && (
+        <ObservationFilterToggle
+          filterMode={filterMode}
+          onFilterModeChange={handleFilterModeChange}
+        />
+      )}
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
       <FlatList
-        initialNumToRender={rowsPerWindow}
-        getItemLayout={getItemLayout}
         keyExtractor={keyExtractor}
         style={styles.container}
         windowSize={3}
@@ -105,9 +131,7 @@ export const ObservationsList: React.FC<
               );
           }
         }}
-        data={[...observations, ...tracks].sort((a, b) =>
-          a.createdAt < b.createdAt ? 1 : -1,
-        )}
+        data={filteredData}
       />
     </View>
   );
@@ -121,6 +145,6 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
   listItem: {
-    height: OBSERVATION_CELL_HEIGHT,
+    minHeight: 80,
   },
 });

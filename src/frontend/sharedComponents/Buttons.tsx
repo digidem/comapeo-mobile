@@ -50,7 +50,9 @@ const BaseButton = ({
           {renderIcon({color: colors.icon, size: 25})}
         </View>
       )}
-      <HeaderText variant="header5" style={{color: colors.text}}>
+      <HeaderText
+        variant="header5"
+        style={{color: colors.text, flexShrink: 1, textAlign: 'center'}}>
         {text}
       </HeaderText>
       {renderIcon && iconPosition === 'right' && (

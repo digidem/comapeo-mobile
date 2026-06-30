@@ -10,7 +10,7 @@ describe('Settings - Language Settings Flow', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
-    const languageOption = await $(byTextMatches('Language'));
+    const languageOption = await $(byResourceId('languageSettingsButton'));
     await languageOption.click();
   });
 
@@ -19,27 +19,33 @@ describe('Settings - Language Settings Flow', () => {
       byTextMatches('Follow system preferences'),
     );
     await expect(followSystemPreferences).toBeDisplayed();
-    await expect($(byResourceId('nullButton-selected'))).toBeDisplayed();
+    await expect($(byResourceId('SystemPreferenceRadioButton'))).toBeChecked();
+    // Assumes browserstack uses english as system pref
+    await expect($(byResourceId('currentLanguageLabel'))).toHaveText('English');
   });
 
   it('should scroll to Spanish, select it, and confirm language change', async () => {
-    await $(byTextMatches('Spanish')).scrollIntoView();
-    await $(byTextMatches('Spanish')).click();
-
-    const idiomaOption = await $(byTextMatches('Idioma'));
-    await expect(idiomaOption).toBeDisplayed();
-    await idiomaOption.click();
     await $(byTextMatches('Español')).scrollIntoView();
-    await expect($(byResourceId('esButton-selected'))).toBeDisplayed();
+    await $(byTextMatches('Español')).click();
 
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await backBtn.click();
+    // header should change
+    const idiomaHeader = await $(byTextMatches('Idioma'));
+    await expect(idiomaHeader).toBeDisplayed();
+
+    await expect($(byResourceId('esRadioButton'))).toBeChecked();
+    const languageHeader = $(
+      'android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().resourceId("currentLanguageLabel"))',
+    );
+    await expect(languageHeader).toHaveText('Español');
+
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
     await $(byResourceId('MAIN.map-screen')).click();
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
     await expect($(byText('Añadir observaciones'))).toBeDisplayed();
+    await $('~Go to map.').click();
   });
 
   it('should switch back to English and confirm language revert', async () => {
@@ -51,12 +57,14 @@ describe('Settings - Language Settings Flow', () => {
     const settingsInSpanish = $(byTextMatches('Ajustes de'));
     await settingsInSpanish.click();
 
-    const idiomaOption = await $(byTextMatches('Idioma'));
-    await idiomaOption.click();
+    const spanishLanguageOption = await $(byTextMatches('Español'));
+    await spanishLanguageOption.click();
     const englishElem = await $(byTextMatches('English'));
     await englishElem.click();
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await $(byResourceId('observationsEmptyView')).click();
+
+    await expect($(byResourceId('currentLanguageLabel'))).toHaveText('English');
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await $(byResourceId('MAIN.map-screen')).click();
   });
 });

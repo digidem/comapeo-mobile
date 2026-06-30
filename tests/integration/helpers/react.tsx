@@ -11,23 +11,23 @@ import type {
 } from '../../../src/frontend/contexts/LocalDiscoveryContext';
 import {
   createLocaleStore,
+  LocaleContext,
   LocaleStore,
-  LocaleStoreProvider,
 } from '../../../src/frontend/contexts/LocaleStoreContext';
 import {createManualEntryCoordinateFormatStore} from '../../../src/frontend/contexts/ManualEntryCoordinateFormatStoreContext';
 import {createMetricsDiagnosticsStore} from '../../../src/frontend/contexts/MetricsDiagnosticsStoreContext';
 import {createDraftObservationStore} from '../../../src/frontend/contexts/PersistedStores/DraftObservationStore';
 import {createSecurityStore} from '../../../src/frontend/contexts/SecurityStoreContext';
 import {createTrackStore} from '../../../src/frontend/contexts/TrackStoreContext';
-import {getAppLanguageTag} from '../../../src/frontend/lib/intl';
 import {AppDiagnosticMetrics} from '../../../src/frontend/metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
-import {QueryClient} from '@tanstack/react-query';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
 import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowStorageBannerContext';
 import {createEarlyAccessStore} from '../../../src/frontend/contexts/EarlyAccessContext';
 import {createAppUsageStatsStore} from '../../../src/frontend/contexts/AppUsageStatsContext';
+import {createUnitSystemStore} from '../../../src/frontend/contexts/UnitSystemStoreContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
@@ -51,12 +51,20 @@ jest.mock('expo/fetch', () => ({
 
 export function createMinimalWrapper() {
   const localeStore = createLocaleStore({persist: false});
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {gcTime: Infinity},
+      mutations: {gcTime: Infinity},
+    },
+  });
 
   return ({children}: {children: ReactNode}) => {
     return (
-      <LocaleStoreProvider value={localeStore}>
-        <IntlProvider>{children}</IntlProvider>
-      </LocaleStoreProvider>
+      <QueryClientProvider client={queryClient}>
+        <LocaleContext value={localeStore}>
+          <IntlProvider>{children}</IntlProvider>
+        </LocaleContext>
+      </QueryClientProvider>
     );
   };
 }
@@ -90,15 +98,10 @@ export function createAppProvidersWrapper({
   const appDiagnosticMetrics = new AppDiagnosticMetrics({
     getLocaleInfo: () => {
       const systemLocales = getLocales();
-      const localeState = persistedLocaleStore.instance.getState();
-
-      const appLanguageTag = getAppLanguageTag({
-        localeState,
-        systemLanguageTags: systemLocales.map(l => l.languageTag),
-      }).value;
+      const {languageTag} = persistedLocaleStore.instance.getState();
 
       return {
-        appLanguageTag,
+        appLanguageTag: languageTag,
         deviceLanguageTag: systemLocales[0]!.languageTag,
       };
     },
@@ -166,6 +169,8 @@ export function createAppProvidersWrapper({
 
   const persistedEarlyAccessStore = createEarlyAccessStore({persist: false});
 
+  const unitSystemStore = createUnitSystemStore({persist: false});
+
   const lowStorageBannerStore = createLowStorageBannerStore();
 
   const appUsagePromptStore = createAppUsageStatsStore({
@@ -207,7 +212,8 @@ export function createAppProvidersWrapper({
           trackStore={persistedTrackStore}
           lowStorageBannerStore={lowStorageBannerStore}
           appUsageStatsStore={appUsagePromptStore}
-          earlyAccessStore={persistedEarlyAccessStore}>
+          earlyAccessStore={persistedEarlyAccessStore}
+          unitSystemStore={unitSystemStore}>
           {children}
         </AppProviders>
       </OuterWrapper>

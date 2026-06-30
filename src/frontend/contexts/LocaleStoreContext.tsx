@@ -1,22 +1,54 @@
 import {createContext, useContext} from 'react';
+import {getLocales} from 'expo-localization';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
   createJSONStorage,
   persist as createPersistedState,
 } from 'zustand/middleware';
+import * as v from 'valibot';
 
 import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
-import {SupportedLanguageTag} from '../lib/intl';
-import {type LocaleState} from '../sharedTypes/locale';
+import {
+  getUsableLanguageTag,
+  getUsableLanguageTagFromSystemPreferences,
+  AvailableLanguageTag,
+} from '../lib/intl';
+import {
+  LocaleStateSchema,
+  LocaleStateSchemaV0,
+  type LocaleState,
+} from '../sharedTypes/locale';
 
 // Do not change!
 export const STORAGE_KEY = 'locale' as const;
 
 function createInitialState(): LocaleState {
+  const systemLanguageTags = getLocales().map(l => l.languageTag);
   return {
-    languageTag: null,
+    languageTag: getUsableLanguageTagFromSystemPreferences(systemLanguageTags),
     useSystemPreferences: true,
   };
+}
+
+/**
+ * Migrates persisted state from version 0 (where languageTag could be null)
+ * to version 1 (where languageTag is always resolved).
+ */
+function migrate(persistedState: unknown): LocaleState {
+  const currentSchema = v.safeParse(LocaleStateSchema, persistedState);
+
+  if (currentSchema.success) {
+    return currentSchema.output;
+  }
+
+  const legacyV0 = v.safeParse(LocaleStateSchemaV0, persistedState);
+  if (legacyV0.success && legacyV0.output.languageTag !== null) {
+    const usableLanguageTag = getUsableLanguageTag(legacyV0.output.languageTag);
+    if (usableLanguageTag) {
+      return {languageTag: usableLanguageTag, useSystemPreferences: false};
+    }
+  }
+  return createInitialState();
 }
 
 export function createLocaleStore({persist} = {persist: false}) {
@@ -27,7 +59,18 @@ export function createLocaleStore({persist} = {persist: false}) {
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
         storage: createJSONStorage(() => MMKVStoreInitializer),
-        version: 0,
+        version: 1,
+        migrate,
+        // usable language tags can change between app boot ups
+        // this just makes sure the language tag is still usable
+        // if not, then use system preferences
+        onRehydrateStorage: () => state => {
+          if (!state) return;
+          const usable = getUsableLanguageTag(state.languageTag);
+          if (!usable) {
+            store.setState(createInitialState());
+          }
+        },
       }),
     );
   } else {
@@ -35,18 +78,22 @@ export function createLocaleStore({persist} = {persist: false}) {
   }
 
   const actions = {
-    setLanguageTag: (languageTag: SupportedLanguageTag | null) => {
-      store.setState(
-        languageTag === null
-          ? {
-              languageTag,
-              useSystemPreferences: true,
-            }
-          : {
-              languageTag,
-              useSystemPreferences: false,
-            },
-      );
+    setLanguageTag: (
+      languageTag: AvailableLanguageTag | 'SystemPreference',
+    ) => {
+      if (languageTag === 'SystemPreference') {
+        const systemLanguageTags = getLocales().map(l => l.languageTag);
+        store.setState({
+          languageTag:
+            getUsableLanguageTagFromSystemPreferences(systemLanguageTags),
+          useSystemPreferences: true,
+        });
+      } else {
+        store.setState({
+          languageTag,
+          useSystemPreferences: false,
+        });
+      }
     },
   };
 
@@ -55,9 +102,7 @@ export function createLocaleStore({persist} = {persist: false}) {
 
 export type LocaleStore = ReturnType<typeof createLocaleStore>;
 
-const LocaleContext = createContext<LocaleStore | null>(null);
-
-export const LocaleStoreProvider = LocaleContext.Provider;
+export const LocaleContext = createContext<LocaleStore | null>(null);
 
 function useLocaleContext() {
   const value = useContext(LocaleContext);

@@ -9,7 +9,7 @@ import MaterialIcons from '@react-native-vector-icons/material-design-icons';
 
 const m = defineMessages({
   remoteArchiveOff: {
-    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff',
+    id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff',
     defaultMessage: 'Remote Archive is Off',
   },
   dataNotShared: {
@@ -27,7 +27,7 @@ const m = defineMessages({
     defaultMessage: 'No servers have been added to this project',
   },
   addArchive: {
-    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive',
+    id: '$1ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive',
     defaultMessage: 'Add Remote Archive',
   },
 });

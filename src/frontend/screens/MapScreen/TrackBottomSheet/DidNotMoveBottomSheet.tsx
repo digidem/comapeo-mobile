@@ -13,19 +13,19 @@ import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescripti
 
 const m = defineMessages({
   noTrackRecorded: {
-    id: 'TrackBottomSheet.DidNotMove.noTrackRecorded',
+    id: '$1TrackBottomSheet.DidNotMove.noTrackRecorded',
     defaultMessage: 'No Track Recorded',
   },
   didNotMove: {
-    id: 'TrackBottomSheet.DidNotMove.didNotMove',
+    id: '$1TrackBottomSheet.DidNotMove.didNotMove',
     defaultMessage: "You didn't move beyond one meter.",
   },
   delete: {
-    id: 'TrackBottomSheet.DidNotMove.delete',
+    id: '$1TrackBottomSheet.DidNotMove.delete',
     defaultMessage: 'Exit Tracks',
   },
   keepRecording: {
-    id: 'TrackBottomSheet.DidNotMove.keepRecording',
+    id: '$1TrackBottomSheet.DidNotMove.keepRecording',
     defaultMessage: 'Continue Recording',
   },
 });

@@ -46,4 +46,10 @@ describe('Onboarding - Map On Your Own Intro Screen', () => {
     await driver.pause(2000);
     await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
   });
+  it('should still be on Map screen after closing app and reopening', async () => {
+    await driver.terminateApp('com.comapeo.rc');
+    await driver.activateApp('com.comapeo.rc');
+    await driver.pause(2000);
+    await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
+  });
 });

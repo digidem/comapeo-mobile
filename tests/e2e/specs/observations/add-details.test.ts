@@ -22,7 +22,7 @@ describe('Observations - Add Details Flow', () => {
     await expect(nextBtn).toBeDisplayed();
     await expect($(byTextMatches('Name'))).toBeDisplayed();
 
-    const detailsInp = await $(byResourceId('OBS.details-inp'));
+    const detailsInp = await $(byResourceId('OBS.text-inp'));
     await detailsInp.click();
     await detailsInp.setValue(output.observationDetails.name);
 
@@ -45,7 +45,7 @@ describe('Observations - Add Details Flow', () => {
     await nextBtn.click();
 
     await expect($(byTextMatches('Cultural Name'))).toBeDisplayed();
-    const culturalNameInp = await $(byResourceId('OBS.details-inp'));
+    const culturalNameInp = await $(byResourceId('OBS.text-inp'));
     await culturalNameInp.click();
     await culturalNameInp.setValue(output.observationDetails.culturalName);
 

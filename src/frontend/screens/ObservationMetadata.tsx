@@ -19,19 +19,26 @@ import UnverifiedBadge from '../images/UnverifiedBadge.svg';
 import {useProjectSettings} from '@comapeo/core-react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
+import {useUnitSystem} from '../contexts/UnitSystemStoreContext';
+import {
+  metersOrConversion,
+  metersPerSecondOrConversion,
+  getLengthUnit,
+  getSpeedUnit,
+} from '../lib/unitConversion';
 import {useOpenShareDialog} from '../hooks/share';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
 import {formatCoords} from '../lib/coordinateFormat';
 
 const m = defineMessages({
   navTitle: {
-    id: 'screens.ObservationMetadataVerified.navTitle',
+    id: '$1screens.ObservationMetadataVerified.navTitle',
     defaultMessage: 'Observation Metadata',
   },
-  howWeCheck: {
-    id: 'screens.ObservationMetadataVerified.howWeCheck',
-    defaultMessage: 'How we validate',
-  },
+  // howWeCheck: {
+  //   id: 'screens.ObservationMetadataVerified.howWeCheck',
+  //   defaultMessage: 'How we validate',
+  // },
   latitude: {
     id: 'screens.ObservationMetadataVerified.latitude',
     defaultMessage: 'Latitude',
@@ -116,8 +123,16 @@ export const ObservationMetadata: NativeNavigationComponent<
     data: {name},
   } = useProjectSettings({projectId});
   const coordinateFormat = useCoordinateFormat();
+  const unitSystem = useUnitSystem();
   const openShare = useOpenShareDialog();
+
   const manualLocation = metadata?.manualLocation;
+  const lengthUnit = getLengthUnit(unitSystem);
+  const speedUnit = getSpeedUnit(unitSystem);
+  const toMetersValue = (raw: number) =>
+    Math.round(metersOrConversion(raw, unitSystem).value).toString();
+  const toSpeedValue = (raw: number) =>
+    metersPerSecondOrConversion(raw, unitSystem).value.toFixed(2);
 
   const listData: {
     [key: string]: {
@@ -160,9 +175,9 @@ export const ObservationMetadata: NativeNavigationComponent<
         label: formatMessage(m.accuracy),
         value:
           metadata?.position?.coords.accuracy != null
-            ? `± ${Number(metadata.position.coords.accuracy).toFixed(0)}`
+            ? `± ${toMetersValue(metadata.position.coords.accuracy)}`
             : undefined,
-        unit: 'm',
+        unit: lengthUnit,
         icon: (
           <MaterialCommunityIcons
             name="bullseye-arrow"
@@ -177,9 +192,9 @@ export const ObservationMetadata: NativeNavigationComponent<
         label: formatMessage(m.altitude),
         value:
           metadata?.position?.coords.altitude != null
-            ? Number(metadata.position.coords.altitude).toFixed(0)
+            ? toMetersValue(metadata.position.coords.altitude)
             : undefined,
-        unit: 'm',
+        unit: lengthUnit,
         icon: (
           <MaterialCommunityIcons
             name="image-filter-hdr"
@@ -194,9 +209,9 @@ export const ObservationMetadata: NativeNavigationComponent<
         label: formatMessage(m.altitudeAccuracy),
         value:
           metadata?.position?.coords.altitudeAccuracy != null
-            ? `± ${Number(metadata.position.coords.altitudeAccuracy).toFixed(0)}`
+            ? `± ${toMetersValue(metadata.position.coords.altitudeAccuracy)}`
             : undefined,
-        unit: 'm',
+        unit: lengthUnit,
         icon: (
           <MaterialCommunityIcons
             name="chevron-double-up"
@@ -211,9 +226,9 @@ export const ObservationMetadata: NativeNavigationComponent<
         label: formatMessage(m.speed),
         value:
           metadata?.position?.coords.speed != null
-            ? Number(metadata.position.coords.speed).toFixed(2)
+            ? toSpeedValue(metadata.position.coords.speed)
             : undefined,
-        unit: 'm/s',
+        unit: speedUnit,
         icon: (
           <MaterialIcons name="speed" color={NEW_DARK_GREY} size={ICON_SIZE} />
         ),

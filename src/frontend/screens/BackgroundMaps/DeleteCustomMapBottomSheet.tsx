@@ -18,7 +18,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   deleteCustomMapTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle',
     defaultMessage: 'Delete Custom Map?',
   },
   deleteCustomMapDescription: {
@@ -27,15 +27,15 @@ const m = defineMessages({
       'This will delete the map and its offline areas. No collected observation data will be deleted.',
   },
   cannotBeUndone: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone',
     defaultMessage: 'This cannot be undone.',
   },
   deleteMapButtonText: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText',
     defaultMessage: 'Delete Map',
   },
   close: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.close',
+    id: '$1screens.Settings.MapManagement.BackgroundMaps.close',
     defaultMessage: 'Close',
   },
 });

@@ -71,6 +71,13 @@ function useDraftObservationContext() {
 /** We don't update the position of an observation with the location from the
  * device location provider if the location is older than this threshold */
 const STALE_LOCATION_THRESHOLD_MS = 1000;
+/** We don't update the position of an observation if the user is moving greater
+ * than this speed in meters per second. This ensures the observation does not
+ * change at all if the user captures the observation while in motion (e.g.
+ * walking fast or in a vehicle or boat). More gradual movement is captured via
+ * the MOVED_AWAY_THRESHOLD_METERS below, which tries to distinguish gradual
+ * drift of the GPS during accuracy refinement from actual slow movement. */
+const MOVING_SPEED_THRESHOLD_MPS = 3; // 3 m/s = 10.8 km/h
 /** Over this threshold we consider the user to have moved away from the
  * location of the observation, and we stop refining GPS position. We use the
  * accuracy of the first location as the default, and use this as a fallback if
@@ -151,6 +158,9 @@ function createDraftObservationLocationUpdator({
     const isStale =
       Date.now() - location.timestamp > STALE_LOCATION_THRESHOLD_MS;
     if (isStale) return;
+
+    const isMoving = (location.coords.speed ?? 0) > MOVING_SPEED_THRESHOLD_MPS;
+    if (isMoving) return;
 
     const initialAccuracy = initialPosition?.coords.accuracy;
     const movedAwayThreshold = initialAccuracy

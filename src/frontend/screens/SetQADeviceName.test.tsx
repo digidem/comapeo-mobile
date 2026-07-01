@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {
   render,
   screen,
@@ -12,7 +11,7 @@ import type {MapeoClientApi} from '@comapeo/ipc';
 
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
-import {RootStackNavigator} from '../Navigation/Stack';
+import {AppNavigator} from '../AppNavigator';
 import {createQADeviceNameStore} from '../contexts/QADeviceNameStoreContext';
 
 // Simulate a QA build so the SetQADeviceName gate is active
@@ -58,7 +57,6 @@ describe('On QA Device require existence of a QA Device name', () => {
 
   it('shows SetQADeviceName screen when no QA name is set in store', async () => {
     const qaDeviceNameStore = createQADeviceNameStore({persist: false});
-    // qaDeviceNameStore starts with null
 
     const app = createAppProvidersWrapper({
       mapeoApi: client,
@@ -67,11 +65,12 @@ describe('On QA Device require existence of a QA Device name', () => {
     onTeardown.push(app.teardown);
 
     render(
-      <NavigationContainer>
-        <React.Suspense fallback={null}>
-          <RootStackNavigator />
-        </React.Suspense>
-      </NavigationContainer>,
+      <React.Suspense fallback={null}>
+        <AppNavigator
+          permissionAsked={false}
+          navigationIntegration={undefined}
+        />
+      </React.Suspense>,
       {wrapper: app.wrapper},
     );
 
@@ -94,11 +93,12 @@ describe('On QA Device require existence of a QA Device name', () => {
     onTeardown.push(app.teardown);
 
     render(
-      <NavigationContainer>
-        <React.Suspense fallback={null}>
-          <RootStackNavigator />
-        </React.Suspense>
-      </NavigationContainer>,
+      <React.Suspense fallback={null}>
+        <AppNavigator
+          permissionAsked={false}
+          navigationIntegration={undefined}
+        />
+      </React.Suspense>,
       {wrapper: app.wrapper},
     );
 
@@ -117,11 +117,12 @@ describe('On QA Device require existence of a QA Device name', () => {
     onTeardown.push(app.teardown);
 
     render(
-      <NavigationContainer>
-        <React.Suspense fallback={null}>
-          <RootStackNavigator />
-        </React.Suspense>
-      </NavigationContainer>,
+      <React.Suspense fallback={null}>
+        <AppNavigator
+          permissionAsked={false}
+          navigationIntegration={undefined}
+        />
+      </React.Suspense>,
       {wrapper: app.wrapper},
     );
 
@@ -142,10 +143,10 @@ describe('On QA Device require existence of a QA Device name', () => {
       'my-qa-device',
     );
 
-    // Gate is cleared — SetQADeviceName should be gone and onboarding should appear.
+    // Gate is cleared — mock has device name but no project, so lands on Success screen.
     await waitFor(() => {
       expect(screen.queryByText('Set QA Device Name')).not.toBeOnTheScreen();
     });
-    expect(screen.getByText('Get Started')).toBeOnTheScreen();
+    expect(screen.getByText('Map On Your Own')).toBeOnTheScreen();
   });
 });

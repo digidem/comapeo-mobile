@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -12,39 +12,29 @@ import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 
-export function SetQADeviceNameScreen() {
-  const currentName = useQADeviceName();
-  const [name, setName] = useState(currentName ?? '');
+function QADeviceNameCommon({
+  initialName,
+  onSave,
+  contentStyle,
+}: {
+  initialName: string;
+  onSave: (name: string) => void;
+  contentStyle?: object;
+}) {
+  const [name, setName] = useState(initialName);
   const [submitted, setSubmitted] = useState(false);
-  const {setQADeviceName} = useQADeviceNameActions();
-  const navigation = useNavigation();
-
-  const isEditingExisting = currentName !== null;
-
-  useLayoutEffect(() => {
-    if (!isEditingExisting) {
-      navigation.setOptions({headerLeft: () => null});
-    }
-  }, [navigation, isEditingExisting]);
 
   const hasError = submitted && name.trim().length === 0;
 
   function handleSave() {
     setSubmitted(true);
     if (name.trim().length === 0) return;
-    setQADeviceName(name.trim());
-    ToastAndroid.show('QA device name saved', ToastAndroid.SHORT);
-    if (isEditingExisting) {
-      navigation.goBack();
-    }
+    onSave(name.trim());
   }
 
   return (
     <ScreenContentWithDock
-      contentContainerStyle={{
-        gap: 24,
-        ...(!isEditingExisting && {marginTop: 60}),
-      }}
+      contentContainerStyle={[styles.content, contentStyle]}
       dockContent={
         <PrimaryButton fullSize text="Save Name" onPress={handleSave} />
       }>
@@ -79,7 +69,48 @@ export function SetQADeviceNameScreen() {
   );
 }
 
+// Rendered outside NavigationContainer as a gate before the app loads only for QA builds.
+export function SetQADeviceNameScreen() {
+  const {setQADeviceName} = useQADeviceNameActions();
+
+  function handleSave(name: string) {
+    setQADeviceName(name);
+    ToastAndroid.show('QA device name saved', ToastAndroid.SHORT);
+  }
+
+  return (
+    <QADeviceNameCommon
+      initialName=""
+      onSave={handleSave}
+      contentStyle={styles.gateContentOffset}
+    />
+  );
+}
+
+// Rendered inside NavigationContainer, accessible from Settings.
+export function EditQADeviceNameScreen() {
+  const currentName = useQADeviceName();
+  const {setQADeviceName} = useQADeviceNameActions();
+  const navigation = useNavigation();
+
+  function handleSave(name: string) {
+    setQADeviceName(name);
+    ToastAndroid.show('QA device name saved', ToastAndroid.SHORT);
+    navigation.goBack();
+  }
+
+  return (
+    <QADeviceNameCommon initialName={currentName ?? ''} onSave={handleSave} />
+  );
+}
+
 const styles = StyleSheet.create({
+  content: {
+    gap: 24,
+  },
+  gateContentOffset: {
+    marginTop: 60,
+  },
   section: {
     gap: 12,
   },
@@ -94,7 +125,8 @@ const styles = StyleSheet.create({
     borderColor: LIGHT_GREY,
     borderWidth: 1,
     borderRadius: 6,
-    padding: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
     fontSize: 18,
     color: DARK_GREY,
   },

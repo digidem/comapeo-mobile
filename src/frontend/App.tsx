@@ -73,8 +73,8 @@ const sentryEnvironment: SentryEnvironment =
 
 const appMetricsOptIn = sentryEnvironment !== 'production';
 let navigationIntegration:
-  | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
-  | undefined = undefined;
+  ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined =
+  undefined;
 const sentryUserId = getSentryUserId({now: new Date(), storage});
 
 Sentry.init({
@@ -85,6 +85,7 @@ Sentry.init({
   debug: false, // this added alot of unneccesary noise to the console.
   initialScope: {user: {id: sentryUserId}},
   enableMetrics: false,
+  replaysSessionSampleRate: sentryEnvironment === 'qa' ? 1.0 : 0,
   replaysOnErrorSampleRate: sentryEnvironment === 'qa' ? 1.0 : 0,
   integrations:
     sentryEnvironment === 'qa'

@@ -3,13 +3,14 @@ import {IntlProvider as ReactIntlProvider, CustomFormats} from 'react-intl';
 import {StyleSheet, Text} from 'react-native';
 import {useLocales} from 'expo-localization';
 
-import messages from '../../../translations/messages.json';
 import {useLocaleState} from './LocaleStoreContext';
 import {
   getUsableLanguageTag,
   configureCalendarLocale,
-  AvailableLanguageTag,
+  type AvailableLanguageTag,
 } from '../lib/intl';
+import {Loading} from '../sharedComponents/Loading';
+import {useLanguageQueries} from '../hooks/useLanguageQueries';
 
 export const formats: CustomFormats = {
   date: {
@@ -33,23 +34,21 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
   const languageTag = useLocaleState(s => s.languageTag);
   const systemLocales = useLocales();
 
-  const messagesToUse = React.useMemo(() => {
+  const languageCodes = React.useMemo(() => {
     const usableSystemLanguageTags = systemLocales
       .map(l => getUsableLanguageTag(l.languageTag))
       .filter((tag): tag is AvailableLanguageTag => tag !== undefined);
-    const languages = [languageTag, ...usableSystemLanguageTags];
-    const merged = {};
-    // Merge messages in order of priority: specific system locales, app language code, full app language tag
-    for (const tag of languages.reverse()) {
-      Object.assign(merged, messages[tag] || {});
-    }
-
-    return merged;
+    return Array.from(new Set([languageTag, ...usableSystemLanguageTags]));
   }, [languageTag, systemLocales]);
 
   React.useEffect(() => {
     configureCalendarLocale(languageTag);
   }, [languageTag]);
+  const {data: messagesToUse, isPending} = useLanguageQueries(languageCodes);
+
+  if (isPending) {
+    return <Loading />;
+  }
 
   return (
     <ReactIntlProvider

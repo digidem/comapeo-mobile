@@ -359,6 +359,5 @@ describe('Exchange screen', () => {
       await syncStateIterator.next();
     }
     expect(await hasObservationSyncedToOtherProject()).toBe(true);
-    // This test needs more than the default 5 second Jest timeout.
-  }, 30_000);
+  });
 });

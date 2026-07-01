@@ -1229,6 +1229,15 @@
   "screens.Settings.MapManagement.MapShareCanceled.title": {
     "message": "Sharing Canceled"
   },
+  "screens.Settings.MapManagement.ReceivingBackgroundMap.downloadErrorDescription": {
+    "message": "Map sharing was interrupted. Make sure both devices are connected to the same network and try again."
+  },
+  "screens.Settings.MapManagement.ReceivingBackgroundMap.downloadErrorTitle": {
+    "message": "Connection Lost"
+  },
+  "screens.Settings.MapManagement.ReceivingBackgroundMap.downloadFailedTitle": {
+    "message": "Map Download Failed"
+  },
   "screens.Settings.MapManagement.ReplaceBackgroundMap.cancel": {
     "message": "Cancel"
   },

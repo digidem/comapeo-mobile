@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {
   useQADeviceName,
   useQADeviceNameActions,
 } from '../contexts/QADeviceNameStoreContext';
-import {LIGHT_GREY, RED, DARK_GREY} from '../lib/styles';
+import {LIGHT_GREY, RED, DARK_GREY, WHITE} from '../lib/styles';
 import {PrimaryButton} from '../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
@@ -79,11 +80,9 @@ export function SetQADeviceNameScreen() {
   }
 
   return (
-    <QADeviceNameCommon
-      initialName=""
-      onSave={handleSave}
-      contentStyle={styles.gateContentOffset}
-    />
+    <SafeAreaView style={styles.safeArea}>
+      <QADeviceNameCommon initialName="" onSave={handleSave} />
+    </SafeAreaView>
   );
 }
 
@@ -105,11 +104,12 @@ export function EditQADeviceNameScreen() {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: WHITE,
+  },
   content: {
     gap: 24,
-  },
-  gateContentOffset: {
-    marginTop: 60,
   },
   section: {
     gap: 12,

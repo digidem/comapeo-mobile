@@ -11,6 +11,12 @@ import type Sentry from '@sentry/react-native';
 import {PostHogProvider} from 'posthog-react-native';
 import {postHog} from './lib/posthog';
 import {linking} from './lib/deepLinkConfig';
+import {useQADeviceName} from './contexts/QADeviceNameStoreContext';
+import {SetQADeviceNameScreen} from './screens/SetQADeviceName';
+import {APP_VARIANT} from './lib/appVariant';
+
+const isQABuild =
+  APP_VARIANT === 'releaseCandidate' || APP_VARIANT === 'preRelease';
 
 export const AppNavigator = ({
   permissionAsked,
@@ -23,9 +29,14 @@ export const AppNavigator = ({
 }) => {
   const containerRef =
     React.useRef<NavigationContainerRef<AppStackParamsList>>(null);
+  const qaDeviceName = useQADeviceName();
 
   if (permissionAsked) {
     SplashScreen.hide();
+  }
+
+  if (isQABuild && !qaDeviceName) {
+    return <SetQADeviceNameScreen />;
   }
 
   return (

@@ -1,50 +1,39 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {
   useQADeviceName,
   useQADeviceNameActions,
 } from '../contexts/QADeviceNameStoreContext';
-import {LIGHT_GREY, RED, DARK_GREY} from '../lib/styles';
+import {LIGHT_GREY, RED, DARK_GREY, WHITE} from '../lib/styles';
 import {PrimaryButton} from '../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 
-export function SetQADeviceNameScreen() {
-  const currentName = useQADeviceName();
-  const [name, setName] = useState(currentName ?? '');
+function QADeviceNameCommon({
+  initialName,
+  onSave,
+}: {
+  initialName: string;
+  onSave: (name: string) => void;
+}) {
+  const [name, setName] = useState(initialName);
   const [submitted, setSubmitted] = useState(false);
-  const {setQADeviceName} = useQADeviceNameActions();
-  const navigation = useNavigation();
-
-  const isEditingExisting = currentName !== null;
-
-  useLayoutEffect(() => {
-    if (!isEditingExisting) {
-      navigation.setOptions({headerLeft: () => null});
-    }
-  }, [navigation, isEditingExisting]);
 
   const hasError = submitted && name.trim().length === 0;
 
   function handleSave() {
     setSubmitted(true);
     if (name.trim().length === 0) return;
-    setQADeviceName(name.trim());
-    ToastAndroid.show('QA device name saved', ToastAndroid.SHORT);
-    if (isEditingExisting) {
-      navigation.goBack();
-    }
+    onSave(name.trim());
   }
 
   return (
     <ScreenContentWithDock
-      contentContainerStyle={{
-        gap: 24,
-        ...(!isEditingExisting && {marginTop: 60}),
-      }}
+      contentContainerStyle={styles.content}
       dockContent={
         <PrimaryButton fullSize text="Save Name" onPress={handleSave} />
       }>
@@ -79,7 +68,47 @@ export function SetQADeviceNameScreen() {
   );
 }
 
+// Rendered outside NavigationContainer as a gate before the app loads only for QA builds.
+export function SetQADeviceNameScreen() {
+  const {setQADeviceName} = useQADeviceNameActions();
+
+  function handleSave(name: string) {
+    setQADeviceName(name);
+    ToastAndroid.show('QA device name saved', ToastAndroid.SHORT);
+  }
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <QADeviceNameCommon initialName="" onSave={handleSave} />
+    </SafeAreaView>
+  );
+}
+
+// Rendered inside NavigationContainer, accessible from Settings.
+export function EditQADeviceNameScreen() {
+  const currentName = useQADeviceName();
+  const {setQADeviceName} = useQADeviceNameActions();
+  const navigation = useNavigation();
+
+  function handleSave(name: string) {
+    setQADeviceName(name);
+    ToastAndroid.show('QA device name saved', ToastAndroid.SHORT);
+    navigation.goBack();
+  }
+
+  return (
+    <QADeviceNameCommon initialName={currentName ?? ''} onSave={handleSave} />
+  );
+}
+
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: WHITE,
+  },
+  content: {
+    gap: 24,
+  },
   section: {
     gap: 12,
   },
@@ -94,7 +123,8 @@ const styles = StyleSheet.create({
     borderColor: LIGHT_GREY,
     borderWidth: 1,
     borderRadius: 6,
-    padding: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
     fontSize: 18,
     color: DARK_GREY,
   },

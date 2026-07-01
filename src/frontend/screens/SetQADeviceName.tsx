@@ -16,11 +16,9 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 function QADeviceNameCommon({
   initialName,
   onSave,
-  contentStyle,
 }: {
   initialName: string;
   onSave: (name: string) => void;
-  contentStyle?: object;
 }) {
   const [name, setName] = useState(initialName);
   const [submitted, setSubmitted] = useState(false);
@@ -35,7 +33,7 @@ function QADeviceNameCommon({
 
   return (
     <ScreenContentWithDock
-      contentContainerStyle={[styles.content, contentStyle]}
+      contentContainerStyle={styles.content}
       dockContent={
         <PrimaryButton fullSize text="Save Name" onPress={handleSave} />
       }>

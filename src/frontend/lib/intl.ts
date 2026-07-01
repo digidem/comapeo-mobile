@@ -1,7 +1,14 @@
+/* eslint-disable intl/no-unused-message-descriptors */
+
 // Mapping of language tag to corresponding native and english names
 import LANGUAGES from '../languages.json';
 import {LocaleConfig} from 'react-native-calendars';
-import {defineMessages} from 'react-intl';
+import {
+  createIntl,
+  createIntlCache,
+  defineMessages,
+  type MessageFormatElement,
+} from 'react-intl';
 import {
   localeImports,
   type AvailableLanguageTag,
@@ -104,35 +111,14 @@ function extractLanguageCode(languageTag: string): string {
   return languageTag.split('-')[0]!;
 }
 
-// An arbitrary Sunday, used as the start of the reference week for deriving day names.
-const REFERENCE_SUNDAY = new Date(2024, 0, 7);
-
-function getMonthNames(languageTag: string, format: 'long' | 'short') {
-  const formatter = new Intl.DateTimeFormat(languageTag, {month: format});
-  return Array.from({length: 12}, (_, month) =>
-    formatter.format(new Date(2024, month, 1)),
-  );
-}
-
-function getDayNames(languageTag: string, format: 'long' | 'short') {
-  const formatter = new Intl.DateTimeFormat(languageTag, {weekday: format});
-  return Array.from({length: 7}, (_, dayOffset) => {
-    const date = new Date(REFERENCE_SUNDAY);
-    date.setDate(date.getDate() + dayOffset);
-    return formatter.format(date);
-  });
-}
-
 // `Intl` has no CLDR data for some of our supported languages (e.g. Indigenous
 // languages not covered by ICU), and silently falls back to English names for
 // them. These messages let translators supply month/day names through the
 // normal translation pipeline for languages `Intl` can't cover.
-const calendarMessages = defineMessages({
+const calendarMonths = defineMessages({
   january: {
     id: 'lib.intl.calendarMonth.january',
     defaultMessage: 'January',
-    description:
-      'This is automatically translated for most languages and should only be translated to ',
   },
   february: {
     id: 'lib.intl.calendarMonth.february',
@@ -157,6 +143,9 @@ const calendarMessages = defineMessages({
     id: 'lib.intl.calendarMonth.december',
     defaultMessage: 'December',
   },
+});
+
+const calendarDaysShort = defineMessages({
   sunday: {id: 'lib.intl.calendarDayShort.sunday', defaultMessage: 'Sun'},
   monday: {id: 'lib.intl.calendarDayShort.monday', defaultMessage: 'Mon'},
   tuesday: {id: 'lib.intl.calendarDayShort.tuesday', defaultMessage: 'Tue'},
@@ -173,87 +162,154 @@ const calendarMessages = defineMessages({
     id: 'lib.intl.calendarDayShort.saturday',
     defaultMessage: 'Sat',
   },
+});
+
+const calendarDaysLong = defineMessages({
   // react-native-calendars also needs full day names: it builds each day
   // cell's accessibility label from a format string that includes `dddd`.
-  sundayFull: {id: 'lib.intl.calendarDay.sunday', defaultMessage: 'Sunday'},
-  mondayFull: {id: 'lib.intl.calendarDay.monday', defaultMessage: 'Monday'},
-  tuesdayFull: {
+  sunday: {id: 'lib.intl.calendarDay.sunday', defaultMessage: 'Sunday'},
+  monday: {id: 'lib.intl.calendarDay.monday', defaultMessage: 'Monday'},
+  tuesday: {
     id: 'lib.intl.calendarDay.tuesday',
     defaultMessage: 'Tuesday',
   },
-  wednesdayFull: {
+  wednesday: {
     id: 'lib.intl.calendarDay.wednesday',
     defaultMessage: 'Wednesday',
   },
-  thursdayFull: {
+  thursday: {
     id: 'lib.intl.calendarDay.thursday',
     defaultMessage: 'Thursday',
   },
-  fridayFull: {id: 'lib.intl.calendarDay.friday', defaultMessage: 'Friday'},
-  saturdayFull: {
+  friday: {id: 'lib.intl.calendarDay.friday', defaultMessage: 'Friday'},
+  saturday: {
     id: 'lib.intl.calendarDay.saturday',
     defaultMessage: 'Saturday',
   },
 });
 
-const CALENDAR_MONTH_MESSAGE_ORDER = [
-  calendarMessages.january,
-  calendarMessages.february,
-  calendarMessages.march,
-  calendarMessages.april,
-  calendarMessages.may,
-  calendarMessages.june,
-  calendarMessages.july,
-  calendarMessages.august,
-  calendarMessages.september,
-  calendarMessages.october,
-  calendarMessages.november,
-  calendarMessages.december,
-];
-
-// Ordered Sunday-first to match react-native-calendars' day index convention.
-const CALENDAR_DAY_SHORT_MESSAGE_ORDER = [
-  calendarMessages.sunday,
-  calendarMessages.monday,
-  calendarMessages.tuesday,
-  calendarMessages.wednesday,
-  calendarMessages.thursday,
-  calendarMessages.friday,
-  calendarMessages.saturday,
-];
-
-const CALENDAR_DAY_MESSAGE_ORDER = [
-  calendarMessages.sundayFull,
-  calendarMessages.mondayFull,
-  calendarMessages.tuesdayFull,
-  calendarMessages.wednesdayFull,
-  calendarMessages.thursdayFull,
-  calendarMessages.fridayFull,
-  calendarMessages.saturdayFull,
-];
+type Month = keyof typeof calendarMonths;
+type DayOfWeekShort = keyof typeof calendarDaysShort;
+type DayOfWeek = keyof typeof calendarDaysLong;
 
 /**
- * Registers month and day names for `languageTag` with `react-native-calendars`.
- * Prefers a translated message where one exists, and otherwise falls back to
- * the same `Intl` API react-intl's `formatDate` uses, so most languages need
- * no translation effort at all.
+ *
+ * configureCalendarLocale should be run in a useEffect in order to update on language change
  */
-export function configureCalendarLocale(languageTag: AvailableLanguageTag) {
-  const translated: Record<string, string> = MESSAGES[languageTag] || {};
-  const fallbackMonthNames = getMonthNames(languageTag, 'long');
-  const fallbackDayNames = getDayNames(languageTag, 'long');
-  const fallbackDayNamesShort = getDayNames(languageTag, 'short');
-
-  LocaleConfig.locales[languageTag] = {
-    monthNames: CALENDAR_MONTH_MESSAGE_ORDER.map(
-      (message, i) => translated[message.id] ?? fallbackMonthNames[i],
+export function configureCalendarLocale({
+  translatedMessages,
+  languageCodes,
+}: {
+  translatedMessages: TranslatedMessages;
+  languageCodes: AvailableLanguageTag[];
+}) {
+  LocaleConfig.locales[languageCodes.join(', ')] = {
+    monthNames: (Object.keys(calendarMonths) as Array<Month>).map(month =>
+      getMonth({month, translatedMessages}),
     ),
-    dayNames: CALENDAR_DAY_MESSAGE_ORDER.map(
-      (message, i) => translated[message.id] ?? fallbackDayNames[i],
-    ),
-    dayNamesShort: CALENDAR_DAY_SHORT_MESSAGE_ORDER.map(
-      (message, i) => translated[message.id] ?? fallbackDayNamesShort[i],
+    dayNamesShort: (
+      Object.keys(calendarDaysShort) as Array<DayOfWeekShort>
+    ).map(day => getShortDay({dayofWeek: day, translatedMessages})),
+    dayNames: (Object.keys(calendarDaysLong) as Array<DayOfWeek>).map(day =>
+      getLongDay({dayofWeek: day, translatedMessages}),
     ),
   };
-  LocaleConfig.defaultLocale = languageTag;
+  LocaleConfig.defaultLocale = languageCodes.join(', ');
+}
+type TranslatedMessages = Partial<
+  Record<AvailableLanguageTag, Record<string, MessageFormatElement[]>>
+>;
+
+/**
+ * `getMonth()`, `getShortDay()`, and `getLongDay` creates translations and fallbacks
+ * First, it tries to find translations in crowdin for the all available language tags
+ * If none of those are available, it uses the translation in react-intl (most dates are already translated by react intl)
+ * And then falls back to english if no translations are available
+ *
+ * We dont just use the translations available by react-intl because it does not support a few of the languages we support
+ */
+
+function getMonth({
+  month,
+  translatedMessages,
+}: {
+  month: Month;
+  translatedMessages: TranslatedMessages;
+}): string {
+  const cache = createIntlCache();
+  for (const [langCode, messages] of Object.entries(translatedMessages)) {
+    const translatedMonth = messages[calendarMonths[month].id];
+
+    const intl = createIntl({locale: langCode, messages}, cache);
+    if (translatedMonth) {
+      return intl.formatMessage(calendarMonths[month]);
+    }
+
+    if (Intl.DateTimeFormat.supportedLocalesOf(langCode).length > 0) {
+      const monthIndex = Object.keys(calendarMonths).indexOf(month);
+      return intl.formatDate(new Date(2024, monthIndex, 1), {
+        month: 'long',
+      });
+    }
+  }
+  const englishIntl = createIntl({locale: 'en'}, cache);
+
+  return englishIntl.formatMessage(calendarMonths[month]);
+}
+
+function getShortDay({
+  dayofWeek,
+  translatedMessages,
+}: {
+  dayofWeek: DayOfWeekShort;
+  translatedMessages: TranslatedMessages;
+}): string {
+  const cache = createIntlCache();
+  for (const [langCode, messages] of Object.entries(translatedMessages)) {
+    const translatedDay = messages[calendarDaysShort[dayofWeek].id];
+    const intl = createIntl({locale: langCode, messages}, cache);
+    if (translatedDay) {
+      return intl.formatMessage(calendarDaysShort[dayofWeek]);
+    }
+
+    if (Intl.DateTimeFormat.supportedLocalesOf(langCode).length > 0) {
+      const dayIndex = Object.keys(calendarDaysShort).indexOf(dayofWeek);
+      // Jan 7, 2024 is a known sunday
+      return intl.formatDate(new Date(2024, 0, 7 + dayIndex), {
+        weekday: 'short',
+      });
+    }
+  }
+  const englishIntl = createIntl({locale: 'en'}, cache);
+
+  return englishIntl.formatMessage(calendarDaysShort[dayofWeek]);
+}
+
+function getLongDay({
+  dayofWeek,
+  translatedMessages,
+}: {
+  dayofWeek: DayOfWeek;
+  translatedMessages: TranslatedMessages;
+}): string {
+  const cache = createIntlCache();
+  for (const [langCode, messages] of Object.entries(translatedMessages)) {
+    const translatedDay = messages[calendarDaysLong[dayofWeek].id];
+
+    const intl = createIntl({locale: langCode, messages}, cache);
+    if (translatedDay) {
+      return intl.formatMessage(calendarDaysLong[dayofWeek]);
+    }
+
+    if (Intl.DateTimeFormat.supportedLocalesOf(langCode).length > 0) {
+      const dayIndex = Object.keys(calendarDaysLong).indexOf(dayofWeek);
+      // Jan 7, 2024 is a known sunday
+      return intl.formatDate(new Date(2024, 0, 7 + dayIndex), {
+        weekday: 'long',
+      });
+    }
+  }
+  const englishIntl = createIntl({locale: 'en'}, cache);
+
+  return englishIntl.formatMessage(calendarDaysLong[dayofWeek]);
 }

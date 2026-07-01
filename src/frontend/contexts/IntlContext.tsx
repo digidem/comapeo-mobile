@@ -1,5 +1,9 @@
 import * as React from 'react';
-import {IntlProvider as ReactIntlProvider, CustomFormats} from 'react-intl';
+import {
+  IntlProvider as ReactIntlProvider,
+  CustomFormats,
+  MessageFormatElement,
+} from 'react-intl';
 import {StyleSheet, Text} from 'react-native';
 import {useLocales} from 'expo-localization';
 
@@ -41,10 +45,39 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
     return Array.from(new Set([languageTag, ...usableSystemLanguageTags]));
   }, [languageTag, systemLocales]);
 
+  const messages = useLanguageQueries(languageCodes);
+
+  // pending only while every language is still loading; a language that's
+  // already cached (e.g. the fallback) lets us render immediately
+  const isPending = messages.every(queryResult => queryResult.isPending);
+
+  // reduceRight means the highest priority languages (start of the array)
+  // get merged last and overwrite the lower priority languages
+  const messagesToUse = React.useMemo(
+    () =>
+      messages.reduceRight<Record<string, MessageFormatElement[]>>(
+        (merged, queryResult) => ({...merged, ...queryResult.data}),
+        {},
+      ),
+    [messages],
+  );
+
   React.useEffect(() => {
-    configureCalendarLocale(languageTag);
-  }, [languageTag]);
-  const {data: messagesToUse, isPending} = useLanguageQueries(languageCodes);
+    if (!isPending) {
+      configureCalendarLocale(
+        // Don't use the `messagesToUse`.
+        // This function need to know if the `day` and `month` translations are not avaialble
+        // If the `day` and `month` translations are not avaialble, it will pull the `day` and `month` translations directly from intl
+        // `messagesToUse` will always have the english fallback and this function won't know that the translations are not availble
+        {
+          translatedMessages: Object.fromEntries(
+            languageCodes.map((code, i) => [code, messages[i]?.data ?? {}]),
+          ),
+          languageCodes,
+        },
+      );
+    }
+  }, [languageCodes, messages, isPending]);
 
   if (isPending) {
     return <Loading />;

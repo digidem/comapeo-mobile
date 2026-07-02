@@ -21,7 +21,7 @@ Logger.setLogCallback(log => {
 // undefined on iOS (no equivalent connectivity manager), so guard the call.
 setConnected?.(true);
 
-import {QueryClient} from '@tanstack/react-query';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {
   comapeo as mapeoApi,
@@ -221,41 +221,45 @@ const App = () => {
 
   return (
     <Sentry.ErrorBoundary fallback={<FatalErrorUntranslated />}>
-      <LocaleContext value={persistedLocaleStore}>
-        <IntlProvider>
-          {/* This fatal error requires internationalization to be set up */}
-          <Sentry.ErrorBoundary fallback={<FatalError />}>
-            <ServerLoading>
-              <Suspense fallback={<Loading />}>
-                <AppProviders
-                  queryClient={queryClient}
-                  localDiscoveryController={localDiscoveryController}
-                  mapeoApi={mapeoApi}
-                  mapServerApi={mapServerApi}
-                  persistedDrafObservationStore={persistedDraftObservationStore}
-                  trackStore={persistedTrackStore}
-                  securityStore={persistedSecurityStore}
-                  coordinateFormatStore={persistedCoordinateFormatStore}
-                  manualEntryCoordinateFormatStore={
-                    persistedManualEntryCoordinateFormatStore
-                  }
-                  savedLocationStore={savedLocationStore}
-                  activeProjectIdStore={persistedActiveProjectIdStore}
-                  metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-                  appUsageStatsStore={appUsagePromptStore}
-                  lowStorageBannerStore={lowStorageBannerStore}
-                  earlyAccessStore={earlyAccessStore}
-                  unitSystemStore={persistedUnitSystemStore}>
-                  <AppNavigator
-                    permissionAsked={permissionsAsked}
-                    navigationIntegration={navigationIntegration}
-                  />
-                </AppProviders>
-              </Suspense>
-            </ServerLoading>
-          </Sentry.ErrorBoundary>
-        </IntlProvider>
-      </LocaleContext>
+      <QueryClientProvider client={queryClient}>
+        <LocaleContext value={persistedLocaleStore}>
+          <IntlProvider>
+            {/* This fatal error requires internationalization to be set up */}
+            <Sentry.ErrorBoundary fallback={<FatalError />}>
+              <ServerLoading>
+                <Suspense fallback={<Loading />}>
+                  <AppProviders
+                    queryClient={queryClient}
+                    localDiscoveryController={localDiscoveryController}
+                    mapeoApi={mapeoApi}
+                    mapServerApi={mapServerApi}
+                    persistedDrafObservationStore={
+                      persistedDraftObservationStore
+                    }
+                    trackStore={persistedTrackStore}
+                    securityStore={persistedSecurityStore}
+                    coordinateFormatStore={persistedCoordinateFormatStore}
+                    manualEntryCoordinateFormatStore={
+                      persistedManualEntryCoordinateFormatStore
+                    }
+                    savedLocationStore={savedLocationStore}
+                    activeProjectIdStore={persistedActiveProjectIdStore}
+                    metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+                    appUsageStatsStore={appUsagePromptStore}
+                    lowStorageBannerStore={lowStorageBannerStore}
+                    earlyAccessStore={earlyAccessStore}
+                    unitSystemStore={persistedUnitSystemStore}>
+                    <AppNavigator
+                      permissionAsked={permissionsAsked}
+                      navigationIntegration={navigationIntegration}
+                    />
+                  </AppProviders>
+                </Suspense>
+              </ServerLoading>
+            </Sentry.ErrorBoundary>
+          </IntlProvider>
+        </LocaleContext>
+      </QueryClientProvider>
     </Sentry.ErrorBoundary>
   );
 };

@@ -87,7 +87,7 @@ module.exports = ({config}) => {
     '@comapeo/core-react-native',
     {
       defaultConfig:
-        'node_modules/@comapeo/default-categories/dist/comapeo-default-categories.comapeocat',
+        require.resolve('@comapeo/default-categories/dist/comapeo-default-categories.comapeocat'),
       defaultOnlineStyleUrl,
       sentry: {
         dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',

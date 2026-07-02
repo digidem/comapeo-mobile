@@ -47,8 +47,9 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
 
   const messages = useLanguageQueries(languageCodes);
 
-  // pending only while every language is still loading; a language that's
-  // already cached (e.g. the fallback) lets us render immediately
+  // pending only when NONE of the languages are available, in other word will NOT be pending if 1 language is available
+  // this guarantees that the app doesn't unmount when the language is switched
+  // And it will fallback to the avaialble langauges when the new chosen language is pending
   const isPending = messages.every(queryResult => queryResult.isPending);
 
   // reduceRight means the highest priority languages (start of the array)

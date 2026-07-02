@@ -111,9 +111,9 @@ function extractLanguageCode(languageTag: string): string {
   return languageTag.split('-')[0]!;
 }
 
-// `Intl` has no CLDR data for some of our supported languages (e.g. Indigenous
-// languages not covered by ICU), and silently falls back to English names for
-// them. These messages let translators supply month/day names through crowdin.
+// `react-intl` has the translations of these be default, but not for all supported languages
+// (e.g. Indigenous languages), and silently falls back to English names for
+// them. These let translators supply translations through crowdin.
 const calendarMonths = defineMessages({
   january: {
     id: 'lib.intl.calendarMonth.january',
@@ -193,7 +193,7 @@ type DayOfWeek = keyof typeof calendarDaysLong;
 
 /**
  *
- * configureCalendarLocale should be run in a useEffect in order to update on language change
+ * Should be run in a useEffect in order to update on language change
  */
 export function configureCalendarLocale({
   translatedMessages,

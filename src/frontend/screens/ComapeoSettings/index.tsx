@@ -17,7 +17,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BLACK, BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import HeartCheckIcon from '../../images/HeartCheck.svg';
 import AngleRulerIcon from '../../images/AngleRuler.svg';
-import {APP_VARIANT} from '../../lib/appVariant';
+import {isQABuild} from '../../lib/appVariant';
 import {useQADeviceName} from '../../contexts/QADeviceNameStoreContext';
 
 const m = defineMessages({
@@ -143,8 +143,6 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
 
   const hasPasscode = passcode !== null;
   const qaDeviceName = useQADeviceName();
-  const isQABuild =
-    APP_VARIANT === 'releaseCandidate' || APP_VARIANT === 'preRelease';
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

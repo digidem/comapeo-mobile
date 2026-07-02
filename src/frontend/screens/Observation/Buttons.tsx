@@ -137,6 +137,7 @@ export const ButtonFields = ({
         const displayedValue = getFieldAnswerText({
           fieldOptions: field.options,
           tagValue: value,
+          formatDate,
         });
 
         if (!displayedValue) continue;

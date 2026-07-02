@@ -44,6 +44,10 @@ function QADeviceNameCommon({
           events in Sentry and identify the relevant device. Spaces are allowed
           and there is a maximum of 200 characters and no new lines.
         </BodyText>
+        <BodyText style={styles.description}>
+          Please make a note of the name you chose to be able to share with
+          developers if needed.
+        </BodyText>
       </View>
 
       <View style={styles.field}>

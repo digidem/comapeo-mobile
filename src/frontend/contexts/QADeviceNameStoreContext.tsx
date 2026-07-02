@@ -21,7 +21,10 @@ function createInitialState(): QADeviceNameState {
   return {qaDeviceName: null};
 }
 
-export function createQADeviceNameStore({persist} = {persist: false}) {
+export function createQADeviceNameStore({
+  persist,
+  onNameSet,
+}: {persist?: boolean; onNameSet?: (name: string) => void} = {}) {
   let store: StoreApi<QADeviceNameState>;
 
   if (persist) {
@@ -39,6 +42,7 @@ export function createQADeviceNameStore({persist} = {persist: false}) {
   const actions: QADeviceNameActions = {
     setQADeviceName: (name: string) => {
       store.setState({qaDeviceName: name});
+      onNameSet?.(name);
     },
   };
 

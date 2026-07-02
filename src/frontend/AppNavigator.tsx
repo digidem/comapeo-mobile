@@ -13,10 +13,7 @@ import {postHog} from './lib/posthog';
 import {linking} from './lib/deepLinkConfig';
 import {useQADeviceName} from './contexts/QADeviceNameStoreContext';
 import {SetQADeviceNameScreen} from './screens/SetQADeviceName';
-import {APP_VARIANT} from './lib/appVariant';
-
-const isQABuild =
-  APP_VARIANT === 'releaseCandidate' || APP_VARIANT === 'preRelease';
+import {isQABuild} from './lib/appVariant';
 
 export const AppNavigator = ({
   permissionAsked,

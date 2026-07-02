@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  TextInput,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -32,43 +38,45 @@ function QADeviceNameCommon({
   }
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={styles.content}
-      dockContent={
-        <PrimaryButton fullSize text="Save Name" onPress={handleSave} />
-      }>
-      <View style={styles.section}>
-        <HeaderText variant="header2">Set QA Device Name</HeaderText>
-        <BodyText style={styles.description}>
-          This name is used for the developers to be able to search through
-          events in Sentry and identify the relevant device. Spaces are allowed
-          and there is a maximum of 200 characters and no new lines.
-        </BodyText>
-        <BodyText style={styles.description}>
-          Please make a note of the name you chose to be able to share with
-          developers if needed.
-        </BodyText>
-      </View>
-
-      <View style={styles.field}>
-        <HeaderText variant="header3">QA Device Name (required)</HeaderText>
-        <TextInput
-          testID="SET_QA_DEVICE_NAME.name-input"
-          style={[styles.input, hasError && styles.inputError]}
-          value={name}
-          onChangeText={setName}
-          placeholder="e.g. Motorola Moto G4"
-          placeholderTextColor={LIGHT_GREY}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        {hasError && (
-          <BodyText style={styles.errorText}>
-            Please enter a name before saving.
+    <KeyboardAvoidingView style={styles.keyboardAvoiding} behavior="height">
+      <ScreenContentWithDock
+        contentContainerStyle={styles.content}
+        dockContent={
+          <PrimaryButton fullSize text="Save Name" onPress={handleSave} />
+        }>
+        <View style={styles.section}>
+          <HeaderText variant="header2">Set QA Device Name</HeaderText>
+          <BodyText style={styles.description}>
+            This name is used for the developers to be able to search through
+            events in Sentry and identify the relevant device. Spaces are
+            allowed and there is a maximum of 200 characters and no new lines.
           </BodyText>
-        )}
-      </View>
-    </ScreenContentWithDock>
+          <BodyText style={styles.description}>
+            Please make a note of the name you chose to be able to share with
+            developers if needed.
+          </BodyText>
+        </View>
+
+        <View style={styles.field}>
+          <HeaderText variant="header3">QA Device Name (required)</HeaderText>
+          <TextInput
+            testID="SET_QA_DEVICE_NAME.name-input"
+            style={[styles.input, hasError && styles.inputError]}
+            value={name}
+            onChangeText={setName}
+            placeholder="e.g. Motorola Moto G4"
+            placeholderTextColor={LIGHT_GREY}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          {hasError && (
+            <BodyText style={styles.errorText}>
+              Please enter a name before saving.
+            </BodyText>
+          )}
+        </View>
+      </ScreenContentWithDock>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -106,6 +114,9 @@ export function EditQADeviceNameScreen() {
 }
 
 const styles = StyleSheet.create({
+  keyboardAvoiding: {
+    flex: 1,
+  },
   safeArea: {
     flex: 1,
     backgroundColor: WHITE,

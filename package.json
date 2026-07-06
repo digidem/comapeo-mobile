@@ -139,6 +139,7 @@
     "@eslint/js": "10.0.1",
     "@formatjs/cli": "6.16.11",
     "@formatjs/cli-lib": "8.7.11",
+    "@mapeo/crypto": "1.0.0-alpha.10",
     "@mapeo/mock-data": "5.0.0",
     "@react-native/metro-babel-transformer": "0.81.6",
     "@react-native/metro-config": "0.81.6",

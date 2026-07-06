@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  TextInput,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -43,6 +49,10 @@ function QADeviceNameCommon({
           This name is used for the developers to be able to search through
           events in Sentry and identify the relevant device. Spaces are allowed
           and there is a maximum of 200 characters and no new lines.
+        </BodyText>
+        <BodyText style={styles.description}>
+          Please make a note of the name you chose to be able to share with
+          developers if needed.
         </BodyText>
       </View>
 
@@ -97,11 +107,16 @@ export function EditQADeviceNameScreen() {
   }
 
   return (
-    <QADeviceNameCommon initialName={currentName ?? ''} onSave={handleSave} />
+    <KeyboardAvoidingView style={styles.keyboardAvoiding} behavior="padding">
+      <QADeviceNameCommon initialName={currentName ?? ''} onSave={handleSave} />
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  keyboardAvoiding: {
+    flex: 1,
+  },
   safeArea: {
     flex: 1,
     backgroundColor: WHITE,

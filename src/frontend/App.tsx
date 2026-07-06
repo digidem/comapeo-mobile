@@ -97,17 +97,15 @@ if (appMetricsOptIn) {
   Sentry.getClient()?.addIntegration(navigationIntegration);
 }
 
-const qaDeviceNameStore = createQADeviceNameStore({persist: true});
+const qaDeviceNameStore = createQADeviceNameStore({
+  persist: true,
+  onNameSet: name => Sentry.setTag('QA_Device_Name', name),
+});
 
 const initialQADeviceName = qaDeviceNameStore.instance.getState().qaDeviceName;
 if (initialQADeviceName) {
   Sentry.setTag('QA_Device_Name', initialQADeviceName);
 }
-qaDeviceNameStore.instance.subscribe((current, previous) => {
-  if (current.qaDeviceName !== previous.qaDeviceName && current.qaDeviceName) {
-    Sentry.setTag('QA_Device_Name', current.qaDeviceName);
-  }
-});
 
 const persistedLocaleStore = createLocaleStore({
   persist: true,

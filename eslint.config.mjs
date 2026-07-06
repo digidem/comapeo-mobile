@@ -88,16 +88,26 @@ const frontendConfig = pluginTs.config(
     rules: {
       'intl/no-unused-message-descriptors': 'error',
       'intl/no-duplicate-message-descriptor-ids': 'error',
-      // More noise than signal
-      '@eslint-react/hooks-extra/no-direct-set-state-in-use-effect': 'off',
+      // Duplicate of react-hooks/set-state-in-effect, already set to warn below
+      '@eslint-react/set-state-in-effect': 'off',
       // Some React Native libraries use the subscription return approach
       '@eslint-react/web-api/no-leaked-event-listener': 'off',
       // Not relevant for React Native
       '@eslint-react/web-api/no-leaked-resize-observer': 'off',
+      // Not relevant for React Native (no DOM setTimeout cleanup needed)
+      '@eslint-react/web-api-no-leaked-timeout': 'off',
       // useContext is still valid
       '@eslint-react/no-use-context': 'off',
+      // Mock functions legitimately use 'use' prefix to match real hook names
+      '@eslint-react/no-unnecessary-use-prefix': 'off',
+      // new Date() during render is acceptable in React Native (no hydration concerns)
+      '@eslint-react/purity': 'off',
+      // Naming conventions/ style preference not traditionally used by us
+      '@eslint-react/naming-convention-ref-name': 'off',
       // There are some cases in app code when it's needed
       '@typescript-eslint/no-require-imports': 'off',
+      // Requires ES2022 error lib for {cause} support — not in our tsconfig base
+      'preserve-caught-error': 'off',
       // We want to strictly adhere
       'react-hooks/exhaustive-deps': 'error',
       // We want to strictly adhere

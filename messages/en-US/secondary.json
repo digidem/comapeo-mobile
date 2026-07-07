@@ -149,6 +149,9 @@
   "Screens.Settings.AppSettings.createTestData": {
     "message": "Create Test Data"
   },
+  "Screens.Settings.AppSettings.qaDeviceName": {
+    "message": "QA Device Name"
+  },
   "Screens.Settings.AppSettings.testData": {
     "message": "Test Data"
   },

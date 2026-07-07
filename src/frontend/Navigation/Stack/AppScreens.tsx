@@ -145,6 +145,8 @@ import {MapReceivedBottomSheet} from '../../screens/BackgroundMaps/MapReceivedBo
 import {ReplaceBackgroundMap} from '../../screens/BackgroundMaps/ReplaceBackgroundMap.tsx';
 import {ReceivingBackgroundMap} from '../../screens/BackgroundMaps/ReceivingBackgroundMap.tsx';
 import {MapShareCanceledBottomSheet} from '../../screens/BackgroundMaps/MapShareCanceledBottomSheet.tsx';
+import {EditQADeviceNameScreen} from '../../screens/SetQADeviceName.tsx';
+import {isQABuild} from '../../lib/appVariant';
 import {RootStack} from './RootStack.ts';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -439,6 +441,13 @@ export const createAppScreens = ({
           name="CreateTestData"
           component={CreateTestDataScreen}
           options={{headerTitle: 'Create Test Data'}}
+        />
+      )}
+      {isQABuild && (
+        <RootStack.Screen
+          name="EditQADeviceName"
+          component={EditQADeviceNameScreen}
+          options={{headerTitle: 'QA Device Name'}}
         />
       )}
       <RootStack.Screen

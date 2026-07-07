@@ -13,3 +13,6 @@ export const APP_VARIANT: AppVariant = applicationId?.endsWith('.dev')
     : applicationId?.endsWith('.pre')
       ? 'preRelease'
       : 'production';
+
+export const isQABuild =
+  APP_VARIANT === 'releaseCandidate' || APP_VARIANT === 'preRelease';

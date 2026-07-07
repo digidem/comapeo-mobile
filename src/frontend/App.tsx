@@ -109,10 +109,7 @@ if (appMetricsOptIn) {
   Sentry.getClient()?.addIntegration(navigationIntegration);
 }
 
-const qaDeviceNameStore = createQADeviceNameStore({
-  persist: true,
-  onNameSet: name => Sentry.setTag('QA_Device_Name', name),
-});
+const qaDeviceNameStore = createQADeviceNameStore({persist: true});
 
 const initialQADeviceName = qaDeviceNameStore.instance.getState().qaDeviceName;
 if (initialQADeviceName) {

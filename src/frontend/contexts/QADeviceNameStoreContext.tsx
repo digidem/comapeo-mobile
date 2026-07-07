@@ -4,6 +4,7 @@ import {
   createJSONStorage,
   persist as createPersistedState,
 } from 'zustand/middleware';
+import * as Sentry from '@sentry/react-native';
 import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
 
 // NOTE: Do not change!
@@ -21,10 +22,7 @@ function createInitialState(): QADeviceNameState {
   return {qaDeviceName: null};
 }
 
-export function createQADeviceNameStore({
-  persist,
-  onNameSet,
-}: {persist?: boolean; onNameSet?: (name: string) => void} = {}) {
+export function createQADeviceNameStore({persist}: {persist?: boolean} = {}) {
   let store: StoreApi<QADeviceNameState>;
 
   if (persist) {
@@ -42,7 +40,7 @@ export function createQADeviceNameStore({
   const actions: QADeviceNameActions = {
     setQADeviceName: (name: string) => {
       store.setState({qaDeviceName: name});
-      onNameSet?.(name);
+      Sentry.setTag('QA_Device_Name', name);
     },
   };
 

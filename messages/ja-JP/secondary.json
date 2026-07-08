@@ -1,14 +1,14 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "編集を続ける"
+    "message": "編集を続ける",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "観察記録は保存されません。元に戻すことはできません。"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "観察記録を破棄しますか？"
+    "message": "観察記録を破棄しますか？",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "完了"
@@ -137,24 +137,24 @@
     "message": "詳細を表示"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "取消"
+    "message": "取消",
+    "description": "Text for cancel action button."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
-    "description": "Explanation for consequences of removing archive server.",
-    "message": "このプロジェクトの新しいデータのアーカイブを停止します。既存のアーカイブされたデータは削除されません。"
+    "message": "このプロジェクトの新しいデータのアーカイブを停止します。既存のアーカイブされたデータは削除されません。",
+    "description": "Explanation for consequences of removing archive server."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.removeArchive": {
-    "description": "Text for destructive action button.",
-    "message": "アーカイブを削除"
+    "message": "アーカイブを削除",
+    "description": "Text for destructive action button."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.title": {
-    "description": "Text for title that asks about confirming archive server removal.",
-    "message": "プロジェクトから {name} を削除しますか？"
+    "message": "プロジェクトから {name} を削除しますか？",
+    "description": "Text for title that asks about confirming archive server removal."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "削除"
+    "message": "削除",
+    "description": "Button to delete a track"
   },
   "Storage.MapBanner.title": {
     "message": "デバイスのストレージ容量が少なくなっています。"
@@ -175,16 +175,16 @@
     "message": "新しいトラックを録音する準備はできましたか？"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "編集を続ける"
+    "message": "編集を続ける",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "変更を破棄してよろしいですか？"
+    "message": "変更を破棄してよろしいですか？",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "変更を破棄"
+    "message": "変更を破棄",
+    "description": "Button to confirm discarding the track"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "変更は保存されません。元に戻すことはできません。"
@@ -229,20 +229,20 @@
     "message": "このデバイスのロールを選択しています:"
   },
   "screens.AboutSettings.CoMapeoBuild": {
-    "description": "Label for CoMapeo build number",
-    "message": "CoMapeo ビルド"
+    "message": "CoMapeo ビルド",
+    "description": "Label for CoMapeo build number"
   },
   "screens.AboutSettings.CoMapeoVersion": {
-    "description": "Label for CoMapeo version",
-    "message": "CoMapeoバージョン"
+    "message": "CoMapeoバージョン",
+    "description": "Label for CoMapeo version"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "Android ビルド番号"
+    "message": "Android ビルド番号",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "Androidバージョン"
+    "message": "Androidバージョン",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.comapeoWebsiteLabel": {
     "message": "CoMapeo ウェブサイト"
@@ -251,20 +251,20 @@
     "message": "アーリーアクセスモードに入っています。"
   },
   "screens.AboutSettings.emojiSource": {
-    "description": "Label for the source of emojis used in CoMapeo",
-    "message": "絵文字のソース"
+    "message": "絵文字のソース",
+    "description": "Label for the source of emojis used in CoMapeo"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "携帯電話の機種"
+    "message": "携帯電話の機種",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.releaseNameLabel": {
-    "description": "Label for the release name",
-    "message": "リリース名"
+    "message": "リリース名",
+    "description": "Label for the release name"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "不明"
+    "message": "不明",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "取消"
@@ -330,12 +330,12 @@
     "message": "音声録音"
   },
   "screens.AudioPermission.Button.goToSettings": {
-    "description": "Screen button text for navigating the user to settings when audio permission is denied",
-    "message": "設定に移動"
+    "message": "設定に移動",
+    "description": "Screen button text for navigating the user to settings when audio permission is denied"
   },
   "screens.AudioPermission.description": {
-    "description": "Screen description for audio permission screen",
-    "message": "アプリを使用中とバックグラウンドで音声を録音するには、CoMapeoがマイクにアクセスする必要があります。アプリの設定でマイクの権限を有効にしてください。"
+    "message": "アプリを使用中とバックグラウンドで音声を録音するには、CoMapeoがマイクにアクセスする必要があります。アプリの設定でマイクの権限を有効にしてください。",
+    "description": "Screen description for audio permission screen"
   },
   "screens.AudioRecording.lessThan1": {
     "message": "残り1分未満"
@@ -359,16 +359,16 @@
     "message": "このデバイス"
   },
   "screens.CoordinateFormat.dd": {
-    "description": "Decimal Degrees coordinate format",
-    "message": "十進緯経度(DD)"
+    "message": "十進緯経度(DD)",
+    "description": "Decimal Degrees coordinate format"
   },
   "screens.CoordinateFormat.dms": {
-    "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "時分秒緯経度(DMS)"
+    "message": "時分秒緯経度(DMS)",
+    "description": "Degrees/Minutes/Seconds coordinate format"
   },
   "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "ユニバーサル横メルカトル図法(UTM)"
+    "message": "ユニバーサル横メルカトル図法(UTM)",
+    "description": "Universal Transverse Mercator coordinate format"
   },
   "screens.DataAndPrivacy.appUsageId": {
     "message": "ID番号はランダムにスクランブルされ、毎月変更されます。"
@@ -527,28 +527,28 @@
     "message": "デバイスは、このプロジェクトを表示または貢献することができなくなります。"
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "詳細情報"
+    "message": "詳細情報",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "前回更新:"
+    "message": "前回更新:",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "十進緯経度"
+    "message": "十進緯経度",
+    "description": "Section title for DD coordinates"
   },
   "screens.LocationInfoScreen.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "時分秒緯経度"
+    "message": "時分秒緯経度",
+    "description": "Section title for DMS coordinates"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "GPSセンサー状態"
+    "message": "GPSセンサー状態",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "UTM座標"
+    "message": "UTM座標",
+    "description": "Section title for UTM coordinates"
   },
   "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
     "message": "座標が無効です"
@@ -623,8 +623,8 @@
     "message": "座標が無効です。緯度は-90から90の間でなければなりません。経度は-180から180の間でなければなりません。"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "座標を入力"
+    "message": "座標を入力",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
     "message": "ユニバーサル横メルカトル図法(UTM)"
@@ -648,66 +648,66 @@
     "message": "パスコードとは何ですか?"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "観察記録"
+    "message": "観察記録",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "観察記録"
+    "message": "観察記録",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCategoryChooser.title": {
     "message": "カテゴリを選択"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "待機を続ける"
+    "message": "待機を続ける",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "手動の座標"
+    "message": "手動の座標",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "この観察記録には位置情報がありません。GPS信号の待機を続けるか、位置情報なしで観察記録を保存するか、手動で座標を入力することができます。"
+    "message": "この観察記録には位置情報がありません。GPS信号の待機を続けるか、位置情報なしで観察記録を保存するか、手動で座標を入力することができます。",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "GPS信号がありません"
+    "message": "GPS信号がありません",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "保存"
+    "message": "保存",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPSの精度が低くなっています。精度改善を待つか、低い精度で観察を保存するか、手動で座標を入力することができます。"
+    "message": "GPSの精度が低くなっています。精度改善を待つか、低い精度で観察を保存するか、手動で座標を入力することができます。",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "GPS信号が弱い"
+    "message": "GPS信号が弱い",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "新しい観察記録"
+    "message": "新しい観察記録",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "観察記録"
+    "message": "観察記録",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "何がここで起こっているか?"
+    "message": "何がここで起こっているか?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "観察記録"
+    "message": "観察記録",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "トラック"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "観察記録"
+    "message": "観察記録",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.accuracy": {
     "message": "精度"
@@ -755,8 +755,8 @@
     "message": "CoMapeoによって送信および検証されました"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "最初の観察記録を記録するには、マップまたはカメラビューから開始します。"
+    "message": "最初の観察記録を記録するには、マップまたはカメラビューから開始します。",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "すべて"
@@ -780,37 +780,37 @@
     "message": "現在の権限"
   },
   "screens.PhotoPreviewModal.attachedAtTime": {
-    "description": "Label for the time when the photo was attached to an observation",
-    "message": "観察時に添付されます"
+    "message": "観察時に添付されます",
+    "description": "Label for the time when the photo was attached to an observation"
   },
   "screens.PhotoPreviewModal.attachedBy": {
-    "description": "Label for the person who attached the photo to the observation",
-    "message": "{name} が添付しました"
+    "message": "{name} が添付しました",
+    "description": "Label for the person who attached the photo to the observation"
   },
   "screens.PhotoPreviewModal.distanceFromObs": {
     "message": "観察記録から添付された {distance}"
   },
   "screens.PhotoPreviewModal.landscape": {
-    "description": "Describes image layout when taking photo horizontally",
-    "message": "ランドスケープ"
+    "message": "ランドスケープ",
+    "description": "Describes image layout when taking photo horizontally"
   },
   "screens.PhotoPreviewModal.navTitle": {
     "message": "写真情報"
   },
   "screens.PhotoPreviewModal.portrait": {
-    "description": "Describes image layout when taking photo vertically",
-    "message": "縦向き"
+    "message": "縦向き",
+    "description": "Describes image layout when taking photo vertically"
   },
   "screens.PhotoPreviewModal.timeAttached": {
-    "description": "Label for the time when the photo was attached to an observation",
-    "message": "観察記録の後に {formattedNum} を添付しました"
+    "message": "観察記録の後に {formattedNum} を添付しました",
+    "description": "Label for the time when the photo was attached to an observation"
   },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "CoMapeoによって検証されました"
   },
   "screens.PhotoPreviewModal.verifiedOriginal": {
-    "description": "Text indicating that the photo is a verified original",
-    "message": "これは確認されていないオリジナルです。"
+    "message": "これは確認されていないオリジナルです。",
+    "description": "Text indicating that the photo is a verified original"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Awana Digitalについて"
@@ -936,12 +936,12 @@
     "message": "プロジェクト統計情報|OFF"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "何がここで起こっているか?"
+    "message": "何がここで起こっているか?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.SaveTrack.track": {
-    "description": "Category title for new track screen",
-    "message": "トラック"
+    "message": "トラック",
+    "description": "Category title for new track screen"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "招待状を確認"
@@ -1073,12 +1073,12 @@
     "message": "トラック"
   },
   "screens.TrackEdit.title": {
-    "description": "Title for editing track screen",
-    "message": "トラックを編集"
+    "message": "トラックを編集",
+    "description": "Title for editing track screen"
   },
   "screens.TrackEdit.track": {
-    "description": "Preset title for new track screen",
-    "message": "トラック"
+    "message": "トラック",
+    "description": "Preset title for new track screen"
   },
   "screens.TrackRecordingActive.cancel": {
     "message": "取消"
@@ -1108,8 +1108,8 @@
     "message": "このデバイス"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
-    "description": "title for observation options",
-    "message": "オプションを表示"
+    "message": "オプションを表示",
+    "description": "title for observation options"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "切断済み"
@@ -1118,8 +1118,8 @@
     "message": "このデバイスです！"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "検索中…"
+    "message": "検索中…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "変更"

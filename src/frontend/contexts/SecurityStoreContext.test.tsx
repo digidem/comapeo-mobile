@@ -20,11 +20,11 @@ function createWrapper(settingsStore: SecurityStore) {
   };
 }
 
-test('initial state', () => {
+test('initial state', async () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
 
-  const stateHook = renderHook(() => useSecurityState(), {
+  const stateHook = await renderHook(() => useSecurityState(), {
     wrapper,
   });
 
@@ -48,10 +48,10 @@ test('passcode cannot be set to invalid value', async () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
 
-  const actionsHook = renderHook(() => useSecurityActions(), {
+  const actionsHook = await renderHook(() => useSecurityActions(), {
     wrapper,
   });
-  const stateHook = renderHook(() => useSecurityState(), {
+  const stateHook = await renderHook(() => useSecurityState(), {
     wrapper,
   });
 
@@ -91,8 +91,8 @@ test('set and verify hashed passcode', async () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
 
-  const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
-  const stateHook = renderHook(() => useSecurityState(), {wrapper});
+  const actionsHook = await renderHook(() => useSecurityActions(), {wrapper});
+  const stateHook = await renderHook(() => useSecurityState(), {wrapper});
 
   await act(async () => {
     await actionsHook.result.current.setPasscode('12345');
@@ -106,15 +106,15 @@ test('set and verify hashed passcode', async () => {
   expect(verified).toBe(true);
 });
 
-test('obscure code cannot be set when passcode is not set', () => {
+test('obscure code cannot be set when passcode is not set', async () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
 
-  const actionsHook = renderHook(() => useSecurityActions(), {
+  const actionsHook = await renderHook(() => useSecurityActions(), {
     wrapper,
   });
 
-  const stateHook = renderHook(() => useSecurityState(), {
+  const stateHook = await renderHook(() => useSecurityState(), {
     wrapper,
   });
 
@@ -142,8 +142,8 @@ test('obscure code has expected value when enabled', async () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
 
-  const stateHook = renderHook(() => useSecurityState(), {wrapper});
-  const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
+  const stateHook = await renderHook(() => useSecurityState(), {wrapper});
+  const actionsHook = await renderHook(() => useSecurityActions(), {wrapper});
 
   await act(async () => {
     await actionsHook.result.current.setPasscode('12345');
@@ -151,7 +151,7 @@ test('obscure code has expected value when enabled', async () => {
 
   expect(stateHook.result.current.obscureCodeEnabled).toBe(false);
 
-  act(() => {
+  await act(async () => {
     actionsHook.result.current.enableObscureCode(true);
   });
 
@@ -162,11 +162,11 @@ test('obscure code is unset when passcode is unset', async () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
 
-  const stateHook = renderHook(() => useSecurityState(), {
+  const stateHook = await renderHook(() => useSecurityState(), {
     wrapper,
   });
 
-  const actionsHook = renderHook(() => useSecurityActions(), {
+  const actionsHook = await renderHook(() => useSecurityActions(), {
     wrapper,
   });
 
@@ -197,13 +197,13 @@ test('obscure code is unset when passcode is unset', async () => {
   });
 });
 
-test('increments attempts and sets lockout', () => {
+test('increments attempts and sets lockout', async () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
-  const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
-  const stateHook = renderHook(() => useSecurityState(), {wrapper});
+  const actionsHook = await renderHook(() => useSecurityActions(), {wrapper});
+  const stateHook = await renderHook(() => useSecurityState(), {wrapper});
 
-  act(() => {
+  await act(async () => {
     actionsHook.result.current.incrementAndGetAttempts();
     actionsHook.result.current.incrementAndGetAttempts();
     actionsHook.result.current.setLockUntil(123456789);
@@ -213,13 +213,13 @@ test('increments attempts and sets lockout', () => {
   expect(stateHook.result.current.lockUntil).toBe(123456789);
 });
 
-test('resets attempts and lockout', () => {
+test('resets attempts and lockout', async () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
-  const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
-  const stateHook = renderHook(() => useSecurityState(), {wrapper});
+  const actionsHook = await renderHook(() => useSecurityActions(), {wrapper});
+  const stateHook = await renderHook(() => useSecurityState(), {wrapper});
 
-  act(() => {
+  await act(async () => {
     actionsHook.result.current.incrementAndGetAttempts();
     actionsHook.result.current.setLockUntil(999999);
     actionsHook.result.current.resetFailedAttempts();

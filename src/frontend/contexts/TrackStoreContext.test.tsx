@@ -47,11 +47,11 @@ describe('PresetSchema', () => {
 });
 
 describe('useTrackState()', () => {
-  test('initial state', () => {
+  test('initial state', async () => {
     const trackStore = createTrackStore();
     const wrapper = createWrapper(trackStore);
 
-    const stateHook = renderHook(() => useTrackState(), {
+    const stateHook = await renderHook(() => useTrackState(), {
       wrapper,
     });
 
@@ -69,20 +69,20 @@ describe('useTrackState()', () => {
 });
 
 describe('useTrackActions()', () => {
-  test('setTracking()', () => {
+  test('setTracking()', async () => {
     const dateSpy = jest.spyOn(global, 'Date');
 
     const trackStore = createTrackStore();
     const wrapper = createWrapper(trackStore);
 
-    const actionsHook = renderHook(() => useTrackActions(), {
+    const actionsHook = await renderHook(() => useTrackActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useTrackState(), {
+    const stateHook = await renderHook(() => useTrackState(), {
       wrapper,
     });
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.setTracking(true);
     });
 
@@ -97,7 +97,7 @@ describe('useTrackActions()', () => {
       docId: null,
     });
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.setTracking(false);
     });
 
@@ -113,18 +113,18 @@ describe('useTrackActions()', () => {
     });
   });
 
-  test('addNewObservation()', () => {
+  test('addNewObservation()', async () => {
     const trackStore = createTrackStore();
     const wrapper = createWrapper(trackStore);
 
-    const actionsHook = renderHook(() => useTrackActions(), {
+    const actionsHook = await renderHook(() => useTrackActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useTrackState(), {
+    const stateHook = await renderHook(() => useTrackState(), {
       wrapper,
     });
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.addNewObservation({
         docId: 'doc_1',
         versionId: 'version_1',
@@ -143,20 +143,20 @@ describe('useTrackActions()', () => {
     });
   });
 
-  test('clearCurrentTrack()', () => {
+  test('clearCurrentTrack()', async () => {
     const dateSpy = jest.spyOn(global, 'Date');
 
     const trackStore = createTrackStore();
     const wrapper = createWrapper(trackStore);
 
-    const actionsHook = renderHook(() => useTrackActions(), {
+    const actionsHook = await renderHook(() => useTrackActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useTrackState(), {
+    const stateHook = await renderHook(() => useTrackState(), {
       wrapper,
     });
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.setTracking(true);
     });
 
@@ -171,7 +171,7 @@ describe('useTrackActions()', () => {
       docId: null,
     });
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.clearCurrentTrack();
     });
 
@@ -187,18 +187,18 @@ describe('useTrackActions()', () => {
     });
   });
 
-  test('setDescription()', () => {
+  test('setDescription()', async () => {
     const trackStore = createTrackStore();
     const wrapper = createWrapper(trackStore);
 
-    const actionsHook = renderHook(() => useTrackActions(), {
+    const actionsHook = await renderHook(() => useTrackActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useTrackState(), {
+    const stateHook = await renderHook(() => useTrackState(), {
       wrapper,
     });
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.setDescription('some description');
     });
 
@@ -214,21 +214,21 @@ describe('useTrackActions()', () => {
     });
   });
 
-  test('addNewLocations()', () => {
+  test('addNewLocations()', async () => {
     const trackStore = createTrackStore();
     const wrapper = createWrapper(trackStore);
 
-    const actionsHook = renderHook(() => useTrackActions(), {
+    const actionsHook = await renderHook(() => useTrackActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useTrackState(), {
+    const stateHook = await renderHook(() => useTrackState(), {
       wrapper,
     });
 
     const timestamp1 = Date.now();
     const timestamp2 = timestamp1 + 1_000;
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.addNewLocations([
         {latitude: 0, longitude: 0, timestamp: timestamp1},
         {latitude: 1, longitude: 1, timestamp: timestamp2},
@@ -252,7 +252,7 @@ describe('useTrackActions()', () => {
 
     const timestamp3 = timestamp2 + 1_000;
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.addNewLocations([
         {latitude: 0.5, longitude: 0.5, timestamp: timestamp3},
       ]);
@@ -281,7 +281,7 @@ describe('useTrackActions()', () => {
     // This test exists to check a previous implementation bug where adding more
     // than one location when there is already a location history would result
     // in incorrect distance calculation.
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.addNewLocations([
         {latitude: 0.5, longitude: 1, timestamp: timestamp3 + 1_000},
         {latitude: 0.5, longitude: 1.5, timestamp: timestamp3 + 2_000},

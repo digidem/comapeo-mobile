@@ -20,23 +20,23 @@ function createWrapper(store: ManualEntryCoordinateFormatStore) {
   };
 }
 
-test('usage of state and actions hooks', () => {
+test('usage of state and actions hooks', async () => {
   const store = createManualEntryCoordinateFormatStore();
   const wrapper = createWrapper(store);
 
-  const actionsHook = renderHook(
+  const actionsHook = await renderHook(
     () => useManualEntryCoordinateFormatActions(),
     {wrapper},
   );
 
-  const stateHook = renderHook(() => useManualEntryCoordinateFormat(), {
+  const stateHook = await renderHook(() => useManualEntryCoordinateFormat(), {
     wrapper,
   });
 
   expect(stateHook.result.current).toBe('utm');
 
   for (const f of ['dd', 'dms', 'utm'] satisfies Array<CoordinateFormat>) {
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.setFormat(f);
     });
 

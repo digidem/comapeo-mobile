@@ -131,7 +131,7 @@ describe('MapScreen low-storage banner', () => {
     for (const fn of onTeardown) await fn();
   });
 
-  const renderMap = ({
+  const renderMap = async ({
     isOnline = true,
   }: Readonly<{isOnline?: boolean}> = {}) => {
     const app = createAppProvidersWrapper({
@@ -140,7 +140,7 @@ describe('MapScreen low-storage banner', () => {
     });
     onTeardown.push(app.teardown);
 
-    const tree = render(
+    const tree = await render(
       <NavigationContainer>
         <React.Suspense fallback={null}>
           <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -152,7 +152,7 @@ describe('MapScreen low-storage banner', () => {
     );
 
     const safeUnmount = async () => {
-      tree.unmount();
+      await tree.unmount();
       await new Promise(res => setTimeout(res, 0));
     };
     onTeardown.unshift(safeUnmount);
@@ -162,14 +162,14 @@ describe('MapScreen low-storage banner', () => {
 
   it('shows banner when isLow is true and not dismissed', async () => {
     mockFreeBytes = 100 * 1024 * 1024;
-    renderMap();
+    await renderMap();
     expect(await screen.findByTestId('MAP:low-storage-banner')).toBeTruthy();
   });
 
   it('hides banner after dismiss tap (still low)', async () => {
     mockFreeBytes = 100 * 1024 * 1024;
     const user = userEvent.setup();
-    renderMap();
+    await renderMap();
 
     const banner = await screen.findByTestId('MAP:low-storage-banner');
     const closeBtn = within(banner).getByRole('button');
@@ -185,7 +185,7 @@ describe('MapScreen low-storage banner', () => {
   it('resets dismissal when storage recovers, then shows again when low returns', async () => {
     mockFreeBytes = 100 * 1024 * 1024;
     const user = userEvent.setup();
-    renderMap();
+    await renderMap();
 
     const banner = await screen.findByTestId('MAP:low-storage-banner');
     const closeBtn = within(banner).getByRole('button');
@@ -196,11 +196,11 @@ describe('MapScreen low-storage banner', () => {
     );
 
     mockFreeBytes = 600 * 1024 * 1024;
-    renderMap();
+    await renderMap();
     expect(screen.queryByTestId('MAP:low-storage-banner')).toBeNull();
 
     mockFreeBytes = 100 * 1024 * 1024;
-    renderMap();
+    await renderMap();
     expect(await screen.findByTestId('MAP:low-storage-banner')).toBeTruthy();
   });
 });

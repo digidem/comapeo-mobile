@@ -30,13 +30,13 @@ describe('AppUsageStatsPromptContext', () => {
     jest.useRealTimers();
   });
 
-  it('initial state is correct', () => {
+  it('initial state is correct', async () => {
     const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
     });
     const wrapper = createWrapper(store);
-    const {result} = renderHook(() => useAppUsageStatsState(s => s), {
+    const {result} = await renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
     expect(result.current).toStrictEqual({
@@ -47,40 +47,40 @@ describe('AppUsageStatsPromptContext', () => {
     } as AppUsageStatsState);
   });
 
-  it('records the completion of onboarding to current "now"', () => {
+  it('records the completion of onboarding to current "now"', async () => {
     const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
     });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
+    const actionsHook = await renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
-    const stateHook = renderHook(
+    const stateHook = await renderHook(
       () => useAppUsageStatsState(s => s.completedOnboardingAt),
       {wrapper},
     );
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.recordCompleteOnboarding();
     });
     expect(stateHook.result.current).toBe(FAKE_NOW);
   });
 
-  it('setOptedIn(true) sets 12-month window fields, updates lastPromptAt, and does not bump promptCount', () => {
+  it('setOptedIn(true) sets 12-month window fields, updates lastPromptAt, and does not bump promptCount', async () => {
     const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
     });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
+    const actionsHook = await renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
+    const stateHook = await renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.setOptedIn(true);
     });
 
@@ -91,20 +91,20 @@ describe('AppUsageStatsPromptContext', () => {
     });
   });
 
-  it('setOptedIn(false) clears 12-month window fields, updates lastPromptAt, and bumps promptCount each time', () => {
+  it('setOptedIn(false) clears 12-month window fields, updates lastPromptAt, and bumps promptCount each time', async () => {
     const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
     });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
+    const actionsHook = await renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
+    const stateHook = await renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.setOptedIn(false);
     });
     expect(stateHook.result.current).toMatchObject({
@@ -113,7 +113,7 @@ describe('AppUsageStatsPromptContext', () => {
       optInStartedAt: null,
     });
 
-    act(() => {
+    await act(async () => {
       jest.setSystemTime(FAKE_NOW + 1000);
       actionsHook.result.current.setOptedIn(false);
     });
@@ -121,25 +121,25 @@ describe('AppUsageStatsPromptContext', () => {
     expect(stateHook.result.current.optInStartedAt).toBeNull();
   });
 
-  it('accepting after a decline keeps promptCount unchanged on accept but sets the 12-month window', () => {
+  it('accepting after a decline keeps promptCount unchanged on accept but sets the 12-month window', async () => {
     const store = createAppUsageStatsStore({
       appUsageMetricsOptIn: () => {},
       appUsageMetricsOptOut: () => {},
     });
     const wrapper = createWrapper(store);
-    const actionsHook = renderHook(() => useAppUsageStatsActions(), {
+    const actionsHook = await renderHook(() => useAppUsageStatsActions(), {
       wrapper,
     });
-    const stateHook = renderHook(() => useAppUsageStatsState(s => s), {
+    const stateHook = await renderHook(() => useAppUsageStatsState(s => s), {
       wrapper,
     });
 
-    act(() => {
+    await act(async () => {
       actionsHook.result.current.setOptedIn(false);
     });
     expect(stateHook.result.current.promptCount).toBe(1);
 
-    act(() => {
+    await act(async () => {
       jest.setSystemTime(FAKE_NOW + 2000);
       actionsHook.result.current.setOptedIn(true);
     });

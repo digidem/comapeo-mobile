@@ -74,8 +74,8 @@ const sentryEnvironment: SentryEnvironment =
 
 const appMetricsOptIn = sentryEnvironment !== 'production';
 let navigationIntegration:
-  | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
-  | undefined = undefined;
+  ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined =
+  undefined;
 const sentryUserId = getSentryUserId({now: new Date(), storage});
 
 Sentry.init({

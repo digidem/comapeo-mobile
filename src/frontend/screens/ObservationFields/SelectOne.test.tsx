@@ -8,8 +8,8 @@ const OPTIONS = [
   {label: 'Option C', value: 'c'},
 ];
 
-test('renders all option labels', () => {
-  render(
+test('renders all option labels', async () => {
+  await render(
     <SelectOne options={OPTIONS} updateTag={jest.fn()} tagValue={undefined} />,
   );
 
@@ -18,55 +18,59 @@ test('renders all option labels', () => {
   expect(screen.getByText('Option C')).toBeOnTheScreen();
 });
 
-test('pressing an option calls updateTag with that value', () => {
+test('pressing an option calls updateTag with that value', async () => {
   const updateTag = jest.fn();
 
-  render(
+  await render(
     <SelectOne options={OPTIONS} updateTag={updateTag} tagValue={undefined} />,
   );
 
-  fireEvent.press(screen.getByText('Option B'));
+  await fireEvent.press(screen.getByText('Option B'));
 
   expect(updateTag).toHaveBeenCalledWith('b');
 });
 
-test('pressing the currently selected option still calls updateTag', () => {
+test('pressing the currently selected option still calls updateTag', async () => {
   const updateTag = jest.fn();
 
-  render(<SelectOne options={OPTIONS} updateTag={updateTag} tagValue="a" />);
+  await render(
+    <SelectOne options={OPTIONS} updateTag={updateTag} tagValue="a" />,
+  );
 
-  fireEvent.press(screen.getByText('Option A'));
+  await fireEvent.press(screen.getByText('Option A'));
 
   expect(updateTag).toHaveBeenCalledWith('a');
 });
 
-test('pressing a different option replaces the selection', () => {
+test('pressing a different option replaces the selection', async () => {
   const updateTag = jest.fn();
 
-  render(<SelectOne options={OPTIONS} updateTag={updateTag} tagValue="a" />);
+  await render(
+    <SelectOne options={OPTIONS} updateTag={updateTag} tagValue="a" />,
+  );
 
-  fireEvent.press(screen.getByText('Option C'));
+  await fireEvent.press(screen.getByText('Option C'));
 
   expect(updateTag).toHaveBeenCalledWith('c');
   expect(updateTag).not.toHaveBeenCalledWith('a');
 });
 
-test('works when tagValue is undefined', () => {
+test('works when tagValue is undefined', async () => {
   const updateTag = jest.fn();
 
-  render(
+  await render(
     <SelectOne options={OPTIONS} updateTag={updateTag} tagValue={undefined} />,
   );
 
-  fireEvent.press(screen.getByText('Option A'));
+  await fireEvent.press(screen.getByText('Option A'));
 
   expect(updateTag).toHaveBeenCalledWith('a');
 });
 
-test('options with duplicate labels each save their own distinct value when pressed', () => {
+test('options with duplicate labels each save their own distinct value when pressed', async () => {
   const updateTag = jest.fn();
 
-  render(
+  await render(
     <SelectOne
       options={[
         {label: '00PM', value: 'Cap Start - 12'},
@@ -78,17 +82,17 @@ test('options with duplicate labels each save their own distinct value when pres
   );
 
   const matches = screen.getAllByText('00PM');
-  fireEvent.press(matches[0]!);
+  await fireEvent.press(matches[0]!);
   expect(updateTag).toHaveBeenLastCalledWith('Cap Start - 12');
 
-  fireEvent.press(matches[1]!);
+  await fireEvent.press(matches[1]!);
   expect(updateTag).toHaveBeenLastCalledWith('Cap End - 12');
 });
 
 // Duplicate labels (but distinct values) caused stale options to bleed into the
 // next field when navigating between questions. Real-world example: a
 // camera-settings field with two "00PM" options ("Cap Start - 12" / "Cap End - 12").
-test('re-renders correctly when swapped to a field with duplicate labels', () => {
+test('re-renders correctly when swapped to a field with duplicate labels', async () => {
   const CAMERA_SETTINGS_OPTIONS = [
     {label: 'MultiShot - RPF2Shot', value: 'multishot-rpf2shot'},
     {label: '00PM', value: 'Cap Start - 12'},
@@ -101,7 +105,7 @@ test('re-renders correctly when swapped to a field with duplicate labels', () =>
   ];
   const updateTag = jest.fn();
 
-  const {rerender} = render(
+  const {rerender} = await render(
     <SelectOne
       options={CAMERA_SETTINGS_OPTIONS}
       updateTag={updateTag}
@@ -109,7 +113,7 @@ test('re-renders correctly when swapped to a field with duplicate labels', () =>
     />,
   );
 
-  rerender(
+  await rerender(
     <SelectOne
       options={NEXT_OPTIONS}
       updateTag={updateTag}

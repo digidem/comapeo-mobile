@@ -124,6 +124,14 @@ const frontendConfig = pluginTs.config(
       'testing-library/render-result-naming-convention': 'off',
       '@eslint-react/hooks-extra/no-unnecessary-use-prefix': 'off',
       '@eslint-react/hooks-extra/no-useless-custom-hooks': 'off',
+      // In @testing-library/react-native v14, fireEvent (and render/rerender)
+      // became async and MUST be awaited — unlike the DOM library the plugin's
+      // 'react' preset assumes. Require awaiting fireEvent, and stop forbidding it.
+      'testing-library/await-async-events': [
+        'error',
+        {eventModule: ['fireEvent', 'userEvent']},
+      ],
+      'testing-library/no-await-sync-events': 'off',
     },
   },
 );

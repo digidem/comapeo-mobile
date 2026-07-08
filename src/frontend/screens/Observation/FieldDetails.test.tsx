@@ -27,6 +27,8 @@ function makeField(overrides: Partial<Field> = {}): Field {
   };
 }
 
+// render is async in @testing-library/react-native v14; this helper returns
+// the render promise, so callers must await it.
 function renderFieldDetails(props: React.ComponentProps<typeof FieldDetails>) {
   return render(
     <IntlProvider locale="en" messages={{}}>

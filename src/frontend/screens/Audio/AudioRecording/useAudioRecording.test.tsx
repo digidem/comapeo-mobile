@@ -56,7 +56,7 @@ describe('useAudioRecording', () => {
     const {result, unmount} = await renderHook(() => useAudioRecording());
 
     let startRecordingPromise!: Promise<void>;
-    act(() => {
+    await act(async () => {
       startRecordingPromise = result.current.startRecording();
     });
 
@@ -80,7 +80,7 @@ describe('useAudioRecording', () => {
     const {result} = await renderHook(() => useAudioRecording());
 
     let startRecordingPromise!: Promise<void>;
-    act(() => {
+    await act(async () => {
       startRecordingPromise = result.current.startRecording();
     });
 

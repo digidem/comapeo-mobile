@@ -47,7 +47,8 @@ describe('Observation Fields', () => {
       const user = userEvent.setup();
       await navigateToTextField(user);
       const textInput = await screen.findByTestId('OBS.text-inp');
-      await fireEvent.changeText(textInput, null);
+      // Deliberately passing a non-string to test how the field handles bad input.
+      await fireEvent.changeText(textInput, null as unknown as string);
 
       expect(textInput).toHaveDisplayValue('');
     });
@@ -56,7 +57,8 @@ describe('Observation Fields', () => {
       const user = userEvent.setup();
       await navigateToTextField(user);
       const textInput = await screen.findByTestId('OBS.text-inp');
-      await fireEvent.changeText(textInput, {foo: 'bar'});
+      // Deliberately passing a non-string to test how the field handles bad input.
+      await fireEvent.changeText(textInput, {foo: 'bar'} as unknown as string);
 
       expect(textInput).toHaveDisplayValue('');
     });

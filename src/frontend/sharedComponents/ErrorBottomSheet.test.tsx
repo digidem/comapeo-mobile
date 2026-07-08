@@ -81,7 +81,7 @@ describe('ErrorBottomSheet', () => {
     });
 
     const advancedButton = screen.getByText('Advanced');
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
 
     await waitFor(() => {
       expect(screen.getByText(/Test error message/)).toBeOnTheScreen();
@@ -98,12 +98,12 @@ describe('ErrorBottomSheet', () => {
 
     const advancedButton = screen.getByText('Advanced');
 
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
     await waitFor(() => {
       expect(screen.getByText(/Test error message/)).toBeOnTheScreen();
     });
 
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
     await waitFor(() => {
       expect(screen.queryByText('Test error message')).not.toBeOnTheScreen();
     });
@@ -119,7 +119,7 @@ describe('ErrorBottomSheet', () => {
     });
 
     const advancedButton = screen.getByText('Advanced');
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
 
     await waitFor(() => {
       expect(screen.getByText(/INVITE_ABORTED/)).toBeOnTheScreen();
@@ -137,7 +137,7 @@ describe('ErrorBottomSheet', () => {
     });
 
     const advancedButton = screen.getByText('Advanced');
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
 
     await waitFor(() => {
       expect(screen.getByText(/TestFunction/)).toBeOnTheScreen();
@@ -160,7 +160,7 @@ describe('ErrorBottomSheet', () => {
     });
 
     const advancedButton = screen.getByText('Advanced');
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
 
     await waitFor(() => {
       expect(screen.getByText(/INVITE_ABORTED/)).toBeOnTheScreen();
@@ -186,7 +186,7 @@ describe('ErrorBottomSheet', () => {
     });
 
     const advancedButton = screen.getByText('Advanced');
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
 
     await waitFor(() => {
       expect(screen.getByText(/Error:/)).toBeOnTheScreen();

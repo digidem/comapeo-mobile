@@ -191,7 +191,6 @@
     "prettier": "3.9.4",
     "random-access-memory": "6.2.1",
     "react-native-svg-transformer": "1.5.3",
-    "react-test-renderer": "19.1.4",
     "semver": "7.8.5",
     "test-renderer": "1.2.0",
     "type-fest": "5.7.0",

@@ -10,6 +10,7 @@ describe('Settings - Early Access Mode', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
     const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
+    await earlyAccessItem.scrollIntoView();
     await expect($(byTextMatches('Early Access OFF'))).toBeDisplayed();
     await earlyAccessItem.click();
     await expect($(byTextMatches('Early Access Mode'))).toBeDisplayed();

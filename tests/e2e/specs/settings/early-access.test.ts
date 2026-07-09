@@ -35,8 +35,9 @@ describe('Settings - Early Access Mode', () => {
   it('should show ON in the App Settings list item text', async () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await expect($(byTextMatches('Early Access ON'))).toBeDisplayed();
     const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
+    await earlyAccessItem.scrollIntoView();
+    await expect($(byTextMatches('Early Access ON'))).toBeDisplayed();
     await earlyAccessItem.click();
     await expect($(byResourceId('EA.checkbox-on'))).toBeDisplayed();
   });
@@ -59,7 +60,9 @@ describe('Settings - Early Access Mode', () => {
     await seeUpdates.scrollIntoView();
     await expect(seeUpdates).toBeDisplayed();
     await backBtn.click();
-    await $(byResourceId('earlyAccessFlag')).click();
+    const earlyAccessFlag = await $(byResourceId('earlyAccessFlag'));
+    await earlyAccessFlag.scrollIntoView();
+    await earlyAccessFlag.click();
   });
 
   it('should toggle OFF, show bottom sheet, close it, and show OFF in App Settings', async () => {

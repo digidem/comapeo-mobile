@@ -56,12 +56,16 @@ export class MessagePortLike extends EventEmitter {
   postMessage(message: unknown) {
     const serverState = this.#serverStateStore.getState();
     switch (serverState.value) {
+      case 'CHECKING':
+      case 'MIGRATING':
+      case 'LOW_SPACE':
       case 'STARTING':
         this.#outgoingQueue.push(message);
         break;
       case 'STARTED':
         nodejs.channel.post(this.#API_EVENT_NAME, message);
         break;
+      case 'MIGRATION_ERROR':
       case 'ERROR':
         // The backend has latched into a permanent ERROR state, already surfaced
         // to the user via ServerStateStore. Routine teardown RPC sends (e.g.
@@ -76,7 +80,7 @@ export class MessagePortLike extends EventEmitter {
           Sentry.addBreadcrumb({
             category: 'ipc',
             level: 'warning',
-            message: 'Dropping RPC send; backend is in ERROR state',
+            message: `Dropping RPC send; backend is in ${serverState.value} state`,
           });
         }
         break;

@@ -22,12 +22,13 @@ import {createTrackStore} from '../../../src/frontend/contexts/TrackStoreContext
 import {AppDiagnosticMetrics} from '../../../src/frontend/metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
-import {QueryClient} from '@tanstack/react-query';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
 import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowStorageBannerContext';
 import {createEarlyAccessStore} from '../../../src/frontend/contexts/EarlyAccessContext';
 import {createAppUsageStatsStore} from '../../../src/frontend/contexts/AppUsageStatsContext';
 import {createUnitSystemStore} from '../../../src/frontend/contexts/UnitSystemStoreContext';
+import {createQADeviceNameStore} from '../../../src/frontend/contexts/QADeviceNameStoreContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
@@ -51,12 +52,20 @@ jest.mock('expo/fetch', () => ({
 
 export function createMinimalWrapper() {
   const localeStore = createLocaleStore({persist: false});
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {gcTime: Infinity},
+      mutations: {gcTime: Infinity},
+    },
+  });
 
   return ({children}: {children: ReactNode}) => {
     return (
-      <LocaleContext value={localeStore}>
-        <IntlProvider>{children}</IntlProvider>
-      </LocaleContext>
+      <QueryClientProvider client={queryClient}>
+        <LocaleContext value={localeStore}>
+          <IntlProvider>{children}</IntlProvider>
+        </LocaleContext>
+      </QueryClientProvider>
     );
   };
 }
@@ -65,10 +74,12 @@ export function createAppProvidersWrapper({
   mapeoApi,
   isOnline = true,
   activeProjectId,
+  qaDeviceName,
 }: {
   mapeoApi: MapeoClientApi;
   isOnline?: boolean;
   activeProjectId?: string;
+  qaDeviceName?: string;
 }) {
   const queryClient = new QueryClient({
     // Disable garbage collection, so that no "collect garbage" timers are
@@ -163,6 +174,11 @@ export function createAppProvidersWrapper({
 
   const unitSystemStore = createUnitSystemStore({persist: false});
 
+  const qaDeviceNameStore = createQADeviceNameStore({persist: false});
+  if (qaDeviceName) {
+    qaDeviceNameStore.actions.setQADeviceName(qaDeviceName);
+  }
+
   const lowStorageBannerStore = createLowStorageBannerStore();
 
   const appUsagePromptStore = createAppUsageStatsStore({
@@ -205,7 +221,8 @@ export function createAppProvidersWrapper({
           lowStorageBannerStore={lowStorageBannerStore}
           appUsageStatsStore={appUsagePromptStore}
           earlyAccessStore={persistedEarlyAccessStore}
-          unitSystemStore={unitSystemStore}>
+          unitSystemStore={unitSystemStore}
+          qaDeviceNameStore={qaDeviceNameStore}>
           {children}
         </AppProviders>
       </OuterWrapper>

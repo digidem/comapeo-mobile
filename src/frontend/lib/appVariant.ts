@@ -1,10 +1,7 @@
 import {applicationId} from 'expo-application';
 
 export type AppVariant =
-  | 'development'
-  | 'releaseCandidate'
-  | 'production'
-  | 'preRelease';
+  'development' | 'releaseCandidate' | 'production' | 'preRelease';
 
 export const APP_VARIANT: AppVariant = applicationId?.endsWith('.dev')
   ? 'development'
@@ -13,3 +10,6 @@ export const APP_VARIANT: AppVariant = applicationId?.endsWith('.dev')
     : applicationId?.endsWith('.pre')
       ? 'preRelease'
       : 'production';
+
+export const isQABuild =
+  APP_VARIANT === 'releaseCandidate' || APP_VARIANT === 'preRelease';

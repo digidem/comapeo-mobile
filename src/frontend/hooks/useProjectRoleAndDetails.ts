@@ -18,11 +18,7 @@ import {DEFAULT_PROJECT_COLOR} from '../constants';
  * - 'solo': Derived frontend-only role indicating the user is the sole owner/manager.
  */
 export type FrontendRole =
-  | 'coordinator'
-  | 'participant'
-  | 'solo'
-  | 'blocked'
-  | undefined;
+  'coordinator' | 'participant' | 'solo' | 'blocked' | undefined;
 
 export type ProjectDetails = {
   role: FrontendRole;

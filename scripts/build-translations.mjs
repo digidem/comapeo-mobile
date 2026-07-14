@@ -1,110 +1,107 @@
 #!/usr/bin/env node
+// @ts-check
 
-import path from 'node:path';
 import fs from 'node:fs';
-import {readFile, writeFile} from 'node:fs/promises';
+import {writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {compile} from '@formatjs/cli-lib';
+import {includeKeys} from 'filter-obj';
 
 import LANGUAGE_NAME_TRANSLATIONS from '../src/frontend/languages.json' with {type: 'json'};
 
-const PROJECT_ROOT_DIR_PATH = new URL('../', import.meta.url).pathname;
-const TRANSLATIONS_DIR_PATH = path.join(PROJECT_ROOT_DIR_PATH, 'translations');
+const PROJECT_ROOT = fileURLToPath(new URL('..', import.meta.url));
+const MESSAGES_DIR = path.join(PROJECT_ROOT, 'messages');
 
-const TRANSLATIONS_OUTPUT_PATH = path.join(
-  TRANSLATIONS_DIR_PATH,
-  'messages.json',
-);
+const languageSourceDirectories = fs
+  .readdirSync(MESSAGES_DIR, {withFileTypes: true})
+  .filter(d => d.isDirectory());
 
-await run();
+const languageCodes = languageSourceDirectories.map(({name}) => name);
 
-async function run() {
-  fs.rmSync(TRANSLATIONS_DIR_PATH, {force: true, recursive: true});
-  fs.mkdirSync(TRANSLATIONS_DIR_PATH);
+assertNoDuplicateBaseTags(languageCodes);
 
-  const messages = await loadMessages();
-  const translations = convertMessagesToTranslations(messages);
+const TRANSLATIONS_DIR = path.join(PROJECT_ROOT, 'translations');
 
-  await writeFile(
-    TRANSLATIONS_OUTPUT_PATH,
-    JSON.stringify(translations, null, 2),
-  );
+fs.rmSync(TRANSLATIONS_DIR, {recursive: true, force: true});
+fs.mkdirSync(TRANSLATIONS_DIR);
 
-  console.log(`Successfully built translations to ${TRANSLATIONS_OUTPUT_PATH}`);
-}
+/** @type {Array<string>} */
+const importLines = [];
 
-////////////////////////////// Helpers //////////////////////////////
+await Promise.all(
+  languageSourceDirectories.map(async directory => {
+    const languageCode = directory.name;
 
-/**
- * @returns {Promise<{ [lang: string]: unknown }>}
- */
-async function loadMessages() {
-  const messagesDir = path.join(PROJECT_ROOT_DIR_PATH, 'messages');
-  const entries = fs.readdirSync(messagesDir, {
-    withFileTypes: true,
-  });
-
-  const dirs = entries.filter(entry => entry.isDirectory());
-
-  // Initialize all language folders (even those with no translations yet),
-  // and error if two folders map to the same base language code.
-  const result = {};
-  const langToFolder = {};
-  for (const entry of dirs) {
-    const lang = entry.name.split('-')[0];
-    if (result[lang]) {
-      throw new Error(
-        `Duplicate language code '${lang}': folders '${langToFolder[lang]}' and '${entry.name}' both map to the same code`,
-      );
-    }
-    result[lang] = {};
-    langToFolder[lang] = entry.name;
-  }
-
-  /** @type {Array<[string, any]>} */
-  const loadedMessages = await Promise.all(
-    dirs.flatMap(entry => {
-      const lang = entry.name.split('-')[0];
-      const langDir = path.join(messagesDir, entry.name);
-      const langFiles = fs
-        .readdirSync(langDir)
-        .filter(f => f.endsWith('.json'));
-      return langFiles.map(async fileName => {
-        const msgs = JSON.parse(await readFile(path.join(langDir, fileName)));
-        return [lang, msgs];
-      });
-    }),
-  );
-
-  for (const [lang, msgs] of loadedMessages) {
-    // If a language is added to Crowdin, but has no translated messages,
-    // Crowdin still creates an empty file, so we just ignore it
-    if (Object.keys(msgs).length === 0) continue;
-
-    result[lang] = {...result[lang], ...msgs};
-  }
-
-  return result;
-}
-
-/**
- * @param {{ [lang: string]: unknown }} messages
- */
-function convertMessagesToTranslations(messages) {
-  const result = {};
-
-  for (const lang in messages) {
-    if (!LANGUAGE_NAME_TRANSLATIONS[lang]) {
-      console.warn(`Locale '${lang}' has no language name defined in \`src/frontend/languages.json\`,
+    if (!(languageCode in LANGUAGE_NAME_TRANSLATIONS)) {
+      console.warn(`Locale '${languageCode}' has no language name defined in \`src/frontend/languages.json\`,
 so it will not appear as a language option in CoMapeo.
 Add the language name in English and the native language to \`languages.json\`
-in order to allow users to select '${lang}' in CoMapeo`);
+in order to allow users to select '${languageCode}' in CoMapeo`);
     }
-    result[lang] = {};
-    const msgs = messages[lang];
-    Object.keys(msgs).forEach(key => {
-      if (!msgs[key].message) return;
-      result[lang][key] = msgs[key].message;
-    });
-  }
 
-  return result;
+    const baseInputPath = path.join(directory.parentPath, directory.name);
+
+    const compiled = await compile(
+      [
+        path.join(baseInputPath, 'primary.json'),
+        path.join(baseInputPath, 'secondary.json'),
+      ],
+      {ast: true, format: 'crowdin'},
+    );
+
+    const parsed = JSON.parse(compiled);
+
+    const baseTag = languageCode.split('-')[0];
+
+    importLines.push(`  ${baseTag}: () => import('./${baseTag}.json'),`);
+
+    // TODO: Similar to note for `assertNoDuplicateBaseTags()`, but ideally
+    // messages should be compiled to the same language code, not the base tag.
+    const outputFile = path.join(TRANSLATIONS_DIR, `${baseTag}.json`);
+
+    await writeFile(outputFile, JSON.stringify(parsed), 'utf-8');
+
+    console.log(
+      `Compiled messages for ${languageCode} to ${path.relative(PROJECT_ROOT, outputFile)}`,
+    );
+  }),
+);
+
+await writeFile(
+  path.join(TRANSLATIONS_DIR, 'index.ts'),
+  `// AUTO-GENERATED — do not edit manually, run \`npm run build:translations\`
+
+export const localeImports = {
+${importLines.join('\n')}
+} as const;
+
+export type AvailableLanguageTag = keyof typeof localeImports;
+`,
+);
+
+console.log(`Successfully built translations to ${TRANSLATIONS_DIR}`);
+
+// TODO: This script shouldn't be defining outputs based on base tags.
+// It's better to output to the exact language code and then have the application decide how to load
+// the translations based on the base tags.
+/**
+ * @param {Array<string>} languageCodes
+ */
+function assertNoDuplicateBaseTags(languageCodes) {
+  const groupedByBaseTag = Object.groupBy(languageCodes, l => {
+    const baseTag = l.split('-')[0];
+    return baseTag;
+  });
+
+  const duplicateBaseTags = includeKeys(
+    groupedByBaseTag,
+    (key, value) => (value?.length ?? 0) > 1,
+  );
+
+  if (Object.keys(duplicateBaseTags).length > 0) {
+    throw new Error(
+      `Language codes mapping to the same base tags found:\n\n${JSON.stringify(duplicateBaseTags, null, 2)}`,
+    );
+  }
 }

@@ -1,4 +1,19 @@
 import {jest, afterAll} from '@jest/globals';
+
+jest.mock('./translations/index', () => {
+  const actual = jest.requireActual('./translations/index');
+  return {
+    localeImports: Object.fromEntries(
+      Object.keys(actual.localeImports).map(key => [
+        key,
+        () =>
+          Promise.resolve({
+            default: jest.requireActual('./translations/en.json'),
+          }),
+      ]),
+    ),
+  };
+});
 import 'react-native-gesture-handler/jestSetup';
 import mockNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';

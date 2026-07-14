@@ -1,18 +1,18 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "Continue editing",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardObservationButton": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard"
+    "message": "Discard",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "Your Observation will not be saved. This cannot be undone."
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Discard observation?"
+    "message": "Discard observation?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "Done"
@@ -149,28 +149,31 @@
   "Screens.Settings.AppSettings.createTestData": {
     "message": "Create Test Data"
   },
+  "Screens.Settings.AppSettings.qaDeviceName": {
+    "message": "QA Device Name"
+  },
   "Screens.Settings.AppSettings.testData": {
     "message": "Test Data"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "Cancel"
+    "message": "Cancel",
+    "description": "Text for cancel action button."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
-    "description": "Explanation for consequences of removing archive server.",
-    "message": "This will stop archiving new data for this project. Existing archived data will not be deleted."
+    "message": "This will stop archiving new data for this project. Existing archived data will not be deleted.",
+    "description": "Explanation for consequences of removing archive server."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.removeArchive": {
-    "description": "Text for destructive action button.",
-    "message": "Remove Archive"
+    "message": "Remove Archive",
+    "description": "Text for destructive action button."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.title": {
-    "description": "Text for title that asks about confirming archive server removal.",
-    "message": "Remove {name} from project?"
+    "message": "Remove {name} from project?",
+    "description": "Text for title that asks about confirming archive server removal."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "Delete"
+    "message": "Delete",
+    "description": "Button to delete a track"
   },
   "Storage.MapBanner.title": {
     "message": "Your device has low storage."
@@ -191,16 +194,16 @@
     "message": "Ready to record new track?"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "Continue editing",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Discard changes?"
+    "message": "Discard changes?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Discard changes"
+    "message": "Discard changes",
+    "description": "Button to confirm discarding the track"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -257,24 +260,24 @@
     "message": "You are selecting a role for this device:"
   },
   "screens.AboutSettings.CoMapeoBuild": {
-    "description": "Label for CoMapeo build number",
-    "message": "CoMapeo build"
+    "message": "CoMapeo build",
+    "description": "Label for CoMapeo build number"
   },
   "screens.AboutSettings.CoMapeoType": {
-    "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)",
-    "message": "CoMapeo variant"
+    "message": "CoMapeo variant",
+    "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)"
   },
   "screens.AboutSettings.CoMapeoVersion": {
-    "description": "Label for CoMapeo version",
-    "message": "CoMapeo version"
+    "message": "CoMapeo version",
+    "description": "Label for CoMapeo version"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "Android build number"
+    "message": "Android build number",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "Android version"
+    "message": "Android version",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.comapeoWebsiteLabel": {
     "message": "CoMapeo Website"
@@ -283,20 +286,20 @@
     "message": "You are in Early Access Mode."
   },
   "screens.AboutSettings.emojiSource": {
-    "description": "Label for the source of emojis used in CoMapeo",
-    "message": "Emojis source"
+    "message": "Emojis source",
+    "description": "Label for the source of emojis used in CoMapeo"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "Phone model"
+    "message": "Phone model",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.releaseNameLabel": {
-    "description": "Label for the release name",
-    "message": "Release name"
+    "message": "Release name",
+    "description": "Label for the release name"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Unknown"
+    "message": "Unknown",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "Cancel"
@@ -365,12 +368,12 @@
     "message": "Audio Recording"
   },
   "screens.AudioPermission.Button.goToSettings": {
-    "description": "Screen button text for navigating the user to settings when audio permission is denied",
-    "message": "Go to Settings"
+    "message": "Go to Settings",
+    "description": "Screen button text for navigating the user to settings when audio permission is denied"
   },
   "screens.AudioPermission.description": {
-    "description": "Screen description for audio permission screen",
-    "message": "To record audio while using the app and in the background CoMapeo needs to access your microphone. Please enable microphone permissions in your app settings."
+    "message": "To record audio while using the app and in the background CoMapeo needs to access your microphone. Please enable microphone permissions in your app settings.",
+    "description": "Screen description for audio permission screen"
   },
   "screens.AudioRecording.lessThan1": {
     "message": "Less than a minute left"
@@ -397,16 +400,16 @@
     "message": "This Device"
   },
   "screens.CoordinateFormat.dd": {
-    "description": "Decimal Degrees coordinate format",
-    "message": "Decimal Degrees (DD)"
+    "message": "Decimal Degrees (DD)",
+    "description": "Decimal Degrees coordinate format"
   },
   "screens.CoordinateFormat.dms": {
-    "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "Degrees/Minutes/Seconds (DMS)",
+    "description": "Degrees/Minutes/Seconds coordinate format"
   },
   "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "Universal Transverse Mercator (UTM)",
+    "description": "Universal Transverse Mercator coordinate format"
   },
   "screens.DataAndPrivacy.appUsageId": {
     "message": "ID numbers are scrambled randomly and changed every month."
@@ -574,28 +577,28 @@
     "message": "This device will no longer be able to view or contribute to the project {projectName}."
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "Details"
+    "message": "Details",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "Last update"
+    "message": "Last update",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "Coordinates Decimal Degrees"
+    "message": "Coordinates Decimal Degrees",
+    "description": "Section title for DD coordinates"
   },
   "screens.LocationInfoScreen.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "Coordinates DMS"
+    "message": "Coordinates DMS",
+    "description": "Section title for DMS coordinates"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "Sensor Status"
+    "message": "Sensor Status",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "Coordinates UTM"
+    "message": "Coordinates UTM",
+    "description": "Section title for UTM coordinates"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "East"
@@ -700,8 +703,8 @@
     "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "Enter coordinates"
+    "message": "Enter coordinates",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
     "message": "Universal Transverse Mercator (UTM)"
@@ -731,66 +734,66 @@
     "message": "What is Obscure Passcode?"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "Observation",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "Observation",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCategoryChooser.title": {
     "message": "Choose a category"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Continue waiting"
+    "message": "Continue waiting",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "Manual Coords"
+    "message": "Manual Coords",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually"
+    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "No GPS signal"
+    "message": "No GPS signal",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "Save"
+    "message": "Save",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
+    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Weak GPS signal"
+    "message": "Weak GPS signal",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "New Observation",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "Observation",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "What is happening here?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "Observation",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Track"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "Observations"
+    "message": "Observations",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.accuracy": {
     "message": "Accuracy"
@@ -838,8 +841,8 @@
     "message": "Sent and Validated by CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Start from map or camera view to record your first observation."
+    "message": "Start from map or camera view to record your first observation.",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "All"
@@ -863,41 +866,41 @@
     "message": "Current Permissions"
   },
   "screens.PhotoPreviewModal.attachedAtTime": {
-    "description": "Label for the time when the photo was attached to an observation",
-    "message": "Attached at the time of the observation"
+    "message": "Attached at the time of the observation",
+    "description": "Label for the time when the photo was attached to an observation"
   },
   "screens.PhotoPreviewModal.attachedBy": {
-    "description": "Label for the person who attached the photo to the observation",
-    "message": "Attached by {name}"
+    "message": "Attached by {name}",
+    "description": "Label for the person who attached the photo to the observation"
   },
   "screens.PhotoPreviewModal.distanceFromObs": {
     "message": "Attached {distance} from observation"
   },
   "screens.PhotoPreviewModal.imageStorageSize": {
-    "description": "Image size in megabytes",
-    "message": "{value} MB"
+    "message": "{value} MB",
+    "description": "Image size in megabytes"
   },
   "screens.PhotoPreviewModal.landscape": {
-    "description": "Describes image layout when taking photo horizontally",
-    "message": "Landscape"
+    "message": "Landscape",
+    "description": "Describes image layout when taking photo horizontally"
   },
   "screens.PhotoPreviewModal.navTitle": {
     "message": "Photo Info"
   },
   "screens.PhotoPreviewModal.portrait": {
-    "description": "Describes image layout when taking photo vertically",
-    "message": "Portrait"
+    "message": "Portrait",
+    "description": "Describes image layout when taking photo vertically"
   },
   "screens.PhotoPreviewModal.timeAttached": {
-    "description": "Label for the time when the photo was attached to an observation",
-    "message": "Attached {formattedNum} after observation"
+    "message": "Attached {formattedNum} after observation",
+    "description": "Label for the time when the photo was attached to an observation"
   },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "Validated by CoMapeo"
   },
   "screens.PhotoPreviewModal.verifiedOriginal": {
-    "description": "Text indicating that the photo is a verified original",
-    "message": "This is a verified unaltered original."
+    "message": "This is a verified unaltered original.",
+    "description": "Text indicating that the photo is a verified original"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "About Awana Digital"
@@ -1026,12 +1029,12 @@
     "message": "Project Statistics | OFF"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "What is happening here?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.SaveTrack.track": {
-    "description": "Category title for new track screen",
-    "message": "Track"
+    "message": "Track",
+    "description": "Category title for new track screen"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Accepted!"
@@ -1149,6 +1152,15 @@
   },
   "screens.Settings.MapManagement.MapShareCanceled.title": {
     "message": "Sharing Canceled"
+  },
+  "screens.Settings.MapManagement.ReceivingBackgroundMap.downloadErrorDescription": {
+    "message": "Map sharing was interrupted. Make sure both devices are connected to the same network and try again."
+  },
+  "screens.Settings.MapManagement.ReceivingBackgroundMap.downloadErrorTitle": {
+    "message": "Connection Lost"
+  },
+  "screens.Settings.MapManagement.ReceivingBackgroundMap.downloadFailedTitle": {
+    "message": "Map Download Failed"
   },
   "screens.Settings.MapManagement.ReplaceBackgroundMap.cancel": {
     "message": "Cancel"
@@ -1274,12 +1286,12 @@
     "message": "Tracks"
   },
   "screens.TrackEdit.title": {
-    "description": "Title for editing track screen",
-    "message": "Edit Track"
+    "message": "Edit Track",
+    "description": "Title for editing track screen"
   },
   "screens.TrackEdit.track": {
-    "description": "Preset title for new track screen",
-    "message": "Track"
+    "message": "Track",
+    "description": "Preset title for new track screen"
   },
   "screens.TrackRecordingActive.cancel": {
     "message": "Cancel"
@@ -1309,8 +1321,8 @@
     "message": "This device"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
-    "description": "title for observation options",
-    "message": "Show Options"
+    "message": "Show Options",
+    "description": "title for observation options"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Disconnected"
@@ -1319,8 +1331,8 @@
     "message": "This Device!"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+    "message": "Searching…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Change"

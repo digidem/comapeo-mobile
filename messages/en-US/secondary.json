@@ -1036,6 +1036,42 @@
     "message": "Track",
     "description": "Category title for new track screen"
   },
+  "screens.ServerLoading.Migrating.dataSafe": {
+    "message": "All data is safe and protected"
+  },
+  "screens.ServerLoading.Migrating.doNotClose": {
+    "message": "Do not close app while updating!"
+  },
+  "screens.ServerLoading.Migrating.projectsMigrating": {
+    "message": "Projects are migrating to a newer, faster format"
+  },
+  "screens.ServerLoading.Migrating.updatingCoMapeo": {
+    "message": "Updating CoMapeo…"
+  },
+  "screens.ServerLoading.Migrating.updatingCount": {
+    "message": "Updating {done} of {total}…"
+  },
+  "screens.ServerLoading.NotEnoughSpace.dataSafe": {
+    "message": "All data is safe and protected"
+  },
+  "screens.ServerLoading.NotEnoughSpace.freeUpSpace": {
+    "message": "Free up space to continue."
+  },
+  "screens.ServerLoading.NotEnoughSpace.newUpdateAvailable": {
+    "message": "New update available with performance improvements"
+  },
+  "screens.ServerLoading.NotEnoughSpace.openStorageSettings": {
+    "message": "Open Storage Settings"
+  },
+  "screens.ServerLoading.NotEnoughSpace.skipForNow": {
+    "message": "Skip for Now"
+  },
+  "screens.ServerLoading.NotEnoughSpace.spaceRequired": {
+    "message": "~340 MB required to update"
+  },
+  "screens.ServerLoading.NotEnoughSpace.updateCoMapeo": {
+    "message": "Update CoMapeo"
+  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Accepted!"
   },

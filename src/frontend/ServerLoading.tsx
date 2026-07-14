@@ -3,12 +3,17 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import type {ServerStateStore} from './lib/ServerStateStore.js';
 import {useStore} from 'zustand';
+import {Migrating} from './screens/StorageMigration/Migrating';
+import {NotEnoughSpace} from './screens/StorageMigration/NotEnoughSpace';
+import {parseMigrationProgress} from './lib/parseMigrationProgress';
 
 export const ServerLoading = ({
   serverStateStore,
+  onSkipMigration,
   children,
 }: React.PropsWithChildren<{
   serverStateStore: ServerStateStore;
+  onSkipMigration: () => void;
 }>) => {
   const serverState = useStore(serverStateStore);
 
@@ -19,13 +24,13 @@ export const ServerLoading = ({
   }
 
   if (serverState.value === 'MIGRATING') {
-    return null;
+    SplashScreen.hide();
+    return <Migrating progress={parseMigrationProgress(serverState.context)} />;
   }
 
   if (serverState.value === 'LOW_SPACE') {
-    // TODO: You can "skip" migrating when there's low space by calling
-    // `initializeNodejs` with `forceSkipMigrate`
-    return null;
+    SplashScreen.hide();
+    return <NotEnoughSpace onSkip={onSkipMigration} />;
   }
 
   if (serverState.value === 'MIGRATION_ERROR') {

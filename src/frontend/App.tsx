@@ -263,7 +263,16 @@ const App = () => {
           <IntlProvider>
             {/* This fatal error requires internationalization to be set up */}
             <Sentry.ErrorBoundary fallback={<FatalError />}>
-              <ServerLoading serverStateStore={serverStateStore}>
+              <ServerLoading
+                serverStateStore={serverStateStore}
+                onSkipMigration={() => {
+                  initializeNodejs({
+                    metricsIsEnabled,
+                    sentryEnvironment,
+                    sentryUserId,
+                    forceSkipMigrate: true,
+                  });
+                }}>
                 <Suspense fallback={<Loading />}>
                   <AppProviders
                     queryClient={queryClient}

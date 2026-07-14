@@ -84,6 +84,12 @@ const config = {
   ],
   moduleNameMapper: {
     '\\.svg$': '<rootDir>/src/frontend/__mocks__/svg.tsx',
+    // The react-native jest environment enables the 'react-native' export
+    // condition, which resolves b4a to its browser build. That build allocates
+    // plain Uint8Arrays instead of Node Buffers, silently breaking
+    // `key.toString('hex')` in hypercore 11's indexing path (docIds become
+    // comma-joined bytes). Force the Node build in tests.
+    '^b4a$': '<rootDir>/node_modules/b4a/index.js',
     '^@comapeo/core/package\\.json$':
       '<rootDir>/node_modules/@comapeo/core/package.json',
     '^@comapeo/ipc$': '<rootDir>/node_modules/@comapeo/ipc/dist/index.js',

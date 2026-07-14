@@ -1,4 +1,6 @@
 import {spawn} from 'node:child_process';
+import {mkdtempSync} from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import {MessageChannel} from 'node:worker_threads';
 import {FastifyController, MapeoManager} from '@comapeo/core';
@@ -13,7 +15,6 @@ import Fastify from 'fastify';
 import {randomBytes} from 'node:crypto';
 import {pEvent} from 'p-event';
 import pEvery from 'p-every';
-import RAM from 'random-access-memory';
 import {MEMBER_ROLE_ID} from '../../../src/frontend/sharedTypes';
 
 const COMAPEO_CORE_PKG_FOLDER = path.dirname(
@@ -39,7 +40,7 @@ export async function createManager(
   const manager = new MapeoManager({
     rootKey: KeyManager.generateRootKey(),
     dbFolder: ':memory:',
-    coreStorage: () => new RAM(),
+    coreStorage: mkdtempSync(path.join(os.tmpdir(), 'comapeo-test-core-')),
     projectMigrationsFolder,
     clientMigrationsFolder,
     fastify,

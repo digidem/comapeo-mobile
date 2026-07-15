@@ -1,5 +1,5 @@
 import {useOwnDeviceInfo, useCreateDocument} from '@comapeo/core-react';
-import {useMutation} from '@tanstack/react-query';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {lengthToDegrees} from '@turf/helpers';
 import {randomPosition} from '@turf/random';
 import {LocationObject} from 'expo-location';
@@ -10,7 +10,7 @@ import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {LIGHT_GREY, RED, WHITE} from '../../lib/styles';
+import {BLACK, LIGHT_GREY, RED, WHITE} from '../../lib/styles';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {LocationView} from '../../sharedComponents/LocationView';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
@@ -216,6 +216,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     fontSize: 20,
+    color: BLACK,
   },
   errorText: {
     color: RED,
@@ -239,6 +240,7 @@ function useCreateFakeObservationsMutation() {
 
   const {data: deviceInfo} = useOwnDeviceInfo();
   const {data: presets} = usePresetsQuery();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({
@@ -306,7 +308,11 @@ function useCreateFakeObservationsMutation() {
         tasks.push(createObservationAsync({value}));
       }
 
-      return Promise.all(tasks);
+      await Promise.all(tasks);
+      // so that the new observations show up in the list without needing to refresh
+      await queryClient.invalidateQueries({
+        queryKey: ['@comapeo/core-react', 'projects', projectId],
+      });
     },
   });
 }

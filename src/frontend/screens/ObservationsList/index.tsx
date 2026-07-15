@@ -14,6 +14,8 @@ import {useTracks} from '../../hooks/server/track';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
 import {ObservationFilterToggle} from './ObservationFilterToggle';
+import {usePresetsQuery} from '../../hooks/server/presets';
+import {matchPreset} from '../../lib/utils';
 
 const m = defineMessages({
   observationListTitle: {
@@ -37,6 +39,8 @@ export const ObservationsList: React.FC<
   const {authState} = useAuthContext();
   const isEarlyAccessEnabled = useEarlyAccessState(s => s.isEarlyAccessEnabled);
   const {data: deviceInfo} = useOwnDeviceInfo();
+  const {data: allPresets} = usePresetsQuery();
+  const myDeviceId = deviceInfo?.deviceId;
 
   const [filterMode, setFilterMode] = React.useState<'all' | 'mine'>('all');
   const lastInteractionRef = React.useRef<number | null>(null);
@@ -65,19 +69,12 @@ export const ObservationsList: React.FC<
       return allData.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
     }
 
-    const myDeviceId = deviceInfo?.deviceId;
     const filtered = allData.filter(
       item => 'createdBy' in item && item.createdBy === myDeviceId,
     );
 
     return filtered.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-  }, [
-    observations,
-    tracks,
-    isEarlyAccessEnabled,
-    filterMode,
-    deviceInfo?.deviceId,
-  ]);
+  }, [observations, tracks, isEarlyAccessEnabled, filterMode, myDeviceId]);
 
   if ((!observations.length && !tracks.length) || authState === 'obscured') {
     return (
@@ -99,9 +96,10 @@ export const ObservationsList: React.FC<
       <FlatList
         keyExtractor={keyExtractor}
         style={styles.container}
-        windowSize={3}
-        removeClippedSubviews
+        windowSize={7}
+        updateCellsBatchingPeriod={20}
         renderItem={({item, index}) => {
+          const isMine = 'createdBy' in item && item.createdBy === myDeviceId;
           switch (item.schemaName) {
             case 'observation':
               return (
@@ -109,6 +107,8 @@ export const ObservationsList: React.FC<
                   key={item.docId}
                   testID={`observationListItem:${index}`}
                   observation={item}
+                  preset={matchPreset(item.tags, allPresets)}
+                  isMine={isMine}
                   style={styles.listItem}
                   onPress={() =>
                     navigation.navigate('Observation', {
@@ -123,6 +123,8 @@ export const ObservationsList: React.FC<
                   key={item.docId}
                   testID={`trackListItem:${index}`}
                   track={item}
+                  allPresets={allPresets}
+                  isMine={isMine}
                   style={styles.listItem}
                   onPress={() => {
                     navigation.navigate('Track', {trackId: item.docId});

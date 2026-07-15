@@ -37,6 +37,7 @@
     "@comapeo/ipc": "8.0.0",
     "@comapeo/nodejs-mobile-react-native": "18.20.4-2",
     "@expo-google-fonts/rubik": "0.4.2",
+    "@formatjs/intl-datetimeformat": "7.5.0",
     "@formatjs/intl-getcanonicallocales": "3.2.9",
     "@formatjs/intl-locale": "5.3.8",
     "@formatjs/intl-pluralrules": "6.3.8",

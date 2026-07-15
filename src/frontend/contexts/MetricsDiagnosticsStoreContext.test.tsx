@@ -19,27 +19,27 @@ function createWrapper(store: MetricsDiagnosticsStore) {
   };
 }
 
-test('usage of state and actions hooks', () => {
+test('usage of state and actions hooks', async () => {
   const activeProjectStore = createMetricsDiagnosticsStore();
   const wrapper = createWrapper(activeProjectStore);
 
-  const actionsHook = renderHook(() => useMetricsDiagnosticsActions(), {
+  const actionsHook = await renderHook(() => useMetricsDiagnosticsActions(), {
     wrapper,
   });
 
-  const stateHook = renderHook(() => useMetricsDiagnosticsEnabled(), {
+  const stateHook = await renderHook(() => useMetricsDiagnosticsEnabled(), {
     wrapper,
   });
 
   expect(stateHook.result.current).toStrictEqual(true);
 
-  act(() => {
+  await act(async () => {
     actionsHook.result.current.setIsEnabled(false);
   });
 
   expect(stateHook.result.current).toStrictEqual(false);
 
-  act(() => {
+  await act(async () => {
     actionsHook.result.current.setIsEnabled(true);
   });
 

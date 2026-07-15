@@ -25,6 +25,6 @@ export function useDeviceInfo<M extends MethodName>(
         throw new Error(`Method ${methodName} is not a function on DeviceInfo`);
       }
     },
-    queryKey: [DEVICE_INFO_KEY, methodName],
+    queryKey: [DEVICE_INFO_KEY, methodName, ...params],
   });
 }

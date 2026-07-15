@@ -28,8 +28,7 @@ const m = defineMessages({
 export const OBSCURE_PASSCODE = '00000';
 
 export const EDITING_SCREEN_NAMES: (
-  | keyof AppStackParamsList
-  | keyof HomeTabsParamsList
+  keyof AppStackParamsList | keyof HomeTabsParamsList
 )[] = [
   'AddPhoto',
   'TrackCategoryChooser',

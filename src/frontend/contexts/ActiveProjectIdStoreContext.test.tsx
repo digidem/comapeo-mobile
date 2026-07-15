@@ -58,7 +58,7 @@ describe('ActiveProjectIdStore', () => {
 
     const wrapper = createWrapper(activeProjectStore, client);
 
-    const stateHook = renderHook(() => useActiveProjectId(), {
+    const stateHook = await renderHook(() => useActiveProjectId(), {
       wrapper,
     });
 
@@ -75,7 +75,7 @@ describe('ActiveProjectIdStore', () => {
 
     const wrapper = createWrapper(activeProjectStore, client);
 
-    const stateHook = renderHook(() => useActiveProjectId(), {
+    const stateHook = await renderHook(() => useActiveProjectId(), {
       wrapper,
     });
 
@@ -90,11 +90,11 @@ describe('ActiveProjectIdStore', () => {
 
     const wrapper = createWrapper(activeProjectStore, client);
 
-    const stateHook = renderHook(() => useActiveProjectId(), {
+    const stateHook = await renderHook(() => useActiveProjectId(), {
       wrapper,
     });
 
-    const actionsHook = renderHook(() => useActiveProjectIdActions(), {
+    const actionsHook = await renderHook(() => useActiveProjectIdActions(), {
       wrapper,
     });
 
@@ -102,7 +102,9 @@ describe('ActiveProjectIdStore', () => {
       expect(stateHook.result.current).toBeUndefined();
     });
 
-    act(() => actionsHook.result.current.setActiveProjectId('12345'));
+    await act(async () =>
+      actionsHook.result.current.setActiveProjectId('12345'),
+    );
 
     expect(stateHook.result.current).toBe('12345');
   });

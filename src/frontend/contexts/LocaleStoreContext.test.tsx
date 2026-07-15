@@ -15,15 +15,15 @@ function createWrapper(store: LocaleStore) {
   };
 }
 
-test('usage of state and actions hooks', () => {
+test('usage of state and actions hooks', async () => {
   const store = createLocaleStore();
   const wrapper = createWrapper(store);
 
-  const actionsHook = renderHook(() => useLocaleActions(), {
+  const actionsHook = await renderHook(() => useLocaleActions(), {
     wrapper,
   });
 
-  const stateHook = renderHook(() => useLocaleState(), {
+  const stateHook = await renderHook(() => useLocaleState(), {
     wrapper,
   });
 
@@ -33,7 +33,7 @@ test('usage of state and actions hooks', () => {
     useSystemPreferences: true,
   });
 
-  act(() => {
+  await act(async () => {
     actionsHook.result.current.setLanguageTag('pt');
   });
 
@@ -42,7 +42,7 @@ test('usage of state and actions hooks', () => {
     languageTag: 'pt',
   });
 
-  act(() => {
+  await act(async () => {
     actionsHook.result.current.setLanguageTag('SystemPreference');
   });
 

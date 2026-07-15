@@ -54,7 +54,7 @@ afterEach(() => {
 });
 
 describe('useIsLastCoordinator', () => {
-  test('returns true when device is the only coordinator', () => {
+  test('returns true when device is the only coordinator', async () => {
     const members = [
       mockMember('device-coordinator', COORDINATOR_ROLE_ID),
       mockMember('device-member-1', MEMBER_ROLE_ID),
@@ -68,7 +68,7 @@ describe('useIsLastCoordinator', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastCoordinator({deviceId: 'device-coordinator'}),
       {wrapper},
     );
@@ -76,7 +76,7 @@ describe('useIsLastCoordinator', () => {
     expect(result.current).toBe(true);
   });
 
-  test('returns true when device is the only creator (creator role)', () => {
+  test('returns true when device is the only creator (creator role)', async () => {
     const members = [
       mockMember('device-creator', CREATOR_ROLE_ID),
       mockMember('device-member-1', MEMBER_ROLE_ID),
@@ -89,7 +89,7 @@ describe('useIsLastCoordinator', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastCoordinator({deviceId: 'device-creator'}),
       {wrapper},
     );
@@ -97,7 +97,7 @@ describe('useIsLastCoordinator', () => {
     expect(result.current).toBe(true);
   });
 
-  test('returns false when there are multiple coordinators', () => {
+  test('returns false when there are multiple coordinators', async () => {
     const members = [
       mockMember('coordinator-1', COORDINATOR_ROLE_ID),
       mockMember('coordinator-2', COORDINATOR_ROLE_ID),
@@ -111,7 +111,7 @@ describe('useIsLastCoordinator', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastCoordinator({deviceId: 'coordinator-1'}),
       {wrapper},
     );
@@ -119,7 +119,7 @@ describe('useIsLastCoordinator', () => {
     expect(result.current).toBe(false);
   });
 
-  test('returns false when device is not a coordinator', () => {
+  test('returns false when device is not a coordinator', async () => {
     const members = [
       mockMember('coordinator-1', COORDINATOR_ROLE_ID),
       mockMember('device-member-1', MEMBER_ROLE_ID),
@@ -132,7 +132,7 @@ describe('useIsLastCoordinator', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastCoordinator({deviceId: 'device-member-1'}),
       {wrapper},
     );
@@ -140,7 +140,7 @@ describe('useIsLastCoordinator', () => {
     expect(result.current).toBe(false);
   });
 
-  test('returns false when there are no coordinators', () => {
+  test('returns false when there are no coordinators', async () => {
     const members = [
       mockMember('device-member-1', MEMBER_ROLE_ID),
       mockMember('device-member-2', MEMBER_ROLE_ID),
@@ -153,7 +153,7 @@ describe('useIsLastCoordinator', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastCoordinator({deviceId: 'device-member-1'}),
       {wrapper},
     );
@@ -161,7 +161,7 @@ describe('useIsLastCoordinator', () => {
     expect(result.current).toBe(false);
   });
 
-  test('returns false when members array is empty', () => {
+  test('returns false when members array is empty', async () => {
     jest.mocked(useManyMembers).mockReturnValue({
       data: [],
       error: null,
@@ -169,7 +169,7 @@ describe('useIsLastCoordinator', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastCoordinator({deviceId: 'device-1'}),
       {wrapper},
     );
@@ -177,7 +177,7 @@ describe('useIsLastCoordinator', () => {
     expect(result.current).toBe(false);
   });
 
-  test('returns false when device ID does not match the coordinator', () => {
+  test('returns false when device ID does not match the coordinator', async () => {
     const members = [
       mockMember('device-coordinator', COORDINATOR_ROLE_ID),
       mockMember('device-member-1', MEMBER_ROLE_ID),
@@ -190,7 +190,7 @@ describe('useIsLastCoordinator', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastCoordinator({deviceId: 'device-random'}),
       {wrapper},
     );
@@ -198,7 +198,7 @@ describe('useIsLastCoordinator', () => {
     expect(result.current).toBe(false);
   });
 
-  test('handles mixed coordinator and creator roles correctly', () => {
+  test('handles mixed coordinator and creator roles correctly', async () => {
     const members = [
       mockMember('device-creator', CREATOR_ROLE_ID),
       mockMember('device-coordinator', COORDINATOR_ROLE_ID),
@@ -213,13 +213,13 @@ describe('useIsLastCoordinator', () => {
 
     const wrapper = createWrapper();
 
-    const {result: result1} = renderHook(
+    const {result: result1} = await renderHook(
       () => useIsLastCoordinator({deviceId: 'device-creator'}),
       {wrapper},
     );
     expect(result1.current).toBe(false);
 
-    const {result: result2} = renderHook(
+    const {result: result2} = await renderHook(
       () => useIsLastCoordinator({deviceId: 'device-coordinator'}),
       {wrapper},
     );

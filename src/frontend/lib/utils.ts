@@ -47,8 +47,7 @@ import {LocationHistoryPoint} from '../sharedTypes/location';
 const STALE_TIMEOUT = 60 * 1000; // 60 seconds
 
 type LocationStatusResult =
-  | {status: 'searching' | 'error'}
-  | {status: 'good'; accuracy: number};
+  {status: 'searching' | 'error'} | {status: 'good'; accuracy: number};
 
 export function getLocationStatus({
   location,

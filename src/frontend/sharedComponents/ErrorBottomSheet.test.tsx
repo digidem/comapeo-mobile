@@ -52,7 +52,7 @@ function TestNavigator({error}: {error: Error & {code?: string}}) {
 describe('ErrorBottomSheet', () => {
   it('should render error title', async () => {
     const error = new Error('Test error message');
-    render(<TestNavigator error={error} />);
+    await render(<TestNavigator error={error} />);
 
     await waitFor(() => {
       expect(screen.getByText('Something Went Wrong')).toBeOnTheScreen();
@@ -61,7 +61,7 @@ describe('ErrorBottomSheet', () => {
 
   it('should render Advanced button', async () => {
     const error = new Error('Test error message');
-    render(<TestNavigator error={error} />);
+    await render(<TestNavigator error={error} />);
 
     await waitFor(() => {
       expect(screen.getByText('Advanced')).toBeOnTheScreen();
@@ -70,7 +70,7 @@ describe('ErrorBottomSheet', () => {
 
   it('should not show error details initially', async () => {
     const error = new Error('Test error message');
-    render(<TestNavigator error={error} />);
+    await render(<TestNavigator error={error} />);
 
     await waitFor(() => {
       expect(screen.getByText('Advanced')).toBeOnTheScreen();
@@ -81,14 +81,14 @@ describe('ErrorBottomSheet', () => {
 
   it('should show error details when Advanced is clicked', async () => {
     const error = new Error('Test error message');
-    render(<TestNavigator error={error} />);
+    await render(<TestNavigator error={error} />);
 
     await waitFor(() => {
       expect(screen.getByText('Advanced')).toBeOnTheScreen();
     });
 
     const advancedButton = screen.getByText('Advanced');
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
 
     await waitFor(() => {
       expect(screen.getByText(/Test error message/)).toBeOnTheScreen();
@@ -97,7 +97,7 @@ describe('ErrorBottomSheet', () => {
 
   it('should hide error details when Advanced is clicked again', async () => {
     const error = new Error('Test error message');
-    render(<TestNavigator error={error} />);
+    await render(<TestNavigator error={error} />);
 
     await waitFor(() => {
       expect(screen.getByText('Advanced')).toBeOnTheScreen();
@@ -105,12 +105,12 @@ describe('ErrorBottomSheet', () => {
 
     const advancedButton = screen.getByText('Advanced');
 
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
     await waitFor(() => {
       expect(screen.getByText(/Test error message/)).toBeOnTheScreen();
     });
 
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
     await waitFor(() => {
       expect(screen.queryByText('Test error message')).not.toBeOnTheScreen();
     });
@@ -119,14 +119,14 @@ describe('ErrorBottomSheet', () => {
   it('should display error code when available', async () => {
     const error = new Error('Test error message') as Error & {code?: string};
     error.code = 'INVITE_ABORTED';
-    render(<TestNavigator error={error} />);
+    await render(<TestNavigator error={error} />);
 
     await waitFor(() => {
       expect(screen.getByText('Advanced')).toBeOnTheScreen();
     });
 
     const advancedButton = screen.getByText('Advanced');
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
 
     await waitFor(() => {
       expect(screen.getByText(/INVITE_ABORTED/)).toBeOnTheScreen();
@@ -137,14 +137,14 @@ describe('ErrorBottomSheet', () => {
     const error = new Error('Detailed error message');
     error.stack =
       'Error: Detailed error message\n    at TestFunction (test.ts:10:5)';
-    render(<TestNavigator error={error} />);
+    await render(<TestNavigator error={error} />);
 
     await waitFor(() => {
       expect(screen.getByText('Advanced')).toBeOnTheScreen();
     });
 
     const advancedButton = screen.getByText('Advanced');
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
 
     await waitFor(() => {
       expect(screen.getByText(/TestFunction/)).toBeOnTheScreen();
@@ -160,14 +160,14 @@ describe('ErrorBottomSheet', () => {
     at InviteManager.sendInvite (InviteManager.ts:45:11)
     at ReviewAndInvite.sendInvite (ReviewAndInvite.tsx:30:25)`;
 
-    render(<TestNavigator error={error} />);
+    await render(<TestNavigator error={error} />);
 
     await waitFor(() => {
       expect(screen.getByText('Advanced')).toBeOnTheScreen();
     });
 
     const advancedButton = screen.getByText('Advanced');
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
 
     await waitFor(() => {
       expect(screen.getByText(/INVITE_ABORTED/)).toBeOnTheScreen();
@@ -177,7 +177,7 @@ describe('ErrorBottomSheet', () => {
 
   it('should render Close button', async () => {
     const error = new Error('Test error');
-    render(<TestNavigator error={error} />);
+    await render(<TestNavigator error={error} />);
 
     await waitFor(() => {
       expect(screen.getByText('Close')).toBeOnTheScreen();
@@ -186,14 +186,14 @@ describe('ErrorBottomSheet', () => {
 
   it('should handle error with empty message', async () => {
     const error = new Error('');
-    render(<TestNavigator error={error} />);
+    await render(<TestNavigator error={error} />);
 
     await waitFor(() => {
       expect(screen.getByText('Advanced')).toBeOnTheScreen();
     });
 
     const advancedButton = screen.getByText('Advanced');
-    fireEvent.press(advancedButton);
+    await fireEvent.press(advancedButton);
 
     await waitFor(() => {
       expect(screen.getByText(/Error:/)).toBeOnTheScreen();

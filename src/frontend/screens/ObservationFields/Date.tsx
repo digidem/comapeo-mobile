@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Calendar, type DateData} from 'react-native-calendars';
 import {TouchableOpacity, StyleSheet, View, Text} from 'react-native';
 import {BLACK, BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
@@ -38,6 +38,18 @@ export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
   const [calendarVisible, setCalendarVisible] = useState(false);
   const {formatMessage, formatDate} = useIntl();
   const valueAsDate = isISODateString(tagValue) ? tagValue : null;
+  const hasSetDefaultDate = useRef(false);
+
+  useEffect(() => {
+    if (hasSetDefaultDate.current) return;
+    hasSetDefaultDate.current = true;
+    if (!valueAsDate) {
+      const todayIso = new Date(
+        toLocalDateString(new Date()) + 'T00:00:00',
+      ).toISOString();
+      updateTag(todayIso);
+    }
+  }, [valueAsDate, updateTag]);
 
   function handleDayPress(date: DateData) {
     // Appending T00:00:00 forces local midnight parsing; without it, date-only

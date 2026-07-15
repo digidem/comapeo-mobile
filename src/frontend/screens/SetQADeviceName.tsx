@@ -41,7 +41,12 @@ function QADeviceNameCommon({
     <ScreenContentWithDock
       contentContainerStyle={styles.content}
       dockContent={
-        <PrimaryButton fullSize text="Save Name" onPress={handleSave} />
+        <PrimaryButton
+          testID="SET_QA_DEVICE_NAME.save-btn"
+          fullSize
+          text="Save Name"
+          onPress={handleSave}
+        />
       }>
       <View style={styles.section}>
         <HeaderText variant="header2">Set QA Device Name</HeaderText>

@@ -208,9 +208,6 @@ initializeNodejs({
   metricsIsEnabled,
   sentryEnvironment,
   sentryUserId,
-  // True only when the user tapped "Skip for Now" on the low-space migration
-  // screen immediately before the app restarted itself. The flag is one-shot
-  // (cleared on read) so the next full launch offers the migration again.
   forceSkipMigrate: consumeSkipMigrationFlag(),
 });
 
@@ -279,10 +276,6 @@ const App = () => {
               <ServerLoading
                 serverStateStore={serverStateStore}
                 onSkipMigration={() => {
-                  // The Node backend can only be started once per app
-                  // process, so skipping the migration requires a full
-                  // process restart; the one-shot flag makes the fresh
-                  // launch call initializeNodejs with forceSkipMigrate.
                   setSkipMigrationOnNextLaunch();
                   RNRestart.restart();
                 }}>

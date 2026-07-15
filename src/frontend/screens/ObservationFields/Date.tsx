@@ -19,6 +19,16 @@ type DatePickerProps = {
   updateTag: (newDate: string | null) => void;
 };
 
+// Converts a UTC ISO instant back to the local calendar day (YYYY-MM-DD),
+// as opposed to slicing the ISO string, which reads the UTC day and is
+// wrong for timezones ahead of UTC (e.g. Indonesia).
+function toLocalDateString(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 /**
  *
  * @description the `tagValue`can be any type (not a date), but this component will only update it to date
@@ -68,6 +78,7 @@ export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
           testID="FIELD.date-calendar"
           style={styles.calendarStyle}
           enableSwipeMonths
+          maxDate={toLocalDateString(new Date())}
           renderArrow={direction => (
             <IonIcon
               name={direction === 'left' ? 'chevron-back' : 'chevron-forward'}
@@ -79,7 +90,7 @@ export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
           markedDates={
             valueAsDate
               ? {
-                  [valueAsDate.slice(0, 10)]: {
+                  [toLocalDateString(new Date(valueAsDate))]: {
                     selected: true,
                     selectedColor: COMAPEO_BLUE,
                   },

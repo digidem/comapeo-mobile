@@ -1,5 +1,5 @@
 diff --git a/node_modules/expo/android/build.gradle b/node_modules/expo/android/build.gradle
-index e294b59..1dc1afc 100644
+index 6b690b8..4999cfa 100644
 --- a/node_modules/expo/android/build.gradle
 +++ b/node_modules/expo/android/build.gradle
 @@ -76,6 +76,15 @@ android {

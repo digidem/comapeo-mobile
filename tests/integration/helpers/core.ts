@@ -151,7 +151,10 @@ export async function inviteToProject(
   const inviteeInvitePromise = pEvent(
     invitee.invite,
     'invite-received',
-    invite => Buffer.from(invite.inviteId, 'hex').equals(inviteId),
+    invite =>
+      Buffer.from((invite as {inviteId: string}).inviteId, 'hex').equals(
+        inviteId,
+      ),
   );
 
   await Promise.all([
@@ -160,7 +163,7 @@ export async function inviteToProject(
       __testOnlyInviteId: inviteId,
     }),
     (async () => {
-      const invite = await inviteeInvitePromise;
+      const invite = (await inviteeInvitePromise) as {inviteId: string};
       await invitee.invite.accept(invite);
     })(),
   ]);

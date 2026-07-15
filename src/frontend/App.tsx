@@ -56,6 +56,7 @@ import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
 import {Suspense} from 'react';
 import {Loading} from './sharedComponents/Loading.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
+import {createQADeviceNameStore} from './contexts/QADeviceNameStoreContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {createAppRpc} from './lib/createAppRpc.ts';
@@ -85,6 +86,18 @@ Sentry.init({
   debug: false, // this added alot of unneccesary noise to the console.
   initialScope: {user: {id: sentryUserId}},
   enableMetrics: false,
+  replaysSessionSampleRate: sentryEnvironment === 'qa' ? 1.0 : 0,
+  replaysOnErrorSampleRate: sentryEnvironment === 'qa' ? 1.0 : 0,
+  integrations:
+    sentryEnvironment === 'qa'
+      ? [
+          Sentry.mobileReplayIntegration({
+            maskAllText: false,
+            maskAllImages: false,
+            maskAllVectors: false,
+          }),
+        ]
+      : [],
 });
 
 if (appMetricsOptIn) {
@@ -94,6 +107,13 @@ if (appMetricsOptIn) {
     ignoreEmptyBackNavigationTransactions: false,
   });
   Sentry.getClient()?.addIntegration(navigationIntegration);
+}
+
+const qaDeviceNameStore = createQADeviceNameStore({persist: true});
+
+const initialQADeviceName = qaDeviceNameStore.instance.getState().qaDeviceName;
+if (initialQADeviceName) {
+  Sentry.setTag('QA_Device_Name', initialQADeviceName);
 }
 
 const persistedLocaleStore = createLocaleStore({
@@ -265,7 +285,8 @@ const App = () => {
                     appUsageStatsStore={appUsagePromptStore}
                     lowStorageBannerStore={lowStorageBannerStore}
                     earlyAccessStore={earlyAccessStore}
-                    unitSystemStore={persistedUnitSystemStore}>
+                    unitSystemStore={persistedUnitSystemStore}
+                    qaDeviceNameStore={qaDeviceNameStore}>
                     <AppNavigator
                       permissionAsked={permissionsAsked}
                       navigationIntegration={navigationIntegration}

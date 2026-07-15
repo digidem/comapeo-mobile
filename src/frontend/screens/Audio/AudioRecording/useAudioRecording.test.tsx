@@ -53,10 +53,10 @@ describe('useAudioRecording', () => {
   test('does not call record() when unmounted before prepareToRecordAsync resolves', async () => {
     const {recorder, resolvePrepare} = mockRecorderWithPendingPrepare();
 
-    const {result, unmount} = renderHook(() => useAudioRecording());
+    const {result, unmount} = await renderHook(() => useAudioRecording());
 
     let startRecordingPromise!: Promise<void>;
-    act(() => {
+    await act(async () => {
       startRecordingPromise = result.current.startRecording();
     });
 
@@ -64,7 +64,7 @@ describe('useAudioRecording', () => {
     expect(recorder.record).not.toHaveBeenCalled();
 
     // Simulate navigating away from the screen while prepare is still pending.
-    unmount();
+    await unmount();
 
     await act(async () => {
       resolvePrepare();
@@ -77,10 +77,10 @@ describe('useAudioRecording', () => {
   test('calls record() when still mounted after prepareToRecordAsync resolves', async () => {
     const {recorder, resolvePrepare} = mockRecorderWithPendingPrepare();
 
-    const {result} = renderHook(() => useAudioRecording());
+    const {result} = await renderHook(() => useAudioRecording());
 
     let startRecordingPromise!: Promise<void>;
-    act(() => {
+    await act(async () => {
       startRecordingPromise = result.current.startRecording();
     });
 

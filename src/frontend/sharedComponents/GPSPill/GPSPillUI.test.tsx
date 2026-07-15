@@ -4,7 +4,7 @@ import {DARK_GREY, DARK_MAGENTA, GREEN, WARNING_RED} from '../../lib/styles';
 import {GPSPillUI} from './GPSPillUI';
 
 test('searching status', async () => {
-  render(
+  await render(
     <GPSPillUI
       status="searching"
       unitSystem="metric"
@@ -24,7 +24,7 @@ test('searching status', async () => {
 });
 
 test('error status', async () => {
-  render(
+  await render(
     <GPSPillUI
       status="error"
       unitSystem="metric"
@@ -45,7 +45,7 @@ test('error status', async () => {
 });
 
 test('good status - metric', async () => {
-  render(
+  await render(
     <GPSPillUI
       status="good"
       accuracy={1}
@@ -67,7 +67,7 @@ test('good status - metric', async () => {
 });
 
 test('good status - imperial', async () => {
-  render(
+  await render(
     <GPSPillUI
       status="good"
       accuracy={1}
@@ -82,28 +82,30 @@ test('good status - imperial', async () => {
 });
 
 test('displayed accuracy - metric', async () => {
-  render(<GPSPillUI status="good" accuracy={10} unitSystem="metric" />);
+  await render(<GPSPillUI status="good" accuracy={10} unitSystem="metric" />);
   expect(screen.getByText('±10 m')).toBeOnTheScreen();
 
-  render(<GPSPillUI status="good" accuracy={-1} unitSystem="metric" />);
+  await render(<GPSPillUI status="good" accuracy={-1} unitSystem="metric" />);
   expect(screen.getByText('±1 m')).toBeOnTheScreen();
 
-  render(<GPSPillUI status="good" accuracy={0.5} unitSystem="metric" />);
+  await render(<GPSPillUI status="good" accuracy={0.5} unitSystem="metric" />);
   expect(screen.getByText('±1 m')).toBeOnTheScreen();
 
-  render(<GPSPillUI status="good" accuracy={5.25} unitSystem="metric" />);
+  await render(<GPSPillUI status="good" accuracy={5.25} unitSystem="metric" />);
   expect(screen.getByText('±5 m')).toBeOnTheScreen();
 
-  render(<GPSPillUI status="good" accuracy={10.75} unitSystem="metric" />);
+  await render(
+    <GPSPillUI status="good" accuracy={10.75} unitSystem="metric" />,
+  );
   expect(screen.getByText('±11 m')).toBeOnTheScreen();
 });
 
 test('displayed accuracy - imperial', async () => {
   // 10m * 3.28084 = 32.8084, rounds to 33
-  render(<GPSPillUI status="good" accuracy={10} unitSystem="imperial" />);
+  await render(<GPSPillUI status="good" accuracy={10} unitSystem="imperial" />);
   expect(screen.getByText('±33 ft')).toBeOnTheScreen();
 
   // 5m * 3.28084 = 16.4042, rounds to 16
-  render(<GPSPillUI status="good" accuracy={5} unitSystem="imperial" />);
+  await render(<GPSPillUI status="good" accuracy={5} unitSystem="imperial" />);
   expect(screen.getByText('±16 ft')).toBeOnTheScreen();
 });

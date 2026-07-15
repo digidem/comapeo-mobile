@@ -7,7 +7,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
-import {APP_VARIANT} from '../../lib/appVariant';
+import {isQABuild} from '../../lib/appVariant';
 import {useQADeviceName} from '../../contexts/QADeviceNameStoreContext';
 import {NEW_DARK_GREY} from '../../lib/styles';
 
@@ -18,19 +18,18 @@ const m = defineMessages({
   },
 });
 
-function isQABuild() {
-  return APP_VARIANT === 'releaseCandidate' || APP_VARIANT === 'preRelease';
-}
-
 function formatUTCTimestamp(date: Date): string {
-  const month = date.toLocaleString('en-US', {month: 'short', timeZone: 'UTC'});
-  const day = date.getUTCDate();
-  let hours = date.getUTCHours();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12 || 12;
-  const pad = (n: number) => String(n).padStart(2, '0');
-  const ms = String(date.getUTCMilliseconds()).padStart(3, '0');
-  return `${month} ${day}, ${hours}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}.${ms} ${ampm} UTC`;
+  return (
+    new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+      timeZone: 'UTC',
+    }).format(date) + ' UTC'
+  );
 }
 
 function QAInfoSection() {
@@ -65,7 +64,7 @@ export const BackgroundMapErrorBottomSheet = ({
           <BodyText style={{textAlign: 'center'}}>
             {route.params.description}
           </BodyText>
-          {isQABuild() && <QAInfoSection />}
+          {isQABuild && <QAInfoSection />}
         </View>
         <SecondaryButton
           style={{alignSelf: 'center'}}

@@ -10,7 +10,7 @@ import {HeaderText} from './Text/HeaderText';
 import {BodyText} from './Text/BodyText';
 import {SecondaryButton} from './Buttons';
 import {BLUE_GREY, NEW_DARK_GREY} from '../lib/styles';
-import {APP_VARIANT} from '../lib/appVariant';
+import {isQABuild} from '../lib/appVariant';
 import {useQADeviceName} from '../contexts/QADeviceNameStoreContext';
 
 const m = defineMessages({
@@ -28,19 +28,18 @@ const m = defineMessages({
   },
 });
 
-function isQABuild() {
-  return APP_VARIANT === 'releaseCandidate' || APP_VARIANT === 'preRelease';
-}
-
 function formatUTCTimestamp(date: Date): string {
-  const month = date.toLocaleString('en-US', {month: 'short', timeZone: 'UTC'});
-  const day = date.getUTCDate();
-  let hours = date.getUTCHours();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12 || 12;
-  const pad = (n: number) => String(n).padStart(2, '0');
-  const ms = String(date.getUTCMilliseconds()).padStart(3, '0');
-  return `${month} ${day}, ${hours}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}.${ms} ${ampm} UTC`;
+  return (
+    new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+      timeZone: 'UTC',
+    }).format(date) + ' UTC'
+  );
 }
 
 function QAInfoSection() {
@@ -84,7 +83,7 @@ export const ErrorBottomSheet = ({
             </HeaderText>
           </View>
 
-          {isQABuild() && <QAInfoSection />}
+          {isQABuild && <QAInfoSection />}
 
           <View style={styles.advancedSection}>
             <TouchableOpacity

@@ -24,6 +24,7 @@ jest.mock('./BottomSheetWrapper', () => ({
 }));
 jest.mock('../lib/appVariant', () => ({
   APP_VARIANT: 'production' as AppVariant,
+  isQABuild: false,
 }));
 jest.mock('../contexts/QADeviceNameStoreContext', () => ({
   useQADeviceName: () => null,
@@ -215,18 +216,19 @@ describe('ErrorBottomSheet', () => {
 describe('ErrorBottomSheet in QA builds', () => {
   const appVariantModule = jest.requireMock('../lib/appVariant') as {
     APP_VARIANT: AppVariant;
+    isQABuild: boolean;
   };
   const qaDeviceNameModule = jest.requireMock(
     '../contexts/QADeviceNameStoreContext',
   ) as {useQADeviceName: () => string | null};
 
   afterEach(() => {
-    appVariantModule.APP_VARIANT = 'production';
+    appVariantModule.isQABuild = false;
     qaDeviceNameModule.useQADeviceName = () => null;
   });
 
-  it('shows UTC timestamp and QA device name in releaseCandidate builds', async () => {
-    appVariantModule.APP_VARIANT = 'releaseCandidate';
+  it('shows UTC timestamp and QA device name in QA builds', async () => {
+    appVariantModule.isQABuild = true;
     qaDeviceNameModule.useQADeviceName = () => 'my-qa-device';
 
     const error = new Error('Test error');
@@ -240,23 +242,8 @@ describe('ErrorBottomSheet in QA builds', () => {
     expect(screen.getByText('my-qa-device')).toBeOnTheScreen();
   });
 
-  it('shows UTC timestamp and QA device name in preRelease builds', async () => {
-    appVariantModule.APP_VARIANT = 'preRelease';
-    qaDeviceNameModule.useQADeviceName = () => 'my-qa-device';
-
-    const error = new Error('Test error');
-    render(<TestNavigator error={error} />);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('EBS.qa-info-section')).toBeOnTheScreen();
-    });
-
-    expect(screen.getByText(/UTC/)).toBeOnTheScreen();
-    expect(screen.getByText('my-qa-device')).toBeOnTheScreen();
-  });
-
-  it('timestamp matches UTC format MMM D, H:MM:SS.mmm AM/PM UTC', async () => {
-    appVariantModule.APP_VARIANT = 'releaseCandidate';
+  it('timestamp matches UTC format MMM D, H:MM:SS AM/PM UTC', async () => {
+    appVariantModule.isQABuild = true;
     qaDeviceNameModule.useQADeviceName = () => null;
 
     const error = new Error('Test error');
@@ -265,7 +252,7 @@ describe('ErrorBottomSheet in QA builds', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          /^[A-Z][a-z]{2} \d{1,2}, \d{1,2}:\d{2}:\d{2}\.\d{3} (AM|PM) UTC$/,
+          /^[A-Z][a-z]{2} \d{1,2}, \d{1,2}:\d{2}:\d{2} (AM|PM) UTC$/,
         ),
       ).toBeOnTheScreen();
     });

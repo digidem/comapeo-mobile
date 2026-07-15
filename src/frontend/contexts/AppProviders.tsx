@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ComapeoCoreProvider} from '@comapeo/core-react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {QueryClient} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {fetch} from 'expo/fetch';
@@ -52,6 +52,10 @@ import {
   EarlyAccessStoreProvider,
   type EarlyAccessStore,
 } from './EarlyAccessContext';
+import {
+  QADeviceNameStoreContext,
+  type QADeviceNameStore,
+} from './QADeviceNameStoreContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -71,6 +75,7 @@ type AppProvidersProps = {
   appUsageStatsStore: AppUsageStatsStore;
   earlyAccessStore: EarlyAccessStore;
   unitSystemStore: UnitSystemStore;
+  qaDeviceNameStore: QADeviceNameStore;
 };
 
 export const AppProviders = ({
@@ -91,6 +96,7 @@ export const AppProviders = ({
   earlyAccessStore,
   appUsageStatsStore,
   unitSystemStore,
+  qaDeviceNameStore,
 }: AppProvidersProps) => {
   return (
     <UnitSystemStoreContext value={unitSystemStore}>
@@ -101,41 +107,40 @@ export const AppProviders = ({
               <ManualEntryCoordinateFormatStoreProvider
                 value={manualEntryCoordinateFormatStore}>
                 <TrackStoreProvider value={trackStore}>
-                  <QueryClientProvider client={queryClient}>
-                    <LowStorageBannerStoreProvider
-                      value={lowStorageBannerStore}>
-                      <SafeAreaProvider>
-                        <GestureHandlerRootView style={styles.flex}>
-                          <SavedLocationStoreProvider
-                            value={savedLocationStore}>
-                            <LocationProvider>
-                              <LocalDiscoveryProvider
-                                value={localDiscoveryController}>
-                                <ComapeoCoreProvider
-                                  clientApi={mapeoApi}
-                                  getMapServerBaseUrl={mapServerApi.getBaseUrl}
-                                  fetch={fetch}
-                                  queryClient={queryClient}>
-                                  <ActiveProjectIdStoreProvider
-                                    store={activeProjectIdStore}>
-                                    <DraftObservationProvider
-                                      draftObservationStore={
-                                        persistedDrafObservationStore
-                                      }>
-                                      <EarlyAccessStoreProvider
-                                        value={earlyAccessStore}>
+                  <LowStorageBannerStoreProvider value={lowStorageBannerStore}>
+                    <SafeAreaProvider>
+                      <GestureHandlerRootView style={styles.flex}>
+                        <SavedLocationStoreProvider value={savedLocationStore}>
+                          <LocationProvider>
+                            <LocalDiscoveryProvider
+                              value={localDiscoveryController}>
+                              <ComapeoCoreProvider
+                                clientApi={mapeoApi}
+                                getMapServerBaseUrl={mapServerApi.getBaseUrl}
+                                fetch={fetch}
+                                queryClient={queryClient}>
+                                <ActiveProjectIdStoreProvider
+                                  store={activeProjectIdStore}>
+                                  <DraftObservationProvider
+                                    draftObservationStore={
+                                      persistedDrafObservationStore
+                                    }>
+                                    <EarlyAccessStoreProvider
+                                      value={earlyAccessStore}>
+                                      <QADeviceNameStoreContext
+                                        value={qaDeviceNameStore}>
                                         <AuthProvider>{children}</AuthProvider>
-                                      </EarlyAccessStoreProvider>
-                                    </DraftObservationProvider>
-                                  </ActiveProjectIdStoreProvider>
-                                </ComapeoCoreProvider>
-                              </LocalDiscoveryProvider>
-                            </LocationProvider>
-                          </SavedLocationStoreProvider>
-                        </GestureHandlerRootView>
-                      </SafeAreaProvider>
-                    </LowStorageBannerStoreProvider>
-                  </QueryClientProvider>
+                                      </QADeviceNameStoreContext>
+                                    </EarlyAccessStoreProvider>
+                                  </DraftObservationProvider>
+                                </ActiveProjectIdStoreProvider>
+                              </ComapeoCoreProvider>
+                            </LocalDiscoveryProvider>
+                          </LocationProvider>
+                        </SavedLocationStoreProvider>
+                      </GestureHandlerRootView>
+                    </SafeAreaProvider>
+                  </LowStorageBannerStoreProvider>
                 </TrackStoreProvider>
               </ManualEntryCoordinateFormatStoreProvider>
             </CoordinateFormatStoreProvider>

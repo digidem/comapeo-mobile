@@ -91,9 +91,6 @@
   "$1screens.DeviceNaming.Success.joinProject": {
     "message": "Төсөлд нэгдэх"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "Амжилттай!"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Төхөөрөмжний нэр"
   },
@@ -158,9 +155,6 @@
   "$1screens.Observation.description": {
     "message": "Тодорхойлолт:"
   },
-  "$1screens.Observation.details": {
-    "message": "Дэлгэрэнгүй:"
-  },
   "$1screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Сануулга"
@@ -168,13 +162,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Сануулга"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "Өөрчлөх"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Энд юу болоод байгаа юм бэ?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -220,9 +207,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "Аппликэшний нууц үг"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "Төхөөрөмжийн аюулгүй байдал"
   },
   "$1screens.Security.title": {
     "message": "Аюулгүй байдал"

@@ -88,9 +88,6 @@
   "$1screens.DeviceNaming.Success.joinProject": {
     "message": "Tham gia một dự án"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "Thành công!"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Tên thiết bị"
   },
@@ -151,9 +148,6 @@
   "$1screens.Observation.description": {
     "message": "Mô tả:"
   },
-  "$1screens.Observation.details": {
-    "message": "Chi tiết:"
-  },
   "$1screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Quan sát"
@@ -164,13 +158,6 @@
   "$1screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Quan sát"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "Thay đổi"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Có điều gì đang diễn ra ở đây?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -217,9 +204,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "Mật khẩu Ứng dụng"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "Bảo mật thiết bị"
   },
   "$1screens.Security.title": {
     "message": "Bảo mật"

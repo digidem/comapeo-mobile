@@ -68,8 +68,13 @@ export const ObservationCreate = ({
 
   return (
     <ScreenContentWithDock
+      testID="OBS.create-obs"
       dockContainerStyle={{padding: 0}}
-      dockContent={<ActionsRow fieldRefs={preset?.fieldRefs} />}>
+      dockContent={
+        <ActionsRow
+          fieldIds={preset ? preset.fieldRefs.map(val => val.docId) : undefined}
+        />
+      }>
       <View style={styles.container}>
         <View
           style={{

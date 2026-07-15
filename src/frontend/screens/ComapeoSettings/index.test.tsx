@@ -6,7 +6,7 @@ describe('CoMapeo Settings Screen', () => {
 
   test('opens drawer when header button is pressed', async () => {
     const user = userEvent.setup();
-    integrationSetup.renderNavigation({
+    await integrationSetup.renderNavigation({
       activeProjectId: integrationSetup.projectId,
     });
 

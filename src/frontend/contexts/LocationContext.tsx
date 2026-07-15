@@ -115,14 +115,16 @@ function LocationProviderInitialized({
     const handleCheckAndStartWatchPosition = () => {
       if (!isMounted || locationSubscription) return;
 
-      startWatchPosition(store).then(sub => {
-        if (isMounted) {
-          locationSubscription = sub;
-        } else {
-          // If unmounted before promise resolves, clean up immediately
-          sub.remove();
-        }
-      });
+      startWatchPosition(store)
+        .then(sub => {
+          if (isMounted) {
+            locationSubscription = sub;
+          } else {
+            // If unmounted before promise resolves, clean up immediately
+            sub.remove();
+          }
+        })
+        .catch(Sentry.captureException);
     };
 
     const initialPermissionGranted =
@@ -178,6 +180,11 @@ function startWatchPosition(store: StoreApi<LocationState>) {
   return watchPositionAsync(
     {
       accuracy: Accuracy.BestForNavigation,
+      // Don't show Google Play Services' "improve location accuracy" dialog
+      // (only triggered when the network provider is off): it pushes a
+      // network/Wi-Fi-based accuracy mode that's useless offline, and if the
+      // user dismisses it, watching never starts. Use available providers (GPS).
+      mayShowUserSettingsDialog: false,
     },
     location => {
       store.setState(prev => ({...prev, location}));

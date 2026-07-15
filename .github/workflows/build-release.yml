@@ -262,5 +262,6 @@ jobs:
       - name: Submit to Google Play Store
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          APP_VARIANT: production
         run: |
           eas submit --platform android --profile production --id ${{ needs.build.outputs.build_id }} --non-interactive

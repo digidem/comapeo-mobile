@@ -1,7 +1,11 @@
-// Mapping of language tags to corresponding translated messages used in app
-import MESSAGES from '../../../translations/messages.json';
 // Mapping of language tag to corresponding native and english names
 import LANGUAGES from '../languages.json';
+import {
+  localeImports,
+  type AvailableLanguageTag,
+} from '../../../translations/index';
+
+export type {AvailableLanguageTag};
 
 interface UsableLanguage {
   /** IETF BCP 47 language tag (https://en.wikipedia.org/wiki/IETF_language_tag) */
@@ -12,12 +16,9 @@ interface UsableLanguage {
   englishName: string;
 }
 
-// Language tag that has corresponding translations
-export type AvailableLanguageTag = keyof typeof MESSAGES;
-
 // All supported languages
 export const USABLE_LANGUAGES = getUsableLanguages(
-  Object.keys(MESSAGES) as Array<AvailableLanguageTag>,
+  Object.keys(localeImports) as Array<AvailableLanguageTag>,
 );
 
 /**

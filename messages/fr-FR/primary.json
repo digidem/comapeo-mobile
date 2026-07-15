@@ -17,9 +17,6 @@
   "$1Navigation.Menu.coordinatorTools": {
     "message": "Outils de coordinator"
   },
-  "$1Navigation.Menu.currentProject": {
-    "message": "Projet actuel"
-  },
   "$1Navigation.Menu.exchange": {
     "message": "Échanger"
   },
@@ -70,9 +67,6 @@
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff": {
     "message": "Archive distante désactivée"
-  },
-  "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
-    "message": "Archives distantes"
   },
   "$1ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
     "message": "Archive distante activée"
@@ -153,12 +147,6 @@
   },
   "$1screen.EditProjectDetails.projectName": {
     "message": "Nom du projet"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
-    "message": "Coordonnateur"
-  },
-  "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
-    "message": "Participant"
   },
   "$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Envoyer une invitation"
@@ -331,9 +319,6 @@
   "$1screens.DeviceNaming.Success.mapOnYourOwn": {
     "message": "Carte sur la vôtre"
   },
-  "$1screens.DeviceNaming.Success.success": {
-    "message": "Succès !"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "Des noms distincts aident les collaborateurs à utiliser CoMapeo pour vous reconnaître."
   },
@@ -471,9 +456,6 @@
   "$1screens.Observation.deleteTitle": {
     "message": "Supprimer l'observation?"
   },
-  "$1screens.Observation.details": {
-    "message": "Détails:"
-  },
   "$1screens.Observation.location": {
     "message": "Emplacement:"
   },
@@ -490,13 +472,6 @@
   "$1screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
     "message": "Texte de partage"
-  },
-  "$1screens.ObservationCreate.changePreset": {
-    "message": "Modifier"
-  },
-  "$1screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Que se passe-t-il ici?"
   },
   "$1screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -583,9 +558,6 @@
   },
   "$1screens.Security.passcodeHeader": {
     "message": "Code d'accès de l'application"
-  },
-  "$1screens.Security.securitySubheader": {
-    "message": "Sécurité de l'appareil"
   },
   "$1screens.Security.title": {
     "message": "Sécurité"

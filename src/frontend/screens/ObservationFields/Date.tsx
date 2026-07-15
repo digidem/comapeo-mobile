@@ -53,7 +53,7 @@ export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
   }
 
   return (
-    <>
+    <View style={{flex: 1}}>
       <View style={styles.container}>
         {valueAsDate && (
           <View style={styles.labelContainer}>
@@ -99,7 +99,12 @@ export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
           }
         />
       )}
-    </>
+      <View
+        onTouchEnd={() => {
+          if (calendarVisible) setCalendarVisible(false);
+        }}
+        style={{height: '100%'}}></View>
+    </View>
   );
 };
 
@@ -109,6 +114,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     marginTop: 20,
     padding: 20,
+    flex: 1,
   },
   labelContainer: {
     position: 'absolute',

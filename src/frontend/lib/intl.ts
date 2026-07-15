@@ -7,6 +7,7 @@ import {
   createIntl,
   createIntlCache,
   defineMessages,
+  IntlCache,
   type MessageFormatElement,
 } from 'react-intl';
 import {
@@ -202,15 +203,16 @@ export function configureCalendarLocale({
   translatedMessages: TranslatedMessages;
   languageCodes: AvailableLanguageTag[];
 }) {
+  const cache = createIntlCache();
   LocaleConfig.locales[languageCodes.join(', ')] = {
     monthNames: (Object.keys(calendarMonths) as Array<Month>).map(month =>
-      getMonth({month, translatedMessages}),
+      getMonth({month, translatedMessages, cache}),
     ),
     dayNamesShort: (
       Object.keys(calendarDaysShort) as Array<DayOfWeekShort>
-    ).map(day => getShortDay({dayofWeek: day, translatedMessages})),
+    ).map(day => getShortDay({dayofWeek: day, translatedMessages, cache})),
     dayNames: (Object.keys(calendarDaysLong) as Array<DayOfWeek>).map(day =>
-      getLongDay({dayofWeek: day, translatedMessages}),
+      getLongDay({dayofWeek: day, translatedMessages, cache}),
     ),
   };
   LocaleConfig.defaultLocale = languageCodes.join(', ');
@@ -231,11 +233,12 @@ type TranslatedMessages = Partial<
 function getMonth({
   month,
   translatedMessages,
+  cache,
 }: {
   month: Month;
   translatedMessages: TranslatedMessages;
+  cache: IntlCache;
 }): string {
-  const cache = createIntlCache();
   for (const [langCode, messages] of Object.entries(translatedMessages)) {
     const translatedMonth = messages[calendarMonths[month].id];
 
@@ -259,11 +262,12 @@ function getMonth({
 function getShortDay({
   dayofWeek,
   translatedMessages,
+  cache,
 }: {
   dayofWeek: DayOfWeekShort;
   translatedMessages: TranslatedMessages;
+  cache: IntlCache;
 }): string {
-  const cache = createIntlCache();
   for (const [langCode, messages] of Object.entries(translatedMessages)) {
     const translatedDay = messages[calendarDaysShort[dayofWeek].id];
     const intl = createIntl({locale: langCode, messages}, cache);
@@ -287,11 +291,12 @@ function getShortDay({
 function getLongDay({
   dayofWeek,
   translatedMessages,
+  cache,
 }: {
   dayofWeek: DayOfWeek;
   translatedMessages: TranslatedMessages;
+  cache: IntlCache;
 }): string {
-  const cache = createIntlCache();
   for (const [langCode, messages] of Object.entries(translatedMessages)) {
     const translatedDay = messages[calendarDaysLong[dayofWeek].id];
 

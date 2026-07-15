@@ -9,8 +9,9 @@ export function parseMigrationProgress(
   if (!context) return null;
   const match = /^(\d+)\/(\d+)$/.exec(context);
   if (!match) return null;
-  const done = Number(match[1]);
   const total = Number(match[2]);
   if (total === 0) return null;
+  // make sure the UI never shows more than 100%.
+  const done = Math.min(Number(match[1]), total);
   return {done, total};
 }

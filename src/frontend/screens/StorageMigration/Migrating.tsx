@@ -17,6 +17,7 @@ import DeployedCodeUpdateIcon from '../../images/DeployedCodeUpdate.svg';
 import SafetyIcon from '../../images/Safety.svg';
 import StopwatchIcon from '../../images/Stopwatch.svg';
 import WarningIcon from '../../images/WarningYellow.svg';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 
@@ -48,24 +49,24 @@ export const Migrating = ({
 }: {
   progress: {done: number; total: number} | null;
 }) => {
-  const {formatMessage} = useIntl();
+  const {formatMessage: t} = useIntl();
 
   return (
     <View style={styles.container}>
       <View style={styles.alertBanner}>
         <WarningIcon width={26} height={26} />
-        <HeaderText variant="header6">{formatMessage(m.doNotClose)}</HeaderText>
+        <HeaderText variant="header6">{t(m.doNotClose)}</HeaderText>
       </View>
       <View style={styles.content}>
-        <View style={styles.iconCircle}>
-          <DeployedCodeUpdateIcon width={48} height={48} color={WHITE} />
-        </View>
-        <HeaderText variant="header2" style={styles.centeredText}>
-          {formatMessage(m.updatingCoMapeo)}
-        </HeaderText>
-        <BodyText style={styles.centeredText}>
-          {formatMessage(m.projectsMigrating)}
-        </BodyText>
+        <IconTitleDescription
+          icon={
+            <View style={styles.iconCircle}>
+              <DeployedCodeUpdateIcon width={48} height={48} color={WHITE} />
+            </View>
+          }
+          title={t(m.updatingCoMapeo)}
+          description={t(m.projectsMigrating)}
+        />
       </View>
       <View style={styles.progressSection}>
         <MaterialIcon name="sync" size={16} color={COMAPEO_BLUE} />
@@ -86,7 +87,7 @@ export const Migrating = ({
           <View style={styles.infoRow}>
             <StopwatchIcon width={26} height={26} />
             <BodyText variant="smallMeta" style={styles.infoText}>
-              {formatMessage(m.updatingCount, {
+              {t(m.updatingCount, {
                 done: progress.done,
                 total: progress.total,
               })}
@@ -96,7 +97,7 @@ export const Migrating = ({
         <View style={styles.infoRow}>
           <SafetyIcon width={26} height={26} />
           <BodyText variant="smallMeta" style={styles.infoText}>
-            {formatMessage(m.dataSafe)}
+            {t(m.dataSafe)}
           </BodyText>
         </View>
       </View>
@@ -128,7 +129,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    gap: 10,
     paddingHorizontal: 30,
   },
   iconCircle: {
@@ -138,9 +138,6 @@ const styles = StyleSheet.create({
     backgroundColor: DARK_ORANGE,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  centeredText: {
-    textAlign: 'center',
   },
   progressSection: {
     alignSelf: 'stretch',

@@ -1036,42 +1036,6 @@
     "message": "Track",
     "description": "Category title for new track screen"
   },
-  "screens.ServerLoading.Migrating.dataSafe": {
-    "message": "All data is safe and protected"
-  },
-  "screens.ServerLoading.Migrating.doNotClose": {
-    "message": "Do not close app while updating!"
-  },
-  "screens.ServerLoading.Migrating.projectsMigrating": {
-    "message": "Projects are migrating to a newer, faster format"
-  },
-  "screens.ServerLoading.Migrating.updatingCoMapeo": {
-    "message": "Updating CoMapeo…"
-  },
-  "screens.ServerLoading.Migrating.updatingCount": {
-    "message": "Updating {done} of {total}…"
-  },
-  "screens.ServerLoading.NotEnoughSpace.dataSafe": {
-    "message": "All data is safe and protected"
-  },
-  "screens.ServerLoading.NotEnoughSpace.freeUpSpace": {
-    "message": "Free up space to continue."
-  },
-  "screens.ServerLoading.NotEnoughSpace.newUpdateAvailable": {
-    "message": "New update available with performance improvements"
-  },
-  "screens.ServerLoading.NotEnoughSpace.openStorageSettings": {
-    "message": "Open Storage Settings"
-  },
-  "screens.ServerLoading.NotEnoughSpace.skipForNow": {
-    "message": "Skip for Now"
-  },
-  "screens.ServerLoading.NotEnoughSpace.spaceRequired": {
-    "message": "~340 MB required to update"
-  },
-  "screens.ServerLoading.NotEnoughSpace.updateCoMapeo": {
-    "message": "Update CoMapeo"
-  },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Accepted!"
   },
@@ -1278,6 +1242,63 @@
   },
   "screens.ShareProjectStats.infoAnonymized": {
     "message": "Shared information will be completely anonymized"
+  },
+  "screens.StorageMigration.Migrating.dataSafe": {
+    "message": "All data is safe and protected"
+  },
+  "screens.StorageMigration.Migrating.doNotClose": {
+    "message": "Do not close app while updating!"
+  },
+  "screens.StorageMigration.Migrating.projectsMigrating": {
+    "message": "Projects are migrating to a newer, faster format"
+  },
+  "screens.StorageMigration.Migrating.updatingCoMapeo": {
+    "message": "Updating CoMapeo…"
+  },
+  "screens.StorageMigration.Migrating.updatingCount": {
+    "message": "Updating {done} of {total}…"
+  },
+  "screens.StorageMigration.MigrationError.advanced": {
+    "message": "Advanced"
+  },
+  "screens.StorageMigration.MigrationError.restartApp": {
+    "message": "Restart App"
+  },
+  "screens.StorageMigration.MigrationError.somethingWrong": {
+    "message": "Something Went Wrong"
+  },
+  "screens.StorageMigration.MigrationError.unknownError": {
+    "message": "Unknown error"
+  },
+  "screens.StorageMigration.NotEnoughSpace.dataSafe": {
+    "message": "All data is safe and protected"
+  },
+  "screens.StorageMigration.NotEnoughSpace.freeUpSpace": {
+    "message": "Free up space to continue."
+  },
+  "screens.StorageMigration.NotEnoughSpace.newUpdateAvailable": {
+    "message": "New update available with performance improvements"
+  },
+  "screens.StorageMigration.NotEnoughSpace.openStorageSettings": {
+    "message": "Open Storage Settings"
+  },
+  "screens.StorageMigration.NotEnoughSpace.skipForNow": {
+    "message": "Skip for Now"
+  },
+  "screens.StorageMigration.NotEnoughSpace.spaceRequired": {
+    "message": "~340 MB required to update"
+  },
+  "screens.StorageMigration.NotEnoughSpace.updateCoMapeo": {
+    "message": "Update CoMapeo"
+  },
+  "screens.StorageMigration.UpdateComplete.continue": {
+    "message": "Continue"
+  },
+  "screens.StorageMigration.UpdateComplete.latestVersionReady": {
+    "message": "The latest version of CoMapeo is ready to use"
+  },
+  "screens.StorageMigration.UpdateComplete.updateComplete": {
+    "message": "Update Complete!"
   },
   "screens.Sync.NoWifiDisplay.description": {
     "message": "Check device’s settings and connectivity."

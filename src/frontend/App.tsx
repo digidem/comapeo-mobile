@@ -60,6 +60,11 @@ import {createQADeviceNameStore} from './contexts/QADeviceNameStoreContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {createAppRpc} from './lib/createAppRpc.ts';
+import {
+  consumeSkipMigrationFlag,
+  setSkipMigrationOnNextLaunch,
+} from './lib/skipMigrationFlag.ts';
+import RNRestart from 'react-native-restart';
 import {postHog} from './lib/posthog.ts';
 import {APP_VARIANT} from './lib/appVariant.ts';
 
@@ -199,7 +204,15 @@ persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
 });
 
 // Need to know if metrics are enabled before starting node
-initializeNodejs({metricsIsEnabled, sentryEnvironment, sentryUserId});
+initializeNodejs({
+  metricsIsEnabled,
+  sentryEnvironment,
+  sentryUserId,
+  // True only when the user tapped "Skip for Now" on the low-space migration
+  // screen immediately before the app restarted itself. The flag is one-shot
+  // (cleared on read) so the next full launch offers the migration again.
+  forceSkipMigrate: consumeSkipMigrationFlag(),
+});
 
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(
@@ -266,12 +279,12 @@ const App = () => {
               <ServerLoading
                 serverStateStore={serverStateStore}
                 onSkipMigration={() => {
-                  initializeNodejs({
-                    metricsIsEnabled,
-                    sentryEnvironment,
-                    sentryUserId,
-                    forceSkipMigrate: true,
-                  });
+                  // The Node backend can only be started once per app
+                  // process, so skipping the migration requires a full
+                  // process restart; the one-shot flag makes the fresh
+                  // launch call initializeNodejs with forceSkipMigrate.
+                  setSkipMigrationOnNextLaunch();
+                  RNRestart.restart();
                 }}>
                 <Suspense fallback={<Loading />}>
                   <AppProviders

@@ -88,7 +88,7 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
     for (const fn of onTeardown) await fn();
   });
 
-  const renderHeader = ({
+  const renderHeader = async ({
     isOnline = true,
     activeProjectId = projectId,
   }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
@@ -99,7 +99,7 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
     });
     onTeardown.push(appProviders.teardown);
 
-    const utils = render(
+    const utils = await render(
       <React.Suspense fallback={null}>
         <ActiveProjectProvider activeProjectId={activeProjectId}>
           <NavigationContainer>
@@ -116,7 +116,7 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
     );
 
     const safeUnmount = async () => {
-      utils.unmount();
+      await utils.unmount();
       await new Promise(res => setTimeout(res, 0));
     };
     onTeardown.unshift(safeUnmount);
@@ -126,7 +126,7 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
 
   it('shows badge when isLow is true', async () => {
     mockFreeBytes = 100 * 1024 * 1024;
-    renderHeader();
+    await renderHeader();
 
     await screen.findByTestId('HOME.header-button');
 
@@ -135,7 +135,7 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
 
   it('hides badge when isLow is false', async () => {
     mockFreeBytes = 600 * 1024 * 1024;
-    renderHeader();
+    await renderHeader();
 
     await screen.findByTestId('HOME.header-button');
 

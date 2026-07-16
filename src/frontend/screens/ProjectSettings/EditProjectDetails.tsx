@@ -58,6 +58,7 @@ export const EditProjectDetails: NativeNavigationComponent<
     },
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const selectedColor = watch('color');
 
   useEffect(() => {

@@ -59,7 +59,7 @@ describe('On QA Device require existence of a QA Device name', () => {
     const app = createAppProvidersWrapper({mapeoApi: client});
     onTeardown.push(app.teardown);
 
-    render(
+    await render(
       <React.Suspense fallback={null}>
         <AppNavigator
           permissionAsked={false}
@@ -84,7 +84,7 @@ describe('On QA Device require existence of a QA Device name', () => {
     });
     onTeardown.push(app.teardown);
 
-    render(
+    await render(
       <React.Suspense fallback={null}>
         <AppNavigator
           permissionAsked={false}
@@ -103,7 +103,7 @@ describe('On QA Device require existence of a QA Device name', () => {
     const app = createAppProvidersWrapper({mapeoApi: client});
     onTeardown.push(app.teardown);
 
-    render(
+    await render(
       <React.Suspense fallback={null}>
         <AppNavigator
           permissionAsked={false}

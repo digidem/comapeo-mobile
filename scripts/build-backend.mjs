@@ -102,6 +102,7 @@ const NATIVE_MODULES = [
   {name: 'quickbit-native', usesNapi: true},
   {name: 'simdle-native', usesNapi: true},
   {name: 'sodium-native', usesNapi: true},
+  {name: 'rocksdb-native', usesNapi: true},
 ];
 
 const KEEP_THESE = [

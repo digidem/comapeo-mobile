@@ -56,7 +56,9 @@ export const Migrating = ({
     <SafeAreaView style={styles.container}>
       <View style={styles.alertBanner}>
         <WarningIcon width={26} height={26} />
-        <HeaderText variant="header6">{t(m.doNotClose)}</HeaderText>
+        <HeaderText variant="header6" style={styles.alertText}>
+          {t(m.doNotClose)}
+        </HeaderText>
       </View>
       <View style={styles.content}>
         <IconTitleDescription
@@ -125,6 +127,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 6,
+  },
+  alertText: {
+    flexShrink: 1,
   },
   content: {
     flex: 1,

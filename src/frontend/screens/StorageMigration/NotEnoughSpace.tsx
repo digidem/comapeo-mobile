@@ -94,7 +94,9 @@ export const NotEnoughSpace = ({onSkip}: {onSkip: () => void}) => {
         }>
         <View style={styles.alertBanner}>
           <WarningIcon width={26} height={26} />
-          <HeaderText variant="header6">{t(m.freeUpSpace)}</HeaderText>
+          <HeaderText variant="header6" style={styles.alertText}>
+            {t(m.freeUpSpace)}
+          </HeaderText>
         </View>
         <View style={styles.centerContent}>
           <IconTitleDescription
@@ -145,6 +147,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 6,
+  },
+  alertText: {
+    flexShrink: 1,
   },
   centerContent: {
     flexGrow: 1,

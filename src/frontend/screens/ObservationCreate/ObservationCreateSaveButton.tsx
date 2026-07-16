@@ -1,5 +1,4 @@
 import {useCreateDocument} from '@comapeo/core-react';
-import {Observation} from '@comapeo/schema';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {
   useCreatePhotoAttachment,
@@ -104,10 +103,7 @@ export const ObservationCreateSaveButton = () => {
       projectId,
     });
 
-  const {
-    addNewLocations: addNewTrackLocations,
-    addNewObservation: addNewTrackObservation,
-  } = useTrackActions();
+  const {addNewObservation: addNewTrackObservation} = useTrackActions();
 
   const isLoading =
     photoAttachmentStatus === 'pending' ||
@@ -128,22 +124,6 @@ export const ObservationCreateSaveButton = () => {
     // If that changes, this will naively go back to the map screen.
     navigation.popTo('Home', {
       screen: lastOpenedTab === 'Camera' ? 'Camera' : 'Map',
-    });
-  };
-
-  const addObservationRefToTrack = (observation: Observation) => {
-    if (observation.lat && observation.lon) {
-      addNewTrackLocations([
-        {
-          timestamp: Date.now(),
-          latitude: observation.lat,
-          longitude: observation.lon,
-        },
-      ]);
-    }
-    addNewTrackObservation({
-      docId: observation.docId,
-      versionId: observation.versionId,
     });
   };
 
@@ -215,7 +195,10 @@ export const ObservationCreateSaveButton = () => {
       });
 
       if (isTracking) {
-        addObservationRefToTrack(createdObservation);
+        addNewTrackObservation({
+          docId: createdObservation.docId,
+          versionId: createdObservation.versionId,
+        });
       }
 
       finalizeSave();

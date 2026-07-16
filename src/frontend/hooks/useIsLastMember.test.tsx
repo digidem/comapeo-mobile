@@ -56,7 +56,7 @@ afterEach(() => {
 });
 
 describe('useIsLastMember', () => {
-  test('returns true when device is the only member (coordinator)', () => {
+  test('returns true when device is the only member (coordinator)', async () => {
     const members = [mockMember('device-coordinator', COORDINATOR_ROLE_ID)];
 
     jest.mocked(useManyMembers).mockReturnValue({
@@ -66,7 +66,7 @@ describe('useIsLastMember', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastMember({deviceId: 'device-coordinator'}),
       {
         wrapper,
@@ -76,7 +76,7 @@ describe('useIsLastMember', () => {
     expect(result.current).toBe(true);
   });
 
-  test('returns true when device is the only member (participant)', () => {
+  test('returns true when device is the only member (participant)', async () => {
     const members = [mockMember('device-member', MEMBER_ROLE_ID)];
 
     jest.mocked(useManyMembers).mockReturnValue({
@@ -86,7 +86,7 @@ describe('useIsLastMember', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastMember({deviceId: 'device-member'}),
       {
         wrapper,
@@ -96,7 +96,7 @@ describe('useIsLastMember', () => {
     expect(result.current).toBe(true);
   });
 
-  test('returns false when there are multiple members', () => {
+  test('returns false when there are multiple members', async () => {
     const members = [
       mockMember('device-coordinator', COORDINATOR_ROLE_ID),
       mockMember('device-member', MEMBER_ROLE_ID),
@@ -109,7 +109,7 @@ describe('useIsLastMember', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastMember({deviceId: 'device-coordinator'}),
       {
         wrapper,
@@ -119,7 +119,7 @@ describe('useIsLastMember', () => {
     expect(result.current).toBe(false);
   });
 
-  test('returns false when members array is empty', () => {
+  test('returns false when members array is empty', async () => {
     jest.mocked(useManyMembers).mockReturnValue({
       data: [],
       error: null,
@@ -127,14 +127,17 @@ describe('useIsLastMember', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(() => useIsLastMember({deviceId: 'device-1'}), {
-      wrapper,
-    });
+    const {result} = await renderHook(
+      () => useIsLastMember({deviceId: 'device-1'}),
+      {
+        wrapper,
+      },
+    );
 
     expect(result.current).toBe(false);
   });
 
-  test('returns false when device ID does not match the member', () => {
+  test('returns false when device ID does not match the member', async () => {
     const members = [mockMember('device-1', COORDINATOR_ROLE_ID)];
 
     jest.mocked(useManyMembers).mockReturnValue({
@@ -144,7 +147,7 @@ describe('useIsLastMember', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastMember({deviceId: 'device-random'}),
       {
         wrapper,
@@ -154,7 +157,7 @@ describe('useIsLastMember', () => {
     expect(result.current).toBe(false);
   });
 
-  test('ignores blocked members when counting', () => {
+  test('ignores blocked members when counting', async () => {
     const members = [
       mockMember('device-coordinator', COORDINATOR_ROLE_ID),
       mockMember('device-blocked-1', BLOCKED_ROLE_ID),
@@ -168,7 +171,7 @@ describe('useIsLastMember', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastMember({deviceId: 'device-coordinator'}),
       {
         wrapper,
@@ -178,7 +181,7 @@ describe('useIsLastMember', () => {
     expect(result.current).toBe(true);
   });
 
-  test('ignores left members when counting', () => {
+  test('ignores left members when counting', async () => {
     const members = [
       mockMember('device-member', MEMBER_ROLE_ID),
       mockMember('device-left-1', LEFT_ROLE_ID),
@@ -192,7 +195,7 @@ describe('useIsLastMember', () => {
     });
 
     const wrapper = createWrapper();
-    const {result} = renderHook(
+    const {result} = await renderHook(
       () => useIsLastMember({deviceId: 'device-member'}),
       {
         wrapper,
@@ -202,7 +205,7 @@ describe('useIsLastMember', () => {
     expect(result.current).toBe(true);
   });
 
-  test('counts both coordinators and participants as members', () => {
+  test('counts both coordinators and participants as members', async () => {
     const members = [
       mockMember('device-creator', CREATOR_ROLE_ID),
       mockMember('device-coordinator', COORDINATOR_ROLE_ID),
@@ -217,19 +220,19 @@ describe('useIsLastMember', () => {
 
     const wrapper = createWrapper();
 
-    const {result: result1} = renderHook(
+    const {result: result1} = await renderHook(
       () => useIsLastMember({deviceId: 'device-creator'}),
       {wrapper},
     );
     expect(result1.current).toBe(false);
 
-    const {result: result2} = renderHook(
+    const {result: result2} = await renderHook(
       () => useIsLastMember({deviceId: 'device-coordinator'}),
       {wrapper},
     );
     expect(result2.current).toBe(false);
 
-    const {result: result3} = renderHook(
+    const {result: result3} = await renderHook(
       () => useIsLastMember({deviceId: 'device-member'}),
       {wrapper},
     );

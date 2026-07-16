@@ -21,13 +21,17 @@ Logger.setLogCallback(log => {
 // undefined on iOS (no equivalent connectivity manager), so guard the call.
 setConnected?.(true);
 
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  focusManager,
+} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {
   comapeo as mapeoApi,
   comapeoServicesClient,
 } from '@comapeo/core-react-native';
-import {PermissionsAndroid, Platform} from 'react-native';
+import {PermissionsAndroid, Platform, AppState} from 'react-native';
 import {requestForegroundPermissionsAsync} from 'expo-location';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
@@ -55,6 +59,7 @@ import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
 import {Suspense} from 'react';
 import {Loading} from './sharedComponents/Loading.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
+import {createQADeviceNameStore} from './contexts/QADeviceNameStoreContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {postHog} from './lib/posthog.ts';
@@ -68,8 +73,8 @@ import {APP_VARIANT} from './lib/appVariant.ts';
 // id) migrates later with an updated core-react-native.
 const appMetricsOptIn = APP_VARIANT !== 'production';
 let navigationIntegration:
-  | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
-  | undefined = undefined;
+  ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined =
+  undefined;
 
 initSentry({
   integrations: defaults => {
@@ -141,6 +146,8 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
   persist: true,
 });
 
+const qaDeviceNameStore = createQADeviceNameStore({persist: true});
+
 const savedLocationStore = createSavedLocationStore({persist: true});
 const lowStorageBannerStore = createLowStorageBannerStore();
 const earlyAccessStore = createEarlyAccessStore({persist: true});
@@ -191,6 +198,10 @@ const appUsagePromptStore = createAppUsageStatsStore({
 });
 
 const queryClient = new QueryClient();
+
+AppState.addEventListener('change', status => {
+  focusManager.setFocused(status === 'active');
+});
 
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
@@ -248,7 +259,8 @@ const App = () => {
                     appUsageStatsStore={appUsagePromptStore}
                     lowStorageBannerStore={lowStorageBannerStore}
                     earlyAccessStore={earlyAccessStore}
-                    unitSystemStore={persistedUnitSystemStore}>
+                    unitSystemStore={persistedUnitSystemStore}
+                    qaDeviceNameStore={qaDeviceNameStore}>
                     <AppNavigator
                       permissionAsked={permissionsAsked}
                       navigationIntegration={navigationIntegration}

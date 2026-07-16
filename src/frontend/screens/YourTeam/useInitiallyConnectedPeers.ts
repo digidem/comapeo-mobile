@@ -3,31 +3,22 @@ import {useLocalPeers} from '../../hooks/useLocalPeers';
 
 export function useInitiallyConnectedPeers() {
   const peers = useLocalPeers();
-  const [relevantDeviceIds, setRelevantDeviceIds] = React.useState<
-    Array<string>
-  >(() => {
-    return peers.filter(p => p.status === 'connected').map(p => p.deviceId);
-  });
+  const [relevantDeviceIds, setRelevantDeviceIds] = React.useState<Set<string>>(
+    () =>
+      new Set(peers.filter(p => p.status === 'connected').map(p => p.deviceId)),
+  );
 
-  React.useEffect(() => {
-    setRelevantDeviceIds(prev => {
-      const next = [];
+  const nextSeenConnectedIds = new Set(relevantDeviceIds);
+  let changed = false;
+  for (const p of peers) {
+    if (p.status === 'connected' && !nextSeenConnectedIds.has(p.deviceId)) {
+      nextSeenConnectedIds.add(p.deviceId);
+      changed = true;
+    }
+  }
+  if (changed) {
+    setRelevantDeviceIds(nextSeenConnectedIds);
+  }
 
-      for (const p of peers) {
-        const included = prev.includes(p.deviceId);
-
-        if (included) {
-          next.push(p.deviceId);
-        } else {
-          if (p.status === 'connected') {
-            next.push(p.deviceId);
-          }
-        }
-      }
-
-      return next;
-    });
-  }, [peers, setRelevantDeviceIds]);
-
-  return peers.filter(p => relevantDeviceIds.includes(p.deviceId));
+  return peers.filter(p => relevantDeviceIds.has(p.deviceId));
 }

@@ -12,6 +12,9 @@ import type Sentry from '@sentry/react-native';
 import {PostHogProvider} from 'posthog-react-native';
 import {postHog} from './lib/posthog';
 import {linking} from './lib/deepLinkConfig';
+import {useQADeviceName} from './contexts/QADeviceNameStoreContext';
+import {SetQADeviceNameScreen} from './screens/SetQADeviceName';
+import {isQABuild} from './lib/appVariant';
 
 export const AppNavigator = ({
   permissionAsked,
@@ -19,11 +22,11 @@ export const AppNavigator = ({
 }: {
   permissionAsked: boolean;
   navigationIntegration:
-    | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
-    | undefined;
+    ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined;
 }) => {
   const containerRef =
     React.useRef<NavigationContainerRef<AppStackParamsList>>(null);
+  const qaDeviceName = useQADeviceName();
 
   // Hiding the splash while a system permission dialog is presented leaves the
   // app `inactive`, and on iOS the hide silently no-ops in that state. On a
@@ -50,6 +53,10 @@ export const AppNavigator = ({
     });
     return () => sub.remove();
   }, [permissionAsked]);
+
+  if (isQABuild && !qaDeviceName) {
+    return <SetQADeviceNameScreen />;
+  }
 
   return (
     <NavigationContainer

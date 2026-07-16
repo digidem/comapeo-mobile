@@ -28,6 +28,7 @@ import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowSto
 import {createEarlyAccessStore} from '../../../src/frontend/contexts/EarlyAccessContext';
 import {createAppUsageStatsStore} from '../../../src/frontend/contexts/AppUsageStatsContext';
 import {createUnitSystemStore} from '../../../src/frontend/contexts/UnitSystemStoreContext';
+import {createQADeviceNameStore} from '../../../src/frontend/contexts/QADeviceNameStoreContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
@@ -73,10 +74,12 @@ export function createAppProvidersWrapper({
   mapeoApi,
   isOnline = true,
   activeProjectId,
+  qaDeviceName,
 }: {
   mapeoApi: MapeoClientApi;
   isOnline?: boolean;
   activeProjectId?: string;
+  qaDeviceName?: string;
 }) {
   const queryClient = new QueryClient({
     // Disable garbage collection, so that no "collect garbage" timers are
@@ -171,6 +174,11 @@ export function createAppProvidersWrapper({
 
   const unitSystemStore = createUnitSystemStore({persist: false});
 
+  const qaDeviceNameStore = createQADeviceNameStore({persist: false});
+  if (qaDeviceName) {
+    qaDeviceNameStore.actions.setQADeviceName(qaDeviceName);
+  }
+
   const lowStorageBannerStore = createLowStorageBannerStore();
 
   const appUsagePromptStore = createAppUsageStatsStore({
@@ -213,7 +221,8 @@ export function createAppProvidersWrapper({
           lowStorageBannerStore={lowStorageBannerStore}
           appUsageStatsStore={appUsagePromptStore}
           earlyAccessStore={persistedEarlyAccessStore}
-          unitSystemStore={unitSystemStore}>
+          unitSystemStore={unitSystemStore}
+          qaDeviceNameStore={qaDeviceNameStore}>
           {children}
         </AppProviders>
       </OuterWrapper>

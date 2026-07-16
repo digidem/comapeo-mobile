@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {WHITE} from '../../lib/styles';
 import SuccessIcon from '../../images/Success.svg';
@@ -27,7 +28,7 @@ export const UpdateComplete = ({onContinue}: {onContinue: () => void}) => {
   const {formatMessage: t} = useIntl();
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <ScreenContentWithDock
         contentContainerStyle={styles.contentContainer}
         dockContent={
@@ -44,7 +45,7 @@ export const UpdateComplete = ({onContinue}: {onContinue: () => void}) => {
           description={t(m.latestVersionReady)}
         />
       </ScreenContentWithDock>
-    </View>
+    </SafeAreaView>
   );
 };
 

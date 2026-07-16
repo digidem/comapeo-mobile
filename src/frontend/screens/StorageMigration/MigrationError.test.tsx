@@ -7,8 +7,8 @@ import {MigrationError} from './MigrationError';
 jest.mock('react-native-restart', () => ({restart: jest.fn()}));
 import RNRestart from 'react-native-restart';
 
-function renderScreen(errorMessage?: string) {
-  render(
+async function renderScreen(errorMessage?: string) {
+  await render(
     <IntlProvider locale="en" messages={{}}>
       <MigrationError errorMessage={errorMessage} />
     </IntlProvider>,
@@ -16,8 +16,8 @@ function renderScreen(errorMessage?: string) {
 }
 
 describe('MigrationError', () => {
-  test('renders the generic error UI with details collapsed', () => {
-    renderScreen('ENOSPC: no space left on device');
+  test('renders the generic error UI with details collapsed', async () => {
+    await renderScreen('ENOSPC: no space left on device');
 
     expect(screen.getByText('Something Went Wrong')).toBeOnTheScreen();
     expect(screen.getByText('Advanced')).toBeOnTheScreen();
@@ -26,28 +26,28 @@ describe('MigrationError', () => {
     ).not.toBeOnTheScreen();
   });
 
-  test('expands Advanced to show the backend error message', () => {
-    renderScreen('ENOSPC: no space left on device');
+  test('expands Advanced to show the backend error message', async () => {
+    await renderScreen('ENOSPC: no space left on device');
 
-    fireEvent.press(screen.getByText('Advanced'));
+    await fireEvent.press(screen.getByText('Advanced'));
 
     expect(
       screen.getByText('ENOSPC: no space left on device'),
     ).toBeOnTheScreen();
   });
 
-  test('falls back to "Unknown error" when no message is provided', () => {
-    renderScreen(undefined);
+  test('falls back to "Unknown error" when no message is provided', async () => {
+    await renderScreen(undefined);
 
-    fireEvent.press(screen.getByText('Advanced'));
+    await fireEvent.press(screen.getByText('Advanced'));
 
     expect(screen.getByText('Unknown error')).toBeOnTheScreen();
   });
 
-  test('Restart App restarts the app process', () => {
-    renderScreen('boom');
+  test('Restart App restarts the app process', async () => {
+    await renderScreen('boom');
 
-    fireEvent.press(screen.getByText('Restart App'));
+    await fireEvent.press(screen.getByText('Restart App'));
 
     expect(RNRestart.restart).toHaveBeenCalledTimes(1);
   });

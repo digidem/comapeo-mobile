@@ -2,6 +2,7 @@ import * as React from 'react';
 import {AppState, Linking, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import RNRestart from 'react-native-restart';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {
   BLUE_GREY,
@@ -67,7 +68,7 @@ export const NotEnoughSpace = ({onSkip}: {onSkip: () => void}) => {
   }, []);
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <ScreenContentWithDock
         contentContainerStyle={styles.contentContainer}
         dockContent={
@@ -121,7 +122,7 @@ export const NotEnoughSpace = ({onSkip}: {onSkip: () => void}) => {
           </View>
         </View>
       </ScreenContentWithDock>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -150,7 +151,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 20,
-    paddingHorizontal: 10,
   },
   iconCircle: {
     width: 80,

@@ -3,6 +3,7 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import RNRestart from 'react-native-restart';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {BLUE_GREY, WHITE} from '../../lib/styles';
 import ChevronDown from '../../images/chevrondown.svg';
@@ -37,7 +38,7 @@ export const MigrationError = ({errorMessage}: {errorMessage?: string}) => {
   const [advancedExpanded, setAdvancedExpanded] = React.useState(false);
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <ScreenContentWithDock
         contentContainerStyle={styles.contentContainer}
         dockContent={
@@ -83,7 +84,7 @@ export const MigrationError = ({errorMessage}: {errorMessage?: string}) => {
           )}
         </View>
       </ScreenContentWithDock>
-    </View>
+    </SafeAreaView>
   );
 };
 

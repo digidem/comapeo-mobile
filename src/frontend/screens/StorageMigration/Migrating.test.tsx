@@ -5,8 +5,8 @@ import {IntlProvider} from 'react-intl';
 import {Migrating} from './Migrating';
 import {parseMigrationProgress} from '../../lib/parseMigrationProgress';
 
-function renderScreen(progress: {done: number; total: number} | null) {
-  render(
+async function renderScreen(progress: {done: number; total: number} | null) {
+  await render(
     <IntlProvider locale="en" messages={{}}>
       <Migrating progress={progress} />
     </IntlProvider>,
@@ -14,8 +14,8 @@ function renderScreen(progress: {done: number; total: number} | null) {
 }
 
 describe('Migrating', () => {
-  test('renders the update info and keep-open warning', () => {
-    renderScreen({done: 3, total: 12});
+  test('renders the update info and keep-open warning', async () => {
+    await renderScreen({done: 3, total: 12});
 
     expect(
       screen.getByText('Do not close app while updating!'),
@@ -29,36 +29,36 @@ describe('Migrating', () => {
     ).toBeOnTheScreen();
   });
 
-  test('shows the progress count when progress is known', () => {
-    renderScreen({done: 3, total: 12});
+  test('shows the progress count when progress is known', async () => {
+    await renderScreen({done: 3, total: 12});
 
     expect(screen.getByText('Updating 3 of 12…')).toBeOnTheScreen();
   });
 
-  test('hides the progress count while waiting for the first progress report', () => {
-    renderScreen(null);
+  test('hides the progress count while waiting for the first progress report', async () => {
+    await renderScreen(null);
 
     expect(screen.queryByText(/Updating \d+ of \d+/)).not.toBeOnTheScreen();
   });
 });
 
 describe('parseMigrationProgress', () => {
-  test('parses a done/total context string', () => {
+  test('parses a done/total context string', async () => {
     expect(parseMigrationProgress('3/12')).toEqual({done: 3, total: 12});
   });
 
-  test('returns null for the initial empty context', () => {
+  test('returns null for the initial empty context', async () => {
     expect(parseMigrationProgress('')).toBeNull();
     expect(parseMigrationProgress(undefined)).toBeNull();
   });
 
-  test('returns null for malformed or zero-total contexts', () => {
+  test('returns null for malformed or zero-total contexts', async () => {
     expect(parseMigrationProgress('3 of 12')).toBeNull();
     expect(parseMigrationProgress('3/')).toBeNull();
     expect(parseMigrationProgress('0/0')).toBeNull();
   });
 
-  test('forces done to total (backend counts can disagree)', () => {
+  test('forces done to total (backend counts can disagree)', async () => {
     expect(parseMigrationProgress('15/12')).toEqual({done: 12, total: 12});
   });
 });

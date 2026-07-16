@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {Bar as ProgressBar} from 'react-native-progress';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {
   BLUE_GREY,
@@ -52,7 +53,7 @@ export const Migrating = ({
   const {formatMessage: t} = useIntl();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.alertBanner}>
         <WarningIcon width={26} height={26} />
         <HeaderText variant="header6">{t(m.doNotClose)}</HeaderText>
@@ -101,7 +102,7 @@ export const Migrating = ({
           </BodyText>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

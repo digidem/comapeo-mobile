@@ -5,8 +5,8 @@ import {IntlProvider} from 'react-intl';
 
 import {NotEnoughSpace} from './NotEnoughSpace';
 
-function renderScreen(onSkip = jest.fn()) {
-  render(
+async function renderScreen(onSkip = jest.fn()) {
+  await render(
     <IntlProvider locale="en" messages={{}}>
       <NotEnoughSpace onSkip={onSkip} />
     </IntlProvider>,
@@ -15,8 +15,8 @@ function renderScreen(onSkip = jest.fn()) {
 }
 
 describe('NotEnoughSpace', () => {
-  test('renders the update info and low-space warning', () => {
-    renderScreen();
+  test('renders the update info and low-space warning', async () => {
+    await renderScreen();
 
     expect(screen.getByText('Free up space to continue.')).toBeOnTheScreen();
     expect(screen.getByText('Update CoMapeo')).toBeOnTheScreen();
@@ -28,19 +28,19 @@ describe('NotEnoughSpace', () => {
     ).toBeOnTheScreen();
   });
 
-  test('tapping "Skip for Now" calls onSkip', () => {
-    const {onSkip} = renderScreen();
+  test('tapping "Skip for Now" calls onSkip', async () => {
+    const {onSkip} = await renderScreen();
 
-    fireEvent.press(screen.getByText('Skip for Now'));
+    await fireEvent.press(screen.getByText('Skip for Now'));
 
     expect(onSkip).toHaveBeenCalledTimes(1);
   });
 
-  test('tapping "Open Storage Settings" opens the Android storage settings', () => {
+  test('tapping "Open Storage Settings" opens the Android storage settings', async () => {
     const sendIntentSpy = jest.spyOn(Linking, 'sendIntent').mockResolvedValue();
-    renderScreen();
+    await renderScreen();
 
-    fireEvent.press(screen.getByText('Open Storage Settings'));
+    await fireEvent.press(screen.getByText('Open Storage Settings'));
 
     expect(sendIntentSpy).toHaveBeenCalledWith(
       'android.settings.INTERNAL_STORAGE_SETTINGS',

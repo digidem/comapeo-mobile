@@ -10,6 +10,7 @@ import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
 import {WHITE} from '../../../lib/styles';
 import {useFocusEffect} from '@react-navigation/native';
 import {useLocationPermissionModalMutation} from '../../../hooks/useLocationPermissionTracker';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 const handleOpenSettings = () => {
   Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
@@ -20,6 +21,7 @@ export const TrackBottomSheet = React.memo(() => {
   // bottom inset its content sits flush against the tab bar and the action
   // button reads as tucked under it on devices with a home indicator.
   const insets = useSafeAreaInsets();
+  const bottomBarHeight = useBottomTabBarHeight();
   const [foregroundPermission, setForegroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
   const [backgroundPermission, setBackgroundPermission] =
@@ -112,7 +114,7 @@ export const TrackBottomSheet = React.memo(() => {
 
   const sheetStyle = [
     styles.animatedBackground,
-    {paddingBottom: 30 + insets.bottom},
+    {paddingBottom: insets.bottom + bottomBarHeight},
   ];
 
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';

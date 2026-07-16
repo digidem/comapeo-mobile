@@ -85,7 +85,7 @@ export const ButtonFields = ({
   const {observation, preset} = useObservationWithPreset(observationId);
   const coordinateFormat = useCoordinateFormat();
   const unitSystem = useUnitSystem();
-  const [isShareButtonLoading, setShareButtonLoading] = useState(false);
+  const [isShareButtonLoading, setIsShareButtonLoading] = useState(false);
   const {projectApi, projectId} = useActiveProject();
   const {
     data: {name},
@@ -121,7 +121,7 @@ export const ButtonFields = ({
   }
 
   async function handlePressShare() {
-    setShareButtonLoading(true);
+    setIsShareButtonLoading(true);
 
     try {
       const urls = await fetchFreshUrls();
@@ -200,7 +200,7 @@ export const ButtonFields = ({
     } catch (err) {
       Sentry.captureException(err);
     } finally {
-      setShareButtonLoading(false);
+      setIsShareButtonLoading(false);
     }
   }
 

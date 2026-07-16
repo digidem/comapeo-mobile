@@ -53,7 +53,7 @@ describe('Exchange screen', () => {
 
   const Stack = createNativeStackNavigator<Pick<AppStackParamsList, 'Sync'>>();
 
-  const renderSyncScreen = ({
+  const renderSyncScreen = async ({
     isOnline = true,
     activeProjectId = projectId,
   }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
@@ -64,7 +64,7 @@ describe('Exchange screen', () => {
     });
     onTeardown.push(appProviders.teardown);
 
-    const {unmount} = render(
+    const {unmount} = await render(
       <React.Suspense fallback={null}>
         <ActiveProjectProvider activeProjectId={activeProjectId}>
           <NavigationContainer>
@@ -91,7 +91,7 @@ describe('Exchange screen', () => {
     // But it's the only solution that worked for me, without adding test-only
     // code to the component.
     const actualTeardown = async () => {
-      unmount();
+      await unmount();
       await sleep(0);
     };
 
@@ -105,7 +105,7 @@ describe('Exchange screen', () => {
   };
 
   test('when project is in "solo mode", renders a screen with info', async () => {
-    renderSyncScreen({activeProjectId: projectId});
+    await renderSyncScreen({activeProjectId: projectId});
 
     await expect(screen.findByText('Exchange')).resolves.toBeVisible();
     await expect(
@@ -137,7 +137,7 @@ describe('Exchange screen', () => {
 
     // Render the sync screen
 
-    renderSyncScreen({isOnline: false, activeProjectId: projectId});
+    await renderSyncScreen({isOnline: false, activeProjectId: projectId});
 
     await expect(screen.findByText('No Wi-Fi.')).resolves.toBeVisible();
   });
@@ -153,7 +153,7 @@ describe('Exchange screen', () => {
       dangerouslyAllowInsecureConnections: true,
     });
 
-    renderSyncScreen({isOnline: false, activeProjectId: projectId});
+    await renderSyncScreen({isOnline: false, activeProjectId: projectId});
 
     await expect(
       screen.findByText('Remote Archive connected'),
@@ -228,7 +228,7 @@ describe('Exchange screen', () => {
 
     // Render the sync screen, which should show no connection
 
-    renderSyncScreen({activeProjectId: projectId});
+    await renderSyncScreen({activeProjectId: projectId});
 
     expect(await screen.findByText('CoMapeo Test Wi-Fi')).toBeVisible();
     expect(await screen.findByText('No devices found.')).toBeVisible();
@@ -319,7 +319,7 @@ describe('Exchange screen', () => {
 
     // Sync with the remote archive (but not the other manager)
 
-    const unmount = renderSyncScreen({activeProjectId: projectId});
+    const unmount = await renderSyncScreen({activeProjectId: projectId});
 
     await user.press(await screen.findByText('Start'));
 

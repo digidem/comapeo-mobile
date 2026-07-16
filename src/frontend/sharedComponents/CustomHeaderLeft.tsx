@@ -37,6 +37,5 @@ export const CustomHeaderLeft = ({
 };
 
 export const CustomHeaderLeftStyles = StyleSheet.create({
-  // eslint-disable-next-line react-native/no-unused-styles
   headerStyles: {marginLeft: 0, marginRight: 15},
 }).headerStyles;

@@ -61,14 +61,16 @@ export const InputPasscode = ({
   React.useEffect(() => {
     if (error) {
       inputRef.current?.focus();
-      if (inputValue.length === 5) setInputValue('');
     }
-  }, [error, inputValue.length, inputRef]);
+  }, [error, inputRef]);
 
   function updateInput(newVal: string) {
     if (error) hideError();
     setInputValue(newVal);
-    if (!showNext && newVal.length === 5) validate(newVal);
+    if (!showNext && newVal.length === 5) {
+      validate(newVal);
+      setInputValue('');
+    }
   }
 
   const {popTo, navigate} = useNavigationFromRoot();

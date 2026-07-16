@@ -129,11 +129,11 @@ describe('convertPosition()', () => {
 });
 
 describe('useDraftObservationState()', () => {
-  test('initial state is empty', () => {
+  test('initial state is empty', async () => {
     const store = createDraftObservationStore({persist: false});
     const wrapper = createWrapper(store);
 
-    const stateHook = renderHook(() => useDraftObservationState(), {
+    const stateHook = await renderHook(() => useDraftObservationState(), {
       wrapper,
     });
 
@@ -145,11 +145,11 @@ describe('useDraftObservationState()', () => {
     });
   });
 
-  test('selector returns specific state slice', () => {
+  test('selector returns specific state slice', async () => {
     const store = createDraftObservationStore({persist: false});
     const wrapper = createWrapper(store);
 
-    const stateHook = renderHook(
+    const stateHook = await renderHook(
       () => useDraftObservationState(state => state.value),
       {wrapper},
     );
@@ -160,18 +160,18 @@ describe('useDraftObservationState()', () => {
 
 describe('useDraftObservationActions()', () => {
   describe('createDraft()', () => {
-    test('creates empty draft without arguments', () => {
+    test('creates empty draft without arguments', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
@@ -187,14 +187,14 @@ describe('useDraftObservationActions()', () => {
       });
     });
 
-    test('creates draft from existing observation', () => {
+    test('creates draft from existing observation', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
@@ -215,7 +215,7 @@ describe('useDraftObservationActions()', () => {
         createdBy: 'test-device',
       };
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft(existingObservation);
       });
 
@@ -233,26 +233,26 @@ describe('useDraftObservationActions()', () => {
   });
 
   describe('clearDraft()', () => {
-    test('clears draft and resets to empty state', () => {
+    test('clears draft and resets to empty state', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
       // First create a draft
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
       expect(stateHook.result.current.value).not.toBeNull();
 
       // Then clear it
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.clearDraft();
       });
 
@@ -266,25 +266,25 @@ describe('useDraftObservationActions()', () => {
   });
 
   describe('addAudio()', () => {
-    test('adds audio attachment to draft', () => {
+    test('adds audio attachment to draft', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
       const timestamp = Date.now();
       let audioId: number | undefined;
 
-      act(() => {
+      await act(async () => {
         audioId = actionsHook.result.current.addAudio({
           uri: 'file://audio.m4a',
           duration: 5000,
@@ -303,25 +303,25 @@ describe('useDraftObservationActions()', () => {
       });
     });
 
-    test('increments attachment id for multiple audio attachments', () => {
+    test('increments attachment id for multiple audio attachments', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
       let audioId1: number | undefined;
       let audioId2: number | undefined;
 
-      act(() => {
+      await act(async () => {
         audioId1 = actionsHook.result.current.addAudio({
           uri: 'file://audio1.m4a',
           duration: 5000,
@@ -339,11 +339,11 @@ describe('useDraftObservationActions()', () => {
       expect(stateHook.result.current.unsavedAttachments).toHaveLength(2);
     });
 
-    test('throws when adding audio without draft', () => {
+    test('throws when adding audio without draft', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
 
@@ -358,18 +358,18 @@ describe('useDraftObservationActions()', () => {
   });
 
   describe('deleteUnsavedAttachment()', () => {
-    test('removes attachment by id', () => {
+    test('removes attachment by id', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
         actionsHook.result.current.addAudio({
           uri: 'file://audio1.m4a',
@@ -385,7 +385,7 @@ describe('useDraftObservationActions()', () => {
 
       expect(stateHook.result.current.unsavedAttachments).toHaveLength(2);
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.deleteUnsavedAttachment(0);
       });
 
@@ -398,22 +398,22 @@ describe('useDraftObservationActions()', () => {
   });
 
   describe('updatePosition()', () => {
-    test('updates position with device location', () => {
+    test('updates position with device location', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updatePosition({
           manualLocation: false,
           position: mockLocationObject,
@@ -430,18 +430,18 @@ describe('useDraftObservationActions()', () => {
       ).toBe(37.7749);
     });
 
-    test('updates position with manual coordinates', () => {
+    test('updates position with manual coordinates', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
@@ -452,7 +452,7 @@ describe('useDraftObservationActions()', () => {
         },
       };
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updatePosition({
           manualLocation: true,
           position: manualPosition,
@@ -466,11 +466,11 @@ describe('useDraftObservationActions()', () => {
       );
     });
 
-    test('throws when updating position without draft', () => {
+    test('throws when updating position without draft', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
 
@@ -484,22 +484,22 @@ describe('useDraftObservationActions()', () => {
   });
 
   describe('updateTag()', () => {
-    test('updates a tag value', () => {
+    test('updates a tag value', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updateTag('notes', 'My observation notes');
       });
 
@@ -508,22 +508,22 @@ describe('useDraftObservationActions()', () => {
       );
     });
 
-    test('adds new tag', () => {
+    test('adds new tag', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updateTag('customTag', 'custom value');
       });
 
@@ -534,11 +534,11 @@ describe('useDraftObservationActions()', () => {
       expect(stateHook.result.current.value?.tags.notes).toBe('');
     });
 
-    test('throws when updating tag without draft', () => {
+    test('throws when updating tag without draft', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
 
@@ -549,22 +549,22 @@ describe('useDraftObservationActions()', () => {
   });
 
   describe('updatePreset()', () => {
-    test('sets preset on draft without previous preset', () => {
+    test('sets preset on draft without previous preset', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updatePreset(mockPreset);
       });
 
@@ -575,28 +575,28 @@ describe('useDraftObservationActions()', () => {
       expect(stateHook.result.current.value?.tags.addedTag).toBe('added');
     });
 
-    test('replaces preset and updates tags correctly', () => {
+    test('replaces preset and updates tags correctly', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
       // Set first preset
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updatePreset(mockPreset);
       });
 
       // Add a custom tag
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updateTag('myCustomTag', 'should persist');
       });
 
@@ -610,7 +610,7 @@ describe('useDraftObservationActions()', () => {
       };
 
       // Set new preset
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updatePreset(newPreset);
       });
 
@@ -629,28 +629,28 @@ describe('useDraftObservationActions()', () => {
       );
     });
 
-    test('removeTags removes specified tags when switching presets', () => {
+    test('removeTags removes specified tags when switching presets', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
       });
 
       // First set a preset
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updatePreset(mockPreset);
       });
 
       // Add a custom tag (not from preset)
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updateTag('toRemove', 'removeMe');
       });
 
@@ -663,7 +663,7 @@ describe('useDraftObservationActions()', () => {
         removeTags: {toRemove: 'removeMe'},
       };
 
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.updatePreset(presetWithRemoveTags);
       });
 
@@ -671,11 +671,11 @@ describe('useDraftObservationActions()', () => {
       expect(stateHook.result.current.value?.tags.toRemove).toBeUndefined();
     });
 
-    test('throws when updating preset without draft', () => {
+    test('throws when updating preset without draft', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
 
@@ -686,19 +686,19 @@ describe('useDraftObservationActions()', () => {
   });
 
   describe('clearDraft() after modifications', () => {
-    test('clears all state including attachments', () => {
+    test('clears all state including attachments', async () => {
       const store = createDraftObservationStore({persist: false});
       const wrapper = createWrapper(store);
 
-      const actionsHook = renderHook(() => useDraftObservationActions(), {
+      const actionsHook = await renderHook(() => useDraftObservationActions(), {
         wrapper,
       });
-      const stateHook = renderHook(() => useDraftObservationState(), {
+      const stateHook = await renderHook(() => useDraftObservationState(), {
         wrapper,
       });
 
       // Create draft with modifications
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.createDraft();
         actionsHook.result.current.updateTag('notes', 'Some notes');
         actionsHook.result.current.updatePreset(mockPreset);
@@ -717,7 +717,7 @@ describe('useDraftObservationActions()', () => {
       expect(stateHook.result.current.unsavedAttachments).toHaveLength(1);
 
       // Clear everything
-      act(() => {
+      await act(async () => {
         actionsHook.result.current.clearDraft();
       });
 

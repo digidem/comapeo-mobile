@@ -93,6 +93,7 @@ export function AudioRecording({
 
   React.useEffect(() => {
     if (timeElapsed >= MAX_RECORDING_DURATION_MS && !isLoading) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       finishRecording();
     }
   }, [timeElapsed, isLoading, finishRecording]);

@@ -30,7 +30,7 @@ const plugins = [
       },
     ],
   }),
-  nativePaths(),
+  nativePaths({ preserveNestingFor: ['sodium-native'] }),
   importHook(),
   commonjs({
     ignoreDynamicRequires: true,

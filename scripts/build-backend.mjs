@@ -101,9 +101,88 @@ const NATIVE_MODULES = [
   {name: 'fs-native-extensions', usesNapi: true},
   {name: 'quickbit-native', usesNapi: true},
   {name: 'simdle-native', usesNapi: true},
-  {name: 'sodium-native', usesNapi: true},
+  // The tree contains sodium-native at two incompatible versions (4.x hoisted
+  // for the fallback old core, 5.x nested under the hypercore 11 packages);
+  // every copy needs its own matching prebuild at its own path. Must stay in
+  // sync with `preserveNestingFor` in src/backend/rollup.config.js.
+  {name: 'sodium-native', usesNapi: true, allCopies: true},
   {name: 'rocksdb-native', usesNapi: true},
 ];
+
+/**
+ * Find every installed copy of a package in the staging tree (hoisted and
+ * nested). The dependency tree can contain the same native module at multiple
+ * versions — e.g. sodium-native 4.x hoisted for the fallback old core and
+ * 5.x copies nested under the hypercore 11 packages — and each copy must
+ * ship its own matching prebuild at its own path.
+ * @param {string} name
+ * @returns {string[]} absolute paths to each copy's package.json
+ */
+function findPackageJsons(name) {
+  /** @type {string[]} */
+  const found = [];
+  walk(path.join(nodejsAssetsBackendDirectory, 'node_modules'));
+  if (found.length === 0) {
+    throw new Error(`No installed copies of ${name} found`);
+  }
+  return found;
+
+  /** @param {string} nodeModulesDir */
+  function walk(nodeModulesDir) {
+    const pkgJsonPath = path.join(
+      nodeModulesDir,
+      ...name.split('/'),
+      'package.json',
+    );
+    if (fs.existsSync(pkgJsonPath)) {
+      found.push(pkgJsonPath);
+    }
+    for (const packageDir of listPackageDirs(nodeModulesDir)) {
+      const nested = path.join(packageDir, 'node_modules');
+      if (fs.existsSync(nested)) {
+        walk(nested);
+      }
+    }
+  }
+}
+
+/**
+ * @param {string} nodeModulesDir
+ * @returns {string[]} absolute paths of the package directories inside
+ */
+function listPackageDirs(nodeModulesDir) {
+  /** @type {string[]} */
+  const dirs = [];
+  /** @type {import('node:fs').Dirent[]} */
+  let entries;
+  try {
+    entries = fs.readdirSync(nodeModulesDir, {withFileTypes: true});
+  } catch {
+    return dirs;
+  }
+  for (const entry of entries) {
+    if (!entry.isDirectory() || entry.name.startsWith('.')) continue;
+    const entryPath = path.join(nodeModulesDir, entry.name);
+    if (entry.name.startsWith('@')) {
+      for (const scoped of fs.readdirSync(entryPath, {withFileTypes: true})) {
+        if (scoped.isDirectory()) {
+          dirs.push(path.join(entryPath, scoped.name));
+        }
+      }
+    } else {
+      dirs.push(entryPath);
+    }
+  }
+  return dirs;
+}
+
+const NATIVE_MODULE_COPIES = NATIVE_MODULES.flatMap(m => {
+  const copies = findPackageJsons(m.name);
+  // Without `allCopies`, only the hoisted copy ships prebuilds (nested copies
+  // are pointed at the hoisted path by rollup-plugin-native-paths).
+  const selected = m.allCopies ? copies : copies.slice(0, 1);
+  return selected.map(pkgJsonPath => ({...m, pkgJsonPath}));
+});
 
 const KEEP_THESE = [
   'package.json',
@@ -118,10 +197,8 @@ const KEEP_THESE = [
   // Bare's require.addon() needs the package.json present for native modules
   // At build time we use the presence of binding.gyp to determine whether
   // native addons use node-gyp-build for addon resolution
-  ...NATIVE_MODULES.flatMap(m => {
-    const pkgPathAbs = require.resolve(`${m.name}/package.json`, {
-      paths: [nodejsAssetsBackendDirectory],
-    });
+  ...NATIVE_MODULE_COPIES.flatMap(m => {
+    const pkgPathAbs = m.pkgJsonPath;
     const pkgPathRel = path.relative(nodejsAssetsBackendDirectory, pkgPathAbs);
     const bindingGypPath = path.join(path.dirname(pkgPathRel), 'binding.gyp');
     if (
@@ -146,14 +223,15 @@ for (const name of KEEP_THESE) {
 console.log('Downloading native prebuilds...');
 
 await downloadPrebuilds(
-  NATIVE_MODULES.map(m => {
-    const pkgJsonPath = require.resolve(`${m.name}/package.json`, {
-      paths: [nodejsAssetsBackendDirectory],
-    });
+  NATIVE_MODULE_COPIES.map(m => {
+    const {version} = JSON.parse(fs.readFileSync(m.pkgJsonPath, 'utf-8'));
 
-    const {version} = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
+    const packageDir = path.relative(
+      nodejsAssetsBackendDirectory,
+      path.dirname(m.pkgJsonPath),
+    );
 
-    return {...m, version};
+    return {name: m.name, usesNapi: m.usesNapi, version, packageDir};
   }),
 );
 

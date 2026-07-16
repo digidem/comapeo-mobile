@@ -95,36 +95,42 @@ export async function init({
   mkdirSync(indexDir, { recursive: true })
   mkdirSync(customMapsDir, { recursive: true })
 
-  const { shouldUpgrade, useFallback, reason } = await checkShouldMigrate(
-    indexDir,
-    availableDiskSpace,
-  )
+  let useFallback = false
 
-  if (shouldUpgrade) {
-    serverStatus.setState('MIGRATING', { context: '' })
-    try {
-      await migrateStorage(indexDir, (doneSoFar, totalCores) => {
-        serverStatus.setState('MIGRATING', {
-          context: `${doneSoFar}/${totalCores}`,
+  if (!forceSkipMigrate) {
+    const {
+      shouldUpgrade,
+      useFallback: useFallbackResult,
+      reason,
+    } = await checkShouldMigrate(indexDir, availableDiskSpace)
+    useFallback = useFallbackResult
+
+    if (shouldUpgrade) {
+      serverStatus.setState('MIGRATING', { context: '' })
+      try {
+        await migrateStorage(indexDir, (doneSoFar, totalCores) => {
+          serverStatus.setState('MIGRATING', {
+            context: `${doneSoFar}/${totalCores}`,
+          })
         })
-      })
-      serverStatus.setState('STARTING')
-    } catch (reason) {
-      let error
-      if (reason instanceof Error) {
-        error = reason
-      } else {
-        error = new Error(
-          typeof reason === 'string' ? reason : 'unknown rejection',
-        )
+        serverStatus.setState('STARTING')
+      } catch (reason) {
+        let error
+        if (reason instanceof Error) {
+          error = reason
+        } else {
+          error = new Error(
+            typeof reason === 'string' ? reason : 'unknown rejection',
+          )
+        }
+        serverStatus.setState('MIGRATION_ERROR', { error })
+        return
       }
-      serverStatus.setState('MIGRATION_ERROR', { error })
-      return
-    }
-  } else {
-    if (reason === MIGRATION_REASON_NO_SPACE) {
-      serverStatus.setState('LOW_SPACE')
-      return
+    } else {
+      if (reason === MIGRATION_REASON_NO_SPACE) {
+        serverStatus.setState('LOW_SPACE')
+        return
+      }
     }
   }
 

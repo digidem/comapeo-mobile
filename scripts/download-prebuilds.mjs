@@ -8,7 +8,10 @@ import {$} from 'execa';
 const TARGETS = ['android-arm', 'android-arm64', 'android-x64'];
 
 /**
- * @param {Array<{ name: string, usesNapi: boolean, version: string }>} modules
+ * `packageDir` is the package's path relative to the nodejs-project root
+ * (defaults to `node_modules/<name>`) — nested copies of a module (e.g.
+ * @comapeo/core's own sodium-native) need their prebuilds at their own path.
+ * @param {Array<{ name: string, usesNapi: boolean, version: string, packageDir?: string }>} modules
  * @param {{verbose?: boolean}} opts
  */
 export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
@@ -20,12 +23,12 @@ export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
   const {abi: NODE_ABI} = getNodeJsMobileNodeVersions();
 
   return Promise.all(
-    modules.map(async ({name, usesNapi, version}) => {
+    modules.map(async ({name, usesNapi, version, packageDir}) => {
       if (verbose) {
         console.log(`${name}: prebuilds start (${version})`);
       }
       const prebuildsDir = fileURLToPath(
-        new URL(`node_modules/${name}/prebuilds/`, nodejsProjectUrl),
+        new URL(`${packageDir ?? `node_modules/${name}`}/prebuilds/`, nodejsProjectUrl),
       );
       fs.rmSync(prebuildsDir, {recursive: true, force: true});
 

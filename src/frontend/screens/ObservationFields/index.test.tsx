@@ -32,8 +32,7 @@ describe('Observation Fields', () => {
       const user = userEvent.setup();
       await navigateToTextField(user);
       const textInput = await screen.findByTestId('OBS.text-inp');
-
-      fireEvent.changeText(textInput, 'hello');
+      await fireEvent.changeText(textInput, 'hello');
       expect(textInput).toHaveDisplayValue('hello');
 
       await user.press(await screen.findByTestId('MAIN.header-back-btn'));
@@ -48,8 +47,8 @@ describe('Observation Fields', () => {
       const user = userEvent.setup();
       await navigateToTextField(user);
       const textInput = await screen.findByTestId('OBS.text-inp');
-
-      fireEvent.changeText(textInput, null);
+      // Deliberately passing a non-string to test how the field handles bad input.
+      await fireEvent.changeText(textInput, null as unknown as string);
 
       expect(textInput).toHaveDisplayValue('');
     });
@@ -58,8 +57,8 @@ describe('Observation Fields', () => {
       const user = userEvent.setup();
       await navigateToTextField(user);
       const textInput = await screen.findByTestId('OBS.text-inp');
-
-      fireEvent.changeText(textInput, {foo: 'bar'});
+      // Deliberately passing a non-string to test how the field handles bad input.
+      await fireEvent.changeText(textInput, {foo: 'bar'} as unknown as string);
 
       expect(textInput).toHaveDisplayValue('');
     });
@@ -68,10 +67,9 @@ describe('Observation Fields', () => {
       const user = userEvent.setup();
       await navigateToTextField(user);
       const textInput = await screen.findByTestId('OBS.text-inp');
-
-      fireEvent.changeText(textInput, 'some text');
+      await fireEvent.changeText(textInput, 'some text');
       expect(textInput).toHaveDisplayValue('some text');
-      fireEvent.changeText(textInput, '');
+      await fireEvent.changeText(textInput, '');
 
       expect(textInput).toHaveDisplayValue('');
     });
@@ -103,8 +101,7 @@ describe('Observation Fields', () => {
       const user = userEvent.setup();
       await navigateToTextField(user);
       const numberInput = await screen.findByTestId('OBS.number-inp');
-
-      fireEvent.changeText(numberInput, '1.23');
+      await fireEvent.changeText(numberInput, '1.23');
       expect(numberInput).toHaveDisplayValue('1.23');
 
       await user.press(await screen.findByTestId('MAIN.header-back-btn'));
@@ -121,17 +118,13 @@ describe('Observation Fields', () => {
       const user = userEvent.setup();
       await navigateToTextField(user);
       const numberInput = await screen.findByTestId('OBS.number-inp');
-
-      fireEvent.changeText(numberInput, '-');
+      await fireEvent.changeText(numberInput, '-');
       expect(numberInput).toHaveDisplayValue('-');
-
-      fireEvent.changeText(numberInput, '-08');
+      await fireEvent.changeText(numberInput, '-08');
       expect(numberInput).toHaveDisplayValue('-8');
-
-      fireEvent.changeText(numberInput, '1.2.34');
+      await fireEvent.changeText(numberInput, '1.2.34');
       expect(numberInput).toHaveDisplayValue('1.234');
-
-      fireEvent.changeText(numberInput, '-0');
+      await fireEvent.changeText(numberInput, '-0');
       expect(numberInput).toHaveDisplayValue('-0');
 
       //should save -0 as 0

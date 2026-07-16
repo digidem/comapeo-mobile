@@ -34,15 +34,15 @@ const mockLocationObject: LocationObject = {
   mocked: false,
 };
 
-test('state hook is non reactive', () => {
+test('state hook is non reactive', async () => {
   const store = createSavedLocationStore();
   const wrapper = createWrapper(store);
 
-  const actionsHook = renderHook(() => useSavedLocationActions(), {
+  const actionsHook = await renderHook(() => useSavedLocationActions(), {
     wrapper,
   });
 
-  const stateHook = renderHook(() => useNonReactiveSavedLocation(), {
+  const stateHook = await renderHook(() => useNonReactiveSavedLocation(), {
     wrapper,
   });
 
@@ -51,7 +51,7 @@ test('state hook is non reactive', () => {
     savedLocation: null,
   });
 
-  act(() => {
+  await act(async () => {
     actionsHook.result.current.setSavedLocation(mockLocationObject);
   });
 
@@ -61,19 +61,19 @@ test('state hook is non reactive', () => {
   });
 });
 
-test('action updates state', () => {
+test('action updates state', async () => {
   const store = createSavedLocationStore();
   const wrapper = createWrapper(store);
 
-  const actionsHook = renderHook(() => useSavedLocationActions(), {
+  const actionsHook = await renderHook(() => useSavedLocationActions(), {
     wrapper,
   });
 
-  act(() => {
+  await act(async () => {
     actionsHook.result.current.setSavedLocation(mockLocationObject);
   });
 
-  const stateHook = renderHook(() => useNonReactiveSavedLocation(), {
+  const stateHook = await renderHook(() => useNonReactiveSavedLocation(), {
     wrapper,
   });
 

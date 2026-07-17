@@ -28,7 +28,10 @@ export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
         console.log(`${name}: prebuilds start (${version})`);
       }
       const prebuildsDir = fileURLToPath(
-        new URL(`${packageDir ?? `node_modules/${name}`}/prebuilds/`, nodejsProjectUrl),
+        new URL(
+          `${packageDir ?? `node_modules/${name}`}/prebuilds/`,
+          nodejsProjectUrl,
+        ),
       );
       fs.rmSync(prebuildsDir, {recursive: true, force: true});
 

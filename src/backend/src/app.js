@@ -152,11 +152,20 @@ export async function init(options) {
     if (shouldUpgrade) {
       serverStatus.setState('MIGRATING', { context: '' })
       try {
-        await migrateStorage(indexDir, (doneSoFar, totalCores) => {
-          serverStatus.setState('MIGRATING', {
-            context: `${doneSoFar}/${totalCores}`,
-          })
-        })
+        const migrationResults = await migrateStorage(
+          indexDir,
+          (doneSoFar, totalCores) => {
+            serverStatus.setState('MIGRATING', {
+              context: `${doneSoFar}/${totalCores}`,
+            })
+          },
+        )
+        const failedMigration = Object.values(migrationResults).find(
+          ({ migrated }) => !migrated,
+        )
+        if (failedMigration) {
+          throw failedMigration.error || new Error('Storage migration failed')
+        }
         serverStatus.setState('STARTING')
       } catch (reason) {
         serverStatus.setState('MIGRATION_ERROR', { error: asError(reason) })
@@ -173,11 +182,12 @@ export async function init(options) {
 
   const fastify = Fastify()
 
-  const storageIsOldFormat = useFallback || forceSkipMigrate
-  const ManagerClass = storageIsOldFormat ? FallbackMapeoManager : MapeoManager
-  const migrationPath = storageIsOldFormat
-    ? oldMigrationsFolderPath
-    : migrationsFolderPath
+  const ManagerClass =
+    useFallback || forceSkipMigrate ? FallbackMapeoManager : MapeoManager
+  const migrationPath =
+    useFallback || forceSkipMigrate
+      ? oldMigrationsFolderPath
+      : migrationsFolderPath
 
   const manager = new ManagerClass({
     rootKey,

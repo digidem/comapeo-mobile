@@ -187,6 +187,8 @@ const KEEP_THESE = [
   'dist',
   // Static folders referenced by @comapeo/core code
   'node_modules/@comapeo/core/drizzle',
+  // Static migrations used by the fallback core when migration is skipped
+  'node_modules/comapeo-core-old/drizzle',
   // zip file that is the default config
   'node_modules/@comapeo/default-categories/dist/comapeo-default-categories.comapeocat',
   // Offline fallback map

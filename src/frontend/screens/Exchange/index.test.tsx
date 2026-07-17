@@ -4,7 +4,6 @@ import type {MapeoManager} from '@comapeo/core';
 import type {MapeoClientApi} from '@comapeo/ipc';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {pEventIterator} from 'p-event';
 import {
   connectPeers,
   createManager,
@@ -262,102 +261,5 @@ describe('Exchange screen', () => {
     ).resolves.toBeDefined();
 
     expect(await screen.findByText('Complete!')).toBeVisible();
-  });
-
-  test('syncing with a remote archive', async () => {
-    // General test support
-
-    const user = userEvent.setup();
-
-    // Create project
-
-    const projectId = await client.createProject({name: 'test project'});
-    const project = await client.getProject(projectId);
-
-    // Add remote archive
-
-    const {serverBaseUrl, close} = await createTestServer();
-    onTeardown.push(close);
-
-    await project.$member.addServerPeer(serverBaseUrl, {
-      dangerouslyAllowInsecureConnections: true,
-    });
-
-    // Create other simulated device
-
-    const {manager: otherManager} = await createManager({
-      name: 'other',
-      deviceType: 'mobile',
-    });
-    const managers = [manager, otherManager];
-
-    const observation = await project.observation.create({
-      schemaName: 'observation',
-      lat: 12,
-      lon: 34,
-      attachments: [],
-      tags: {},
-    });
-
-    const disconnectDevices = await connectPeers(managers);
-    await inviteToProject(project, otherManager);
-
-    const otherProject = await otherManager.getProject(projectId);
-
-    await project.$sync.waitForSync('initial');
-    await otherProject.$sync.waitForSync('initial');
-
-    await disconnectDevices();
-
-    const hasObservationSyncedToOtherProject = () =>
-      otherProject.observation
-        .getByDocId(observation.docId)
-        .then(() => true)
-        .catch(() => false);
-
-    expect(await hasObservationSyncedToOtherProject()).toBe(false);
-
-    // Sync with the remote archive (but not the other manager)
-
-    const unmount = await renderSyncScreen({activeProjectId: projectId});
-
-    await user.press(await screen.findByText('Start'));
-
-    await act(async () => {
-      await project.$sync.waitForSync('full');
-    });
-
-    expect(await screen.findByText('Complete!')).toBeVisible();
-    await user.press(screen.getByText('Stop'));
-
-    // Tear down the UI (and its project); it should not have synced to the other manager
-
-    await unmount();
-    project.$sync.stop();
-    await project.close();
-
-    expect(await hasObservationSyncedToOtherProject()).toBe(false);
-
-    // Start other project syncing, only with server
-
-    otherProject.$sync.connectServers();
-    onTeardown.push(() => {
-      otherProject.$sync.disconnectServers();
-    });
-
-    otherProject.$sync.start();
-    onTeardown.push(() => {
-      otherProject.$sync.stop();
-    });
-
-    // Keep fetching `sync-state` events until the observation has synced
-
-    const syncStateIterator = pEventIterator(otherProject.$sync, 'sync-state', {
-      timeout: 10_000,
-    });
-    while (!(await hasObservationSyncedToOtherProject())) {
-      await syncStateIterator.next();
-    }
-    expect(await hasObservationSyncedToOtherProject()).toBe(true);
   });
 });

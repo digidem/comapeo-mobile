@@ -12,11 +12,9 @@ import {ExhaustivenessError} from './lib/ExhaustivenessError';
 
 export const ServerLoading = ({
   serverStateStore,
-  onSkipMigration,
   children,
 }: React.PropsWithChildren<{
   serverStateStore: ServerStateStore;
-  onSkipMigration: () => void;
 }>) => {
   const serverState = useStore(serverStateStore);
 
@@ -43,7 +41,7 @@ export const ServerLoading = ({
       );
     case 'LOW_SPACE':
       SplashScreen.hide();
-      return <NotEnoughSpace onSkip={onSkipMigration} />;
+      return <NotEnoughSpace />;
     case 'MIGRATION_ERROR':
       SplashScreen.hide();
       return <MigrationError errorMessage={serverState.error} />;

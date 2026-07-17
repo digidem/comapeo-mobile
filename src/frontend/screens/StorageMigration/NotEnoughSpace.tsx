@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {AppState, Linking, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import RNRestart from 'react-native-restart';
 import {SafeAreaView} from 'react-native-safe-area-context';
+
+import {retryServerStart} from '../../lib/retryServerStart';
 
 import {
   BLUE_GREY,
@@ -52,16 +53,18 @@ const m = defineMessages({
   },
 });
 
-export const NotEnoughSpace = ({onSkip}: {onSkip: () => void}) => {
+export const NotEnoughSpace = () => {
   const {formatMessage: t} = useIntl();
 
-  // When the user comesback from the system storage settings, restart the
-  // app to re-check —migration then starts automatically if enough space was freed.
+  // When the user comes back from the system storage settings, ask the
+  // backend to re-check — migration then starts automatically if enough
+  // space was freed.
   const openedStorageSettings = React.useRef(false);
   React.useEffect(() => {
     const subscription = AppState.addEventListener('change', status => {
       if (status === 'active' && openedStorageSettings.current) {
-        RNRestart.restart();
+        openedStorageSettings.current = false;
+        retryServerStart({forceSkipMigrate: false});
       }
     });
     return () => subscription.remove();
@@ -88,7 +91,9 @@ export const NotEnoughSpace = ({onSkip}: {onSkip: () => void}) => {
               fullSize
               testID="STORAGE-MIGRATION.skip-migration-btn"
               text={t(m.skipForNow)}
-              onPress={onSkip}
+              onPress={() => {
+                retryServerStart({forceSkipMigrate: true});
+              }}
             />
           </View>
         }>

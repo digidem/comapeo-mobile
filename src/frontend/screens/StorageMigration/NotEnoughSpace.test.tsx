@@ -5,13 +5,15 @@ import {IntlProvider} from 'react-intl';
 
 import {NotEnoughSpace} from './NotEnoughSpace';
 
-async function renderScreen(onSkip = jest.fn()) {
+jest.mock('../../lib/retryServerStart', () => ({retryServerStart: jest.fn()}));
+import {retryServerStart} from '../../lib/retryServerStart';
+
+async function renderScreen() {
   await render(
     <IntlProvider locale="en" messages={{}}>
-      <NotEnoughSpace onSkip={onSkip} />
+      <NotEnoughSpace />
     </IntlProvider>,
   );
-  return {onSkip};
 }
 
 describe('NotEnoughSpace', () => {
@@ -28,12 +30,12 @@ describe('NotEnoughSpace', () => {
     ).toBeOnTheScreen();
   });
 
-  test('tapping "Skip for Now" calls onSkip', async () => {
-    const {onSkip} = await renderScreen();
+  test('tapping "Skip for Now" asks the backend to restart, skipping migration', async () => {
+    await renderScreen();
 
     await fireEvent.press(screen.getByText('Skip for Now'));
 
-    expect(onSkip).toHaveBeenCalledTimes(1);
+    expect(retryServerStart).toHaveBeenCalledWith({forceSkipMigrate: true});
   });
 
   test('tapping "Open Storage Settings" opens the Android storage settings', async () => {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {SafeAreaView} from 'react-native-safe-area-context';
 

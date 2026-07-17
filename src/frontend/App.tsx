@@ -60,11 +60,6 @@ import {createQADeviceNameStore} from './contexts/QADeviceNameStoreContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {createAppRpc} from './lib/createAppRpc.ts';
-import {
-  consumeSkipMigrationFlag,
-  setSkipMigrationOnNextLaunch,
-} from './lib/skipMigrationFlag.ts';
-import RNRestart from 'react-native-restart';
 import {postHog} from './lib/posthog.ts';
 import {APP_VARIANT} from './lib/appVariant.ts';
 
@@ -204,12 +199,7 @@ persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
 });
 
 // Need to know if metrics are enabled before starting node
-initializeNodejs({
-  metricsIsEnabled,
-  sentryEnvironment,
-  sentryUserId,
-  forceSkipMigrate: consumeSkipMigrationFlag(),
-});
+initializeNodejs({metricsIsEnabled, sentryEnvironment, sentryUserId});
 
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(
@@ -273,12 +263,7 @@ const App = () => {
           <IntlProvider>
             {/* This fatal error requires internationalization to be set up */}
             <Sentry.ErrorBoundary fallback={<FatalError />}>
-              <ServerLoading
-                serverStateStore={serverStateStore}
-                onSkipMigration={() => {
-                  setSkipMigrationOnNextLaunch();
-                  RNRestart.restart();
-                }}>
+              <ServerLoading serverStateStore={serverStateStore}>
                 <Suspense fallback={<Loading />}>
                   <AppProviders
                     queryClient={queryClient}

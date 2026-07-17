@@ -1,15 +1,12 @@
 #!/usr/bin/env node
 
 import fs from 'node:fs';
-import {createRequire} from 'node:module';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {parseArgs} from 'node:util';
 import {$} from 'execa';
 
 import {downloadPrebuilds} from './download-prebuilds.mjs';
-
-const require = createRequire(import.meta.url);
 
 const nodejsAssetsDirectory = fileURLToPath(
   new URL('../nodejs-assets', import.meta.url),

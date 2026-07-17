@@ -40,6 +40,54 @@ const log = debug('mapeo:app')
 // Set these up as soon as possible (e.g. before the init function)
 const serverStatus = new ServerStatus()
 
+/** @type {Parameters<typeof init>[0] | null} */
+let initOptionsToRetryAfterLowSpace = null
+
+// The Node runtime can only start once per app process, so retrying startup
+// (skipping migration, or re-checking after freeing space) re-runs init here.
+rnBridge.channel.on('server:restart', (message) => {
+  if (!initOptionsToRetryAfterLowSpace) return
+  const options = initOptionsToRetryAfterLowSpace
+  initOptionsToRetryAfterLowSpace = null
+  const { forceSkipMigrate, availableDiskSpace } =
+    parseServerRestartMessage(message)
+  log(`server restart requested (forceSkipMigrate=${forceSkipMigrate})`)
+  init({
+    ...options,
+    forceSkipMigrate,
+    availableDiskSpace: availableDiskSpace ?? options.availableDiskSpace,
+  }).catch((reason) => {
+    const error = asError(reason)
+    Sentry.captureException(error)
+    serverStatus.setState('ERROR', { error, context: 'serverRestart' })
+  })
+})
+
+/** @param {unknown} reason */
+function asError(reason) {
+  if (reason instanceof Error) return reason
+  return new Error(typeof reason === 'string' ? reason : 'unknown rejection')
+}
+
+/**
+ * @param {unknown} message
+ * @returns {{ forceSkipMigrate: boolean, availableDiskSpace?: number }}
+ */
+function parseServerRestartMessage(message) {
+  if (typeof message !== 'object' || message === null) {
+    return { forceSkipMigrate: false }
+  }
+  const { forceSkipMigrate, availableDiskSpace } =
+    /** @type {Record<string, unknown>} */ (message)
+  return {
+    forceSkipMigrate: forceSkipMigrate === true,
+    availableDiskSpace:
+      typeof availableDiskSpace === 'number' && availableDiskSpace >= 0
+        ? availableDiskSpace
+        : undefined,
+  }
+}
+
 process.on('uncaughtException', (error) => {
   log('uncaught exception')
   // setState only forwards error.message to the frontend; capture here so the
@@ -49,12 +97,7 @@ process.on('uncaughtException', (error) => {
 })
 process.on('unhandledRejection', (reason) => {
   log('unhandled rejection')
-  let error
-  if (reason instanceof Error) {
-    error = reason
-  } else {
-    error = new Error(typeof reason === 'string' ? reason : 'unknown rejection')
-  }
+  const error = asError(reason)
   Sentry.captureException(error)
   serverStatus.setState('ERROR', { error, context: 'unhandledRejection' })
 })
@@ -74,15 +117,16 @@ process.on('exit', (code) => {
  * @param {string} options.defaultConfigPath
  * @param {boolean} options.forceSkipMigrate
  */
-export async function init({
-  version,
-  rootKey,
-  migrationsFolderPath,
-  defaultConfigPath,
-  oldMigrationsFolderPath,
-  availableDiskSpace,
-  forceSkipMigrate,
-}) {
+export async function init(options) {
+  const {
+    version,
+    rootKey,
+    migrationsFolderPath,
+    defaultConfigPath,
+    oldMigrationsFolderPath,
+    availableDiskSpace,
+    forceSkipMigrate,
+  } = options
   log('Starting app...')
   log(`Device version is ${version}`)
 
@@ -115,20 +159,13 @@ export async function init({
         })
         serverStatus.setState('STARTING')
       } catch (reason) {
-        let error
-        if (reason instanceof Error) {
-          error = reason
-        } else {
-          error = new Error(
-            typeof reason === 'string' ? reason : 'unknown rejection',
-          )
-        }
-        serverStatus.setState('MIGRATION_ERROR', { error })
+        serverStatus.setState('MIGRATION_ERROR', { error: asError(reason) })
         return
       }
     } else {
       if (reason === MIGRATION_REASON_NO_SPACE) {
         serverStatus.setState('LOW_SPACE')
+        initOptionsToRetryAfterLowSpace = options
         return
       }
     }
@@ -136,9 +173,9 @@ export async function init({
 
   const fastify = Fastify()
 
-  const ManagerClass =
-    useFallback || forceSkipMigrate ? FallbackMapeoManager : MapeoManager
-  const migrationPath = useFallback
+  const storageIsOldFormat = useFallback || forceSkipMigrate
+  const ManagerClass = storageIsOldFormat ? FallbackMapeoManager : MapeoManager
+  const migrationPath = storageIsOldFormat
     ? oldMigrationsFolderPath
     : migrationsFolderPath
 

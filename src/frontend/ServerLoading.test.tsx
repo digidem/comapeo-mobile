@@ -7,17 +7,19 @@ import {createStore} from 'zustand';
 import {ServerLoading} from './ServerLoading';
 import type {ServerState} from './lib/ServerStateStore';
 
+jest.mock('./lib/retryServerStart', () => ({retryServerStart: jest.fn()}));
+import {retryServerStart} from './lib/retryServerStart';
+
 async function setup(initial: ServerState) {
   const store = createStore<ServerState>(() => initial);
-  const onSkipMigration = jest.fn();
   await render(
     <IntlProvider locale="en" messages={{}}>
-      <ServerLoading serverStateStore={store} onSkipMigration={onSkipMigration}>
+      <ServerLoading serverStateStore={store}>
         <Text>APP CONTENT</Text>
       </ServerLoading>
     </IntlProvider>,
   );
-  return {store, onSkipMigration};
+  return {store};
 }
 
 describe('ServerLoading', () => {
@@ -62,12 +64,12 @@ describe('ServerLoading', () => {
   });
 
   test('skipping from LOW_SPACE goes straight to the app once started', async () => {
-    const {store, onSkipMigration} = await setup({value: 'LOW_SPACE'});
+    const {store} = await setup({value: 'LOW_SPACE'});
 
     expect(screen.getByText('Update CoMapeo')).toBeOnTheScreen();
 
     await fireEvent.press(screen.getByText('Skip for Now'));
-    expect(onSkipMigration).toHaveBeenCalledTimes(1);
+    expect(retryServerStart).toHaveBeenCalledWith({forceSkipMigrate: true});
 
     await act(async () => store.setState({value: 'STARTED'}, true));
 

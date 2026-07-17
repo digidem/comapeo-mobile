@@ -10,14 +10,12 @@ interface InitializeOpts {
   metricsIsEnabled: boolean;
   sentryEnvironment: string;
   sentryUserId: string;
-  forceSkipMigrate?: boolean;
 }
 
 export async function initializeNodejs({
   metricsIsEnabled,
   sentryEnvironment,
   sentryUserId,
-  forceSkipMigrate,
 }: InitializeOpts) {
   let rootKey = await getItemAsync(ROOT_KEY);
   if (!rootKey) {
@@ -41,10 +39,6 @@ export async function initializeNodejs({
 
   if (metricsIsEnabled) {
     flags.push('--metricsIsEnabled');
-  }
-
-  if (forceSkipMigrate) {
-    flags.push('--forceSkipMigrate');
   }
 
   nodejs.startWithArgs(`loader.js ${flags.join(' ')}`);

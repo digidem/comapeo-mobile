@@ -5,15 +5,19 @@ import {IntlProvider} from 'react-intl';
 
 import {NotEnoughSpace} from './NotEnoughSpace';
 
-jest.mock('../../lib/retryServerStart', () => ({retryServerStart: jest.fn()}));
-import {retryServerStart} from '../../lib/retryServerStart';
-
-async function renderScreen() {
+async function renderScreen({
+  spaceNeededBytes = null,
+  onRetry = jest.fn(),
+}: {
+  spaceNeededBytes?: number | null;
+  onRetry?: jest.Mock;
+} = {}) {
   await render(
     <IntlProvider locale="en" messages={{}}>
-      <NotEnoughSpace />
+      <NotEnoughSpace spaceNeededBytes={spaceNeededBytes} onRetry={onRetry} />
     </IntlProvider>,
   );
+  return {onRetry};
 }
 
 describe('NotEnoughSpace', () => {
@@ -30,12 +34,28 @@ describe('NotEnoughSpace', () => {
     ).toBeOnTheScreen();
   });
 
-  test('tapping "Skip for Now" asks the backend to restart, skipping migration', async () => {
-    await renderScreen();
+  test('shows the space still needed when known', async () => {
+    await renderScreen({spaceNeededBytes: 52_428_800});
+
+    expect(
+      screen.getByText('~50 MB more required to update'),
+    ).toBeOnTheScreen();
+  });
+
+  test('falls back to a generic message when the space needed is unknown', async () => {
+    await renderScreen({spaceNeededBytes: null});
+
+    expect(
+      screen.getByText('More storage required to update'),
+    ).toBeOnTheScreen();
+  });
+
+  test('tapping "Skip for Now" retries, skipping migration', async () => {
+    const {onRetry} = await renderScreen();
 
     await fireEvent.press(screen.getByText('Skip for Now'));
 
-    expect(retryServerStart).toHaveBeenCalledWith({forceSkipMigrate: true});
+    expect(onRetry).toHaveBeenCalledWith({forceSkipMigrate: true});
   });
 
   test('tapping "Open Storage Settings" opens the Android storage settings', async () => {

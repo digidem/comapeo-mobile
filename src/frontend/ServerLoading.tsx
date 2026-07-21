@@ -8,13 +8,16 @@ import {MigrationError} from './screens/StorageMigration/MigrationError';
 import {NotEnoughSpace} from './screens/StorageMigration/NotEnoughSpace';
 import {UpdateComplete} from './screens/StorageMigration/UpdateComplete';
 import {parseMigrationProgress} from './lib/parseMigrationProgress';
+import {parseSpaceNeeded} from './lib/parseSpaceNeeded';
 import {ExhaustivenessError} from './lib/ExhaustivenessError';
 
 export const ServerLoading = ({
   serverStateStore,
+  onRetryAfterLowSpace,
   children,
 }: React.PropsWithChildren<{
   serverStateStore: ServerStateStore;
+  onRetryAfterLowSpace: (opts: {forceSkipMigrate: boolean}) => void;
 }>) => {
   const serverState = useStore(serverStateStore);
 
@@ -41,7 +44,12 @@ export const ServerLoading = ({
       );
     case 'LOW_SPACE':
       SplashScreen.hide();
-      return <NotEnoughSpace />;
+      return (
+        <NotEnoughSpace
+          spaceNeededBytes={parseSpaceNeeded(serverState.context)}
+          onRetry={onRetryAfterLowSpace}
+        />
+      );
     case 'MIGRATION_ERROR':
       SplashScreen.hide();
       return <MigrationError errorMessage={serverState.error} />;

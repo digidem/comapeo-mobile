@@ -6,6 +6,21 @@ import {Paths} from 'expo-file-system';
 
 const ROOT_KEY = '__RootKey';
 
+async function getOrCreateRootKey(): Promise<string> {
+  const existing = await getItemAsync(ROOT_KEY);
+  if (existing) return existing;
+
+  try {
+    const newRootKey = uint8ArrayToHex(getRandomBytes(16));
+    await setItemAsync(ROOT_KEY, newRootKey);
+    return newRootKey;
+  } catch (err) {
+    throw new Error(
+      `Error initializing root key: ${typeof err === 'string' ? err : ''}`,
+    );
+  }
+}
+
 interface InitializeOpts {
   metricsIsEnabled: boolean;
   sentryEnvironment: string;
@@ -17,18 +32,7 @@ export async function initializeNodejs({
   sentryEnvironment,
   sentryUserId,
 }: InitializeOpts) {
-  let rootKey = await getItemAsync(ROOT_KEY);
-  if (!rootKey) {
-    try {
-      const newRootKey = uint8ArrayToHex(getRandomBytes(16));
-      await setItemAsync(ROOT_KEY, newRootKey);
-      rootKey = newRootKey;
-    } catch (err) {
-      throw new Error(
-        `Error initializing root key: ${typeof err === 'string' ? err : ''}`,
-      );
-    }
-  }
+  const rootKey = await getOrCreateRootKey();
 
   const flags = [
     `--rootKey=${rootKey}`,
@@ -42,4 +46,23 @@ export async function initializeNodejs({
   }
 
   nodejs.startWithArgs(`loader.js ${flags.join(' ')}`);
+}
+
+/**
+ * Used from the "not enough space" screen — either the user tapped Skip, or
+ * they came back from Settings after freeing up space. We can't restart the
+ * whole app here, so the backend just re-runs its startup on its own.
+ */
+export async function retryServerStart({
+  forceSkipMigrate,
+}: {
+  forceSkipMigrate: boolean;
+}) {
+  const rootKey = await getOrCreateRootKey();
+
+  nodejs.channel.post('server:restart', {
+    rootKey,
+    forceSkipMigrate,
+    availableDiskSpace: Paths.availableDiskSpace,
+  });
 }

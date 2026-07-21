@@ -3,8 +3,6 @@ import {AppState, Linking, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {retryServerStart} from '../../lib/retryServerStart';
-
 import {
   BLUE_GREY,
   DARK_ORANGE,
@@ -21,6 +19,7 @@ import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription'
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {formatSpaceNeeded} from '../../lib/parseSpaceNeeded';
 
 const m = defineMessages({
   freeUpSpace: {
@@ -37,7 +36,11 @@ const m = defineMessages({
   },
   spaceRequired: {
     id: 'screens.StorageMigration.NotEnoughSpace.spaceRequired',
-    defaultMessage: '~340 MB required to update',
+    defaultMessage: '{spaceNeeded} more required to update',
+  },
+  spaceRequiredUnknown: {
+    id: 'screens.StorageMigration.NotEnoughSpace.spaceRequiredUnknown',
+    defaultMessage: 'More storage required to update',
   },
   dataSafe: {
     id: 'screens.StorageMigration.NotEnoughSpace.dataSafe',
@@ -53,7 +56,13 @@ const m = defineMessages({
   },
 });
 
-export const NotEnoughSpace = () => {
+export const NotEnoughSpace = ({
+  spaceNeededBytes,
+  onRetry,
+}: {
+  spaceNeededBytes: number | null;
+  onRetry: (opts: {forceSkipMigrate: boolean}) => void;
+}) => {
   const {formatMessage: t} = useIntl();
 
   // When the user comes back from the system storage settings, ask the
@@ -64,11 +73,11 @@ export const NotEnoughSpace = () => {
     const subscription = AppState.addEventListener('change', status => {
       if (status === 'active' && openedStorageSettings.current) {
         openedStorageSettings.current = false;
-        retryServerStart({forceSkipMigrate: false});
+        onRetry({forceSkipMigrate: false});
       }
     });
     return () => subscription.remove();
-  }, []);
+  }, [onRetry]);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -92,7 +101,7 @@ export const NotEnoughSpace = () => {
               testID="STORAGE-MIGRATION.skip-migration-btn"
               text={t(m.skipForNow)}
               onPress={() => {
-                retryServerStart({forceSkipMigrate: true});
+                onRetry({forceSkipMigrate: true});
               }}
             />
           </View>
@@ -117,7 +126,11 @@ export const NotEnoughSpace = () => {
             <View style={styles.infoRow}>
               <HardDriveDownloadIcon width={26} height={26} />
               <BodyText variant="smallMeta" style={styles.infoText}>
-                {t(m.spaceRequired)}
+                {spaceNeededBytes === null
+                  ? t(m.spaceRequiredUnknown)
+                  : t(m.spaceRequired, {
+                      spaceNeeded: formatSpaceNeeded(spaceNeededBytes),
+                    })}
               </BodyText>
             </View>
             <View style={styles.infoRow}>

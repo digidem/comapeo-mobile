@@ -1,7 +1,6 @@
 /**
- * The backend reports storage-migration progress via the MIGRATING server
- * state's `context` field as a `"done/total"` string (e.g. `"3/12"`). It is
- * the empty string until the first core has been counted.
+ * The backend sends progress as a "done/total" string in `context`, e.g.
+ * `"3/12"`. It's an empty string until the first core is counted.
  */
 export function parseMigrationProgress(
   context: string | undefined,

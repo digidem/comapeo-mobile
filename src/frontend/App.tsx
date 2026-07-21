@@ -25,7 +25,7 @@ import {
   focusManager,
 } from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
-import {initializeNodejs} from './initializeNodejs';
+import {initializeNodejs, retryServerStart} from './initializeNodejs';
 import {AppState, PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
@@ -263,7 +263,9 @@ const App = () => {
           <IntlProvider>
             {/* This fatal error requires internationalization to be set up */}
             <Sentry.ErrorBoundary fallback={<FatalError />}>
-              <ServerLoading serverStateStore={serverStateStore}>
+              <ServerLoading
+                serverStateStore={serverStateStore}
+                onRetryAfterLowSpace={retryServerStart}>
                 <Suspense fallback={<Loading />}>
                   <AppProviders
                     queryClient={queryClient}

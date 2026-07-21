@@ -22,6 +22,22 @@ const require = createRequire(import.meta.url)
 export const DEFAULT_FALLBACK_MAP_FILE_PATH =
   require.resolve('@comapeo/fallback-smp')
 
+// Also used by the 'server:restart' listener below, so it's defined here
+// instead of index.js (see `KEEP_THESE` in build-backend.mjs for how these
+// files get bundled onto the device).
+export const MIGRATIONS_FOLDER_PATH = new URL(
+  '../node_modules/@comapeo/core/drizzle',
+  import.meta.url,
+).pathname
+export const OLD_MIGRATIONS_FOLDER_PATH = new URL(
+  '../node_modules/comapeo-core-old/drizzle',
+  import.meta.url,
+).pathname
+export const DEFAULT_CONFIG_PATH = new URL(
+  '../node_modules/@comapeo/default-categories/dist/comapeo-default-categories.comapeocat',
+  import.meta.url,
+).pathname
+
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
 
@@ -40,22 +56,22 @@ const log = debug('mapeo:app')
 // Set these up as soon as possible (e.g. before the init function)
 const serverStatus = new ServerStatus()
 
-/** @type {Parameters<typeof init>[0] | null} */
-let initOptionsToRetryAfterLowSpace = null
-
-// The Node runtime can only start once per app process, so retrying startup
-// (skipping migration, or re-checking after freeing space) re-runs init here.
+// Node can only start once per app process, so when the user hits Skip or
+// comes back after freeing up space, we just re-run init() again ourselves
+// instead of restarting the whole app.
 rnBridge.channel.on('server:restart', (message) => {
-  if (!initOptionsToRetryAfterLowSpace) return
-  const options = initOptionsToRetryAfterLowSpace
-  initOptionsToRetryAfterLowSpace = null
-  const { forceSkipMigrate, availableDiskSpace } =
-    parseServerRestartMessage(message)
-  log(`server restart requested (forceSkipMigrate=${forceSkipMigrate})`)
+  const { rootKey, forceSkipMigrate, availableDiskSpace } =
+    /** @type {{ rootKey: string, forceSkipMigrate: boolean, availableDiskSpace: number }} */ (
+      message
+    )
+
   init({
-    ...options,
+    rootKey: Buffer.from(rootKey, 'hex'),
     forceSkipMigrate,
-    availableDiskSpace: availableDiskSpace ?? options.availableDiskSpace,
+    availableDiskSpace,
+    migrationsFolderPath: MIGRATIONS_FOLDER_PATH,
+    oldMigrationsFolderPath: OLD_MIGRATIONS_FOLDER_PATH,
+    defaultConfigPath: DEFAULT_CONFIG_PATH,
   }).catch((reason) => {
     const error = asError(reason)
     Sentry.captureException(error)
@@ -67,25 +83,6 @@ rnBridge.channel.on('server:restart', (message) => {
 function asError(reason) {
   if (reason instanceof Error) return reason
   return new Error(typeof reason === 'string' ? reason : 'unknown rejection')
-}
-
-/**
- * @param {unknown} message
- * @returns {{ forceSkipMigrate: boolean, availableDiskSpace?: number }}
- */
-function parseServerRestartMessage(message) {
-  if (typeof message !== 'object' || message === null) {
-    return { forceSkipMigrate: false }
-  }
-  const { forceSkipMigrate, availableDiskSpace } =
-    /** @type {Record<string, unknown>} */ (message)
-  return {
-    forceSkipMigrate: forceSkipMigrate === true,
-    availableDiskSpace:
-      typeof availableDiskSpace === 'number' && availableDiskSpace >= 0
-        ? availableDiskSpace
-        : undefined,
-  }
 }
 
 process.on('uncaughtException', (error) => {
@@ -146,6 +143,7 @@ export async function init(options) {
       shouldUpgrade,
       useFallback: useFallbackResult,
       reason,
+      spaceNeeded,
     } = await checkShouldMigrate(indexDir, availableDiskSpace)
     useFallback = useFallbackResult
 
@@ -173,8 +171,7 @@ export async function init(options) {
       }
     } else {
       if (reason === MIGRATION_REASON_NO_SPACE) {
-        serverStatus.setState('LOW_SPACE')
-        initOptionsToRetryAfterLowSpace = options
+        serverStatus.setState('LOW_SPACE', { context: String(spaceNeeded) })
         return
       }
     }
@@ -189,18 +186,27 @@ export async function init(options) {
       ? oldMigrationsFolderPath
       : migrationsFolderPath
 
-  const manager = new ManagerClass({
-    rootKey,
-    dbFolder: dbDir,
-    coreStorage: indexDir,
-    clientMigrationsFolder: join(migrationPath, 'client'),
-    projectMigrationsFolder: join(migrationPath, 'project'),
-    fastify,
-    defaultConfigPath,
-    defaultIsArchiveDevice: true,
-    defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
-    customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
-  })
+  /** @type {InstanceType<typeof MapeoManager> | InstanceType<typeof FallbackMapeoManager>} */
+  let manager
+  try {
+    manager = new ManagerClass({
+      rootKey,
+      dbFolder: dbDir,
+      coreStorage: indexDir,
+      clientMigrationsFolder: join(migrationPath, 'client'),
+      projectMigrationsFolder: join(migrationPath, 'project'),
+      fastify,
+      defaultConfigPath,
+      defaultIsArchiveDevice: true,
+      defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
+      customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
+    })
+  } catch (reason) {
+    // This can still fail on its own (it runs its own DB migrations), even
+    // when the storage migration above went fine. Same error screen either way.
+    serverStatus.setState('MIGRATION_ERROR', { error: asError(reason) })
+    return
+  }
 
   const { publicKey, secretKey } = new KeyManager(rootKey).getIdentityKeypair()
   const mapServer = createMapServer({

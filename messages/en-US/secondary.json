@@ -1286,7 +1286,10 @@
     "message": "Skip for Now"
   },
   "screens.StorageMigration.NotEnoughSpace.spaceRequired": {
-    "message": "~340 MB required to update"
+    "message": "{spaceNeeded} more required to update"
+  },
+  "screens.StorageMigration.NotEnoughSpace.spaceRequiredUnknown": {
+    "message": "More storage required to update"
   },
   "screens.StorageMigration.NotEnoughSpace.updateCoMapeo": {
     "message": "Update CoMapeo"

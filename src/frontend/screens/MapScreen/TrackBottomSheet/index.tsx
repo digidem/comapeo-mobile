@@ -128,6 +128,9 @@ export const TrackBottomSheet = React.memo(({isOpen}: {isOpen: boolean}) => {
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
 
   const measuredHeight = React.useRef(height);
+  // translateY moves the object down and the sheet is pinned to the bottom of the screen
+  // By setting the initial value to the height of the screen, it will be moved completely off the screen
+  // This means that it is NOT shown at first, which is desired
   const translateY = useSharedValue(height);
 
   React.useEffect(() => {

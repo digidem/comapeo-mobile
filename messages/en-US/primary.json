@@ -931,6 +931,9 @@
   "$1screens.YourTeam.RemoveDevice.title": {
     "message": "Remove Device"
   },
+  "$1screens.obsDetail.date": {
+    "message": "Date"
+  },
   "$1sharedComponents.ErrorBottomSheet.close": {
     "message": "Close"
   },

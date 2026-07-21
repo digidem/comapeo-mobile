@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   CustomFormatConfig,
   FormattedDate,
+  IntlShape,
   defineMessages,
   useIntl,
 } from 'react-intl';
@@ -82,9 +83,11 @@ export const FormattedPresetName = ({preset}: {preset?: Preset}) => {
 export function getFieldAnswerText({
   tagValue,
   fieldOptions,
+  formatDate,
 }: {
   tagValue?: Observation['tags'][0];
   fieldOptions: Field['options'];
+  formatDate: IntlShape['formatDate'];
 }): string | undefined {
   if (Array.isArray(tagValue)) {
     return tagValue
@@ -105,6 +108,12 @@ export function getFieldAnswerText({
     return correspondingLabel.label;
   }
 
+  if (isISODateString(tagValue)) {
+    return formatDate(tagValue, {
+      dateStyle: 'medium',
+    });
+  }
+
   if (typeof tagValue === 'number') {
     return String(tagValue);
   }
@@ -114,4 +123,11 @@ export function getFieldAnswerText({
   }
 
   return undefined;
+}
+
+export function isISODateString(val: unknown): val is string {
+  return (
+    typeof val === 'string' &&
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/.test(val)
+  );
 }

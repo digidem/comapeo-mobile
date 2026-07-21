@@ -23,18 +23,19 @@ export const DEFAULT_FALLBACK_MAP_FILE_PATH =
   require.resolve('@comapeo/fallback-smp')
 
 // Also used by the 'server:restart' listener below, so it's defined here
-// instead of index.js (see `KEEP_THESE` in build-backend.mjs for how these
-// files get bundled onto the device).
+// instead of index.js. Rollup bundles this whole file to the project root
+// (see `KEEP_THESE` in build-backend.mjs), so these paths are relative to
+// that root, not to where this source file lives.
 export const MIGRATIONS_FOLDER_PATH = new URL(
-  '../node_modules/@comapeo/core/drizzle',
+  './node_modules/@comapeo/core/drizzle',
   import.meta.url,
 ).pathname
 export const OLD_MIGRATIONS_FOLDER_PATH = new URL(
-  '../node_modules/comapeo-core-old/drizzle',
+  './node_modules/comapeo-core-old/drizzle',
   import.meta.url,
 ).pathname
 export const DEFAULT_CONFIG_PATH = new URL(
-  '../node_modules/@comapeo/default-categories/dist/comapeo-default-categories.comapeocat',
+  './node_modules/@comapeo/default-categories/dist/comapeo-default-categories.comapeocat',
   import.meta.url,
 ).pathname
 
@@ -73,9 +74,10 @@ rnBridge.channel.on('server:restart', (message) => {
     oldMigrationsFolderPath: OLD_MIGRATIONS_FOLDER_PATH,
     defaultConfigPath: DEFAULT_CONFIG_PATH,
   }).catch((reason) => {
-    const error = asError(reason)
-    Sentry.captureException(error)
-    serverStatus.setState('ERROR', { error, context: 'serverRestart' })
+    serverStatus.setState('ERROR', {
+      error: asError(reason),
+      context: 'serverRestart',
+    })
   })
 })
 
@@ -87,16 +89,14 @@ function asError(reason) {
 
 process.on('uncaughtException', (error) => {
   log('uncaught exception')
-  // setState only forwards error.message to the frontend; capture here so the
-  // original stack is preserved for diagnosing the underlying failure.
-  Sentry.captureException(error)
   serverStatus.setState('ERROR', { error, context: 'uncaughtException' })
 })
 process.on('unhandledRejection', (reason) => {
   log('unhandled rejection')
-  const error = asError(reason)
-  Sentry.captureException(error)
-  serverStatus.setState('ERROR', { error, context: 'unhandledRejection' })
+  serverStatus.setState('ERROR', {
+    error: asError(reason),
+    context: 'unhandledRejection',
+  })
 })
 process.on('exit', (code) => {
   log(`App process exited with code ${code}`)

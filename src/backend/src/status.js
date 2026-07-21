@@ -1,10 +1,25 @@
 import { debug } from 'debug'
 import { createRequire } from 'module'
+import * as Sentry from '@sentry/node'
 const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
 
 const log = debug('mapeo:status')
+
+// Drizzle wraps the real error in `cause` behind a generic message, so walk
+// the chain to get the whole story onto the error screen.
+/** @param {Error & { cause?: unknown }} error */
+function errorChainToString(error) {
+  const messages = [error.message]
+  /** @type {unknown} */
+  let cause = error.cause
+  while (cause instanceof Error) {
+    messages.push(cause.message)
+    cause = /** @type {{cause?: unknown}} */ (cause).cause
+  }
+  return messages.join(' | caused by: ')
+}
 
 /**
  * @typedef {'CHECKING' | 'STARTING' | 'STARTED' | 'ERROR' | 'MIGRATING' | 'MIGRATION_ERROR' | 'LOW_SPACE'} Status
@@ -66,8 +81,11 @@ export class ServerStatus {
 
     if (nextState === 'ERROR') {
       error = error || new Error('Unknown server error')
-      log(context, error.message)
-      // TODO: Log to Bugsnag
+    }
+
+    if (error) {
+      log(context, errorChainToString(error))
+      Sentry.captureException(error, { tags: { context } })
     }
 
     this.#state = nextState
@@ -77,7 +95,7 @@ export class ServerStatus {
       /** @type {StatusMessage} */
       {
         value: nextState,
-        error: error && error.message,
+        error: error && errorChainToString(error),
         context,
       },
     )

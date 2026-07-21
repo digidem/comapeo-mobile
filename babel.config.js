@@ -22,7 +22,7 @@ module.exports = function (api) {
     plugins: [
       ['transform-inline-environment-variables', {include: requiredEnvVars}],
       // react-native-reanimated/plugin has to be last
-      'react-native-reanimated/plugin',
+      'react-native-worklets/plugin',
     ],
   };
 };

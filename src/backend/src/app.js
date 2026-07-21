@@ -171,7 +171,7 @@ export async function init(options) {
       }
     } else {
       if (reason === MIGRATION_REASON_NO_SPACE) {
-        serverStatus.setState('LOW_SPACE', { context: String(spaceNeeded) })
+        serverStatus.setState('LOW_SPACE', { context: spaceNeeded?.toString() })
         return
       }
     }

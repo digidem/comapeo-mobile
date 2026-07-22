@@ -9,7 +9,7 @@
     "ios": "npm run build:backend && npm run ios-no-backend-rebuild",
     "ios-no-backend-rebuild": "expo run:ios",
     "prestart": "npm run build:translations && npm run build:intl-polyfills",
-    "start": "expo start",
+    "start": "expo start --dev-client",
     "lint:prettier": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --check",
     "lint:eslint": "eslint --cache .",
     "lint:types": "tsc --noEmit",

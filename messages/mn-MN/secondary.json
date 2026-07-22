@@ -1,11 +1,11 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Үргэлжлүүлэн засварлах"
+    "message": "Үргэлжлүүлэн засварлах",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Сануулгаас татгалзах уу?"
+    "message": "Сануулгаас татгалзах уу?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "Дууслаа"
@@ -26,40 +26,40 @@
     "message": "Харах"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "Цуцлах"
+    "message": "Цуцлах",
+    "description": "Text for cancel action button."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "Устгах"
+    "message": "Устгах",
+    "description": "Button to delete a track"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Үргэлжлүүлэн засварлах"
+    "message": "Үргэлжлүүлэн засварлах",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Өөрчлөлтийг цуцлах уу? "
+    "message": "Өөрчлөлтийг цуцлах уу? ",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Өөрчлөлтийг цуцлах"
+    "message": "Өөрчлөлтийг цуцлах",
+    "description": "Button to confirm discarding the track"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "Android бүтээх дугаар"
+    "message": "Android бүтээх дугаар",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "Android хувилбар"
+    "message": "Android хувилбар",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "Гар утасны загвар"
+    "message": "Гар утасны загвар",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Үл мэдэгдэх"
+    "message": "Үл мэдэгдэх",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "Цуцлах"
@@ -116,28 +116,28 @@
     "message": "Хаах"
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "Дэлгэрэнгүй"
+    "message": "Дэлгэрэнгүй",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "Сүүлийн шинэчлэл"
+    "message": "Сүүлийн шинэчлэл",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "Аравтын зэрэгтэй солбицолууд"
+    "message": "Аравтын зэрэгтэй солбицолууд",
+    "description": "Section title for DD coordinates"
   },
   "screens.LocationInfoScreen.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "DMS-ийн солбицолууд"
+    "message": "DMS-ийн солбицолууд",
+    "description": "Section title for DMS coordinates"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "Мэдрэгчийн төлөв"
+    "message": "Мэдрэгчийн төлөв",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "UTM-ийн солбицолууд"
+    "message": "UTM-ийн солбицолууд",
+    "description": "Section title for UTM coordinates"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "Дорнод"
@@ -224,8 +224,8 @@
     "message": "Хойд"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "Солбицол оруулах"
+    "message": "Солбицол оруулах",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "Бүсийн үсэг"
@@ -243,60 +243,60 @@
     "message": "Тодорхой бус нууц үг юу вэ?"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Сануулга"
+    "message": "Сануулга",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Сануулга"
+    "message": "Сануулга",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Үргэлжлүүлэн хүлээж байна"
+    "message": "Үргэлжлүүлэн хүлээж байна",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "Гар ажиллагаатай солбицолууд"
+    "message": "Гар ажиллагаатай солбицолууд",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "Энэ сануулга нь байршилгүй. Та GPS дохиог үргэлжлүүлэн хүлээх, сануулгыг байршилгүйгээр хадгалах эсвэл солбицолуудыг гараар оруулах боломжтой"
+    "message": "Энэ сануулга нь байршилгүй. Та GPS дохиог үргэлжлүүлэн хүлээх, сануулгыг байршилгүйгээр хадгалах эсвэл солбицолуудыг гараар оруулах боломжтой",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "GPS-ийн дохио байхгүй"
+    "message": "GPS-ийн дохио байхгүй",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "Хадгалах"
+    "message": "Хадгалах",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS-ийн нарийвчлал бага байна. Та илүү нарийвчлалтай байхыг үргэлжлүүлэн хүлээх, ажиглалтыг бага нарийвчлалтайгаар хадгалах эсвэл солбицолыг гараар оруулах боломжтой."
+    "message": "GPS-ийн нарийвчлал бага байна. Та илүү нарийвчлалтай байхыг үргэлжлүүлэн хүлээх, ажиглалтыг бага нарийвчлалтайгаар хадгалах эсвэл солбицолыг гараар оруулах боломжтой.",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "GPS-ийн дохио сул байна"
+    "message": "GPS-ийн дохио сул байна",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "Шинэ сануулга"
+    "message": "Шинэ сануулга",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Сануулга"
+    "message": "Сануулга",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Энд юу болоод байгаа юм бэ?"
+    "message": "Энд юу болоод байгаа юм бэ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Сануулга"
+    "message": "Сануулга",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "Сануулгууд"
+    "message": "Сануулгууд",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "Өргөрөг"
@@ -305,8 +305,8 @@
     "message": "Уртраг"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Анхны сануулгаа бичхийн тулд газрын зураг эсвэл камерын харагдацаас эхэл."
+    "message": "Анхны сануулгаа бичхийн тулд газрын зураг эсвэл камерын харагдацаас эхэл.",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "Бүгд"
@@ -321,8 +321,8 @@
     "message": "Хаах"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Энд юу болоод байгаа юм бэ?"
+    "message": "Энд юу болоод байгаа юм бэ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.Settings.Config.projectName": {
     "message": "Төслийн нэр:"
@@ -337,8 +337,8 @@
     "message": "Сүлжээний холболт салгасан"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Хайлт хийж байна..."
+    "message": "Хайлт хийж байна...",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Өөрчлөх"

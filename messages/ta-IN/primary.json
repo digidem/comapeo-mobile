@@ -1,22 +1,22 @@
 {
   "$1ObservationEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "தொடர்ந்து திருத்தவும்"
+    "message": "தொடர்ந்து திருத்தவும்",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "$1ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Button to confirm discarding the observation edits",
-    "message": "மாற்றங்களை நிராகரிக்கவும்"
+    "message": "மாற்றங்களை நிராகரிக்கவும்",
+    "description": "Button to confirm discarding the observation edits"
   },
   "$1ObservationEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "மாற்றங்களை அகற்றவா?"
+    "message": "மாற்றங்களை அகற்றவா?",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "$1ProjectSettings.RemoteArchive.Success.close": {
     "message": "மூடுக"
   },
   "$1SaveTrack.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "தொடர்ந்து திருத்தவும்"
+    "message": "தொடர்ந்து திருத்தவும்",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "$1allProjects.close": {
     "message": "மூடுக"
@@ -52,8 +52,8 @@
     "message": "இந்தப் படத்தை நீக்கவா?"
   },
   "$1screens.CoordinateFormat.title": {
-    "description": "Title coordinate format screen",
-    "message": "ஒருங்கிணைப்பு வடிவம்"
+    "message": "ஒருங்கிணைப்பு வடிவம்",
+    "description": "Title coordinate format screen"
   },
   "$1screens.DataPrivacy.next": {
     "message": "அடுத்து"
@@ -80,8 +80,8 @@
     "message": "முடிந்தது"
   },
   "$1screens.LanguageSettings.title": {
-    "description": "Title language settings screen",
-    "message": "மொழி"
+    "message": "மொழி",
+    "description": "Title language settings screen"
   },
   "$1screens.LeaveProject.cancel": {
     "message": "ரத்து செய்க"
@@ -93,67 +93,67 @@
     "message": "தொடரவும்"
   },
   "$1screens.LocationInfoScreen.gpsHeader": {
-    "description": "Header for GPS screen",
-    "message": "தற்போதைய GPS இடம்"
+    "message": "தற்போதைய GPS இடம்",
+    "description": "Header for GPS screen"
   },
   "$1screens.LocationInfoScreen.no": {
-    "description": "if a location sensor is active yes/no",
-    "message": "இல்லை"
+    "message": "இல்லை",
+    "description": "if a location sensor is active yes/no"
   },
   "$1screens.LocationInfoScreen.yes": {
-    "description": "if a location sensor is active yes/no",
-    "message": "ஆம்"
+    "message": "ஆம்",
+    "description": "if a location sensor is active yes/no"
   },
   "$1screens.Observation.ObservationView.delete": {
-    "description": "Button to delete an observation",
-    "message": "அழி"
+    "message": "அழி",
+    "description": "Button to delete an observation"
   },
   "$1screens.Observation.ObservationView.noAnswer": {
-    "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "பதில் இல்லை"
+    "message": "பதில் இல்லை",
+    "description": "Placeholder text for fields on an observation which are not answered"
   },
   "$1screens.Observation.ObservationView.share": {
-    "description": "Button to share an observation",
-    "message": "பகிரவும்"
+    "message": "பகிரவும்",
+    "description": "Button to share an observation"
   },
   "$1screens.Observation.deleteTitle": {
     "message": "அவதானிப்புகளை நீக்கவா?"
   },
   "$1screens.Observation.fallbackCategoryName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "அவதானிப்புகள்"
+    "message": "அவதானிப்புகள்",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "$1screens.Observation.title": {
-    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "அவதானிப்புகள்"
+    "message": "அவதானிப்புகள்",
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions"
   },
   "$1screens.ObservationDetails.done": {
-    "description": "Button text when all questions are complete",
-    "message": "முடிந்தது"
+    "message": "முடிந்தது",
+    "description": "Button text when all questions are complete"
   },
   "$1screens.ObservationDetails.nextQuestion": {
-    "description": "Button text to navigate to next question",
-    "message": "அடுத்து"
+    "message": "அடுத்து",
+    "description": "Button text to navigate to next question"
   },
   "$1screens.ObservationDetails.title": {
-    "description": "Title of observation details screen showing question number and total",
-    "message": "கேள்வி {தற்போதைய} இல் {மொத்தம்}"
+    "message": "கேள்வி {தற்போதைய} இல் {மொத்தம்}",
+    "description": "Title of observation details screen showing question number and total"
   },
   "$1screens.ObservationEdit.ObservationEditView.detailsButton": {
-    "description": "Button label to add details",
-    "message": "விபரங்கள்"
+    "message": "விபரங்கள்",
+    "description": "Button label to add details"
   },
   "$1screens.ObservationEdit.navTitle": {
-    "description": "screen title for edit observation screen",
-    "message": "கவனிப்பைத் திருத்து"
+    "message": "கவனிப்பைத் திருத்து",
+    "description": "screen title for edit observation screen"
   },
   "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "வரைபடத்திற்குச் செல்லவும்"
+    "message": "வரைபடத்திற்குச் செல்லவும்",
+    "description": "Back button on observation list screen when no observations are yet recorded"
   },
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "அவதானிப்புகளைச் சேர்க்கவும்"
+    "message": "அவதானிப்புகளைச் சேர்க்கவும்",
+    "description": "Title of observation list view when the user has not yet recorded observations"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.close": {
     "message": "மூடுக"

@@ -71,7 +71,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       isSavedPhoto(attachment) || isAudioAttachment(attachment),
   );
 
-  const canEdit = useCanEditOrDelete(observation.originalVersionId);
+  const canEdit = useCanEditOrDelete(observation.createdBy);
 
   React.useEffect(() => {
     navigation.setOptions({

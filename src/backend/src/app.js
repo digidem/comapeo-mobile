@@ -202,9 +202,10 @@ export async function init(options) {
       customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
     })
   } catch (reason) {
-    // This can still fail on its own (it runs its own DB migrations), even
-    // when the storage migration above went fine. Same error screen either way.
-    serverStatus.setState('MIGRATION_ERROR', { error: asError(reason) })
+    serverStatus.setState('ERROR', {
+      error: asError(reason),
+      context: 'managerInit',
+    })
     return
   }
 

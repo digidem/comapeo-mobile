@@ -1,11 +1,11 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "ทำการแก้ไขต่อ"
+    "message": "ทำการแก้ไขต่อ",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "ยืนยันการยกเลิก?"
+    "message": "ยืนยันการยกเลิก?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "เสร็จสิ้น"
@@ -26,40 +26,40 @@
     "message": "มุมมอง"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "ยกเลิก"
+    "message": "ยกเลิก",
+    "description": "Text for cancel action button."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "ลบ"
+    "message": "ลบ",
+    "description": "Button to delete a track"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "ทำการแก้ไขต่อ"
+    "message": "ทำการแก้ไขต่อ",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "ยกเลิกการเปลี่ยนแปลงหรือไม่?"
+    "message": "ยกเลิกการเปลี่ยนแปลงหรือไม่?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "ยกเลิกการเปลี่ยนแปลง"
+    "message": "ยกเลิกการเปลี่ยนแปลง",
+    "description": "Button to confirm discarding the track"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "รหัส Build Number บน Android"
+    "message": "รหัส Build Number บน Android",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "เวอร์ชันของแอนดรอยด์"
+    "message": "เวอร์ชันของแอนดรอยด์",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "รุ่นของโทรศัพท์"
+    "message": "รุ่นของโทรศัพท์",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "ไม่มีข้อมูล"
+    "message": "ไม่มีข้อมูล",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "ยกเลิก"
@@ -83,16 +83,16 @@
     "message": "ออกจากโครงการ"
   },
   "screens.CoordinateFormat.dd": {
-    "description": "Decimal Degrees coordinate format",
-    "message": "องศาทศนิยม (DD)"
+    "message": "องศาทศนิยม (DD)",
+    "description": "Decimal Degrees coordinate format"
   },
   "screens.CoordinateFormat.dms": {
-    "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "องศา ลิปดา ฟิลิปดา (DMS)"
+    "message": "องศา ลิปดา ฟิลิปดา (DMS)",
+    "description": "Degrees/Minutes/Seconds coordinate format"
   },
   "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "ระบบพิกัดกริดแบบยูทีเอ็ม (Universal Transverse Mercator - UTM)"
+    "message": "ระบบพิกัดกริดแบบยูทีเอ็ม (Universal Transverse Mercator - UTM)",
+    "description": "Universal Transverse Mercator coordinate format"
   },
   "screens.EarlyAccessTurnedOff.close": {
     "message": "ปิด"
@@ -107,28 +107,28 @@
     "message": "ปิด"
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "รายละเอียด"
+    "message": "รายละเอียด",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "ปรับปรุงล่าสุด"
+    "message": "ปรับปรุงล่าสุด",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "ระบบพิกัดองศาทศนิยม (Decimal Degrees - DD)"
+    "message": "ระบบพิกัดองศาทศนิยม (Decimal Degrees - DD)",
+    "description": "Section title for DD coordinates"
   },
   "screens.LocationInfoScreen.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "ระบบพิกัดองศา ลิปดา ฟิลิปดา (DMS)"
+    "message": "ระบบพิกัดองศา ลิปดา ฟิลิปดา (DMS)",
+    "description": "Section title for DMS coordinates"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "สถานะเซ็นเซอร์"
+    "message": "สถานะเซ็นเซอร์",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "ระบบพิกัด UTM"
+    "message": "ระบบพิกัด UTM",
+    "description": "Section title for UTM coordinates"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "ตะวันออก"
@@ -224,8 +224,8 @@
     "message": "เหนือ"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "ป้อนพิกัด"
+    "message": "ป้อนพิกัด",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
     "message": "ระบบพิกัดกริดแบบยูทีเอ็ม (Universal Transverse Mercator - UTM)"
@@ -237,60 +237,60 @@
     "message": "หมายเลขโซน"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "การสังเกต"
+    "message": "การสังเกต",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "การสังเกต"
+    "message": "การสังเกต",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "กำลังรอ"
+    "message": "กำลังรอ",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "ป้อนพิกัดด้วยตัวเอง"
+    "message": "ป้อนพิกัดด้วยตัวเอง",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "ข้อสังเกตนี้ไม่ปรากฎสถานที่ กรุณารอสัญญาณ GPS สักครู่ บันทึกข้อสังเกต โดยป้อนพิกัดด้วยตัวเอง "
+    "message": "ข้อสังเกตนี้ไม่ปรากฎสถานที่ กรุณารอสัญญาณ GPS สักครู่ บันทึกข้อสังเกต โดยป้อนพิกัดด้วยตัวเอง ",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "ไม่มีสัญญาณ GPS"
+    "message": "ไม่มีสัญญาณ GPS",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "บันทึก"
+    "message": "บันทึก",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "ความแม่นยำของ GPS ต่ำ กรุณารอสักพักเพื่อความแม่นยำของสัญญาณ กรุณาบันทึกข้อสังเกต หรือป้อนพิกัดด้วยตัวเอง"
+    "message": "ความแม่นยำของ GPS ต่ำ กรุณารอสักพักเพื่อความแม่นยำของสัญญาณ กรุณาบันทึกข้อสังเกต หรือป้อนพิกัดด้วยตัวเอง",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "สัญญาณ GPS อ่อน"
+    "message": "สัญญาณ GPS อ่อน",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "การสังเกตใหม่"
+    "message": "การสังเกตใหม่",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "การสังเกต"
+    "message": "การสังเกต",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "เกิดอะไรขึ้นที่นี่?"
+    "message": "เกิดอะไรขึ้นที่นี่?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "การสังเกต"
+    "message": "การสังเกต",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "การสังเกตต่าง ๆ "
+    "message": "การสังเกตต่าง ๆ ",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "ละติจูด"
@@ -302,8 +302,8 @@
     "message": "ลองจิจูด"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "เริ่มจากมุมมองแผนที่หรือกล้องเพื่อเริ่มบันทึกการสังเกตแรก"
+    "message": "เริ่มจากมุมมองแผนที่หรือกล้องเพื่อเริ่มบันทึกการสังเกตแรก",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "ทั้งหมด"
@@ -318,8 +318,8 @@
     "message": "ปิด"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "เกิดอะไรขึ้นที่นี่?"
+    "message": "เกิดอะไรขึ้นที่นี่?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.Settings.Config.projectName": {
     "message": "ชื่อโครงการ:"
@@ -334,8 +334,8 @@
     "message": "ขาดการเชื่อมต่อ"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "กำลัง​ค้น​หา..."
+    "message": "กำลัง​ค้น​หา...",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "แก้ไข"

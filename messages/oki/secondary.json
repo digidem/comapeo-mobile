@@ -1,34 +1,34 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Taastay iweechweech"
+    "message": "Taastay iweechweech",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Toochinee observation?"
+    "message": "Toochinee observation?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
     "message": "Keer"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "Noomtee"
+    "message": "Noomtee",
+    "description": "Text for cancel action button."
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Taastay iweechweech"
+    "message": "Taastay iweechweech",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Toochinee weecheet?"
+    "message": "Toochinee weecheet?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Toochinee weecheet"
+    "message": "Toochinee weecheet",
+    "description": "Button to confirm discarding the track"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Meengetoksee"
+    "message": "Meengetoksee",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "Noomtee"
@@ -55,7 +55,7 @@
     "message": "Noomtee"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Cheeng'…"
+    "message": "Cheeng'…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   }
 }

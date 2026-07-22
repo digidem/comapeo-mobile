@@ -39,19 +39,19 @@
     "message": "Projekt wechseln"
   },
   "$1ObservationEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Bearbeitung fortsetzen"
+    "message": "Bearbeitung fortsetzen",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "$1ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Button to confirm discarding the observation edits",
-    "message": "Änderungen verwerfen"
+    "message": "Änderungen verwerfen",
+    "description": "Button to confirm discarding the observation edits"
   },
   "$1ObservationEdit.HeaderLeft.discardObservationDescription": {
     "message": "Ihre Änderungen werden nicht gespeichert. Dies kann nicht rückgängig gemacht werden."
   },
   "$1ObservationEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Änderungen verwerfen?"
+    "message": "Änderungen verwerfen?",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "$1ProjectSettings.RemoteArchive.AddRemoteArchive.looking": {
     "message": "Suche nach Remote-Archiv..."
@@ -84,12 +84,12 @@
     "message": "Entferntes Archiv"
   },
   "$1SaveTrack.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Bearbeitung fortsetzen"
+    "message": "Bearbeitung fortsetzen",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "$1SaveTrack.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Track verwerfen?"
+    "message": "Track verwerfen?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Ihr Track wird nicht gespeichert. Dies kann nicht rückgängig gemacht werden."
@@ -170,8 +170,8 @@
     "message": "Siehe CoMapeo Updates"
   },
   "$1screens.AboutSettings.title": {
-    "description": "Title of 'About CoMapeo' screen",
-    "message": "Über CoMapeo"
+    "message": "Über CoMapeo",
+    "description": "Title of 'About CoMapeo' screen"
   },
   "$1screens.AppPasscode": {
     "message": "App-Passwort"
@@ -180,8 +180,8 @@
     "message": "Abbrechen"
   },
   "$1screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
-    "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Passwort: {passcode}"
+    "message": "Passwort: {passcode}",
+    "description": "used to indicate to the user what the new passcode will be."
   },
   "$1screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "App-Passwort speichern"
@@ -244,16 +244,16 @@
     "message": "Teilen"
   },
   "$1screens.AudioPermission.Button.allow": {
-    "description": "Screen button text for granting the audio permission",
-    "message": "Erlauben"
+    "message": "Erlauben",
+    "description": "Screen button text for granting the audio permission"
   },
   "$1screens.AudioPermission.Button.notNow": {
-    "description": "Screen button text for not granting audio permission",
-    "message": "Nicht jetzt"
+    "message": "Nicht jetzt",
+    "description": "Screen button text for not granting audio permission"
   },
   "$1screens.AudioPermission.title": {
-    "description": "Screen title for audio permission screen",
-    "message": "Audio mit CoMapeo aufnehmen"
+    "message": "Audio mit CoMapeo aufnehmen",
+    "description": "Screen title for audio permission screen"
   },
   "$1screens.AudioPlaybackNew.backToEditing": {
     "message": "Zurück zur Bearbeitung"
@@ -280,8 +280,8 @@
     "message": "Dieses Foto löschen?"
   },
   "$1screens.CoordinateFormat.title": {
-    "description": "Title coordinate format screen",
-    "message": "Koordinaten Format"
+    "message": "Koordinaten Format",
+    "description": "Title coordinate format screen"
   },
   "$1screens.DataAndPrivacy.shareAppUsage": {
     "message": "App-Nutzung teilen"
@@ -377,12 +377,12 @@
     "message": "Erfolg"
   },
   "$1screens.LanguageSettings.followSystemPreferences": {
-    "description": "Label for language option to follow system preferences",
-    "message": "Systemeinstellungen folgen"
+    "message": "Systemeinstellungen folgen",
+    "description": "Label for language option to follow system preferences"
   },
   "$1screens.LanguageSettings.title": {
-    "description": "Title language settings screen",
-    "message": "Sprache"
+    "message": "Sprache",
+    "description": "Title language settings screen"
   },
   "$1screens.LeaveProject.cancel": {
     "message": "Abbrechen"
@@ -418,28 +418,28 @@
     "message": "{deviceName} öffnen"
   },
   "$1screens.LocationInfoScreen.gpsHeader": {
-    "description": "Header for GPS screen",
-    "message": "Aktuelle GPS Position"
+    "message": "Aktuelle GPS Position",
+    "description": "Header for GPS screen"
   },
   "$1screens.LocationInfoScreen.no": {
-    "description": "if a location sensor is active yes/no",
-    "message": "Nein"
+    "message": "Nein",
+    "description": "if a location sensor is active yes/no"
   },
   "$1screens.LocationInfoScreen.yes": {
-    "description": "if a location sensor is active yes/no",
-    "message": "Ja"
+    "message": "Ja",
+    "description": "if a location sensor is active yes/no"
   },
   "$1screens.Observation.ObservationView.delete": {
-    "description": "Button to delete an observation",
-    "message": "Löschen"
+    "message": "Löschen",
+    "description": "Button to delete an observation"
   },
   "$1screens.Observation.ObservationView.noAnswer": {
-    "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "Keine Antwort"
+    "message": "Keine Antwort",
+    "description": "Placeholder text for fields on an observation which are not answered"
   },
   "$1screens.Observation.ObservationView.share": {
-    "description": "Button to share an observation",
-    "message": "Teilen"
+    "message": "Teilen",
+    "description": "Button to share an observation"
   },
   "$1screens.Observation.TrackList.track": {
     "message": "Spur"
@@ -454,8 +454,8 @@
     "message": "Beschreibung:"
   },
   "$1screens.Observation.fallbackCategoryName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Beobachtung"
+    "message": "Beobachtung",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "$1screens.Observation.location": {
     "message": "Ort:"
@@ -464,50 +464,50 @@
     "message": "Präzision:"
   },
   "$1screens.Observation.shareMediaTitle": {
-    "description": "Title of dialog to share an observation with media",
-    "message": "Bild teilen"
+    "message": "Bild teilen",
+    "description": "Title of dialog to share an observation with media"
   },
   "$1screens.Observation.shareMessageFooter": {
     "message": "Gesendet von CoMapeo"
   },
   "$1screens.Observation.shareTextTitle": {
-    "description": "Title of dialog to share an observation without media",
-    "message": "Text teilen"
+    "message": "Text teilen",
+    "description": "Title of dialog to share an observation without media"
   },
   "$1screens.Observation.title": {
-    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "Beobachtung"
+    "message": "Beobachtung",
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions"
   },
   "$1screens.ObservationDetails.done": {
-    "description": "Button text when all questions are complete",
-    "message": "Fertig"
+    "message": "Fertig",
+    "description": "Button text when all questions are complete"
   },
   "$1screens.ObservationDetails.nextQuestion": {
-    "description": "Button text to navigate to next question",
-    "message": "Nächste Frage"
+    "message": "Nächste Frage",
+    "description": "Button text to navigate to next question"
   },
   "$1screens.ObservationDetails.title": {
-    "description": "Title of observation details screen showing question number and total",
-    "message": "Frage {current} von {total}"
+    "message": "Frage {current} von {total}",
+    "description": "Title of observation details screen showing question number and total"
   },
   "$1screens.ObservationEdit.ObservationEditView.photoButton": {
-    "description": "Button label for adding photo",
-    "message": "Foto"
+    "message": "Foto",
+    "description": "Button label for adding photo"
   },
   "$1screens.ObservationEdit.navTitle": {
-    "description": "screen title for edit observation screen",
-    "message": "Beobachtung bearbeiten"
+    "message": "Beobachtung bearbeiten",
+    "description": "screen title for edit observation screen"
   },
   "$1screens.ObservationMetadataVerified.navTitle": {
     "message": "Beobachtungs-Metadaten"
   },
   "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "Zur Karte"
+    "message": "Zur Karte",
+    "description": "Back button on observation list screen when no observations are yet recorded"
   },
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "Beobachtung(en) hinzufügen"
+    "message": "Beobachtung(en) hinzufügen",
+    "description": "Title of observation list view when the user has not yet recorded observations"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
     "message": "Audioaufnahmen hinzufügen."
@@ -546,8 +546,8 @@
     "message": "DIESE GERÄT VON… ENTFERNT"
   },
   "$1screens.SaveTrack.TrackEditView.title": {
-    "description": "Title for new track screen",
-    "message": "Neue Spur"
+    "message": "Neue Spur",
+    "description": "Title for new track screen"
   },
   "$1screens.Security.obscurePasscodeDescription": {
     "message": "App-Code zum Benutzen aktivieren"
@@ -745,8 +745,8 @@
     "message": "Track löschen?"
   },
   "$1screens.Track.title": {
-    "description": "Title of track screen showing (non-editable) view of observation with map",
-    "message": "Spur"
+    "message": "Spur",
+    "description": "Title of track screen showing (non-editable) view of observation with map"
   },
   "$1screens.TrackCategoryChooser.title": {
     "message": "Wählen Sie eine Kategorie"

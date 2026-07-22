@@ -1,14 +1,14 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Doorgaan met bewerken"
+    "message": "Doorgaan met bewerken",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "Je waarneming wordt niet opgeslagen. Dit kan niet ongedaan worden gemaakt."
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Waarneming annuleren?"
+    "message": "Waarneming annuleren?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "Voltooid"
@@ -137,24 +137,24 @@
     "message": "Details bekijken"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "Annuleren"
+    "message": "Annuleren",
+    "description": "Text for cancel action button."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
-    "description": "Explanation for consequences of removing archive server.",
-    "message": "Dit zal stoppen met het archiveren van nieuwe gegevens voor dit project. Bestaande gearchiveerde gegevens worden niet verwijderd."
+    "message": "Dit zal stoppen met het archiveren van nieuwe gegevens voor dit project. Bestaande gearchiveerde gegevens worden niet verwijderd.",
+    "description": "Explanation for consequences of removing archive server."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.removeArchive": {
-    "description": "Text for destructive action button.",
-    "message": "Verwijder archief"
+    "message": "Verwijder archief",
+    "description": "Text for destructive action button."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.title": {
-    "description": "Text for title that asks about confirming archive server removal.",
-    "message": "{name} uit het project verwijderen?"
+    "message": "{name} uit het project verwijderen?",
+    "description": "Text for title that asks about confirming archive server removal."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "Verwijderen"
+    "message": "Verwijderen",
+    "description": "Button to delete a track"
   },
   "Storage.MapBanner.title": {
     "message": "Uw apparaat heeft een lage opslag."
@@ -175,16 +175,16 @@
     "message": "Klaar om nieuw nummer op te nemen?"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Doorgaan met bewerken"
+    "message": "Doorgaan met bewerken",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Wijzigingen annuleren?"
+    "message": "Wijzigingen annuleren?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Wijzigingen annuleren"
+    "message": "Wijzigingen annuleren",
+    "description": "Button to confirm discarding the track"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Uw wijzigingen worden niet opgeslagen. Dit kan niet ongedaan worden gemaakt."
@@ -229,20 +229,20 @@
     "message": "U selecteert een rol voor dit apparaat:"
   },
   "screens.AboutSettings.CoMapeoBuild": {
-    "description": "Label for CoMapeo build number",
-    "message": "CoMapeo maken"
+    "message": "CoMapeo maken",
+    "description": "Label for CoMapeo build number"
   },
   "screens.AboutSettings.CoMapeoVersion": {
-    "description": "Label for CoMapeo version",
-    "message": "CoMapeo versie"
+    "message": "CoMapeo versie",
+    "description": "Label for CoMapeo version"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "Android build nummer"
+    "message": "Android build nummer",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "Android versie"
+    "message": "Android versie",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.comapeoWebsiteLabel": {
     "message": "CoMapeo website"
@@ -251,20 +251,20 @@
     "message": "U bent in de Vroegtijdige toegangsmodus."
   },
   "screens.AboutSettings.emojiSource": {
-    "description": "Label for the source of emojis used in CoMapeo",
-    "message": "Emojis bron"
+    "message": "Emojis bron",
+    "description": "Label for the source of emojis used in CoMapeo"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "Telefoon model"
+    "message": "Telefoon model",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.releaseNameLabel": {
-    "description": "Label for the release name",
-    "message": "Release naam"
+    "message": "Release naam",
+    "description": "Label for the release name"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Onbekend"
+    "message": "Onbekend",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "Annuleren"
@@ -330,12 +330,12 @@
     "message": "Audio opnemen"
   },
   "screens.AudioPermission.Button.goToSettings": {
-    "description": "Screen button text for navigating the user to settings when audio permission is denied",
-    "message": "Ga naar Instellingen"
+    "message": "Ga naar Instellingen",
+    "description": "Screen button text for navigating the user to settings when audio permission is denied"
   },
   "screens.AudioPermission.description": {
-    "description": "Screen description for audio permission screen",
-    "message": "Om audio op te nemen tijdens het gebruik van de app en op de achtergrond heeft CoMapeo toegang nodig tot uw microfoon. Schakel permissies voor microfoon in in uw app-instellingen."
+    "message": "Om audio op te nemen tijdens het gebruik van de app en op de achtergrond heeft CoMapeo toegang nodig tot uw microfoon. Schakel permissies voor microfoon in in uw app-instellingen.",
+    "description": "Screen description for audio permission screen"
   },
   "screens.AudioRecording.lessThan1": {
     "message": "Nog minder dan een minuut resterend"
@@ -362,12 +362,12 @@
     "message": "Dit apparaat"
   },
   "screens.CoordinateFormat.dd": {
-    "description": "Decimal Degrees coordinate format",
-    "message": "Decimale graden (DD)"
+    "message": "Decimale graden (DD)",
+    "description": "Decimal Degrees coordinate format"
   },
   "screens.CoordinateFormat.dms": {
-    "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Graden/Minuten/Seconden (DMS)"
+    "message": "Graden/Minuten/Seconden (DMS)",
+    "description": "Degrees/Minutes/Seconds coordinate format"
   },
   "screens.DataAndPrivacy.appUsageId": {
     "message": "ID-nummers worden willekeurig gecodeerd en elke maand veranderd."
@@ -526,24 +526,24 @@
     "message": "Apparaat zal niet langer in staat zijn om dit project te bekijken of bij te dragen."
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "Laatste update"
+    "message": "Laatste update",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "Coördinaten Decimale Graden"
+    "message": "Coördinaten Decimale Graden",
+    "description": "Section title for DD coordinates"
   },
   "screens.LocationInfoScreen.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "DMS coördinaten"
+    "message": "DMS coördinaten",
+    "description": "Section title for DMS coordinates"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "Status van de sensor"
+    "message": "Status van de sensor",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "UTM coördinaten"
+    "message": "UTM coördinaten",
+    "description": "Section title for UTM coordinates"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "Oost"
@@ -636,8 +636,8 @@
     "message": "Noord"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "Coördinaten invoeren"
+    "message": "Coördinaten invoeren",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "Zone letter"
@@ -658,66 +658,66 @@
     "message": "Wat is Obscure Passcode?"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Waarneming"
+    "message": "Waarneming",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Waarneming"
+    "message": "Waarneming",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCategoryChooser.title": {
     "message": "Kies een categorie"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Blijven wachten"
+    "message": "Blijven wachten",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "Handmatige Coördinaten"
+    "message": "Handmatige Coördinaten",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "Deze waarneming heeft geen locatie. U kunt doorgaan met wachten op een GPS signaal, de waarneming opslaan zonder een locatie, of de coördinaten handmatig invoeren"
+    "message": "Deze waarneming heeft geen locatie. U kunt doorgaan met wachten op een GPS signaal, de waarneming opslaan zonder een locatie, of de coördinaten handmatig invoeren",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "Geen GPS signaal"
+    "message": "Geen GPS signaal",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "Opslaan"
+    "message": "Opslaan",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS nauwkeurigheid is laag. U kunt blijven wachten op betere nauwkeurigheid, de waarneming opslaan met lage nauwkeurigheid, of handmatig de coördinaten invoeren"
+    "message": "GPS nauwkeurigheid is laag. U kunt blijven wachten op betere nauwkeurigheid, de waarneming opslaan met lage nauwkeurigheid, of handmatig de coördinaten invoeren",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Zwak GPS signaal"
+    "message": "Zwak GPS signaal",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "Nieuwe waarneming"
+    "message": "Nieuwe waarneming",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Waarneming"
+    "message": "Waarneming",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Wat gebeurt er hier?"
+    "message": "Wat gebeurt er hier?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Waarneming"
+    "message": "Waarneming",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Bijhouden"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "Waarnemingen"
+    "message": "Waarnemingen",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.accuracy": {
     "message": "Nauwkeurigheid"
@@ -762,8 +762,8 @@
     "message": "Verzonden en gevalideerd door CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Begin van de kaart- of camera weergave om de eerste waarneming op te nemen."
+    "message": "Begin van de kaart- of camera weergave om de eerste waarneming op te nemen.",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "Allemaal"
@@ -787,41 +787,41 @@
     "message": "Huidige permissies"
   },
   "screens.PhotoPreviewModal.attachedAtTime": {
-    "description": "Label for the time when the photo was attached to an observation",
-    "message": "Bijgevoegd op het moment van de waarneming"
+    "message": "Bijgevoegd op het moment van de waarneming",
+    "description": "Label for the time when the photo was attached to an observation"
   },
   "screens.PhotoPreviewModal.attachedBy": {
-    "description": "Label for the person who attached the photo to the observation",
-    "message": "Bijgevoegd door {name}"
+    "message": "Bijgevoegd door {name}",
+    "description": "Label for the person who attached the photo to the observation"
   },
   "screens.PhotoPreviewModal.distanceFromObs": {
     "message": "Bijgevoegd {distance} van waarneming"
   },
   "screens.PhotoPreviewModal.imageStorageSize": {
-    "description": "Image size in megabytes",
-    "message": "{value} MB"
+    "message": "{value} MB",
+    "description": "Image size in megabytes"
   },
   "screens.PhotoPreviewModal.landscape": {
-    "description": "Describes image layout when taking photo horizontally",
-    "message": "Liggend"
+    "message": "Liggend",
+    "description": "Describes image layout when taking photo horizontally"
   },
   "screens.PhotoPreviewModal.navTitle": {
     "message": "Foto Info"
   },
   "screens.PhotoPreviewModal.portrait": {
-    "description": "Describes image layout when taking photo vertically",
-    "message": "Staand"
+    "message": "Staand",
+    "description": "Describes image layout when taking photo vertically"
   },
   "screens.PhotoPreviewModal.timeAttached": {
-    "description": "Label for the time when the photo was attached to an observation",
-    "message": "{formattedNum} bijgevoegd na waarneming"
+    "message": "{formattedNum} bijgevoegd na waarneming",
+    "description": "Label for the time when the photo was attached to an observation"
   },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "Gevalideerd door CoMapeo"
   },
   "screens.PhotoPreviewModal.verifiedOriginal": {
-    "description": "Text indicating that the photo is a verified original",
-    "message": "Dit is een ongecontroleerd origineel dat is geverifieerd."
+    "message": "Dit is een ongecontroleerd origineel dat is geverifieerd.",
+    "description": "Text indicating that the photo is a verified original"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Over Awana Digitaal"
@@ -950,12 +950,12 @@
     "message": "Project Statistieken Instrument UIT"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Wat gebeurt er hier?"
+    "message": "Wat gebeurt er hier?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.SaveTrack.track": {
-    "description": "Category title for new track screen",
-    "message": "Bijhouden"
+    "message": "Bijhouden",
+    "description": "Category title for new track screen"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Uitnodiging bekijken"
@@ -1090,12 +1090,12 @@
     "message": "Nummers"
   },
   "screens.TrackEdit.title": {
-    "description": "Title for editing track screen",
-    "message": "Bewerk track"
+    "message": "Bewerk track",
+    "description": "Title for editing track screen"
   },
   "screens.TrackEdit.track": {
-    "description": "Preset title for new track screen",
-    "message": "Bijhouden"
+    "message": "Bijhouden",
+    "description": "Preset title for new track screen"
   },
   "screens.TrackRecordingActive.cancel": {
     "message": "Annuleren"
@@ -1125,8 +1125,8 @@
     "message": "Dit apparaat"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
-    "description": "title for observation options",
-    "message": "Toon opties"
+    "message": "Toon opties",
+    "description": "title for observation options"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Losgekoppeld"
@@ -1135,8 +1135,8 @@
     "message": "Dit apparaat!"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Bezig te zoeken…"
+    "message": "Bezig te zoeken…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Wijzigen"

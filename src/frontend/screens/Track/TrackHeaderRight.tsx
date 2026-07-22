@@ -18,7 +18,7 @@ export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
 
   const navigation = useNavigationFromRoot();
 
-  const canEdit = useCanEditOrDelete(track.originalVersionId);
+  const canEdit = useCanEditOrDelete(track.createdBy);
 
   return canEdit ? (
     <IconButton

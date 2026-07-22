@@ -102,6 +102,8 @@ export const ObservationsList: React.FC<
         windowSize={3}
         removeClippedSubviews
         renderItem={({item, index}) => {
+          const isMine = deviceInfo.deviceId === item.createdBy;
+
           switch (item.schemaName) {
             case 'observation':
               return (
@@ -109,6 +111,7 @@ export const ObservationsList: React.FC<
                   key={item.docId}
                   testID={`observationListItem:${index}`}
                   observation={item}
+                  showSyncedIndicator={!isMine}
                   style={styles.listItem}
                   onPress={() =>
                     navigation.navigate('Observation', {
@@ -127,6 +130,7 @@ export const ObservationsList: React.FC<
                   onPress={() => {
                     navigation.navigate('Track', {trackId: item.docId});
                   }}
+                  showSyncedIndicator={!isMine}
                 />
               );
           }

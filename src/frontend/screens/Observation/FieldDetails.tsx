@@ -26,7 +26,7 @@ export const FieldDetails = ({
   tags: Observation['tags'];
   style?: ViewStyleProp;
 }) => {
-  const {formatMessage} = useIntl();
+  const {formatMessage, formatDate} = useIntl();
 
   return (
     <View>
@@ -35,6 +35,7 @@ export const FieldDetails = ({
         const answers = getFieldAnswerText({
           tagValue,
           fieldOptions: field.options,
+          formatDate,
         });
         return (
           <View key={field.docId} style={[styles.section, style]}>

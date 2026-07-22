@@ -34,6 +34,13 @@ const pluralRulesSupportedLocales = getSupportedLocalesFromDir(
     ),
   ),
 );
+const dateTimeFormatSupportedLocales = getSupportedLocalesFromDir(
+  path.dirname(
+    fileURLToPath(
+      import.meta.resolve('@formatjs/intl-datetimeformat/polyfill-force.js'),
+    ),
+  ),
+);
 
 build();
 
@@ -132,6 +139,23 @@ function writePolyfillFile(locales, outputPath) {
     );
   }
 
+  writer.write('\n');
+
+  // Write lines to load date time format polyfill
+  writer.write(
+    createImportStatement('@formatjs/intl-datetimeformat/polyfill-force.js'),
+  );
+  for (const locale of locales) {
+    writer.write(
+      createImportStatement(
+        `@formatjs/intl-datetimeformat/locale-data/${locale}.js`,
+      ),
+    );
+  }
+  // Adds full IANA timezone data, needed for Intl.DateTimeFormat's
+  // timeZone option to work correctly across all supported locales.
+  writer.write(createImportStatement('@formatjs/intl-datetimeformat/add-all-tz.js'));
+
   writer.end();
 }
 
@@ -142,7 +166,8 @@ function writePolyfillFile(locales, outputPath) {
 function isFullySupportedLocale(locale) {
   return (
     relativeTimeFormatSupportedLocales.includes(locale) &&
-    pluralRulesSupportedLocales.includes(locale)
+    pluralRulesSupportedLocales.includes(locale) &&
+    dateTimeFormatSupportedLocales.includes(locale)
   );
 }
 

@@ -1,11 +1,11 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Endelea kuhariri"
+    "message": "Endelea kuhariri",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Ungependa kutupa uchunguzi?"
+    "message": "Ungependa kutupa uchunguzi?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "Imekamilika"
@@ -26,40 +26,40 @@
     "message": "Tazama"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "Ghairi"
+    "message": "Ghairi",
+    "description": "Text for cancel action button."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "Futa"
+    "message": "Futa",
+    "description": "Button to delete a track"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Endelea kuhariri"
+    "message": "Endelea kuhariri",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Ungependa kutupa mabadiliko?"
+    "message": "Ungependa kutupa mabadiliko?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Tupa mabadiliko"
+    "message": "Tupa mabadiliko",
+    "description": "Button to confirm discarding the track"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "Nambari ya muundo wa Android"
+    "message": "Nambari ya muundo wa Android",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "Toleo la Android"
+    "message": "Toleo la Android",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "Muundo wa simu"
+    "message": "Muundo wa simu",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Haijulikani"
+    "message": "Haijulikani",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "Ghairi"
@@ -98,12 +98,12 @@
     "message": "Ondoka kwenye Mradi"
   },
   "screens.CoordinateFormat.dd": {
-    "description": "Decimal Degrees coordinate format",
-    "message": "Digrii za Desimali (DD)"
+    "message": "Digrii za Desimali (DD)",
+    "description": "Decimal Degrees coordinate format"
   },
   "screens.CoordinateFormat.dms": {
-    "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Digrii/Dakika/Sekunde (DMS)"
+    "message": "Digrii/Dakika/Sekunde (DMS)",
+    "description": "Degrees/Minutes/Seconds coordinate format"
   },
   "screens.EarlyAccessTurnedOff.close": {
     "message": "Funga"
@@ -124,28 +124,28 @@
     "message": "Funga"
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "Maelezo"
+    "message": "Maelezo",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "Sasisho la mwisho"
+    "message": "Sasisho la mwisho",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "Huratibu Digrii za Desimali"
+    "message": "Huratibu Digrii za Desimali",
+    "description": "Section title for DD coordinates"
   },
   "screens.LocationInfoScreen.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "Huratibu DMS"
+    "message": "Huratibu DMS",
+    "description": "Section title for DMS coordinates"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "Hali ya Kitambuzi"
+    "message": "Hali ya Kitambuzi",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "Huratibu UTM"
+    "message": "Huratibu UTM",
+    "description": "Section title for UTM coordinates"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "Mashariki"
@@ -241,8 +241,8 @@
     "message": "Kaskazini"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "Weka viratibu"
+    "message": "Weka viratibu",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "Herufi ya Ukanda"
@@ -260,60 +260,60 @@
     "message": "Nambari ya siri Isiyojulikana ni nini?"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Uchunguzi"
+    "message": "Uchunguzi",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Uchunguzi"
+    "message": "Uchunguzi",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Endelea kusubiri"
+    "message": "Endelea kusubiri",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "Viratibu vya kuweka Wewe Mwenyewe"
+    "message": "Viratibu vya kuweka Wewe Mwenyewe",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "Uchunguzi huu hauna eneo. Unaweza kuendelea kusubiri ishara ya GPS, kuhifadhi uchunguzi bila eneo, au kuweka viratibu wewe mwenyewe"
+    "message": "Uchunguzi huu hauna eneo. Unaweza kuendelea kusubiri ishara ya GPS, kuhifadhi uchunguzi bila eneo, au kuweka viratibu wewe mwenyewe",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "Hakuna ishara ya GPS"
+    "message": "Hakuna ishara ya GPS",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "Hifadhi"
+    "message": "Hifadhi",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "Usahihi wa GPS ni wa chini. Unaweza kuendelea kusubiri usahihi bora, kuhifadhi uchunguzi ulio na usahihi wa chini, au uweke viratibu wewe mwenyewe"
+    "message": "Usahihi wa GPS ni wa chini. Unaweza kuendelea kusubiri usahihi bora, kuhifadhi uchunguzi ulio na usahihi wa chini, au uweke viratibu wewe mwenyewe",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Ishara dhaifu ya GPS"
+    "message": "Ishara dhaifu ya GPS",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "Uchunguzi Mpya"
+    "message": "Uchunguzi Mpya",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Uchunguzi"
+    "message": "Uchunguzi",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Ni nini kinachofanyika hapa?"
+    "message": "Ni nini kinachofanyika hapa?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Uchunguzi"
+    "message": "Uchunguzi",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "Uchunguzi"
+    "message": "Uchunguzi",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "Latitudo"
@@ -322,8 +322,8 @@
     "message": "Longitudo"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Anza kwenye ramani au mwonekano wa kamera ili urekodi uchunguzi wako wa kwanza."
+    "message": "Anza kwenye ramani au mwonekano wa kamera ili urekodi uchunguzi wako wa kwanza.",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "Yote"
@@ -338,8 +338,8 @@
     "message": "Funga"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Ni nini kinachofanyika hapa?"
+    "message": "Ni nini kinachofanyika hapa?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.Settings.Config.projectName": {
     "message": "Jina la Mradi:"
@@ -354,8 +354,8 @@
     "message": "Imetenganishwa"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Inatafuta…"
+    "message": "Inatafuta…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Badilisha"

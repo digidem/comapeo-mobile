@@ -1,14 +1,14 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Lanjutkan menyunting"
+    "message": "Lanjutkan menyunting",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "Pengamatan Anda tidak akan disimpan. Ini tidak dapat dibatalkan."
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Hapus pengamatan?"
+    "message": "Hapus pengamatan?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "Selesai"
@@ -134,24 +134,24 @@
     "message": "Lihat Detail"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "Batalkan"
+    "message": "Batalkan",
+    "description": "Text for cancel action button."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
-    "description": "Explanation for consequences of removing archive server.",
-    "message": "Ini akan menghentikan pengarsipan data baru untuk proyek ini. Data yang sudah diarsipkan tidak akan dihapus."
+    "message": "Ini akan menghentikan pengarsipan data baru untuk proyek ini. Data yang sudah diarsipkan tidak akan dihapus.",
+    "description": "Explanation for consequences of removing archive server."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.removeArchive": {
-    "description": "Text for destructive action button.",
-    "message": "Hapus Arsip"
+    "message": "Hapus Arsip",
+    "description": "Text for destructive action button."
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.title": {
-    "description": "Text for title that asks about confirming archive server removal.",
-    "message": "Hapus {name} dari proyek?"
+    "message": "Hapus {name} dari proyek?",
+    "description": "Text for title that asks about confirming archive server removal."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "Hapus"
+    "message": "Hapus",
+    "description": "Button to delete a track"
   },
   "Storage.MapBanner.title": {
     "message": "Perangkat Anda memiliki penyimpanan yang rendah."
@@ -172,16 +172,16 @@
     "message": "Siap untuk merekam lagu baru?"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Lanjutkan menyunting"
+    "message": "Lanjutkan menyunting",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Batalkan perubahan?"
+    "message": "Batalkan perubahan?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "Batalkan perubahan"
+    "message": "Batalkan perubahan",
+    "description": "Button to confirm discarding the track"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Perubahan Anda tidak akan disimpan. Ini tidak dapat dibatalkan."
@@ -226,24 +226,24 @@
     "message": "Anda sedang memilih peran untuk perangkat ini:"
   },
   "screens.AboutSettings.CoMapeoBuild": {
-    "description": "Label for CoMapeo build number",
-    "message": "Build CoMapeo"
+    "message": "Build CoMapeo",
+    "description": "Label for CoMapeo build number"
   },
   "screens.AboutSettings.CoMapeoType": {
-    "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)",
-    "message": "Varian CoMapeo"
+    "message": "Varian CoMapeo",
+    "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)"
   },
   "screens.AboutSettings.CoMapeoVersion": {
-    "description": "Label for CoMapeo version",
-    "message": "Versi CoMapeo"
+    "message": "Versi CoMapeo",
+    "description": "Label for CoMapeo version"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "Nomor seri Android"
+    "message": "Nomor seri Android",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "Versi Android"
+    "message": "Versi Android",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.comapeoWebsiteLabel": {
     "message": "Situs Web CoMapeo"
@@ -252,20 +252,20 @@
     "message": "Anda berada dalam Mode Akses Awal."
   },
   "screens.AboutSettings.emojiSource": {
-    "description": "Label for the source of emojis used in CoMapeo",
-    "message": "Sumber emoji"
+    "message": "Sumber emoji",
+    "description": "Label for the source of emojis used in CoMapeo"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "Model telepon"
+    "message": "Model telepon",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.releaseNameLabel": {
-    "description": "Label for the release name",
-    "message": "Nama rilis"
+    "message": "Nama rilis",
+    "description": "Label for the release name"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Tidak diketahui"
+    "message": "Tidak diketahui",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "Batal"
@@ -331,12 +331,12 @@
     "message": "Rekaman Audio"
   },
   "screens.AudioPermission.Button.goToSettings": {
-    "description": "Screen button text for navigating the user to settings when audio permission is denied",
-    "message": "Buka Pengaturan"
+    "message": "Buka Pengaturan",
+    "description": "Screen button text for navigating the user to settings when audio permission is denied"
   },
   "screens.AudioPermission.description": {
-    "description": "Screen description for audio permission screen",
-    "message": "Untuk merekam audio saat menggunakan aplikasi dan di latar belakang, CoMapeo perlu mengakses mikrofon Anda. Aktifkan izin mikrofon di pengaturan aplikasi Anda."
+    "message": "Untuk merekam audio saat menggunakan aplikasi dan di latar belakang, CoMapeo perlu mengakses mikrofon Anda. Aktifkan izin mikrofon di pengaturan aplikasi Anda.",
+    "description": "Screen description for audio permission screen"
   },
   "screens.AudioRecording.lessThan1": {
     "message": "Kurang dari satu menit tersisa"
@@ -363,16 +363,16 @@
     "message": "Perangkat ini"
   },
   "screens.CoordinateFormat.dd": {
-    "description": "Decimal Degrees coordinate format",
-    "message": "Derajat Desimal (DD)"
+    "message": "Derajat Desimal (DD)",
+    "description": "Decimal Degrees coordinate format"
   },
   "screens.CoordinateFormat.dms": {
-    "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Derajat/Menit/Detik (DMD)"
+    "message": "Derajat/Menit/Detik (DMD)",
+    "description": "Degrees/Minutes/Seconds coordinate format"
   },
   "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "Mercator Transversal Universal (UTM)"
+    "message": "Mercator Transversal Universal (UTM)",
+    "description": "Universal Transverse Mercator coordinate format"
   },
   "screens.DataAndPrivacy.appUsageId": {
     "message": "Nomor ID diacak secara acak dan diubah setiap bulan."
@@ -534,28 +534,28 @@
     "message": "Perangkat tidak akan lagi dapat melihat atau berkontribusi pada proyek ini."
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "Rincian"
+    "message": "Rincian",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "Pembaharuan terakhir"
+    "message": "Pembaharuan terakhir",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "Koordinat Derajat Desimal"
+    "message": "Koordinat Derajat Desimal",
+    "description": "Section title for DD coordinates"
   },
   "screens.LocationInfoScreen.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "Koordinat DMS"
+    "message": "Koordinat DMS",
+    "description": "Section title for DMS coordinates"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "Status Sensor"
+    "message": "Status Sensor",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "Koordinat UTM"
+    "message": "Koordinat UTM",
+    "description": "Section title for UTM coordinates"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "Timur"
@@ -660,8 +660,8 @@
     "message": "mU"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "Masukkan koordinat"
+    "message": "Masukkan koordinat",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
     "message": "Mercator Transversal Universal (UTM)"
@@ -691,66 +691,66 @@
     "message": "Apa itu Kode Sandi Tidak Jelas?"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Pengamatan"
+    "message": "Pengamatan",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Pengamatan"
+    "message": "Pengamatan",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCategoryChooser.title": {
     "message": "Pilih kategori"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Terus menunggu"
+    "message": "Terus menunggu",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "Koordinat Manual"
+    "message": "Koordinat Manual",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "Pengamatan ini tidak memiliki lokasi. Anda dapat terus menunggu sinyal GPS, menyimpan pengamatan tanpa lokasi, atau memasukkan koordinat secara manual"
+    "message": "Pengamatan ini tidak memiliki lokasi. Anda dapat terus menunggu sinyal GPS, menyimpan pengamatan tanpa lokasi, atau memasukkan koordinat secara manual",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "Tidak ada sinyal GPS"
+    "message": "Tidak ada sinyal GPS",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "Simpan"
+    "message": "Simpan",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "Akurasi GPS rendah. Anda dapat terus menunggu akurasi yang lebih baik, menyimpan pengamatan dengan akurasi rendah, atau memasukkan koordinat secara manual"
+    "message": "Akurasi GPS rendah. Anda dapat terus menunggu akurasi yang lebih baik, menyimpan pengamatan dengan akurasi rendah, atau memasukkan koordinat secara manual",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Sinyal GPS lemah"
+    "message": "Sinyal GPS lemah",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "Pengamatan Baru"
+    "message": "Pengamatan Baru",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Pengamatan"
+    "message": "Pengamatan",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Apa yang terjadi di sini?"
+    "message": "Apa yang terjadi di sini?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Pengamatan"
+    "message": "Pengamatan",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Lacak"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "Pengamatan"
+    "message": "Pengamatan",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.accuracy": {
     "message": "Akurasi"
@@ -795,8 +795,8 @@
     "message": "Dikirim dan Divalidasi oleh CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Mulai dari tampilan peta atau kamera untuk merekam pengamatan pertama Anda."
+    "message": "Mulai dari tampilan peta atau kamera untuk merekam pengamatan pertama Anda.",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.justYou": {
     "message": "Hanya Anda"
@@ -817,41 +817,41 @@
     "message": "Izin Saat Ini"
   },
   "screens.PhotoPreviewModal.attachedAtTime": {
-    "description": "Label for the time when the photo was attached to an observation",
-    "message": "Terlampir pada saat pengamatan"
+    "message": "Terlampir pada saat pengamatan",
+    "description": "Label for the time when the photo was attached to an observation"
   },
   "screens.PhotoPreviewModal.attachedBy": {
-    "description": "Label for the person who attached the photo to the observation",
-    "message": "Dilampirkan oleh {name}"
+    "message": "Dilampirkan oleh {name}",
+    "description": "Label for the person who attached the photo to the observation"
   },
   "screens.PhotoPreviewModal.distanceFromObs": {
     "message": "Terlampir {distance} dari pengamatan"
   },
   "screens.PhotoPreviewModal.imageStorageSize": {
-    "description": "Image size in megabytes",
-    "message": "{value} MB"
+    "message": "{value} MB",
+    "description": "Image size in megabytes"
   },
   "screens.PhotoPreviewModal.landscape": {
-    "description": "Describes image layout when taking photo horizontally",
-    "message": "Lanskap"
+    "message": "Lanskap",
+    "description": "Describes image layout when taking photo horizontally"
   },
   "screens.PhotoPreviewModal.navTitle": {
     "message": "Info Foto"
   },
   "screens.PhotoPreviewModal.portrait": {
-    "description": "Describes image layout when taking photo vertically",
-    "message": "Potret"
+    "message": "Potret",
+    "description": "Describes image layout when taking photo vertically"
   },
   "screens.PhotoPreviewModal.timeAttached": {
-    "description": "Label for the time when the photo was attached to an observation",
-    "message": "Terlampir {formattedNum} setelah pengamatan"
+    "message": "Terlampir {formattedNum} setelah pengamatan",
+    "description": "Label for the time when the photo was attached to an observation"
   },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "Divalidasi oleh CoMapeo"
   },
   "screens.PhotoPreviewModal.verifiedOriginal": {
-    "description": "Text indicating that the photo is a verified original",
-    "message": "Ini adalah asli yang diverifikasi tidak berubah."
+    "message": "Ini adalah asli yang diverifikasi tidak berubah.",
+    "description": "Text indicating that the photo is a verified original"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Tentang Awana Digital"
@@ -977,12 +977,12 @@
     "message": "Statistik Proyek | MATI"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Apa yang terjadi di sini?"
+    "message": "Apa yang terjadi di sini?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.SaveTrack.track": {
-    "description": "Category title for new track screen",
-    "message": "Lacak"
+    "message": "Lacak",
+    "description": "Category title for new track screen"
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Undangan Tinjauan"
@@ -1123,12 +1123,12 @@
     "message": "Trek"
   },
   "screens.TrackEdit.title": {
-    "description": "Title for editing track screen",
-    "message": "Edit Trek"
+    "message": "Edit Trek",
+    "description": "Title for editing track screen"
   },
   "screens.TrackEdit.track": {
-    "description": "Preset title for new track screen",
-    "message": "Lacak"
+    "message": "Lacak",
+    "description": "Preset title for new track screen"
   },
   "screens.TrackRecordingActive.cancel": {
     "message": "Batal"
@@ -1155,8 +1155,8 @@
     "message": "Perangkat ini"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
-    "description": "title for observation options",
-    "message": "Tampilkan Opsi"
+    "message": "Tampilkan Opsi",
+    "description": "title for observation options"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Terputus"
@@ -1165,8 +1165,8 @@
     "message": "Perangkat ini!"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Mencari…"
+    "message": "Mencari…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Ubah"

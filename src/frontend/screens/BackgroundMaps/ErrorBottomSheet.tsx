@@ -7,6 +7,9 @@ import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {isQABuild} from '../../lib/appVariant';
+import {useQADeviceName} from '../../contexts/QADeviceNameStoreContext';
+import {NEW_DARK_GREY} from '../../lib/styles';
 
 const m = defineMessages({
   goBack: {
@@ -14,6 +17,38 @@ const m = defineMessages({
     defaultMessage: 'Go Back',
   },
 });
+
+function formatUTCTimestamp(date: Date): string {
+  return (
+    new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+      timeZone: 'UTC',
+    }).format(date) + ' UTC'
+  );
+}
+
+function QAInfoSection() {
+  const qaDeviceName = useQADeviceName();
+  const timestamp = React.useMemo(() => formatUTCTimestamp(new Date()), []);
+
+  return (
+    <View style={styles.qaInfoSection}>
+      <BodyText variant="smallMeta" style={styles.qaInfoText}>
+        {timestamp}
+      </BodyText>
+      {qaDeviceName && (
+        <BodyText variant="smallMeta" style={styles.qaInfoText}>
+          {qaDeviceName}
+        </BodyText>
+      )}
+    </View>
+  );
+}
 
 export const BackgroundMapErrorBottomSheet = ({
   navigation,
@@ -29,6 +64,7 @@ export const BackgroundMapErrorBottomSheet = ({
           <BodyText style={{textAlign: 'center'}}>
             {route.params.description}
           </BodyText>
+          {isQABuild && <QAInfoSection />}
         </View>
         <SecondaryButton
           style={{alignSelf: 'center'}}
@@ -54,5 +90,13 @@ const styles = StyleSheet.create({
   header: {
     textAlign: 'center',
     marginBottom: 20,
+  },
+  qaInfoSection: {
+    alignItems: 'center',
+    gap: 4,
+    marginTop: 12,
+  },
+  qaInfoText: {
+    color: NEW_DARK_GREY,
   },
 });

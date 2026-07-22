@@ -1,11 +1,11 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "ဆက်လက်ပြင်ဆင်ခြင်း"
+    "message": "ဆက်လက်ပြင်ဆင်ခြင်း",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "လေ့လာထားရှိမှုများကို ဖျက်ပစ်မှာလား?"
+    "message": "လေ့လာထားရှိမှုများကို ဖျက်ပစ်မှာလား?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "ပြီးသွားပြီ"
@@ -14,40 +14,40 @@
     "message": "နောက်သို့ ပြန်သွား"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "ပယ်ဖျက်သည်"
+    "message": "ပယ်ဖျက်သည်",
+    "description": "Text for cancel action button."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "ပယ်ဖျက်သည်"
+    "message": "ပယ်ဖျက်သည်",
+    "description": "Button to delete a track"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "ဆက်လက်ပြင်ဆင်ခြင်း"
+    "message": "ဆက်လက်ပြင်ဆင်ခြင်း",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "ပြောင်းလဲမှုများကို ဖျက်ပစ်မှာလား?"
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ပစ်မှာလား?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း"
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း",
+    "description": "Button to confirm discarding the track"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "အန့်ဒရိုက် Android တည်ဆောက် နံပါတ်"
+    "message": "အန့်ဒရိုက် Android တည်ဆောက် နံပါတ်",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "အန့်ဒရိုက် Android ဘားရှင်း"
+    "message": "အန့်ဒရိုက် Android ဘားရှင်း",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "ဖုန်းမော်ဒယ်"
+    "message": "ဖုန်းမော်ဒယ်",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "မသိသော"
+    "message": "မသိသော",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "ပယ်ဖျက်သည်"
@@ -65,16 +65,16 @@
     "message": "ပြီးသွားပြီ"
   },
   "screens.CoordinateFormat.dd": {
-    "description": "Decimal Degrees coordinate format",
-    "message": "ဒသမ ဒီဂရီ"
+    "message": "ဒသမ ဒီဂရီ",
+    "description": "Decimal Degrees coordinate format"
   },
   "screens.CoordinateFormat.dms": {
-    "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "ဒီဂရီ/ မိနစ်/ စက္ကန့်"
+    "message": "ဒီဂရီ/ မိနစ်/ စက္ကန့်",
+    "description": "Degrees/Minutes/Seconds coordinate format"
   },
   "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "UTM (Universal Transverse Mercator)"
+    "message": "UTM (Universal Transverse Mercator)",
+    "description": "Universal Transverse Mercator coordinate format"
   },
   "screens.ExchangeSoloScreen.goBack": {
     "message": "နောက်သို့ ပြန်သွား"
@@ -107,8 +107,8 @@
     "message": "မြောက်"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "ကိုဩဒိနိတ်အမှတ်များ ရိုက်ထည့်ပါ"
+    "message": "ကိုဩဒိနိတ်အမှတ်များ ရိုက်ထည့်ပါ",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
     "message": "UTM (Universal Transverse Mercator)"
@@ -117,32 +117,32 @@
     "message": "ဇုန်နံပါတ်"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "လေ့လာတွေ့ရှိချက်များ"
+    "message": "လေ့လာတွေ့ရှိချက်များ",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "လေ့လာတွေ့ရှိချက်များ"
+    "message": "လေ့လာတွေ့ရှိချက်များ",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "ဆက်လက် စောင့်နေခြင်း"
+    "message": "ဆက်လက် စောင့်နေခြင်း",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "လေ့လာတွေ့ရှိချက်များ"
+    "message": "လေ့လာတွေ့ရှိချက်များ",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
+    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "လေ့လာတွေ့ရှိချက်များ"
+    "message": "လေ့လာတွေ့ရှိချက်များ",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?"
+    "message": "ဒီမှာ ဘာဖြစ်နေတာလဲ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
     "message": "နောက်ထပ်"
@@ -151,8 +151,8 @@
     "message": "ပယ်ဖျက်သည်"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "ရှာဖွေခြင်း…"
+    "message": "ရှာဖွေခြင်း…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "ပြောင်းလဲသည်"

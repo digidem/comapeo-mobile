@@ -73,8 +73,7 @@ export type RootStackParamsList = {
     photoId: number;
   };
   TrackCategoryChooser:
-    | {trackAction: 'saveNew'}
-    | {trackAction: 'editExisting'; trackId: string};
+    {trackAction: 'saveNew'} | {trackAction: 'editExisting'; trackId: string};
   ObservationCategoryChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
@@ -184,6 +183,7 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
+  EditQADeviceName: undefined;
   LeaveProjectWarning: {
     memberType: 'coordinator' | 'participant';
     warningType: 'lastCoordinator' | 'lastDevice';

@@ -1,11 +1,11 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "បន្តកែសម្រួល"
+    "message": "បន្តកែសម្រួល",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "បោះបង់ការសង្កេត?"
+    "message": "បោះបង់ការសង្កេត?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "រួចរាល់"
@@ -20,40 +20,40 @@
     "message": "ទិដ្ឋភាព"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "បោះបង់"
+    "message": "បោះបង់",
+    "description": "Text for cancel action button."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "លុប"
+    "message": "លុប",
+    "description": "Button to delete a track"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "បន្តកែសម្រួល"
+    "message": "បន្តកែសម្រួល",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "តើ​អ្នក​ចង់​រក្សា​ទុក​មុន​ពេល​ចាកចេញទេ?"
+    "message": "តើ​អ្នក​ចង់​រក្សា​ទុក​មុន​ពេល​ចាកចេញទេ?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "លះបង់​ការកែប្រែ"
+    "message": "លះបង់​ការកែប្រែ",
+    "description": "Button to confirm discarding the track"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "លេខកំណែបង្កើតអេនដ្រយ"
+    "message": "លេខកំណែបង្កើតអេនដ្រយ",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "កំណែអេនដ្រយ"
+    "message": "កំណែអេនដ្រយ",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "ម៉ូដែលទូរសព្វ"
+    "message": "ម៉ូដែលទូរសព្វ",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "មិន​ស្គាល់"
+    "message": "មិន​ស្គាល់",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "បោះបង់"
@@ -80,20 +80,20 @@
     "message": "បិទ"
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "ព័ត៌មានលម្អិត"
+    "message": "ព័ត៌មានលម្អិត",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "ការធ្វើបច្ចុប្បន្នភាពចុងក្រោយ"
+    "message": "ការធ្វើបច្ចុប្បន្នភាពចុងក្រោយ",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "ស្ថានភាពឧបករណ៍ចាប់សញ្ញា"
+    "message": "ស្ថានភាពឧបករណ៍ចាប់សញ្ញា",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "និយាមកា UTM"
+    "message": "និយាមកា UTM",
+    "description": "Section title for UTM coordinates"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "ខាងកើត"
@@ -120,8 +120,8 @@
     "message": "ម៉ែតខាងជើង"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "បញ្ចូលលេខនិយាមកា"
+    "message": "បញ្ចូលលេខនិយាមកា",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "អក្សរតំបន់"
@@ -130,67 +130,67 @@
     "message": "លេខតំបន់"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "ការសង្កេត"
+    "message": "ការសង្កេត",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "ការសង្កេត"
+    "message": "ការសង្កេត",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "បន្តរង់ចាំ"
+    "message": "បន្តរង់ចាំ",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "បញ្ចូលលេខនិយាមកាដោយដៃ"
+    "message": "បញ្ចូលលេខនិយាមកាដោយដៃ",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "ការសង្កេតនេះមិនមានទីតាំងទេ។ អ្នកអាចបន្តរង់ចាំសញ្ញាGPS រក្សាទុកការសង្កេតដោយគ្មានទីតាំង ឬបញ្ចូលលេខនិយាមកាដោយដៃ"
+    "message": "ការសង្កេតនេះមិនមានទីតាំងទេ។ អ្នកអាចបន្តរង់ចាំសញ្ញាGPS រក្សាទុកការសង្កេតដោយគ្មានទីតាំង ឬបញ្ចូលលេខនិយាមកាដោយដៃ",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "គ្មានសញ្ញាGPS ទេ"
+    "message": "គ្មានសញ្ញាGPS ទេ",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "រក្សាទុក"
+    "message": "រក្សាទុក",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "សុក្រឹត្យភាពនៃប្រព័ន្ធ GPS គឺទាប។ អ្នកអាចបន្តរង់ចាំនូវសុក្រឹត្យភាពដែលប្រសើរជាងមុន រក្សាទុកការសង្កេតដោយសុក្រឹត្យភាពទាបឬបញ្ចូលលេខនិយាមកាដោយដៃ"
+    "message": "សុក្រឹត្យភាពនៃប្រព័ន្ធ GPS គឺទាប។ អ្នកអាចបន្តរង់ចាំនូវសុក្រឹត្យភាពដែលប្រសើរជាងមុន រក្សាទុកការសង្កេតដោយសុក្រឹត្យភាពទាបឬបញ្ចូលលេខនិយាមកាដោយដៃ",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "សញ្ញា GPS ខ្សោយ"
+    "message": "សញ្ញា GPS ខ្សោយ",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "ការសង្កេតថ្មី"
+    "message": "ការសង្កេតថ្មី",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "ការសង្កេត"
+    "message": "ការសង្កេត",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "តើមានអ្វីកំពុងកើតឡើងនៅទីនេះ?"
+    "message": "តើមានអ្វីកំពុងកើតឡើងនៅទីនេះ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "ការសង្កេត"
+    "message": "ការសង្កេត",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "ការសង្កេត"
+    "message": "ការសង្កេត",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.location": {
     "message": "ទីតាំង"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "ចាប់ផ្តើមពីទិដ្ឋភាពផែនទីឬកាមេរ៉ាដើម្បីកត់ត្រាការសង្កេតដំបូងរបស់អ្នក។"
+    "message": "ចាប់ផ្តើមពីទិដ្ឋភាពផែនទីឬកាមេរ៉ាដើម្បីកត់ត្រាការសង្កេតដំបូងរបស់អ្នក។",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "ទាំងអស់"
@@ -202,8 +202,8 @@
     "message": "បិទ"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "តើមានអ្វីកំពុងកើតឡើងនៅទីនេះ?"
+    "message": "តើមានអ្វីកំពុងកើតឡើងនៅទីនេះ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
     "message": "បន្ទាប់"
@@ -215,8 +215,8 @@
     "message": "បាន​ផ្ដាច់"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "កំពុងស្វែងរក…"
+    "message": "កំពុងស្វែងរក…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "ផ្លាស់ប្តូរ"

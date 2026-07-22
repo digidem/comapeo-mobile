@@ -8,8 +8,8 @@ const OPTIONS = [
   {label: 'Option C', value: 'c'},
 ];
 
-test('renders all option labels', () => {
-  render(
+test('renders all option labels', async () => {
+  await render(
     <SelectMultiple options={OPTIONS} updateTag={jest.fn()} tagValue={[]} />,
   );
 
@@ -18,22 +18,22 @@ test('renders all option labels', () => {
   expect(screen.getByText('Option C')).toBeOnTheScreen();
 });
 
-test('selecting an unselected option adds it', () => {
+test('selecting an unselected option adds it', async () => {
   const updateTag = jest.fn();
 
-  render(
+  await render(
     <SelectMultiple options={OPTIONS} updateTag={updateTag} tagValue={['a']} />,
   );
 
-  fireEvent.press(screen.getByText('Option B'));
+  await fireEvent.press(screen.getByText('Option B'));
 
   expect(updateTag).toHaveBeenCalledWith(['a', 'b']);
 });
 
-test('selecting an already-selected option removes it', () => {
+test('selecting an already-selected option removes it', async () => {
   const updateTag = jest.fn();
 
-  render(
+  await render(
     <SelectMultiple
       options={OPTIONS}
       updateTag={updateTag}
@@ -41,27 +41,27 @@ test('selecting an already-selected option removes it', () => {
     />,
   );
 
-  fireEvent.press(screen.getByText('Option A'));
+  await fireEvent.press(screen.getByText('Option A'));
 
   expect(updateTag).toHaveBeenCalledWith(['b']);
 });
 
-test('selecting the only selected option results in an empty array', () => {
+test('selecting the only selected option results in an empty array', async () => {
   const updateTag = jest.fn();
 
-  render(
+  await render(
     <SelectMultiple options={OPTIONS} updateTag={updateTag} tagValue={['b']} />,
   );
 
-  fireEvent.press(screen.getByText('Option B'));
+  await fireEvent.press(screen.getByText('Option B'));
 
   expect(updateTag).toHaveBeenCalledWith([]);
 });
 
-test('works when tagValue is undefined', () => {
+test('works when tagValue is undefined', async () => {
   const updateTag = jest.fn();
 
-  render(
+  await render(
     <SelectMultiple
       options={OPTIONS}
       updateTag={updateTag}
@@ -69,24 +69,24 @@ test('works when tagValue is undefined', () => {
     />,
   );
 
-  fireEvent.press(screen.getByText('Option C'));
+  await fireEvent.press(screen.getByText('Option C'));
 
   expect(updateTag).toHaveBeenCalledWith(['c']);
 });
 
-test('works when tagValue is a scalar string', () => {
+test('works when tagValue is a scalar string', async () => {
   const updateTag = jest.fn();
 
-  render(
+  await render(
     <SelectMultiple options={OPTIONS} updateTag={updateTag} tagValue="a" />,
   );
 
-  fireEvent.press(screen.getByText('Option B'));
+  await fireEvent.press(screen.getByText('Option B'));
 
   expect(updateTag).toHaveBeenCalledWith(['a', 'b']);
 });
 
-test('re-renders correctly when swapped to a field with duplicate labels', () => {
+test('re-renders correctly when swapped to a field with duplicate labels', async () => {
   const DUPLICATE_LABEL_OPTIONS = [
     {label: 'Same', value: 'x'},
     {label: 'Same', value: 'y'},
@@ -97,7 +97,7 @@ test('re-renders correctly when swapped to a field with duplicate labels', () =>
   ];
   const updateTag = jest.fn();
 
-  const {rerender} = render(
+  const {rerender} = await render(
     <SelectMultiple
       options={DUPLICATE_LABEL_OPTIONS}
       updateTag={updateTag}
@@ -105,7 +105,7 @@ test('re-renders correctly when swapped to a field with duplicate labels', () =>
     />,
   );
 
-  rerender(
+  await rerender(
     <SelectMultiple
       options={NEXT_OPTIONS}
       updateTag={updateTag}
@@ -118,19 +118,19 @@ test('re-renders correctly when swapped to a field with duplicate labels', () =>
   expect(screen.queryByText('Same')).toBeNull();
 });
 
-test('multiple options can be selected', () => {
+test('multiple options can be selected', async () => {
   const updateTag = jest.fn();
-  const {rerender} = render(
+  const {rerender} = await render(
     <SelectMultiple options={OPTIONS} updateTag={updateTag} tagValue={[]} />,
   );
 
-  fireEvent.press(screen.getByText('Option A'));
+  await fireEvent.press(screen.getByText('Option A'));
   expect(updateTag).toHaveBeenLastCalledWith(['a']);
 
-  rerender(
+  await rerender(
     <SelectMultiple options={OPTIONS} updateTag={updateTag} tagValue={['a']} />,
   );
 
-  fireEvent.press(screen.getByText('Option C'));
+  await fireEvent.press(screen.getByText('Option C'));
   expect(updateTag).toHaveBeenLastCalledWith(['a', 'c']);
 });

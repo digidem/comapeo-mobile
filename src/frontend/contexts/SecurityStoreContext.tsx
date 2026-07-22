@@ -96,13 +96,11 @@ export function createSecurityStore({persist} = {persist: false}) {
         name: STORAGE_KEY,
         version: 1,
         migrate,
-        storage: createJSONStorage(
-          (): StateStorage => ({
-            getItem: key => getItem(key),
-            setItem: (key, value) => setItem(key, value),
-            removeItem: key => deleteItemAsync(key),
-          }),
-        ),
+        storage: createJSONStorage((): StateStorage => ({
+          getItem: key => getItem(key),
+          setItem: (key, value) => setItem(key, value),
+          removeItem: key => deleteItemAsync(key),
+        })),
         onRehydrateStorage: () => {
           return (state?: SecurityState) => {
             if (state) {

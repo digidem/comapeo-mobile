@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/react-native';
 import {AppState, Dimensions, PixelRatio, Platform} from 'react-native';
 import * as NetInfo from '@react-native-community/netinfo';
+import * as Application from 'expo-application';
 import * as Device from 'expo-device';
 import {getMonthlyHash} from './getMonthlyHash';
 import {sendMetricsData} from './sendMetricsData';
@@ -15,6 +16,7 @@ const STORAGE_KEY = 'DeviceDiagnosticMetricsLastSentAt';
 type DeviceDiagnosticMetricsData = {
   type: 'device diagnostics v1';
   monthlyDeviceHash: string;
+  appId?: string;
   brand?: string;
   deviceType?: string;
   isEmulator?: true;
@@ -62,6 +64,7 @@ async function generateDeviceDiagnosticMetricsData(): Promise<DeviceDiagnosticMe
     ),
   };
 
+  setIfNotNull(result, 'appId', Application.applicationId);
   setIfNotNull(result, 'brand', Device.brand);
   setIfNotNull(result, 'manufacturer', Device.manufacturer);
   setIfNotNull(result, 'model', Device.modelId || Device.modelName);

@@ -3,12 +3,7 @@ import {Text as RNText, TextProps, TextStyle} from 'react-native';
 import {DARK_GREY} from '../../lib/styles';
 
 type Variant =
-  | 'header1'
-  | 'header2'
-  | 'header3'
-  | 'header4'
-  | 'header5'
-  | 'header6';
+  'header1' | 'header2' | 'header3' | 'header4' | 'header5' | 'header6';
 
 interface HeaderProps extends Omit<TextProps, 'style'> {
   style?: Omit<TextStyle, 'fontSize' | 'fontFamily' | 'fontWeight'>;

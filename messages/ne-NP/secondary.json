@@ -1,11 +1,11 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "निरन्तर सम्पादन"
+    "message": "निरन्तर सम्पादन",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "अवलाेकन हटाउने?"
+    "message": "अवलाेकन हटाउने?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "भयाे"
@@ -17,40 +17,40 @@
     "message": "पछाडी जानुहाेस"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "रद्द"
+    "message": "रद्द",
+    "description": "Text for cancel action button."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "मेटाउने"
+    "message": "मेटाउने",
+    "description": "Button to delete a track"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "निरन्तर सम्पादन"
+    "message": "निरन्तर सम्पादन",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "परिवर्तन रद्द?"
+    "message": "परिवर्तन रद्द?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "परिवर्तन रद्द"
+    "message": "परिवर्तन रद्द",
+    "description": "Button to confirm discarding the track"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "Android build नम्बर"
+    "message": "Android build नम्बर",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "Android संस्करण"
+    "message": "Android संस्करण",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "फाेन माेडल"
+    "message": "फाेन माेडल",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "अज्ञात"
+    "message": "अज्ञात",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "रद्द"
@@ -80,20 +80,20 @@
     "message": "पछाडी जानुहाेस"
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "विवरणहरू"
+    "message": "विवरणहरू",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "पछिल्लाे अपडेट"
+    "message": "पछिल्लाे अपडेट",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "सेन्सरकाे अवस्था"
+    "message": "सेन्सरकाे अवस्था",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "UTM निर्देश"
+    "message": "UTM निर्देश",
+    "description": "Section title for UTM coordinates"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "पुर्व"
@@ -114,8 +114,8 @@
     "message": "उत्तर"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "निर्देश भित्र प्रवेश"
+    "message": "निर्देश भित्र प्रवेश",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "क्षेत्र पत्र"
@@ -124,68 +124,68 @@
     "message": "जाेन नम्बर"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "अवलाेकन"
+    "message": "अवलाेकन",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "अवलाेकन"
+    "message": "अवलाेकन",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "पर्खाइ निरन्तर"
+    "message": "पर्खाइ निरन्तर",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "म्यानुअल काेर्डस्"
+    "message": "म्यानुअल काेर्डस्",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "याे अवलाेकनकाे लाेकेसन छैन । तपाइले GPS संकेत निरन्तर कुर्न सक्नु हुनेछ, अवलाेकनलाइ लाेकेसन बेगर संग्रह गर्न सक्नुहुन्छ, वा निर्देशलाइ अाफैले राख्नु"
+    "message": "याे अवलाेकनकाे लाेकेसन छैन । तपाइले GPS संकेत निरन्तर कुर्न सक्नु हुनेछ, अवलाेकनलाइ लाेकेसन बेगर संग्रह गर्न सक्नुहुन्छ, वा निर्देशलाइ अाफैले राख्नु",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "GPS संकेत छैन"
+    "message": "GPS संकेत छैन",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "संग्रह"
+    "message": "संग्रह",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS यथार्थता न्यून छ, दुरूस्त GPS काे लागि कुर्न सक्नु हुन्छ, न्यून GPS यथार्थतामा संग्रह गर्न सक्नु हुन्छ, वा अाफैले निर्देश गर्न सक्नुहुन्छ"
+    "message": "GPS यथार्थता न्यून छ, दुरूस्त GPS काे लागि कुर्न सक्नु हुन्छ, न्यून GPS यथार्थतामा संग्रह गर्न सक्नु हुन्छ, वा अाफैले निर्देश गर्न सक्नुहुन्छ",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "कमजाेर GPS संकेत"
+    "message": "कमजाेर GPS संकेत",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "नया अवलाेकन"
+    "message": "नया अवलाेकन",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "अवलाेकन"
+    "message": "अवलाेकन",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "यहाँ के भइ राखेकाे छ?"
+    "message": "यहाँ के भइ राखेकाे छ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "अवलाेकन"
+    "message": "अवलाेकन",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "अवलाेकनहरू"
+    "message": "अवलाेकनहरू",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "पहिलो अवलोकन रेकर्ड गर्न नक्सा वा क्यामेरा दृश्यबाट सुरू गर्नु."
+    "message": "पहिलो अवलोकन रेकर्ड गर्न नक्सा वा क्यामेरा दृश्यबाट सुरू गर्नु.",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "यहाँ के भइ राखेकाे छ?"
+    "message": "यहाँ के भइ राखेकाे छ?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.Settings.NameDefaultProjectIntro.nextButton": {
     "message": "अर्काे"
@@ -194,8 +194,8 @@
     "message": "रद्द"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "खाेजी जारी …"
+    "message": "खाेजी जारी …",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "परिवर्तन"

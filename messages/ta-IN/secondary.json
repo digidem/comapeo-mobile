@@ -1,11 +1,11 @@
 {
   "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "தொடர்ந்து திருத்தவும்"
+    "message": "தொடர்ந்து திருத்தவும்",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "அவதானிப்புகளை நீக்கவா?"
+    "message": "அவதானிப்புகளை நீக்கவா?",
+    "description": "Title of dialog that shows when cancelling a new observation"
   },
   "ExportSuccess.done": {
     "message": "முடிந்தது"
@@ -26,40 +26,40 @@
     "message": "பார்க்கவும் "
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
-    "description": "Text for cancel action button.",
-    "message": "ரத்து செய்க"
+    "message": "ரத்து செய்க",
+    "description": "Text for cancel action button."
   },
   "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete a track",
-    "message": "அழி"
+    "message": "அழி",
+    "description": "Button to delete a track"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "தொடர்ந்து திருத்தவும்"
+    "message": "தொடர்ந்து திருத்தவும்",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "TrackEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling track edits",
-    "message": "மாற்றங்களை அகற்றவா?"
+    "message": "மாற்றங்களை அகற்றவா?",
+    "description": "Title of dialog that shows when cancelling track edits"
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
-    "description": "Button to confirm discarding the track",
-    "message": "மாற்றங்களை நிராகரிக்கவும்"
+    "message": "மாற்றங்களை நிராகரிக்கவும்",
+    "description": "Button to confirm discarding the track"
   },
   "screens.AboutSettings.androidBuild": {
-    "description": "Label for Android build number",
-    "message": "Android உருவாக்க எண்"
+    "message": "Android உருவாக்க எண்",
+    "description": "Label for Android build number"
   },
   "screens.AboutSettings.androidVersion": {
-    "description": "Label for Android version",
-    "message": "ஆண்ட்ராய்டு பதிப்பு (Android version)"
+    "message": "ஆண்ட்ராய்டு பதிப்பு (Android version)",
+    "description": "Label for Android version"
   },
   "screens.AboutSettings.phoneModel": {
-    "description": "Label for phone model",
-    "message": "போன் மாடல்"
+    "message": "போன் மாடல்",
+    "description": "Label for phone model"
   },
   "screens.AboutSettings.unknownValue": {
-    "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "தெரியாத"
+    "message": "தெரியாத",
+    "description": "Shown when a device info (e.g. version number) is unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "ரத்து செய்க"
@@ -83,16 +83,16 @@
     "message": "திட்டத்தை விட்டு வெளியேறவும்"
   },
   "screens.CoordinateFormat.dd": {
-    "description": "Decimal Degrees coordinate format",
-    "message": "தசம டிகிரி (DD)"
+    "message": "தசம டிகிரி (DD)",
+    "description": "Decimal Degrees coordinate format"
   },
   "screens.CoordinateFormat.dms": {
-    "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "டிகிரி/நிமிடங்கள்/வினாடிகள் (DMS)"
+    "message": "டிகிரி/நிமிடங்கள்/வினாடிகள் (DMS)",
+    "description": "Degrees/Minutes/Seconds coordinate format"
   },
   "screens.CoordinateFormat.utm": {
-    "description": "Universal Transverse Mercator coordinate format",
-    "message": "யுனிவர்சல் டிரான்ஸ்வர்ஸ் மெர்கேட்டர் (UTM)"
+    "message": "யுனிவர்சல் டிரான்ஸ்வர்ஸ் மெர்கேட்டர் (UTM)",
+    "description": "Universal Transverse Mercator coordinate format"
   },
   "screens.EarlyAccessTurnedOff.close": {
     "message": "மூடுக"
@@ -107,28 +107,28 @@
     "message": "மூடுக"
   },
   "screens.LocationInfoScreen.details": {
-    "description": "Section title for details about current position",
-    "message": "விபரங்கள்"
+    "message": "விபரங்கள்",
+    "description": "Section title for details about current position"
   },
   "screens.LocationInfoScreen.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "கடைசியாகப் புதுப்பித்தது"
+    "message": "கடைசியாகப் புதுப்பித்தது",
+    "description": "Section title for time of last GPS update"
   },
   "screens.LocationInfoScreen.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "தசம டிகிரிகளை ஒருங்கிணைக்கிறது"
+    "message": "தசம டிகிரிகளை ஒருங்கிணைக்கிறது",
+    "description": "Section title for DD coordinates"
   },
   "screens.LocationInfoScreen.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "DMS ஒருங்கிணைப்பு"
+    "message": "DMS ஒருங்கிணைப்பு",
+    "description": "Section title for DMS coordinates"
   },
   "screens.LocationInfoScreen.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "சென்சார் நிலை"
+    "message": "சென்சார் நிலை",
+    "description": "Heading for section about location sensor status"
   },
   "screens.LocationInfoScreen.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "UTM ஒருங்கிணைப்பு"
+    "message": "UTM ஒருங்கிணைப்பு",
+    "description": "Section title for UTM coordinates"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "கிழக்கு"
@@ -230,8 +230,8 @@
     "message": "மீட்டர் வடக்கு MN"
   },
   "screens.ManualGpsScreen.title": {
-    "description": "title of manual GPS screen",
-    "message": "ஒருங்கிணைப்புகள் உள்ளிடவும்"
+    "message": "ஒருங்கிணைப்புகள் உள்ளிடவும்",
+    "description": "title of manual GPS screen"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
     "message": "யுனிவர்சல் டிரான்ஸ்வர்ஸ் மெர்கேட்டர் (UTM)"
@@ -243,60 +243,60 @@
     "message": "மண்டல எண்"
   },
   "screens.Observation.ObservationView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "அவதானிப்புகள்"
+    "message": "அவதானிப்புகள்",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.Observation.fallbackPresetName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "அவதானிப்புகள்"
+    "message": "அவதானிப்புகள்",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "screens.ObservationCreate.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "தொடர்ந்து காத்திருக்கவும்"
+    "message": "தொடர்ந்து காத்திருக்கவும்",
+    "description": "Button to cancel save and continue waiting for GPS"
   },
   "screens.ObservationCreate.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "கையேடு இணைப்புகள்"
+    "message": "கையேடு இணைப்புகள்",
+    "description": "Button to manually enter GPS coordinates"
   },
   "screens.ObservationCreate.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "இந்தக் கவனிப்புக்கு இடம் இல்லை. ஜிபிஎஸ் சிக்னலுக்காக நீங்கள் தொடர்ந்து காத்திருக்கலாம், இருப்பிடம் இல்லாமல் கண்காணிப்பைச் சேமிக்கலாம் அல்லது ஆயங்களை கைமுறையாக உள்ளிடலாம்"
+    "message": "இந்தக் கவனிப்புக்கு இடம் இல்லை. ஜிபிஎஸ் சிக்னலுக்காக நீங்கள் தொடர்ந்து காத்திருக்கலாம், இருப்பிடம் இல்லாமல் கண்காணிப்பைச் சேமிக்கலாம் அல்லது ஆயங்களை கைமுறையாக உள்ளிடலாம்",
+    "description": "Description in dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "GPS சமிக்ஞை இல்லை"
+    "message": "GPS சமிக்ஞை இல்லை",
+    "description": "Title of dialog when trying to save with no GPS coords"
   },
   "screens.ObservationCreate.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "சேமிக்கவும்"
+    "message": "சேமிக்கவும்",
+    "description": "Button to save regardless of GPS state"
   },
   "screens.ObservationCreate.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS துல்லியம் குறைவாக உள்ளது. சிறந்த துல்லியத்திற்காக நீங்கள் தொடர்ந்து காத்திருக்கலாம், குறைந்த துல்லியத்துடன் கண்காணிப்பைச் சேமிக்கலாம் அல்லது ஆயங்களை கைமுறையாக உள்ளிடலாம்"
+    "message": "GPS துல்லியம் குறைவாக உள்ளது. சிறந்த துல்லியத்திற்காக நீங்கள் தொடர்ந்து காத்திருக்கலாம், குறைந்த துல்லியத்துடன் கண்காணிப்பைச் சேமிக்கலாம் அல்லது ஆயங்களை கைமுறையாக உள்ளிடலாம்",
+    "description": "Description in dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "பலவீனமான GPS சிக்னல்"
+    "message": "பலவீனமான GPS சிக்னல்",
+    "description": "Title of dialog when trying to save with low GPS accuracy."
   },
   "screens.ObservationCreate.navTitle": {
-    "description": "screen title for new observation screen",
-    "message": "புதிய கவனிப்பு"
+    "message": "புதிய கவனிப்பு",
+    "description": "screen title for new observation screen"
   },
   "screens.ObservationCreate.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "அவதானிப்புகள்"
+    "message": "அவதானிப்புகள்",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "இங்கே என்ன நடக்கிறது?"
+    "message": "இங்கே என்ன நடக்கிறது?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.ObservationEdit.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "அவதானிப்புகள்"
+    "message": "அவதானிப்புகள்",
+    "description": "Default name of observation with no matching preset"
   },
   "screens.ObservationList.observationListTitle": {
-    "description": "Title of screen with list of observations",
-    "message": "அவதானிப்புகள்"
+    "message": "அவதானிப்புகள்",
+    "description": "Title of screen with list of observations"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "அட்சரேகை"
@@ -305,8 +305,8 @@
     "message": "தீர்க்கரேகை"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "உங்கள் முதல் கண்காணிப்பைப் பதிவு செய்ய வரைபடம் அல்லது கேமரா காட்சியிலிருந்து தொடங்கவும்."
+    "message": "உங்கள் முதல் கண்காணிப்பைப் பதிவு செய்ய வரைபடம் அல்லது கேமரா காட்சியிலிருந்து தொடங்கவும்.",
+    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "அனைத்தும்"
@@ -321,8 +321,8 @@
     "message": "மூடுக"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "இங்கே என்ன நடக்கிறது?"
+    "message": "இங்கே என்ன நடக்கிறது?",
+    "description": "Placeholder for description/notes field"
   },
   "screens.Settings.Config.projectName": {
     "message": "செயற்திட்டத்தின் பெயர்"
@@ -337,8 +337,8 @@
     "message": "துண்டிக்கப்பட்டது"
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "தேடு…"
+    "message": "தேடு…",
+    "description": "Shown in new observation screen whilst looking for GPS"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "மாற்றுக"

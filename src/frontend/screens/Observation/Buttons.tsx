@@ -91,7 +91,7 @@ export const ButtonFields = ({
     data: {name},
   } = useProjectSettings({projectId});
   const openShare = useOpenShareDialog();
-  const canDelete = useCanEditOrDelete(observation.originalVersionId);
+  const canDelete = useCanEditOrDelete(observation.createdBy);
 
   function handlePressDelete() {
     navigation.navigate('ConfirmDeleteObservationBottomSheet', {observationId});

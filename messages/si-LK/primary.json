@@ -1,22 +1,22 @@
 {
   "$1ObservationEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "සංස්කරණය කරගෙන යන්න"
+    "message": "සංස්කරණය කරගෙන යන්න",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "$1ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Button to confirm discarding the observation edits",
-    "message": "වෙනස්කම් ඉවතලන්න"
+    "message": "වෙනස්කම් ඉවතලන්න",
+    "description": "Button to confirm discarding the observation edits"
   },
   "$1ObservationEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "වෙනස්කම් ඉවතලන්න?"
+    "message": "වෙනස්කම් ඉවතලන්න?",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "$1ProjectSettings.RemoteArchive.Success.close": {
     "message": "වසන්න"
   },
   "$1SaveTrack.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "සංස්කරණය කරගෙන යන්න"
+    "message": "සංස්කරණය කරගෙන යන්න",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "$1allProjects.close": {
     "message": "වසන්න"
@@ -79,8 +79,8 @@
     "message": "මෙම ඡායාරූපය මකන්නද?"
   },
   "$1screens.CoordinateFormat.title": {
-    "description": "Title coordinate format screen",
-    "message": "සම්බන්ධීකරණ ආකෘතිය"
+    "message": "සම්බන්ධීකරණ ආකෘතිය",
+    "description": "Title coordinate format screen"
   },
   "$1screens.DataPrivacy.next": {
     "message": "ඊළඟ"
@@ -110,8 +110,8 @@
     "message": "සාර්ථකත්වය"
   },
   "$1screens.LanguageSettings.title": {
-    "description": "Title language settings screen",
-    "message": "භාෂාව"
+    "message": "භාෂාව",
+    "description": "Title language settings screen"
   },
   "$1screens.LeaveProject.cancel": {
     "message": "අවලංගු කරන්න"
@@ -123,28 +123,28 @@
     "message": "ඉදිරියට යන්න"
   },
   "$1screens.LocationInfoScreen.gpsHeader": {
-    "description": "Header for GPS screen",
-    "message": "වත්මන් GPS ස්ථානය"
+    "message": "වත්මන් GPS ස්ථානය",
+    "description": "Header for GPS screen"
   },
   "$1screens.LocationInfoScreen.no": {
-    "description": "if a location sensor is active yes/no",
-    "message": "නැහැ"
+    "message": "නැහැ",
+    "description": "if a location sensor is active yes/no"
   },
   "$1screens.LocationInfoScreen.yes": {
-    "description": "if a location sensor is active yes/no",
-    "message": "ඔව්"
+    "message": "ඔව්",
+    "description": "if a location sensor is active yes/no"
   },
   "$1screens.Observation.ObservationView.delete": {
-    "description": "Button to delete an observation",
-    "message": "මකන්න"
+    "message": "මකන්න",
+    "description": "Button to delete an observation"
   },
   "$1screens.Observation.ObservationView.noAnswer": {
-    "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "පිළිතුරක් නැත"
+    "message": "පිළිතුරක් නැත",
+    "description": "Placeholder text for fields on an observation which are not answered"
   },
   "$1screens.Observation.ObservationView.share": {
-    "description": "Button to share an observation",
-    "message": "බෙදාගන්න"
+    "message": "බෙදාගන්න",
+    "description": "Button to share an observation"
   },
   "$1screens.Observation.deleteTitle": {
     "message": "නිරීක්ෂණය මකන්නද?"
@@ -153,40 +153,40 @@
     "message": "විස්තර:"
   },
   "$1screens.Observation.fallbackCategoryName": {
-    "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "නිරීක්ෂණ"
+    "message": "නිරීක්ෂණ",
+    "description": "Fallback name used when category name cannot be determined for observation"
   },
   "$1screens.Observation.title": {
-    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "නිරීක්ෂණ"
+    "message": "නිරීක්ෂණ",
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions"
   },
   "$1screens.ObservationDetails.done": {
-    "description": "Button text when all questions are complete",
-    "message": "කළා"
+    "message": "කළා",
+    "description": "Button text when all questions are complete"
   },
   "$1screens.ObservationDetails.nextQuestion": {
-    "description": "Button text to navigate to next question",
-    "message": "ඊළඟ"
+    "message": "ඊළඟ",
+    "description": "Button text to navigate to next question"
   },
   "$1screens.ObservationDetails.title": {
-    "description": "Title of observation details screen showing question number and total",
-    "message": "ප්‍රශ්නය {current} වල {total}"
+    "message": "ප්‍රශ්නය {current} වල {total}",
+    "description": "Title of observation details screen showing question number and total"
   },
   "$1screens.ObservationEdit.ObservationEditView.detailsButton": {
-    "description": "Button label to add details",
-    "message": "විස්තරය"
+    "message": "විස්තරය",
+    "description": "Button label to add details"
   },
   "$1screens.ObservationEdit.navTitle": {
-    "description": "screen title for edit observation screen",
-    "message": "නිරීක්ෂණ සංස්කරණය කරන්න"
+    "message": "නිරීක්ෂණ සංස්කරණය කරන්න",
+    "description": "screen title for edit observation screen"
   },
   "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "සිතියම වෙත යන්න"
+    "message": "සිතියම වෙත යන්න",
+    "description": "Back button on observation list screen when no observations are yet recorded"
   },
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "නිරීක්ෂණය එකතු කරන්න"
+    "message": "නිරීක්ෂණය එකතු කරන්න",
+    "description": "Title of observation list view when the user has not yet recorded observations"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.close": {
     "message": "වසන්න"

@@ -1,6 +1,6 @@
 {
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "Andi ta pasa aki?"
+    "message": "Andi ta pasa aki?",
+    "description": "Placeholder for description/notes field"
   }
 }

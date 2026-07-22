@@ -66,25 +66,32 @@ export function createLocaleStore({persist} = {persist: false}) {
         // directly, so there's no need to reach for the store instance,
         // which doesn't exist in the onRehydrateStorage.
         merge: (persistedState, currentState) => {
-          const state = persistedState as LocaleState;
+          const parseResults = v.safeParse(LocaleStateSchema, persistedState);
 
-          if (state.useSystemPreferences) {
+          if (!parseResults.success) {
+            return currentState;
+          }
+
+          const validatedPersistedState = parseResults.output;
+
+          if (validatedPersistedState.useSystemPreferences) {
             // usable language tags can change between app boot ups;
             // re-resolve from system preferences in case they changed
             const systemLanguageTags = getLocales().map(l => l.languageTag);
             return {
               ...currentState,
+              ...validatedPersistedState,
               languageTag:
                 getUsableLanguageTagFromSystemPreferences(systemLanguageTags),
             };
           }
 
           // checks that the language tag is still an available language
-          if (!getUsableLanguageTag(state.languageTag)) {
+          if (!getUsableLanguageTag(validatedPersistedState.languageTag)) {
             return {...currentState, ...createInitialState()};
           }
 
-          return {...currentState, ...state};
+          return {...currentState, ...validatedPersistedState};
         },
       }),
     );

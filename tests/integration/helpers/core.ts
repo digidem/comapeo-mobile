@@ -217,7 +217,7 @@ export const createTestServer = (): Promise<{
     });
   });
 
-// jest-expo stubs `fetch` with a non-working stub; this swaps in undici's real implementation.
+// jest-expo subs `fetch` with a non-working stub; this swaps in undici's real implementation.
 export function useRealFetch(): () => void {
   const originalFetch = global.fetch;
   const originalHeaders = global.Headers;

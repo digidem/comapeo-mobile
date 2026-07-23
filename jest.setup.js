@@ -1,4 +1,11 @@
 import {jest, afterAll} from '@jest/globals';
+import {performance as nodePerformance} from 'node:perf_hooks';
+
+// undici reads `performance.markResourceTiming` at import time (as early as
+// @comapeo/core's own imports), so it must be patched before any test file loads.
+
+globalThis.performance.markResourceTiming =
+  nodePerformance.markResourceTiming.bind(nodePerformance);
 
 jest.mock('./translations/index', () => {
   const actual = jest.requireActual('./translations/index');

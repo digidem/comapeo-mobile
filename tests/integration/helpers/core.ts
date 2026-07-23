@@ -182,6 +182,10 @@ export const createTestServer = (): Promise<{
 
     childProcess.unref();
 
+    // @comapeo/core needs to reach the server spawned above (e.g. to add it
+    // as a peer).
+    const callFetch = useRealFetch();
+
     childProcess.stdout.on('data', data => {
       const url = data.toString().trim();
 
@@ -190,10 +194,12 @@ export const createTestServer = (): Promise<{
           serverBaseUrl: url,
           close: () => {
             childProcess.kill('SIGTERM');
+            callFetch();
           },
         });
       } else {
         childProcess.kill();
+        callFetch();
         reject(new Error('Test is not set up correctly: invalid URL'));
       }
     });
@@ -210,6 +216,24 @@ export const createTestServer = (): Promise<{
       }
     });
   });
+
+// jest-expo subs `fetch` with a non-working stub; this swaps in undici's real implementation.
+export function useRealFetch(): () => void {
+  const originalFetch = global.fetch;
+  const originalHeaders = global.Headers;
+  const originalResponse = global.Response;
+
+  const {fetch, Headers, Response} = require('undici');
+  global.fetch = fetch;
+  global.Headers = Headers;
+  global.Response = Response;
+
+  return () => {
+    global.fetch = originalFetch;
+    global.Headers = originalHeaders;
+    global.Response = originalResponse;
+  };
+}
 
 function urlIsValid(url: string): boolean {
   try {

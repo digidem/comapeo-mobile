@@ -82,6 +82,7 @@
     "expo-linking": "56.0.14",
     "expo-localization": "56.0.6",
     "expo-location": "56.0.18",
+    "expo-modules-core": "56.0.21",
     "expo-secure-store": "56.0.4",
     "expo-sensors": "56.0.6",
     "expo-splash-screen": "56.0.10",
@@ -196,13 +197,17 @@
     "type-fest": "5.7.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.62.1",
+    "undici": "6.25.0",
     "webdriverio": "9.29.1",
     "zod-validation-error": "4.0.2"
   },
   "overrides": {
     "axios": "1.15.0",
     "basic-ftp": "5.2.0",
-    "require-addon": "1.1.0"
+    "require-addon": "1.1.0",
+    "expo-modules-core": {
+      "react-native-worklets": "$react-native-worklets"
+    }
   },
   "expo": {
     "install": {

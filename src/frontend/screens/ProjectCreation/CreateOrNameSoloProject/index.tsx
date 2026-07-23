@@ -199,7 +199,7 @@ export const CreateOrNameSoloProject = ({
                 paddingTop: 10,
               }}>
               {mutationIsPending ? (
-                <LoadingIndicator size={30} style={{marginBottom: 20}} />
+                <LoadingIndicator size="large" style={{marginBottom: 20}} />
               ) : (
                 <PrimaryButton
                   testID="PROJECT.create-btn"

@@ -84,7 +84,7 @@ export const ConfirmPasscodeBottomSheet = ({
         </BodyText>
         {loading ? (
           <View style={styles.loading}>
-            <LoadingIndicator size={32} />
+            <LoadingIndicator size="large" />
           </View>
         ) : (
           <View style={styles.buttonsContainer}>

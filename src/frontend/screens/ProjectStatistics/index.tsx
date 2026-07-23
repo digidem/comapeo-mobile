@@ -97,7 +97,7 @@ export const ProjectStatistics = ({
                 {formatMessage(m.shareLabel)}
               </BodyText>
               {status === 'pending' ? (
-                <LoadingIndicator size={25} style={{flex: 0}} />
+                <LoadingIndicator size="small" style={{flex: 0}} />
               ) : (
                 <Checkbox
                   testID={

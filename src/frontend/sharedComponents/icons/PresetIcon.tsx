@@ -39,7 +39,7 @@ const LoadedPresetIcon = ({
   } = useProjectIconUrl(iconId, iconType);
 
   if (isRefetching) {
-    return <LoadingIndicator size={iconSize} />;
+    return <LoadingIndicator size={size === 'small' ? 'small' : 'large'} />;
   }
 
   if (error) {

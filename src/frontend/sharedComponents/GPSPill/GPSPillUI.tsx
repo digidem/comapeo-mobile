@@ -68,7 +68,7 @@ export const GPSPillUI = (props: Props) => {
             // Animations seem to cause issues with test performance on Browserstack
             animating={!isE2E}
             hidesWhenStopped={false}
-            size={12}
+            size="small"
             color={WHITE}
           />
         </View>

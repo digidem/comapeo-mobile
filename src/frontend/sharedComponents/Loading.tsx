@@ -9,7 +9,7 @@ export const Loading = ({
   style,
 }: {
   color?: string;
-  size?: number;
+  size?: 'small' | 'large';
   style?: ViewStyleProp;
 }) => (
   <View style={[styles.root, style]}>

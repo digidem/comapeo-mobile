@@ -64,7 +64,7 @@ export const DeleteCustomMapBottomSheet = () => {
 
         {removeCustomMapMutation.status === 'pending' ? (
           <View style={styles.loading}>
-            <LoadingIndicator size={40} />
+            <LoadingIndicator size="large" />
           </View>
         ) : (
           <View style={styles.buttonsContainer}>

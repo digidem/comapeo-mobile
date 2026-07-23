@@ -137,7 +137,7 @@ export const EditScreen = ({
         headerRight: () => {
           return isPending ? (
             <IconButton>
-              <LoadingIndicator size={30} />
+              <LoadingIndicator size="large" />
             </IconButton>
           ) : (
             <IconButton testID="save-icon" onPress={onSubmit}>

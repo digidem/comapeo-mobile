@@ -166,7 +166,7 @@ export function BackgroundMapsScreen() {
     <>
       <ScrollView contentContainerStyle={styles.container}>
         {isRefetching || mapInfoStatus === 'pending' ? (
-          <Loading size={12} />
+          <Loading size="small" />
         ) : mapInfoStatus !== 'success' || !customMapInfo ? (
           <NoMapScreen
             error={mapInfoError}
@@ -213,7 +213,7 @@ function NoMapScreen({
       </View>
       <View style={{gap: 20, marginTop: 40, alignItems: 'center'}}>
         {isUploading ? (
-          <LoadingIndicator size={32} />
+          <LoadingIndicator size="large" />
         ) : (
           <SecondaryButton
             fullSize

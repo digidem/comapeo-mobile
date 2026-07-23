@@ -248,7 +248,7 @@ export function MapReceivedBottomSheet({
 
         <View style={styles.buttonsContainer}>
           {declineStatus === 'pending' ? (
-            <LoadingIndicator size={32} />
+            <LoadingIndicator size="large" />
           ) : (
             <>
               {warningInfo.warning !== 'space' && (

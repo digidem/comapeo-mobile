@@ -123,7 +123,7 @@ export const DeviceNaming = ({
           </View>
           <View style={styles.buttonContainer}>
             {status === 'pending' ? (
-              <LoadingIndicator size={30} style={{flex: 0}} />
+              <LoadingIndicator size="large" style={{flex: 0}} />
             ) : (
               <PrimaryButton
                 testID="ONBOARDING.add-name-btn"

@@ -138,7 +138,7 @@ export const AudioAttachmentPlaybackScreen = ({
         shareLoading ? (
           <LoadingIndicator
             style={{maxHeight: SIDE_ICON_BUTTON_WIDTH}}
-            size={SIDE_ICON_BUTTON_WIDTH}
+            size="large"
             color={WHITE}
           />
         ) : (

@@ -64,7 +64,7 @@ export const TurnOffPasscodeBottomSheet = ({
         </HeaderText>
 
         {isLoading ? (
-          <LoadingIndicator size={30} />
+          <LoadingIndicator size="large" />
         ) : (
           <View style={styles.buttonsContainer}>
             <DestructiveButton

@@ -96,7 +96,7 @@ export const AuthScreen = () => {
       )}
       {loading ? (
         <View style={styles.loadingContainer}>
-          <LoadingIndicator size={32} />
+          <LoadingIndicator size="large" />
         </View>
       ) : (
         <PasscodeInput

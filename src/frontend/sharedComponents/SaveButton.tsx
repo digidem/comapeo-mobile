@@ -12,7 +12,7 @@ export const SaveButton = ({
 }) => {
   return isLoading ? (
     <View style={{marginRight: 10}}>
-      <LoadingIndicator size={30} />
+      <LoadingIndicator size="large" />
     </View>
   ) : (
     <IconButton onPress={onPress} testID="OBS.edit-save-btn">

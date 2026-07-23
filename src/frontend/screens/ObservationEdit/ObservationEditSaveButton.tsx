@@ -129,7 +129,7 @@ export const ObservationEditSaveButton = () => {
 
   return isLoading ? (
     <View style={{marginRight: 10}}>
-      <LoadingIndicator size={30} />
+      <LoadingIndicator size="large" />
     </View>
   ) : (
     <IconButton onPress={handlePressSave} testID="OBS.edit-save-btn">

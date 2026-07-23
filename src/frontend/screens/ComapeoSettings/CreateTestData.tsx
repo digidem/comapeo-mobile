@@ -45,7 +45,7 @@ export function CreateTestDataScreen() {
       dockContent={
         createFakeObservations.status === 'pending' ? (
           <View style={styles.loadingContainer}>
-            <LoadingIndicator size={30} color={WHITE} />
+            <LoadingIndicator size="large" color={WHITE} />
           </View>
         ) : (
           <PrimaryButton
@@ -136,7 +136,7 @@ export function CreateTestDataScreen() {
               accuracy={location.coords.accuracy || undefined}
             />
           ) : (
-            <LoadingIndicator size={20} />
+            <LoadingIndicator size="small" />
           )}
         </View>
         <Controller

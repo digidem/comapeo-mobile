@@ -61,15 +61,37 @@ export function createLocaleStore({persist} = {persist: false}) {
         storage: createJSONStorage(() => MMKVStoreInitializer),
         version: 1,
         migrate,
-        // usable language tags can change between app boot ups
-        // this just makes sure the language tag is still usable
-        // if not, then use system preferences
-        onRehydrateStorage: () => state => {
-          if (!state) return;
-          const usable = getUsableLanguageTag(state.languageTag);
-          if (!usable) {
-            store.setState(createInitialState());
+        // Runs on every hydration (unlike `migrate`, which only runs on a
+        // version bump). Its return value becomes the applied state
+        // directly, so there's no need to reach for the store instance,
+        // which doesn't exist in the onRehydrateStorage.
+        merge: (persistedState, currentState) => {
+          const parseResults = v.safeParse(LocaleStateSchema, persistedState);
+
+          if (!parseResults.success) {
+            return currentState;
           }
+
+          const validatedPersistedState = parseResults.output;
+
+          if (validatedPersistedState.useSystemPreferences) {
+            // usable language tags can change between app boot ups;
+            // re-resolve from system preferences in case they changed
+            const systemLanguageTags = getLocales().map(l => l.languageTag);
+            return {
+              ...currentState,
+              ...validatedPersistedState,
+              languageTag:
+                getUsableLanguageTagFromSystemPreferences(systemLanguageTags),
+            };
+          }
+
+          // checks that the language tag is still an available language
+          if (!getUsableLanguageTag(validatedPersistedState.languageTag)) {
+            return {...currentState, ...createInitialState()};
+          }
+
+          return {...currentState, ...validatedPersistedState};
         },
       }),
     );

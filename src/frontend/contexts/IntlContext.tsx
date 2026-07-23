@@ -13,7 +13,7 @@ import {
   configureCalendarLocale,
   type AvailableLanguageTag,
 } from '../lib/intl';
-import {Loading} from '../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../sharedComponents/FullScreenCenteredLoader';
 import {useLanguageQueries} from '../hooks/useLanguageQueries';
 
 export const formats: CustomFormats = {
@@ -81,7 +81,7 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
   }, [languageCodes, messages, isPending]);
 
   if (isPending) {
-    return <Loading />;
+    return <FullScreenCenteredLoader />;
   }
 
   return (

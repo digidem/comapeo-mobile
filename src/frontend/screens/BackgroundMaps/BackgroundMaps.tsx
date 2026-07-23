@@ -21,7 +21,7 @@ import {
   VERY_LIGHT_GREY,
   BLUE_GREY,
 } from '../../lib/styles';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -166,7 +166,7 @@ export function BackgroundMapsScreen() {
     <>
       <ScrollView contentContainerStyle={styles.container}>
         {isRefetching || mapInfoStatus === 'pending' ? (
-          <Loading size="small" />
+          <FullScreenCenteredLoader />
         ) : mapInfoStatus !== 'success' || !customMapInfo ? (
           <NoMapScreen
             error={mapInfoError}

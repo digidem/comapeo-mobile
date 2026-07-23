@@ -10,7 +10,7 @@ import {
   NativeRootNavigationProps,
 } from '../../sharedTypes/navigation';
 import {TabBar} from './TabBar';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import {Drawer} from 'react-native-drawer-layout';
 import {DrawerMenu} from '../../sharedComponents/DrawerMenu';
@@ -64,7 +64,9 @@ export const HomeTabs = ({navigation}: NativeRootNavigationProps<'Home'>) => {
           }}
           initialRouteName={'Map'}
           screenLayout={({children}) => (
-            <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+            <React.Suspense fallback={<FullScreenCenteredLoader />}>
+              {children}
+            </React.Suspense>
           )}
           backBehavior="initialRoute">
           <Tab.Screen

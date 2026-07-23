@@ -7,7 +7,7 @@ import {
 
 import {MMKVStoreInitializer} from '../hooks/persistedState/createPersistedState';
 import {useClientApi} from '@comapeo/core-react';
-import {Loading} from '../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../sharedComponents/FullScreenCenteredLoader';
 
 type ActiveProjectIdState = {
   projectId?: string;
@@ -90,7 +90,7 @@ export const ActiveProjectIdStoreProvider = ({
   }, [store, isInitialized, listProjects]);
 
   return !isInitialized ? (
-    <Loading />
+    <FullScreenCenteredLoader />
   ) : (
     <ActiveProjectIdStoreContext value={store}>
       {children}

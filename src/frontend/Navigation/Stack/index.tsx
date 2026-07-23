@@ -5,7 +5,7 @@ import {WHITE, MEDIUM_GREY} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {createAppScreens} from './AppScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
@@ -70,7 +70,7 @@ export const RootStackNavigator = () => {
     <SafeAreaView
       edges={['bottom']}
       style={{flex: 1, backgroundColor: MEDIUM_GREY}}>
-      <React.Suspense fallback={<Loading />}>
+      <React.Suspense fallback={<FullScreenCenteredLoader />}>
         <PendingInvitesListener
           currentRouteName={state.routes[state.index]?.name}
           navigateToInviteScreen={inviteId =>
@@ -102,7 +102,9 @@ export const RootStackNavigator = () => {
   );
 
   const screenLayout: NavigatorScreenLayout = ({children}) => (
-    <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+    <React.Suspense fallback={<FullScreenCenteredLoader />}>
+      {children}
+    </React.Suspense>
   );
 
   const commonNavigatorProps = {

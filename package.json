@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@comapeo/core-react": "11.0.7",
-    "@comapeo/core-react-native": "1.0.0-pre.7",
+    "@comapeo/core-react-native": "1.0.0-pre.9",
     "@comapeo/default-categories": "1.1.2",
     "@comapeo/ipc": "8.0.0",
     "@expo-google-fonts/rubik": "0.4.2",

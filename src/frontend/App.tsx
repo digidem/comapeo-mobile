@@ -57,7 +57,7 @@ import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
 import {Suspense} from 'react';
-import {Loading} from './sharedComponents/Loading.tsx';
+import {FullScreenCenteredLoader} from './sharedComponents/FullScreenCenteredLoader.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
 import {createQADeviceNameStore} from './contexts/QADeviceNameStoreContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
@@ -238,7 +238,7 @@ const App = () => {
             {/* This fatal error requires internationalization to be set up */}
             <Sentry.ErrorBoundary fallback={<FatalError />}>
               <ServerLoading>
-                <Suspense fallback={<Loading />}>
+                <Suspense fallback={<FullScreenCenteredLoader />}>
                   <AppProviders
                     queryClient={queryClient}
                     localDiscoveryController={localDiscoveryController}

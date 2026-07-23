@@ -14,7 +14,7 @@ import {
   PasscodeInputSchema,
   StoredPasscodeSchema,
 } from '../lib/security';
-import {Loading} from '../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../sharedComponents/FullScreenCenteredLoader';
 
 const SecurityStateSchema = v.variant('passcode', [
   v.object({
@@ -185,7 +185,7 @@ export const SecurityStoreProvider = ({
 
   return (
     <SecurityStoreContext value={value}>
-      {!hasHydrated ? <Loading /> : children}
+      {!hasHydrated ? <FullScreenCenteredLoader /> : children}
     </SecurityStoreContext>
   );
 };

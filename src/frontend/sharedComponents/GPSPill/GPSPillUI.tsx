@@ -58,15 +58,11 @@ export const GPSPillUI = (props: Props) => {
     }
 
     case 'searching': {
-      const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
-
       backgroundColor = DARK_GREY;
       text = '--';
       icon = (
         <View testID={props.iconTestID}>
           <LoadingIndicator
-            // Animations seem to cause issues with test performance on Browserstack
-            animating={!isE2E}
             hidesWhenStopped={false}
             size="small"
             color={WHITE}

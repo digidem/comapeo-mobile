@@ -23,7 +23,7 @@ import {Divider} from '../../sharedComponents/Divider.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import VerifiedBadge from '../../images/verifiedBadge.svg';
-import {Loading} from '../../sharedComponents/Loading.tsx';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {Field} from '@comapeo/schema';
@@ -127,7 +127,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
         <View style={styles.section}>
           <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
-          <React.Suspense fallback={<Loading />}>
+          <React.Suspense fallback={<FullScreenCenteredLoader />}>
             <TrackAccordian observationId={observationId} />
           </React.Suspense>
           {observation?.tags?.notes ? (

@@ -21,7 +21,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {TextButton} from '../../sharedComponents/TextButton';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {toError} from '../../utils/errors';
@@ -184,7 +184,7 @@ export function SendingBackgroundMap({
   }
 
   if (cancelStatus === 'pending') {
-    return <Loading />;
+    return <FullScreenCenteredLoader />;
   }
 
   return (

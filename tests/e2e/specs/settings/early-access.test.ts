@@ -10,7 +10,7 @@ describe('Settings - Early Access Mode', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
     const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
-    await earlyAccessItem.scrollIntoView();
+    await earlyAccessItem.scrollIntoView({percent: 0.5});
     await expect($(byTextMatches('Early Access OFF'))).toBeDisplayed();
     await earlyAccessItem.click();
     await expect($(byTextMatches('Early Access Mode'))).toBeDisplayed();
@@ -36,7 +36,7 @@ describe('Settings - Early Access Mode', () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
-    await earlyAccessItem.scrollIntoView();
+    await earlyAccessItem.scrollIntoView({percent: 0.5});
     await expect($(byTextMatches('Early Access ON'))).toBeDisplayed();
     await earlyAccessItem.click();
     await expect($(byResourceId('EA.checkbox-on'))).toBeDisplayed();
@@ -61,7 +61,7 @@ describe('Settings - Early Access Mode', () => {
     await expect(seeUpdates).toBeDisplayed();
     await backBtn.click();
     const earlyAccessFlag = await $(byResourceId('earlyAccessFlag'));
-    await earlyAccessFlag.scrollIntoView();
+    await earlyAccessFlag.scrollIntoView({percent: 0.5});
     await earlyAccessFlag.click();
   });
 

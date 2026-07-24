@@ -8,7 +8,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useProjectSettings} from '@comapeo/core-react';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/coordinateFormat.ts';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {convertUrlToBase64} from '../../utils/base64.ts';
 import * as Sentry from '@sentry/react-native';
 import {getFieldAnswerText} from '../../sharedComponents/FormattedData.tsx';
@@ -234,7 +234,7 @@ const Button = ({onPress, isLoading, iconName, title}: ButtonProps) => (
   <TouchableOpacity onPress={onPress} style={{flex: 1}} disabled={isLoading}>
     <View style={styles.button}>
       {isLoading ? (
-        <UIActivityIndicator />
+        <LoadingIndicator />
       ) : (
         <MaterialIcons
           size={30}

@@ -4,7 +4,7 @@ import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {File} from 'expo-file-system';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 import {FILE_SELECT_MUTATION_KEY} from '../../hooks/files';
 import {
@@ -21,7 +21,7 @@ import {
   VERY_LIGHT_GREY,
   BLUE_GREY,
 } from '../../lib/styles';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -166,7 +166,7 @@ export function BackgroundMapsScreen() {
     <>
       <ScrollView contentContainerStyle={styles.container}>
         {isRefetching || mapInfoStatus === 'pending' ? (
-          <Loading size={12} />
+          <FullScreenCenteredLoader />
         ) : mapInfoStatus !== 'success' || !customMapInfo ? (
           <NoMapScreen
             error={mapInfoError}
@@ -213,7 +213,7 @@ function NoMapScreen({
       </View>
       <View style={{gap: 20, marginTop: 40, alignItems: 'center'}}>
         {isUploading ? (
-          <UIActivityIndicator size={32} />
+          <LoadingIndicator size="large" />
         ) : (
           <SecondaryButton
             fullSize

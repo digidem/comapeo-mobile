@@ -66,12 +66,6 @@ When targeting Intel-based architectures (i.e. `x86_64`), the affected Gradle bu
 
 Native addons by the holepunch team use [`require-addon`](https://github.com/holepunchto/require-addon) to load native prebuilds. This package expects the native prebuilds to be in a `prebuilds/` directory at the root of the package, in contrast to modules which use `node-gyp-build`, which, at runtime, looks for prebuilds in `build/Release/`. This patch moves the prebuilds into the correct folder based on the presence of `binding.gyp`, and cleans up any unnecessary prebuilds to keep the APK size down.
 
-## react-native-indicators
-
-### [Fix `key` prop error when using components](./react-native-indicators+0.17.0+001+fix-key-prop-error.patch)
-
-Refer to https://github.com/n4kz/react-native-indicators/issues/43 for details.
-
 ## `react-native-confirmation-code-field`
 
 ### [Fix mask symbol logic issue](./react-native-confirmation-code-field+9.0.0+001+fix-mask-symbol-logic-issue.patch)

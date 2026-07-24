@@ -12,7 +12,7 @@ import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDoc
 import {Button} from '../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../utils/normalizeRemoteArchiveUrl';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useAddServerPeer} from '@comapeo/core-react';
@@ -223,7 +223,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
     <ScreenContentWithDock
       dockContent={
         status === 'pending' ? (
-          <UIActivityIndicator style={{marginBottom: 20}} />
+          <LoadingIndicator style={{marginBottom: 20}} />
         ) : (
           <Button
             fullWidth

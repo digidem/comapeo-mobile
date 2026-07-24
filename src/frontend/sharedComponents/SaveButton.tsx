@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View} from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from './LoadingIndicator';
 import {IconButton} from './IconButton';
 import SaveCheck from '../images/CheckMark.svg';
 export const SaveButton = ({
@@ -12,7 +12,7 @@ export const SaveButton = ({
 }) => {
   return isLoading ? (
     <View style={{marginRight: 10}}>
-      <UIActivityIndicator size={30} />
+      <LoadingIndicator size="large" />
     </View>
   ) : (
     <IconButton onPress={onPress} testID="OBS.edit-save-btn">

@@ -2,7 +2,7 @@ import React from 'react';
 import {Image} from 'expo-image';
 import {Circle} from './Circle';
 import {type IconSize} from '../../sharedTypes';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../LoadingIndicator';
 import {useProjectIconUrl} from '../../hooks/server/icons';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 interface PresetIconProps {
@@ -39,7 +39,7 @@ const LoadedPresetIcon = ({
   } = useProjectIconUrl(iconId, iconType);
 
   if (isRefetching) {
-    return <UIActivityIndicator size={iconSize} />;
+    return <LoadingIndicator size={size === 'small' ? 'small' : 'large'} />;
   }
 
   if (error) {

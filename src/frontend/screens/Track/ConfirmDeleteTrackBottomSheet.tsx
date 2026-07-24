@@ -15,7 +15,7 @@ import {useDeleteTrackMutation} from '../../hooks/server/track';
 import {DocAlreadyDeletedError, getErrorCode} from '@comapeo/core/errors.js';
 import * as Sentry from '@sentry/react-native';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 const m = defineMessages({
   deleteTitle: {
@@ -75,7 +75,7 @@ export const ConfirmDeleteTrackBottomSheet = ({
         />
         <View style={styles.buttonsContainer}>
           {status === 'pending' ? (
-            <UIActivityIndicator style={{marginVertical: 20}} />
+            <LoadingIndicator style={{marginVertical: 20}} />
           ) : (
             <>
               <DestructiveButton

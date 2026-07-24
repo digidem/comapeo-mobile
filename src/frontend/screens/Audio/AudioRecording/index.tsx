@@ -8,12 +8,8 @@ import {useAudioRecording} from './useAudioRecording';
 import {usePreventBackButtonWhileRecording} from './usePreventBackButtonWhileRecording';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
-import {
-  audioStyles,
-  PRIMARY_CONTROL_DIAMETER,
-  MAX_RECORDING_DURATION_MS,
-} from '../shared';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {audioStyles, MAX_RECORDING_DURATION_MS} from '../shared';
+import {LoadingIndicator} from '../../../sharedComponents/LoadingIndicator';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {useDraftObservationActions} from '../../../contexts/DraftObservationContext';
@@ -115,10 +111,7 @@ export function AudioRecording({
         dockContent={
           isLoading ? (
             <View style={styles.center}>
-              <UIActivityIndicator
-                color={WHITE}
-                size={PRIMARY_CONTROL_DIAMETER}
-              />
+              <LoadingIndicator color={WHITE} size="large" />
             </View>
           ) : (
             <TouchableOpacity

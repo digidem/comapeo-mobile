@@ -14,7 +14,7 @@ import {
 } from '@comapeo/core-react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../sharedComponents/LoadingIndicator';
 import {ColorCard} from '../sharedComponents/ColorCard';
 import {DEFAULT_PROJECT_COLOR} from '../constants';
 import {toError} from '../utils/errors';
@@ -74,7 +74,7 @@ export const RemovedFromProjectBottomSheet = ({
         <View style={styles.buttonContainer}>
           {leaveProject.status === 'pending' ||
           createProject.status === 'pending' ? (
-            <UIActivityIndicator style={{margin: 20}} />
+            <LoadingIndicator style={{margin: 20}} />
           ) : (
             <SecondaryButton
               fullSize

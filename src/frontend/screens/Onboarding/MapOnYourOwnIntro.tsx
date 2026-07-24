@@ -18,7 +18,7 @@ import MapIcon from '../../images/Map.svg';
 import {useCreateProject} from '@comapeo/core-react';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {DARK_ORANGE, COMAPEO_BLUE, WHITE, DARK_GREY} from '../../lib/styles';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 const m = defineMessages({
   title: {
@@ -78,7 +78,7 @@ export const MapOnYourOwnIntro = ({
         <View style={{gap: 12, paddingBottom: 20}}>
           {status === 'pending' ? (
             <View style={{alignItems: 'center', paddingVertical: 12}}>
-              <UIActivityIndicator size={30} style={{flex: 0}} />
+              <LoadingIndicator size="large" style={{flex: 0}} />
             </View>
           ) : (
             <>

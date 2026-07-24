@@ -19,7 +19,7 @@ import {
 } from 'expo-location';
 import {createStore} from 'zustand';
 import {getCoords} from '../lib/coordinateFormat';
-import {Loading} from '../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../sharedComponents/FullScreenCenteredLoader';
 import {FatalError} from '../screens/FatalError';
 import {useSavedLocationActions} from './SavedLocationContext';
 
@@ -67,7 +67,7 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
   });
 
   if (permissionsPending || providerStatusPending) {
-    return <Loading />;
+    return <FullScreenCenteredLoader />;
   }
 
   if (permissionsError || providerStatusError) {

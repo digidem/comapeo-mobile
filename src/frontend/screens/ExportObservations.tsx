@@ -9,7 +9,7 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {DownloadIcon} from '../sharedComponents/icons';
 import {useState} from 'react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../sharedComponents/LoadingIndicator';
 import {useObservations} from '../hooks/server/observations';
 import {useTracks} from '../hooks/server/track';
 import * as Sentry from '@sentry/react-native';
@@ -162,7 +162,7 @@ export const ExportObservations = ({
             )}
           />
         ) : (
-          <UIActivityIndicator />
+          <LoadingIndicator />
         )}
       </View>
     </View>

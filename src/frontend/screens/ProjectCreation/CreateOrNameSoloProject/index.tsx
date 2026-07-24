@@ -9,7 +9,7 @@ import {
   View,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../../sharedComponents/LoadingIndicator';
 import {useCreateProject, useUpdateProjectSettings} from '@comapeo/core-react';
 import {HookFormTextInput} from '../../../sharedComponents/HookFormTextInput';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
@@ -199,7 +199,7 @@ export const CreateOrNameSoloProject = ({
                 paddingTop: 10,
               }}>
               {mutationIsPending ? (
-                <UIActivityIndicator size={30} style={{marginBottom: 20}} />
+                <LoadingIndicator size="large" style={{marginBottom: 20}} />
               ) : (
                 <PrimaryButton
                   testID="PROJECT.create-btn"

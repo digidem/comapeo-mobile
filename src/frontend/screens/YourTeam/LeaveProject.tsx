@@ -16,7 +16,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectSettings} from '../../hooks/server/projects';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {toError} from '../../utils/errors';
 
 const m = defineMessages({
@@ -120,7 +120,7 @@ export const LeaveProject = ({
 
       <View style={styles.buttons}>
         {leaveProject.status === 'pending' ? (
-          <UIActivityIndicator style={{marginVertical: 20}} />
+          <LoadingIndicator style={{marginVertical: 20}} />
         ) : (
           <>
             <DestructiveButton

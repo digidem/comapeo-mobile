@@ -10,7 +10,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -99,7 +99,7 @@ export const ShareProjectStats = ({
       dockContent={
         isSubmitting ? (
           <View style={styles.loading}>
-            <Loading />
+            <FullScreenCenteredLoader />
           </View>
         ) : (
           <View style={styles.buttons}>

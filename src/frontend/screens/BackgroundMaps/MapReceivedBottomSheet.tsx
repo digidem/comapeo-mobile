@@ -4,7 +4,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import bboxPolygon from '@turf/bbox-polygon';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import pointToPolygonDistance from '@turf/point-to-polygon-distance';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 import StackSvg from '../../images/Stack.svg';
 import CautionSvg from '../../images/caution.svg';
@@ -248,7 +248,7 @@ export function MapReceivedBottomSheet({
 
         <View style={styles.buttonsContainer}>
           {declineStatus === 'pending' ? (
-            <UIActivityIndicator size={32} />
+            <LoadingIndicator size="large" />
           ) : (
             <>
               {warningInfo.warning !== 'space' && (

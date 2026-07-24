@@ -22,7 +22,7 @@ import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButt
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {ReceivingMapProgressBar} from './ReceivingMapProgressBar';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {VERY_LIGHT_GREY, NEW_DARK_GREY, COMAPEO_BLUE} from '../../lib/styles';
 
 const m = defineMessages({
@@ -112,7 +112,7 @@ export function ReceivingBackgroundMap({
   };
 
   if (abortStatus === 'pending') {
-    return <Loading />;
+    return <FullScreenCenteredLoader />;
   }
 
   if (mapShare.status === 'canceled') {

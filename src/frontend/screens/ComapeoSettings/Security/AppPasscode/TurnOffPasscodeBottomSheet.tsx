@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../../../sharedComponents/LoadingIndicator';
 
 import {RED} from '../../../../lib/styles';
 import ErrorIcon from '../../../../images/Error.svg';
@@ -64,7 +64,7 @@ export const TurnOffPasscodeBottomSheet = ({
         </HeaderText>
 
         {isLoading ? (
-          <UIActivityIndicator size={30} />
+          <LoadingIndicator size="large" />
         ) : (
           <View style={styles.buttonsContainer}>
             <DestructiveButton

@@ -17,7 +17,7 @@ import {
 import * as Sentry from '@sentry/react-native';
 import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {Alert, AlertButton, View} from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {useQueryClient} from '@tanstack/react-query';
 import {defineMessages, useIntl} from 'react-intl';
 import {
@@ -262,7 +262,7 @@ export const ObservationCreateSaveButton = () => {
   }
   return isLoading ? (
     <View style={{marginRight: 10}}>
-      <UIActivityIndicator size={30} />
+      <LoadingIndicator size="large" />
     </View>
   ) : (
     <IconButton onPress={handlePressSave} testID="OBS.edit-save-btn">

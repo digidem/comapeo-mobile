@@ -49,7 +49,7 @@ const config = {
       'appium:platformVersion': '13.0',
       'appium:deviceName': 'Samsung Galaxy S23',
       'appium:automationName': 'UIAutomator2',
-      'appium:app': 'bs://864383aa245a0623d29607bd2d75b99d2a888614',
+      'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,
       'appium:newCommandTimeout': 150,
       'bstack:options': {

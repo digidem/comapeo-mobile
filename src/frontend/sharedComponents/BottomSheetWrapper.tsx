@@ -75,7 +75,7 @@ const AnimateBottomSheetContainer = ({
             backgroundColor: WHITE,
             paddingHorizontal: 20,
             paddingTop: 40,
-            paddingBottom: Math.max(20, insets.bottom),
+            paddingBottom: 20 + insets.bottom,
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
             flexShrink: 1,

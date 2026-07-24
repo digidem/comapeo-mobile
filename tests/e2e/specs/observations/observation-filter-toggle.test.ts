@@ -19,7 +19,6 @@ describe('Observations - Filter Toggle (Early Access)', () => {
     await backBtn.click();
     const backBtnAgain = await $(byResourceId('MAIN.header-back-btn'));
     await backBtnAgain.click();
-    await $(byResourceId('MAIN.header-back-btn')).click();
     await $(byResourceId('MAIN.map-screen')).click();
   });
 

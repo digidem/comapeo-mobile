@@ -11,6 +11,7 @@ describe('Passcode - Obscure Passcode Visibility', () => {
     await appSettingsOption.click();
 
     const securityOption = await $(byResourceId('securitySettingsButton'));
+    await securityOption.scrollIntoView();
     await securityOption.click();
 
     const obscurePassItem = await $(byText('Obscure Passcode'));

@@ -10,7 +10,7 @@ describe('Observations - Filter Toggle (Early Access)', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
     const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
-    await earlyAccessItem.scrollIntoView({percent: 0.5});
+    await earlyAccessItem.scrollIntoView();
     await earlyAccessItem.click();
     const offCheckbox = await $(byResourceId('EA.checkbox-off'));
     await offCheckbox.click();
@@ -67,7 +67,7 @@ describe('Observations - Filter Toggle (Early Access)', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
     const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
-    await earlyAccessItem.scrollIntoView({percent: 0.5});
+    await earlyAccessItem.scrollIntoView();
     await earlyAccessItem.click();
     const onCheckbox = await $(byResourceId('EA.checkbox-on'));
     await onCheckbox.click();

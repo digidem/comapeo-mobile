@@ -21,7 +21,7 @@ module.exports = function (api) {
     presets: ['babel-preset-expo'],
     plugins: [
       ['transform-inline-environment-variables', {include: requiredEnvVars}],
-      // react-native-reanimated/plugin has to be last
+      // react-native-worklets/plugin has to be last
       'react-native-worklets/plugin',
     ],
   };

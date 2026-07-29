@@ -2,6 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {checkForElementGone} from '../../utils/checkForGone';
+import {scrollToEnd} from '../../utils/scrollToEnd';
 
 describe('Settings - Early Access Mode', () => {
   it('should show Early Access off and open Early Access from App Settings', async () => {
@@ -9,9 +10,7 @@ describe('Settings - Early Access Mode', () => {
     await drawerIcon.click();
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
-    // scroll below the targeted item to make sure it is on the screen
-    const dataAndPrivacyOption = await $(byResourceId('dataAndPrivacyButton'));
-    await dataAndPrivacyOption.scrollIntoView();
+    await scrollToEnd();
     await expect($(byTextMatches('Early Access OFF'))).toBeDisplayed();
     await $(byResourceId('earlyAccessFlag')).click();
     await expect($(byTextMatches('Early Access Mode'))).toBeDisplayed();
@@ -36,9 +35,7 @@ describe('Settings - Early Access Mode', () => {
   it('should show ON in the App Settings list item text', async () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    // scroll below the targeted item to make sure it is on the screen
-    const dataAndPrivacyOption = await $(byResourceId('dataAndPrivacyButton'));
-    await dataAndPrivacyOption.scrollIntoView();
+    await scrollToEnd();
     await expect($(byTextMatches('Early Access ON'))).toBeDisplayed();
     await $(byResourceId('earlyAccessFlag')).click();
     await expect($(byResourceId('EA.checkbox-on'))).toBeDisplayed();
@@ -78,9 +75,7 @@ describe('Settings - Early Access Mode', () => {
     await expect($(byResourceId('EA.checkbox-off'))).toBeDisplayed();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    // scroll below the targeted item to make sure it is on the screen
-    const dataAndPrivacyOption = await $(byResourceId('dataAndPrivacyButton'));
-    await dataAndPrivacyOption.scrollIntoView();
+    await scrollToEnd();
     await expect($(byTextMatches('Early Access OFF'))).toBeDisplayed();
     await backBtn.click();
     await $(byResourceId('MAIN.map-screen')).click();

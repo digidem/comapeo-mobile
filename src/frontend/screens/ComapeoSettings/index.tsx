@@ -279,6 +279,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
       </BodyText>
       <SettingsRow
         testID="earlyAccessFlag"
+        labelTestID="earlyAccessFlagLabel"
         onPress={() => navigation.navigate('EarlyAccess')}
         label={
           isEarlyAccess
@@ -336,19 +337,24 @@ function SettingsRow({
   label,
   onPress,
   testID,
+  labelTestID,
   Icon,
   EndContent,
 }: {
   label: string;
   onPress: () => void;
   testID?: string;
+  labelTestID?: string;
   Icon: React.ReactNode;
   EndContent: React.ReactNode;
 }) {
   return (
     <TouchableOpacity testID={testID} onPress={onPress} style={styles.row}>
       {Icon}
-      <HeaderText variant="header6" style={styles.rowLabel}>
+      <HeaderText
+        variant="header6"
+        style={styles.rowLabel}
+        testID={labelTestID}>
         {label}
       </HeaderText>
       {EndContent}

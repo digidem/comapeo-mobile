@@ -74,6 +74,20 @@ Fixes a bug in the `MaskSymbol` component where the mask (`*`) briefly un-hides 
 
 See: [Reviewer context](https://github.com/digidem/comapeo-mobile/pull/1225).
 
+## react-native-vision-camera
+
+### [Fix camera device list startup race](./react-native-vision-camera+4.7.3+001+fix-camera-devices-startup-race.patch)
+
+`CameraDevicesManager` sends its device list to JS only at startup, but builds that list from `cameraProvider` and
+`extensionsManager`, which initialise asynchronously and yield an empty list until both are set. When initialisation
+loses that race, JS caches the empty list and nothing ever re-emits, so `useCameraDevice()` returns `undefined` — and the
+camera screen stays unavailable — until the app is restarted. This patch emits `CameraDevicesChanged` once
+initialisation completes, and re-sends the current list when JS subscribes, since events emitted before then are
+dropped.
+
+Fixed upstream in v5, which requires the New Architecture. 4.7.3 is the final 4.x release, so there is nothing to
+upgrade to.
+
 ## expo
 
 ### [Enable streaming file uploads in fetch API](./expo+54.0.33.patch)

@@ -117,14 +117,6 @@ export const CameraView = ({onAddPress}: Props) => {
 
   const disableButton = capturing || !cameraReady || !hasPermission;
 
-  console.log('CAMERA_DEBUG', {
-    hasDevice: !!device,
-    deviceCount: Camera.getAvailableCameraDevices().length,
-    positions: Camera.getAvailableCameraDevices().map(d => d.position),
-    hasPermission,
-    permissionStatus: Camera.getCameraPermissionStatus(),
-  });
-
   let cameraContent;
   if (!hasPermission) {
     cameraContent = (

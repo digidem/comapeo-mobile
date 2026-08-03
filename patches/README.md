@@ -80,3 +80,9 @@ See: [Reviewer context](https://github.com/digidem/comapeo-mobile/pull/1225).
 
 Modifies Expo's native fetch implementation to stream files directly to the fetch request rather than loading them into memory. This patch enables streaming uploads by modifying the native Android code to read and transmit files in chunks. This prevents out-of-memory (OOM) errors when uploading large files (e.g., over 200MB).
 Refer to this [issue](https://github.com/expo/expo/issues) and this [PR](https://github.com/expo/expo/pull) which have been created to address this limitation in Expo's fetch implementation.
+
+## `react-native-drawer-layout`
+
+### [Experimental fix for empty drawer on Android](./react-native-drawer-layout+4.2.4.patch)
+
+Hard-to-reproduce issue where the drawer is empty on Android. It's possible that this is caused by `removeClippedSubviews` being set to `true` on Android, which could result in the drawer not being re-attached in some circumstances. The cost of setting `removeClippedSubviews` to `false` is that the drawer will always be rendered, even when it's not visible, which should have minimal impact on performance given that the drawer is small and there is only one of them.

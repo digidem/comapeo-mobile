@@ -1,0 +1,26 @@
+diff --git a/node_modules/react-native-drawer-layout/lib/module/views/Drawer.native.js b/node_modules/react-native-drawer-layout/lib/module/views/Drawer.native.js
+index 5fb761c..4a7face 100644
+--- a/node_modules/react-native-drawer-layout/lib/module/views/Drawer.native.js
++++ b/node_modules/react-native-drawer-layout/lib/module/views/Drawer.native.js
+@@ -296,7 +296,7 @@ export function Drawer({
+                 accessibilityLabel: overlayAccessibilityLabel
+               }) : null]
+             }), /*#__PURE__*/_jsx(Animated.View, {
+-              removeClippedSubviews: Platform.OS !== 'ios',
++              removeClippedSubviews: false,
+               style: [styles.drawer, {
+                 width: drawerWidth,
+                 position: drawerType === 'permanent' ? 'relative' : 'absolute'
+diff --git a/node_modules/react-native-drawer-layout/src/views/Drawer.native.tsx b/node_modules/react-native-drawer-layout/src/views/Drawer.native.tsx
+index ff41791..e8de76a 100644
+--- a/node_modules/react-native-drawer-layout/src/views/Drawer.native.tsx
++++ b/node_modules/react-native-drawer-layout/src/views/Drawer.native.tsx
+@@ -484,7 +484,7 @@ export function Drawer({
+                 ) : null}
+               </Animated.View>
+               <Animated.View
+-                removeClippedSubviews={Platform.OS !== 'ios'}
++                removeClippedSubviews={false}
+                 style={[
+                   styles.drawer,
+                   {

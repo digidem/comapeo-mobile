@@ -183,59 +183,59 @@ export const RootStackANavigator = createNativeStackNavigator({
         },
         Security: {
           screen: Security,
-          options: intl(Security.navTitle),
+          options: {headerTitle: intl(Security.navTitle)},
         },
         AppPasscode: {
           screen: AppPasscode,
-          options: intl(AppPasscode.navTitle),
+          options: {headerTitle: intl(AppPasscode.navTitle)},
         },
         DisablePasscode: {
           screen: TurnOffPasscode,
-          options: intl(TurnOffPasscode.navTitle),
+          options: {headerTitle: intl(TurnOffPasscode.navTitle)},
         },
         SetPasscode: {
           screen: SetPasscode,
-          options: intl(SetPasscode.navTitle),
+          options: {headerTitle: intl(SetPasscode.navTitle)},
         },
         EnterPassToTurnOff: {
           screen: EnterPassToTurnOff,
-          options: intl(EnterPassToTurnOff.navTitle),
+          options: {headerTitle: intl(EnterPassToTurnOff.navTitle)},
         },
         ObscurePasscode: {
           screen: ObscurePasscode,
-          options: intl(ObscurePasscode.navTitle),
+          options: {headerTitle: intl(ObscurePasscode.navTitle)},
         },
         TrackCategoryChooser: {
           screen: TrackCategoryChooser,
-          options: intl(TrackCategoryChooser.navTitle),
+          options: {headerTitle: intl(TrackCategoryChooser.navTitle)},
         },
         ObservationCategoryChooser: {
           screen: ObservationCategoryChooser,
-          options: intl(ObservationCategoryChooser.navTitle),
+          options: {headerTitle: intl(ObservationCategoryChooser.navTitle)},
         },
         Observation: {
           screen: ObservationScreen,
-          options: intl(ObservationScreen.navTitle),
+          options: {headerTitle: intl(ObservationScreen.navTitle)},
         },
         AppSettings: {
           screen: AppSettings,
-          options: intl(AppSettings.navTitle),
+          options: {headerTitle: intl(AppSettings.navTitle)},
         },
         ProjectSettings: {
           screen: ProjectSettings,
-          options: intl(ProjectSettings.navTitle),
+          options: {headerTitle: intl(ProjectSettings.navTitle)},
         },
         CoordinateFormat: {
           screen: CoordinateFormat,
-          options: intl(CoordinateFormat.navTitle),
+          options: {headerTitle: intl(CoordinateFormat.navTitle)},
         },
         Collaborate: {
           screen: Collaborate,
-          options: intl(Collaborate.navTitle),
+          options: {headerTitle: intl(Collaborate.navTitle)},
         },
         JoinAProject: {
           screen: JoinAProject,
-          options: intl(JoinAProject.navTitle),
+          options: {headerTitle: intl(JoinAProject.navTitle)},
         },
         CreateProject: {
           screen: CreateOrNameSoloProject,
@@ -251,23 +251,23 @@ export const RootStackANavigator = createNativeStackNavigator({
         },
         YourTeam: {
           screen: YourTeam,
-          options: intl(YourTeam.navTitle),
+          options: {headerTitle: intl(YourTeam.navTitle)},
         },
         SelectDevice: {
           screen: SelectInviteDevice,
-          options: intl(SelectInviteDevice.navTitle),
+          options: {headerTitle: intl(SelectInviteDevice.navTitle)},
         },
         SelectMapShareDevice: {
           screen: SelectMapShareDevice,
-          options: intl(SelectMapShareDevice.navTitle),
+          options: {headerTitle: intl(SelectMapShareDevice.navTitle)},
         },
         SelectInviteeRole: {
           screen: SelectInviteeRole,
-          options: intl(SelectInviteeRole.navTitle),
+          options: {headerTitle: intl(SelectInviteeRole.navTitle)},
         },
         ReviewAndInvite: {
           screen: ReviewAndInvite,
-          options: intl(ReviewInvitation.navTitle),
+          options: {headerTitle: intl(ReviewInvitation.navTitle)},
         },
         InviteAccepted: {
           screen: InviteAccepted,
@@ -275,7 +275,7 @@ export const RootStackANavigator = createNativeStackNavigator({
         },
         RemoveDevice: {
           screen: RemoveDevice,
-          options: intl(RemoveDevice.navTitle),
+          options: {headerTitle: intl(RemoveDevice.navTitle)},
         },
         DeviceRemovedSuccess: {
           screen: DeviceRemovedSuccess,
@@ -306,7 +306,7 @@ export const RootStackANavigator = createNativeStackNavigator({
         },
         Sync: {
           screen: SyncScreen,
-          options: intl(SyncScreen.navTitle),
+          options: {headerTitle: intl(SyncScreen.navTitle)},
         },
         ManualGpsScreen: {
           screen: ManualGpsScreen,
@@ -317,11 +317,11 @@ export const RootStackANavigator = createNativeStackNavigator({
         },
         LanguageSettings: {
           screen: LanguageSettings,
-          options: intl(LanguageSettings.navTitle),
+          options: {headerTitle: intl(LanguageSettings.navTitle)},
         },
         UnitSystemSettings: {
           screen: UnitSystemSettings,
-          options: intl(UnitSystemSettings.navTitle),
+          options: {headerTitle: intl(UnitSystemSettings.navTitle)},
         },
         Track: {
           screen: TrackScreen,
@@ -333,15 +333,15 @@ export const RootStackANavigator = createNativeStackNavigator({
         },
         AboutSettings: {
           screen: AboutSettings,
-          options: intl(AboutSettings.navTitle),
+          options: {headerTitle: intl(AboutSettings.navTitle)},
         },
         DataAndPrivacy: {
           screen: DataAndPrivacy,
-          options: intl(DataAndPrivacy.navTitle),
+          options: {headerTitle: intl(DataAndPrivacy.navTitle)},
         },
         SettingsPrivacyPolicy: {
           screen: SettingsPrivacyPolicy,
-          options: intl(SettingsPrivacyPolicy.navTitle),
+          options: {headerTitle: intl(SettingsPrivacyPolicy.navTitle)},
         },
         TrackEdit: {
           screen: TrackEdit,
@@ -357,7 +357,7 @@ export const RootStackANavigator = createNativeStackNavigator({
         },
         Categories: {
           screen: Categories,
-          options: intl(Categories.navTitle),
+          options: {headerTitle: intl(Categories.navTitle)},
         },
         BackgroundMaps: {
           screen: BackgroundMapsScreen,
@@ -426,11 +426,11 @@ export const RootStackANavigator = createNativeStackNavigator({
         },
         AudioAttachmentPlaybackScreen: {
           screen: AudioAttachmentPlaybackScreen,
-          options: intl(AudioAttachmentPlaybackScreen.navTitle),
+          options: {headerTitle: intl(AudioAttachmentPlaybackScreen.navTitle)},
         },
         ObservationMetadata: {
           screen: ObservationMetadata,
-          options: intl(ObservationMetadata.navTitle),
+          options: {headerTitle: intl(ObservationMetadata.navTitle)},
         },
         InviteCollaborators: {
           screen: InviteCollaboratorsScreen,
@@ -467,19 +467,19 @@ export const RootStackANavigator = createNativeStackNavigator({
         },
         ProjectStatistics: {
           screen: ProjectStatistics,
-          options: intl(ProjectStatistics.navTitle),
+          options: {headerTitle: intl(ProjectStatistics.navTitle)},
         },
         EarlyAccess: {
           screen: EarlyAccess,
-          options: intl(EarlyAccess.navTitle),
+          options: {headerTitle: intl(EarlyAccess.navTitle)},
         },
         StartNewProjectIntro: {
           screen: StartNewProjectIntro,
-          options: intl(StartNewProjectIntro.navTitle),
+          options: {headerTitle: intl(StartNewProjectIntro.navTitle)},
         },
         NameDefaultProjectIntro: {
           screen: NameDefaultProjectIntro,
-          options: intl(NameDefaultProjectIntro.navTitle),
+          options: {headerTitle: intl(NameDefaultProjectIntro.navTitle)},
         },
         LeaveProjectWarning: {
           screen: LeaveProjectWarning,
@@ -499,7 +499,7 @@ export const RootStackANavigator = createNativeStackNavigator({
         },
         ExportObservations: {
           screen: ExportObservations,
-          options: intl(ExportObservations.navTitle),
+          options: {headerTitle: intl(ExportObservations.navTitle)},
         },
       },
     },

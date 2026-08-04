@@ -23,15 +23,16 @@ import {useAuthContext} from '../../contexts/AuthContext';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
-const APPROX_APP_BAR_HEIGHT = 56;
+// These mirror react-native-drawer-layout's own defaults, so the drawer keeps
+// exactly the size it had before. The gap leaves a strip of screen uncovered
+// beside the open drawer so it can be tapped to dismiss — the library calls it
+// APPROX_APP_BAR_HEIGHT. 360 is the Material Design 3 standard drawer width:
+// https://m3.material.io/components/navigation-drawer/specs
+const DRAWER_EDGE_GAP = 56;
 const MAX_DRAWER_WIDTH = 360;
 
-// Mirrors react-native-drawer-layout's default so the drawer keeps its usual size.
 function getDrawerWidth(windowWidth: number) {
-  return Math.max(
-    Math.min(windowWidth - APPROX_APP_BAR_HEIGHT, MAX_DRAWER_WIDTH),
-    0,
-  );
+  return Math.max(Math.min(windowWidth - DRAWER_EDGE_GAP, MAX_DRAWER_WIDTH), 0);
 }
 
 export const HomeTabs = ({navigation}: NativeRootNavigationProps<'Home'>) => {

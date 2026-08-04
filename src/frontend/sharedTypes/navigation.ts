@@ -8,6 +8,7 @@ import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
 import {PermissionResponse} from 'expo-audio';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
+import {StaticScreenProps} from '@react-navigation/native';
 
 export type Exports = 'Observation' | 'Tracks' | 'ObservationsWithMedia';
 
@@ -239,3 +240,9 @@ export type NativeHomeTabsNavigationProps<
   BottomTabScreenProps<HomeTabsParamsList, ScreenName>,
   NativeStackScreenProps<AppStackParamsList>
 >;
+
+export type StaticNavigationComponent<
+  Params extends Record<string, unknown> | undefined,
+> = React.FC<StaticScreenProps<Params>> & {
+  navTitle?: MessageDescriptor;
+};

@@ -10,7 +10,6 @@ import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {useManyDocs} from '@comapeo/core-react';
 
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
@@ -24,8 +23,8 @@ import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import VerifiedBadge from '../../images/verifiedBadge.svg';
 import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader.tsx';
-import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
+import {useFieldsQuery} from '../../hooks/server/fields';
 import {Field} from '@comapeo/schema';
 import {HorizontalScrollView} from '../../sharedComponents/HorizontalScrollView.tsx';
 import {
@@ -53,11 +52,10 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   navigation,
 }) => {
   const {observationId} = route.params;
-  const {projectId} = useActiveProject();
   const {observation, preset} = useObservationWithPreset(observationId);
   const {createDraft} = useDraftObservationActions();
 
-  const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
+  const {data: fieldsData} = useFieldsQuery();
   const {lat, lon, metadata} = observation;
 
   const fields = preset

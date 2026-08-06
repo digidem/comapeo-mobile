@@ -1,4 +1,4 @@
-import {type MapeoClientApi} from '@comapeo/ipc';
+import {type ComapeoCoreClientApi} from '@comapeo/ipc';
 import {getLocales} from 'expo-localization';
 import {Component, type ComponentPropsWithoutRef, type ReactNode} from 'react';
 
@@ -76,7 +76,7 @@ export function createAppProvidersWrapper({
   activeProjectId,
   qaDeviceName,
 }: {
-  mapeoApi: MapeoClientApi;
+  mapeoApi: ComapeoCoreClientApi;
   isOnline?: boolean;
   activeProjectId?: string;
   qaDeviceName?: string;

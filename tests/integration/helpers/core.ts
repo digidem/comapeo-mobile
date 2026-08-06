@@ -2,11 +2,11 @@ import {spawn} from 'node:child_process';
 import path from 'node:path';
 import {MessageChannel} from 'node:worker_threads';
 import {FastifyController, MapeoManager} from '@comapeo/core';
-import type {MapeoProjectApi} from '@comapeo/ipc';
+import type {ComapeoProjectClientApi} from '@comapeo/ipc';
 import {
-  closeMapeoClient,
-  createMapeoClient,
-  createMapeoServer,
+  closeComapeoCoreClient,
+  createComapeoCoreClient,
+  createComapeoCoreServer,
 } from '@comapeo/ipc';
 import {KeyManager} from '@mapeo/crypto';
 import Fastify from 'fastify';
@@ -57,8 +57,16 @@ export async function createManager(
 export function setUpIPC({manager}: {manager: MapeoManager}) {
   const {port1, port2} = new MessageChannel();
 
-  const server = createMapeoServer(manager, port1);
-  const client = createMapeoClient(port2, {timeout: 30_000});
+  // Cast needed: Node's MessagePort type doesn't match rpc-reflector's
+  // MessagePortLike, though it satisfies it at runtime.
+  const server = createComapeoCoreServer(
+    manager,
+    port1 as unknown as Parameters<typeof createComapeoCoreServer>[1],
+  );
+  const client = createComapeoCoreClient(
+    port2 as unknown as Parameters<typeof createComapeoCoreClient>[0],
+    {timeout: 30_000},
+  );
 
   return {
     client,
@@ -71,7 +79,7 @@ export function setUpIPC({manager}: {manager: MapeoManager}) {
     },
     stop: async () => {
       server.close();
-      await closeMapeoClient(client);
+      await closeComapeoCoreClient(client);
       port1.close();
       port2.close();
     },
@@ -143,7 +151,7 @@ async function stopPeerDiscovery(
 }
 
 export async function inviteToProject(
-  project: MapeoProjectApi,
+  project: ComapeoProjectClientApi,
   invitee: MapeoManager,
 ): Promise<void> {
   const inviteId = randomBytes(32);

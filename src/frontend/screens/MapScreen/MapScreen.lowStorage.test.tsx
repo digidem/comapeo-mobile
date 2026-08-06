@@ -10,7 +10,7 @@ import {
 } from '@testing-library/react-native';
 
 import type {MapeoManager} from '@comapeo/core';
-import type {MapeoClientApi} from '@comapeo/ipc';
+import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 
 import {
   createManager,
@@ -104,7 +104,7 @@ const Stack = createNativeStackNavigator<{Map: undefined}>();
 
 describe('MapScreen low-storage banner', () => {
   let manager: MapeoManager;
-  let client: MapeoClientApi;
+  let client: ComapeoCoreClientApi;
   let onTeardown: Array<() => unknown> = [];
 
   beforeEach(async () => {

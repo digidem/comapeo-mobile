@@ -10,7 +10,7 @@ import {
   LocalDiscoveryProvider,
   createLocalDiscoveryController,
 } from './LocalDiscoveryContext';
-import {type MapeoClientApi} from '@comapeo/ipc';
+import {type ComapeoCoreClientApi} from '@comapeo/ipc';
 import {DraftObservationProvider} from './DraftObservationContext';
 import {DraftObservationStore} from './PersistedStores/DraftObservationStore';
 import {type TrackStore, TrackStoreProvider} from './TrackStoreContext';
@@ -60,7 +60,7 @@ import {
 type AppProvidersProps = {
   children: React.ReactNode;
   localDiscoveryController: ReturnType<typeof createLocalDiscoveryController>;
-  mapeoApi: MapeoClientApi;
+  mapeoApi: ComapeoCoreClientApi;
   mapServerApi: {getBaseUrl: () => Promise<URL>};
   persistedDrafObservationStore: DraftObservationStore;
   trackStore: TrackStore;

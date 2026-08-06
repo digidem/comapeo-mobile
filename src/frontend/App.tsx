@@ -39,7 +39,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
-import {initSentry} from '@comapeo/core-react-native/sentry';
+import {
+  initSentry,
+  setApplicationUsageData,
+  setDiagnosticsEnabled,
+} from '@comapeo/core-react-native/sentry';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 import {createDraftObservationStore} from './contexts/PersistedStores/DraftObservationStore';
@@ -164,6 +168,10 @@ persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
   if (previous.isEnabled !== current.isEnabled) {
     appDiagnosticMetrics.setEnabled(current.isEnabled);
     deviceDiagnosticMetrics.setEnabled(current.isEnabled);
+    // Restart-to-activate: takes effect next launch, not this session.
+    setDiagnosticsEnabled(current.isEnabled).catch(err => {
+      Sentry.captureException(err);
+    });
   }
 });
 
@@ -191,9 +199,16 @@ const appUsagePromptStore = createAppUsageStatsStore({
   persist: true,
   appUsageMetricsOptIn: () => {
     postHog.optIn();
+    // Restart-to-activate: takes effect next launch, not this session.
+    setApplicationUsageData(true).catch(err => {
+      Sentry.captureException(err);
+    });
   },
   appUsageMetricsOptOut: () => {
     postHog.optOut();
+    setApplicationUsageData(false).catch(err => {
+      Sentry.captureException(err);
+    });
   },
 });
 

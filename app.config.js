@@ -95,6 +95,8 @@ module.exports = ({config}) => {
         // Trace only outside production (matches the app's prior env-gated
         // tracesSampleRate). The full runtime consent model migrates later.
         tracesSampleRate: sentryEnvironment === 'production' ? 0 : 1.0,
+        diagnosticsEnabledDefault: true,
+        applicationUsageDataDefault: sentryEnvironment !== 'production',
       },
     },
   ]);

@@ -10,7 +10,7 @@ import Zeroconf, {
   type Service,
   type Service as ZeroconfService,
 } from 'react-native-zeroconf';
-import {type MapeoClientApi} from '@comapeo/ipc';
+import {type ComapeoCoreClientApi} from '@comapeo/ipc';
 import * as Sentry from '@sentry/react-native';
 import noop from '../lib/noop';
 import pTimeout from 'p-timeout';
@@ -82,7 +82,7 @@ export function useLocalDiscoveryController() {
  *
  * Subscribe to changes in the state with subscribe(listener).
  */
-export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
+export function createLocalDiscoveryController(mapeoApi: ComapeoCoreClientApi) {
   let appState = AppState.currentState;
   let netInfo: NetInfoWifiState | NetInfoDisconnectedStates | null = null;
   let unsubscribeInternal: undefined | (() => void);

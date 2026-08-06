@@ -15,6 +15,7 @@ import {getFieldAnswerText} from '../../sharedComponents/FormattedData.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
+import {type PhotoVariant, type SavedPhoto} from '../../sharedTypes';
 import {useOpenShareDialog} from '../../hooks/share.ts';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.ts';
 import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
@@ -97,7 +98,32 @@ export const ButtonFields = ({
     navigation.navigate('ConfirmDeleteObservationBottomSheet', {observationId});
   }
 
-  async function fetchFreshUrls() {
+  async function getAttachmentUrl(
+    attachment: SavedPhoto,
+    variant: PhotoVariant,
+  ) {
+    return projectApi.$blobs.getUrl({
+      driveId: attachment.driveDiscoveryId,
+      name: attachment.name,
+      type: 'photo',
+      variant,
+    });
+  }
+
+  async function fetchAttachmentBase64(attachment: SavedPhoto) {
+    const originalUrl = await getAttachmentUrl(attachment, 'original');
+
+    try {
+      return await convertUrlToBase64(originalUrl);
+    } catch {
+      // The original may fail to load depending on media sync settings.
+      // Fall back to the preview variant if using the original does not work.
+      const previewUrl = await getAttachmentUrl(attachment, 'preview');
+      return await convertUrlToBase64(previewUrl);
+    }
+  }
+
+  async function fetchFreshBase64Urls() {
     const {attachments} = observation;
 
     if (!attachments || attachments.length === 0) {
@@ -108,27 +134,20 @@ export const ButtonFields = ({
       return [];
     }
 
-    return await Promise.all(
-      photoAttachments.map(async attachment => {
-        return projectApi.$blobs.getUrl({
-          driveId: attachment.driveDiscoveryId,
-          name: attachment.name,
-          type: 'photo',
-          variant: 'original',
-        });
-      }),
-    );
+    return await Promise.all(photoAttachments.map(fetchAttachmentBase64));
   }
 
   async function handlePressShare() {
     setIsShareButtonLoading(true);
 
     try {
-      const urls = await fetchFreshUrls();
-      const base64Urls =
-        urls.length > 0
-          ? await Promise.all(urls.map(url => convertUrlToBase64(url)))
-          : [];
+      const base64Urls = await fetchFreshBase64Urls().catch(err => {
+        // Report the failure, but swallow it so sharing can proceed without photos
+        // instead of blocking the whole share on a single failed conversion.
+        Sentry.captureException(err);
+        // Empty array matches fetchFreshBase64Urls' return type (string[]).
+        return [];
+      });
 
       const completedFields: Array<{label: string; value: string}> = [];
       for (const field of fields) {

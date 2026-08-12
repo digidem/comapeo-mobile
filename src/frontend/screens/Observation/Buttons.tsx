@@ -134,11 +134,18 @@ export const ButtonFields = ({
       return [];
     }
 
+    // Report the failure, but swallow it so sharing can proceed without photos
+    // instead of blocking the whole share on a single failed conversion.
     const settledPromises = await Promise.allSettled(
       photoAttachments.map(fetchAttachmentBase64),
     );
 
-    //If there are any photos that have thrown an error we still want allow the rest of the sharing to happen
+    settledPromises.forEach(prom => {
+      if (prom.status === 'rejected') {
+        Sentry.captureException(prom.reason);
+      }
+    });
+
     return settledPromises
       .filter(promise => promise.status === 'fulfilled')
       .map(resolvedPromise => resolvedPromise.value);
@@ -148,13 +155,7 @@ export const ButtonFields = ({
     setIsShareButtonLoading(true);
 
     try {
-      const base64Urls = await fetchFreshBase64Urls().catch(err => {
-        // Report the failure, but swallow it so sharing can proceed without photos
-        // instead of blocking the whole share on a single failed conversion.
-        Sentry.captureException(err);
-        // Empty array matches fetchFreshBase64Urls' return type (string[]).
-        return [];
-      });
+      const base64Urls = await fetchFreshBase64Urls();
 
       const completedFields: Array<{label: string; value: string}> = [];
       for (const field of fields) {

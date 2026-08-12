@@ -111,9 +111,8 @@ export const ButtonFields = ({
   }
 
   async function fetchAttachmentBase64(attachment: SavedPhoto) {
-    const originalUrl = await getAttachmentUrl(attachment, 'original');
-
     try {
+      const originalUrl = await getAttachmentUrl(attachment, 'original');
       return await convertUrlToBase64(originalUrl);
     } catch {
       // The original may fail to load depending on media sync settings.

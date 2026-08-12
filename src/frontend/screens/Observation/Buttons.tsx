@@ -134,7 +134,14 @@ export const ButtonFields = ({
       return [];
     }
 
-    return await Promise.all(photoAttachments.map(fetchAttachmentBase64));
+    const settledPromises = await Promise.allSettled(
+      photoAttachments.map(fetchAttachmentBase64),
+    );
+
+    //If there are any photos that have thrown an error we still want allow the rest of the sharing to happen
+    return settledPromises
+      .filter(promise => promise.status === 'fulfilled')
+      .map(resolvedPromise => resolvedPromise.value);
   }
 
   async function handlePressShare() {

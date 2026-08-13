@@ -337,6 +337,9 @@
   "$1screens.AudioRecording.nowRecording": {
     "message": "Now Recording..."
   },
+  "$1screens.CameraScreen.cameraUnavailable": {
+    "message": "Camera unavailable. Please close and reopen CoMapeo to try again."
+  },
   "$1screens.CameraScreen.noCameraAccess": {
     "message": "No access to camera. Please allow access in settings."
   },

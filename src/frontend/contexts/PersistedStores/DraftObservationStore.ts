@@ -509,8 +509,6 @@ function createEmptyStoreState(): DraftStateEmpty {
 function createEmptyObservationValue(): ObservationValueWithPreset {
   return {
     schemaName: 'observation',
-    lat: 0,
-    lon: 0,
     metadata: {manualLocation: false},
     tags: {
       notes: '',

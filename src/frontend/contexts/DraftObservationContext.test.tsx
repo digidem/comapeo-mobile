@@ -179,8 +179,6 @@ describe('useDraftObservationActions()', () => {
       expect(stateHook.result.current.unsavedAttachments).toStrictEqual([]);
       expect(stateHook.result.current.value).toStrictEqual({
         schemaName: 'observation',
-        lat: 0,
-        lon: 0,
         metadata: {manualLocation: false},
         tags: {notes: ''},
         attachments: [],

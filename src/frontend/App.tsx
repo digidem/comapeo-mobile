@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {Logger, setConnected} from '@maplibre/maplibre-react-native';
-import {getLocales} from 'expo-localization';
 
 // Maplibre logs when tile requests are cancelled, which is often.
 // this turns off the unneccessary noise in the console logs
@@ -42,10 +41,7 @@ import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {
   initSentry,
   setApplicationUsageData,
-  setDiagnosticsEnabled,
 } from '@comapeo/core-react-native/sentry';
-import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
-import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 import {createDraftObservationStore} from './contexts/PersistedStores/DraftObservationStore';
 import {createTrackStore} from './contexts/TrackStoreContext';
 import {createSecurityStore} from './contexts/SecurityStoreContext';
@@ -53,7 +49,6 @@ import {createCoordinateFormatStore} from './contexts/CoordinateFormatStoreConte
 import {createUnitSystemStore} from './contexts/UnitSystemStoreContext';
 import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatStoreContext';
 import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
-import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
 import {createLocaleStore, LocaleContext} from './contexts/LocaleStoreContext';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
@@ -67,47 +62,25 @@ import {createQADeviceNameStore} from './contexts/QADeviceNameStoreContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {postHog} from './lib/posthog.ts';
-import {APP_VARIANT} from './lib/appVariant.ts';
 
-// DSN / environment / tracesSampleRate are baked into the native config by the
-// @comapeo/core-react-native plugin (app.config.js) and locked by initSentry,
-// which owns the Sentry.init call across the RN, Node, and Android-FGS hubs —
-// we pass only the allowlisted extensions. Tracing stays env-gated via the
-// plugin's tracesSampleRate; the full runtime consent model (and a stable user
-// id) migrates later with an updated core-react-native.
-const appMetricsOptIn = APP_VARIANT !== 'production';
 let navigationIntegration:
   ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined =
   undefined;
 
 initSentry({
   integrations: defaults => {
-    if (!appMetricsOptIn) return defaults;
     navigationIntegration = Sentry.reactNavigationIntegration({
       enableTimeToInitialDisplay: true,
       ignoreEmptyBackNavigationTransactions: false,
     });
     return [...defaults, navigationIntegration];
   },
-  tags: appMetricsOptIn ? {appMetricsOptIn: 'true'} : undefined,
 });
 
 const persistedLocaleStore = createLocaleStore({
   persist: true,
 });
 
-const appDiagnosticMetrics = new AppDiagnosticMetrics({
-  getLocaleInfo: () => {
-    const systemLocales = getLocales();
-    const {languageTag} = persistedLocaleStore.instance.getState();
-
-    return {
-      appLanguageTag: languageTag,
-      deviceLanguageTag: systemLocales[0]!.languageTag,
-    };
-  },
-});
-const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const mapServerApi = {
   async getBaseUrl() {
     return new URL(await comapeoServicesClient.mapServer.getBaseUrl());
@@ -146,34 +119,12 @@ const persistedActiveProjectIdStore = createActiveProjectIdStore({
   persist: true,
 });
 
-const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
-  persist: true,
-});
-
 const qaDeviceNameStore = createQADeviceNameStore({persist: true});
 
 const savedLocationStore = createSavedLocationStore({persist: true});
 const lowStorageBannerStore = createLowStorageBannerStore();
 const earlyAccessStore = createEarlyAccessStore({persist: true});
 const persistedUnitSystemStore = createUnitSystemStore({persist: true});
-
-// Ensure that these metrics instances are initially in sync with initial state of relevant store
-const metricsIsEnabled =
-  persistedMetricsDiagnosticsStore.instance.getState().isEnabled;
-appDiagnosticMetrics.setEnabled(metricsIsEnabled);
-deviceDiagnosticMetrics.setEnabled(metricsIsEnabled);
-
-// Sync metrics instances with subsequent changes in relevant store state
-persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
-  if (previous.isEnabled !== current.isEnabled) {
-    appDiagnosticMetrics.setEnabled(current.isEnabled);
-    deviceDiagnosticMetrics.setEnabled(current.isEnabled);
-    // Restart-to-activate: takes effect next launch, not this session.
-    setDiagnosticsEnabled(current.isEnabled).catch(err => {
-      Sentry.captureException(err);
-    });
-  }
-});
 
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(
@@ -270,7 +221,6 @@ const App = () => {
                     }
                     savedLocationStore={savedLocationStore}
                     activeProjectIdStore={persistedActiveProjectIdStore}
-                    metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
                     appUsageStatsStore={appUsagePromptStore}
                     lowStorageBannerStore={lowStorageBannerStore}
                     earlyAccessStore={earlyAccessStore}

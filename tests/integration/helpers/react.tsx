@@ -15,7 +15,6 @@ import {
   LocaleStore,
 } from '../../../src/frontend/contexts/LocaleStoreContext';
 import {createManualEntryCoordinateFormatStore} from '../../../src/frontend/contexts/ManualEntryCoordinateFormatStoreContext';
-import {createMetricsDiagnosticsStore} from '../../../src/frontend/contexts/MetricsDiagnosticsStoreContext';
 import {createDraftObservationStore} from '../../../src/frontend/contexts/PersistedStores/DraftObservationStore';
 import {createSecurityStore} from '../../../src/frontend/contexts/SecurityStoreContext';
 import {createTrackStore} from '../../../src/frontend/contexts/TrackStoreContext';
@@ -112,24 +111,6 @@ export function createAppProvidersWrapper({
 
   const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 
-  const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
-    persist: true,
-  });
-
-  // Ensure that these metrics instances are initially in sync with initial state of relevant store
-  const metricsIsEnabled =
-    persistedMetricsDiagnosticsStore.instance.getState().isEnabled;
-  appDiagnosticMetrics.setEnabled(metricsIsEnabled);
-  deviceDiagnosticMetrics.setEnabled(metricsIsEnabled);
-
-  // Sync metrics instances with subsequent changes in relevant store state
-  persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
-    if (previous.isEnabled !== current.isEnabled) {
-      appDiagnosticMetrics.setEnabled(current.isEnabled);
-      deviceDiagnosticMetrics.setEnabled(current.isEnabled);
-    }
-  });
-
   const localDiscoveryController: ReturnType<
     typeof createLocalDiscoveryController
   > = {
@@ -210,7 +191,6 @@ export function createAppProvidersWrapper({
           localDiscoveryController={localDiscoveryController}
           activeProjectIdStore={persistedActiveProjectIdStore}
           persistedDrafObservationStore={persistedDraftObservationStore}
-          metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
           securityStore={persistedSecurityStore}
           manualEntryCoordinateFormatStore={
             persistedManualEntryCoordinateFormatStore

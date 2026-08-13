@@ -1,11 +1,10 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-
 import {
-  useMetricsDiagnosticsActions,
-  useMetricsDiagnosticsEnabled,
-} from '../contexts/MetricsDiagnosticsStoreContext';
+  getDiagnosticsEnabled,
+  setDiagnosticsEnabled,
+} from '@comapeo/core-react-native/sentry';
 import {WHITE, BLACK} from '../lib/styles';
 import {Checkbox} from './Checkbox';
 
@@ -18,8 +17,7 @@ const m = defineMessages({
 
 export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
   const {formatMessage} = useIntl();
-  const isEnabled = useMetricsDiagnosticsEnabled();
-  const {setIsEnabled} = useMetricsDiagnosticsActions();
+  const isEnabled = getDiagnosticsEnabled();
 
   return (
     <View style={styles.container}>
@@ -30,7 +28,7 @@ export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
         value={isEnabled}
         error={false}
         onPress={() => {
-          setIsEnabled(!isEnabled);
+          setDiagnosticsEnabled(!isEnabled);
         }}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
       />

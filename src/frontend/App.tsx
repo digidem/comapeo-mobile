@@ -41,6 +41,7 @@ import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {
   initSentry,
   setApplicationUsageData,
+  getDiagnosticsEnabled,
 } from '@comapeo/core-react-native/sentry';
 import {createDraftObservationStore} from './contexts/PersistedStores/DraftObservationStore';
 import {createTrackStore} from './contexts/TrackStoreContext';
@@ -62,6 +63,9 @@ import {createQADeviceNameStore} from './contexts/QADeviceNameStoreContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {postHog} from './lib/posthog.ts';
+import {getLocales} from 'expo-localization';
+import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics.ts';
+import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics.ts';
 
 let navigationIntegration:
   ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined =
@@ -145,6 +149,26 @@ TaskManager.defineTask(
     }
   },
 );
+
+const appDiagnosticMetrics = new AppDiagnosticMetrics({
+  getLocaleInfo: () => {
+    const systemLocales = getLocales();
+    const {languageTag} = persistedLocaleStore.instance.getState();
+
+    return {
+      appLanguageTag: languageTag,
+      deviceLanguageTag: systemLocales[0]!.languageTag,
+    };
+  },
+});
+
+const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
+
+const backendDiagnosticsEnabled = getDiagnosticsEnabled();
+
+// App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
+appDiagnosticMetrics.setEnabled(backendDiagnosticsEnabled);
+deviceDiagnosticMetrics.setEnabled(backendDiagnosticsEnabled);
 
 const appUsagePromptStore = createAppUsageStatsStore({
   persist: true,

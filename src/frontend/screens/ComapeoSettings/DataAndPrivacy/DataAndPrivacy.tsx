@@ -16,10 +16,8 @@ import {MetricsDiagnosticsPermissionToggle} from '../../../sharedComponents/Metr
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {Checkbox} from '../../../sharedComponents/Checkbox';
-import {
-  useAppUsageStatsActions,
-  useAppUsageStatsState,
-} from '../../../contexts/AppUsageStatsContext';
+import {useAppUsageStatsActions} from '../../../contexts/AppUsageStatsContext';
+import {getDiagnosticsEnabled} from '@comapeo/core-react-native/sentry';
 const m = defineMessages({
   navTitle: {
     id: 'screens.DataAndPrivacy.navTitle',
@@ -80,10 +78,8 @@ export const DataAndPrivacy = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'DataAndPrivacy'>) => {
   const {formatMessage} = useIntl();
-  const optInStartedAt = useAppUsageStatsState(store => store.optInStartedAt);
+  const appUsageOptedIn = getDiagnosticsEnabled();
   const {setOptedIn} = useAppUsageStatsActions();
-
-  const appUsageOptedIn = !!optInStartedAt;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

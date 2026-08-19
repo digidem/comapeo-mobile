@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -24,10 +23,10 @@ import {
   RED,
   VERY_LIGHT_GREY,
 } from '../../lib/styles';
-import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
+import RNRestart from 'react-native-restart';
 
 const m = defineMessages({
   header: {
@@ -49,9 +48,7 @@ const m = defineMessages({
   },
 });
 
-export const DeviceNaming = ({
-  navigation,
-}: NativeStackScreenProps<OnboardingParamsList, 'DeviceNaming'>) => {
+export const DeviceNaming = () => {
   const [name, setName] = React.useState('');
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const {formatMessage: t} = useIntl();
@@ -79,7 +76,13 @@ export const DeviceNaming = ({
       },
       {
         onSuccess: () => {
-          navigation.replace('Success');
+          // Always restart the app here
+          // If the user has toggled off diagnosticEnabled in `OnboardingPrivacyPolicy`
+          // the app need to restart for sending diagnostic to be disabled in the backend.
+          // This guarantees that app restart, while still navigating the user to the
+          // `Success` screen after it has restart - as the navigation sets
+          // the default screen to the success screen when the user has a name set
+          RNRestart.restart();
         },
       },
     );

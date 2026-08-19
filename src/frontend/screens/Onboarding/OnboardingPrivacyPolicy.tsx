@@ -1,10 +1,14 @@
 import * as React from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
+import {View, ScrollView, StyleSheet, Text} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {PrivacyPolicy} from '../PrivacyPolicy';
-import {BLUE_GREY, WHITE} from '../../lib/styles';
+import {BLACK, BLUE_GREY, WHITE} from '../../lib/styles';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {MetricsDiagnosticsPermissionToggle} from '../../sharedComponents/MetricsDiagnosticsPermissionToggle';
+import {Checkbox} from '../../sharedComponents/Checkbox';
+import {
+  getDiagnosticsEnabled,
+  setDiagnosticsEnabled,
+} from '@comapeo/core-react-native/sentry';
 
 const m = defineMessages({
   navTitle: {
@@ -15,10 +19,19 @@ const m = defineMessages({
     id: 'screens.OnboardingPrivacyPolicy.permissionsTitle',
     defaultMessage: 'Current Permissions',
   },
+  shareDiagnostics: {
+    id: '$1screens.OnboardingPrivacyPolicy.shareDiagnostics',
+    defaultMessage: 'Share Diagnostic Information',
+  },
 });
 
 export const OnboardingPrivacyPolicy = () => {
   const {formatMessage} = useIntl();
+  //this is a non-reactive value
+  const nonReactiveDiagnosticsEnabled = getDiagnosticsEnabled();
+  const [isEnabled, setIsEnabled] = React.useState(
+    nonReactiveDiagnosticsEnabled,
+  );
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -28,7 +41,21 @@ export const OnboardingPrivacyPolicy = () => {
         {formatMessage(m.permissionsTitle)}
       </HeaderText>
       <View style={styles.permissionToggleContainer}>
-        <MetricsDiagnosticsPermissionToggle />
+        <View style={styles.container}>
+          <Text style={styles.permissionText}>
+            {formatMessage(m.shareDiagnostics)}
+          </Text>
+          <Checkbox
+            value={isEnabled}
+            error={false}
+            onPress={() => {
+              const newIsEnabledValue = !isEnabled;
+              setDiagnosticsEnabled(newIsEnabledValue);
+              setIsEnabled(newIsEnabledValue);
+            }}
+            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+          />
+        </View>
       </View>
     </ScrollView>
   );
@@ -57,5 +84,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 10,
+  },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: WHITE,
+  },
+  permissionText: {
+    fontSize: 16,
+    color: BLACK,
+    flex: 1,
   },
 });

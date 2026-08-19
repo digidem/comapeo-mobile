@@ -35,6 +35,9 @@ export function setupIntegrationTest() {
 
   afterEach(async () => {
     for (const fn of onTeardown) await fn();
+    // Closed last, after any test-registered teardown (e.g. peer-discovery
+    // disconnects) that still needs a live manager.
+    await manager.close();
   });
 
   const renderNavigation = async ({
@@ -105,6 +108,9 @@ export function setupIntegrationTestWithoutProject() {
 
   afterEach(async () => {
     for (const fn of onTeardown) await fn();
+    // Closed last, after any test-registered teardown (e.g. peer-discovery
+    // disconnects) that still needs a live manager.
+    await manager.close();
   });
 
   const renderNavigationAsync = async ({

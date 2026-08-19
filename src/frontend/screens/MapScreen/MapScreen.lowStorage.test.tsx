@@ -129,6 +129,7 @@ describe('MapScreen low-storage banner', () => {
 
   afterEach(async () => {
     for (const fn of onTeardown) await fn();
+    await manager.close();
   });
 
   const renderMap = async ({

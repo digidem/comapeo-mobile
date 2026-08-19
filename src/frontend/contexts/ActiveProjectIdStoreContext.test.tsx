@@ -51,6 +51,7 @@ describe('ActiveProjectIdStore', () => {
 
   afterEach(async () => {
     for (const fn of onTeardown) await fn();
+    await manager.close();
   });
 
   test('if no project is available, store will be empty', async () => {

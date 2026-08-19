@@ -171,7 +171,7 @@ export async function inviteToProject(
 
 export const createTestServer = (): Promise<{
   serverBaseUrl: string;
-  close: () => void;
+  close: () => Promise<void>;
 }> =>
   new Promise((resolve, reject) => {
     const startServerPath =
@@ -180,7 +180,13 @@ export const createTestServer = (): Promise<{
       stdio: ['ignore', 'pipe', 'inherit'],
     });
 
-    childProcess.unref();
+    // Resolves once the child process's stdio streams have fully closed,
+    // which is also when it stops holding the event loop open. Awaited by
+    // `close()` below so tests don't leave a still-exiting child process
+    // behind as an open handle.
+    const closed = new Promise<void>(resolveClosed => {
+      childProcess.once('close', () => resolveClosed());
+    });
 
     childProcess.stdout.on('data', data => {
       const url = data.toString().trim();
@@ -188,8 +194,9 @@ export const createTestServer = (): Promise<{
       if (urlIsValid(url)) {
         resolve({
           serverBaseUrl: url,
-          close: () => {
+          close: async () => {
             childProcess.kill('SIGTERM');
+            await closed;
           },
         });
       } else {

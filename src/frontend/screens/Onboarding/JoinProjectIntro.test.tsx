@@ -8,6 +8,16 @@ import {MEMBER_ROLE_ID} from '../../sharedTypes';
 import {connectPeers} from '../../../../tests/integration/helpers/core';
 
 describe('Onboarding Screens', () => {
+  let disconnect: (() => Promise<void>) | undefined;
+
+  // Declared before the setup hooks below so it runs before their internal
+  // teardown (afterEach hooks run in declaration order), since disconnecting
+  // requires the managers to still be open.
+  afterEach(async () => {
+    await disconnect?.();
+    disconnect = undefined;
+  });
+
   const inviteeSetup = setupIntegrationTestWithoutProject();
   const invitorSetup = setupIntegrationTest();
 
@@ -23,7 +33,10 @@ describe('Onboarding Screens', () => {
       ),
     ).toBeVisible();
 
-    await connectPeers([inviteeSetup.manager, invitorSetup.manager]);
+    disconnect = await connectPeers([
+      inviteeSetup.manager,
+      invitorSetup.manager,
+    ]);
 
     const invitorProject = await invitorSetup.client.getProject(
       invitorSetup.projectId,

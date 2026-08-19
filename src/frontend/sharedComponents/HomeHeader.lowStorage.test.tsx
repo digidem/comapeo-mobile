@@ -86,6 +86,7 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
 
   afterEach(async () => {
     for (const fn of onTeardown) await fn();
+    await manager.close();
   });
 
   const renderHeader = async ({

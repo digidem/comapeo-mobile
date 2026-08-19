@@ -48,6 +48,9 @@ describe('Exchange screen', () => {
 
   afterEach(async () => {
     for (const fn of onTeardown) await fn();
+    // Closed last, after any test-registered teardown (e.g. peer-discovery
+    // disconnects) that still needs a live manager.
+    await manager.close();
   });
 
   const Stack = createNativeStackNavigator<Pick<AppStackParamsList, 'Sync'>>();
@@ -124,6 +127,7 @@ describe('Exchange screen', () => {
       name: 'other',
       deviceType: 'mobile',
     });
+    onTeardown.push(() => otherManager.close());
 
     const disconnect = await connectPeers([manager, otherManager]);
     onTeardown.push(disconnect);
@@ -189,6 +193,9 @@ describe('Exchange screen', () => {
     onTeardown.push(() => {
       otherProject.$sync.stop();
     });
+    // Pushed last (after the disconnect and sync-stop teardown above) so
+    // `otherManager` is closed only once nothing else still needs it.
+    onTeardown.push(() => otherManager.close());
 
     await project.$sync.waitForSync('initial');
     await otherProject.$sync.waitForSync('initial');

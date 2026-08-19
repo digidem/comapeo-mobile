@@ -214,6 +214,11 @@
       "exclude": [
         "@sentry/react-native"
       ]
+    },
+    "autolinking": {
+      "buildFromSource": [
+        "expo-file-system"
+      ]
     }
   }
 }

@@ -42,6 +42,9 @@ export function createActiveProjectIdStore({persist} = {persist: false}) {
     setActiveProjectId: (projectId: string) => {
       store.setState({projectId});
     },
+    clearActiveProjectId: () => {
+      store.setState({projectId: undefined});
+    },
   };
 
   return {

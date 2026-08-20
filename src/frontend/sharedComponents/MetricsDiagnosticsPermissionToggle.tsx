@@ -17,7 +17,10 @@ const m = defineMessages({
 
 export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
   const {formatMessage} = useIntl();
-  const isEnabled = getDiagnosticsEnabled();
+  // this value is not reactive
+  const nonReactiveDiagnosticsEnabled = getDiagnosticsEnabled();
+  const [reactiveDiagnosticsEnabled, setReactiveDiagnosticsEnabled] =
+    React.useState(nonReactiveDiagnosticsEnabled);
 
   return (
     <View style={styles.container}>
@@ -25,10 +28,12 @@ export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
         {formatMessage(m.shareDiagnostics)}
       </Text>
       <Checkbox
-        value={isEnabled}
+        value={reactiveDiagnosticsEnabled}
         error={false}
         onPress={() => {
-          setDiagnosticsEnabled(!isEnabled);
+          const newDiagnosticEnabledValue = !reactiveDiagnosticsEnabled;
+          setDiagnosticsEnabled(newDiagnosticEnabledValue);
+          setReactiveDiagnosticsEnabled(newDiagnosticEnabledValue);
         }}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
       />

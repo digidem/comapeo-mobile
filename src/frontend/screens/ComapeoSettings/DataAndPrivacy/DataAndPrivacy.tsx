@@ -16,8 +16,10 @@ import {MetricsDiagnosticsPermissionToggle} from '../../../sharedComponents/Metr
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {Checkbox} from '../../../sharedComponents/Checkbox';
-import {useAppUsageStatsActions} from '../../../contexts/AppUsageStatsContext';
-import {getDiagnosticsEnabled} from '@comapeo/core-react-native/sentry';
+import {
+  getApplicationUsageData,
+  setApplicationUsageData,
+} from '@comapeo/core-react-native/sentry';
 const m = defineMessages({
   navTitle: {
     id: 'screens.DataAndPrivacy.navTitle',
@@ -78,8 +80,10 @@ export const DataAndPrivacy = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'DataAndPrivacy'>) => {
   const {formatMessage} = useIntl();
-  const appUsageOptedIn = getDiagnosticsEnabled();
-  const {setOptedIn} = useAppUsageStatsActions();
+  const nonReactiveAppUsageData = getApplicationUsageData();
+  const [reactiveAppUsageData, setReactiveAppUsageData] = React.useState(
+    nonReactiveAppUsageData,
+  );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -167,8 +171,12 @@ export const DataAndPrivacy = ({
           </HeaderText>
           <Checkbox
             hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-            value={appUsageOptedIn}
-            onPress={() => setOptedIn(!appUsageOptedIn)}
+            value={reactiveAppUsageData}
+            onPress={() => {
+              const appUsageData = !reactiveAppUsageData;
+              setApplicationUsageData(appUsageData);
+              setReactiveAppUsageData(appUsageData);
+            }}
           />
         </View>
       </View>

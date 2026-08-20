@@ -174,6 +174,7 @@ const appUsagePromptStore = createAppUsageStatsStore({
   persist: true,
   appUsageMetricsOptIn: () => {
     postHog.optIn();
+    appDiagnosticMetrics.setEnabled(true);
     // Restart-to-activate: takes effect next launch, not this session.
     setApplicationUsageData(true).catch(err => {
       Sentry.captureException(err);
@@ -181,6 +182,7 @@ const appUsagePromptStore = createAppUsageStatsStore({
   },
   appUsageMetricsOptOut: () => {
     postHog.optOut();
+    appDiagnosticMetrics.setEnabled(false);
     setApplicationUsageData(false).catch(err => {
       Sentry.captureException(err);
     });

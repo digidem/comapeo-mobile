@@ -1,0 +1,2 @@
+- https://medium.com/@Amr.sa/running-android-emulator-in-a-docker-container-19ecb68e1909
+- https://github.com/amrsa1/Android-Emulator-image

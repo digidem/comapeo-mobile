@@ -42,6 +42,7 @@ import {
   initSentry,
   setApplicationUsageData,
   getDiagnosticsEnabled,
+  getApplicationUsageData,
 } from '@comapeo/core-react-native/sentry';
 import {createDraftObservationStore} from './contexts/PersistedStores/DraftObservationStore';
 import {createTrackStore} from './contexts/TrackStoreContext';
@@ -162,13 +163,10 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
   },
 });
 
-const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
-
-const backendDiagnosticsEnabled = getDiagnosticsEnabled();
+const backendAppDiagnosticsEnabled = getApplicationUsageData();
 
 // App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
-appDiagnosticMetrics.setEnabled(backendDiagnosticsEnabled);
-deviceDiagnosticMetrics.setEnabled(backendDiagnosticsEnabled);
+appDiagnosticMetrics.setEnabled(backendAppDiagnosticsEnabled);
 
 const appUsagePromptStore = createAppUsageStatsStore({
   persist: true,
@@ -188,6 +186,11 @@ const appUsagePromptStore = createAppUsageStatsStore({
     });
   },
 });
+
+const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
+const backendDeviceDiagnosticsEnabled = getDiagnosticsEnabled();
+// App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
+deviceDiagnosticMetrics.setEnabled(backendDeviceDiagnosticsEnabled);
 
 const queryClient = new QueryClient();
 

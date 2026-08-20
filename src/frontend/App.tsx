@@ -212,6 +212,15 @@ const queryClient = new QueryClient();
 
 const isStorybook = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true';
 
+// The storybook branch never goes through AppNavigator, which is what hides
+// the splash screen in the normal app flow, so hide it once storybook mounts.
+const StorybookRoot = () => {
+  React.useEffect(() => {
+    SplashScreen.hideAsync().catch(() => {});
+  }, []);
+  return <StorybookUIRoot />;
+};
+
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -250,7 +259,7 @@ const App = () => {
                   earlyAccessStore={earlyAccessStore}
                   unitSystemStore={persistedUnitSystemStore}>
                   {isStorybook ? (
-                    <StorybookUIRoot />
+                    <StorybookRoot />
                   ) : (
                     <AppNavigator
                       permissionAsked={permissionsAsked}

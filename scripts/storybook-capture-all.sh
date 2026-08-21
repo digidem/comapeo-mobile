@@ -162,6 +162,36 @@ printf '%s\n' \
 
 adb wait-for-device
 
+# A runtime permission dialog (the add-photo flow asks for the camera on first
+# use) is a system window this script can neither see nor dismiss, so it stalls
+# readiness in a way that is indistinguishable from a hung screen. Pre-grant
+# every dangerous permission the built app requests, so no story can raise one.
+#
+# The list below must match the *merged* manifest the APK actually ships
+# with (android/app/build/intermediates/merged_manifest/*/AndroidManifest.xml
+# after a build), not just android/app/src/main/AndroidManifest.xml — library
+# dependencies (e.g. the camera/media libs) add their own dangerous
+# permissions during manifest merging that don't appear in the app's own
+# manifest source. Grants that don't apply to the device's API level fail
+# harmlessly and are ignored.
+runtime_permissions=(
+  android.permission.CAMERA
+  android.permission.RECORD_AUDIO
+  android.permission.ACCESS_FINE_LOCATION
+  android.permission.ACCESS_COARSE_LOCATION
+  android.permission.ACCESS_BACKGROUND_LOCATION
+  android.permission.ACCESS_MEDIA_LOCATION
+  android.permission.ACTIVITY_RECOGNITION
+  android.permission.READ_EXTERNAL_STORAGE
+  android.permission.WRITE_EXTERNAL_STORAGE
+)
+grant_failures=0
+for permission in "${runtime_permissions[@]}"; do
+  adb shell pm grant "$package_id" "$permission" >/dev/null 2>&1 || grant_failures=$((grant_failures + 1))
+done
+printf 'permission_grants_requested=%s\npermission_grants_failed=%s\n' \
+  "${#runtime_permissions[@]}" "$grant_failures" >>"$provenance_path"
+
 if ! force_stop_output=$(adb shell am force-stop "$package_id" 2>&1); then
   printf 'force_stop_status=failed\n%s\n' "$force_stop_output" >>"$provenance_path"
   fail "could not force-stop Storybook; see $provenance_path"
@@ -245,25 +275,10 @@ for ((index = 0; index < record_count; index += 1)); do
   if ! grep -Fqx -- "$expected_log" <<<"$runtime_logs"; then
     fail "runtime identity check failed at position $position for story: $story_id"
   fi
-  ready_kind=${ready_target%%:*}
-  ready_value=${ready_target#*:}
-  story_ready_test_id="STORYBOOK.flow-ready.$story_id"
-  route_ready_test_id="$story_ready_test_id.$ready_value"
-  if ! ui_dump=$(adb exec-out uiautomator dump /dev/tty 2>/dev/null); then
-    fail "could not read Android UI hierarchy after capturing story: $story_id"
-  fi
-  if ! grep -Fq -- "resource-id=\"$story_ready_test_id\"" <<<"$ui_dump"; then
-    fail "current story readiness check failed at position $position for story: $story_id"
-  fi
-  if [[ $ready_kind == route ]]; then
-    if ! grep -Fq -- "resource-id=\"$route_ready_test_id\"" <<<"$ui_dump"; then
-      fail "current native readiness check failed at position $position for story: $story_id; expected route: $ready_value"
-    fi
-  else
-    if ! grep -Fq -- "resource-id=\"$ready_value\"" <<<"$ui_dump"; then
-      fail "current native readiness check failed at position $position for story: $story_id; expected testID: $ready_value"
-    fi
-  fi
+  # Native readiness is not re-checked here: the capture command already
+  # asserts the marker in a UI dump taken immediately before and immediately
+  # after `screencap`, which binds the marker to the pixels far more tightly
+  # than a dump taken after that process has exited.
 
   byte_size=$(wc -c <"$frame_path")
   byte_size=${byte_size//[[:space:]]/}

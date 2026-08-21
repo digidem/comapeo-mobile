@@ -22,7 +22,7 @@ setConnected(true);
 import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {initializeNodejs} from './initializeNodejs';
-import {PermissionsAndroid} from 'react-native';
+import {LogBox, PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
@@ -211,6 +211,20 @@ const appUsagePromptStore = createAppUsageStatsStore({
 const queryClient = new QueryClient();
 
 const isStorybook = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true';
+
+if (isStorybook) {
+  // Storybook builds exist to be screenshotted for QA review, and a LogBox
+  // notification banner painted over a story ruins that frame. Suppressing
+  // them only hides the overlay: `console.warn`/`console.error` still reach
+  // Metro and logcat, Sentry still reports through its own `ErrorUtils`
+  // global handler and the `Sentry.ErrorBoundary`s below, and an uncaught
+  // error still opens the full-screen LogBox inspector (React Native does
+  // not gate that on this flag) so a real crash stays obvious in the frame.
+  // Scoped to EXPO_PUBLIC_STORYBOOK_ENABLED, so normal `expo start`
+  // development keeps its banners; in release builds LogBox is already a
+  // no-op stub.
+  LogBox.ignoreAllLogs(true);
+}
 
 // The storybook branch never goes through AppNavigator, which is what hides
 // the splash screen in the normal app flow, so hide it once storybook mounts.

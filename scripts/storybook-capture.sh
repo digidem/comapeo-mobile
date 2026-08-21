@@ -132,18 +132,36 @@ native_readiness_matches() {
   esac
 }
 
+# `uiautomator dump` is flaky under emulator memory pressure: the on-device
+# helper is sometimes reaped by the guest low-memory killer, or the pull races
+# a still-forming window, which surfaces as an empty/truncated read (not valid
+# hierarchy XML) rather than as a missing marker. That's a transient read
+# failure worth a short retry, bounded by time rather than attempt count since
+# one dump takes anywhere from under a second to several seconds on a loaded
+# emulator. A well-formed dump that simply lacks the marker is not retried —
+# that's real evidence the screen changed, and this check exists specifically
+# to catch that between/around the screenshot.
 assert_current_native_readiness() {
   local timing=$1
+  local dump_deadline=$((SECONDS + 15))
   local hierarchy
 
-  if ! hierarchy=$(adb exec-out uiautomator dump /dev/tty 2>/dev/null); then
-    echo "storybook-capture: could not read Android UI hierarchy $timing" >&2
-    return 1
-  fi
-  if ! native_readiness_matches "$hierarchy"; then
+  while :; do
+    hierarchy=$(timeout 10 adb exec-out uiautomator dump /dev/tty 2>/dev/null) || hierarchy=
+    if [[ -z $hierarchy || $hierarchy != *'<hierarchy'* ]]; then
+      (( SECONDS < dump_deadline )) || break
+      sleep 0.5
+      continue
+    fi
+    if native_readiness_matches "$hierarchy"; then
+      return 0
+    fi
     echo "storybook-capture: current native readiness check failed $timing for story: $story_id; expected: $ready_target" >&2
     return 1
-  fi
+  done
+
+  echo "storybook-capture: could not read Android UI hierarchy $timing after retrying" >&2
+  return 1
 }
 
 if [[ $ready_kind == route ]]; then
@@ -167,7 +185,7 @@ while (( SECONDS < deadline )); do
       fi
 
       if (( SECONDS >= ui_probe_at )); then
-        if ui_dump=$(adb exec-out uiautomator dump /dev/tty 2>/dev/null) &&
+        if ui_dump=$(timeout 10 adb exec-out uiautomator dump /dev/tty 2>/dev/null) &&
           native_readiness_matches "$ui_dump"; then
           capture_ready=true
           break

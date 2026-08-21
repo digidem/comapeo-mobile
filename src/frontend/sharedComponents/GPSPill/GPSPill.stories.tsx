@@ -41,7 +41,10 @@ export const Error: Story = {
 };
 
 export const AllStates: Story = {
-  args: {} as any,
+  args: {
+    status: 'searching',
+    unitSystem: 'metric',
+  },
   render: () => (
     <View style={{flexDirection: 'row', gap: 12, padding: 16}}>
       <GPSPillUI status="searching" unitSystem="metric" />

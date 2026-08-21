@@ -42,7 +42,10 @@ export const Disabled: Story = {
 };
 
 export const AllVariants: Story = {
-  args: {} as any,
+  args: {
+    children: 'Button variants',
+    onPress: () => {},
+  },
   render: () => (
     <View style={{gap: 12, padding: 16, alignItems: 'center'}}>
       <Button variant="contained" color="dark" onPress={() => {}}>

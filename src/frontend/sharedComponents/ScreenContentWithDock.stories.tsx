@@ -12,7 +12,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {} as any,
+  args: {
+    children: null,
+    dockContent: null,
+  },
   render: () => (
     <ScreenContentWithDock
       dockContent={<PrimaryButton text="Save" fullSize onPress={() => {}} />}>

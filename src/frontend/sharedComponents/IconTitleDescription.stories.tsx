@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react-native';
 import {IconTitleDescription} from './IconTitleDescription';
-import {View, Text} from 'react-native';
+import {Text} from 'react-native';
 
 const meta = {
   title: 'Shared/IconTitleDescription',

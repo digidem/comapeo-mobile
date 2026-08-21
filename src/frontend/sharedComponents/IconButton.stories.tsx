@@ -1,6 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react-native';
 import {IconButton} from './IconButton';
-import {View} from 'react-native';
 import {Text} from 'react-native';
 
 const meta = {

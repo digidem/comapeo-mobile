@@ -10,45 +10,56 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+function StatefulPasscodeInput({
+  initialValue,
+  error,
+  maskValues,
+}: {
+  initialValue: string;
+  error: boolean;
+  maskValues?: boolean;
+}) {
+  const [value, setValue] = useState(initialValue);
+  return (
+    <PasscodeInput
+      inputValue={value}
+      onChangeTextWithValidation={setValue}
+      error={error}
+      maskValues={maskValues}
+    />
+  );
+}
+
 export const Default: Story = {
-  args: {} as any,
-  render: () => {
-    const [value, setValue] = useState('');
-    return (
-      <PasscodeInput
-        inputValue={value}
-        onChangeTextWithValidation={setValue}
-        error={false}
-      />
-    );
+  args: {
+    inputValue: '',
+    onChangeTextWithValidation: () => {},
+    error: false,
   },
+  render: () => <StatefulPasscodeInput initialValue="" error={false} />,
 };
 
 export const WithError: Story = {
-  args: {} as any,
-  render: () => {
-    const [value, setValue] = useState('12');
-    return (
-      <PasscodeInput
-        inputValue={value}
-        onChangeTextWithValidation={setValue}
-        error={true}
-      />
-    );
+  args: {
+    inputValue: '12',
+    onChangeTextWithValidation: () => {},
+    error: true,
   },
+  render: () => <StatefulPasscodeInput initialValue="12" error />,
 };
 
 export const Unmasked: Story = {
-  args: {} as any,
-  render: () => {
-    const [value, setValue] = useState('12345');
-    return (
-      <PasscodeInput
-        inputValue={value}
-        onChangeTextWithValidation={setValue}
-        error={false}
-        maskValues={false}
-      />
-    );
+  args: {
+    inputValue: '12345',
+    onChangeTextWithValidation: () => {},
+    error: false,
+    maskValues: false,
   },
+  render: () => (
+    <StatefulPasscodeInput
+      initialValue="12345"
+      error={false}
+      maskValues={false}
+    />
+  ),
 };

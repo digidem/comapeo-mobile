@@ -54,7 +54,11 @@ export const SecondaryDestructive: Story = {
 };
 
 export const AllVariants: Story = {
-  args: {} as any,
+  args: {
+    text: 'Button variants',
+    fullSize: true,
+    onPress: () => {},
+  },
   render: () => (
     <View style={{gap: 12, padding: 16, alignItems: 'center'}}>
       <PrimaryButton text="Primary" fullSize onPress={() => {}} />

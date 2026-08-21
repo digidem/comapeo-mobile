@@ -19,6 +19,10 @@ export const Default: Story = {
 };
 
 export const Loading: Story = {
-  args: {} as any,
+  args: {
+    size: 100,
+    onPress: undefined,
+    children: null,
+  },
   render: () => <ThumbnailLoader size={100} />,
 };

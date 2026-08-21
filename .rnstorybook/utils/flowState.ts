@@ -18,14 +18,34 @@ import {
   useActiveProjectId,
   useActiveProjectIdActions,
 } from '../../src/frontend/contexts/ActiveProjectIdStoreContext';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../src/frontend/contexts/DraftObservationContext';
 import {expoToCoreDeviceType} from '../../src/frontend/lib/deviceTypeMap';
-import {useSeedObservations, useSeedProject} from './seedData';
+import {
+  useSeedObservations,
+  useSeedPointPreset,
+  useSeedProject,
+} from './seedData';
+
+export type DraftObservationSpec =
+  | 'none'
+  | {state: 'empty'}
+  | {state: 'preset-selected'; requireFields?: boolean};
 
 export type FlowStateSpec = {
   auth?: 'authenticated' | 'unauthenticated';
   /** `null` clears the device name (see Open Question 1 in the PRD — confirmed clearable). */
   deviceName?: string | null;
   project?: 'none' | {name: string; observations?: number};
+  draftObservation?: DraftObservationSpec;
+};
+
+export type ResolvedFlowState = {
+  key: string;
+  projectId?: string;
+  observationIds: readonly string[];
 };
 
 export const FLOW_STATES = {
@@ -57,18 +77,36 @@ const DEV_PASSCODE = '13579';
 
 const DEVICE_TYPE = expoToCoreDeviceType(expoDeviceType);
 
-function buildKey(spec: FlowStateSpec, resolvedProjectId: string | undefined) {
-  const projectPart =
-    spec.project === 'none' || !spec.project
-      ? 'none'
-      : `${spec.project.name}:${spec.project.observations ?? 0}`;
-  return [spec.auth, spec.deviceName, projectPart, resolvedProjectId].join('|');
+function buildKey(spec?: FlowStateSpec) {
+  if (!spec) return 'flow:none';
+
+  const project = spec.project;
+  return JSON.stringify({
+    auth: spec.auth ?? null,
+    deviceName: Object.prototype.hasOwnProperty.call(spec, 'deviceName')
+      ? spec.deviceName
+      : '__flow_state_device_name_unset__',
+    project:
+      project === 'none'
+        ? 'none'
+        : project
+          ? {name: project.name, observations: project.observations ?? 0}
+          : null,
+    draftObservation: spec.draftObservation ?? null,
+  });
 }
 
-type ReadyFlowState = {
-  key: string;
-  spec: FlowStateSpec | undefined;
-};
+function hasOnlyExpectedTags(
+  tags: Record<string, unknown>,
+  expectedTags: Record<string, unknown>,
+) {
+  const tagKeys = Object.keys(tags);
+  const expectedKeys = Object.keys(expectedTags);
+  return (
+    tagKeys.length === expectedKeys.length &&
+    expectedKeys.every(key => tags[key] === expectedTags[key])
+  );
+}
 
 /**
  * Applies `spec` to the running backend/session, returning `null` while an
@@ -88,7 +126,7 @@ type ReadyFlowState = {
  * `AuthContext` already boots into whenever no passcode was set at launch,
  * so this doesn't affect them.
  */
-export function useFlowState(spec?: FlowStateSpec): {key: string} | null {
+export function useFlowState(spec?: FlowStateSpec): ResolvedFlowState | null {
   const passcode = useSecurityState(state => state.passcode);
   const {setPasscode} = useSecurityActions();
 
@@ -107,9 +145,21 @@ export function useFlowState(spec?: FlowStateSpec): {key: string} | null {
     typeof spec?.project === 'object' ? (spec.project.observations ?? 0) : 0;
   const {ensure: ensureObservations} = useSeedObservations(observationsCount);
 
-  const [ready, setReady] = React.useState<ReadyFlowState | null>(null);
+  const requirePresetFields =
+    typeof spec?.draftObservation === 'object' &&
+    spec.draftObservation.state === 'preset-selected' &&
+    spec.draftObservation.requireFields === true;
+  const {resolve: resolvePointPreset} = useSeedPointPreset({
+    requireFields: requirePresetFields,
+  });
+
+  const draftState = useDraftObservationState();
+  const {clearDraft, createDraft, updatePreset} = useDraftObservationActions();
+
+  const [ready, setReady] = React.useState<ResolvedFlowState | null>(null);
   const [error, setError] = React.useState<Error | null>(null);
-  const isReadyForCurrentSpec = ready !== null && ready.spec === spec;
+  const specKey = buildKey(spec);
+  const isReadyForCurrentSpec = ready !== null && ready.key === specKey;
 
   React.useEffect(() => {
     if (isReadyForCurrentSpec) return;
@@ -122,7 +172,7 @@ export function useFlowState(spec?: FlowStateSpec): {key: string} | null {
     };
 
     if (!spec) {
-      setReady({key: 'flow:none', spec});
+      setReady({key: specKey, observationIds: []});
       return () => {
         cancelled = true;
       };
@@ -171,9 +221,12 @@ export function useFlowState(spec?: FlowStateSpec): {key: string} | null {
         return;
       }
 
-      if (spec_.project) {
+      let projectId = activeProjectId ?? undefined;
+      let observationIds: readonly string[] = [];
+
+      if (typeof spec_.project === 'object') {
         setReady(null);
-        const projectId = await ensureProject();
+        projectId = await ensureProject();
         if (cancelled) return;
 
         if (projectId !== activeProjectId) {
@@ -181,11 +234,86 @@ export function useFlowState(spec?: FlowStateSpec): {key: string} | null {
           return;
         }
 
-        await ensureObservations(projectId);
+        observationIds = await ensureObservations(projectId);
         if (cancelled) return;
       }
 
-      setReady({key: buildKey(spec_, activeProjectId), spec: spec_});
+      const draftSpec = spec_.draftObservation;
+      if (draftSpec) {
+        if (!projectId && draftSpec !== 'none') {
+          throw new Error(
+            'Storybook flow draft setup requires an active seeded project',
+          );
+        }
+
+        if (draftSpec === 'none') {
+          if (draftState.value !== null) {
+            setReady(null);
+            clearDraft();
+            return;
+          }
+        } else if (draftSpec.state === 'empty') {
+          const isCompatibleEmptyDraft =
+            draftState.value !== null &&
+            draftState.id === null &&
+            draftState.value.presetRef === undefined &&
+            draftState.unsavedAttachments?.length === 0 &&
+            draftState.value.attachments.length === 0 &&
+            hasOnlyExpectedTags(draftState.value.tags, {notes: ''});
+
+          if (!isCompatibleEmptyDraft) {
+            setReady(null);
+            if (draftState.value === null) {
+              createDraft();
+            } else {
+              clearDraft();
+            }
+            return;
+          }
+        } else {
+          const preset = await resolvePointPreset(projectId!);
+          if (cancelled) return;
+
+          const expectedTags = {
+            notes: '',
+            ...preset.tags,
+            ...preset.addTags,
+          };
+          const isCompatiblePresetDraft =
+            draftState.value !== null &&
+            draftState.id === null &&
+            draftState.value.presetRef?.docId === preset.docId &&
+            draftState.value.presetRef.versionId === preset.versionId &&
+            draftState.unsavedAttachments?.length === 0 &&
+            draftState.value.attachments.length === 0 &&
+            hasOnlyExpectedTags(draftState.value.tags, expectedTags);
+          const isCompatibleEmptyDraft =
+            draftState.value !== null &&
+            draftState.id === null &&
+            draftState.value.presetRef === undefined &&
+            draftState.unsavedAttachments?.length === 0 &&
+            draftState.value.attachments.length === 0 &&
+            hasOnlyExpectedTags(draftState.value.tags, {notes: ''});
+
+          if (!isCompatiblePresetDraft) {
+            setReady(null);
+            if (draftState.value === null) {
+              createDraft();
+            } else if (isCompatibleEmptyDraft) {
+              updatePreset(preset);
+            } else {
+              clearDraft();
+            }
+            return;
+          }
+        }
+      }
+
+      setReady({
+        key: buildKey(spec_),
+        projectId,
+        observationIds,
+      });
     }
 
     apply().catch(fail);
@@ -196,15 +324,20 @@ export function useFlowState(spec?: FlowStateSpec): {key: string} | null {
   }, [
     activeProjectId,
     clearActiveProjectId,
+    clearDraft,
+    createDraft,
     deviceInfo.name,
+    draftState,
     ensureObservations,
     ensureProject,
     isReadyForCurrentSpec,
     passcode,
+    resolvePointPreset,
     setActiveProjectId,
     setDeviceInfo,
     setPasscode,
     spec,
+    updatePreset,
   ]);
 
   // Surface seeding failures loudly (nearest error boundary) rather than

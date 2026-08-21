@@ -36,7 +36,11 @@ export const Error: Story = {
 };
 
 export const AllStates: Story = {
-  args: {} as any,
+  args: {
+    value: false,
+    onPress: () => {},
+    hitSlop: {top: 10, bottom: 10, left: 10, right: 10},
+  },
   render: () => (
     <View style={{flexDirection: 'row', gap: 20, padding: 16}}>
       <Checkbox

@@ -13,7 +13,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const SimpleList: Story = {
-  args: {} as any,
+  args: {children: null},
   render: () => (
     <List>
       <ListItem onPress={() => {}}>
@@ -35,7 +35,7 @@ export const SimpleList: Story = {
 };
 
 export const WithSubheader: Story = {
-  args: {} as any,
+  args: {children: null},
   render: () => (
     <List subheader="General">
       <ListItem onPress={() => {}}>

@@ -32,17 +32,8 @@ const finalConfig = {
   },
 };
 
-let withStorybook;
-try {
-  withStorybook =
-    require('@storybook/react-native/metro/withStorybook').withStorybook;
-} catch {
-  // Storybook not installed or not available — skip wrapper
-}
+const {withStorybook} = require('@storybook/react-native/metro/withStorybook');
 
-module.exports =
-  withStorybook && process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true'
-    ? withStorybook(finalConfig, {
-        enabled: process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true',
-      })
-    : finalConfig;
+module.exports = withStorybook(finalConfig, {
+  enabled: process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true',
+});

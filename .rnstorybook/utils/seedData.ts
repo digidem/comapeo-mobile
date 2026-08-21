@@ -18,6 +18,7 @@ import {useClientApi} from '@comapeo/core-react';
 import {lengthToDegrees} from '@turf/helpers';
 import {randomPosition} from '@turf/random';
 import {type BBox} from 'geojson';
+import type {Preset} from '@comapeo/schema';
 
 import type {Metadata} from '../../src/frontend/sharedTypes';
 
@@ -71,7 +72,9 @@ export function useSeedObservations(count: number, options?: {lang?: string}) {
         projectApi.preset.getMany({lang}),
       ]);
 
-      const existingIds = existingObservations.map(o => o.docId);
+      const existingIds = existingObservations
+        .map(observation => observation.docId)
+        .sort();
       const deficit = count - existingIds.length;
       if (deficit <= 0 || presets.length === 0) {
         return existingIds.slice(0, count);
@@ -122,10 +125,52 @@ export function useSeedObservations(count: number, options?: {lang?: string}) {
       }
 
       const newIds = await Promise.all(tasks);
-      return [...existingIds, ...newIds].slice(0, count);
+      return [...existingIds, ...newIds].sort().slice(0, count);
     },
     [clientApi, count, lang],
   );
 
   return {ensure};
+}
+
+/**
+ * Resolve the deterministic point preset used by draft-backed flow stories.
+ * This only reads project config; applying the preset remains the draft
+ * store's responsibility.
+ */
+export function useSeedPointPreset(options?: {
+  lang?: string;
+  requireFields?: boolean;
+}) {
+  const clientApi = useClientApi();
+  const lang = options?.lang;
+  const requireFields = options?.requireFields ?? false;
+
+  const resolve = React.useCallback(
+    async (projectId: string): Promise<Preset> => {
+      const projectApi = await clientApi.getProject(projectId);
+      const presets = await projectApi.preset.getMany({lang});
+      const eligiblePresets = presets
+        .filter(
+          preset =>
+            preset.geometry.includes('point') &&
+            (!requireFields || preset.fieldRefs.length > 0),
+        )
+        .sort((a, b) => (a.docId < b.docId ? -1 : a.docId > b.docId ? 1 : 0));
+      const preset = eligiblePresets[0];
+
+      if (!preset) {
+        throw new Error(
+          requireFields
+            ? `Storybook flow could not find a point preset with fields in project ${projectId}`
+            : `Storybook flow could not find a point preset in project ${projectId}`,
+        );
+      }
+
+      return preset;
+    },
+    [clientApi, lang, requireFields],
+  );
+
+  return {resolve};
 }

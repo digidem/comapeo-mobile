@@ -28,16 +28,15 @@ const m = defineMessages({
 export const OBSCURE_PASSCODE = '00000';
 
 export const EDITING_SCREEN_NAMES: (
-  | keyof AppStackParamsList
-  | keyof HomeTabsParamsList
+  keyof AppStackParamsList | keyof HomeTabsParamsList
 )[] = [
   'AddPhoto',
   'TrackCategoryChooser',
   'ObservationCategoryChooser',
   'ManualGpsScreen',
   'ObservationCreate',
-  'ObservationDetails',
   'ObservationEdit',
+  'ObservationFields',
   'SaveTrack',
   'TrackEdit',
   'Camera',
@@ -50,6 +49,7 @@ export const EDITING_SCREEN_NAMES: (
   'ErrorBottomSheet',
   'ConfirmDiscardObservationBottomSheet',
   'ConfirmDiscardObservationEditBottomSheet',
+  'MapOnYourOwnIntro',
 ];
 
 export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [

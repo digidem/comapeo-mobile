@@ -16,19 +16,6 @@ import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
 import {ObservationFilterToggle} from './ObservationFilterToggle';
 
 const m = defineMessages({
-  loading: {
-    id: 'screens.ObservationsList.loading',
-    defaultMessage:
-      'Loading… this can take a while after synchronizing with a new device',
-    description: 'message shown whilst observations are loading',
-  },
-  error: {
-    id: 'screens.ObservationsList.error',
-    defaultMessage:
-      'Error loading observations. Try quitting and restarting CoMapeo.',
-    description:
-      'message shown when there is an unexpected error when loading observations',
-  },
   observationListTitle: {
     id: 'screens.ObservationList.observationListTitle',
     defaultMessage: 'Observations',
@@ -115,6 +102,8 @@ export const ObservationsList: React.FC<
         windowSize={3}
         removeClippedSubviews
         renderItem={({item, index}) => {
+          const isMine = deviceInfo.deviceId === item.createdBy;
+
           switch (item.schemaName) {
             case 'observation':
               return (
@@ -122,6 +111,7 @@ export const ObservationsList: React.FC<
                   key={item.docId}
                   testID={`observationListItem:${index}`}
                   observation={item}
+                  showSyncedIndicator={!isMine}
                   style={styles.listItem}
                   onPress={() =>
                     navigation.navigate('Observation', {
@@ -140,6 +130,7 @@ export const ObservationsList: React.FC<
                   onPress={() => {
                     navigation.navigate('Track', {trackId: item.docId});
                   }}
+                  showSyncedIndicator={!isMine}
                 />
               );
           }

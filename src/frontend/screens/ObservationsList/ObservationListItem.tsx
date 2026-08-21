@@ -14,8 +14,7 @@ import {matchPreset} from '../../lib/utils';
 import {sharedStyles} from './SharedStyle.ts';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
-import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {usePresetsQuery} from '../../hooks/server/presets.ts';
 
 interface ObservationListItemProps {
@@ -23,6 +22,7 @@ interface ObservationListItemProps {
   observation: Observation;
   testID: string;
   onPress: (id: string) => void;
+  showSyncedIndicator?: boolean;
 }
 
 type PhotoAttachment = Omit<Attachment, 'type'> & {type: 'photo'};
@@ -38,6 +38,7 @@ function ObservationListItemNotMemoized({
   observation,
   testID,
   onPress,
+  showSyncedIndicator,
 }: ObservationListItemProps) {
   return (
     <TouchableOpacity
@@ -47,10 +48,14 @@ function ObservationListItemNotMemoized({
       <React.Suspense
         fallback={
           <View style={[styles.container, style]}>
-            <UIActivityIndicator />
+            <LoadingIndicator />
           </View>
         }>
-        <ObservationListItemInner observation={observation} style={style} />
+        <ObservationListItemInner
+          observation={observation}
+          showSyncedIndicator={showSyncedIndicator}
+          style={style}
+        />
       </React.Suspense>
     </TouchableOpacity>
   );
@@ -59,17 +64,23 @@ function ObservationListItemNotMemoized({
 function ObservationListItemInner({
   style,
   observation,
+  showSyncedIndicator,
 }: {
   style?: ViewStyleProp;
   observation: Observation;
+  showSyncedIndicator?: boolean;
 }) {
   const {data: allPresets} = usePresetsQuery();
   const preset = matchPreset(observation.tags, allPresets);
   const photos = observation.attachments.filter(isSavedPhoto);
-  const isMine = useIsMyDocument(observation.originalVersionId);
 
   return (
-    <View style={[styles.container, style, !isMine && sharedStyles.synced]}>
+    <View
+      style={[
+        styles.container,
+        style,
+        showSyncedIndicator && sharedStyles.synced,
+      ]}>
       <View style={styles.text}>
         <HeaderText variant="header4">
           <FormattedPresetName preset={preset} />

@@ -19,10 +19,14 @@ Logger.setLogCallback(log => {
 // https://github.com/maplibre/maplibre-react-native/blob/6f99de530eec2e06de485ef86f4be61f941e0e09/docs/content/modules/mlrn-module.md#setconnectedconnected
 setConnected(true);
 
-import {QueryClient} from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  focusManager,
+} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {initializeNodejs} from './initializeNodejs';
-import {LogBox, PermissionsAndroid} from 'react-native';
+import {AppState, LogBox, PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
@@ -50,8 +54,9 @@ import {createMapeoApi} from './lib/createMapeoApi.ts';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
 import {Suspense} from 'react';
-import {Loading} from './sharedComponents/Loading.tsx';
+import {FullScreenCenteredLoader} from './sharedComponents/FullScreenCenteredLoader.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
+import {createQADeviceNameStore} from './contexts/QADeviceNameStoreContext.tsx';
 import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {createAppRpc} from './lib/createAppRpc.ts';
@@ -70,8 +75,8 @@ const sentryEnvironment: SentryEnvironment =
 
 const appMetricsOptIn = sentryEnvironment !== 'production';
 let navigationIntegration:
-  | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
-  | undefined = undefined;
+  ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined =
+  undefined;
 const sentryUserId = getSentryUserId({now: new Date(), storage});
 
 Sentry.init({
@@ -82,6 +87,18 @@ Sentry.init({
   debug: false, // this added alot of unneccesary noise to the console.
   initialScope: {user: {id: sentryUserId}},
   enableMetrics: false,
+  replaysSessionSampleRate: sentryEnvironment === 'qa' ? 1.0 : 0,
+  replaysOnErrorSampleRate: sentryEnvironment === 'qa' ? 1.0 : 0,
+  integrations:
+    sentryEnvironment === 'qa'
+      ? [
+          Sentry.mobileReplayIntegration({
+            maskAllText: false,
+            maskAllImages: false,
+            maskAllVectors: false,
+          }),
+        ]
+      : [],
 });
 
 if (appMetricsOptIn) {
@@ -91,6 +108,13 @@ if (appMetricsOptIn) {
     ignoreEmptyBackNavigationTransactions: false,
   });
   Sentry.getClient()?.addIntegration(navigationIntegration);
+}
+
+const qaDeviceNameStore = createQADeviceNameStore({persist: true});
+
+const initialQADeviceName = qaDeviceNameStore.instance.getState().qaDeviceName;
+if (initialQADeviceName) {
+  Sentry.setTag('QA_Device_Name', initialQADeviceName);
 }
 
 const persistedLocaleStore = createLocaleStore({
@@ -210,6 +234,10 @@ const appUsagePromptStore = createAppUsageStatsStore({
 
 const queryClient = new QueryClient();
 
+AppState.addEventListener('change', status => {
+  focusManager.setFocused(status === 'active');
+});
+
 const isStorybook = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true';
 
 if (isStorybook) {
@@ -242,50 +270,64 @@ const App = () => {
       'android.permission.CAMERA',
       'android.permission.ACCESS_FINE_LOCATION',
       'android.permission.ACCESS_COARSE_LOCATION',
-    ]).then(() => setPermissionsAsked(true));
+    ])
+      .catch(err => {
+        // Rejects when no Activity is attached (e.g. launched in the
+        // background)
+        Sentry.captureException(err);
+      })
+      // Always dismiss the splash, regardless of outcome — this startup ask
+      // is only an eager prompt; each feature re-requests its own permission
+      // on demand. Never gate splash dismissal on the request succeeding.
+      .finally(() => setPermissionsAsked(true));
   }, []);
 
   return (
     <Sentry.ErrorBoundary fallback={<FatalErrorUntranslated />}>
-      <LocaleContext value={persistedLocaleStore}>
-        <IntlProvider>
-          {/* This fatal error requires internationalization to be set up */}
-          <Sentry.ErrorBoundary fallback={<FatalError />}>
-            <ServerLoading serverStateStore={serverStateStore}>
-              <Suspense fallback={<Loading />}>
-                <AppProviders
-                  queryClient={queryClient}
-                  localDiscoveryController={localDiscoveryController}
-                  mapeoApi={mapeoApi}
-                  mapServerApi={mapServerApi}
-                  persistedDrafObservationStore={persistedDraftObservationStore}
-                  trackStore={persistedTrackStore}
-                  securityStore={persistedSecurityStore}
-                  coordinateFormatStore={persistedCoordinateFormatStore}
-                  manualEntryCoordinateFormatStore={
-                    persistedManualEntryCoordinateFormatStore
-                  }
-                  savedLocationStore={savedLocationStore}
-                  activeProjectIdStore={persistedActiveProjectIdStore}
-                  metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-                  appUsageStatsStore={appUsagePromptStore}
-                  lowStorageBannerStore={lowStorageBannerStore}
-                  earlyAccessStore={earlyAccessStore}
-                  unitSystemStore={persistedUnitSystemStore}>
-                  {isStorybook ? (
-                    <StorybookRoot />
-                  ) : (
-                    <AppNavigator
-                      permissionAsked={permissionsAsked}
-                      navigationIntegration={navigationIntegration}
-                    />
-                  )}
-                </AppProviders>
-              </Suspense>
-            </ServerLoading>
-          </Sentry.ErrorBoundary>
-        </IntlProvider>
-      </LocaleContext>
+      <QueryClientProvider client={queryClient}>
+        <LocaleContext value={persistedLocaleStore}>
+          <IntlProvider>
+            {/* This fatal error requires internationalization to be set up */}
+            <Sentry.ErrorBoundary fallback={<FatalError />}>
+              <ServerLoading serverStateStore={serverStateStore}>
+                <Suspense fallback={<FullScreenCenteredLoader />}>
+                  <AppProviders
+                    queryClient={queryClient}
+                    localDiscoveryController={localDiscoveryController}
+                    mapeoApi={mapeoApi}
+                    mapServerApi={mapServerApi}
+                    persistedDrafObservationStore={
+                      persistedDraftObservationStore
+                    }
+                    trackStore={persistedTrackStore}
+                    securityStore={persistedSecurityStore}
+                    coordinateFormatStore={persistedCoordinateFormatStore}
+                    manualEntryCoordinateFormatStore={
+                      persistedManualEntryCoordinateFormatStore
+                    }
+                    savedLocationStore={savedLocationStore}
+                    activeProjectIdStore={persistedActiveProjectIdStore}
+                    metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+                    appUsageStatsStore={appUsagePromptStore}
+                    lowStorageBannerStore={lowStorageBannerStore}
+                    earlyAccessStore={earlyAccessStore}
+                    unitSystemStore={persistedUnitSystemStore}
+                    qaDeviceNameStore={qaDeviceNameStore}>
+                    {isStorybook ? (
+                      <StorybookRoot />
+                    ) : (
+                      <AppNavigator
+                        permissionAsked={permissionsAsked}
+                        navigationIntegration={navigationIntegration}
+                      />
+                    )}
+                  </AppProviders>
+                </Suspense>
+              </ServerLoading>
+            </Sentry.ErrorBoundary>
+          </IntlProvider>
+        </LocaleContext>
+      </QueryClientProvider>
     </Sentry.ErrorBoundary>
   );
 };

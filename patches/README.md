@@ -66,12 +66,6 @@ When targeting Intel-based architectures (i.e. `x86_64`), the affected Gradle bu
 
 Native addons by the holepunch team use [`require-addon`](https://github.com/holepunchto/require-addon) to load native prebuilds. This package expects the native prebuilds to be in a `prebuilds/` directory at the root of the package, in contrast to modules which use `node-gyp-build`, which, at runtime, looks for prebuilds in `build/Release/`. This patch moves the prebuilds into the correct folder based on the presence of `binding.gyp`, and cleans up any unnecessary prebuilds to keep the APK size down.
 
-## react-native-indicators
-
-### [Fix `key` prop error when using components](./react-native-indicators+0.17.0+001+fix-key-prop-error.patch)
-
-Refer to https://github.com/n4kz/react-native-indicators/issues/43 for details.
-
 ## `react-native-confirmation-code-field`
 
 ### [Fix mask symbol logic issue](./react-native-confirmation-code-field+9.0.0+001+fix-mask-symbol-logic-issue.patch)
@@ -79,6 +73,20 @@ Refer to https://github.com/n4kz/react-native-indicators/issues/43 for details.
 Fixes a bug in the `MaskSymbol` component where the mask (`*`) briefly un-hides when typing quickly. This patch sets the `visibleFlag` to `false` immediately, preventing the undesired flicker.
 
 See: [Reviewer context](https://github.com/digidem/comapeo-mobile/pull/1225).
+
+## react-native-vision-camera
+
+### [Fix camera device list startup race](./react-native-vision-camera+4.7.3+001+fix-camera-devices-startup-race.patch)
+
+`CameraDevicesManager` sends its device list to JS only at startup, but builds that list from `cameraProvider` and
+`extensionsManager`, which initialise asynchronously and yield an empty list until both are set. When initialisation
+loses that race, JS caches the empty list and nothing ever re-emits, so `useCameraDevice()` returns `undefined` — and the
+camera screen stays unavailable — until the app is restarted. This patch emits `CameraDevicesChanged` once
+initialisation completes, and re-sends the current list when JS subscribes, since events emitted before then are
+dropped.
+
+Fixed upstream in v5, which requires the New Architecture. 4.7.3 is the final 4.x release, so there is nothing to
+upgrade to.
 
 ## expo
 

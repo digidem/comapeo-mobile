@@ -5,14 +5,14 @@
  */
 import * as React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../src/frontend/sharedComponents/LoadingIndicator';
 
 import type {FlowStateSpec} from './flowState';
 
 export function FlowStatePlaceholder({spec}: {spec?: FlowStateSpec}) {
   return (
     <View style={styles.container}>
-      <UIActivityIndicator size={30} />
+      <LoadingIndicator size="small" />
       <Text style={styles.label}>Applying flow state…</Text>
       <Text style={styles.spec}>{JSON.stringify(spec ?? null, null, 2)}</Text>
     </View>

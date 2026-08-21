@@ -58,7 +58,7 @@ export function setUpIPC({manager}: {manager: MapeoManager}) {
   const {port1, port2} = new MessageChannel();
 
   const server = createMapeoServer(manager, port1);
-  const client = createMapeoClient(port2);
+  const client = createMapeoClient(port2, {timeout: 30_000});
 
   return {
     client,
@@ -151,7 +151,10 @@ export async function inviteToProject(
   const inviteeInvitePromise = pEvent(
     invitee.invite,
     'invite-received',
-    invite => Buffer.from(invite.inviteId, 'hex').equals(inviteId),
+    invite =>
+      Buffer.from((invite as {inviteId: string}).inviteId, 'hex').equals(
+        inviteId,
+      ),
   );
 
   await Promise.all([
@@ -160,7 +163,7 @@ export async function inviteToProject(
       __testOnlyInviteId: inviteId,
     }),
     (async () => {
-      const invite = await inviteeInvitePromise;
+      const invite = (await inviteeInvitePromise) as {inviteId: string};
       await invitee.invite.accept(invite);
     })(),
   ]);
@@ -171,9 +174,8 @@ export const createTestServer = (): Promise<{
   close: () => void;
 }> =>
   new Promise((resolve, reject) => {
-    const startServerPath = require.resolve(
-      '../../../tests/integration/helpers/startTestCloudServer.mjs',
-    );
+    const startServerPath =
+      require.resolve('../../../tests/integration/helpers/startTestCloudServer.mjs');
     const childProcess = spawn('node', [startServerPath], {
       stdio: ['ignore', 'pipe', 'inherit'],
     });

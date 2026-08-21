@@ -22,7 +22,7 @@ import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButt
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {ReceivingMapProgressBar} from './ReceivingMapProgressBar';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {VERY_LIGHT_GREY, NEW_DARK_GREY, COMAPEO_BLUE} from '../../lib/styles';
 
 const m = defineMessages({
@@ -41,6 +41,19 @@ const m = defineMessages({
   done: {
     id: 'screens.Settings.MapManagement.BackgroundMapUpdated.done',
     defaultMessage: 'Done',
+  },
+  downloadErrorTitle: {
+    id: 'screens.Settings.MapManagement.ReceivingBackgroundMap.downloadErrorTitle',
+    defaultMessage: 'Connection Lost',
+  },
+  downloadErrorDescription: {
+    id: 'screens.Settings.MapManagement.ReceivingBackgroundMap.downloadErrorDescription',
+    defaultMessage:
+      'Map sharing was interrupted. Make sure both devices are connected to the same network and try again.',
+  },
+  downloadFailedTitle: {
+    id: 'screens.Settings.MapManagement.ReceivingBackgroundMap.downloadFailedTitle',
+    defaultMessage: 'Map Download Failed',
   },
 });
 
@@ -99,7 +112,7 @@ export function ReceivingBackgroundMap({
   };
 
   if (abortStatus === 'pending') {
-    return <Loading />;
+    return <FullScreenCenteredLoader />;
   }
 
   if (mapShare.status === 'canceled') {
@@ -107,12 +120,23 @@ export function ReceivingBackgroundMap({
   }
 
   if (mapShare.status === 'error') {
-    const message = mapShare.error.message ?? 'Map download failed';
-    Sentry.captureException(new Error(message));
+    const isDownloadError =
+      mapShare.error.code === MapShareErrorCode.DOWNLOAD_ERROR;
+    const title = isDownloadError
+      ? t(m.downloadErrorTitle)
+      : t(m.downloadFailedTitle);
+    const description = isDownloadError
+      ? t(m.downloadErrorDescription)
+      : mapShare.error.message;
+    Sentry.captureException(
+      new Error(
+        `Map download error [${mapShare.error.code}]: ${mapShare.error.message}`,
+      ),
+    );
     return (
       <MapShareError
-        title={message}
-        description={message}
+        title={title}
+        description={description}
         onClose={handleDone}
       />
     );

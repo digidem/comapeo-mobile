@@ -1,22 +1,22 @@
 {
   "$1ObservationEdit.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Taastay iweechweech"
+    "message": "Taastay iweechweech",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "$1ObservationEdit.HeaderLeft.discardObservationButton": {
-    "description": "Button to confirm discarding the observation edits",
-    "message": "Toochinee weecheet"
+    "message": "Toochinee weecheet",
+    "description": "Button to confirm discarding the observation edits"
   },
   "$1ObservationEdit.HeaderLeft.discardTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Toochinee weecheet?"
+    "message": "Toochinee weecheet?",
+    "description": "Title of dialog that shows when cancelling observation edits"
   },
   "$1ProjectSettings.RemoteArchive.Success.close": {
     "message": "Keer"
   },
   "$1SaveTrack.HeaderLeft.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Taastay iweechweech"
+    "message": "Taastay iweechweech",
+    "description": "Button on dialog to keep editing (cancelling close action)"
   },
   "$1allProjects.close": {
     "message": "Keer"

@@ -15,10 +15,6 @@ import {WHITE, DARK_GREEN, COMAPEO_BLUE} from '../../lib/styles';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 const m = defineMessages({
-  success: {
-    id: '$1screens.DeviceNaming.Success.success',
-    defaultMessage: 'Success!',
-  },
   deviceReady: {
     id: '$1screens.DeviceNaming.Success.deviceReady',
     defaultMessage: '{deviceName} is ready!',

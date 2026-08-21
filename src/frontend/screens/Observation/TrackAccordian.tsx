@@ -9,6 +9,7 @@ import {useTracks} from '../../hooks/server/track.ts';
 import {View} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles.ts';
 import {findAssociatedTrack} from './findAssociatedTrack.ts';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 const m = defineMessages({
   track: {
@@ -19,6 +20,7 @@ const m = defineMessages({
 
 export function TrackAccordian({observationId}: {observationId: string}) {
   const navigation = useNavigationFromRoot();
+  const {data: deviceInfo} = useOwnDeviceInfo();
   const {data: allTracks} = useTracks();
   const track =
     allTracks === undefined
@@ -52,6 +54,7 @@ export function TrackAccordian({observationId}: {observationId: string}) {
               navigation.push('Track', {trackId: track.docId});
             }}
             testID={`trackListItem:${track.docId}`}
+            showSyncedIndicator={deviceInfo.deviceId !== track.createdBy}
           />
         }
       />

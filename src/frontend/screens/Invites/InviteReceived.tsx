@@ -12,7 +12,7 @@ import {
 } from '@comapeo/core-react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import * as Sentry from '@sentry/react-native';
 import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
@@ -85,6 +85,9 @@ export const InviteReceived = ({
       {inviteId: inviteId},
       {
         onSuccess: projectId => {
+          // In versions before v6, the user did not have to have a default project
+          // Now we would like the user to always have a default project
+          // This guarantees that
           if (!hasDefaultProject) {
             createProject.mutate(undefined, {
               onError: err => {
@@ -92,6 +95,21 @@ export const InviteReceived = ({
               },
             });
           }
+
+          const isInOnboarding = navigation
+            .getState()
+            .routes.find(route => route.name === 'JoinProjectIntro');
+
+          // If the user is on the onboarding screen, simply show the invites accepted modal
+          if (isInOnboarding) {
+            navigation.replace('InviteSuccessfullyAccepted', {
+              projectId,
+              projectName: invite.projectName,
+            });
+            return;
+          }
+
+          // otherwise reset the navigation so that the stale project is no longer showing.
           navigation.reset({
             index: 1,
             routes: [
@@ -156,7 +174,7 @@ export const InviteReceived = ({
         <View style={styles.buttonContainer}>
           {acceptInvite.status === 'pending' ||
           rejectInvite.status === 'pending' ? (
-            <UIActivityIndicator style={{marginVertical: 20}} />
+            <LoadingIndicator style={{marginVertical: 20}} />
           ) : (
             <>
               <SecondaryButton

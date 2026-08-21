@@ -33,6 +33,11 @@ const m = defineMessages({
     id: '$1screens.CameraScreen.openSettings',
     defaultMessage: 'Open Settings',
   },
+  cameraUnavailable: {
+    id: '$1screens.CameraScreen.cameraUnavailable',
+    defaultMessage:
+      'Camera unavailable. Please close and reopen CoMapeo to try again.',
+  },
 });
 
 type Props = {
@@ -112,31 +117,46 @@ export const CameraView = ({onAddPress}: Props) => {
 
   const disableButton = capturing || !cameraReady || !hasPermission;
 
+  let cameraContent;
+  if (!hasPermission) {
+    cameraContent = (
+      <View style={styles.messageContainer}>
+        <BodyText variant="tinyMeta" style={styles.messageText}>
+          {formatMessage(m.noCameraAccess)}
+        </BodyText>
+        <PrimaryButton
+          fullSize
+          text={formatMessage(m.openSettings)}
+          onPress={() => openSettingsMutation.mutateAsync()}
+        />
+      </View>
+    );
+  } else if (!device) {
+    cameraContent = (
+      <View style={styles.messageContainer}>
+        <BodyText variant="tinyMeta" style={styles.messageText}>
+          {formatMessage(m.cameraUnavailable)}
+        </BodyText>
+      </View>
+    );
+  } else {
+    cameraContent = (
+      <Camera
+        device={device}
+        ref={camera}
+        style={{flex: 1}}
+        isActive={true}
+        photo={true}
+        enableZoomGesture={true}
+        onInitialized={() => setCameraReady(true)}
+      />
+    );
+  }
+
   return (
     <View style={styles.container} testID="MAIN.camera-scrn">
       <StatusBar barStyle="light-content" />
-      {!hasPermission || !device ? (
-        <View style={styles.noPermissionContainer}>
-          <BodyText variant="tinyMeta" style={styles.noPermissionText}>
-            {formatMessage(m.noCameraAccess)}
-          </BodyText>
-          <PrimaryButton
-            fullSize
-            text={formatMessage(m.openSettings)}
-            onPress={() => openSettingsMutation.mutateAsync()}
-          />
-        </View>
-      ) : (
-        <Camera
-          device={device}
-          ref={camera}
-          style={{flex: 1}}
-          isActive={true}
-          photo={true}
-          enableZoomGesture={true}
-          onInitialized={() => setCameraReady(true)}
-        />
-      )}
+      {cameraContent}
 
       <View style={styles.bottomBar}>
         <View style={styles.gpsPillContainer}>
@@ -161,14 +181,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
   },
-  noPermissionContainer: {
+  messageContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     gap: 30,
     paddingHorizontal: 40,
   },
-  noPermissionText: {
+  messageText: {
     color: 'white',
     textAlign: 'center',
   },

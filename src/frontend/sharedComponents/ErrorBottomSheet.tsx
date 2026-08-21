@@ -9,7 +9,9 @@ import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from './Text/HeaderText';
 import {BodyText} from './Text/BodyText';
 import {SecondaryButton} from './Buttons';
-import {BLUE_GREY} from '../lib/styles';
+import {BLUE_GREY, NEW_DARK_GREY} from '../lib/styles';
+import {isQABuild} from '../lib/appVariant';
+import {useQADeviceName} from '../contexts/QADeviceNameStoreContext';
 
 const m = defineMessages({
   somethingWrong: {
@@ -25,6 +27,38 @@ const m = defineMessages({
     defaultMessage: 'Close',
   },
 });
+
+function formatUTCTimestamp(date: Date): string {
+  return (
+    new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+      timeZone: 'UTC',
+    }).format(date) + ' UTC'
+  );
+}
+
+function QAInfoSection() {
+  const qaDeviceName = useQADeviceName();
+  const timestamp = React.useMemo(() => formatUTCTimestamp(new Date()), []);
+
+  return (
+    <View style={styles.qaInfoSection} testID="EBS.qa-info-section">
+      <BodyText variant="smallMeta" style={styles.qaInfoText}>
+        {timestamp}
+      </BodyText>
+      {qaDeviceName && (
+        <BodyText variant="smallMeta" style={styles.qaInfoText}>
+          {qaDeviceName}
+        </BodyText>
+      )}
+    </View>
+  );
+}
 
 export const ErrorBottomSheet = ({
   navigation,
@@ -48,6 +82,8 @@ export const ErrorBottomSheet = ({
               {formatMessage(m.somethingWrong)}
             </HeaderText>
           </View>
+
+          {isQABuild && <QAInfoSection />}
 
           <View style={styles.advancedSection}>
             <TouchableOpacity
@@ -148,5 +184,12 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: '#29292A',
+  },
+  qaInfoSection: {
+    alignItems: 'center',
+    gap: 4,
+  },
+  qaInfoText: {
+    color: NEW_DARK_GREY,
   },
 });

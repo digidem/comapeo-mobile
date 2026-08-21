@@ -8,13 +8,14 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useProjectSettings} from '@comapeo/core-react';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/coordinateFormat.ts';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {convertUrlToBase64} from '../../utils/base64.ts';
 import * as Sentry from '@sentry/react-native';
-import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
+import {getFieldAnswerText} from '../../sharedComponents/FormattedData.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
+import {type PhotoVariant, type SavedPhoto} from '../../sharedTypes';
 import {useOpenShareDialog} from '../../hooks/share.ts';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.ts';
 import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
@@ -40,10 +41,6 @@ const m = defineMessages({
     id: '$1screens.Observation.shareMediaTitle',
     defaultMessage: 'Sharing image',
     description: 'Title of dialog to share an observation with media',
-  },
-  shareMessageTitle: {
-    id: '$1screens.Observation.shareMessageTitle',
-    defaultMessage: 'CoMapeo Alert',
   },
   shareMessageFooter: {
     id: '$1screens.Observation.shareMessageFooter',
@@ -71,10 +68,6 @@ const m = defineMessages({
     id: '$1screens.Observation.precision',
     defaultMessage: 'Precision:',
   },
-  details: {
-    id: '$1screens.Observation.details',
-    defaultMessage: 'Details:',
-  },
   description: {
     id: '$1screens.Observation.description',
     defaultMessage: 'Description:',
@@ -93,19 +86,43 @@ export const ButtonFields = ({
   const {observation, preset} = useObservationWithPreset(observationId);
   const coordinateFormat = useCoordinateFormat();
   const unitSystem = useUnitSystem();
-  const [isShareButtonLoading, setShareButtonLoading] = useState(false);
+  const [isShareButtonLoading, setIsShareButtonLoading] = useState(false);
   const {projectApi, projectId} = useActiveProject();
   const {
     data: {name},
   } = useProjectSettings({projectId});
   const openShare = useOpenShareDialog();
-  const canDelete = useCanEditOrDelete(observation.originalVersionId);
+  const canDelete = useCanEditOrDelete(observation.createdBy);
 
   function handlePressDelete() {
     navigation.navigate('ConfirmDeleteObservationBottomSheet', {observationId});
   }
 
-  async function fetchFreshUrls() {
+  async function getAttachmentUrl(
+    attachment: SavedPhoto,
+    variant: PhotoVariant,
+  ) {
+    return projectApi.$blobs.getUrl({
+      driveId: attachment.driveDiscoveryId,
+      name: attachment.name,
+      type: 'photo',
+      variant,
+    });
+  }
+
+  async function fetchAttachmentBase64(attachment: SavedPhoto) {
+    try {
+      const originalUrl = await getAttachmentUrl(attachment, 'original');
+      return await convertUrlToBase64(originalUrl);
+    } catch {
+      // The original may fail to load depending on media sync settings.
+      // Fall back to the preview variant if using the original does not work.
+      const previewUrl = await getAttachmentUrl(attachment, 'preview');
+      return await convertUrlToBase64(previewUrl);
+    }
+  }
+
+  async function fetchFreshBase64Urls() {
     const {attachments} = observation;
 
     if (!attachments || attachments.length === 0) {
@@ -116,39 +133,40 @@ export const ButtonFields = ({
       return [];
     }
 
-    return await Promise.all(
-      photoAttachments.map(async attachment => {
-        return projectApi.$blobs.getUrl({
-          driveId: attachment.driveDiscoveryId,
-          name: attachment.name,
-          type: 'photo',
-          variant: 'original',
-        });
-      }),
+    // Report the failure, but swallow it so sharing can proceed without photos
+    // instead of blocking the whole share on a single failed conversion.
+    const settledPromises = await Promise.allSettled(
+      photoAttachments.map(fetchAttachmentBase64),
     );
+
+    settledPromises.forEach(prom => {
+      if (prom.status === 'rejected') {
+        Sentry.captureException(prom.reason);
+      }
+    });
+
+    return settledPromises
+      .filter(promise => promise.status === 'fulfilled')
+      .map(resolvedPromise => resolvedPromise.value);
   }
 
   async function handlePressShare() {
-    setShareButtonLoading(true);
+    setIsShareButtonLoading(true);
 
     try {
-      const urls = await fetchFreshUrls();
-      const base64Urls =
-        urls.length > 0
-          ? await Promise.all(urls.map(url => convertUrlToBase64(url)))
-          : [];
+      const base64Urls = await fetchFreshBase64Urls();
 
       const completedFields: Array<{label: string; value: string}> = [];
       for (const field of fields) {
         const value = observation.tags[field.tagKey];
 
-        if (value === undefined || value === null || value === '') {
-          continue;
-        }
+        const displayedValue = getFieldAnswerText({
+          fieldOptions: field.options,
+          tagValue: value,
+          formatDate,
+        });
 
-        const displayedValue = (Array.isArray(value) ? value : [value])
-          .map(v => getValueLabel(v, field).trim())
-          .join(', ');
+        if (!displayedValue) continue;
 
         completedFields.push({label: field.label, value: displayedValue});
       }
@@ -208,7 +226,7 @@ export const ButtonFields = ({
     } catch (err) {
       Sentry.captureException(err);
     } finally {
-      setShareButtonLoading(false);
+      setIsShareButtonLoading(false);
     }
   }
 
@@ -242,7 +260,7 @@ const Button = ({onPress, isLoading, iconName, title}: ButtonProps) => (
   <TouchableOpacity onPress={onPress} style={{flex: 1}} disabled={isLoading}>
     <View style={styles.button}>
       {isLoading ? (
-        <UIActivityIndicator />
+        <LoadingIndicator />
       ) : (
         <MaterialIcons
           size={30}

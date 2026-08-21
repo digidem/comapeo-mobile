@@ -10,7 +10,6 @@ import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {useManyDocs} from '@comapeo/core-react';
 
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
@@ -23,9 +22,9 @@ import {Divider} from '../../sharedComponents/Divider.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import VerifiedBadge from '../../images/verifiedBadge.svg';
-import {Loading} from '../../sharedComponents/Loading.tsx';
-import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader.tsx';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
+import {useFieldsQuery} from '../../hooks/server/fields';
 import {Field} from '@comapeo/schema';
 import {HorizontalScrollView} from '../../sharedComponents/HorizontalScrollView.tsx';
 import {
@@ -53,11 +52,10 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   navigation,
 }) => {
   const {observationId} = route.params;
-  const {projectId} = useActiveProject();
   const {observation, preset} = useObservationWithPreset(observationId);
   const {createDraft} = useDraftObservationActions();
 
-  const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
+  const {data: fieldsData} = useFieldsQuery();
   const {lat, lon, metadata} = observation;
 
   const fields = preset
@@ -71,7 +69,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       isSavedPhoto(attachment) || isAudioAttachment(attachment),
   );
 
-  const canEdit = useCanEditOrDelete(observation.originalVersionId);
+  const canEdit = useCanEditOrDelete(observation.createdBy);
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -127,7 +125,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
         <View style={styles.section}>
           <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
-          <React.Suspense fallback={<Loading />}>
+          <React.Suspense fallback={<FullScreenCenteredLoader />}>
             <TrackAccordian observationId={observationId} />
           </React.Suspense>
           {observation?.tags?.notes ? (
@@ -183,7 +181,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             <Divider />
             <FieldDetails
               style={{paddingHorizontal: 20}}
-              observation={observation}
+              tags={observation.tags}
               fields={fields}
             />
           </>

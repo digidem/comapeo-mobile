@@ -1,5 +1,4 @@
 import {useCreateDocument} from '@comapeo/core-react';
-import {Observation} from '@comapeo/schema';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {
   useCreatePhotoAttachment,
@@ -18,7 +17,7 @@ import {
 import * as Sentry from '@sentry/react-native';
 import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {Alert, AlertButton, View} from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {useQueryClient} from '@tanstack/react-query';
 import {defineMessages, useIntl} from 'react-intl';
 import {
@@ -104,10 +103,7 @@ export const ObservationCreateSaveButton = () => {
       projectId,
     });
 
-  const {
-    addNewLocations: addNewTrackLocations,
-    addNewObservation: addNewTrackObservation,
-  } = useTrackActions();
+  const {addNewObservation: addNewTrackObservation} = useTrackActions();
 
   const isLoading =
     photoAttachmentStatus === 'pending' ||
@@ -117,22 +113,17 @@ export const ObservationCreateSaveButton = () => {
   const finalizeSave = () => {
     queryClient.invalidateQueries({queryKey: STORAGE_QUERY_KEY});
     clearDraft();
-    navigation.popTo('Home', {screen: 'Map'});
-  };
-
-  const addObservationRefToTrack = (observation: Observation) => {
-    if (observation.lat && observation.lon) {
-      addNewTrackLocations([
-        {
-          timestamp: Date.now(),
-          latitude: observation.lat,
-          longitude: observation.lon,
-        },
-      ]);
-    }
-    addNewTrackObservation({
-      docId: observation.docId,
-      versionId: observation.versionId,
+    const homeTabRoute = navigation
+      .getState()
+      .routes.find(route => route.name === 'Home');
+    // the home screen is a nested navigator (the tabs)
+    // find the latest open tab in the nested tab navigator
+    const lastOpenedTab =
+      homeTabRoute?.state?.routes[homeTabRoute.state.index || 0]?.name;
+    // This assumes that the user can only navigate to this screen via the Camera or Map Screen
+    // If that changes, this will naively go back to the map screen.
+    navigation.popTo('Home', {
+      screen: lastOpenedTab === 'Camera' ? 'Camera' : 'Map',
     });
   };
 
@@ -204,7 +195,10 @@ export const ObservationCreateSaveButton = () => {
       });
 
       if (isTracking) {
-        addObservationRefToTrack(createdObservation);
+        addNewTrackObservation({
+          docId: createdObservation.docId,
+          versionId: createdObservation.versionId,
+        });
       }
 
       finalizeSave();
@@ -268,7 +262,7 @@ export const ObservationCreateSaveButton = () => {
   }
   return isLoading ? (
     <View style={{marginRight: 10}}>
-      <UIActivityIndicator size={30} />
+      <LoadingIndicator size="large" />
     </View>
   ) : (
     <IconButton onPress={handlePressSave} testID="OBS.edit-save-btn">

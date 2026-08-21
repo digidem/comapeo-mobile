@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, useWindowDimensions} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {MapScreen} from '../../screens/MapScreen';
@@ -10,7 +10,7 @@ import {
   NativeRootNavigationProps,
 } from '../../sharedTypes/navigation';
 import {TabBar} from './TabBar';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import {Drawer} from 'react-native-drawer-layout';
 import {DrawerMenu} from '../../sharedComponents/DrawerMenu';
@@ -23,8 +23,22 @@ import {useAuthContext} from '../../contexts/AuthContext';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
+// These mirror react-native-drawer-layout's own defaults, so the drawer keeps
+// exactly the size it had before. The gap leaves a strip of screen uncovered
+// beside the open drawer so it can be tapped to dismiss — the library calls it
+// APPROX_APP_BAR_HEIGHT.
+const DRAWER_EDGE_GAP = 56;
+// 360 is the Material Design 3 standard drawer width:
+// https://m3.material.io/components/navigation-drawer/specs
+const MAX_DRAWER_WIDTH = 360;
+
+function getDrawerWidth(windowWidth: number) {
+  return Math.max(Math.min(windowWidth - DRAWER_EDGE_GAP, MAX_DRAWER_WIDTH), 0);
+}
+
 export const HomeTabs = ({navigation}: NativeRootNavigationProps<'Home'>) => {
   const [drawerOpen, setDrawerOpen] = useOpenDrawer();
+  const drawerWidth = getDrawerWidth(useWindowDimensions().width);
 
   return (
     <>
@@ -39,6 +53,11 @@ export const HomeTabs = ({navigation}: NativeRootNavigationProps<'Home'>) => {
         }}
         drawerType="slide"
         swipeEnabled={false}
+        // The library's `maxWidth: '100%'` resolves to 0 if the panel lays out
+        // while an ancestor is momentarily zero-width — which a suspense
+        // hide/reveal on project switch does, blanking the drawer until restart
+        // (#1613). `width` matches so the library's drawerWidth stays in sync.
+        drawerStyle={{width: drawerWidth, maxWidth: drawerWidth}}
         renderDrawerContent={() => (
           <DrawerMenu
             closeMenu={() => {
@@ -64,7 +83,9 @@ export const HomeTabs = ({navigation}: NativeRootNavigationProps<'Home'>) => {
           }}
           initialRouteName={'Map'}
           screenLayout={({children}) => (
-            <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+            <React.Suspense fallback={<FullScreenCenteredLoader />}>
+              {children}
+            </React.Suspense>
           )}
           backBehavior="initialRoute">
           <Tab.Screen

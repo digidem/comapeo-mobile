@@ -3,7 +3,7 @@ import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled
 import * as Location from 'expo-location';
 import {Linking, StyleSheet, View, AppState} from 'react-native';
 import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
-import {Loading} from '../../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../../sharedComponents/FullScreenCenteredLoader';
 import {StartStopTrack} from './StartStopTrack';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
 import {WHITE} from '../../../lib/styles';
@@ -68,7 +68,7 @@ export const TrackBottomSheet = React.memo(() => {
     if (!foregroundPermission || !backgroundPermission) {
       return (
         <View style={{display: 'flex', minHeight: 200}}>
-          <Loading />
+          <FullScreenCenteredLoader />
         </View>
       );
     }

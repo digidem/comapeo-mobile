@@ -3,7 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useWindowDimensions} from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../sharedComponents/LoadingIndicator';
 
 import {useAuthContext} from '../contexts/AuthContext';
 import CoMapeoLogoSvg from '../images/CoMapeoLogo.svg';
@@ -96,7 +96,7 @@ export const AuthScreen = () => {
       )}
       {loading ? (
         <View style={styles.loadingContainer}>
-          <UIActivityIndicator size={32} />
+          <LoadingIndicator size="large" />
         </View>
       ) : (
         <PasscodeInput

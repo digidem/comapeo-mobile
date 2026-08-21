@@ -12,8 +12,9 @@ import {
   useOwnRoleInProject,
   useProjectSettings,
 } from '@comapeo/core-react';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../sharedComponents/LoadingIndicator';
 import {ColorCard} from '../sharedComponents/ColorCard';
 import {DEFAULT_PROJECT_COLOR} from '../constants';
 import {toError} from '../utils/errors';
@@ -34,11 +35,10 @@ const m = defineMessages({
 });
 
 export const RemovedFromProjectBottomSheet = ({
-  route,
   navigation,
 }: NativeRootNavigationProps<'RemovedFromProjectBottomSheet'>) => {
   const {formatMessage} = useIntl();
-  const {projectId} = route.params;
+  const {projectId} = useActiveProject();
   const {
     data: {reason},
   } = useOwnRoleInProject({projectId});
@@ -74,7 +74,7 @@ export const RemovedFromProjectBottomSheet = ({
         <View style={styles.buttonContainer}>
           {leaveProject.status === 'pending' ||
           createProject.status === 'pending' ? (
-            <UIActivityIndicator style={{margin: 20}} />
+            <LoadingIndicator style={{margin: 20}} />
           ) : (
             <SecondaryButton
               fullSize
@@ -88,7 +88,6 @@ export const RemovedFromProjectBottomSheet = ({
                         createProject.mutate(undefined, {
                           onError: err => {
                             const firstProject = projects[0];
-                            //if there is a project just open that project
                             if (firstProject) {
                               setActiveProjectId(firstProject.projectId);
                               navigation.popToTop();

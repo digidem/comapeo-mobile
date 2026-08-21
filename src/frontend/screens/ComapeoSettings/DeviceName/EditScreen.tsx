@@ -3,7 +3,7 @@ import {Alert, ScrollView, StyleSheet} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {useForm} from 'react-hook-form';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../../sharedComponents/LoadingIndicator';
 
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {useOwnDeviceInfo, useSetOwnDeviceInfo} from '@comapeo/core-react';
@@ -137,7 +137,7 @@ export const EditScreen = ({
         headerRight: () => {
           return isPending ? (
             <IconButton>
-              <UIActivityIndicator size={30} />
+              <LoadingIndicator size="large" />
             </IconButton>
           ) : (
             <IconButton testID="save-icon" onPress={onSubmit}>

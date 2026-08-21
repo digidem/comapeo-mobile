@@ -3,7 +3,7 @@ import {type NativeStackNavigationOptions} from '@react-navigation/native-stack'
 import * as Sentry from '@sentry/react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -63,7 +63,7 @@ export function RemoveRemoteArchive({
 
         <View style={styles.buttonContainer}>
           {removeServerPeer.status === 'pending' ? (
-            <UIActivityIndicator style={{flex: 0}} />
+            <LoadingIndicator style={{flex: 0}} />
           ) : (
             <>
               <DestructiveButton

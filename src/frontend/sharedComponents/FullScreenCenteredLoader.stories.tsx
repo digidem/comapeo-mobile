@@ -1,10 +1,10 @@
 import type {Meta, StoryObj} from '@storybook/react-native';
-import {Loading} from './Loading';
+import {FullScreenCenteredLoader} from './FullScreenCenteredLoader';
 
 const meta = {
   title: 'Shared/Loading',
-  component: Loading,
-} satisfies Meta<typeof Loading>;
+  component: FullScreenCenteredLoader,
+} satisfies Meta<typeof FullScreenCenteredLoader>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

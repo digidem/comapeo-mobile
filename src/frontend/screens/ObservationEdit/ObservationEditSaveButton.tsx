@@ -11,7 +11,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
 
 import {View} from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {useQueryClient} from '@tanstack/react-query';
 import {
   useDraftObservationActions,
@@ -129,7 +129,7 @@ export const ObservationEditSaveButton = () => {
 
   return isLoading ? (
     <View style={{marginRight: 10}}>
-      <UIActivityIndicator size={30} />
+      <LoadingIndicator size="large" />
     </View>
   ) : (
     <IconButton onPress={handlePressSave} testID="OBS.edit-save-btn">

@@ -1,0 +1,52 @@
+diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/react/CameraDevicesManager.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/react/CameraDevicesManager.kt
+index 0386478..723dcba 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/react/CameraDevicesManager.kt
++++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/react/CameraDevicesManager.kt
+@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
+ class CameraDevicesManager(private val reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+   companion object {
+     private const val TAG = "CameraDevices"
++    private const val DEVICES_CHANGED_NAME = "CameraDevicesChanged"
+   }
+   private val executor = CameraQueues.cameraExecutor
+   private val coroutineScope = CoroutineScope(executor.asCoroutineDispatcher())
+@@ -68,6 +69,10 @@ class CameraDevicesManager(private val reactContext: ReactApplicationContext) :
+         Log.i(TAG, "Initializing ExtensionsManager...")
+         extensionsManager = ExtensionsManager.getInstanceAsync(reactContext, cameraProvider!!).await(executor)
+         Log.i(TAG, "Successfully initialized!")
++        // getDevicesJson() returns an empty list until both of the above are set, so any
++        // earlier emission was empty. Without this, JS keeps that empty list for the
++        // entire app session and useCameraDevice() never returns a device.
++        sendAvailableDevicesChangedEvent()
+       } catch (error: Throwable) {
+         Log.e(TAG, "Failed to initialize ProcessCameraProvider/ExtensionsManager! Error: ${error.message}", error)
+       }
+@@ -99,9 +104,10 @@ class CameraDevicesManager(private val reactContext: ReactApplicationContext) :
+   }
+ 
+   fun sendAvailableDevicesChangedEvent() {
++    if (!reactContext.hasActiveReactInstance()) return
+     val eventEmitter = reactContext.getJSModule(RCTDeviceEventEmitter::class.java)
+     val devices = getDevicesJson()
+-    eventEmitter.emit("CameraDevicesChanged", devices)
++    eventEmitter.emit(DEVICES_CHANGED_NAME, devices)
+   }
+ 
+   override fun getConstants(): MutableMap<String, Any?> {
+@@ -114,10 +120,13 @@ class CameraDevicesManager(private val reactContext: ReactApplicationContext) :
+     )
+   }
+ 
+-  // Required for NativeEventEmitter, this is just a dummy implementation:
+-  @Suppress("unused", "UNUSED_PARAMETER")
++  // JS subscribes at bundle-eval time, which can be later than the init above emitted.
++  // RCTDeviceEventEmitter drops events that have no listeners, so re-send on subscribe.
++  @Suppress("unused")
+   @ReactMethod
+-  fun addListener(eventName: String) {}
++  fun addListener(eventName: String) {
++    if (eventName == DEVICES_CHANGED_NAME) sendAvailableDevicesChangedEvent()
++  }
+ 
+   @Suppress("unused", "UNUSED_PARAMETER")
+   @ReactMethod

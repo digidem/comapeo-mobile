@@ -10,7 +10,7 @@ import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
 import {ExchangeSoloScreen} from './ExchangeSoloScreen';
 import {NoWifiDisplay} from './NoWifiDisplay';
 import {ExchangeScreenContent} from './ExchangeScreenContent';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {defineMessages} from 'react-intl';
@@ -34,7 +34,7 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   const hasRemoteArchive = !!useActiveArchiveServer({projectId});
 
   if (!syncState) {
-    return <Loading />;
+    return <FullScreenCenteredLoader />;
   }
 
   if (projectSettingsQuery.data?.name === undefined) {

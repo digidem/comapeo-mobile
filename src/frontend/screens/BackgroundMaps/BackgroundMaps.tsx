@@ -4,7 +4,7 @@ import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {File} from 'expo-file-system';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 import {FILE_SELECT_MUTATION_KEY} from '../../hooks/files';
 import {
@@ -21,7 +21,7 @@ import {
   VERY_LIGHT_GREY,
   BLUE_GREY,
 } from '../../lib/styles';
-import {Loading} from '../../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -60,39 +60,6 @@ const m = defineMessages({
   removeMapFile: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.removeMapFile',
     defaultMessage: 'Remove Map File',
-  },
-
-  customMapAddedTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle',
-    defaultMessage: 'Custom Map Added',
-  },
-  customMapAddedDescription: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription',
-    defaultMessage:
-      'You will see this map when you are offline, but you will not see a map outside the area defined in your custom map.',
-  },
-  close: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.close',
-    defaultMessage: 'Close',
-  },
-
-  deleteCustomMapTitle: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle',
-    defaultMessage: 'Delete Custom Map?',
-  },
-  deleteCustomMapDescription: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription',
-    defaultMessage:
-      'This will delete the map and its offline areas. No collected observation data will be deleted.',
-  },
-  // TODO: Merge into deleteCustomMapDescription when https://github.com/digidem/comapeo-mobile/issues/669 is addressed
-  cannotBeUndone: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone',
-    defaultMessage: 'This cannot be undone.',
-  },
-  deleteMapButtonText: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText',
-    defaultMessage: 'Delete Map',
   },
   importErrorTitle: {
     id: '$1screens.Settings.MapManagement.BackgroundMaps.importErrorTitle',
@@ -199,7 +166,7 @@ export function BackgroundMapsScreen() {
     <>
       <ScrollView contentContainerStyle={styles.container}>
         {isRefetching || mapInfoStatus === 'pending' ? (
-          <Loading size={12} />
+          <FullScreenCenteredLoader />
         ) : mapInfoStatus !== 'success' || !customMapInfo ? (
           <NoMapScreen
             error={mapInfoError}
@@ -246,7 +213,7 @@ function NoMapScreen({
       </View>
       <View style={{gap: 20, marginTop: 40, alignItems: 'center'}}>
         {isUploading ? (
-          <UIActivityIndicator size={32} />
+          <LoadingIndicator size="large" />
         ) : (
           <SecondaryButton
             fullSize

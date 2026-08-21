@@ -7,7 +7,7 @@ import {type BBox} from 'geojson';
 import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {LIGHT_GREY, RED, WHITE} from '../../lib/styles';
@@ -45,7 +45,7 @@ export function CreateTestDataScreen() {
       dockContent={
         createFakeObservations.status === 'pending' ? (
           <View style={styles.loadingContainer}>
-            <UIActivityIndicator size={30} color={WHITE} />
+            <LoadingIndicator size="large" color={WHITE} />
           </View>
         ) : (
           <PrimaryButton
@@ -136,7 +136,7 @@ export function CreateTestDataScreen() {
               accuracy={location.coords.accuracy || undefined}
             />
           ) : (
-            <UIActivityIndicator size={20} />
+            <LoadingIndicator size="small" />
           )}
         </View>
         <Controller

@@ -9,9 +9,9 @@ describe('Settings - Early Access Mode', () => {
     await drawerIcon.click();
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
-    const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
+    await $(byResourceId('earlyAccessFlagLabel')).scrollIntoView();
     await expect($(byTextMatches('Early Access OFF'))).toBeDisplayed();
-    await earlyAccessItem.click();
+    await $(byResourceId('earlyAccessFlag')).click();
     await expect($(byTextMatches('Early Access Mode'))).toBeDisplayed();
     await expect($(byText('See CoMapeo Updates'))).toBeDisplayed();
   });
@@ -34,9 +34,9 @@ describe('Settings - Early Access Mode', () => {
   it('should show ON in the App Settings list item text', async () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
+    await $(byResourceId('earlyAccessFlagLabel')).scrollIntoView();
     await expect($(byTextMatches('Early Access ON'))).toBeDisplayed();
-    const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
-    await earlyAccessItem.click();
+    await $(byResourceId('earlyAccessFlag')).click();
     await expect($(byResourceId('EA.checkbox-on'))).toBeDisplayed();
   });
 
@@ -57,7 +57,8 @@ describe('Settings - Early Access Mode', () => {
     const seeUpdates = await $(byTextMatches('See CoMapeo Updates'));
     await seeUpdates.scrollIntoView();
     await expect(seeUpdates).toBeDisplayed();
-    await backBtn.click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await $(byResourceId('earlyAccessFlagLabel')).scrollIntoView();
     await $(byResourceId('earlyAccessFlag')).click();
   });
 
@@ -72,6 +73,7 @@ describe('Settings - Early Access Mode', () => {
     await expect($(byResourceId('EA.checkbox-off'))).toBeDisplayed();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
+    await $(byResourceId('earlyAccessFlagLabel')).scrollIntoView();
     await expect($(byTextMatches('Early Access OFF'))).toBeDisplayed();
     await backBtn.click();
     await $(byResourceId('MAIN.map-screen')).click();

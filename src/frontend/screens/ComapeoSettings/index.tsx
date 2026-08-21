@@ -17,6 +17,8 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BLACK, BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import HeartCheckIcon from '../../images/HeartCheck.svg';
 import AngleRulerIcon from '../../images/AngleRuler.svg';
+import {isQABuild} from '../../lib/appVariant';
+import {useQADeviceName} from '../../contexts/QADeviceNameStoreContext';
 
 const m = defineMessages({
   title: {
@@ -111,6 +113,10 @@ const m = defineMessages({
     id: 'Screens.Settings.AppSettings.testData',
     defaultMessage: 'Test Data',
   },
+  qaDeviceName: {
+    id: 'Screens.Settings.AppSettings.qaDeviceName',
+    defaultMessage: 'QA Device Name',
+  },
 });
 
 export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
@@ -136,6 +142,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   }[coordinateFormat];
 
   const hasPasscode = passcode !== null;
+  const qaDeviceName = useQADeviceName();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -223,6 +230,20 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
           />
         </>
       )}
+      {isQABuild && (
+        <SettingsRow
+          onPress={() => navigation.navigate('EditQADeviceName')}
+          label={`${formatMessage(m.qaDeviceName)}${qaDeviceName ? `: ${qaDeviceName}` : ''}`}
+          Icon={<MaterialIcon name="devices" size={24} color={NEW_DARK_GREY} />}
+          EndContent={
+            <MaterialIcon
+              name="chevron-right"
+              size={20}
+              color={NEW_DARK_GREY}
+            />
+          }
+        />
+      )}
 
       <View style={styles.divider} />
 
@@ -258,6 +279,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
       </BodyText>
       <SettingsRow
         testID="earlyAccessFlag"
+        labelTestID="earlyAccessFlagLabel"
         onPress={() => navigation.navigate('EarlyAccess')}
         label={
           isEarlyAccess
@@ -315,19 +337,24 @@ function SettingsRow({
   label,
   onPress,
   testID,
+  labelTestID,
   Icon,
   EndContent,
 }: {
   label: string;
   onPress: () => void;
   testID?: string;
+  labelTestID?: string;
   Icon: React.ReactNode;
   EndContent: React.ReactNode;
 }) {
   return (
     <TouchableOpacity testID={testID} onPress={onPress} style={styles.row}>
       {Icon}
-      <HeaderText variant="header6" style={styles.rowLabel}>
+      <HeaderText
+        variant="header6"
+        style={styles.rowLabel}
+        testID={labelTestID}>
         {label}
       </HeaderText>
       {EndContent}

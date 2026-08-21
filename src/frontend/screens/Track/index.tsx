@@ -62,7 +62,7 @@ export const TrackScreen = ({
   const trackObservations = observations.filter(observation =>
     track.observationRefs.some(ref => ref.docId === observation.docId),
   );
-  const canDelete = useCanEditOrDelete(track.originalVersionId);
+  const canDelete = useCanEditOrDelete(track.createdBy);
   const locationHistory = getLocationHistoryFromTrack(track);
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
   const preset = useGetPresetById(track?.presetRef?.docId);

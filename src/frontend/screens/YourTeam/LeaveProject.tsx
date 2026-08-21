@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {CommonActions} from '@react-navigation/native';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {
@@ -15,7 +16,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectSettings} from '../../hooks/server/projects';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {toError} from '../../utils/errors';
 
 const m = defineMessages({
@@ -62,15 +63,27 @@ export const LeaveProject = ({
       {
         onSuccess: () => {
           try {
-            navigation.replace('LeftProjectConfirmation', {
-              projectName: projectSettings.name ?? '',
-            });
             const defaultProject = projects?.find(
               project => project.name === undefined,
             );
             if (defaultProject?.projectId) {
               setActiveProjectId(defaultProject.projectId);
             }
+            // Reset (rather than replace) so that no screen with queries
+            // scoped to the left project stays mounted — refetching them
+            // errors because leaving closes the project's data stores.
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  {name: 'Home'},
+                  {
+                    name: 'LeftProjectConfirmation',
+                    params: {projectName: projectSettings.name ?? ''},
+                  },
+                ],
+              }),
+            );
           } catch (err) {
             Sentry.captureException(err);
             navigation.replace('ErrorBottomSheet', {
@@ -107,7 +120,7 @@ export const LeaveProject = ({
 
       <View style={styles.buttons}>
         {leaveProject.status === 'pending' ? (
-          <UIActivityIndicator style={{marginVertical: 20}} />
+          <LoadingIndicator style={{marginVertical: 20}} />
         ) : (
           <>
             <DestructiveButton

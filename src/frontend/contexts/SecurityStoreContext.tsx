@@ -14,7 +14,7 @@ import {
   PasscodeInputSchema,
   StoredPasscodeSchema,
 } from '../lib/security';
-import {Loading} from '../sharedComponents/Loading';
+import {FullScreenCenteredLoader} from '../sharedComponents/FullScreenCenteredLoader';
 
 const SecurityStateSchema = v.variant('passcode', [
   v.object({
@@ -96,13 +96,11 @@ export function createSecurityStore({persist} = {persist: false}) {
         name: STORAGE_KEY,
         version: 1,
         migrate,
-        storage: createJSONStorage(
-          (): StateStorage => ({
-            getItem: key => getItem(key),
-            setItem: (key, value) => setItem(key, value),
-            removeItem: key => deleteItemAsync(key),
-          }),
-        ),
+        storage: createJSONStorage((): StateStorage => ({
+          getItem: key => getItem(key),
+          setItem: (key, value) => setItem(key, value),
+          removeItem: key => deleteItemAsync(key),
+        })),
         onRehydrateStorage: () => {
           return (state?: SecurityState) => {
             if (state) {
@@ -187,7 +185,7 @@ export const SecurityStoreProvider = ({
 
   return (
     <SecurityStoreContext value={value}>
-      {!hasHydrated ? <Loading /> : children}
+      {!hasHydrated ? <FullScreenCenteredLoader /> : children}
     </SecurityStoreContext>
   );
 };

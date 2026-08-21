@@ -7,7 +7,7 @@ import {useSelectFile} from '../hooks/files';
 import {useProjectSettings, useGetOwnRole} from '../hooks/server/projects';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
 import {MEDIUM_GREY} from '../lib/styles';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../sharedComponents/LoadingIndicator';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../sharedTypes';
 import {convertFileUriToPosixPath} from '../lib/file-system';
 import noop from '../lib/noop';
@@ -146,7 +146,7 @@ export const Categories: NativeNavigationComponent<'Categories'> = ({
         </>
       )}
       {configImportIsPending ? (
-        <UIActivityIndicator style={{marginTop: 20, flex: 0}} />
+        <LoadingIndicator style={{marginTop: 20, flex: 0}} />
       ) : isCoordinator ? (
         <SecondaryButton
           style={{marginTop: 20, alignSelf: 'center'}}

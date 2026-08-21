@@ -2,7 +2,7 @@ import * as React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -97,7 +97,7 @@ export const ProjectStatistics = ({
                 {formatMessage(m.shareLabel)}
               </BodyText>
               {status === 'pending' ? (
-                <UIActivityIndicator size={25} style={{flex: 0}} />
+                <LoadingIndicator size="small" style={{flex: 0}} />
               ) : (
                 <Checkbox
                   testID={

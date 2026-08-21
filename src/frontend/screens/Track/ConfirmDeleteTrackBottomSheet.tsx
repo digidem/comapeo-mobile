@@ -12,8 +12,10 @@ import {
 } from '../../sharedComponents/Buttons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteTrackMutation} from '../../hooks/server/track';
+import {DocAlreadyDeletedError, getErrorCode} from '@comapeo/core/errors.js';
 import * as Sentry from '@sentry/react-native';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 const m = defineMessages({
   deleteTitle: {
@@ -40,7 +42,7 @@ export const ConfirmDeleteTrackBottomSheet = ({
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const {trackId} = route.params;
-  const {mutate: deleteTrackMutation} = useDeleteTrackMutation();
+  const {mutate: deleteTrackMutation, status} = useDeleteTrackMutation();
 
   function handleDelete() {
     deleteTrackMutation(
@@ -50,6 +52,12 @@ export const ConfirmDeleteTrackBottomSheet = ({
           navigation.pop(2);
         },
         onError: err => {
+          // Already deleted (double-tap, or deleted on another device and
+          // synced) — the user's intent is satisfied, so finish quietly.
+          if (getErrorCode(err) === DocAlreadyDeletedError.code) {
+            navigation.pop(2);
+            return;
+          }
           Sentry.captureException(err);
           navigation.navigate('ErrorBottomSheet', {error: err});
         },
@@ -66,17 +74,23 @@ export const ConfirmDeleteTrackBottomSheet = ({
           description={t(m.deleteDescription)}
         />
         <View style={styles.buttonsContainer}>
-          <DestructiveButton
-            fullSize
-            text={t(m.deleteButton)}
-            renderIcon={() => <DiscardIcon />}
-            onPress={handleDelete}
-          />
-          <SecondaryButton
-            fullSize
-            text={t(m.cancel)}
-            onPress={() => navigation.goBack()}
-          />
+          {status === 'pending' ? (
+            <LoadingIndicator style={{marginVertical: 20}} />
+          ) : (
+            <>
+              <DestructiveButton
+                fullSize
+                text={t(m.deleteButton)}
+                renderIcon={() => <DiscardIcon />}
+                onPress={handleDelete}
+              />
+              <SecondaryButton
+                fullSize
+                text={t(m.cancel)}
+                onPress={() => navigation.goBack()}
+              />
+            </>
+          )}
         </View>
       </View>
     </BottomSheetWrapper>

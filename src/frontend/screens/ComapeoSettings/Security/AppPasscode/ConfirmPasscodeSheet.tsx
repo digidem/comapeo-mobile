@@ -5,7 +5,7 @@ import {useSecurityActions} from '../../../../contexts/SecurityStoreContext';
 import ErrorIcon from '../../../../images/Error.svg';
 import {RED} from '../../../../lib/styles';
 import {useIntl, defineMessages} from 'react-intl';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../../../sharedComponents/LoadingIndicator';
 import {StyleSheet, View} from 'react-native';
 import * as Sentry from '@sentry/react-native';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
@@ -84,7 +84,7 @@ export const ConfirmPasscodeBottomSheet = ({
         </BodyText>
         {loading ? (
           <View style={styles.loading}>
-            <UIActivityIndicator size={32} />
+            <LoadingIndicator size="large" />
           </View>
         ) : (
           <View style={styles.buttonsContainer}>

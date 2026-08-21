@@ -17,7 +17,7 @@ import {StopIcon} from '../../sharedComponents/icons';
 import PlayArrow from '../../images/PlayArrow.svg';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import * as FileSystem from 'expo-file-system/legacy';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {useOpenShareDialog} from '../../hooks/share';
 import {audioStyles, SIDE_ICON_BUTTON_WIDTH} from '../../screens/Audio/shared';
 import * as Sentry from '@sentry/react-native';
@@ -136,9 +136,9 @@ export const AudioAttachmentPlaybackScreen = ({
       dockContainerStyle={styles.dockContainer}
       dockContent={
         shareLoading ? (
-          <UIActivityIndicator
+          <LoadingIndicator
             style={{maxHeight: SIDE_ICON_BUTTON_WIDTH}}
-            size={SIDE_ICON_BUTTON_WIDTH}
+            size="large"
             color={WHITE}
           />
         ) : (

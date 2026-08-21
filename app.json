@@ -4,6 +4,7 @@
     "jsEngine": "hermes",
     "name": "CoMapeo",
     "slug": "comapeo",
+    "scheme": "comapeo",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -95,6 +96,19 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#050F77"
       },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "app.comapeo.org"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",

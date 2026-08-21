@@ -48,10 +48,6 @@ const m = defineMessages({
     id: '$1Navigation.Menu.gatherObservations',
     defaultMessage: 'Gather Observations',
   },
-  currentProject: {
-    id: '$1Navigation.Menu.currentProject',
-    defaultMessage: 'Current Project',
-  },
   exchange: {
     id: '$1Navigation.Menu.exchange',
     defaultMessage: 'Exchange',

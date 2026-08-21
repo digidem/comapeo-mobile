@@ -1,0 +1,12 @@
+onboarding	flows-onboarding--intro	route:IntroToCoMapeo	2	01 Intro
+onboarding	flows-onboarding--data-privacy	route:DataPrivacy	2	02 Data Privacy
+onboarding	flows-onboarding--privacy-policy	route:OnboardingPrivacyPolicy	2	03 Privacy Policy
+onboarding	flows-onboarding--device-naming	route:DeviceNaming	2	04 Device Naming
+onboarding	flows-onboarding--success	route:Success	2	05 Success
+onboarding	flows-onboarding--map-on-your-own-intro	route:MapOnYourOwnIntro	2	06b Map On Your Own Intro
+create-observation	flows-createobservation--home	testID:MAIN.map-screen	10	01 Home
+create-observation	flows-createobservation--category-chooser	route:ObservationCategoryChooser	10	02 Category Chooser
+create-observation	flows-createobservation--add-photo	route:AddPhoto	10	03 Add Photo
+create-observation	flows-createobservation--observation-create	route:ObservationCreate	10	04 Observation Create
+create-observation	flows-createobservation--observation-fields	route:ObservationFields	10	05 Observation Fields
+create-observation	flows-createobservation--observation-detail	route:Observation	10	06 Observation Detail

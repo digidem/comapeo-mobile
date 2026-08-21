@@ -1,6 +1,12 @@
 # Storybook User-Story Flows
 
-**Status**: In progress — Phase 1 done, Phase 2 mostly done (Task 2.2 open), and Risk 8 is fixed in code and typechecked. Its required repeated on-device proof is blocked by Risk 3's Home error boundary and a blank post-relaunch Storybook surface. See `plans/handoff.md` for the next-agent briefing.
+**Status**: Implementation and native acceptance complete. Two provenance-
+recording, clean-cold, no-HMR 12-frame captures, reports, deterministic ledger
+comparison, and leaf recovery passed on 2026-08-21. Current native
+story-and-route markers were checked at screenshot time. Remaining:
+whole-branch senior approval before committing. The map-server HMR lifecycle
+defect remains a separate production/runtime issue; neither accepted cold run
+reproduced it.
 **Date**: 2026-08-20
 **Branch**: `feat/storybook-integration`
 **Extends**: [`plans/2026-06-05-2026-06-05-storybook-react-native-v6.md`](./2026-06-05-2026-06-05-storybook-react-native-v6.md)
@@ -32,6 +38,19 @@ Verified in the repo on 2026-08-20:
 | Capture       | Ad-hoc script at `/tmp/storybook-shots/capture_via_deeplink.sh`, not in the repo                                                                                                      |
 
 The in-app mounting strategy from the master plan is the thing that makes this PRD cheap: stories already render inside the full real `AppProviders` tree, against the real running embedded backend. Nothing is mocked. See the master plan's "Architecture" and "Context Provider Dependency Tree" sections.
+
+### Final App/Metro scope resolution
+
+This flow PRD originally limited production-app changes to
+`ActiveProjectIdStoreContext.tsx`, while the earlier master Storybook plan also
+requires static integration in `src/frontend/App.tsx` plus Metro disabled-mode
+stubbing. Clean normal-build correctness governs that conflict. `App.tsx` and
+`metro.config.js` are therefore authorized Storybook integration scope:
+`App.tsx` keeps the static `.rnstorybook` import and environment-selected root,
+and Metro always calls `withStorybook`, using
+`EXPO_PUBLIC_STORYBOOK_ENABLED` only for its `enabled` option. The disabled
+wrapper stubs Storybook and `.rnstorybook`, so a normal production export does
+not need the ignored generated `storybook.requires.ts`.
 
 ### Why `withNavigation` cannot deliver a user story
 
@@ -121,13 +140,9 @@ export const withRealNavigator: Decorator = (Story, context) => {
   if (!ready) return <FlowStatePlaceholder />;
 
   return (
-    <NavigationIndependentTree>
-      <NavigationContainer
-        key={`${context.id}:${ready.key}`}
-        initialState={seed}>
-        <RootStackNavigator />
-      </NavigationContainer>
-    </NavigationIndependentTree>
+    <NavigationContainer key={`${context.id}:${ready.key}`} initialState={seed}>
+      <RootStackNavigator />
+    </NavigationContainer>
   );
 };
 ```
@@ -151,7 +166,7 @@ parameters: {flow: {initialState: {
 
 Note `initialState` routes must exist in the branch `RootStackNavigator` renders for the given flow state — seeding `ObservationCreate` requires a device name _and_ a project, or `createAppScreens` is never rendered.
 
-**Nesting note**: `@react-navigation/native@7.2.2`. If Storybook's own UI is itself a navigation tree, a bare nested `NavigationContainer` warns. `withNavigation` currently nests without visible trouble, so this may be a no-op — but wrap in `NavigationIndependentTree` defensively and drop it if verified unnecessary.
+**Nesting note**: `NavigationIndependentTree` is not required. Storybook replaces `AppNavigator` rather than nesting below it (`App.tsx`), and Storybook RN v10's UI is a View/drawer composition rather than a React Navigation tree. On-device flow and atomic-navigation smoke checks showed no nested-container warning after removing the wrapper.
 
 ### `flowState.ts`
 
@@ -215,7 +230,7 @@ Both come from one decorator and one flow-state spec; a Step story is a Walkthro
 **Goal**: Make app state settable from a story. **Estimated time**: 1 day.
 
 - [x] **1.1** Implement `.rnstorybook/utils/seedData.ts` (master-plan task 2.4, still a stub): `useSeedProject(name)` and `useSeedObservations(count, options)` using `useCreateProject` / `useCreateDocument` / `usePresetsQuery`, following `CreateTestData.tsx:233-312`. Both must be idempotent — re-running a story must not create a second project. **Implemented, but via the imperative `useClientApi()` client rather than the suspense-query hooks named above** — `useManyDocs`/`useSingleProject` would suspend or throw when called with a projectId that doesn't exist yet, which is exactly the situation `flowState.ts` calls these hooks in before a project has been created. `useSeedObservations` also takes `projectId` as an `ensure(projectId)` argument rather than a hook param, so it can seed a project id resolved moments earlier by `useSeedProject` in the same async sequence without a stale closure.
-- [x] **1.2** Add `clearActiveProjectId` to the `actions` object in `createActiveProjectIdStore` (`src/frontend/contexts/ActiveProjectIdStoreContext.tsx`). Two lines. This is the **only application-code change** this PRD requires; keep it that way.
+- [x] **1.2** Add `clearActiveProjectId` to the `actions` object in `createActiveProjectIdStore` (`src/frontend/contexts/ActiveProjectIdStoreContext.tsx`). The flow-state behavior remains this PRD's only new production-state change. Static `App.tsx` integration and Metro disabled stubbing are separately required by the governing master Storybook plan; see the final scope resolution above.
 - [x] **1.3** Create `.rnstorybook/utils/flowState.ts` with `FlowStateSpec`, `FLOW_STATES` presets, and `useFlowState`. **New finding while implementing this**: `AuthContext`'s `authState` is local React state seeded once when `AuthProvider` mounts (above Storybook) and is only otherwise changed by `authenticate()` or an AppState background transition — calling `setPasscode()` alone does _not_ flip it mid-session. This means the `auth: 'unauthenticated'` axis (used only by `lockedApp`) sets the passcode but won't visibly show `AuthScreen` within a running Storybook session; it would need a fresh app boot. `freshInstall`/`namedNoProject`/`onboardedWithData` are unaffected since they only need `auth: 'authenticated'`, which is what `AuthContext` already boots into by default. Documented in `flowState.ts`'s `useFlowState` docblock rather than as a new PRD risk, since none of the Phase 3/4 flows currently plan to use `lockedApp`.
 - [x] **1.4** Resolve Open Question 1 (clearing the device name) empirically and record the outcome in this file. Do this **before** 2.x — the answer determines whether `freshInstall` is a real preset or a documented limitation. **Resolved: clearable, see Open Question 1.**
 - [x] **1.5** Add a `FlowStatePlaceholder` component (spinner + the spec being applied, as text) so a story that hangs mid-seed is diagnosable from a screenshot alone. Implemented at `.rnstorybook/utils/FlowStatePlaceholder.tsx`.
@@ -225,7 +240,7 @@ Both come from one decorator and one flow-state spec; a Step story is a Walkthro
 **Goal**: One decorator that mounts the real stack. **Estimated time**: 0.5 day.
 
 - [x] **2.1** Create `.rnstorybook/decorators/withRealNavigator.tsx` per the Architecture shape; export from `.rnstorybook/decorators/index.ts`.
-- [ ] **2.2** Verify nesting: confirm whether `NavigationIndependentTree` is required under Storybook RN v10 + `@react-navigation/native@7.2.2`. Remove it if not. **Not yet verified either way — kept defensively per the PRD's own instruction. Untouched.**
+- [x] **2.2** Verify nesting: confirm whether `NavigationIndependentTree` is required under Storybook RN v10 + `@react-navigation/native@7.2.2`. Removed it: Storybook replaces `AppNavigator`, so the flow navigator has no parent React Navigation tree. On-device flow and atomic-navigation smoke checks emitted no nested-container warning.
 - [x] **2.3** Smoke story `Flows/_Sanity/Fresh Install` — `flow.state: FLOW_STATES.freshInstall`, no `initialState`. Passes when it lands on `IntroToCoMapeo` unprompted. **Verified on-device (deep link `flows-sanity--fresh-install`): lands correctly when state already matches. When a mutation is needed first (e.g. right after `Onboarded` ran), hits the remount race in new Risk 8 — landed on `Success` once instead. Re-running once state was already clean was reliable.**
 - [x] **2.4** Smoke story `Flows/_Sanity/Onboarded` — `FLOW_STATES.onboardedWithData`. Passes when it lands on `Home`. Expect map-surface caveats (Risk 3). **Flow-state application (auth/deviceName/project/5 observations) worked correctly and it did land on `Home`, but `MapScreen` then threw a hard render error — see the addendum to Risk 3. Not a flowState.ts/decorator bug; a `Home`-specific issue for Task 4.5 to resolve.**
 - [x] **2.5** Document the "story function renders `null`, the decorator renders everything" convention in `.rnstorybook/README.md`.
@@ -236,11 +251,11 @@ Both come from one decorator and one flow-state spec; a Step story is a Walkthro
 
 Real order, from `src/frontend/Navigation/Stack/OnboardingScreens.tsx`: `IntroToCoMapeo` → `DataPrivacy` → `OnboardingPrivacyPolicy` → `DeviceNaming` → `Success` → (`JoinProjectIntro` | `MapOnYourOwnIntro`).
 
-- [ ] **3.1** `Flows/Onboarding/Walkthrough` — `freshInstall`, no `initialState`. Tappable start to finish.
-- [ ] **3.2** Step stories `01 Intro` … `05 Success`, each seeding `flow.initialState` with the real back-stack up to that screen.
-- [ ] **3.3** Branch stories `06a Join Project Intro` and `06b Map On Your Own Intro`, documenting in each description which user choice leads there.
-- [ ] **3.4** **Splash decision — record, don't build.** No live splash story: `ServerLoading` renders `null`, and it has already resolved before Storybook mounts. The narrative starts at `IntroToCoMapeo`. If the capture output ever needs a cover frame, use the static asset from `assets/` in the report generator (Task 5.3), not a story.
-- [ ] **3.5** Note in the Walkthrough's description that completing `DeviceNaming` mutates real backend state — after a full walkthrough the device _is_ named, so `freshInstall` must be re-applied (Risk 1).
+- [x] **3.1** `Flows/Onboarding/Walkthrough` — `freshInstall`, no `initialState`. On-device, tapped Intro → Data Privacy → privacy policy → Device Naming → Success → Map On Your Own → Home without leaving Storybook.
+- [x] **3.2** Step stories `01 Intro` … `05 Success`, each seeding `flow.initialState` with the real back-stack up to that screen. All five resolved to their named screens through mixed-order deep links without restart.
+- [x] **3.3** Branch stories `06a Join Project Intro` and `06b Map On Your Own Intro`, documenting in each description which user choice leads there. Both resolved through direct deep links; the walkthrough uses Map On Your Own.
+- [x] **3.4** **Splash decision — record, don't build.** No live splash story: `ServerLoading` renders `null`, and it has already resolved before Storybook mounts. The narrative starts at `IntroToCoMapeo`. If the capture output ever needs a cover frame, use the static asset from `assets/` in the report generator (Task 5.3), not a story.
+- [x] **3.5** The Walkthrough description records that completing `DeviceNaming` mutates real backend state and that `freshInstall` must be re-applied before replaying it. The on-device run re-applied Fresh Install successfully after completion.
 
 ### Phase 4: Flow B — First observation
 
@@ -248,21 +263,21 @@ Real order, from `src/frontend/Navigation/Stack/OnboardingScreens.tsx`: `IntroTo
 
 Screens confirmed present in `src/frontend/Navigation/Stack/AppScreens.tsx`: `Home` (167), `ObservationCategoryChooser` (227), `Categories` (407), `AddPhoto` (177), `ObservationCreate` (373), `ObservationFields` (353), `ObservationMetadata` (489), `Observation` (232).
 
-- [ ] **4.1** `Flows/CreateObservation/Walkthrough` — `onboardedWithData`, `initialState` `[Home]`.
-- [ ] **4.2** Step stories: `01 Home` → `02 Category Chooser` → `03 Add Photo` → `04 Observation Create` → `05 Observation Fields` → `06 Observation Detail`.
-- [ ] **4.3** `06 Observation Detail` needs a seeded observation id in its route params. Extend `useSeedObservations` to return created ids and thread the first one through `flow.initialState`.
-- [ ] **4.4** Handle `AddPhoto` / camera: `react-native-vision-camera` on an emulator gives a synthetic feed at best. Prefer capturing the permission-prompt or empty state, and document that the camera preview frame is not meaningfully verifiable by screenshot. Do not block the flow on it.
-- [ ] **4.5** Handle `Home` / `MapScreen`: the master plan already flags this as hardware-bound. Capture whatever the emulator produces and treat map _tiles_ as out of scope for visual verification; the map chrome (GPS pill, buttons, bottom sheet) is in scope.
+- [x] **4.1** `Flows/CreateObservation/Walkthrough` — direct interaction reaches Home → Category Chooser → Observation Create; both final cold-start full-manifest runs captured all six numbered Create Observation frames and recovered to a leaf story.
+- [x] **4.2** Step stories: `01 Home` → `02 Category Chooser` → `03 Add Photo` → `04 Observation Create` → `05 Observation Fields` → `06 Observation Detail`. All six directly rendered in mixed order with named-screen evidence.
+- [x] **4.3** `06 Observation Detail` uses a runtime-resolved, deterministically ordered seeded observation id through an `initialState` factory.
+- [x] **4.4** `AddPhoto` is accepted as camera chrome only; emulator preview fidelity is excluded.
+- [x] **4.5** Handle `Home` / `MapScreen`: map chrome is in scope and tiles are excluded. Both accepted cold runs proved the visible nested Map screen via native `testID:MAIN.map-screen`; no tile-content assertion is made.
 
 ### Phase 5: Verification tooling
 
 **Goal**: Turn the proven ad-hoc script into repo infrastructure. **Estimated time**: 1 day.
 
-- [ ] **5.1** Add `scripts/storybook-capture.sh` — the promoted `/tmp/storybook-shots/capture_via_deeplink.sh`, hardened: configurable package id (default `com.comapeo.dev`), configurable settle delay, `adb wait-for-device`, non-zero exit if the pulled PNG is missing or suspiciously small (blank-frame guard).
-- [ ] **5.2** Add `scripts/storybook-capture-all.sh` — reads a checked-in manifest (`.rnstorybook/capture-manifest.txt`, one story id per line, ordered), calls 5.1 per entry, writes numbered PNGs to an output dir. Ordering matters: flow steps should read as a filmstrip.
-- [ ] **5.3** Add a report generator producing a single `index.html` filmstrip per flow, so a reviewer sees the whole journey in one scroll.
+- [x] **5.1** Add `scripts/storybook-capture.sh` — configurable package id/post-ready delay, device wait, identity-first cold-link retry, exact current native story-and-route or story-and-testID readiness proof before and after capture, and PNG/size guard.
+- [x] **5.2** Add `scripts/storybook-capture-all.sh` — reads `.rnstorybook/capture-manifest.tsv`, preflights IDs against Storybook source index, records force-stop/log-clear/launcher/`Running "main"` cold-start provenance inside the output directory, requires exact runtime identity and current target readiness, fails fast, and writes deterministic ledgers. Fixtures prove stale/mismatched readiness, missing/wrong route, and missing testID frames are not certified.
+- [x] **5.3** Add a report generator producing one safe `index.html` filmstrip per flow; fixtures cover escaping, validation, idempotence, and destination-symlink rejection.
 - [ ] **5.4** _(Stretch, not committed)_ Auto-advance mode: `flow.autoAdvance: ['DataPrivacy', 'DeviceNaming', ...]` driving `navigationRef` on a timer, capturing between hops. Only pursue if Step stories prove insufficient in practice.
-- [ ] **5.5** Document the whole loop in `.rnstorybook/README.md`: `npm run storybook:android` → `npm run storybook-generate` after adding stories → `scripts/storybook-capture-all.sh`.
+- [x] **5.5** Document the verified disposable-device, generation, cold-start, readiness-aware capture, reporting, recovery, and emulator-reset workflow in `.rnstorybook/README.md`.
 
 ---
 
@@ -274,7 +289,15 @@ Screens confirmed present in `src/frontend/Navigation/Stack/AppScreens.tsx`: `Ho
 4. `scripts/storybook-capture-all.sh` produces one non-blank PNG per manifest entry, exit code 0, on a run that includes both flows.
 5. Re-running the full capture twice in a row yields the same set of screens (order and identity — not byte-identical images; timestamps and GPS readouts will differ).
 6. Selecting a leaf-component story after a flow story still renders correctly — flow stories must not leave the app in a state that breaks the existing ~30 stories.
-7. Exactly one file under `src/` is modified by this work (`ActiveProjectIdStoreContext.tsx`, Task 1.2).
+7. Production-state behavior changes only in `ActiveProjectIdStoreContext.tsx` (Task 1.2). Flow stories live under `src/frontend/flows/`; `App.tsx` static Storybook integration and Metro disabled stubbing are required by the master-plan scope resolution above.
+
+Final result: criteria 1–7 passed. Accepted captures are
+`/tmp/storybook-residual-accepted-run1.QH2w1c` and
+`/tmp/storybook-residual-accepted-run2.O963PG`; each contains wrapper-generated
+`cold-start-provenance.txt`, their first five ledger fields match for all 12
+rows, all four reports exist, both leaf recoveries passed, and manual inspection
+found the six named onboarding screens in both runs rather than
+`FlowStatePlaceholder`.
 
 ---
 
@@ -287,22 +310,20 @@ Screens confirmed present in `src/frontend/Navigation/Stack/AppScreens.tsx`: `Ho
 
 3. **`Home` renders a native map.** Already flagged in the master plan. Emulator map surfaces render inconsistently and screenshots may show a blank or partial map.
    _Mitigation_: Scope visual verification to map _chrome_, not tiles (Task 4.5). Do not let flaky map pixels fail the capture run.
-   **Worse than expected, found during Task 2.4**: landing on `Home`/`MapScreen` via `withRealNavigator` threw a hard render error — "Listen method has been called more than once without closing" (Node `net.Server.listen`, surfaced through `MapScreen/index.tsx`), caught by Storybook's per-story error boundary ("Something went wrong rendering your story"), not just a blank/partial tile. Likely cause: something MapScreen owns (probably a local tile/blob server) is only ever meant to start once for the app's whole lifetime, but flow stories remount `RootStackNavigator` (by design, Architecture decision 3) every time flow state changes, so `Home` can mount more than once per Storybook session. Not investigated further (Task 4.5's job). Re-selecting a different story afterward still worked (Storybook's error boundary recovered on next selection), so this doesn't wedge the whole session — but any flow/step story that lands on `Home` should be expected to be unreliable until this is root-caused.
+   **Lifecycle finding**: the error is not caused by `RootStackNavigator` or `MapScreen` remounting. `App.tsx` is the sole caller of `appRpc.mapServer.listen()`, while the backend retains one non-idempotent map server across frontend reloads. An HMR/frontend reload can therefore invoke `listen()` twice against the same server. Cold-start, no-HMR acceptance runs reached Home's map chrome without this error. Treat map tiles as capture-ineligible in Phase 4, and track a durable App/backend lifecycle fix separately from this flow-story work.
 
-4. **Nested `NavigationContainer`.** RN Navigation v7 warns on nested containers.
-   _Mitigation_: `NavigationIndependentTree` (Task 2.2). Low risk — `withNavigation` already nests today without incident.
+4. ~~**Nested `NavigationContainer`.** RN Navigation v7 warns on nested containers.~~ **RESOLVED**: Storybook does not supply a parent React Navigation tree in this mount, so `NavigationIndependentTree` was removed after device smoke checks.
 
 5. **`initialState` can name a route that isn't registered.** `RootStackNavigator` renders one of three screen sets. Seeding `ObservationCreate` while `deviceName` is unset silently produces an empty or wrong screen.
-   _Mitigation_: `useFlowState` validates the spec/`initialState` pair and renders a loud error frame on mismatch — visible in a screenshot, which is the only diagnostic a capture run has.
+   _Mitigation_: each flow story pairs route state with the matching `flow.state`; the capture harness requires exact story identity plus current, story-specific native readiness for the declared direct route or stable native testID immediately before and after capture. Historical route logs are diagnostic only and cannot certify a frame.
 
-6. **Seeding races the capture delay.** The fixed `sleep 2` was tuned for leaf components. A story that seeds a project plus five observations will take longer.
-   _Mitigation_: Configurable per-story delay in the manifest, plus the blank-frame guard (Task 5.1). The `FlowStatePlaceholder` (Task 1.5) makes a too-short delay obvious rather than mysterious.
+6. ~~**Seeding races the capture delay.**~~ **RESOLVED**: capture waits up to 300 seconds for exact target readiness, then applies the manifest's post-ready delay. The first cold seed empirically exceeded 120 seconds; no screenshot is taken from `FlowStatePlaceholder` while convergence continues.
 
 7. **`storybook.requires.ts` drift.** Adding flow stories without re-running `sb-rn-get-stories` means the capture script deep-links to ids that do not exist — and a missing id fails _silently_, leaving the previous story on screen and producing a plausible-looking wrong screenshot.
-   _Mitigation_: `storybook-capture-all.sh` should assert the story actually changed (e.g. compare against the previous frame) rather than trusting the intent. This is a sharper version of master-plan risk 11.
+   _Mitigation (implemented)_: capture-all preflights every manifest ID against the generated source index, then requires the exact runtime linking identity and readiness target before capture. Cold-start selection is retried only while identity remains unobserved.
 
 8. **Remount race after a mutating axis — HIGH PRIORITY, blocks Phase 3.** Empirically found while testing the `Flows/_Sanity` stories (Task 2.3/2.4): when `useFlowState` has to actually mutate an axis (e.g. clear the device name), `setReady()`/the `NavigationContainer` remount can fire before `RootStackNavigator`'s own `useOwnDeviceInfo()`/`useActiveProjectId()` reads have caught up to the new value, so it mounts on the wrong initial route (observed: landed on `Success` instead of `IntroToCoMapeo` right after clearing device name + project). A **no-op** re-selection (state already matching the spec, nothing to mutate) is reliable — only the "had to change something this pass" path races. Confirmed the underlying mutations _do_ land correctly (a follow-up read a few seconds later showed the correct cleared state) — this is purely a remount-timing issue, not a data-correctness one.
-   _Mitigation (implemented, on-device proof pending)_: `useFlowState` now mutates one mismatched routing axis per pass, then waits for the matching subscription value to cause a fresh render before checking again. It marks ready only on a pass where every routing axis already matches; readiness is tied to the active spec so a user advancing a walkthrough is not reset. The Storybook emulator reproduced Risk 3's Home error boundary during the required `Onboarded` → `Fresh Install` alternation, and a fresh app launch stayed blank, so the five-run device acceptance check remains pending.
+   _Mitigation (implemented and proven)_: `useFlowState` mutates one mismatched routing axis per pass, then waits for the matching subscription value to cause a fresh render before checking again. It marks ready only on a pass where every routing axis already matches; readiness is keyed structurally to the active spec so Storybook parameter-object rerenders do not restart a completed flow. Five cold-start, no-HMR `Onboarded` → `Fresh Install` alternations reached Home then IntroToCoMapeo every time.
 
 ---
 
@@ -311,7 +332,7 @@ Screens confirmed present in `src/frontend/Navigation/Stack/AppScreens.tsx`: `Ho
 1. **RESOLVED (2026-08-20, Task 1.4).** Yes — the device name can be cleared. `useSetOwnDeviceInfo().mutateAsync({name: '', deviceType: 'mobile'})` resolves without error, and the immediately-following `useOwnDeviceInfo()` read shows `name: ''`. Verified on-device via a scratch story (`Flows/_Spike/DeviceNameClear`, deleted after this finding was recorded) deep-linked with `flows-spike-devicenameclear--default`: screenshot showed `before: name="jjjj"` (leftover from a prior manual walkthrough) → `mutateAsync resolved` → `device name now: ""`. `!deviceInfo.name` in `getInitialRoute` is falsy for `''`, so this routes to `IntroToCoMapeo` as hoped. `freshInstall` is therefore a real preset, not a documented limitation — `flowState.ts`'s `deviceName: null` axis maps to `mutateAsync({name: '', deviceType: 'mobile'})`.
    ~~`useSetOwnDeviceInfo` is typed `{name: string; deviceType}` — no clear, no `undefined`. `!deviceInfo.name` in `getInitialRoute` is falsy for `''`, so `mutate({name: ''})` _would_ route to `IntroToCoMapeo` **if** core accepts an empty name rather than rejecting it as invalid. Unverified.~~
 
-2. **Which branch does the onboarding narrative take at `Success`?** `JoinProjectIntro` and `MapOnYourOwnIntro` are both real. Phase 3 builds both as leaf stories, but the canonical single-filmstrip "user story" should pick one. Recommend `MapOnYourOwnIntro` — it needs no second device — but this is a product-narrative call, not a technical one.
+2. **RESOLVED (2026-08-20).** The canonical onboarding narrative takes `MapOnYourOwnIntro`, because it needs no second device. Both `JoinProjectIntro` and `MapOnYourOwnIntro` remain direct step stories.
 
 3. **Is `Flows/CreateObservation` the right second flow?** It is the most demonstrable first-use journey and exercises seeding hardest. Alternatives worth considering later: joining a project via invite (needs two devices — likely infeasible in Storybook) or the sync flow (same constraint).
 

@@ -27,13 +27,20 @@ const BaseButton = ({
   iconPosition = 'left',
   text,
   fullSize,
+  disabled = false,
   testID,
   style,
   colors,
-}: ButtonProps & {colors: ButtonColors}) => {
+}: Omit<ButtonProps, 'onPress'> & {
+  onPress?: () => void;
+  disabled?: boolean;
+  colors: ButtonColors;
+}) => {
   return (
     <TouchableOpacity
       testID={testID}
+      disabled={disabled}
+      accessibilityState={{disabled}}
       style={[
         style,
         buttonStyles.base,
@@ -101,6 +108,21 @@ export const DestructiveButton = (props: ButtonProps) => {
         text: WHITE,
         icon: WHITE,
         border: WARNING_RED,
+      }}
+    />
+  );
+};
+
+export const DisabledButton = (props: Omit<ButtonProps, 'onPress'>) => {
+  return (
+    <BaseButton
+      {...props}
+      disabled
+      colors={{
+        background: BLUE_GREY,
+        text: WHITE,
+        icon: WHITE,
+        border: BLUE_GREY,
       }}
     />
   );

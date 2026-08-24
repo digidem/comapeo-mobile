@@ -36,7 +36,11 @@ import {Circle} from '../../sharedComponents/icons/Circle';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {
+  DisabledButton,
+  PrimaryButton,
+  SecondaryButton,
+} from '../../sharedComponents/Buttons';
 import {ROOT_QUERY_KEY} from '../../constants';
 import {useActiveArchiveServer} from '../../hooks/server/projects';
 import {Button} from '../../sharedComponents/Button';
@@ -224,10 +228,13 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
               }}
             />
           ) : (
-            <SecondaryButton
-              fullSize={true}
-              text={t(m.close)}
-              onPress={() => navigation.goBack()}
+            <DisabledButton
+              fullSize
+              testID="EXCHANGE.start-btn-disabled"
+              text={t(m.start)}
+              renderIcon={({color, size}) => (
+                <SyncIcon color={color} size={size} />
+              )}
             />
           );
 

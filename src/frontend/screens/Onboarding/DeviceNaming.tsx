@@ -130,7 +130,6 @@ export const DeviceNaming = ({
                 fullSize
                 onPress={handleSavePress}
                 text={t(m.save)}
-                iconPosition="right"
                 renderIcon={({color, size}) => (
                   <Ionicons
                     name="checkmark-circle-outline"

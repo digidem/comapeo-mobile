@@ -325,11 +325,11 @@
     "message": "Recording Audio with CoMapeo",
     "description": "Screen title for audio permission screen"
   },
-  "$1screens.AudioPlaybackNew.backToEditing": {
-    "message": "Back to Editing"
-  },
   "$1screens.AudioPlaybackNew.delete": {
     "message": "Delete"
+  },
+  "$1screens.AudioPlaybackNew.done": {
+    "message": "Done"
   },
   "$1screens.AudioPlaybackNew.recordingSaved": {
     "message": "Recording Saved!"

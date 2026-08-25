@@ -14,9 +14,10 @@ describe('Onboarding - Map On Your Own Intro Screen', () => {
   });
 
   it('should display intro content with benefits', async () => {
-    const description = await $(
-      byTextMatches('Explore CoMapeo—invite collaborators anytime'),
-    );
+    const title = await $(byTextMatches('Explore CoMapeo on your own'));
+    await expect(title).toBeDisplayed();
+
+    const description = await $(byTextMatches('Invite collaborators anytime'));
     await expect(description).toBeDisplayed();
 
     const snapPhotos = await $(byTextMatches('Snap photos on-the-go'));
@@ -29,17 +30,15 @@ describe('Onboarding - Map On Your Own Intro Screen', () => {
     await expect(trackPaths).toBeDisplayed();
   });
 
-  it('should display "Go to Map" and "Close" buttons', async () => {
+  it('should display header back button and "Start First Map" button', async () => {
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
+    await expect(backButton).toBeDisplayed();
+
     const goToMapButton = await $(byResourceId('ONBOARDING.go-to-map-btn'));
     await expect(goToMapButton).toBeDisplayed();
-
-    const closeButton = await $(
-      byResourceId('ONBOARDING.map-on-your-own-close-btn'),
-    );
-    await expect(closeButton).toBeDisplayed();
   });
 
-  it('should create project and navigate to map when "Go to Map" is tapped', async () => {
+  it('should create project and navigate to map when "Start First Map" is tapped', async () => {
     const goToMapButton = await $(byResourceId('ONBOARDING.go-to-map-btn'));
     await goToMapButton.click();
 

@@ -629,17 +629,17 @@
   "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
     "message": "Add audio recordings."
   },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Close"
+  "$1screens.Onboarding.MapOnYourOwnIntro.exploreOnYourOwn": {
+    "message": "Explore CoMapeo on your own."
   },
-  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "Explore CoMapeo—invite collaborators anytime."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
-    "message": "Go to Map"
+  "$1screens.Onboarding.MapOnYourOwnIntro.inviteCollaborators": {
+    "message": "Invite collaborators anytime."
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
     "message": "Snap photos on-the-go."
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.startFirstMap": {
+    "message": "Start First Map"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.title": {
     "message": "Map On Your Own"

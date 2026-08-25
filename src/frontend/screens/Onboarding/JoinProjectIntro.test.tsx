@@ -19,7 +19,7 @@ describe('Onboarding Screens', () => {
     await user.press(JoinProjectButton);
     expect(
       await screen.findByText(
-        'Coordinate with your team to receive a project invitation.',
+        'Ask a project coordinator to receive a project invitation.',
       ),
     ).toBeVisible();
 

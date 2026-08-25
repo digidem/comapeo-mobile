@@ -10,6 +10,7 @@ type ButtonProps = {
   fullSize: boolean;
   text: string;
   onPress: () => void;
+  disabled?: boolean;
   testID?: string;
   style?: ViewStyleProp;
 };
@@ -27,6 +28,7 @@ const BaseButton = ({
   iconPosition = 'left',
   text,
   fullSize,
+  disabled = false,
   testID,
   style,
   colors,
@@ -34,6 +36,8 @@ const BaseButton = ({
   return (
     <TouchableOpacity
       testID={testID}
+      disabled={disabled}
+      accessibilityState={{disabled}}
       style={[
         style,
         buttonStyles.base,
@@ -64,7 +68,25 @@ const BaseButton = ({
   );
 };
 
+const DisabledButton = (props: ButtonProps) => {
+  return (
+    <BaseButton
+      {...props}
+      colors={{
+        background: BLUE_GREY,
+        text: WHITE,
+        icon: WHITE,
+        border: BLUE_GREY,
+      }}
+    />
+  );
+};
+
 export const PrimaryButton = (props: ButtonProps) => {
+  if (props.disabled) {
+    return <DisabledButton {...props} />;
+  }
+
   return (
     <BaseButton
       {...props}
@@ -79,6 +101,10 @@ export const PrimaryButton = (props: ButtonProps) => {
 };
 
 export const SecondaryButton = (props: ButtonProps) => {
+  if (props.disabled) {
+    return <DisabledButton {...props} />;
+  }
+
   return (
     <BaseButton
       {...props}
@@ -93,6 +119,10 @@ export const SecondaryButton = (props: ButtonProps) => {
 };
 
 export const DestructiveButton = (props: ButtonProps) => {
+  if (props.disabled) {
+    return <DisabledButton {...props} />;
+  }
+
   return (
     <BaseButton
       {...props}
@@ -107,6 +137,10 @@ export const DestructiveButton = (props: ButtonProps) => {
 };
 
 export const SecondaryDestructiveButton = (props: ButtonProps) => {
+  if (props.disabled) {
+    return <DisabledButton {...props} />;
+  }
+
   return (
     <BaseButton
       {...props}

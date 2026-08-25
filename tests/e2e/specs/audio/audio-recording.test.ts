@@ -24,12 +24,12 @@ describe('Audio - Recording Flow', () => {
     await stopButton.click();
     await expect($(byText('Recording Saved!'))).toBeDisplayed();
     await expect($(byTextMatches('0[0-4]:[0-5][0-9]'))).toBeDisplayed();
-    await expect($(byTextMatches('Back to Editing'))).toBeDisplayed();
+    await expect($(byTextMatches('Done'))).toBeDisplayed();
     await expect($(byTextMatches('Delete'))).toBeDisplayed();
   });
 
   it('returns to editor and confirms audio attachment is visible', async () => {
-    const editorReturn = await $(byTextMatches('Back to Editing'));
+    const editorReturn = await $(byTextMatches('Done'));
     await editorReturn.click();
 
     await expect($('~Play audio recording.')).toBeDisplayed();

@@ -13,6 +13,7 @@ import {Bar} from 'react-native-progress';
 import {COMAPEO_BLUE, WHITE, VERY_LIGHT_GREY, BLACK} from '../../lib/styles';
 import {StopIcon} from '../../sharedComponents/icons';
 import PlayArrow from '../../images/PlayArrow.svg';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import {DateDistance} from '../../sharedComponents/DateDistance';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -27,9 +28,9 @@ const m = defineMessages({
     id: '$1screens.AudioPlaybackNew.recordingSaved',
     defaultMessage: 'Recording Saved!',
   },
-  backToEditing: {
-    id: '$1screens.AudioPlaybackNew.backToEditing',
-    defaultMessage: 'Back to Editing',
+  done: {
+    id: '$1screens.AudioPlaybackNew.done',
+    defaultMessage: 'Done',
   },
   delete: {
     id: '$1screens.AudioPlaybackNew.delete',
@@ -77,11 +78,6 @@ export const AudioDraftPlaybackScreen = ({
       dockContainerStyle={{gap: 20, backgroundColor: WHITE}}
       dockContent={
         <>
-          <SecondaryButton
-            fullSize
-            text={formatMessage(m.backToEditing)}
-            onPress={() => navigation.goBack()}
-          />
           <DestructiveButton
             fullSize
             text={formatMessage(m.delete)}
@@ -91,6 +87,18 @@ export const AudioDraftPlaybackScreen = ({
             }}
             renderIcon={({color, size}) => (
               <MaterialIcons name="delete" size={size} color={color} />
+            )}
+          />
+          <SecondaryButton
+            fullSize
+            text={formatMessage(m.done)}
+            onPress={() => navigation.goBack()}
+            renderIcon={({color, size}) => (
+              <Ionicons
+                name="checkmark-circle-outline"
+                color={color}
+                size={size}
+              />
             )}
           />
         </>

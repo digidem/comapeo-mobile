@@ -10,6 +10,7 @@ type ButtonProps = {
   fullSize: boolean;
   text: string;
   onPress: () => void;
+  disabled?: boolean;
   testID?: string;
   style?: ViewStyleProp;
 };
@@ -31,11 +32,7 @@ const BaseButton = ({
   testID,
   style,
   colors,
-}: Omit<ButtonProps, 'onPress'> & {
-  onPress?: () => void;
-  disabled?: boolean;
-  colors: ButtonColors;
-}) => {
+}: ButtonProps & {colors: ButtonColors}) => {
   return (
     <TouchableOpacity
       testID={testID}
@@ -71,7 +68,25 @@ const BaseButton = ({
   );
 };
 
+const DisabledButton = (props: ButtonProps) => {
+  return (
+    <BaseButton
+      {...props}
+      colors={{
+        background: BLUE_GREY,
+        text: WHITE,
+        icon: WHITE,
+        border: BLUE_GREY,
+      }}
+    />
+  );
+};
+
 export const PrimaryButton = (props: ButtonProps) => {
+  if (props.disabled) {
+    return <DisabledButton {...props} />;
+  }
+
   return (
     <BaseButton
       {...props}
@@ -86,6 +101,10 @@ export const PrimaryButton = (props: ButtonProps) => {
 };
 
 export const SecondaryButton = (props: ButtonProps) => {
+  if (props.disabled) {
+    return <DisabledButton {...props} />;
+  }
+
   return (
     <BaseButton
       {...props}
@@ -100,6 +119,10 @@ export const SecondaryButton = (props: ButtonProps) => {
 };
 
 export const DestructiveButton = (props: ButtonProps) => {
+  if (props.disabled) {
+    return <DisabledButton {...props} />;
+  }
+
   return (
     <BaseButton
       {...props}
@@ -113,22 +136,11 @@ export const DestructiveButton = (props: ButtonProps) => {
   );
 };
 
-export const DisabledButton = (props: Omit<ButtonProps, 'onPress'>) => {
-  return (
-    <BaseButton
-      {...props}
-      disabled
-      colors={{
-        background: BLUE_GREY,
-        text: WHITE,
-        icon: WHITE,
-        border: BLUE_GREY,
-      }}
-    />
-  );
-};
-
 export const SecondaryDestructiveButton = (props: ButtonProps) => {
+  if (props.disabled) {
+    return <DisabledButton {...props} />;
+  }
+
   return (
     <BaseButton
       {...props}

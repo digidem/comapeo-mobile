@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {DARK_ORANGE} from '../../lib/styles';
 import ProjectParticipant from '../../images/ProjectParticipant.svg';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
@@ -21,7 +22,9 @@ const m = defineMessages({
   },
 });
 
-export const JoinAProject = () => {
+export const JoinAProject: NativeNavigationComponent<
+  'JoinAProject' | 'JoinProjectIntro'
+> = () => {
   const {formatMessage: t} = useIntl();
 
   return (

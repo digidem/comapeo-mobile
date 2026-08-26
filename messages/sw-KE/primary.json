@@ -103,9 +103,6 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "Hifadhi"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Kataa Mwaliko"
-  },
   "$1screens.InviteSuccess.done": {
     "message": "Imekamilika"
   },
@@ -190,9 +187,6 @@
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "message": "Ongeza Uchunguzi",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Funga"
   },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "Funga"

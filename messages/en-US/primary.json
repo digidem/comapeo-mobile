@@ -440,14 +440,14 @@
   "$1screens.IntroToCoMapeo.ownData": {
     "message": "Always own and control your data"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Decline Invite"
+  "$1screens.InviteReceived.decline": {
+    "message": "Decline"
+  },
+  "$1screens.InviteReceived.join": {
+    "message": "Join"
   },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "Join as a {role}?"
-  },
-  "$1screens.InviteReceived.joinProject": {
-    "message": "Join Project"
   },
   "$1screens.InviteSuccess.done": {
     "message": "Done"

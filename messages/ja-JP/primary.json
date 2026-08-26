@@ -249,9 +249,6 @@
     "message": "CoMapeoでオーディオを録音する",
     "description": "Screen title for audio permission screen"
   },
-  "$1screens.AudioPlaybackNew.backToEditing": {
-    "message": "編集に戻る"
-  },
   "$1screens.AudioPlaybackNew.delete": {
     "message": "削除"
   },
@@ -355,14 +352,8 @@
   "$1screens.IntroToCoMapeo.ownData": {
     "message": "データを常に所有し、制御する"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "招待を拒否する"
-  },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "{role} として参加しますか？"
-  },
-  "$1screens.InviteReceived.joinProject": {
-    "message": "プロジェクトに参加"
   },
   "$1screens.InviteSuccess.done": {
     "message": "完了"
@@ -513,15 +504,6 @@
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
     "message": "音声録音を追加します。"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "閉じる"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "CoMapeoを探索する — いつでもコラボレーターを招待できます。"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
-    "message": "地図に移動"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
     "message": "外出先で写真を撮影してください。"

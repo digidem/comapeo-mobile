@@ -323,12 +323,6 @@
   "screens.ObservationsList.filter.all": {
     "message": "Tất cả"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Đóng"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Tham gia một dự án"
-  },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Đóng"
   },

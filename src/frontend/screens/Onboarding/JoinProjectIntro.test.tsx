@@ -41,7 +41,7 @@ describe('Onboarding Screens', () => {
 
     expect(await screen.findByText("You've been invited to...")).toBeVisible();
 
-    const joinButton = await screen.findByText('Join Project');
+    const joinButton = await screen.findByText('Join');
     expect(joinButton).toBeVisible();
 
     await user.press(joinButton);

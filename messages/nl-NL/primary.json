@@ -252,9 +252,6 @@
     "message": "Audio opnemen met CoMapeo",
     "description": "Screen title for audio permission screen"
   },
-  "$1screens.AudioPlaybackNew.backToEditing": {
-    "message": "Terug naar Bewerken"
-  },
   "$1screens.AudioPlaybackNew.delete": {
     "message": "Verwijderen"
   },
@@ -358,14 +355,8 @@
   "$1screens.IntroToCoMapeo.ownData": {
     "message": "Altijd de eigenaar en controle van je gegevens"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Uitnodiging afwijzen"
-  },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "Deelnemen als een {role}?"
-  },
-  "$1screens.InviteReceived.joinProject": {
-    "message": "Deelnemen aan project"
   },
   "$1screens.InviteSuccess.done": {
     "message": "Voltooid"
@@ -509,15 +500,6 @@
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
     "message": "Audio-opnamen toevoegen."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Afsluiten"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "Verken CoMapeo—nodig medewerkers op elk gewenst moment uit."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
-    "message": "Ga naar Kaart"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
     "message": "Houd foto's onderweg."

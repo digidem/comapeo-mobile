@@ -195,9 +195,6 @@
   "screens.ObservationsList.filter.all": {
     "message": "ទាំងអស់"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "បិទ"
-  },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "បិទ"
   },

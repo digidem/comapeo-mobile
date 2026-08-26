@@ -771,15 +771,6 @@
   "screens.ObservationsList.filter.justYou": {
     "message": "U alleen"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Afsluiten"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Coördineer met je team om een projectuitnodiging te ontvangen."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Deelnemen aan een project"
-  },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Beleid"
   },

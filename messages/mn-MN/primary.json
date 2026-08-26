@@ -103,9 +103,6 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "Хадгалах"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Урилгаас татгалзах"
-  },
   "$1screens.InviteSuccess.done": {
     "message": "Дууслаа"
   },
@@ -186,9 +183,6 @@
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "message": "Сануулгууд нэмэх",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Хаах"
   },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "Хаах"

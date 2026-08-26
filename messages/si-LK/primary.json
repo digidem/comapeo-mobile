@@ -100,9 +100,6 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "සුරකින්න"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "ආරාධනාව ප්‍රතික්ෂේප කරන්න"
-  },
   "$1screens.InviteSuccess.done": {
     "message": "කළා"
   },
@@ -187,9 +184,6 @@
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "message": "නිරීක්ෂණය එකතු කරන්න",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "වසන්න"
   },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "වසන්න"

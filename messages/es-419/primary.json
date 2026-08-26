@@ -258,9 +258,6 @@
     "message": "Grabando audio con CoMapeo",
     "description": "Screen title for audio permission screen"
   },
-  "$1screens.AudioPlaybackNew.backToEditing": {
-    "message": "Volver a edición"
-  },
   "$1screens.AudioPlaybackNew.delete": {
     "message": "Borrar"
   },
@@ -364,14 +361,8 @@
   "$1screens.IntroToCoMapeo.ownData": {
     "message": "Siempre posea y controle sus datos"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Rechazar invitación"
-  },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "¿Unirse como {role}?"
-  },
-  "$1screens.InviteReceived.joinProject": {
-    "message": "Unirse a un Proyecto"
   },
   "$1screens.InviteSuccess.done": {
     "message": "Listo"
@@ -537,15 +528,6 @@
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
     "message": "Añade grabaciones de audio."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Cerrar"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "Explora CoMapeo—invita a colaboradores en cualquier momento."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
-    "message": "Ir al mapa"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
     "message": "Toma fotos en movimiento."

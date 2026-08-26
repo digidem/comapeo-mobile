@@ -80,9 +80,10 @@ export const DataAndPrivacy = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'DataAndPrivacy'>) => {
   const {formatMessage} = useIntl();
+  const optInStartedAt = useAppUsageStatsState(store => store.optInStartedAt);
   const {setOptedIn} = useAppUsageStatsActions();
-  const optedIn = useAppUsageStatsState(store => store.optInStartedAt);
-  const appUsageEnabled = !!optedIn;
+
+  const appUsageOptedIn = !!optInStartedAt;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -170,8 +171,8 @@ export const DataAndPrivacy = ({
           </HeaderText>
           <Checkbox
             hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-            value={appUsageEnabled}
-            onPress={() => setOptedIn(!appUsageEnabled)}
+            value={appUsageOptedIn}
+            onPress={() => setOptedIn(!appUsageOptedIn)}
           />
         </View>
       </View>

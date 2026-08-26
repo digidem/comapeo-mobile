@@ -2,7 +2,6 @@ import React from 'react';
 import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled';
 import * as Location from 'expo-location';
 import {Linking, StyleSheet, View, AppState} from 'react-native';
-import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
 import {FullScreenCenteredLoader} from '../../../sharedComponents/FullScreenCenteredLoader';
 import {StartStopTrack} from './StartStopTrack';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
@@ -17,23 +16,14 @@ const handleOpenSettings = () => {
 export const TrackBottomSheet = React.memo(() => {
   const [foregroundPermission, setForegroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
-  const [backgroundPermission, setBackgroundPermission] =
-    React.useState<Location.LocationPermissionResponse | null>(null);
 
   const requestForegroundPermission = useLocationPermissionModalMutation(
     Location.requestForegroundPermissionsAsync,
   );
-  const requestBackgroundPermission = useLocationPermissionModalMutation(
-    Location.requestBackgroundPermissionsAsync,
-  );
 
   const checkPermissions = React.useCallback(async () => {
-    const [foreground, background] = await Promise.all([
-      Location.getForegroundPermissionsAsync(),
-      Location.getBackgroundPermissionsAsync(),
-    ]);
+    const foreground = await Location.getForegroundPermissionsAsync();
     setForegroundPermission(foreground);
-    setBackgroundPermission(background);
   }, []);
 
   // Re-check permissions on screen focus
@@ -47,7 +37,7 @@ export const TrackBottomSheet = React.memo(() => {
   // App goes to background during system settings, then becomes active again when user returns
   // Only needed if permissions haven't been granted yet
   React.useEffect(() => {
-    if (foregroundPermission?.granted && backgroundPermission?.granted) {
+    if (foregroundPermission?.granted) {
       return;
     }
 
@@ -58,14 +48,10 @@ export const TrackBottomSheet = React.memo(() => {
     });
 
     return () => sub.remove();
-  }, [
-    foregroundPermission?.granted,
-    backgroundPermission?.granted,
-    checkPermissions,
-  ]);
+  }, [foregroundPermission?.granted, checkPermissions]);
 
   const renderContent = () => {
-    if (!foregroundPermission || !backgroundPermission) {
+    if (!foregroundPermission) {
       return (
         <View style={{display: 'flex', minHeight: 200}}>
           <FullScreenCenteredLoader />
@@ -80,21 +66,6 @@ export const TrackBottomSheet = React.memo(() => {
               const permission =
                 await requestForegroundPermission.mutateAsync();
               setForegroundPermission(permission);
-            } else {
-              handleOpenSettings();
-            }
-          }}
-        />
-      );
-    }
-    if (!backgroundPermission.granted) {
-      return (
-        <GPSBackgroundPermissionDisabled
-          askBackgroundLocationPermission={async () => {
-            if (backgroundPermission.canAskAgain) {
-              const permission =
-                await requestBackgroundPermission.mutateAsync();
-              setBackgroundPermission(permission);
             } else {
               handleOpenSettings();
             }

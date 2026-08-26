@@ -45,9 +45,6 @@
   "screens.InviteCancelled.close": {
     "message": "Keer"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Keer"
-  },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Keer"
   },

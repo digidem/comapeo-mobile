@@ -801,15 +801,6 @@
   "screens.ObservationsList.filter.justYou": {
     "message": "Hanya Anda"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Tutup"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Berkoordinasi dengan tim Anda untuk menerima undangan proyek."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Bergabung dengan Proyek"
-  },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Kebijakan Privasi"
   },

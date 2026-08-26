@@ -764,15 +764,6 @@
   "screens.ObservationsList.filter.justYou": {
     "message": "あなただけ"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "閉じる"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "プロジェクトの招待状を受け取るには、チームと調整してください。"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "プロジェクトに参加"
-  },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "プライバシーポリシー"
   },

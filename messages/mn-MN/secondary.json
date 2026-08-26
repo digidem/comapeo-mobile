@@ -311,12 +311,6 @@
   "screens.ObservationsList.filter.all": {
     "message": "Бүгд"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Хаах"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Төсөлд нэгдэх"
-  },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Хаах"
   },

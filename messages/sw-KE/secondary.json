@@ -328,12 +328,6 @@
   "screens.ObservationsList.filter.all": {
     "message": "Yote"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Funga"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Jiunge na Mradi"
-  },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Funga"
   },

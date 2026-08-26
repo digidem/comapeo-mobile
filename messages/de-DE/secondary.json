@@ -772,15 +772,6 @@
   "screens.ObservationsList.filter.justYou": {
     "message": "Nur Sie"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Schließen"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Koordinieren Sie Ihr Team, um eine Einladung zu erhalten."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Einem Projekt beitreten"
-  },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Datenschutzerklärung"
   },

@@ -308,12 +308,6 @@
   "screens.ObservationsList.filter.all": {
     "message": "ทั้งหมด"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "ปิด"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "เข้าร่วมโครงการ"
-  },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "ปิด"
   },

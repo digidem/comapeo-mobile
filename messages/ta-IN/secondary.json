@@ -311,12 +311,6 @@
   "screens.ObservationsList.filter.all": {
     "message": "அனைத்தும்"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "மூடுக"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "திட்டத்தில் சேரவும்"
-  },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "மூடுக"
   },

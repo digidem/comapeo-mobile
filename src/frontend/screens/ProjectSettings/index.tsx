@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import Fontisto from '@react-native-vector-icons/fontisto';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
@@ -164,27 +165,28 @@ export const ProjectSettings = () => {
   );
 };
 
-type SettingsCardRowProps =
-  | {
-      icon: React.ReactNode;
-      title: string;
-      subtitle?: string;
-    }
-  | {
-      icon: React.ReactNode;
-      title: string;
-      subtitle?: string;
-      buttonText: string;
-      onPress: () => void;
-    };
+type SettingsCardRowProps = {
+  icon: React.ReactNode;
+  title: string;
+  subtitle?: string;
+  buttonText?: string;
+  onPress?: () => void;
+};
 
-const SettingsCardRow = (props: SettingsCardRowProps) => {
-  const {icon, title, subtitle} = props;
-  const hasButton =
-    'buttonText' in props && 'onPress' in props && !!props.buttonText;
-
+const SettingsCardRow = ({
+  icon,
+  title,
+  subtitle,
+  buttonText,
+  onPress,
+}: SettingsCardRowProps) => {
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={onPress}
+      disabled={!onPress}
+      accessibilityRole="button"
+      accessibilityLabel={buttonText}>
       <View style={styles.row}>
         <View style={{marginRight: 16}}>{icon}</View>
         <View style={styles.cardColumn}>
@@ -194,22 +196,21 @@ const SettingsCardRow = (props: SettingsCardRowProps) => {
               {subtitle}
             </BodyText>
           )}
-          {hasButton && (
-            <TouchableOpacity
-              onPress={props.onPress}
-              style={{marginTop: 8}}
-              accessibilityRole="button"
-              accessibilityLabel={props.buttonText}>
-              <HeaderText
-                variant="header5"
-                style={{color: COMAPEO_BLUE, alignSelf: 'flex-start'}}>
-                {props.buttonText}
+          {!!buttonText && (
+            <View style={styles.buttonRow}>
+              <HeaderText variant="header5" style={styles.buttonText}>
+                {buttonText}
               </HeaderText>
-            </TouchableOpacity>
+              <MaterialIcons
+                name="arrow-forward"
+                size={24}
+                color={COMAPEO_BLUE}
+              />
+            </View>
           )}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -244,6 +245,14 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
     flexShrink: 1,
     flexWrap: 'wrap',
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  buttonText: {
+    color: COMAPEO_BLUE,
   },
 });
 

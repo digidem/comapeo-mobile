@@ -65,7 +65,7 @@ import {FatalError} from './screens/FatalError.tsx';
 import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {postHog} from './lib/posthog.ts';
 import {getLocales} from 'expo-localization';
-import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics.ts';
+import {AppUsageData} from './metrics/AppUsageData.ts';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics.ts';
 
 let navigationIntegration:
@@ -155,7 +155,7 @@ TaskManager.defineTask(
   },
 );
 
-const appDiagnosticMetrics = new AppDiagnosticMetrics({
+const appDiagnosticMetrics = new AppUsageData({
   getLocaleInfo: () => {
     const systemLocales = getLocales();
     const {languageTag} = persistedLocaleStore.instance.getState();

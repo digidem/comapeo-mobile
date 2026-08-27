@@ -2,7 +2,7 @@ import type {ReadonlyDeep} from 'type-fest';
 import {beginningOfMonthUtc, formatIsoUtc} from '../lib/date';
 import {maxBy} from '../lib/maxBy';
 
-export type AppDiagnosticMetricsReport = ReadonlyDeep<{
+export type AppUsageReport = ReadonlyDeep<{
   dateGenerated: string;
   os: string;
   osVersion: string | number;
@@ -15,16 +15,16 @@ export type AppDiagnosticMetricsReport = ReadonlyDeep<{
   appLocale: string;
 }>;
 
-export type AppDiagnosticMetricsQueue = ReadonlyDeep<{
+export type AppUsageQueue = ReadonlyDeep<{
   /** An ISO date, such as `2012-03-04`, for the newest report successfully sent. */
   highWatermark?: string;
-  reports: AppDiagnosticMetricsReport[];
+  reports: AppUsageReport[];
 }>;
 
 export function hasReportForToday({
   highWatermark,
   reports,
-}: AppDiagnosticMetricsQueue): boolean {
+}: AppUsageQueue): boolean {
   const today = formatIsoUtc(new Date());
 
   const hasAlreadySentForToday = !!highWatermark && highWatermark >= today;
@@ -41,9 +41,9 @@ export function hasReportForToday({
 }
 
 export function truncateReportsByTime(
-  queue: AppDiagnosticMetricsQueue,
+  queue: AppUsageQueue,
   now: Readonly<Date>,
-): AppDiagnosticMetricsQueue {
+): AppUsageQueue {
   const today = formatIsoUtc(now);
   const oldest = formatIsoUtc(beginningOfMonthUtc(now));
   return {
@@ -55,8 +55,8 @@ export function truncateReportsByTime(
 }
 
 export function updateQueueHighWatermark(
-  queue: Readonly<AppDiagnosticMetricsQueue>,
-): AppDiagnosticMetricsQueue {
+  queue: Readonly<AppUsageQueue>,
+): AppUsageQueue {
   const newestReport = maxBy(queue.reports, report => report.dateGenerated);
   const highWatermark =
     newestReport?.dateGenerated ||

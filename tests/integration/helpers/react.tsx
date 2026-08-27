@@ -18,7 +18,7 @@ import {createManualEntryCoordinateFormatStore} from '../../../src/frontend/cont
 import {createDraftObservationStore} from '../../../src/frontend/contexts/PersistedStores/DraftObservationStore';
 import {createSecurityStore} from '../../../src/frontend/contexts/SecurityStoreContext';
 import {createTrackStore} from '../../../src/frontend/contexts/TrackStoreContext';
-import {AppDiagnosticMetrics} from '../../../src/frontend/metrics/AppDiagnosticMetrics';
+import {AppUsageData} from '../../../src/frontend/metrics/AppUsageData';
 import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
@@ -97,7 +97,7 @@ export function createAppProvidersWrapper({
     persist: true,
   });
 
-  const appDiagnosticMetrics = new AppDiagnosticMetrics({
+  const appDiagnosticMetrics = new AppUsageData({
     getLocaleInfo: () => {
       const systemLocales = getLocales();
       const {languageTag} = persistedLocaleStore.instance.getState();

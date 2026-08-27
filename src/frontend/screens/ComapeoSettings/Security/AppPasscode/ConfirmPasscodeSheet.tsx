@@ -88,16 +88,16 @@ export const ConfirmPasscodeBottomSheet = ({
           </View>
         ) : (
           <View style={styles.buttonsContainer}>
+            <PrimaryButton
+              fullSize
+              text={t(m.saveAppPasscode)}
+              onPress={handleSave}
+            />
             <SecondaryButton
               testID="PASSCODE:cancel-btn"
               fullSize
               text={t(m.cancel)}
               onPress={() => navigation.popTo('Security')}
-            />
-            <PrimaryButton
-              fullSize
-              text={t(m.saveAppPasscode)}
-              onPress={handleSave}
             />
           </View>
         )}

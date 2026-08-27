@@ -97,12 +97,12 @@ export const ProjectCreated = ({
       </View>
 
       <View style={{gap: 12}}>
-        <SecondaryButton fullSize text={t(m.done)} onPress={handleGoToMap} />
         <PrimaryButton
           fullSize
           onPress={handleGoToInviteScreen}
           text={t(m.inviteDevice)}
         />
+        <SecondaryButton fullSize text={t(m.done)} onPress={handleGoToMap} />
       </View>
     </View>
   );

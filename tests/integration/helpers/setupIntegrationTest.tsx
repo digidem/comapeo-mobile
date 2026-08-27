@@ -1,6 +1,6 @@
 import {render} from '@testing-library/react-native';
 import type {MapeoManager} from '@comapeo/core';
-import type {MapeoClientApi} from '@comapeo/ipc';
+import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 import {createManager, setUpIPC} from './core';
 import {createAppProvidersWrapper} from './react';
 import {MockedAppNavigator} from './navigation';
@@ -9,7 +9,7 @@ import React from 'react';
 
 export function setupIntegrationTest() {
   let manager: MapeoManager;
-  let client: MapeoClientApi;
+  let client: ComapeoCoreClientApi;
   let onTeardown: Array<() => unknown> = [];
   let projectId: string;
 
@@ -81,7 +81,7 @@ export function setupIntegrationTest() {
 
 export function setupIntegrationTestWithoutProject() {
   let manager: MapeoManager;
-  let client: MapeoClientApi;
+  let client: ComapeoCoreClientApi;
   let onTeardown: Array<() => unknown> = [];
 
   beforeEach(async () => {

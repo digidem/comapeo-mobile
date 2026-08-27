@@ -1,11 +1,22 @@
 import React from 'react';
 import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled';
 import * as Location from 'expo-location';
-import {Linking, StyleSheet, View, AppState} from 'react-native';
+import {
+  Linking,
+  StyleSheet,
+  View,
+  AppState,
+  LayoutChangeEvent,
+  useWindowDimensions,
+} from 'react-native';
 import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
 import {FullScreenCenteredLoader} from '../../../sharedComponents/FullScreenCenteredLoader';
 import {StartStopTrack} from './StartStopTrack';
-import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import {WHITE} from '../../../lib/styles';
 import {useFocusEffect} from '@react-navigation/native';
 import {useLocationPermissionModalMutation} from '../../../hooks/useLocationPermissionTracker';
@@ -14,7 +25,10 @@ const handleOpenSettings = () => {
   Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
 };
 
-export const TrackBottomSheet = React.memo(() => {
+const ANIMATION_DURATION = 250;
+
+export const TrackBottomSheet = React.memo(({isOpen}: {isOpen: boolean}) => {
+  const {height} = useWindowDimensions();
   const [foregroundPermission, setForegroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
   const [backgroundPermission, setBackgroundPermission] =
@@ -36,18 +50,23 @@ export const TrackBottomSheet = React.memo(() => {
     setBackgroundPermission(background);
   }, []);
 
-  // Re-check permissions on screen focus
+  // Re-check permissions on screen focus, but only while the sheet is open.
   // Handles re-checking when navigating back from in-app
   useFocusEffect(
     React.useCallback(() => {
-      checkPermissions();
-    }, [checkPermissions]),
+      if (isOpen) {
+        checkPermissions();
+      }
+    }, [isOpen, checkPermissions]),
   );
   // Re-check permissions when returning from system settings
   // App goes to background during system settings, then becomes active again when user returns
-  // Only needed if permissions haven't been granted yet
+  // Only needed if the sheet is open and permissions haven't been granted yet
   React.useEffect(() => {
-    if (foregroundPermission?.granted && backgroundPermission?.granted) {
+    if (
+      !isOpen ||
+      (foregroundPermission?.granted && backgroundPermission?.granted)
+    ) {
       return;
     }
 
@@ -59,6 +78,7 @@ export const TrackBottomSheet = React.memo(() => {
 
     return () => sub.remove();
   }, [
+    isOpen,
     foregroundPermission?.granted,
     backgroundPermission?.granted,
     checkPermissions,
@@ -106,24 +126,46 @@ export const TrackBottomSheet = React.memo(() => {
   };
 
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
+
+  const measuredHeight = React.useRef(height);
+  // translateY moves the object down and the sheet is pinned to the bottom of the screen
+  // By setting the initial value to the height of the screen, it will be moved completely off the screen
+  // This means that it is NOT shown at first, which is desired
+  const translateY = useSharedValue(height);
+
+  React.useEffect(() => {
+    translateY.value = withTiming(isOpen ? 0 : measuredHeight.current, {
+      duration: ANIMATION_DURATION,
+    });
+  }, [isOpen, translateY]);
+
+  const onLayoutSheet = (event: LayoutChangeEvent) => {
+    measuredHeight.current = event.nativeEvent.layout.height;
+  };
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{translateY: translateY.value}],
+  }));
+
   if (isE2E) {
+    if (!isOpen) {
+      return null;
+    }
     return (
       <View style={styles.container}>
         <View style={styles.animatedBackground}>{renderContent()}</View>
       </View>
     );
-  } else
-    return (
-      // Semi hacky, but without this <View> the animated view bounces too far initially and then bounces back down to adjust.
-      <View style={styles.container}>
-        <Animated.View
-          style={styles.animatedBackground}
-          entering={SlideInDown.duration(250)}
-          exiting={SlideOutDown.duration(250)}>
-          {renderContent()}
-        </Animated.View>
-      </View>
-    );
+  }
+
+  return (
+    <Animated.View
+      style={[styles.animatedBackground, animatedStyle]}
+      onLayout={onLayoutSheet}
+      pointerEvents={isOpen ? 'auto' : 'none'}>
+      {renderContent()}
+    </Animated.View>
+  );
 });
 
 const styles = StyleSheet.create({
@@ -141,5 +183,7 @@ const styles = StyleSheet.create({
     minHeight: 140,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
+    position: 'absolute',
+    bottom: 0,
   },
 });

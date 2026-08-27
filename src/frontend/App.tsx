@@ -72,18 +72,18 @@ let navigationIntegration:
   ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined =
   undefined;
 
-const backendAppDiagnosticsEnabled = getApplicationUsageData();
+const backendAppUsageDataEnabled = getApplicationUsageData();
 
 initSentry({
   integrations: defaults => {
-    if (!backendAppDiagnosticsEnabled) return defaults;
+    if (!backendAppUsageDataEnabled) return defaults;
     navigationIntegration = Sentry.reactNavigationIntegration({
       enableTimeToInitialDisplay: true,
       ignoreEmptyBackNavigationTransactions: false,
     });
     return [...defaults, navigationIntegration];
   },
-  tags: backendAppDiagnosticsEnabled ? {appMetricsOptIn: 'true'} : undefined,
+  tags: backendAppUsageDataEnabled ? {appMetricsOptIn: 'true'} : undefined,
 });
 
 const persistedLocaleStore = createLocaleStore({
@@ -168,7 +168,7 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
 });
 
 // App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
-appDiagnosticMetrics.setEnabled(backendAppDiagnosticsEnabled);
+appDiagnosticMetrics.setEnabled(backendAppUsageDataEnabled);
 
 const appUsagePromptStore = createAppUsageStatsStore({
   persist: true,

@@ -3,13 +3,13 @@ import {validateHTMLColorHex} from 'validate-color';
 import {featureCollection as turfFeatureCollection, point} from '@turf/helpers';
 import {Feature, Point} from 'geojson';
 import {matchPreset} from './utils';
+import {LayerProps} from '@maplibre/maplibre-react-native';
 
 const DEFAULT_MARKER_COLOR = '#F29D4B';
 
-export function createObservationMapLayerStyle(presets: Preset[]) {
-  // Based on example implementation:
-  // https://github.com/rnmapbox/maps/blob/0c37ee88bd4b16efac93417a47ab4b474396b318/example/src/examples/SymbolCircleLayer/DataDrivenCircleColors.js
-
+export function createObservationMapLayerPaint(
+  presets: Preset[],
+): Extract<LayerProps, {type: 'circle'}>['paint'] {
   const categoryColorPairs: Array<string> = [];
 
   for (const {color, name} of presets) {
@@ -21,18 +21,20 @@ export function createObservationMapLayerStyle(presets: Preset[]) {
   }
 
   return {
-    circleColor:
-      categoryColorPairs.length > 0
-        ? ([
-            'match',
-            ['get', 'presetName'],
-            ...categoryColorPairs,
-            DEFAULT_MARKER_COLOR,
-          ] as const)
-        : DEFAULT_MARKER_COLOR,
-    circleRadius: 5,
-    circleStrokeColor: '#fff',
-    circleStrokeWidth: 2,
+    // TO DO: figure out previous logic
+    // "circle-color":
+    //   categoryColorPairs.length > 0
+    //     ? ([
+    //         'match',
+    //         ['get', 'presetName'],
+    //         ...categoryColorPairs,
+    //         DEFAULT_MARKER_COLOR,
+    //       ] as const)
+    //     : DEFAULT_MARKER_COLOR,
+    'circle-color': DEFAULT_MARKER_COLOR,
+    'circle-radius': 5,
+    'circle-stroke-color': '#fff',
+    'circle-stroke-width': 2,
   };
 }
 

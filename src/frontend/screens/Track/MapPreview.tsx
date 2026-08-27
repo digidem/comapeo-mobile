@@ -1,22 +1,25 @@
 import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
 import {
-  MapView,
+  Map,
   Camera,
-  ShapeSource,
-  CircleLayer,
-  LineLayer,
+  GeoJSONSource,
+  Layer,
+  LngLatBounds,
 } from '@maplibre/maplibre-react-native';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import {convertToLineString} from '../../lib/utils.ts';
 import {Observation} from '@comapeo/schema';
 import {usePresetsQuery} from '../../hooks/server/presets.ts';
 import {
-  createObservationMapLayerStyle,
+  createObservationMapLayerPaint,
   observationsToFeatureCollection,
 } from '../../lib/ObservationMapLayer.ts';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps.ts';
-import {SAVED_TRACK_LINE_STYLE} from '../../lib/trackMapStyles';
+import {
+  SAVED_TRACK_LINE_LAYOUT,
+  SAVED_TRACK_LINE_PAINT,
+} from '../../lib/trackMapStyles';
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
   observations: Observation[];
@@ -28,35 +31,34 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
   locationHistory,
   observations,
 }) => {
-  const [swBoundary, neBoundary] = getAdjustedBounds(locationHistory);
+  const bounds = getAdjustedBounds(locationHistory);
   const styleUrlQuery = useMapStyleJsonUrl();
 
   return (
-    <MapView
+    <Map
       style={styles.map}
-      zoomEnabled={false}
-      logoEnabled={false}
-      scrollEnabled={false}
-      pitchEnabled={false}
-      rotateEnabled={false}
-      compassEnabled={false}
+      touchZoom={false}
+      doubleTapHoldZoom={false}
+      doubleTapZoom={false}
+      logo={false}
+      dragPan={false}
+      touchPitch={false}
+      touchRotate={false}
+      compass={false}
       mapStyle={styleUrlQuery.data}>
       <Camera
-        animationMode="moveTo"
+        easing="linear"
         padding={{
-          paddingTop: MAP_PADDING,
-          paddingRight: MAP_PADDING,
-          paddingLeft: MAP_PADDING,
-          paddingBottom: MAP_PADDING,
+          top: MAP_PADDING,
+          right: MAP_PADDING,
+          left: MAP_PADDING,
+          bottom: MAP_PADDING,
         }}
-        bounds={{
-          ne: neBoundary!,
-          sw: swBoundary!,
-        }}
+        bounds={bounds}
       />
       <TrackMapLayer locationHistory={locationHistory} />
       <ObservationMapLayer observations={observations} />
-    </MapView>
+    </Map>
   );
 };
 
@@ -67,14 +69,14 @@ function ObservationMapLayer({observations}: {observations: Observation[]}) {
     return observationsToFeatureCollection(observations, presets);
   }, [observations, presets]);
 
-  const layerStyles = React.useMemo(() => {
-    return createObservationMapLayerStyle(presets);
+  const layerPaint = React.useMemo(() => {
+    return createObservationMapLayerPaint(presets);
   }, [presets]);
 
   return (
-    <ShapeSource id="observations-source" shape={displayedFeatures}>
-      <CircleLayer id="circles" style={layerStyles} />
-    </ShapeSource>
+    <GeoJSONSource id="observations-source" data={displayedFeatures}>
+      <Layer type="circle" id="circles" paint={layerPaint} />
+    </GeoJSONSource>
   );
 }
 
@@ -84,11 +86,16 @@ function TrackMapLayer({
   locationHistory: LocationHistoryPoint[];
 }) {
   return (
-    <ShapeSource
+    <GeoJSONSource
       id="trackShapeSource"
-      shape={convertToLineString(locationHistory)}>
-      <LineLayer id="trackLines" style={SAVED_TRACK_LINE_STYLE} />
-    </ShapeSource>
+      data={convertToLineString(locationHistory)}>
+      <Layer
+        type="line"
+        id="trackLines"
+        paint={SAVED_TRACK_LINE_PAINT}
+        layout={SAVED_TRACK_LINE_LAYOUT}
+      />
+    </GeoJSONSource>
   );
 }
 
@@ -124,10 +131,7 @@ const getAdjustedBounds = (locationHistory: LocationHistoryPoint[]) => {
     maxLng += (MIN_BOUND_SIZE - lngDiff) / 2;
   }
 
-  return [
-    [minLng, minLat], // southWest
-    [maxLng, maxLat], // northEast
-  ];
+  return [minLng, minLat, maxLng, maxLat] satisfies LngLatBounds;
 };
 
 export const styles = StyleSheet.create({

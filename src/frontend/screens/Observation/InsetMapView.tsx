@@ -1,4 +1,4 @@
-import {MapView, Camera, MarkerView} from '@maplibre/maplibre-react-native';
+import {Map, Camera, Marker} from '@maplibre/maplibre-react-native';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {WHITE, DARK_ORANGE} from '../../lib/styles';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
@@ -38,25 +38,20 @@ export const InsetMapView = ({
   }
 
   return (
-    <MapView
+    <Map
       style={styles.map}
-      zoomEnabled={false}
-      logoEnabled={false}
-      scrollEnabled={false}
-      pitchEnabled={false}
-      rotateEnabled={false}
-      compassEnabled={false}
-      surfaceView={false}
+      touchZoom={false}
+      doubleTapHoldZoom={false}
+      doubleTapZoom={false}
+      logo={false}
+      dragPan={false}
+      touchPitch={false}
+      touchRotate={false}
+      compass={false}
+      androidView={'texture'}
       mapStyle={styleUrl}>
-      <Camera
-        centerCoordinate={[lon, lat]}
-        zoomLevel={12}
-        animationMode="moveTo"
-      />
-      <MarkerView
-        id="locationIndicator"
-        anchor={{x: 0.5, y: 0.8}}
-        coordinate={[lon, lat]}>
+      <Camera center={[lon, lat]} zoom={12} easing="linear" />
+      <Marker id="locationIndicator" anchor={'top'} lngLat={[lon, lat]}>
         <TouchableOpacity
           accessibilityLabel="Open observation metadata via map pin"
           onPress={() => navigate('ObservationMetadata', {observationId})}
@@ -71,8 +66,8 @@ export const InsetMapView = ({
           <View style={styles.arrow} />
           <View style={[styles.dot, {backgroundColor: color ?? DARK_ORANGE}]} />
         </TouchableOpacity>
-      </MarkerView>
-    </MapView>
+      </Marker>
+    </Map>
   );
 };
 

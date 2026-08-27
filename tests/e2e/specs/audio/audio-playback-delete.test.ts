@@ -12,7 +12,7 @@ describe('Audio - Playback and Delete', () => {
     checkForElementGone(byTextMatches('Recording Saved!'));
     await expect($(byTextMatches('\\d+:\\d{2}'))).toBeDisplayed();
     await expect($(byText('Delete'))).toBeDisplayed();
-    await expect($(byText('Back to Editing'))).toBeDisplayed();
+    await expect($(byText('Done'))).toBeDisplayed();
   });
 
   it('deletes audio and verifies removal from observation', async () => {

@@ -928,15 +928,6 @@
   "screens.ObservationsList.filter.justYou": {
     "message": "Just You"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Close"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Coordinate with your team to receive a project invitation."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Join a Project"
-  },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
   },

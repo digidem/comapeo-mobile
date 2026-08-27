@@ -14,7 +14,7 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
 
     await expect($(byTextMatches('Recording Saved!'))).toBeDisplayed();
     await expect($(byTextMatches('0[0-4]:[0-5][0-9]'))).toBeDisplayed();
-    await $(byTextMatches('Back to Editing')).click();
+    await $(byTextMatches('Done')).click();
   });
 
   it('confirms first audio thumbnail is correct', async () => {
@@ -29,7 +29,7 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
     await $(byResourceId('OBS.add-audio-btn')).click();
     await driver.pause(3000);
     await $('~Stop recording audio.').click();
-    await $(byTextMatches('Back to Editing')).click();
+    await $(byTextMatches('Done')).click();
 
     const thumbnails = await $$('~Play audio recording.');
     expect(thumbnails.length).toBeGreaterThanOrEqual(2);

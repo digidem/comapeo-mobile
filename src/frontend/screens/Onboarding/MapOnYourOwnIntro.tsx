@@ -2,14 +2,13 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
-import Ionicons from '@react-native-vector-icons/ionicons';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type {MaterialIconsIconName} from '@react-native-vector-icons/material-icons';
 import {usePreventRemove} from '@react-navigation/native';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import ProjectCoordinatorIcon from '../../images/ProjectCoordinator.svg';
 import CameraIcon from '../../images/camera.svg';
@@ -17,17 +16,21 @@ import TracksIcon from '../../images/Tracks.svg';
 import MapIcon from '../../images/Map.svg';
 import {useCreateProject} from '@comapeo/core-react';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
-import {DARK_ORANGE, COMAPEO_BLUE, WHITE, DARK_GREY} from '../../lib/styles';
+import {DARK_ORANGE, WHITE, DARK_GREY} from '../../lib/styles';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 const m = defineMessages({
-  title: {
+  navTitle: {
     id: '$1screens.Onboarding.MapOnYourOwnIntro.title',
     defaultMessage: 'Map On Your Own',
   },
-  description: {
-    id: '$1screens.Onboarding.MapOnYourOwnIntro.description',
-    defaultMessage: 'Explore CoMapeo—invite collaborators anytime.',
+  exploreOnYourOwn: {
+    id: '$1screens.Onboarding.MapOnYourOwnIntro.exploreOnYourOwn',
+    defaultMessage: 'Explore CoMapeo on your own.',
+  },
+  inviteCollaborators: {
+    id: '$1screens.Onboarding.MapOnYourOwnIntro.inviteCollaborators',
+    defaultMessage: 'Invite collaborators anytime.',
   },
   snapPhotos: {
     id: '$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos',
@@ -41,13 +44,9 @@ const m = defineMessages({
     id: '$1screens.Onboarding.MapOnYourOwnIntro.trackPaths',
     defaultMessage: 'Track paths walked.',
   },
-  goToMap: {
-    id: '$1screens.Onboarding.MapOnYourOwnIntro.goToMap',
-    defaultMessage: 'Go to Map',
-  },
-  close: {
-    id: '$1screens.Onboarding.MapOnYourOwnIntro.close',
-    defaultMessage: 'Close',
+  startFirstMap: {
+    id: '$1screens.Onboarding.MapOnYourOwnIntro.startFirstMap',
+    defaultMessage: 'Start First Map',
   },
 });
 
@@ -75,54 +74,38 @@ export const MapOnYourOwnIntro = ({
   return (
     <ScreenContentWithDock
       dockContent={
-        <View style={{gap: 12, paddingBottom: 20}}>
+        <View style={{paddingBottom: 20}}>
           {status === 'pending' ? (
             <View style={{alignItems: 'center', paddingVertical: 12}}>
               <LoadingIndicator size="large" style={{flex: 0}} />
             </View>
           ) : (
-            <>
-              <PrimaryButton
-                testID="ONBOARDING.go-to-map-btn"
-                fullSize
-                text={t(m.goToMap)}
-                iconPosition="left"
-                renderIcon={({size}) => (
-                  <MapIcon width={size} height={size} color={WHITE} />
-                )}
-                onPress={handleGoToMap}
-              />
-              <SecondaryButton
-                testID="ONBOARDING.map-on-your-own-close-btn"
-                fullSize
-                text={t(m.close)}
-                iconPosition="left"
-                renderIcon={({size}) => (
-                  <Ionicons
-                    name="close-circle-outline"
-                    color={COMAPEO_BLUE}
-                    size={size}
-                  />
-                )}
-                onPress={() => {
-                  navigation.goBack();
-                }}
-              />
-            </>
+            <PrimaryButton
+              testID="ONBOARDING.go-to-map-btn"
+              fullSize
+              text={t(m.startFirstMap)}
+              iconPosition="left"
+              renderIcon={({size}) => (
+                <MapIcon width={size} height={size} color={WHITE} />
+              )}
+              onPress={handleGoToMap}
+            />
           )}
         </View>
       }>
       <View style={styles.contentContainer}>
-        <ProjectCoordinatorIcon
-          width={70}
-          height={63}
-          color={DARK_ORANGE}
-          fill={DARK_ORANGE}
+        <IconTitleDescription
+          icon={
+            <ProjectCoordinatorIcon
+              width={70}
+              height={63}
+              color={DARK_ORANGE}
+              fill={DARK_ORANGE}
+            />
+          }
+          title={t(m.exploreOnYourOwn)}
+          description={t(m.inviteCollaborators)}
         />
-        <HeaderText variant="header2" style={styles.title}>
-          {t(m.title)}
-        </HeaderText>
-        <BodyText style={styles.description}>{t(m.description)}</BodyText>
         <View style={styles.benefitsList}>
           <InfoListItem
             icon={{type: 'svg', component: CameraIcon}}
@@ -141,6 +124,8 @@ export const MapOnYourOwnIntro = ({
     </ScreenContentWithDock>
   );
 };
+
+MapOnYourOwnIntro.navTitle = m.navTitle;
 
 type IconConfig =
   | {
@@ -178,18 +163,10 @@ function InfoListItem({icon, text}: {icon: IconConfig; text: string}) {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    alignItems: 'center',
-    gap: 20,
     paddingTop: 65,
   },
-  title: {
-    textAlign: 'center',
-  },
-  description: {
-    textAlign: 'center',
-  },
   benefitsList: {
-    paddingTop: 40,
+    paddingTop: 60,
     gap: 12,
     alignSelf: 'center',
     paddingHorizontal: 40,

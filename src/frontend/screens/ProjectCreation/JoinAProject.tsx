@@ -22,7 +22,9 @@ const m = defineMessages({
   },
 });
 
-export const JoinAProject: NativeNavigationComponent<'JoinAProject'> = () => {
+export const JoinAProject: NativeNavigationComponent<
+  'JoinAProject' | 'JoinProjectIntro'
+> = () => {
   const {formatMessage: t} = useIntl();
 
   return (

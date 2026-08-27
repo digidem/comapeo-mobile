@@ -15,26 +15,25 @@ describe('Onboarding - Join Project Intro Screen', () => {
   });
 
   it('should display intro content', async () => {
-    const description = await $(
-      byTextMatches(
-        'Coordinate with your team to receive a project invitation',
+    await expect($(byTextMatches('Coordinate with your team'))).toBeDisplayed();
+
+    await expect(
+      $(
+        byTextMatches(
+          'Ask a project coordinator to receive a project invitation',
+        ),
       ),
-    );
-    await expect(description).toBeDisplayed();
+    ).toBeDisplayed();
   });
 
-  it('should display "Close" button', async () => {
-    const closeButton = await $(
-      byResourceId('ONBOARDING.join-project-close-btn'),
-    );
-    await expect(closeButton).toBeDisplayed();
+  it('should display header back button', async () => {
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
+    await expect(backButton).toBeDisplayed();
   });
 
-  it('should navigate back to Success screen when "Close" is tapped', async () => {
-    const closeButton = await $(
-      byResourceId('ONBOARDING.join-project-close-btn'),
-    );
-    await closeButton.click();
+  it('should navigate back to Success screen when back button is tapped', async () => {
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
+    await backButton.click();
 
     const deviceReadyMessage = await $(
       byTextMatches(`${output.names.device} is ready`),

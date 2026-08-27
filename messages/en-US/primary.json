@@ -325,11 +325,11 @@
     "message": "Recording Audio with CoMapeo",
     "description": "Screen title for audio permission screen"
   },
-  "$1screens.AudioPlaybackNew.backToEditing": {
-    "message": "Back to Editing"
-  },
   "$1screens.AudioPlaybackNew.delete": {
     "message": "Delete"
+  },
+  "$1screens.AudioPlaybackNew.done": {
+    "message": "Done"
   },
   "$1screens.AudioPlaybackNew.recordingSaved": {
     "message": "Recording Saved!"
@@ -440,14 +440,14 @@
   "$1screens.IntroToCoMapeo.ownData": {
     "message": "Always own and control your data"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Decline Invite"
+  "$1screens.InviteReceived.decline": {
+    "message": "Decline"
+  },
+  "$1screens.InviteReceived.join": {
+    "message": "Join"
   },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "Join as a {role}?"
-  },
-  "$1screens.InviteReceived.joinProject": {
-    "message": "Join Project"
   },
   "$1screens.InviteSuccess.done": {
     "message": "Done"
@@ -629,17 +629,17 @@
   "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
     "message": "Add audio recordings."
   },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Close"
+  "$1screens.Onboarding.MapOnYourOwnIntro.exploreOnYourOwn": {
+    "message": "Explore CoMapeo on your own."
   },
-  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "Explore CoMapeo—invite collaborators anytime."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
-    "message": "Go to Map"
+  "$1screens.Onboarding.MapOnYourOwnIntro.inviteCollaborators": {
+    "message": "Invite collaborators anytime."
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
     "message": "Snap photos on-the-go."
+  },
+  "$1screens.Onboarding.MapOnYourOwnIntro.startFirstMap": {
+    "message": "Start First Map"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.title": {
     "message": "Map On Your Own"

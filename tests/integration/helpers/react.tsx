@@ -19,7 +19,7 @@ import {createDraftObservationStore} from '../../../src/frontend/contexts/Persis
 import {createSecurityStore} from '../../../src/frontend/contexts/SecurityStoreContext';
 import {createTrackStore} from '../../../src/frontend/contexts/TrackStoreContext';
 import {AppUsageData} from '../../../src/frontend/metrics/AppUsageData';
-import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
+import {DeviceDiagnostics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
@@ -109,7 +109,7 @@ export function createAppProvidersWrapper({
     },
   });
 
-  const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
+  const deviceDiagnosticMetrics = new DeviceDiagnostics();
 
   const localDiscoveryController: ReturnType<
     typeof createLocalDiscoveryController

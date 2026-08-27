@@ -66,7 +66,7 @@ import {FatalErrorUntranslated} from './screens/FatalErrorUntranslated.tsx';
 import {postHog} from './lib/posthog.ts';
 import {getLocales} from 'expo-localization';
 import {AppUsageData} from './metrics/AppUsageData.ts';
-import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics.ts';
+import {DeviceDiagnostics} from './metrics/DeviceDiagnosticMetrics.ts';
 
 let navigationIntegration:
   ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined =
@@ -189,10 +189,10 @@ const appUsagePromptStore = createAppUsageStatsStore({
   },
 });
 
-const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
-const backendDeviceDiagnosticsEnabled = getDiagnosticsEnabled();
+const deviceDiagnostics = new DeviceDiagnostics();
+const backendDiagnosticsEnabled = getDiagnosticsEnabled();
 // App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
-deviceDiagnosticMetrics.setEnabled(backendDeviceDiagnosticsEnabled);
+deviceDiagnostics.setEnabled(backendDiagnosticsEnabled);
 
 const queryClient = new QueryClient();
 

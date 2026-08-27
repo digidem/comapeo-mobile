@@ -155,7 +155,7 @@ TaskManager.defineTask(
   },
 );
 
-const appDiagnosticMetrics = new AppUsageData({
+const appUsageData = new AppUsageData({
   getLocaleInfo: () => {
     const systemLocales = getLocales();
     const {languageTag} = persistedLocaleStore.instance.getState();
@@ -168,13 +168,13 @@ const appDiagnosticMetrics = new AppUsageData({
 });
 
 // App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
-appDiagnosticMetrics.setEnabled(backendAppUsageDataEnabled);
+appUsageData.setEnabled(backendAppUsageDataEnabled);
 
 const appUsagePromptStore = createAppUsageStatsStore({
   persist: true,
   appUsageMetricsOptIn: () => {
     postHog.optIn();
-    appDiagnosticMetrics.setEnabled(true);
+    appUsageData.setEnabled(true);
     // Restart-to-activate: takes effect next launch, not this session.
     setApplicationUsageData(true).catch(err => {
       Sentry.captureException(err);
@@ -182,7 +182,7 @@ const appUsagePromptStore = createAppUsageStatsStore({
   },
   appUsageMetricsOptOut: () => {
     postHog.optOut();
-    appDiagnosticMetrics.setEnabled(false);
+    appUsageData.setEnabled(false);
     setApplicationUsageData(false).catch(err => {
       Sentry.captureException(err);
     });

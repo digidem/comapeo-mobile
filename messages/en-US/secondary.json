@@ -1435,23 +1435,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Invite Collaborators"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "Go Back"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "Secure and private way to exchange with collaborators."
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "Only devices invited to a project can contribute."
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "Easily manage project contributors and settings."
-  },
-  "soloProject.startNewProject.start": {
-    "message": "Start"
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "Each project is unique and separate."
   }
 }

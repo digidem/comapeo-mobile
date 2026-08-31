@@ -11,6 +11,7 @@ import {
 import {RemoteDetectionAlert} from '@comapeo/schema';
 import {FeatureCollection} from 'geojson';
 import {useRemoteDetectionAlerts} from '../../../hooks/server/remoteDetectionAlert';
+import {useMapStyleHasGlyphs} from '../../../hooks/server/maps';
 
 // Use modern MapLibre expression syntax (`geometry-type`) rather than the
 // legacy `$type` filter form. The legacy form crashes MapLibre iOS 6.17.1's
@@ -71,6 +72,7 @@ const POLYGON_FILL_FILTER: Expression = [
 
 export const RemoteDetectionAlertsMapLayer = () => {
   const {data: alerts} = useRemoteDetectionAlerts();
+  const {data: hasGlyphs} = useMapStyleHasGlyphs();
 
   if (!alerts) {
     return null;
@@ -122,28 +124,30 @@ export const RemoteDetectionAlertsMapLayer = () => {
       />
 
       {/* Symbol Layer for Labels */}
-      <SymbolLayer
-        id="comapeo-alerts-label"
-        filter={LABEL_FILTER}
-        style={{
-          textField: [
-            'concat',
-            ['get', 'alertType'],
-            ' (',
-            ['get', 'monthDetec'],
-            '-',
-            ['get', 'yearDetec'],
-            ')',
-          ],
-          textFont: ['Open Sans Regular'],
-          textOffset: [0, 0.5],
-          textAnchor: 'top',
-          textColor: '#FFFFFF',
-          textHaloColor: '#000000',
-          textHaloWidth: 1,
-          textHaloBlur: 1,
-        }}
-      />
+      {hasGlyphs && (
+        <SymbolLayer
+          id="comapeo-alerts-label"
+          filter={LABEL_FILTER}
+          style={{
+            textField: [
+              'concat',
+              ['get', 'alertType'],
+              ' (',
+              ['get', 'monthDetec'],
+              '-',
+              ['get', 'yearDetec'],
+              ')',
+            ],
+            textFont: ['Open Sans Regular'],
+            textOffset: [0, 0.5],
+            textAnchor: 'top',
+            textColor: '#FFFFFF',
+            textHaloColor: '#000000',
+            textHaloWidth: 1,
+            textHaloBlur: 1,
+          }}
+        />
+      )}
     </ShapeSource>
   );
 };

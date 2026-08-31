@@ -6,14 +6,20 @@ import {LocationObject} from 'expo-location';
 import {type BBox} from 'geojson';
 import React from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {LIGHT_GREY, RED, WHITE} from '../../lib/styles';
+import {LIGHT_GREY, RED} from '../../lib/styles';
+import {buildTestAlertValues} from '../../lib/testAlertValues';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {LocationView} from '../../sharedComponents/LocationView';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import type {Metadata} from '../../sharedTypes';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import {useLocationState} from '../../contexts/LocationContext';
@@ -29,6 +35,7 @@ const BASE_NUMBER_INPUT_RULES = {
 export function CreateTestDataScreen() {
   const location = useLocationState(store => store.location);
   const createFakeObservations = useCreateFakeObservationsMutation();
+  const createFakeAlerts = useCreateFakeAlertsMutation();
 
   const {
     control,
@@ -40,52 +47,22 @@ export function CreateTestDataScreen() {
   });
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={styles.contentContainer}
-      dockContent={
-        createFakeObservations.status === 'pending' ? (
-          <View style={styles.loadingContainer}>
-            <LoadingIndicator size="large" color={WHITE} />
-          </View>
-        ) : (
-          <PrimaryButton
-            fullSize
-            text="Create"
-            onPress={handleSubmit(data => {
-              if (data.count === undefined) return;
-              if (!location) {
-                ToastAndroid.show('Waiting for location', ToastAndroid.SHORT);
-                return;
-              }
-
-              createFakeObservations.mutate(
-                {
-                  count: data.count,
-                  location: location,
-                  distance:
-                    data.distance === undefined
-                      ? DISTANCE_BUFFER_KM
-                      : data.distance,
-                },
-                {
-                  onSuccess: () => {
-                    ToastAndroid.show(
-                      'Observations created',
-                      ToastAndroid.SHORT,
-                    );
-                  },
-                  onError: () => {
-                    ToastAndroid.show(
-                      'Failed to create observations',
-                      ToastAndroid.SHORT,
-                    );
-                  },
-                },
-              );
-            })}
+    <ScrollView contentContainerStyle={styles.contentContainer}>
+      <View style={styles.field}>
+        <BodyText>Current location:</BodyText>
+        {location ? (
+          <LocationView
+            lat={location.coords.latitude}
+            lon={location.coords.longitude}
+            accuracy={location.coords.accuracy || undefined}
           />
-        )
-      }>
+        ) : (
+          <LoadingIndicator size="small" />
+        )}
+      </View>
+
+      <HeaderText variant="header2">Observations</HeaderText>
+
       <View style={styles.field}>
         <HeaderText variant="header3">
           Number of observations (required):
@@ -127,18 +104,6 @@ export function CreateTestDataScreen() {
           Maximum bounded distance in kilometers (optional, default is{' '}
           {DISTANCE_BUFFER_KM}):
         </HeaderText>
-        <View>
-          <BodyText>Current location: </BodyText>
-          {location ? (
-            <LocationView
-              lat={location.coords.latitude}
-              lon={location.coords.longitude}
-              accuracy={location.coords.accuracy || undefined}
-            />
-          ) : (
-            <LoadingIndicator size="small" />
-          )}
-        </View>
         <Controller
           name="distance"
           control={control}
@@ -164,7 +129,84 @@ export function CreateTestDataScreen() {
           )}
         </View>
       </View>
-    </ScreenContentWithDock>
+
+      {createFakeObservations.status === 'pending' ? (
+        <LoadingIndicator size="large" />
+      ) : (
+        <PrimaryButton
+          fullSize
+          style={styles.button}
+          text="Create Observations"
+          onPress={handleSubmit(data => {
+            if (data.count === undefined) return;
+            if (!location) {
+              ToastAndroid.show('Waiting for location', ToastAndroid.SHORT);
+              return;
+            }
+
+            createFakeObservations.mutate(
+              {
+                count: data.count,
+                location: location,
+                distance:
+                  data.distance === undefined
+                    ? DISTANCE_BUFFER_KM
+                    : data.distance,
+              },
+              {
+                onSuccess: () => {
+                  ToastAndroid.show('Observations created', ToastAndroid.SHORT);
+                },
+                onError: () => {
+                  ToastAndroid.show(
+                    'Failed to create observations',
+                    ToastAndroid.SHORT,
+                  );
+                },
+              },
+            );
+          })}
+        />
+      )}
+
+      <HeaderText variant="header2">Remote detection alerts</HeaderText>
+
+      <View style={styles.field}>
+        <BodyText>
+          Creates one alert of every supported geometry type next to your
+          current location, labelled with its geometry type.
+        </BodyText>
+        {createFakeAlerts.status === 'pending' ? (
+          <LoadingIndicator size="large" />
+        ) : (
+          <PrimaryButton
+            fullSize
+            style={styles.button}
+            text="Create Alerts"
+            onPress={() => {
+              if (!location) {
+                ToastAndroid.show('Waiting for location', ToastAndroid.SHORT);
+                return;
+              }
+              createFakeAlerts.mutate(
+                {location},
+                {
+                  onSuccess: () => {
+                    ToastAndroid.show('Alerts created', ToastAndroid.SHORT);
+                  },
+                  onError: () => {
+                    ToastAndroid.show(
+                      'Failed to create alerts',
+                      ToastAndroid.SHORT,
+                    );
+                  },
+                },
+              );
+            }}
+          />
+        )}
+      </View>
+    </ScrollView>
   );
 }
 
@@ -205,10 +247,14 @@ const NumberInput = ({
 
 const styles = StyleSheet.create({
   contentContainer: {
+    padding: 20,
     gap: 20,
   },
   field: {
     gap: 12,
+  },
+  button: {
+    alignSelf: 'center',
   },
   input: {
     flex: 1,
@@ -220,15 +266,26 @@ const styles = StyleSheet.create({
   errorText: {
     color: RED,
   },
-  loadingContainer: {
-    minHeight: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: LIGHT_GREY,
-    borderRadius: 30,
-    width: 280,
-  },
 });
+
+function useCreateFakeAlertsMutation() {
+  const {projectId} = useActiveProject();
+  const {mutateAsync: createAlertAsync} = useCreateDocument({
+    docType: 'remoteDetectionAlert',
+    projectId,
+  });
+
+  return useMutation({
+    mutationFn: async ({location}: {location: LocationObject}) => {
+      const {latitude, longitude} = location.coords;
+      return Promise.all(
+        buildTestAlertValues(longitude, latitude).map(value =>
+          createAlertAsync({value}),
+        ),
+      );
+    },
+  });
+}
 
 function useCreateFakeObservationsMutation() {
   const {projectId} = useActiveProject();

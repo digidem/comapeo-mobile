@@ -40,7 +40,6 @@
       [
         "expo-location",
         {
-          "isIosBackgroundLocationEnabled": true,
           "locationPermission": "Allow $(PRODUCT_NAME) to use location?"
         }
       ],

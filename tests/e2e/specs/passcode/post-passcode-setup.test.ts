@@ -76,52 +76,42 @@ describe('Passcode - Post Passcode Setup Flow', () => {
   });
 
   it('should re-enter passcode, change it, confirm new passcode, then uncheck passcode usage', async () => {
-    const appPasscodeItem = await $(byText('App Passcode'));
-    await appPasscodeItem.click();
+    await $(byText('App Passcode')).click();
 
-    const passcodeField = await $(byResourceId('SETTINGS.passcode-inp'));
-    await passcodeField.setValue(output.passcode);
+    await $(byResourceId('SETTINGS.passcode-inp')).setValue(output.passcode);
     await expect($(byTextMatches('App Passcode adds'))).toBeDisplayed();
 
-    const changeBtn = await $(byTextMatches('Change App Passcode'));
-    await changeBtn.click();
+    await $(byTextMatches('Change App Passcode')).click();
 
-    await passcodeField.setValue(output.newpasscode);
-    const nextBtn = await $(byTextMatches('Next'));
-    await nextBtn.click();
-    await passcodeField.setValue(output.newpasscode);
-    await nextBtn.click();
+    await $(byResourceId('SETTINGS.passcode-inp')).setValue(output.newpasscode);
+    await $(byTextMatches('Next')).click();
+    await $(byResourceId('SETTINGS.passcode-inp')).setValue(output.newpasscode);
+    await $(byTextMatches('Next')).click();
 
-    const saveBtn = await $(byTextMatches('Save App Passcode'));
-    await saveBtn.click();
+    await $(byTextMatches('Save App Passcode')).click();
 
-    await appPasscodeItem.click();
-    await passcodeField.setValue(output.newpasscode);
+    await $(byText('App Passcode')).click();
+    await $(byResourceId('SETTINGS.passcode-inp')).setValue(output.newpasscode);
 
-    const passcodeCheckbox = await $(byResourceId('SETTINGS.passcode-checked'));
-    await passcodeCheckbox.click();
+    await $(byResourceId('SETTINGS.passcode-checked')).click();
 
     const turnOffText = await $(byTextMatches('Turn Off App Passcode?'));
 
     await expect(turnOffText).toBeDisplayed();
 
-    const cancelTurnOff = await $(byText('Cancel'));
-    await cancelTurnOff.click();
+    await $(byText('Cancel')).click();
 
     await driver.waitUntil(async () => !(await turnOffText.isExisting()), {
       timeout: 5000,
       timeoutMsg: 'The turn off btn did not appear within timeout',
     });
 
-    const turnOffBtn = await $(byText('Turn Off'));
-
-    await passcodeCheckbox.click();
-    await turnOffBtn.click();
+    await $(byResourceId('SETTINGS.passcode-checked')).click();
+    await $(byText('Turn Off')).click();
 
     await expect($(byTextMatches('Passcode not set'))).toBeDisplayed();
 
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await backBtn.click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
   });
 });

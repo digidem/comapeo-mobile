@@ -1,0 +1,102 @@
+diff --git a/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/events/EventEmitter.java b/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/events/EventEmitter.java
+index 379b72f..a2a1eca 100644
+--- a/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/events/EventEmitter.java
++++ b/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/events/EventEmitter.java
+@@ -15,18 +15,11 @@ public class EventEmitter {
+ 
+ 
+     private static ReactContext getCurrentReactContext(ReactApplicationContext reactApplicationContext) {
+-        if (reactApplicationContext.getApplicationContext() instanceof ReactApplication) {
+-            ReactApplication reactApplication = ((ReactApplication) reactApplicationContext
+-                    .getApplicationContext());
+-
+-            return reactApplication
+-                    .getReactNativeHost()
+-                    .getReactInstanceManager()
+-                    .getCurrentReactContext();
+-        } else {
+-            Log.d(LOG_TAG, "getApplicationContext() application doesn't implement ReactApplication");
+-            return reactApplicationContext;
+-        }
++        // New Architecture forbids ReactApplication#getReactNativeHost()
++        // (throws "You should not use ReactNativeHost directly in the New
++        // Architecture"). The supplied ReactApplicationContext is itself a
++        // ReactContext with a live JS runtime, so use it directly.
++        return reactApplicationContext;
+     }
+ 
+ 
+diff --git a/node_modules/@maplibre/maplibre-react-native/lib/commonjs/utils/animated/AnimatedPoint.js b/node_modules/@maplibre/maplibre-react-native/lib/commonjs/utils/animated/AnimatedPoint.js
+index 154d829..010e77c 100644
+--- a/node_modules/@maplibre/maplibre-react-native/lib/commonjs/utils/animated/AnimatedPoint.js
++++ b/node_modules/@maplibre/maplibre-react-native/lib/commonjs/utils/animated/AnimatedPoint.js
+@@ -25,7 +25,10 @@ class AnimatedPoint extends AnimatedWithChildren {
+     if (!(this.latitude instanceof _reactNative.Animated.Value)) {
+       this.latitude = new _reactNative.Animated.Value(this.latitude);
+     }
+-    this._listeners = {};
++    // RN 0.85 made AnimatedNode#_listeners a Map; this subclass must not
++    // clobber it with a plain object, or AnimatedWithChildren#__callListeners
++    // crashes with "undefined is not a function" on `_listeners.forEach`.
++    this._pointListeners = {};
+   }
+   setValue(point = DEFAULT_POINT) {
+     this.longitude.setValue(point.coordinates[0]);
+@@ -54,16 +57,16 @@ class AnimatedPoint extends AnimatedWithChildren {
+         cb(this.__getValue());
+       }
+     };
+-    this._listeners[id] = {
++    this._pointListeners[id] = {
+       longitude: this.longitude.addListener(completeCB),
+       latitude: this.latitude.addListener(completeCB)
+     };
+     return id;
+   }
+   removeListener(id) {
+-    this.longitude.removeListener(this._listeners[id].longitude);
+-    this.latitude.removeListener(this._listeners[id].latitude);
+-    delete this._listeners[id];
++    this.longitude.removeListener(this._pointListeners[id].longitude);
++    this.latitude.removeListener(this._pointListeners[id].latitude);
++    delete this._pointListeners[id];
+   }
+   spring(config = {
+     coordinates: DEFAULT_COORD
+diff --git a/node_modules/@maplibre/maplibre-react-native/lib/module/utils/animated/AnimatedPoint.js b/node_modules/@maplibre/maplibre-react-native/lib/module/utils/animated/AnimatedPoint.js
+index cf0e89c..373af5f 100644
+--- a/node_modules/@maplibre/maplibre-react-native/lib/module/utils/animated/AnimatedPoint.js
++++ b/node_modules/@maplibre/maplibre-react-native/lib/module/utils/animated/AnimatedPoint.js
+@@ -22,7 +22,10 @@ export class AnimatedPoint extends AnimatedWithChildren {
+     if (!(this.latitude instanceof Animated.Value)) {
+       this.latitude = new Animated.Value(this.latitude);
+     }
+-    this._listeners = {};
++    // RN 0.85 made AnimatedNode#_listeners a Map; this subclass must not
++    // clobber it with a plain object, or AnimatedWithChildren#__callListeners
++    // crashes with "undefined is not a function" on `_listeners.forEach`.
++    this._pointListeners = {};
+   }
+   setValue(point = DEFAULT_POINT) {
+     this.longitude.setValue(point.coordinates[0]);
+@@ -51,16 +54,16 @@ export class AnimatedPoint extends AnimatedWithChildren {
+         cb(this.__getValue());
+       }
+     };
+-    this._listeners[id] = {
++    this._pointListeners[id] = {
+       longitude: this.longitude.addListener(completeCB),
+       latitude: this.latitude.addListener(completeCB)
+     };
+     return id;
+   }
+   removeListener(id) {
+-    this.longitude.removeListener(this._listeners[id].longitude);
+-    this.latitude.removeListener(this._listeners[id].latitude);
+-    delete this._listeners[id];
++    this.longitude.removeListener(this._pointListeners[id].longitude);
++    this.latitude.removeListener(this._pointListeners[id].latitude);
++    delete this._pointListeners[id];
+   }
+   spring(config = {
+     coordinates: DEFAULT_COORD

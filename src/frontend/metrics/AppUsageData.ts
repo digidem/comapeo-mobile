@@ -13,12 +13,12 @@ import {maybeJsonParse} from '../lib/maybeJsonParse';
 import {OneAtATimeQueue} from '../lib/OneAtATimeQueue';
 import {setIfNotNull} from '../lib/setIfNotNull';
 import {
-  type AppDiagnosticMetricsQueue,
-  type AppDiagnosticMetricsReport,
+  type AppUsageQueue,
+  type AppUsageReport,
   hasReportForToday,
   truncateReportsByTime,
   updateQueueHighWatermark,
-} from './AppDiagnosticMetricsQueue';
+} from './AppUsageQueue';
 import {getMetricsDeviceId} from './getMetricsDeviceId';
 import {getMetricsRequestInfo} from './getMetricsRequestInfo';
 import {getMonthlyHash} from './getMonthlyHash';
@@ -28,14 +28,14 @@ import {sendMetricsData} from './sendMetricsData';
 const STORAGE_KEY = 'AppDiagnosticMetricsQueue';
 const CHECK_INTERVAL = 5 * MINUTE_MS;
 
-function loadQueueFromStorage(): AppDiagnosticMetricsQueue {
+function loadQueueFromStorage(): AppUsageQueue {
   const storedString = storage.getString(STORAGE_KEY);
   if (!storedString) return {reports: []};
 
   const stored = maybeJsonParse(storedString);
   if (!stored) return {reports: []};
 
-  return stored as AppDiagnosticMetricsQueue;
+  return stored as AppUsageQueue;
 }
 
 async function getCountry(): Promise<undefined | string> {
@@ -46,14 +46,14 @@ async function getCountry(): Promise<undefined | string> {
   return first(countries);
 }
 
-async function generateAppDiagnosticMetricsData({
+async function generateAppUsageData({
   appLanguageTag,
   deviceLanguageTag,
 }: {
   appLanguageTag: AvailableLanguageTag;
   deviceLanguageTag: string;
-}): Promise<AppDiagnosticMetricsReport> {
-  const result: AppDiagnosticMetricsReport = {
+}): Promise<AppUsageReport> {
+  const result: AppUsageReport = {
     dateGenerated: formatIsoUtc(new Date()),
     os: Platform.OS,
     osVersion: Platform.Version,
@@ -75,11 +75,11 @@ async function generateAppDiagnosticMetricsData({
   return result;
 }
 
-function saveQueueToStorage(queue: Readonly<AppDiagnosticMetricsQueue>): void {
+function saveQueueToStorage(queue: Readonly<AppUsageQueue>): void {
   storage.set(STORAGE_KEY, JSON.stringify(queue));
 }
 
-export class AppDiagnosticMetrics {
+export class AppUsageData {
   #isEnabled = false;
   #isOnline = false;
 
@@ -176,7 +176,7 @@ export class AppDiagnosticMetrics {
         ...queue,
         reports: [
           ...queue.reports,
-          await generateAppDiagnosticMetricsData(this.#getLocaleInfo()),
+          await generateAppUsageData(this.#getLocaleInfo()),
         ],
       };
       hasChangedQueue = true;

@@ -1,7 +1,5 @@
 {
   "expo": {
-    "newArchEnabled": false,
-    "jsEngine": "hermes",
     "name": "CoMapeo",
     "slug": "comapeo",
     "scheme": "comapeo",
@@ -77,6 +75,7 @@
       ["./expo-config-plugins/flagSecure/index.js"],
       ["./expo-config-plugins/customPermissionText.js"],
       ["./expo-config-plugins/removeMediaPlaybackPermission.js"],
+      ["./expo-config-plugins/mergeBackupRules.js"],
       [
         "react-native-share",
         {
@@ -115,12 +114,19 @@
         "android.permission.FOREGROUND_SERVICE_LOCATION",
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO",
-        "android.permission.CHANGE_WIFI_MULTICAST_STATE"
+        "android.permission.CHANGE_WIFI_MULTICAST_STATE",
+        "android.permission.RECEIVE_BOOT_COMPLETED"
       ],
       "package": "com.comapeo"
     },
     "ios": {
-      "bundleIdentifier": "com.comapeo"
+      "bundleIdentifier": "com.comapeo",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSLocalNetworkUsageDescription": "CoMapeo uses the local network to discover and sync with nearby devices in your project.",
+        "NSBonjourServices": ["_comapeo._tcp"],
+        "UIViewControllerBasedStatusBarAppearance": true
+      }
     },
     "extra": {
       "eas": {

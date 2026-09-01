@@ -1,10 +1,10 @@
-import {type MapeoClientApi} from '@comapeo/ipc';
+import {type ComapeoCoreClientApi} from '@comapeo/ipc';
 import type {MemberApi} from '@comapeo/core';
 import {getSelectableDevicesForMapShare} from './SelectMapShareDevice';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 
 type PublicPeerInfo = Awaited<
-  ReturnType<MapeoClientApi['listLocalPeers']>
+  ReturnType<ComapeoCoreClientApi['listLocalPeers']>
 >[number];
 
 function mockPeer(

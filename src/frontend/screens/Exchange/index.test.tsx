@@ -1,7 +1,7 @@
 import {act, render, screen, userEvent} from '@testing-library/react-native';
 
 import type {MapeoManager} from '@comapeo/core';
-import type {MapeoClientApi} from '@comapeo/ipc';
+import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
@@ -22,7 +22,7 @@ jest.mock('../../hooks/useCurrentTime');
 
 describe('Exchange screen', () => {
   let manager: MapeoManager;
-  let client: MapeoClientApi;
+  let client: ComapeoCoreClientApi;
   let onTeardown: Array<() => unknown> = [];
   let projectId: string;
 

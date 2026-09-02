@@ -422,23 +422,11 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "Save"
   },
-  "$1screens.IntroToCoMapeo.collaborate": {
-    "message": "Securely share with collaborators"
-  },
-  "$1screens.IntroToCoMapeo.designedFor": {
-    "message": "Co-designed with and for Indigenous territory mappers & monitors."
-  },
-  "$1screens.IntroToCoMapeo.getStarted": {
-    "message": "Get Started"
-  },
-  "$1screens.IntroToCoMapeo.mapAnywhere": {
-    "message": "Map anywhere and everywhere"
-  },
   "$1screens.IntroToCoMapeo.mapWorldTogether": {
     "message": "Map your world, together."
   },
-  "$1screens.IntroToCoMapeo.ownData": {
-    "message": "Always own and control your data"
+  "$1screens.IntroToCoMapeo.start": {
+    "message": "Start"
   },
   "$1screens.InviteReceived.decline": {
     "message": "Decline"

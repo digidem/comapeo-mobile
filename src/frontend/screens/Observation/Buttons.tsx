@@ -222,6 +222,7 @@ export const ButtonFields = ({
         urls: !base64Urls.length ? undefined : base64Urls,
         message: `${[...body.filter(Boolean), ''].join('\n')}\n${footer}`,
         failOnCancel: false,
+        useInternalStorage: true,
       });
     } catch (err) {
       Sentry.captureException(err);

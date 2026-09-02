@@ -28,8 +28,7 @@ export function useAudioRecording() {
   const startRecording = useCallback(async () => {
     // iOS gates recording on allowsRecording, which defaults to false; without
     // this the native recorder throws as soon as record() is called.
-    // This is not documented in expo, but can be seen in the error that is thrown
-    await setAudioModeAsync({allowsRecording: true, playsInSilentMode: true});
+    await setAudioModeAsync({allowsRecording: true});
     await recorder.prepareToRecordAsync();
     // expo-audio releases the recorder's native object when this hook unmounts.
     // If the screen unmounts while prepareToRecordAsync is still awaiting,

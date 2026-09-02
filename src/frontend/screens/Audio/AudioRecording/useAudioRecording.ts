@@ -2,10 +2,16 @@ import {useCallback, useEffect, useRef} from 'react';
 import {
   useAudioRecorder,
   useAudioRecorderState,
+  setAudioModeAsync,
   RecordingPresets,
 } from 'expo-audio';
 
-const RECORDING_OPTIONS = RecordingPresets.HIGH_QUALITY!;
+// `directory: 'document'` keeps recordings out of the cache dir, which iOS can
+// purge under storage pressure before the draft observation gets saved.
+const RECORDING_OPTIONS = {
+  ...RecordingPresets.HIGH_QUALITY!,
+  directory: 'document' as const,
+};
 
 export function useAudioRecording() {
   const recorder = useAudioRecorder(RECORDING_OPTIONS);
@@ -20,6 +26,10 @@ export function useAudioRecording() {
   }, []);
 
   const startRecording = useCallback(async () => {
+    // iOS gates recording on allowsRecording, which defaults to false; without
+    // this the native recorder throws as soon as record() is called.
+    // This is not documented in expo, but can be seen in the error that is thrown
+    await setAudioModeAsync({allowsRecording: true, playsInSilentMode: true});
     await recorder.prepareToRecordAsync();
     // expo-audio releases the recorder's native object when this hook unmounts.
     // If the screen unmounts while prepareToRecordAsync is still awaiting,

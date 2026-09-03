@@ -26,7 +26,7 @@ describe('Passcode - setPasscode', () => {
     await backBtn.click();
     await expect($(byTextMatches('What is App Passcode?'))).toBeDisplayed();
 
-    await continueBtn.click();
+    await $(byTextMatches('Continue')).click();
   });
 
   it('should cancel passcode setup and reopen it', async () => {
@@ -122,20 +122,17 @@ describe('Passcode - setPasscode', () => {
 
     const enabledView = await $('~Obscure Passcode is Enabled');
     await expect(enabledView).toBeDisplayed();
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    if (await backBtn.isDisplayed()) {
-      await backBtn.click();
+    if (await $(byResourceId('MAIN.header-back-btn')).isDisplayed()) {
+      await $(byResourceId('MAIN.header-back-btn')).click();
     }
-    if (await backBtn.isDisplayed()) {
-      await backBtn.click();
+    if (await $(byResourceId('MAIN.header-back-btn')).isDisplayed()) {
+      await $(byResourceId('MAIN.header-back-btn')).click();
     }
-    const backButtonAgain = await $(byResourceId('MAIN.header-back-btn'));
-    if (await backButtonAgain.isDisplayed()) {
-      await backButtonAgain.click();
+    if (await $(byResourceId('MAIN.header-back-btn')).isDisplayed()) {
+      await $(byResourceId('MAIN.header-back-btn')).click();
     }
-    const drawerIcon = await $(byResourceId('MAIN.map-screen'));
-    if (await drawerIcon.isDisplayed()) {
-      await drawerIcon.click();
+    if (await $(byResourceId('MAIN.map-screen')).isDisplayed()) {
+      await $(byResourceId('MAIN.map-screen')).click();
     }
   });
 });

@@ -13,7 +13,7 @@ import {getMetricsDeviceId} from './getMetricsDeviceId';
 
 const STORAGE_KEY = 'DeviceDiagnosticMetricsLastSentAt';
 
-type DeviceDiagnosticMetricsData = {
+type DeviceDiagnosticsData = {
   type: 'device diagnostics v1';
   monthlyDeviceHash: string;
   appId?: string;
@@ -45,10 +45,10 @@ function deviceTypeToString(deviceType: null | Device.DeviceType): string {
   }
 }
 
-async function generateDeviceDiagnosticMetricsData(): Promise<DeviceDiagnosticMetricsData> {
+async function generateDeviceDiagnosticsData(): Promise<DeviceDiagnosticsData> {
   const screen = Dimensions.get('screen');
 
-  const result: DeviceDiagnosticMetricsData = {
+  const result: DeviceDiagnosticsData = {
     type: 'device diagnostics v1',
     os: Platform.OS,
     screen: {
@@ -90,7 +90,7 @@ const hasEnoughTimeElapsed = (): boolean => {
   );
 };
 
-export class DeviceDiagnosticMetrics {
+export class DeviceDiagnostics {
   #isEnabled = false;
   #isOnline = false;
   #isCurrentlySendingMetrics = false;
@@ -148,7 +148,7 @@ export class DeviceDiagnosticMetrics {
     try {
       await sendMetricsData({
         ...getMetricsRequestInfo(),
-        dataToSend: await generateDeviceDiagnosticMetricsData(),
+        dataToSend: await generateDeviceDiagnosticsData(),
       });
       storage.set(STORAGE_KEY, Date.now());
     } catch (err) {

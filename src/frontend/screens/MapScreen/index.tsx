@@ -222,7 +222,7 @@ export const MapScreen = ({
         bottom={20}
       />
 
-      {trackBottomSheetOpen && <TrackBottomSheet />}
+      <TrackBottomSheet isOpen={!!trackBottomSheetOpen} />
     </View>
   );
 };

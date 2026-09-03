@@ -65,8 +65,45 @@ const VERSION_PRE_RELEASE_SUFFIX = /** @type {const} */ (
 module.exports = ({config}) => {
   const versionName = APP_VERSION || generateVersionName();
 
+  // Backend's default online map style (served when no offline map is
+  // imported). Use the app's Mapbox outdoors style when a token is available,
+  // else fall back to MapLibre demo tiles.
+  const defaultOnlineStyleUrl = process.env.MAPBOX_ACCESS_TOKEN
+    ? `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11?access_token=${process.env.MAPBOX_ACCESS_TOKEN}`
+    : 'https://demotiles.maplibre.org/style.json';
+
+  const sentryEnvironment =
+    APP_VARIANT === 'releaseCandidate'
+      ? 'qa'
+      : APP_VARIANT === 'production'
+        ? 'production'
+        : 'development';
+
+  // The @comapeo/core-react-native plugin must live here (not app.json) so it
+  // can read process.env. It bakes all of these into the native build, so
+  // changing any requires a prebuild. The host wires Sentry up at runtime via
+  // `initSentry` (see App.tsx), which reads this baked config.
+  const comapeoPlugin = /** @type {[string, Record<string, unknown>]} */ ([
+    '@comapeo/core-react-native',
+    {
+      defaultConfig:
+        require.resolve('@comapeo/default-categories/dist/comapeo-default-categories.comapeocat'),
+      defaultOnlineStyleUrl,
+      sentry: {
+        dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
+        environment: sentryEnvironment,
+        // Trace only outside production (matches the app's prior env-gated
+        // tracesSampleRate). The full runtime consent model migrates later.
+        tracesSampleRate: sentryEnvironment === 'production' ? 0 : 1.0,
+        diagnosticsEnabledDefault: true,
+        applicationUsageDataDefault: sentryEnvironment !== 'production',
+      },
+    },
+  ]);
+
   return {
     ...config,
+    plugins: [comapeoPlugin, ...(config.plugins ?? [])],
     version: versionName,
     extra: {
       ...config.extra,

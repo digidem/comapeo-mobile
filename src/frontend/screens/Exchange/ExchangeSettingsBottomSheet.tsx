@@ -95,6 +95,7 @@ export const ExchangeSettingsBottomSheet = () => {
             text={t(m.save)}
           />
           <SecondaryButton
+            testID="EXCHANGE.settings-close"
             fullSize
             style={styles.closeButton}
             text={t(m.close)}

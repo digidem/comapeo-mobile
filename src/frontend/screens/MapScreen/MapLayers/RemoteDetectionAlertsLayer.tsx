@@ -5,46 +5,69 @@ import {
   LineLayer,
   ShapeSource,
   SymbolLayer,
+  type Expression,
 } from '@maplibre/maplibre-react-native';
 
 import {RemoteDetectionAlert} from '@comapeo/schema';
 import {FeatureCollection} from 'geojson';
 import {useRemoteDetectionAlerts} from '../../../hooks/server/remoteDetectionAlert';
 
-const LABEL_FILTER = [
+// Use modern MapLibre expression syntax (`geometry-type`) rather than the
+// legacy `$type` filter form. The legacy form crashes MapLibre iOS 6.17.1's
+// `predicateWithMLNJSONObject:` with an unrecognized-selector abort when the
+// layer is added to the map (Android's SDK tolerates it; iOS does not).
+const LABEL_FILTER: Expression = [
   'all',
   [
-    'in',
-    '$type',
-    'Polygon',
-    'LineString',
-    'Point',
-    'MultiLineString',
-    'MultiPolygon',
-    'MultiPoint',
+    'match',
+    ['geometry-type'],
+    [
+      'Polygon',
+      'LineString',
+      'Point',
+      'MultiLineString',
+      'MultiPolygon',
+      'MultiPoint',
+    ],
+    true,
+    false,
   ],
   ['has', 'alertType'],
   ['has', 'monthDetec'],
   ['has', 'yearDetec'],
-] as const;
+];
 
-const POINT_FILTER = ['in', '$type', 'Point', 'MultiPoint'] as const;
+const POINT_FILTER: Expression = [
+  'match',
+  ['geometry-type'],
+  ['Point', 'MultiPoint'],
+  true,
+  false,
+];
 
-const LINESTRING_FILTER = [
-  'in',
-  '$type',
-  'LineString',
-  'MultiLineString',
-] as const;
+const LINESTRING_FILTER: Expression = [
+  'match',
+  ['geometry-type'],
+  ['LineString', 'MultiLineString'],
+  true,
+  false,
+];
 
-const POLYGON_STROKE_FILTER = [
-  'in',
-  '$type',
-  'Polygon',
-  'MultiPolygon',
-] as const;
+const POLYGON_STROKE_FILTER: Expression = [
+  'match',
+  ['geometry-type'],
+  ['Polygon', 'MultiPolygon'],
+  true,
+  false,
+];
 
-const POLYGON_FILL_FILTER = ['in', '$type', 'Polygon', 'MultiPolygon'] as const;
+const POLYGON_FILL_FILTER: Expression = [
+  'match',
+  ['geometry-type'],
+  ['Polygon', 'MultiPolygon'],
+  true,
+  false,
+];
 
 export const RemoteDetectionAlertsMapLayer = () => {
   const {data: alerts} = useRemoteDetectionAlerts();

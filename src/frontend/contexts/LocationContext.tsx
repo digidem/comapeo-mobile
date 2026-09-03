@@ -50,6 +50,12 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
     isError: permissionsError,
   } = useQuery({
     queryKey: ['LocationPermission'],
+    // Read-only: this query gates the whole app tree (renders <Loading/> while
+    // pending), so it must resolve instantly. Requesting here would block on the
+    // permission dialog and — racing the startup request in App.tsx — can leave
+    // the promise unsettled on iOS (concurrent authorization requests), which
+    // strands the splash. The request lives in App.tsx; the grant is picked up
+    // by useCheckPermissionOnAppStateChange on the post-dialog 'active'.
     queryFn: () => {
       return getForegroundPermissionsAsync();
     },

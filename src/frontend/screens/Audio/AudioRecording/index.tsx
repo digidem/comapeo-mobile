@@ -105,6 +105,8 @@ export function AudioRecording({
 
   return (
     <View style={styles.background}>
+      {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
+      {!isE2E && <AnimatedBackground timeElapsed={timeElapsed} />}
       <ScreenContentWithDock
         contentContainerStyle={styles.contentContainer}
         dockContainerStyle={styles.dockContainer}
@@ -140,8 +142,6 @@ export function AudioRecording({
           </View>
         </View>
       </ScreenContentWithDock>
-      {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
-      {!isE2E && <AnimatedBackground timeElapsed={timeElapsed} />}
     </View>
   );
 }

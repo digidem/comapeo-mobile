@@ -6,7 +6,7 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   '@react-native',
   '@?expo',
   '@?react-navigation',
-  '@sentry/react-native',
+  '@sentry/',
   'native-base',
   // Awana modules distributed as ESM
   '@comapeo/',
@@ -61,6 +61,7 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
 const config = {
   preset: 'jest-expo',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  resolver: './node_modules/react-native-worklets/jest/resolver.js',
   // https://react-native-documents.github.io/docs/sponsor-only/jest-mocks
   setupFiles: [
     './node_modules/@react-native-documents/picker/jest/build/jest/setup.js',
@@ -100,7 +101,6 @@ const config = {
   modulePathIgnorePatterns: [
     '<rootDir>/android',
     '<rootDir>/ios',
-    '<rootDir>/nodejs-assets',
     '<rootDir>/assets',
   ],
   testPathIgnorePatterns: ['<rootDir>/tests/e2e/'],

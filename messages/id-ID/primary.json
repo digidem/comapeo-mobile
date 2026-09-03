@@ -255,9 +255,6 @@
     "message": "Merekam Audio dengan CoMapeo",
     "description": "Screen title for audio permission screen"
   },
-  "$1screens.AudioPlaybackNew.backToEditing": {
-    "message": "Kembali ke Pengeditan"
-  },
   "$1screens.AudioPlaybackNew.delete": {
     "message": "Hapus"
   },
@@ -361,14 +358,8 @@
   "$1screens.IntroToCoMapeo.ownData": {
     "message": "Selalu miliki dan kendalikan data Anda"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Tolak Undangan"
-  },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "Bergabunglah sebagai {role}?"
-  },
-  "$1screens.InviteReceived.joinProject": {
-    "message": "Bergabung dengan Proyek"
   },
   "$1screens.InviteSuccess.done": {
     "message": "Selesai"
@@ -428,9 +419,6 @@
   "$1screens.LocationInfoScreen.yes": {
     "message": "Ya",
     "description": "if a location sensor is active yes/no"
-  },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Hidupkan Lokasi"
   },
   "$1screens.Observation.ObservationView.delete": {
     "message": "Hapus",
@@ -518,15 +506,6 @@
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
     "message": "Tambahkan rekaman audio."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Tutup"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "Jelajahi CoMapeo—undang kolaborator kapan saja."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
-    "message": "Buka Peta"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
     "message": "Ambil foto saat bepergian."
@@ -790,8 +769,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Ada yang Tak Beres"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Mulai Proyek Baru"
   }
 }

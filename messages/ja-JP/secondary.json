@@ -109,9 +109,6 @@
   "Screens.ProjectSettings.editInfo": {
     "message": "情報を編集"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "コラボレーターを招待"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "プロジェクトの統計情報は共有されていません。"
   },
@@ -121,17 +118,11 @@
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "セキュアでエンプティされたサーバーと共有します。アクセスに必要な URL です。"
   },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "あなたは自分でマッピングしています。"
-  },
   "Screens.ProjectSettings.update": {
     "message": "更新"
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "セットを更新"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "表示"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "詳細を表示"
@@ -764,15 +755,6 @@
   "screens.ObservationsList.filter.justYou": {
     "message": "あなただけ"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "閉じる"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "プロジェクトの招待状を受け取るには、チームと調整してください。"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "プロジェクトに参加"
-  },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "プライバシーポリシー"
   },
@@ -1150,23 +1132,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "コラボレーターを招待"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "戻る"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "協力者と交換するための安全でプライベートな方法。"
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "プロジェクトに招待されたデバイスだけが貢献できます。"
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "プロジェクトのコントリビューターと設定を簡単に管理できます。"
-  },
-  "soloProject.startNewProject.start": {
-    "message": "開始"
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "それぞれのプロジェクトは一意であり、それぞれ独立しています。"
   }
 }

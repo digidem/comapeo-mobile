@@ -16,9 +16,6 @@
   "Screens.ProjectSettings.update": {
     "message": "ធ្វើបច្ចុប្បន្នភាព"
   },
-  "Screens.ProjectSettings.view": {
-    "message": "ទិដ្ឋភាព"
-  },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "message": "បោះបង់",
     "description": "Text for cancel action button."
@@ -194,9 +191,6 @@
   },
   "screens.ObservationsList.filter.all": {
     "message": "ទាំងអស់"
-  },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "បិទ"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "បិទ"

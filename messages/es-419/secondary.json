@@ -115,9 +115,6 @@
   "Screens.ProjectSettings.editInfo": {
     "message": "Editar información"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "Invita Colaboradores"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "Las estadísticas del Proyecto no están siendo compartidas."
   },
@@ -127,17 +124,11 @@
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Compartir con un servidor seguro encriptado. Se requiere una URL para acceder."
   },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "Estás mapeando por tu cuenta."
-  },
   "Screens.ProjectSettings.update": {
     "message": "Actualizar"
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Actualizar conjunto de categorías"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "Ver"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "Ver detalles"
@@ -684,9 +675,6 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Número de zona"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "¿Usar la ubicación? Rastrea la ubicación incluso cuando está cerrado. Los datos permanecen solo en el dispositivo."
-  },
   "screens.ObscurePasscode.description": {
     "message": "La Contraseña Oscura es una funcionalidad de seguridad que te permite abrir CoMapeo en un modo que oculta toda tu información. Al introducir la Constraseña Oscura en la pantalla de inicio, se mostrará una versión vacía de CoMapeo que te permite crear observaciones de demostración que no se guardan en la base de datos de CoMapeo."
   },
@@ -818,15 +806,6 @@
   },
   "screens.ObservationsList.filter.justYou": {
     "message": "Solo tú"
-  },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Cerrar"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Coordine con su equipo para recibir una invitación al proyecto."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Unirse a un proyecto"
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Política de privacidad"
@@ -1239,23 +1218,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Invita Colaboradores"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "Regresar"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "Forma segura y privada de intercambio con colaboradores."
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "Solo los dispositivos invitados a un proyecto pueden contribuir."
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "Administrar fácilmente los colaboradores y ajustes del proyecto."
-  },
-  "soloProject.startNewProject.start": {
-    "message": "Comenzar"
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "Cada proyecto es único y separado."
   }
 }

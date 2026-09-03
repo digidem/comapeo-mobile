@@ -109,9 +109,6 @@
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.tracks": {
     "message": "Trek"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "Undang Kolaborator"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "Statistik proyek tidak dibagikan."
   },
@@ -120,9 +117,6 @@
   },
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Bagikan dengan server yang aman dan berenkripsi. URL diperlukan untuk mengakses."
-  },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "Anda memetakan sendiri."
   },
   "Screens.ProjectSettings.update": {
     "message": "Memperbarui"
@@ -672,9 +666,6 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Nomor Zona"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "Menggunakan Lokasi? Melacak lokasi bahkan saat ditutup. Data hanya ada di perangkat."
-  },
   "screens.ObscurePasscode.description": {
     "message": "Kode Sandi Obscure adalah fitur keamanan yang memungkinkan Anda membuka CoMapeo dalam mode umpan yang menyembunyikan semua data Anda. Memasukkan Kode Sandi Obscure pada layar intro akan menampilkan versi kosong CoMapeo yang memungkinkan Anda membuat pengamatan demonstrasi yang tidak disimpan ke database CoMapeo."
   },
@@ -800,15 +791,6 @@
   },
   "screens.ObservationsList.filter.justYou": {
     "message": "Hanya Anda"
-  },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Tutup"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Berkoordinasi dengan tim Anda untuk menerima undangan proyek."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Bergabung dengan Proyek"
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Kebijakan Privasi"
@@ -1200,23 +1182,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Undang Kolaborator"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "Kembali"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "Cara aman dan pribadi untuk bertukar dengan kolaborator."
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "Hanya perangkat yang diundang ke proyek yang dapat berkontribusi."
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "Kelola kontributor dan pengaturan proyek dengan mudah."
-  },
-  "soloProject.startNewProject.start": {
-    "message": "Mulai"
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "Setiap proyek unik dan terpisah."
   }
 }

@@ -76,9 +76,6 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "บันทึก"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "ปฏิเสธคำเชิญ"
-  },
   "$1screens.InviteSuccess.done": {
     "message": "เสร็จสิ้น"
   },
@@ -163,9 +160,6 @@
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "message": "เพิ่มการสังเกต",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "ปิด"
   },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "ปิด"

@@ -130,9 +130,6 @@
     "message": "បន្ថែមការសង្កេត",
     "description": "Title of observation list view when the user has not yet recorded observations"
   },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "បិទ"
-  },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "បិទ"
   },

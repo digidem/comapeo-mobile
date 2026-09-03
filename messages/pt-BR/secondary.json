@@ -115,9 +115,6 @@
   "Screens.ProjectSettings.editInfo": {
     "message": "Editar Informação"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "Convidar colaboradores"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "As estatísticas do projeto não estão sendo compartilhadas."
   },
@@ -127,17 +124,11 @@
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Compartilhe com um servidor seguro e encriptado. URL é necessária para acesso."
   },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "Você está mapeando sozinho."
-  },
   "Screens.ProjectSettings.update": {
     "message": "Atualização"
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Atualizar Configuração"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "Visualizar"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "Ver Detalhes"
@@ -687,9 +678,6 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Número do fuso"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "O CoMapeo coleta dados de localização para rastrear a sua rota no mapa, mesmo quando o app é fechado. Seus dados de localização são armazenados apenas no seu dispositivo por padrão e não são armazenados ou enviados para lugar algum."
-  },
   "screens.ObscurePasscode.description": {
     "message": "A senha secreta é um recurso de segurança que permite abrir o CoMapeo em um modo que oculta todos os seus dados. Digitar essa senha secreta na tela de início do app exibirá uma versão vazia do CoMapeo, permitindo que você crie observações de demonstração que não são salvas no banco de dados do CoMapeo."
   },
@@ -821,15 +809,6 @@
   },
   "screens.ObservationsList.filter.justYou": {
     "message": "Apenas você"
-  },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Fechar"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Coordene com sua equipe para receber um convite para um projeto."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Participe de um projeto"
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Política de Privacidade"
@@ -1245,23 +1224,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Convide colaboradores"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "Voltar"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "Uma forma segura e privada para trocar com os colaboradores."
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "Apenas dispositivos convidados para um projeto podem contribuir."
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "Gerencie facilmente os colaboradores e as configurações do projeto."
-  },
-  "soloProject.startNewProject.start": {
-    "message": "Iniciar"
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "Cada projeto é único e separado."
   }
 }

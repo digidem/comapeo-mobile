@@ -22,9 +22,6 @@
   "Screens.ProjectSettings.update": {
     "message": "Шинэчлэх"
   },
-  "Screens.ProjectSettings.view": {
-    "message": "Харах"
-  },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "message": "Цуцлах",
     "description": "Text for cancel action button."
@@ -311,12 +308,6 @@
   "screens.ObservationsList.filter.all": {
     "message": "Бүгд"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Хаах"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Төсөлд нэгдэх"
-  },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Хаах"
   },
@@ -344,9 +335,6 @@
     "message": "Өөрчлөх"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Буцах"
-  },
-  "soloProject.startNewProject.goBack": {
     "message": "Буцах"
   }
 }

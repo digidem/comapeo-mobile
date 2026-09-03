@@ -252,9 +252,6 @@
     "message": "Gravando Áudio com CoMapeo",
     "description": "Screen title for audio permission screen"
   },
-  "$1screens.AudioPlaybackNew.backToEditing": {
-    "message": "Voltar para edição"
-  },
   "$1screens.AudioPlaybackNew.delete": {
     "message": "Excluir"
   },
@@ -358,14 +355,8 @@
   "$1screens.IntroToCoMapeo.ownData": {
     "message": "Sempre possuir e controlar seus dados"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Recusar convite"
-  },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "Participar como{role}?"
-  },
-  "$1screens.InviteReceived.joinProject": {
-    "message": "Participar do Projeto"
   },
   "$1screens.InviteSuccess.done": {
     "message": "Concluído"
@@ -422,12 +413,6 @@
   "$1screens.LocationInfoScreen.yes": {
     "message": "Sim",
     "description": "if a location sensor is active yes/no"
-  },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Ligar"
-  },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use sua localização"
   },
   "$1screens.Observation.ObservationView.delete": {
     "message": "Excluir",
@@ -522,15 +507,6 @@
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
     "message": "Adicione gravações de áudio."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Fechar"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "Explore o CoMapeo — convide colaboradores a qualquer hora."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
-    "message": "Ir para Mapas"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
     "message": "Tire fotos em qualquer lugar."
@@ -806,8 +782,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Ocorreu um erro"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Começar um novo projeto"
   }
 }

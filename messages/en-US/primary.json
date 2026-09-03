@@ -608,27 +608,6 @@
     "message": "Add Observations",
     "description": "Title of observation list view when the user has not yet recorded observations"
   },
-  "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
-    "message": "Add audio recordings."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.exploreOnYourOwn": {
-    "message": "Explore CoMapeo on your own."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.inviteCollaborators": {
-    "message": "Invite collaborators anytime."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
-    "message": "Snap photos on-the-go."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.startFirstMap": {
-    "message": "Start First Map"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.title": {
-    "message": "Map On Your Own"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
-    "message": "Track paths walked."
-  },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Share Diagnostic Information"
   },
@@ -836,27 +815,6 @@
   },
   "$1screens.ShareProjectStats.yesShare": {
     "message": "Yes, Share Stats"
-  },
-  "$1screens.StayNotified.NotNow": {
-    "message": "Not Now"
-  },
-  "$1screens.StayNotified.SecurelySync": {
-    "message": "Securely syncs and processes data with few interruptions."
-  },
-  "$1screens.StayNotified.StayNotified": {
-    "message": "Always Stay Notified"
-  },
-  "$1screens.StayNotified.allow": {
-    "message": "Allow"
-  },
-  "$1screens.StayNotified.allowTheFollowing": {
-    "message": "Notifications allow CoMapeo to do the following:"
-  },
-  "$1screens.StayNotified.realTimeCommunicate": {
-    "message": "Communicate about activity updates in real time."
-  },
-  "$1screens.StayNotified.workInBackground": {
-    "message": "Work in the background to ensure location stays current and accurate."
   },
   "$1screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Close"

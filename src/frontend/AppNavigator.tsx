@@ -3,6 +3,7 @@ import {
   type NavigationContainerRef,
 } from '@react-navigation/native';
 import * as React from 'react';
+import {AppState} from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import {type AppStackParamsList} from './sharedTypes/navigation';
 
@@ -27,9 +28,31 @@ export const AppNavigator = ({
     React.useRef<NavigationContainerRef<AppStackParamsList>>(null);
   const qaDeviceName = useQADeviceName();
 
-  if (permissionAsked) {
-    SplashScreen.hide();
-  }
+  // Hiding the splash while a system permission dialog is presented leaves the
+  // app `inactive`, and on iOS the hide silently no-ops in that state. On a
+  // fresh install (location + local-network prompts) this could strand the
+  // splash until the next launch. Hide once the app is active, retrying when it
+  // returns to the foreground after the prompts are dismissed.
+  React.useEffect(() => {
+    if (!permissionAsked) return;
+
+    const hide = () => {
+      SplashScreen.hideAsync().catch(() => {});
+    };
+
+    if (AppState.currentState === 'active') {
+      hide();
+      return;
+    }
+
+    const sub = AppState.addEventListener('change', state => {
+      if (state === 'active') {
+        hide();
+        sub.remove();
+      }
+    });
+    return () => sub.remove();
+  }, [permissionAsked]);
 
   if (isQABuild && !qaDeviceName) {
     return <SetQADeviceNameScreen />;

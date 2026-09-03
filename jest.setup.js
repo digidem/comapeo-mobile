@@ -1,4 +1,11 @@
 import {jest, afterAll} from '@jest/globals';
+import {performance as nodePerformance} from 'node:perf_hooks';
+
+// undici reads `performance.markResourceTiming` at import time (as early as
+// @comapeo/core's own imports), so it must be patched before any test file loads.
+
+globalThis.performance.markResourceTiming =
+  nodePerformance.markResourceTiming.bind(nodePerformance);
 
 jest.mock('./translations/index', () => {
   const actual = jest.requireActual('./translations/index');
@@ -121,6 +128,21 @@ jest.mock('@maplibre/maplibre-react-native', () => ({
   setTelemetryEnabled: jest.fn(),
   LineJoin: {Round: 'round', Bevel: 'bevel', Miter: 'miter'},
   LineCap: {Round: 'round', Butt: 'butt', Square: 'square'},
+}));
+
+// `ComapeoCoreModule.ts` calls `requireNativeModule("ComapeoCore")` at
+// import time, which throws in tests since there's no native module and
+// no `mocks/ComapeoCore.js` for jest-expo to pick up.
+jest.mock('@comapeo/core-react-native/sentry', () => ({
+  sentryConfig: {},
+  getDiagnosticsEnabled: jest.fn(() => false),
+  setDiagnosticsEnabled: jest.fn(() => Promise.resolve()),
+  getApplicationUsageData: jest.fn(() => false),
+  setApplicationUsageData: jest.fn(() => Promise.resolve()),
+  getDebugEnabled: jest.fn(() => false),
+  setDebugEnabled: jest.fn(() => Promise.resolve()),
+  getRootUserId: jest.fn(() => 'TEST-TEST-TEST'),
+  initSentry: jest.fn(),
 }));
 
 jest.mock('react-native-vision-camera', () => ({

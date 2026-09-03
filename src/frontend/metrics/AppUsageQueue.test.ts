@@ -1,19 +1,17 @@
 import {addDays, subDays} from 'date-fns';
 import {formatIsoUtc} from '../lib/date';
 import {
-  type AppDiagnosticMetricsReport,
+  type AppUsageReport,
   hasReportForToday,
   truncateReportsByTime,
   updateQueueHighWatermark,
-} from './AppDiagnosticMetricsQueue';
+} from './AppUsageQueue';
 
 const today = formatIsoUtc(new Date());
 const tomorrow = formatIsoUtc(addDays(new Date(), 1));
 const yesterday = formatIsoUtc(subDays(new Date(), 1));
 
-const report = (
-  overrides: Partial<AppDiagnosticMetricsReport>,
-): AppDiagnosticMetricsReport => ({
+const report = (overrides: Partial<AppUsageReport>): AppUsageReport => ({
   dateGenerated: today,
   os: 'test',
   osVersion: 123,

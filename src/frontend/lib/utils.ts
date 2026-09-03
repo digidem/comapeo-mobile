@@ -56,7 +56,10 @@ export function getLocationStatus({
   location?: LocationObject;
   providerStatus?: LocationProviderStatus;
 }): LocationStatusResult {
-  const gpsAvailable = !!providerStatus?.gpsAvailable;
+  // `gpsAvailable` is Android-only; iOS's getProviderStatusAsync never sets it,
+  // so an absent value means "platform doesn't report per-provider status",
+  // not "GPS off". Default to available so iOS isn't stuck in 'error'.
+  const gpsAvailable = providerStatus?.gpsAvailable ?? true;
   const locationServicesEnabled = !!providerStatus?.locationServicesEnabled;
 
   if (!gpsAvailable || !locationServicesEnabled) return {status: 'error'};

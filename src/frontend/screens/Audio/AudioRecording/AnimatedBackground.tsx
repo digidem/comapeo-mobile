@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {StyleSheet, useWindowDimensions} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -10,7 +10,7 @@ import {COMAPEO_BLUE} from '../../../lib/styles';
 
 export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
   const {bottom} = useSafeAreaInsets();
-  const {height} = Dimensions.get('window');
+  const {height} = useWindowDimensions();
   const targetHeight = height - bottom;
 
   const elapsedTimeValue = useDerivedValue(() => {
@@ -29,7 +29,6 @@ export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
 const styles = StyleSheet.create({
   fill: {
     position: 'absolute',
-    zIndex: -1,
     bottom: 0,
     width: '100%',
   },

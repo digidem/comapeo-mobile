@@ -17,17 +17,9 @@ module.exports = {
   },
   resolver: {
     ...config.resolver,
-    blockList: [
-      ...defaultBlockList,
-      // for nodejs-mobile: https://nodejs-mobile.github.io/docs/guide/guide-react-native/getting-started#duplicate-module-name
-      /android\/.*/,
-      /ios\/.*/,
-      /nodejs-assets\/.*/,
-    ],
+    blockList: [...defaultBlockList],
     // For https://github.com/kristerkari/react-native-svg-transformer
     assetExts: config.resolver.assetExts.filter(ext => ext !== 'svg'),
     sourceExts: [...config.resolver.sourceExts, 'svg'],
-    // Required for importing @comapeo/ipc and rpc-reflector without bundling the server/backend code also
-    unstable_enablePackageExports: true,
   },
 };

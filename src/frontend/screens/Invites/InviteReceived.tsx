@@ -98,20 +98,6 @@ export const InviteReceived = ({
             });
           }
 
-          const isInOnboarding = navigation
-            .getState()
-            .routes.find(route => route.name === 'JoinProjectIntro');
-
-          // If the user is on the onboarding screen, simply show the invites accepted modal
-          if (isInOnboarding) {
-            navigation.replace('InviteSuccessfullyAccepted', {
-              projectId,
-              projectName: invite.projectName,
-            });
-            return;
-          }
-
-          // otherwise reset the navigation so that the stale project is no longer showing.
           navigation.reset({
             index: 1,
             routes: [

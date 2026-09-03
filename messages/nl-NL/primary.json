@@ -724,8 +724,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Er is iets misgegaan"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Nieuw project starten"
   }
 }

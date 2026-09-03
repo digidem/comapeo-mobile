@@ -420,9 +420,6 @@
     "message": "Oui",
     "description": "if a location sensor is active yes/no"
   },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Emplacement d’allumage"
-  },
   "$1screens.Observation.ObservationView.delete": {
     "message": "Effacer",
     "description": "Button to delete an observation"
@@ -730,8 +727,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Quelque chose s'est mal passé"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Commencer un nouveau projet"
   }
 }

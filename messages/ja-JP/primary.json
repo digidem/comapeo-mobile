@@ -725,8 +725,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "問題が発生しました"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "新規プロジェクトを開始"
   }
 }

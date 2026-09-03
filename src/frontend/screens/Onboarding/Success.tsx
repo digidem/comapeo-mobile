@@ -28,19 +28,19 @@ const m = defineMessages({
     defaultMessage: 'Start Mapping',
   },
   coordinateOrMap: {
-    id: '$1screens.DeviceNaming.Success.coordinateOrMap',
+    id: 'screens.DeviceNaming.Success.coordinateOrMap',
     defaultMessage: 'Coordinate with team to start or map on your own.',
   },
   snapPhotos: {
-    id: '$1screens.DeviceNaming.Success.snapPhotos',
+    id: 'screens.DeviceNaming.Success.snapPhotos',
     defaultMessage: 'Snap photos on-the-go.',
   },
   addAudio: {
-    id: '$1screens.DeviceNaming.Success.addAudio',
+    id: 'screens.DeviceNaming.Success.addAudio',
     defaultMessage: 'Add audio recordings.',
   },
   tracks: {
-    id: '$1screens.DeviceNaming.Success.tracks',
+    id: 'screens.DeviceNaming.Success.tracks',
     defaultMessage: 'Track paths walked.',
   },
 });

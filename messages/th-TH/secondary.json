@@ -22,9 +22,6 @@
   "Screens.ProjectSettings.update": {
     "message": "อัปเดต"
   },
-  "Screens.ProjectSettings.view": {
-    "message": "มุมมอง"
-  },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "message": "ยกเลิก",
     "description": "Text for cancel action button."
@@ -335,9 +332,6 @@
     "message": "แก้ไข"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "ย้อนกลับ"
-  },
-  "soloProject.startNewProject.goBack": {
     "message": "ย้อนกลับ"
   }
 }

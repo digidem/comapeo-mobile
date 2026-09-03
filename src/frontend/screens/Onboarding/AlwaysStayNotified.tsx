@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Notified from '../../images/Notified.svg';
 import Refresh from '../../images/Refresh.svg';
 import LocationIcon from '../../images/LocationIcon.svg';
@@ -9,9 +9,10 @@ import {defineMessages, useIntl} from 'react-intl';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
-import {NEW_DARK_GREY} from '../../lib/styles';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import {SvgProps} from 'react-native-svg';
+import Ionicons from '@react-native-vector-icons/ionicons';
 
 const m = defineMessages({
   AlwaysStayNotified: {
@@ -44,49 +45,61 @@ const m = defineMessages({
     defaultMessage: 'Securely syncs and processes data with few interruptions.',
   },
 });
-export const Success = ({
+export const AlwaysStayNotified = ({
   navigation,
-}: NativeStackScreenProps<OnboardingParamsList, 'Success'>) => {
+}: NativeStackScreenProps<OnboardingParamsList, 'AlwaysStayNotified'>) => {
   const {formatMessage: t} = useIntl();
 
   return (
     <View style={styles.container}>
-      <View style={styles.titleSection}>
-        <Notified width={40} height={60} />
-        <HeaderText variant="header2" style={styles.headerText}>
-          {t(m.AlwaysStayNotified)}
-        </HeaderText>
-      </View>
-      <BodyText style={{textAlign: 'center'}}>
-        {t(m.allowTheFollowing)}
-      </BodyText>
-      <View style={styles.bulletList}>
-        <InfoListItem
-          Icon={PhoneNotification}
-          text={t(m.realTimeCommunicate)}
-        />
-        <InfoListItem Icon={LocationIcon} text={t(m.workInBackground)} />
-        <InfoListItem Icon={Refresh} text={t(m.SecurelySync)} />
-      </View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          paddingTop: 60,
+          paddingHorizontal: 40,
+          gap: 10,
+        }}>
+        <Notified width={50} height={60} />
+        <HeaderText variant="header2">{t(m.AlwaysStayNotified)}</HeaderText>
 
+        <BodyText style={{textAlign: 'center'}}>
+          {t(m.allowTheFollowing)}
+        </BodyText>
+        <View style={styles.bulletList}>
+          <InfoListItem
+            Icon={PhoneNotification}
+            text={t(m.realTimeCommunicate)}
+          />
+          <InfoListItem Icon={LocationIcon} text={t(m.workInBackground)} />
+          <InfoListItem Icon={Refresh} text={t(m.SecurelySync)} />
+        </View>
+      </View>
       <View style={styles.actions}>
+        <TouchableOpacity
+          onPress={() => {}}
+          accessibilityRole="button"
+          accessibilityLabel="Not Now">
+          <HeaderText
+            variant="header5"
+            style={{color: COMAPEO_BLUE, alignSelf: 'flex-start'}}>
+            {t(m.notNow)}
+          </HeaderText>
+        </TouchableOpacity>
         <PrimaryButton
           testID="ONBOARDING.join-project-btn"
           fullSize
           text={t(m.allow)}
           iconPosition="left"
+          renderIcon={({color, size}) => (
+            <Ionicons
+              name="checkmark-circle-outline"
+              color={color}
+              size={size}
+            />
+          )}
           onPress={() => {
             navigation.navigate('JoinProjectIntro');
-          }}
-        />
-        <SecondaryButton
-          testID="ONBOARDING.map-on-your-own-btn"
-          fullSize
-          text={t(m.notNow)}
-          iconPosition="left"
-
-          onPress={() => {
-            navigation.navigate('MapOnYourOwnIntro');
           }}
         />
       </View>
@@ -109,24 +122,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'space-between',
+    padding: 20,
   },
 
-  titleSection: {
-    alignItems: 'center',
-    gap: 10,
-  },
-  headerText: {
-    marginTop: 10,
-    textAlign: 'center',
-  },
-  bodyText: {
-    textAlign: 'center',
-    paddingHorizontal: 20,
-  },
   actions: {
     alignItems: 'center',
-    paddingVertical: 20,
     gap: 10,
   },
   bulletList: {

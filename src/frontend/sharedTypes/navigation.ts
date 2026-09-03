@@ -219,6 +219,7 @@ export type OnboardingParamsList = {
   JoinProjectIntro: undefined;
   MapOnYourOwnIntro: undefined;
   ErrorBottomSheet: {error: Error};
+  AlwaysStayNotified: undefined;
 };
 
 export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;

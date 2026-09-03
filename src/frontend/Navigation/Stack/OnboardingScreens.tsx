@@ -8,6 +8,7 @@ import {JoinAProject} from '../../screens/ProjectCreation/JoinAProject';
 import {MapOnYourOwnIntro} from '../../screens/Onboarding/MapOnYourOwnIntro';
 import {MessageDescriptor} from 'react-intl';
 import {RootStack} from './RootStack';
+import {AlwaysStayNotified} from '../../screens/Onboarding/AlwaysStayNotified';
 
 export const createOnboardingScreens = ({
   intl,
@@ -50,6 +51,11 @@ export const createOnboardingScreens = ({
         name="MapOnYourOwnIntro"
         component={MapOnYourOwnIntro}
         options={{headerTitle: intl(MapOnYourOwnIntro.navTitle)}}
+      />
+      <RootStack.Screen
+        name="AlwaysStayNotified"
+        component={AlwaysStayNotified}
+        options={{headerShown: false, statusBarStyle: 'light'}}
       />
     </RootStack.Group>
   </>

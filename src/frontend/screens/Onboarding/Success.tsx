@@ -105,13 +105,16 @@ export const Success = ({
       <View style={{gap: 12, paddingHorizontal: 20, marginTop: 20}}>
         <BulletListItem
           text={formatMessage(m.snapPhotos)}
-          Icon={<MatericalIcon name="photo-camera" />}
+          Icon={<MatericalIcon size={26} name="photo-camera" />}
         />
         <BulletListItem
           text={formatMessage(m.addAudio)}
-          Icon={<AntDesign name="audio" />}
+          Icon={<AntDesign size={26} name="audio" />}
         />
-        <BulletListItem text={formatMessage(m.tracks)} Icon={<TracksIcon />} />
+        <BulletListItem
+          text={formatMessage(m.tracks)}
+          Icon={<TracksIcon height={26} />}
+        />
       </View>
     </ScreenContentWithDock>
   );
@@ -147,7 +150,7 @@ const styles = StyleSheet.create({
   },
   bulletItem: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     gap: 10,
   },
   bulletText: {

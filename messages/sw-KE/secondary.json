@@ -22,9 +22,6 @@
   "Screens.ProjectSettings.update": {
     "message": "Sasisha"
   },
-  "Screens.ProjectSettings.view": {
-    "message": "Tazama"
-  },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "message": "Ghairi",
     "description": "Text for cancel action button."
@@ -355,9 +352,6 @@
     "message": "Badilisha"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Rudi Nyuma"
-  },
-  "soloProject.startNewProject.goBack": {
     "message": "Rudi Nyuma"
   }
 }

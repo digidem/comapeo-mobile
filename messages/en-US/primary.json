@@ -386,17 +386,11 @@
   "$1screens.DataPrivacy.title": {
     "message": "CoMapeo is private by default."
   },
-  "$1screens.DeviceNaming.Success.chooseProject": {
-    "message": "Choose from below to start your first project."
-  },
   "$1screens.DeviceNaming.Success.deviceReady": {
     "message": "{deviceName} is ready!"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Join a Project"
-  },
-  "$1screens.DeviceNaming.Success.mapOnYourOwn": {
-    "message": "Map On Your Own"
+  "$1screens.DeviceNaming.Success.startMapping": {
+    "message": "Start Mapping"
   },
   "$1screens.DeviceNaming.description": {
     "message": "Distinct names help collaborators using CoMapeo to recognize you."
@@ -842,6 +836,27 @@
   },
   "$1screens.ShareProjectStats.yesShare": {
     "message": "Yes, Share Stats"
+  },
+  "$1screens.StayNotified.NotNow": {
+    "message": "Not Now"
+  },
+  "$1screens.StayNotified.SecurelySync": {
+    "message": "Securely syncs and processes data with few interruptions."
+  },
+  "$1screens.StayNotified.StayNotified": {
+    "message": "Always Stay Notified"
+  },
+  "$1screens.StayNotified.allow": {
+    "message": "Allow"
+  },
+  "$1screens.StayNotified.allowTheFollowing": {
+    "message": "Notifications allow CoMapeo to do the following:"
+  },
+  "$1screens.StayNotified.realTimeCommunicate": {
+    "message": "Communicate about activity updates in real time."
+  },
+  "$1screens.StayNotified.workInBackground": {
+    "message": "Work in the background to ensure location stays current and accurate."
   },
   "$1screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Close"

@@ -84,14 +84,6 @@ export const InputPasscode = ({
         contentContainerStyle={styles.contentContainer}
         dockContent={
           <View style={styles.buttonsContainer}>
-            <SecondaryButton
-              fullSize
-              onPress={() => {
-                popTo('Security');
-              }}
-              text={t(m.cancel)}
-            />
-
             {showNext && (
               <PrimaryButton
                 fullSize
@@ -105,6 +97,14 @@ export const InputPasscode = ({
                 text={t(m.button)}
               />
             )}
+
+            <SecondaryButton
+              fullSize
+              onPress={() => {
+                popTo('Security');
+              }}
+              text={t(m.cancel)}
+            />
           </View>
         }>
         <HeaderText variant="header1" style={styles.header}>

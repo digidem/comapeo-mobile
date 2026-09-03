@@ -135,7 +135,6 @@ export const RemoteDetectionAlertsMapLayer = () => {
             ['get', 'yearDetec'],
             ')',
           ],
-          textFont: ['Open Sans Regular'],
           textOffset: [0, 0.5],
           textAnchor: 'top',
           textColor: '#FFFFFF',

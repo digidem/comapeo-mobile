@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@comapeo/core-react": "12.0.3",
-    "@comapeo/core-react-native": "1.0.0-pre.12",
+    "@comapeo/core-react-native": "1.0.0-pre.13",
     "@comapeo/default-categories": "1.1.2",
     "@expo-google-fonts/rubik": "0.4.2",
     "@formatjs/intl-datetimeformat": "7.5.0",

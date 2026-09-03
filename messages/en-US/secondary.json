@@ -119,9 +119,6 @@
   "Screens.ProjectSettings.editInfo": {
     "message": "Edit Info"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "Invite Collaborators"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "Project statistics are not being shared."
   },
@@ -131,17 +128,11 @@
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Share with a secure, encypted server. URL required to access."
   },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "You’re mapping on your own."
-  },
   "Screens.ProjectSettings.update": {
     "message": "Update"
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Update Set"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "View"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "View Details"

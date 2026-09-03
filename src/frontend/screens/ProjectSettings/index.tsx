@@ -29,14 +29,6 @@ const m = defineMessages({
     id: '$1Screens.ProjectSettings.title',
     defaultMessage: 'Coordinator Tools',
   },
-  soloDescription: {
-    id: 'Screens.ProjectSettings.soloDescription',
-    defaultMessage: 'You’re mapping on your own.',
-  },
-  invite: {
-    id: 'Screens.ProjectSettings.invite',
-    defaultMessage: 'Invite Collaborators',
-  },
   configTitle: {
     id: '$1Screens.ProjectSettings.configTitle',
     defaultMessage: 'Project Categories',
@@ -84,7 +76,6 @@ const m = defineMessages({
     defaultMessage: 'Project statistics are not being shared.',
   },
   update: {id: 'Screens.ProjectSettings.update', defaultMessage: 'Update'},
-  view: {id: 'Screens.ProjectSettings.view', defaultMessage: 'View'},
 });
 
 export const ProjectSettings = () => {
@@ -93,11 +84,7 @@ export const ProjectSettings = () => {
   const {formatMessage} = useIntl();
   const {navigate} = useNavigationFromRoot();
   const {data: configData} = useProjectSettings();
-  const isSolo = projectInfo.role === 'solo';
-  const isCoordinator = projectInfo.role === 'coordinator';
   const remoteArchiveOn = !!useActiveArchiveServer({projectId});
-  const participantWithRemote =
-    projectInfo.role === 'participant' && remoteArchiveOn;
 
   const sendStatsOn = configData.sendStats;
 
@@ -106,61 +93,39 @@ export const ProjectSettings = () => {
       <SettingsCardRow
         icon={<NoProjectIcon width={24} height={24} />}
         title={projectInfo.projectHeader}
-        subtitle={
-          isSolo
-            ? formatMessage(m.soloDescription)
-            : projectInfo.projectDescription
-        }
-        buttonText={
-          isSolo
-            ? formatMessage(m.invite)
-            : isCoordinator
-              ? formatMessage(m.editInfo)
-              : undefined
-        }
-        onPress={
-          isSolo || isCoordinator
-            ? () => {
-                navigate(isSolo ? 'InviteCollaborators' : 'EditProjectDetails');
-              }
-            : undefined
-        }
+        subtitle={projectInfo.projectDescription}
+        buttonText={formatMessage(m.editInfo)}
+        onPress={() => navigate('EditProjectDetails')}
       />
-      {(isCoordinator || participantWithRemote) && (
-        <SettingsCardRow
-          icon={<ExchangeIcon width={24} height={24} color={NEW_DARK_GREY} />}
-          title={formatMessage(
-            remoteArchiveOn ? m.remoteArchiveOn : m.remoteArchiveOff,
-          )}
-          subtitle={formatMessage(m.remoteArchiveDesc)}
-          buttonText={formatMessage(m.viewDetails)}
-          onPress={() => navigate('RemoteArchive')}
-        />
-      )}
-      {projectInfo.role !== 'participant' && (
-        <SettingsCardRow
-          icon={
-            <Fontisto name="nav-icon-grid-a" size={24} color={NEW_DARK_GREY} />
-          }
-          title={formatMessage(m.configTitle)}
-          subtitle={configData?.configMetadata?.name}
-          buttonText={formatMessage(m.updateCategories)}
-          onPress={() => navigate('Categories')}
-        />
-      )}
-      {!isSolo && (
-        <SettingsCardRow
-          icon={<GraphIcon width={24} height={24} color={NEW_DARK_GREY} />}
-          title={formatMessage(
-            sendStatsOn ? m.projectStatsOn : m.projectStatsOff,
-          )}
-          subtitle={formatMessage(
-            sendStatsOn ? m.projectStatsOnDesc : m.projectStatsOffDesc,
-          )}
-          buttonText={formatMessage(isCoordinator ? m.update : m.view)}
-          onPress={() => navigate('ProjectStatistics')}
-        />
-      )}
+      <SettingsCardRow
+        icon={<ExchangeIcon width={24} height={24} color={NEW_DARK_GREY} />}
+        title={formatMessage(
+          remoteArchiveOn ? m.remoteArchiveOn : m.remoteArchiveOff,
+        )}
+        subtitle={formatMessage(m.remoteArchiveDesc)}
+        buttonText={formatMessage(m.viewDetails)}
+        onPress={() => navigate('RemoteArchive')}
+      />
+      <SettingsCardRow
+        icon={
+          <Fontisto name="nav-icon-grid-a" size={24} color={NEW_DARK_GREY} />
+        }
+        title={formatMessage(m.configTitle)}
+        subtitle={configData?.configMetadata?.name}
+        buttonText={formatMessage(m.updateCategories)}
+        onPress={() => navigate('Categories')}
+      />
+      <SettingsCardRow
+        icon={<GraphIcon width={24} height={24} color={NEW_DARK_GREY} />}
+        title={formatMessage(
+          sendStatsOn ? m.projectStatsOn : m.projectStatsOff,
+        )}
+        subtitle={formatMessage(
+          sendStatsOn ? m.projectStatsOnDesc : m.projectStatsOffDesc,
+        )}
+        buttonText={formatMessage(m.update)}
+        onPress={() => navigate('ProjectStatistics')}
+      />
     </ScrollView>
   );
 };
@@ -169,8 +134,8 @@ type SettingsCardRowProps = {
   icon: React.ReactNode;
   title: string;
   subtitle?: string;
-  buttonText?: string;
-  onPress?: () => void;
+  buttonText: string;
+  onPress: () => void;
 };
 
 const SettingsCardRow = ({
@@ -184,7 +149,6 @@ const SettingsCardRow = ({
     <TouchableOpacity
       style={styles.card}
       onPress={onPress}
-      disabled={!onPress}
       accessibilityRole="button"
       accessibilityLabel={buttonText}>
       <View style={styles.row}>
@@ -196,18 +160,16 @@ const SettingsCardRow = ({
               {subtitle}
             </BodyText>
           )}
-          {!!buttonText && (
-            <View style={styles.buttonRow}>
-              <HeaderText variant="header5" style={styles.buttonText}>
-                {buttonText}
-              </HeaderText>
-              <MaterialIcons
-                name="arrow-forward"
-                size={24}
-                color={COMAPEO_BLUE}
-              />
-            </View>
-          )}
+          <View style={styles.buttonRow}>
+            <HeaderText variant="header5" style={styles.buttonText}>
+              {buttonText}
+            </HeaderText>
+            <MaterialIcons
+              name="arrow-forward"
+              size={24}
+              color={COMAPEO_BLUE}
+            />
+          </View>
         </View>
       </View>
     </TouchableOpacity>

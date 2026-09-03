@@ -22,9 +22,6 @@
   "Screens.ProjectSettings.update": {
     "message": "Cập nhật"
   },
-  "Screens.ProjectSettings.view": {
-    "message": "Xem"
-  },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "message": "Hủy",
     "description": "Text for cancel action button."
@@ -350,9 +347,6 @@
     "message": "Thay đổi"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Quay trở lại"
-  },
-  "soloProject.startNewProject.goBack": {
     "message": "Quay trở lại"
   }
 }

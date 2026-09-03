@@ -4,5 +4,5 @@ describe('CoMapeo E2E Flow', function () {
   require('../set-qa-device-name.test');
   require('../data-privacy.test');
   require('../device-naming.test');
-  require('../map-on-your-own-intro.test');
+  require('../success.test');
 });

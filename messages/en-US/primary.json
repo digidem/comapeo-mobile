@@ -942,8 +942,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Start New Project"
   }
 }

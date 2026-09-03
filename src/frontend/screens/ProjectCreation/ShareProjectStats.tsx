@@ -103,15 +103,15 @@ export const ShareProjectStats = ({
           </View>
         ) : (
           <View style={styles.buttons}>
-            <SecondaryButton
-              fullSize
-              onPress={handleSkip}
-              text={formatMessage(m.skip)}
-            />
             <PrimaryButton
               fullSize
               onPress={handleShare}
               text={formatMessage(m.yesShare)}
+            />
+            <SecondaryButton
+              fullSize
+              onPress={handleSkip}
+              text={formatMessage(m.skip)}
             />
           </View>
         )

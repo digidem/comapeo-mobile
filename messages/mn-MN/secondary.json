@@ -22,9 +22,6 @@
   "Screens.ProjectSettings.update": {
     "message": "Шинэчлэх"
   },
-  "Screens.ProjectSettings.view": {
-    "message": "Харах"
-  },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "message": "Цуцлах",
     "description": "Text for cancel action button."
@@ -338,9 +335,6 @@
     "message": "Өөрчлөх"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Буцах"
-  },
-  "soloProject.startNewProject.goBack": {
     "message": "Буцах"
   }
 }

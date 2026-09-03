@@ -744,8 +744,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Etwas ist schief"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Neues Projekt starten"
   }
 }

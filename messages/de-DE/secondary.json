@@ -109,9 +109,6 @@
   "Screens.ProjectSettings.editInfo": {
     "message": "Info bearbeiten"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "Mitarbeiter einladen"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "Projektstatistiken werden nicht freigegeben."
   },
@@ -121,14 +118,8 @@
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Teilen mit einem sicheren, eingebetteten Server. URL wird benötigt um darauf zuzugreifen."
   },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "Du mappst auf eigene Faust."
-  },
   "Screens.ProjectSettings.update": {
     "message": "Aktualisieren"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "Ansicht"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "Details anzeigen"
@@ -1158,20 +1149,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Mitarbeiter einladen"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "Gehe zurück"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "Sicherer und privater Austausch mit Mitarbeitern."
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "Nur Geräte, die zu einem Projekt eingeladen werden, können dazu beitragen."
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "Verwalten Sie einfach Projektmitarbeiter und -einstellungen."
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "Jedes Projekt ist einzigartig und separat."
   }
 }

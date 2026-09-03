@@ -62,15 +62,15 @@ export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
     <ScreenContentWithDock
       dockContent={
         <View style={styles.buttonsContainer}>
-          <SecondaryButton
-            fullSize={true}
-            text={t(m.goBack)}
-            onPress={handleGoBack}
-          />
           <PrimaryButton
             fullSize={true}
             text={t(m.nameMyProject)}
             onPress={handleNameProject}
+          />
+          <SecondaryButton
+            fullSize={true}
+            text={t(m.goBack)}
+            onPress={handleGoBack}
           />
         </View>
       }>

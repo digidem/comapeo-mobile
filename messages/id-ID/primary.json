@@ -420,9 +420,6 @@
     "message": "Ya",
     "description": "if a location sensor is active yes/no"
   },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Hidupkan Lokasi"
-  },
   "$1screens.Observation.ObservationView.delete": {
     "message": "Hapus",
     "description": "Button to delete an observation"
@@ -772,8 +769,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Ada yang Tak Beres"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Mulai Proyek Baru"
   }
 }

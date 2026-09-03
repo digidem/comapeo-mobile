@@ -414,12 +414,6 @@
     "message": "Sim",
     "description": "if a location sensor is active yes/no"
   },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Ligar"
-  },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use sua localização"
-  },
   "$1screens.Observation.ObservationView.delete": {
     "message": "Excluir",
     "description": "Button to delete an observation"
@@ -788,8 +782,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Ocorreu um erro"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Começar um novo projeto"
   }
 }

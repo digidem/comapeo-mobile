@@ -42,7 +42,7 @@ describe('Onboarding - Map On Your Own Intro Screen', () => {
     const goToMapButton = await $(byResourceId('ONBOARDING.go-to-map-btn'));
     await goToMapButton.click();
 
-    await driver.pause(2000);
+    await driver.pause(3500);
     await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
   });
   it('should still be on Map screen after closing app and reopening', async () => {

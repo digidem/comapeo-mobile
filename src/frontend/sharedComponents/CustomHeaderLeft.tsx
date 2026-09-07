@@ -28,6 +28,8 @@ export const CustomHeaderLeft = ({
   return (
     <HeaderBackButton
       {...headerBackButtonProps}
+      // next line is needed for iOS so it doesn't include the previous screen's title in the back button
+      displayMode="minimal"
       testID="MAIN.header-back-btn"
       onPress={onPress || (() => navigation.goBack())}
       style={CustomHeaderLeftStyles}

@@ -150,6 +150,7 @@ const SharedBackButton = ({
   return (
     <HeaderBackButton
       {...headerBackButtonProps}
+      displayMode="minimal"
       style={{marginLeft: 0, marginRight: 15}}
       onPress={onPress ? onPress : () => navigation.goBack()}
       testID="OBS.close-icon"

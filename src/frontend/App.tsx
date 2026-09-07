@@ -98,7 +98,11 @@ const mapServerApi = {
 };
 // iOS only reads the wifi SSID when this is set. Must run before local discovery
 // starts (see below), because configure() drops listeners added before it.
-NetInfo.configure({shouldFetchWiFiSSID: true});
+NetInfo.configure({
+  shouldFetchWiFiSSID: true,
+  // Prevents polling an external URL on iOS since it has no native reachability.
+  reachabilityShouldRun: () => false,
+});
 
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();

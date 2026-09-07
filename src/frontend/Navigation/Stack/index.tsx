@@ -31,8 +31,8 @@ export type NavigatorScreenLayout = NonNullable<
 >;
 
 // Android's bottom inset sits behind the system navigation bar, where grey is a
-// deliberate visual choice (#1671). iOS's is the home activity indicator, where anything but
-// color of the tabs doesn't fit visually (#2077).
+// deliberate visual choice. iOS's is the home activity indicator, where anything but
+// color of the tabs doesn't fit visually.
 const BOTTOM_INSET_COLOR = Platform.OS === 'android' ? MEDIUM_GREY : WHITE;
 
 const NavigatorScreenOptions: NativeStackNavigationOptions = {

@@ -10,7 +10,11 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {MEMBER_ROLE_ID} from '../../sharedTypes';
-import {saveDocuments} from '@react-native-documents/picker';
+import {
+  errorCodes,
+  isErrorWithCode,
+  saveDocuments,
+} from '@react-native-documents/picker';
 import {Exports} from '../../sharedTypes/navigation';
 import * as FileSystem from 'expo-file-system/legacy';
 import {useLocaleState} from '../../contexts/LocaleStoreContext';
@@ -18,12 +22,7 @@ import {useIntl} from 'react-intl';
 import noop from '../../lib/noop';
 
 export function isUserCancelled(err: unknown): boolean {
-  return (
-    typeof err === 'object' &&
-    err !== null &&
-    'message' in err &&
-    (err as {message?: string}).message === 'user canceled the document picker'
-  );
+  return isErrorWithCode(err) && err.code === errorCodes.OPERATION_CANCELED;
 }
 
 export function useProjectSettings() {

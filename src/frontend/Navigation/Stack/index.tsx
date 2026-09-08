@@ -120,6 +120,13 @@ export const RootStackNavigator = () => {
         {!isNotReadyForInvite && (
           <DeepLinkListener
             currentRouteName={state.routes[state.index]?.name}
+            navigateToInviteScreen={inviteId =>
+              navigation.dispatch(
+                openSheetAction({state, descriptors}, 'InviteReceived', {
+                  inviteId,
+                }),
+              )
+            }
           />
         )}
         {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.

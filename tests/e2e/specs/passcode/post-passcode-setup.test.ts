@@ -12,7 +12,6 @@ describe('Passcode - Post Passcode Setup Flow', () => {
     await appSettingsOption.click();
 
     const securityOption = await $(byResourceId('securitySettingsButton'));
-    await securityOption.scrollIntoView();
     await securityOption.click();
 
     const appPasscodeItem = await $(byText('App Passcode'));

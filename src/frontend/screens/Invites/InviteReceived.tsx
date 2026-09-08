@@ -79,7 +79,7 @@ export const InviteReceived = ({
 
   function accept() {
     if (isTracking) {
-      navigation.navigate('TrackRecordingActive');
+      navigation.replace('TrackRecordingActive');
       return;
     }
 

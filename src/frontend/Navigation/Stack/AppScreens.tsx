@@ -92,15 +92,9 @@ import {
   RemoteArchiveScreen,
   createNavigationOptions as createRemoteArchiveNavigationOptions,
 } from '../../screens/RemoteArchive/index.tsx';
-import {
-  RemoveRemoteArchive,
-  navigationOptions as removeRemoteArchiveNavigationOptions,
-} from '../../screens/RemoteArchive/RemoveRemoteArchive.tsx';
+import {RemoveRemoteArchive} from '../../screens/RemoteArchive/RemoveRemoteArchive.tsx';
 import {ExportObservations} from '../../screens/ExportObservations.tsx';
-import {
-  ConfirmDeletePhoto,
-  navigationOptions as confirmDeletePhotoNavigationOptions,
-} from '../../screens/ConfirmDeletePhoto.tsx';
+import {ConfirmDeletePhoto} from '../../screens/ConfirmDeletePhoto.tsx';
 import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackScreen.tsx';
 import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
 import {DidNotMoveBottomSheet} from '../../screens/MapScreen/TrackBottomSheet/DidNotMoveBottomSheet.tsx';
@@ -179,11 +173,6 @@ export const createAppScreens = ({
         name="AttachedPhotoPreviewModal"
         component={AttachedPhotoPreviewModal}
         options={sharedPhotoPreviewNavOptions({intl})}
-      />
-      <RootStack.Screen
-        name="ConfirmDeletePhoto"
-        component={ConfirmDeletePhoto}
-        options={confirmDeletePhotoNavigationOptions}
       />
       <RootStack.Screen
         name="Security"
@@ -470,11 +459,6 @@ export const createAppScreens = ({
         options={{headerShown: false}}
       />
       <RootStack.Screen
-        name="RemoveRemoteArchive"
-        component={RemoveRemoteArchive}
-        options={removeRemoteArchiveNavigationOptions}
-      />
-      <RootStack.Screen
         name="AudioRecording"
         component={AudioRecording}
         options={{headerShown: false, statusBarStyle: 'light'}}
@@ -654,6 +638,14 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="WhatsIncludedBottomSheet"
         component={WhatsIncludedBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDeletePhoto"
+        component={ConfirmDeletePhoto}
+      />
+      <RootStack.Screen
+        name="RemoveRemoteArchive"
+        component={RemoveRemoteArchive}
       />
       <RootStack.Screen
         name="ConfirmDiscardObservationBottomSheet"

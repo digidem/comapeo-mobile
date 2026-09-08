@@ -58,7 +58,7 @@ export const ConfirmPasscodeBottomSheet = ({
       navigation.popTo('Security');
     } catch (e) {
       Sentry.captureException(e);
-      navigation.navigate('ErrorBottomSheet', {
+      navigation.replace('ErrorBottomSheet', {
         error: toError(e, 'Error setting passcode'),
       });
     } finally {

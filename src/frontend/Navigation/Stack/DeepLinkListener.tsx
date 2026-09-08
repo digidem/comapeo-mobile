@@ -1,15 +1,15 @@
 import * as React from 'react';
 import {useLinkingURL} from 'expo-linking';
 import {parseInviteUrl} from '../../lib/deepLinkConfig';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {isInviteScreen, isEditingScreen} from '../../lib/screenNameChecks';
 
 export const DeepLinkListener = ({
   currentRouteName,
+  navigateToInviteScreen,
 }: {
   currentRouteName: string | undefined;
+  navigateToInviteScreen: (inviteId: string) => void;
 }) => {
-  const navigation = useNavigationFromRoot();
   const url = useLinkingURL();
   const pendingInviteId = url ? parseInviteUrl(url) : null;
 
@@ -17,8 +17,8 @@ export const DeepLinkListener = ({
     if (!pendingInviteId || !currentRouteName) return;
     if (isInviteScreen(currentRouteName)) return;
     if (isEditingScreen(currentRouteName)) return;
-    navigation.navigate('InviteReceived', {inviteId: pendingInviteId});
-  }, [pendingInviteId, currentRouteName, navigation]);
+    navigateToInviteScreen(pendingInviteId);
+  }, [pendingInviteId, currentRouteName, navigateToInviteScreen]);
 
   return null;
 };

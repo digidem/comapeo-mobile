@@ -22,7 +22,6 @@ import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
 import {CommonActions, StackActions} from '@react-navigation/native';
-import {isBottomSheetScreen} from '../../lib/screenNameChecks';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -41,15 +40,22 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   statusBarStyle: 'dark',
 };
 
-// iOS keeps a presented modal above anything that arrives after it, so an
-// incoming sheet has to take the place of an open sheet instead of stacking on
-// it. Otherwise the new sheet is unreachable behind the one already showing.
+type LayoutProps = Parameters<NavigatorLayout>[0];
+
+// Anything with the presentation option other than a 'card' is presented as a modal,
+// and iOS keeps a presented modal above whatever arrives after it. So when one is
+// already open, the incoming screen has to replace it rather than stack behind it.
 function openSheetAction(
-  currentRouteName: string | undefined,
+  {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
   name: 'InviteReceived' | 'MapReceivedBottomSheet',
   params: {inviteId: string} | {shareId: string},
 ) {
-  return isBottomSheetScreen(currentRouteName)
+  const currentRoute = state.routes[state.index];
+  const presentation = currentRoute
+    ? descriptors[currentRoute.key]?.options.presentation
+    : undefined;
+
+  return presentation && presentation !== 'card'
     ? StackActions.replace(name, params)
     : CommonActions.navigate(name, params);
 }
@@ -81,7 +87,12 @@ export const RootStackNavigator = () => {
     !deviceInfo.name ||
     !activeProjectId;
 
-  const layout: NavigatorLayout = ({children, state, navigation}) => (
+  const layout: NavigatorLayout = ({
+    children,
+    state,
+    navigation,
+    descriptors,
+  }) => (
     <SafeAreaView
       edges={['bottom']}
       style={{flex: 1, backgroundColor: MEDIUM_GREY}}>
@@ -90,13 +101,9 @@ export const RootStackNavigator = () => {
           currentRouteName={state.routes[state.index]?.name}
           navigateToInviteScreen={inviteId =>
             navigation.dispatch(
-              openSheetAction(
-                state.routes[state.index]?.name,
-                'InviteReceived',
-                {
-                  inviteId,
-                },
-              ),
+              openSheetAction({state, descriptors}, 'InviteReceived', {
+                inviteId,
+              }),
             )
           }
         />
@@ -104,11 +111,9 @@ export const RootStackNavigator = () => {
           currentRouteName={state.routes[state.index]?.name}
           navigateToMapShareScreen={shareId =>
             navigation.dispatch(
-              openSheetAction(
-                state.routes[state.index]?.name,
-                'MapReceivedBottomSheet',
-                {shareId},
-              ),
+              openSheetAction({state, descriptors}, 'MapReceivedBottomSheet', {
+                shareId,
+              }),
             )
           }
         />

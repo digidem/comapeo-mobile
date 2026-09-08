@@ -59,44 +59,6 @@ export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [
   'TrackRecordingActive',
 ];
 
-// Every route rendered with `presentation: 'transparentModal'`. iOS keeps a
-// presented modal on top of anything that arrives after it, so a sheet must
-// replace an open sheet rather than stack on it. Keep in sync with the modal
-// groups in Navigation/Stack/AppScreens.tsx and Navigation/Stack/index.tsx,
-// plus MapShareCanceledBottomSheet, which sets its presentation per screen so
-// it can keep an opaque background and a fade.
-export const BOTTOM_SHEET_SCREEN_NAMES: (keyof AppStackParamsList)[] = [
-  'AllProjects',
-  'AudioAskPermissionBottomSheet',
-  'BackgroundMapErrorBottomSheet',
-  'ConfirmDeleteObservationBottomSheet',
-  'ConfirmDeletePhoto',
-  'ConfirmDeleteTrackBottomSheet',
-  'ConfirmDiscardObservationBottomSheet',
-  'ConfirmDiscardObservationEditBottomSheet',
-  'ConfirmDiscardTrackBottomSheet',
-  'ConfirmPasscodeSheet',
-  'ConfirmTrackDiscardBottomSheet',
-  'DeleteCustomMapBottomSheet',
-  'DidNotMoveBottomSheet',
-  'EarlyAccessOff',
-  'ErrorBottomSheet',
-  'ExchangeSettingsBottomSheet',
-  'ExportSuccess',
-  'InviteCanceled',
-  'InviteReceived',
-  'InviteSuccessfullyAccepted',
-  'MapAddedBottomSheet',
-  'MapReceivedBottomSheet',
-  'MapShareCanceledBottomSheet',
-  'ProjectStatsTurnedOff',
-  'RemovedFromProjectBottomSheet',
-  'RemoveRemoteArchive',
-  'TrackRecordingActive',
-  'TurnOffPasscodeBottomSheet',
-  'WhatsIncludedBottomSheet',
-];
-
 export const MAP_SHARE_SCREEN_NAMES: (keyof AppStackParamsList)[] = [
   'MapReceivedBottomSheet',
   'ReplaceBackgroundMap',

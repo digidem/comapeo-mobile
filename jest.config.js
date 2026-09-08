@@ -47,6 +47,7 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   'p-timeout',
   'parse-json',
   'serialize-error',
+  'start-stop-state-machine',
   'string-timing-safe-equal',
   'styled-map-package',
   'uint8array-extras',

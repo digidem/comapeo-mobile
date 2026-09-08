@@ -21,6 +21,8 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
+import {CommonActions, StackActions} from '@react-navigation/native';
+import {isBottomSheetScreen} from '../../lib/screenNameChecks';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -38,6 +40,19 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   headerBackVisible: false,
   statusBarStyle: 'dark',
 };
+
+// iOS keeps a presented modal above anything that arrives after it, so an
+// incoming sheet has to take the place of an open sheet instead of stacking on
+// it. Otherwise the new sheet is unreachable behind the one already showing.
+function openSheetAction(
+  currentRouteName: string | undefined,
+  name: 'InviteReceived' | 'MapReceivedBottomSheet',
+  params: {inviteId: string} | {shareId: string},
+) {
+  return isBottomSheetScreen(currentRouteName)
+    ? StackActions.replace(name, params)
+    : CommonActions.navigate(name, params);
+}
 
 function getInitialRoute(
   authState: 'authenticated' | 'unauthenticated' | 'obscured',
@@ -74,13 +89,27 @@ export const RootStackNavigator = () => {
         <PendingInvitesListener
           currentRouteName={state.routes[state.index]?.name}
           navigateToInviteScreen={inviteId =>
-            navigation.navigate('InviteReceived', {inviteId})
+            navigation.dispatch(
+              openSheetAction(
+                state.routes[state.index]?.name,
+                'InviteReceived',
+                {
+                  inviteId,
+                },
+              ),
+            )
           }
         />
         <PendingMapSharesListener
           currentRouteName={state.routes[state.index]?.name}
           navigateToMapShareScreen={shareId =>
-            navigation.navigate('MapReceivedBottomSheet', {shareId})
+            navigation.dispatch(
+              openSheetAction(
+                state.routes[state.index]?.name,
+                'MapReceivedBottomSheet',
+                {shareId},
+              ),
+            )
           }
         />
         {!isNotReadyForInvite && (

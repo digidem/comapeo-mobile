@@ -33,7 +33,10 @@ export const AllProjects = () => {
   const {data} = useManyProjects();
   const {projectId: currentProjectId} = useActiveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const {goBack, navigate} = useNavigationFromRoot();
+  // Every route this sheet leads to is reached with `replace`: iOS keeps a
+  // modal presented above anything pushed after it, so the sheet has to leave
+  // the stack in the same action or it covers wherever the user just went.
+  const {goBack, replace} = useNavigationFromRoot();
   const {formatMessage} = useIntl();
   const {isTracking} = useTracking();
 
@@ -54,13 +57,13 @@ export const AllProjects = () => {
         return;
       }
       if (isTracking && currentProjectId !== targetProjectId) {
-        navigate('TrackRecordingActive');
+        replace('TrackRecordingActive');
         return;
       }
       setActiveProjectId(targetProjectId);
       goBack();
     },
-    [currentProjectId, isTracking, goBack, navigate, setActiveProjectId],
+    [currentProjectId, isTracking, goBack, replace, setActiveProjectId],
   );
 
   const renderItem = React.useCallback<ListRenderItem<ProjectListItem>>(
@@ -95,10 +98,10 @@ export const AllProjects = () => {
         fullSize={true}
         onPress={() => {
           if (isTracking) {
-            navigate('TrackRecordingActive');
+            replace('TrackRecordingActive');
             return;
           }
-          navigate('Collaborate');
+          replace('Collaborate');
         }}
         style={{alignSelf: 'center', marginBottom: 10, marginTop: 20}}
         text={formatMessage(m.newCollab)}

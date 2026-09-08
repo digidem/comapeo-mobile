@@ -93,7 +93,7 @@ export const RemovedFromProjectBottomSheet = ({
                               navigation.popToTop();
                               return;
                             }
-                            navigation.navigate('ErrorBottomSheet', {
+                            navigation.replace('ErrorBottomSheet', {
                               error: toError(
                                 err,
                                 'Error creating default project',

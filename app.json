@@ -121,6 +121,9 @@
     },
     "ios": {
       "bundleIdentifier": "com.comapeo",
+      "entitlements": {
+        "com.apple.developer.networking.wifi-info": true
+      },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocalNetworkUsageDescription": "CoMapeo uses the local network to discover and sync with nearby devices in your project.",

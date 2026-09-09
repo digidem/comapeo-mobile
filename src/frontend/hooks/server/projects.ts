@@ -10,20 +10,12 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {MEMBER_ROLE_ID} from '../../sharedTypes';
-import {
-  errorCodes,
-  isErrorWithCode,
-  saveDocuments,
-} from '@react-native-documents/picker';
+import {saveDocuments} from '@react-native-documents/picker';
 import {Exports} from '../../sharedTypes/navigation';
 import * as FileSystem from 'expo-file-system/legacy';
 import {useLocaleState} from '../../contexts/LocaleStoreContext';
 import {useIntl} from 'react-intl';
 import noop from '../../lib/noop';
-
-export function isUserCancelled(err: unknown): boolean {
-  return isErrorWithCode(err) && err.code === errorCodes.OPERATION_CANCELED;
-}
 
 export function useProjectSettings() {
   const {projectId} = useActiveProject();

@@ -1,6 +1,7 @@
 import * as React from 'react';
+import {Platform} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, type Edge} from 'react-native-safe-area-context';
 import {WHITE, MEDIUM_GREY} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
@@ -28,6 +29,8 @@ export type NavigatorLayout = NonNullable<
 export type NavigatorScreenLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
 >;
+
+const SAFE_AREA_EDGES: Edge[] = Platform.OS === 'android' ? ['bottom'] : [];
 
 const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
@@ -68,7 +71,7 @@ export const RootStackNavigator = () => {
 
   const layout: NavigatorLayout = ({children, state, navigation}) => (
     <SafeAreaView
-      edges={['bottom']}
+      edges={SAFE_AREA_EDGES}
       style={{flex: 1, backgroundColor: MEDIUM_GREY}}>
       <React.Suspense fallback={<FullScreenCenteredLoader />}>
         <PendingInvitesListener

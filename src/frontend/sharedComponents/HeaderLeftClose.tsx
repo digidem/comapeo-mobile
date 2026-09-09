@@ -1,6 +1,7 @@
 import React from 'react';
 import {BLACK} from '../lib/styles';
 import {HeaderCloseIcon} from './CustomHeaderLeftClose';
+import {CustomHeaderLeftStyles} from './CustomHeaderLeft';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {HeaderBackButton} from '@react-navigation/elements';
 
@@ -20,7 +21,7 @@ export const HeaderLeftClose = ({
       {...headerBackButtonProps}
       displayMode="minimal"
       testID="OBS.header-left-close"
-      style={{marginLeft: 0, marginRight: 15}}
+      style={CustomHeaderLeftStyles}
       onPress={onPress}
       backImage={() => <HeaderCloseIcon tintColor={tintColor || BLACK} />}
     />

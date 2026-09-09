@@ -5,7 +5,7 @@ import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {BackIcon} from './icons';
 import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 // We use a slightly larger back icon, to improve accessibility
 // TODO iOS: This should probably be a chevron not an arrow
@@ -39,5 +39,11 @@ export const CustomHeaderLeft = ({
 };
 
 export const CustomHeaderLeftStyles = StyleSheet.create({
-  headerStyles: {marginLeft: 0, marginRight: 15},
+  headerStyles: {
+    marginLeft: 0,
+    // iOS 26 draws a glass capsule around the button's frame, ("liquid glass") and a trailing
+    // margin sits inside it, pushing the arrow off center. Android has no
+    // capsule and needs the gap before the title.
+    marginRight: Platform.OS === 'android' ? 15 : 0,
+  },
 }).headerStyles;

@@ -1,6 +1,7 @@
 import React from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
+import {CustomHeaderLeftStyles} from './CustomHeaderLeft';
 import {BackHandler} from 'react-native';
 import isEqual from 'lodash.isequal';
 
@@ -151,7 +152,7 @@ const SharedBackButton = ({
     <HeaderBackButton
       {...headerBackButtonProps}
       displayMode="minimal"
-      style={{marginLeft: 0, marginRight: 15}}
+      style={CustomHeaderLeftStyles}
       onPress={onPress ? onPress : () => navigation.goBack()}
       testID="OBS.close-icon"
       backImage={() => <HeaderCloseIcon tintColor={tintColor || BLACK} />}

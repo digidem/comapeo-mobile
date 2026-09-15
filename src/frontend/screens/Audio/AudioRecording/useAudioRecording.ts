@@ -4,14 +4,13 @@ import {
   useAudioRecorderState,
   setAudioModeAsync,
   RecordingPresets,
-  RecordingOptions,
 } from 'expo-audio';
 
 // `directory: 'document'` keeps recordings out of the cache dir, which iOS can
 // purge under storage pressure before the draft observation gets saved.
-const RECORDING_OPTIONS: RecordingOptions = {
+const RECORDING_OPTIONS = {
   ...RecordingPresets.HIGH_QUALITY!,
-  directory: 'cache',
+  directory: 'document' as const,
 };
 
 export function useAudioRecording() {

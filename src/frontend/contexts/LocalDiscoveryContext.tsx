@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AppState, AppStateStatus} from 'react-native';
+import {AppState, AppStateStatus, Platform} from 'react-native';
 import NetInfo, {
   type NetInfoWifiState,
   type NetInfoState,
@@ -235,8 +235,8 @@ export function createLocalDiscoveryController(mapeoApi: ComapeoCoreClientApi) {
     // Don't do anything if the app is not active (starting and stopping
     // discovery based on appState is handled below in onAppState)
     if (appState !== 'active') return;
-    const nextIpAddress = nextNetInfo.details.ipAddress;
-    const prevIpAddress = netInfo?.details ? netInfo.details.ipAddress : null;
+    const nextIpAddress = getWifiIpAddress(nextNetInfo);
+    const prevIpAddress = getWifiIpAddress(netInfo);
     // netInfo.isConnected is true (I think) only if the wifi network has
     // internet access. We use the presence of an IP address to detect if wifi
     // is connected to a local network.
@@ -274,7 +274,7 @@ export function createLocalDiscoveryController(mapeoApi: ComapeoCoreClientApi) {
     }
     netInfo = nextNetInfo;
     updateState({
-      wifiStatus: nextNetInfo.isWifiEnabled ? 'on' : 'off',
+      wifiStatus: getWifiStatus(nextNetInfo, isLocalWifiConnected),
       wifiConnection: isLocalWifiConnected ? 'connected' : 'disconnected',
       wifiLinkSpeed: nextNetInfo.details.linkSpeed,
       ssid: nextNetInfo.details.ssid,
@@ -432,6 +432,28 @@ function zeroconfServiceToMapeoPeer({
   // remove the suffix when connecting to the peer.
   const name = serviceName.replace(/[^a-fA-F0-9].*/g, '');
   return address ? {address, port, name} : null;
+}
+
+// Both platforms report the wifi interface's IP address as '0.0.0.0' when the
+// device is not associated with a network
+const UNASSIGNED_IP_ADDRESS = '0.0.0.0';
+
+function getWifiIpAddress(
+  netInfoState: NetInfoWifiState | NetInfoDisconnectedStates | null,
+) {
+  const ipAddress = netInfoState?.details?.ipAddress;
+  return !ipAddress || ipAddress === UNASSIGNED_IP_ADDRESS ? null : ipAddress;
+}
+
+// `isWifiEnabled` is Android-only — iOS reports only whether or not we are on a wifi network
+function getWifiStatus(
+  netInfoState: NetInfoWifiState,
+  isLocalWifiConnected: boolean,
+): LocalDiscoveryState['wifiStatus'] {
+  if (Platform.OS === 'android') {
+    return netInfoState.isWifiEnabled ? 'on' : 'off';
+  }
+  return isLocalWifiConnected ? 'on' : 'off';
 }
 
 function shallowPartialEqual<T extends {[k: string]: unknown}>(

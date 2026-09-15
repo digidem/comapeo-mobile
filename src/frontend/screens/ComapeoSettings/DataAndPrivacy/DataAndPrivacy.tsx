@@ -132,7 +132,14 @@ export const DataAndPrivacy = ({
           </BodyText>
         </View>
         <View style={styles.horizontalLine} />
-        <MetricsDiagnosticsPermissionToggle />
+        <MetricsDiagnosticsPermissionToggle
+          onChange={enabled =>
+            navigation.navigate('MetricsResetWarning', {
+              metric: 'diagnostics',
+              sharing: enabled ? 'on' : 'off',
+            })
+          }
+        />
       </View>
 
       <View style={styles.itemContainer}>
@@ -172,7 +179,13 @@ export const DataAndPrivacy = ({
           <Checkbox
             hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
             value={appUsageOptedIn}
-            onPress={() => setOptedIn(!appUsageOptedIn)}
+            onPress={() => {
+              setOptedIn(!appUsageOptedIn);
+              navigation.navigate('MetricsResetWarning', {
+                metric: 'appUsage',
+                sharing: appUsageOptedIn ? 'off' : 'on',
+              });
+            }}
           />
         </View>
       </View>

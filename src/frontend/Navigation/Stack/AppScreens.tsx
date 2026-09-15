@@ -68,6 +68,7 @@ import {
 } from '../../screens/Track/index.tsx';
 import {DataAndPrivacy} from '../../screens/ComapeoSettings/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/ComapeoSettings/DataAndPrivacy/SettingsPrivacyPolicy';
+import {MetricsResetWarningBottomSheet} from '../../screens/ComapeoSettings/DataAndPrivacy/MetricsResetWarningBottomSheet';
 import {TrackEdit} from '../../screens/TrackEdit';
 import {HeaderLeft as HeaderLeftTrackEdit} from '../../screens/TrackEdit/HeaderLeft';
 import {Categories} from '../../screens/Categories.tsx';
@@ -631,6 +632,10 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="EarlyAccessOff"
         component={EarlyAccessOffBottomSheet}
+      />
+      <RootStack.Screen
+        name="MetricsResetWarning"
+        component={MetricsResetWarningBottomSheet}
       />
       <RootStack.Screen
         name="AllProjects"

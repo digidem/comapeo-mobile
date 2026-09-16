@@ -1,96 +1,22 @@
 import React from 'react';
-import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled';
-import * as Location from 'expo-location';
 import {
-  Linking,
   StyleSheet,
   View,
-  AppState,
   LayoutChangeEvent,
   useWindowDimensions,
 } from 'react-native';
-import {FullScreenCenteredLoader} from '../../../sharedComponents/FullScreenCenteredLoader';
-import {StartStopTrack} from './StartStopTrack';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
 import {WHITE} from '../../../lib/styles';
-import {useFocusEffect} from '@react-navigation/native';
-import {useLocationPermissionModalMutation} from '../../../hooks/useLocationPermissionTracker';
-
-const handleOpenSettings = () => {
-  Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
-};
+import {TrackSheetContent} from './TrackSheetContent';
 
 const ANIMATION_DURATION = 250;
 
 export const TrackBottomSheet = React.memo(({isOpen}: {isOpen: boolean}) => {
   const {height} = useWindowDimensions();
-  const [foregroundPermission, setForegroundPermission] =
-    React.useState<Location.LocationPermissionResponse | null>(null);
-
-  const requestForegroundPermission = useLocationPermissionModalMutation(
-    Location.requestForegroundPermissionsAsync,
-  );
-
-  const checkPermissions = React.useCallback(async () => {
-    const foreground = await Location.getForegroundPermissionsAsync();
-    setForegroundPermission(foreground);
-  }, []);
-
-  // Re-check permissions on screen focus, but only while the sheet is open.
-  // Handles re-checking when navigating back from in-app
-  useFocusEffect(
-    React.useCallback(() => {
-      if (isOpen) {
-        checkPermissions();
-      }
-    }, [isOpen, checkPermissions]),
-  );
-  // Re-check permissions when returning from system settings
-  // App goes to background during system settings, then becomes active again when user returns
-  // Only needed if the sheet is open and permissions haven't been granted yet
-  React.useEffect(() => {
-    if (!isOpen || foregroundPermission?.granted) {
-      return;
-    }
-
-    const sub = AppState.addEventListener('change', state => {
-      if (state === 'active') {
-        checkPermissions();
-      }
-    });
-
-    return () => sub.remove();
-  }, [foregroundPermission?.granted, checkPermissions, isOpen]);
-
-  const renderContent = () => {
-    if (!foregroundPermission) {
-      return (
-        <View style={{display: 'flex', minHeight: 200}}>
-          <FullScreenCenteredLoader />
-        </View>
-      );
-    }
-    if (!foregroundPermission.granted) {
-      return (
-        <GPSForegroundPermissionDisabled
-          askForegroundLocationPermission={async () => {
-            if (foregroundPermission.canAskAgain) {
-              const permission =
-                await requestForegroundPermission.mutateAsync();
-              setForegroundPermission(permission);
-            } else {
-              handleOpenSettings();
-            }
-          }}
-        />
-      );
-    }
-    return <StartStopTrack />;
-  };
 
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
 
@@ -120,7 +46,9 @@ export const TrackBottomSheet = React.memo(({isOpen}: {isOpen: boolean}) => {
     }
     return (
       <View style={styles.container}>
-        <View style={styles.animatedBackground}>{renderContent()}</View>
+        <View style={styles.animatedBackground}>
+          <TrackSheetContent isOpen={isOpen} />
+        </View>
       </View>
     );
   }
@@ -130,7 +58,7 @@ export const TrackBottomSheet = React.memo(({isOpen}: {isOpen: boolean}) => {
       style={[styles.animatedBackground, animatedStyle]}
       onLayout={onLayoutSheet}
       pointerEvents={isOpen ? 'auto' : 'none'}>
-      {renderContent()}
+      <TrackSheetContent isOpen={isOpen} />
     </Animated.View>
   );
 });

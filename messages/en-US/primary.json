@@ -337,14 +337,11 @@
   "$1screens.AudioRecording.nowRecording": {
     "message": "Now Recording..."
   },
+  "$1screens.CameraScreen.cameraPermissionTitle": {
+    "message": "Document with Photos"
+  },
   "$1screens.CameraScreen.cameraUnavailable": {
     "message": "Camera unavailable. Please close and reopen CoMapeo to try again."
-  },
-  "$1screens.CameraScreen.noCameraAccess": {
-    "message": "No access to camera. Please allow access in settings."
-  },
-  "$1screens.CameraScreen.openSettings": {
-    "message": "Open Settings"
   },
   "$1screens.CollaboratorInfo.navTitle": {
     "message": "Collaborator Info"
@@ -519,6 +516,12 @@
   "$1screens.LocationInfoScreen.yes": {
     "message": "Yes",
     "description": "if a location sensor is active yes/no"
+  },
+  "$1screens.MapScreen.TrackBottomSheet.permissionTitle": {
+    "message": "Record Tracks"
+  },
+  "$1screens.MapScreen.locationPermissionTitle": {
+    "message": "Record GPS Points"
   },
   "$1screens.Observation.ObservationView.delete": {
     "message": "Delete",

@@ -17,10 +17,8 @@ import {SetQADeviceNameScreen} from './screens/SetQADeviceName';
 import {isQABuild} from './lib/appVariant';
 
 export const AppNavigator = ({
-  permissionAsked,
   navigationIntegration,
 }: {
-  permissionAsked: boolean;
   navigationIntegration:
     ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined;
 }) => {
@@ -28,14 +26,11 @@ export const AppNavigator = ({
     React.useRef<NavigationContainerRef<AppStackParamsList>>(null);
   const qaDeviceName = useQADeviceName();
 
-  // Hiding the splash while a system permission dialog is presented leaves the
-  // app `inactive`, and on iOS the hide silently no-ops in that state. On a
-  // fresh install (location + local-network prompts) this could strand the
-  // splash until the next launch. Hide once the app is active, retrying when it
-  // returns to the foreground after the prompts are dismissed.
+  // Hiding the splash while a system dialog is presented leaves the app
+  // `inactive`, and on iOS the hide silently no-ops in that state. The
+  // local-network prompt still fires on a fresh iOS install, so hide once the
+  // app is active, retrying when it returns to the foreground.
   React.useEffect(() => {
-    if (!permissionAsked) return;
-
     const hide = () => {
       SplashScreen.hideAsync().catch(() => {});
     };
@@ -52,7 +47,7 @@ export const AppNavigator = ({
       }
     });
     return () => sub.remove();
-  }, [permissionAsked]);
+  }, []);
 
   if (isQABuild && !qaDeviceName) {
     return <SetQADeviceNameScreen />;

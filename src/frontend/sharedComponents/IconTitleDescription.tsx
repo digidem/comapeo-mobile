@@ -20,21 +20,26 @@ export const IconTitleDescription = ({
   icon,
   title,
   description,
+  color,
   style,
 }: {
   icon: React.ReactNode;
   title: string;
   description?: string;
+  /** for use on a dark screen. */
+  color?: string;
   style?: ViewStyleProp;
 }) => {
   return (
     <View style={[styles.container, style]}>
       {icon}
-      <HeaderText style={styles.title} variant="header2">
+      <HeaderText style={{...styles.title, color}} variant="header2">
         {title}
       </HeaderText>
       {description && (
-        <BodyText style={styles.description}>{description}</BodyText>
+        <BodyText style={{...styles.description, color}}>
+          {description}
+        </BodyText>
       )}
     </View>
   );

@@ -32,15 +32,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Go Back"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Enable GPS"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "GPS and location needed to record tracks."
-  },
-  "Modal.GPSDisable.title": {
-    "message": "GPS Disabled"
-  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "When project participants exchange their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
   },
@@ -450,6 +441,9 @@
   "screens.AudioRecording.lessThan5": {
     "message": "Less than 5 minutes left"
   },
+  "screens.CameraScreen.cameraPermissionDescription": {
+    "message": "Camera required to use."
+  },
   "screens.CollaboratorInfo.addedOn": {
     "message": "Added on {date}"
   },
@@ -783,6 +777,18 @@
   },
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone Number"
+  },
+  "screens.MapScreen.TrackBottomSheet.locationAndNotificationsRequired": {
+    "message": "Location & Notifications required to use."
+  },
+  "screens.MapScreen.TrackBottomSheet.locationRequired": {
+    "message": "Location required to use."
+  },
+  "screens.MapScreen.TrackBottomSheet.notificationsRequired": {
+    "message": "Notifications required to use."
+  },
+  "screens.MapScreen.locationPermissionDescription": {
+    "message": "Location required to use."
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
@@ -1396,6 +1402,12 @@
   },
   "sharedComponents.ErrorBottomSheet.advanced": {
     "message": "Advanced"
+  },
+  "sharedComponents.PermissionButtons.allow": {
+    "message": "Allow"
+  },
+  "sharedComponents.PermissionButtons.openSettings": {
+    "message": "Open Settings"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"

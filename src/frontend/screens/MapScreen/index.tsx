@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {defineMessages, useIntl} from 'react-intl';
 import {Camera, MapView, UserLocation} from '@maplibre/maplibre-react-native';
 import {
   LocationFollowingIcon,
@@ -42,6 +43,29 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
+import {useLocationPermission} from '../../hooks/usePermissions';
+import {
+  AllowPermissionButton,
+  OpenSettingsButton,
+} from '../../sharedComponents/PermissionButtons';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
+import LocationOnIcon from '../../images/LocationOn.svg';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
+import {DARK_ORANGE} from '../../lib/styles';
+
+const PERMISSION_ICON_SIZE = 80;
+
+const m = defineMessages({
+  locationPermissionTitle: {
+    id: '$1screens.MapScreen.locationPermissionTitle',
+    defaultMessage: 'Record GPS Points',
+  },
+  locationPermissionDescription: {
+    id: 'screens.MapScreen.locationPermissionDescription',
+    defaultMessage: 'Location required to use.',
+  },
+});
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -89,6 +113,8 @@ export const MapScreen = ({
   const isLow = isLowStorage(data.freeBytes);
   const insets = useSafeAreaInsets();
   const BANNER_TOP = insets.top + 75;
+  const {formatMessage} = useIntl();
+  const locationPermission = useLocationPermission();
 
   useCheckDraftObservationAndNavigate({authState});
   useCheckUnsavedTrackAndNavigate({authState});
@@ -123,6 +149,43 @@ export const MapScreen = ({
 
   function handleDidFinishLoadingStyle() {
     setIsFinishedLoadingStyle(true);
+  }
+
+  if (locationPermission.state === 'pending') {
+    return <FullScreenCenteredLoader />;
+  }
+
+  if (locationPermission.state !== 'granted') {
+    return (
+      <ScreenContentWithDock
+        testID="MAP.location-permission"
+        contentContainerStyle={styles.permissionContent}
+        dockContent={
+          locationPermission.state === 'blocked' ? (
+            <OpenSettingsButton
+              testID="MAP.location-settings-btn"
+              onPress={locationPermission.openSettings}
+            />
+          ) : (
+            <AllowPermissionButton
+              testID="MAP.location-allow-btn"
+              onPress={locationPermission.request}
+            />
+          )
+        }>
+        <IconTitleDescription
+          icon={
+            <LocationOnIcon
+              color={DARK_ORANGE}
+              width={PERMISSION_ICON_SIZE}
+              height={PERMISSION_ICON_SIZE}
+            />
+          }
+          title={formatMessage(m.locationPermissionTitle)}
+          description={formatMessage(m.locationPermissionDescription)}
+        />
+      </ScreenContentWithDock>
+    );
   }
 
   return (
@@ -289,6 +352,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 25,
     width: '100%',
+  },
+  permissionContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   lowStorageBanner: {
     position: 'absolute',

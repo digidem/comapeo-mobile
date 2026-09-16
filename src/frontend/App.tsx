@@ -30,8 +30,7 @@ import {
   comapeo as mapeoApi,
   comapeoServicesClient,
 } from '@comapeo/core-react-native';
-import {PermissionsAndroid, Platform, AppState} from 'react-native';
-import {requestForegroundPermissionsAsync} from 'expo-location';
+import {AppState} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
@@ -200,33 +199,10 @@ AppState.addEventListener('change', status => {
   focusManager.setFocused(status === 'active');
 });
 
+// Temporarily removing the permission requests that hit before on boarding since we will have
+// separate permissions in the app now. These will be removed in the onboarding PR but
+// I needed to do it remove them to complete this PR
 const App = () => {
-  const [permissionsAsked, setPermissionsAsked] = React.useState(false);
-  React.useEffect(() => {
-    // PermissionsAndroid is Android-only (no-op on iOS), so iOS needs its own
-    // path or location is never requested. Camera on iOS is requested on
-    // demand by the camera screen, so the eager ask is location-only there.
-    const askStartupPermissions =
-      Platform.OS === 'android'
-        ? PermissionsAndroid.requestMultiple([
-            'android.permission.CAMERA',
-            'android.permission.ACCESS_FINE_LOCATION',
-            'android.permission.ACCESS_COARSE_LOCATION',
-          ])
-        : requestForegroundPermissionsAsync();
-
-    Promise.resolve(askStartupPermissions)
-      .catch(err => {
-        // Rejects when no Activity is attached (e.g. launched in the
-        // background)
-        Sentry.captureException(err);
-      })
-      // Always dismiss the splash, regardless of outcome — this startup ask
-      // is only an eager prompt; each feature re-requests its own permission
-      // on demand. Never gate splash dismissal on the request succeeding.
-      .finally(() => setPermissionsAsked(true));
-  }, []);
-
   return (
     <Sentry.ErrorBoundary fallback={<FatalErrorUntranslated />}>
       <QueryClientProvider client={queryClient}>
@@ -258,7 +234,6 @@ const App = () => {
                     unitSystemStore={persistedUnitSystemStore}
                     qaDeviceNameStore={qaDeviceNameStore}>
                     <AppNavigator
-                      permissionAsked={permissionsAsked}
                       navigationIntegration={navigationIntegration}
                     />
                   </AppProviders>

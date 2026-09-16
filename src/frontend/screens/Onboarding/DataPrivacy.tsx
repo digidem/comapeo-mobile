@@ -28,17 +28,6 @@ export const DataPrivacy = ({
     <ScreenContentWithDock
       dockContent={
         <View style={styles.buttonsContainer}>
-          <SecondaryButton
-            fullSize
-            text={t(m.learnMore)}
-            iconPosition="left"
-            renderIcon={({color, size}) => (
-              <MaterialIcons name="info-outline" color={color} size={size} />
-            )}
-            onPress={() => {
-              navigation.navigate('OnboardingPrivacyPolicy');
-            }}
-          />
           <PrimaryButton
             fullSize
             text={t(m.next)}
@@ -52,6 +41,17 @@ export const DataPrivacy = ({
             )}
             onPress={() => {
               navigation.replace('DeviceNaming');
+            }}
+          />
+          <SecondaryButton
+            fullSize
+            text={t(m.learnMore)}
+            iconPosition="left"
+            renderIcon={({color, size}) => (
+              <MaterialIcons name="info-outline" color={color} size={size} />
+            )}
+            onPress={() => {
+              navigation.navigate('OnboardingPrivacyPolicy');
             }}
           />
         </View>

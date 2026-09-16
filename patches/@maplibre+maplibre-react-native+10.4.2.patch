@@ -1,3 +1,61 @@
+diff --git a/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/camera/MLRNCamera.java b/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/camera/MLRNCamera.java
+index a10a66c..bf2004f 100644
+--- a/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/camera/MLRNCamera.java
++++ b/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/camera/MLRNCamera.java
+@@ -30,6 +30,7 @@ import org.maplibre.reactnative.utils.GeoJSONUtils;
+ 
+ import org.maplibre.reactnative.events.constants.EventTypes;
+ 
++import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.bridge.WritableMap;
+ import com.facebook.react.bridge.WritableNativeMap;
+ 
+@@ -39,6 +40,8 @@ import org.maplibre.android.location.permissions.PermissionsManager;
+ 
+ import androidx.annotation.NonNull;
+ 
++import java.util.HashMap;
++
+ public class MLRNCamera extends AbstractMapFeature {
+     private MLRNCameraManager mManager;
+     private MLRNMapView mMapView;
+@@ -141,6 +144,23 @@ public class MLRNCamera extends AbstractMapFeature {
+ 
+     }
+ 
++    private HashMap<String, Object> mLastStopProps;
++
++    // Every camera move interrupts the user's pinch/pan gestures, so skip stops
++    // that wouldn't change the camera: ones with no target, and repeats. The New
++    // Architecture re-sends props set via setNativeProps on every later update
++    // of this view, so the last stop would otherwise keep being re-applied.
++    // https://github.com/maplibre/maplibre-react-native/issues/1402 (fixed in v11)
++    public boolean shouldSkipStop(ReadableMap map) {
++        HashMap<String, Object> props = map.toHashMap();
++        boolean isRepeated = props.equals(mLastStopProps);
++        mLastStopProps = props;
++        boolean hasTarget = map.hasKey("centerCoordinate") || map.hasKey("bounds")
++                || map.hasKey("zoom") || map.hasKey("heading") || map.hasKey("pitch")
++                || map.hasKey("stops");
++        return isRepeated || !hasTarget;
++    }
++
+     public void setStop(CameraStop stop) {
+         mCameraStop = stop;
+         mCameraStop.setCallback(mCameraCallback);
+diff --git a/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/camera/MLRNCameraManager.java b/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/camera/MLRNCameraManager.java
+index 3f0b172..75ebc9b 100644
+--- a/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/camera/MLRNCameraManager.java
++++ b/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/camera/MLRNCameraManager.java
+@@ -39,7 +39,7 @@ public class MLRNCameraManager extends AbstractEventEmitter<MLRNCamera> {
+ 
+     @ReactProp(name="stop")
+     public void setStop(MLRNCamera camera, ReadableMap map) {
+-        if (map != null) {
++        if (map != null && !camera.shouldSkipStop(map)) {
+             CameraStop stop = CameraStop.fromReadableMap(mContext, map, null);
+             camera.setStop(stop);
+         }
 diff --git a/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/events/EventEmitter.java b/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/events/EventEmitter.java
 index 379b72f..a2a1eca 100644
 --- a/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/events/EventEmitter.java

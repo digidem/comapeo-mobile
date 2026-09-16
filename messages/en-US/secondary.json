@@ -119,9 +119,6 @@
   "Screens.ProjectSettings.editInfo": {
     "message": "Edit Info"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "Invite Collaborators"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "Project statistics are not being shared."
   },
@@ -131,17 +128,11 @@
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Share with a secure, encypted server. URL required to access."
   },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "You’re mapping on your own."
-  },
   "Screens.ProjectSettings.update": {
     "message": "Update"
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Update Set"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "View"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "View Details"
@@ -793,9 +784,6 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone Number"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "Use Location? Tracks location even when closed. Data remains on device only."
-  },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
   },
@@ -1435,23 +1423,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Invite Collaborators"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "Go Back"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "Secure and private way to exchange with collaborators."
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "Only devices invited to a project can contribute."
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "Easily manage project contributors and settings."
-  },
-  "soloProject.startNewProject.start": {
-    "message": "Start"
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "Each project is unique and separate."
   }
 }

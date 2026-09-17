@@ -30,10 +30,14 @@ export function useAudioRecording() {
     // iOS gates recording on allowsRecording, which defaults to false; without
     // this the native recorder throws as soon as record() is called.
     await setAudioModeAsync({allowsRecording: true, playsInSilentMode: true});
-    await recorder.prepareToRecordAsync();
     // expo-audio releases the recorder's native object when this hook unmounts.
-    // If the screen unmounts while prepareToRecordAsync is still awaiting,
-    // record() would run against a released object and crash (Sentry COMAPEO-1Z7).
+    // If the screen unmounts while setAudioModeAsync is still awaiting,
+    // prepareToRecordAsync() would run against a released object and crash.
+    if (!isMountedRef.current) return;
+    await recorder.prepareToRecordAsync();
+    // Same race as above, but around prepareToRecordAsync instead:
+    // if the screen unmounts while it's still awaiting, record() would run
+    // against a released object and crash (Sentry COMAPEO-1Z7).
     if (!isMountedRef.current) return;
     recorder.record();
   }, [recorder]);

@@ -182,6 +182,10 @@ export type RootStackParamsList = {
   ProjectStatsTurnedOff: undefined;
   EarlyAccess: undefined;
   EarlyAccessOff: undefined;
+  MetricsResetWarning: {
+    metric: 'diagnostics' | 'appUsage';
+    sharing: 'on' | 'off';
+  };
   EditQADeviceName: undefined;
   LeaveProjectWarning: {
     memberType: 'coordinator' | 'participant';

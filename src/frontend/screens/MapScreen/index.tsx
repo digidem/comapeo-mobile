@@ -12,6 +12,7 @@ import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
+import {TrackPermissionScreen} from './TrackBottomSheet/TrackPermissionScreen';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
@@ -52,7 +53,7 @@ import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDoc
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import LocationOnIcon from '../../images/LocationOn.svg';
 import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
-import {DARK_ORANGE} from '../../lib/styles';
+import {DARK_ORANGE, WHITE} from '../../lib/styles';
 
 const PERMISSION_ICON_SIZE = 80;
 
@@ -152,39 +153,49 @@ export const MapScreen = ({
   }
 
   if (locationPermission.state === 'pending') {
-    return <FullScreenCenteredLoader />;
+    return (
+      <View style={styles.permissionScreen}>
+        <FullScreenCenteredLoader />
+      </View>
+    );
   }
 
   if (locationPermission.state !== 'granted') {
     return (
-      <ScreenContentWithDock
-        testID="MAP.location-permission"
-        contentContainerStyle={styles.permissionContent}
-        dockContent={
-          locationPermission.state === 'blocked' ? (
-            <OpenSettingsButton
-              testID="MAP.location-settings-btn"
-              onPress={locationPermission.openSettings}
+      <View style={styles.permissionScreen}>
+        {trackBottomSheetOpen ? (
+          <TrackPermissionScreen />
+        ) : (
+          <ScreenContentWithDock
+            testID="MAP.location-permission"
+            contentContainerStyle={styles.permissionContent}
+            dockContent={
+              locationPermission.state === 'blocked' ? (
+                <OpenSettingsButton
+                  testID="MAP.location-settings-btn"
+                  onPress={locationPermission.openSettings}
+                />
+              ) : (
+                <AllowPermissionButton
+                  testID="MAP.location-allow-btn"
+                  onPress={locationPermission.request}
+                />
+              )
+            }>
+            <IconTitleDescription
+              icon={
+                <LocationOnIcon
+                  color={DARK_ORANGE}
+                  width={PERMISSION_ICON_SIZE}
+                  height={PERMISSION_ICON_SIZE}
+                />
+              }
+              title={formatMessage(m.locationPermissionTitle)}
+              description={formatMessage(m.locationPermissionDescription)}
             />
-          ) : (
-            <AllowPermissionButton
-              testID="MAP.location-allow-btn"
-              onPress={locationPermission.request}
-            />
-          )
-        }>
-        <IconTitleDescription
-          icon={
-            <LocationOnIcon
-              color={DARK_ORANGE}
-              width={PERMISSION_ICON_SIZE}
-              height={PERMISSION_ICON_SIZE}
-            />
-          }
-          title={formatMessage(m.locationPermissionTitle)}
-          description={formatMessage(m.locationPermissionDescription)}
-        />
-      </ScreenContentWithDock>
+          </ScreenContentWithDock>
+        )}
+      </View>
     );
   }
 
@@ -352,6 +363,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 25,
     width: '100%',
+  },
+  permissionScreen: {
+    flex: 1,
+    backgroundColor: WHITE,
   },
   permissionContent: {
     flexGrow: 1,

@@ -9,7 +9,6 @@ import {
 
 const RECORDING_OPTIONS: RecordingOptions = {
   ...RecordingPresets.HIGH_QUALITY!,
-  directory: 'cache',
 };
 
 export function useAudioRecording() {

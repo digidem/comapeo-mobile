@@ -3,8 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {BottomSheetWrapper} from '../../../sharedComponents/BottomSheetWrapper';
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {SecondaryButton} from '../../../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {BLUE_GREY, GREEN} from '../../../lib/styles';
@@ -43,17 +42,18 @@ export const MetricsResetWarningBottomSheet = ({
   return (
     <BottomSheetWrapper>
       <View style={styles.container} testID="MRW.sheet">
-        <View style={styles.headerBlock}>
-          <Icon
-            width={80}
-            height={80}
-            color={sharing === 'on' ? GREEN : BLUE_GREY}
-          />
-          <HeaderText variant="header2" style={styles.centerText}>
-            {formatMessage(sharing === 'on' ? m.sharingOn : m.sharingOff)}
-          </HeaderText>
-          <BodyText style={styles.centerText}>{formatMessage(m.desc)}</BodyText>
-        </View>
+        <IconTitleDescription
+          style={styles.headerBlock}
+          icon={
+            <Icon
+              width={80}
+              height={80}
+              color={sharing === 'on' ? GREEN : BLUE_GREY}
+            />
+          }
+          title={formatMessage(sharing === 'on' ? m.sharingOn : m.sharingOff)}
+          description={formatMessage(m.desc)}
+        />
 
         <SecondaryButton
           fullSize
@@ -79,8 +79,6 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   headerBlock: {
-    alignItems: 'center',
     gap: 10,
   },
-  centerText: {textAlign: 'center'},
 });

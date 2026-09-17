@@ -2,14 +2,10 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import RNRestart from 'react-native-restart';
 import {BottomSheetWrapper} from '../../../sharedComponents/BottomSheetWrapper';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {
-  PrimaryButton,
-  SecondaryButton,
-} from '../../../sharedComponents/Buttons';
+import {SecondaryButton} from '../../../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {BLUE_GREY, GREEN} from '../../../lib/styles';
 import DiagnosticsSharingIcon from '../../../images/DiagnosticsSharing.svg';
@@ -27,10 +23,6 @@ const m = defineMessages({
   desc: {
     id: 'screens.MetricsResetWarning.desc',
     defaultMessage: 'This will only go into effect when CoMapeo resets.',
-  },
-  resetNow: {
-    id: 'screens.MetricsResetWarning.resetNow',
-    defaultMessage: 'Reset Now',
   },
   done: {
     id: 'screens.MetricsResetWarning.done',
@@ -63,30 +55,19 @@ export const MetricsResetWarningBottomSheet = ({
           <BodyText style={styles.centerText}>{formatMessage(m.desc)}</BodyText>
         </View>
 
-        <View style={styles.buttons}>
-          <PrimaryButton
-            fullSize
-            testID="MRW.reset-now-btn"
-            text={formatMessage(m.resetNow)}
-            renderIcon={({size, color}) => (
-              <MaterialIcons name="refresh" size={size} color={color} />
-            )}
-            onPress={() => RNRestart.restart()}
-          />
-          <SecondaryButton
-            fullSize
-            testID="MRW.done-btn"
-            text={formatMessage(m.done)}
-            renderIcon={({size, color}) => (
-              <MaterialIcons
-                name="check-circle-outline"
-                size={size}
-                color={color}
-              />
-            )}
-            onPress={() => navigation.goBack()}
-          />
-        </View>
+        <SecondaryButton
+          fullSize
+          testID="MRW.done-btn"
+          text={formatMessage(m.done)}
+          renderIcon={({size, color}) => (
+            <MaterialIcons
+              name="check-circle-outline"
+              size={size}
+              color={color}
+            />
+          )}
+          onPress={() => navigation.goBack()}
+        />
       </View>
     </BottomSheetWrapper>
   );
@@ -102,7 +83,4 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   centerText: {textAlign: 'center'},
-  buttons: {
-    gap: 12,
-  },
 });

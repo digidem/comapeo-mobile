@@ -790,9 +790,6 @@
   "screens.MetricsResetWarning.done": {
     "message": "Done"
   },
-  "screens.MetricsResetWarning.resetNow": {
-    "message": "Reset Now"
-  },
   "screens.MetricsResetWarning.sharingOff": {
     "message": "Sharing will turn OFF."
   },

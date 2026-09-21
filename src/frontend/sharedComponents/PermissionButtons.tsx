@@ -2,6 +2,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 import {PrimaryButton} from './Buttons';
+import SettingsIcon from '../images/Settings.svg';
 
 const m = defineMessages({
   allow: {
@@ -47,7 +48,7 @@ export const OpenSettingsButton = ({onPress, testID}: Props) => {
       text={formatMessage(m.openSettings)}
       onPress={onPress}
       renderIcon={({color, size}) => (
-        <MaterialIcons name="settings" color={color} size={size} />
+        <SettingsIcon color={color} width={size} height={size} />
       )}
     />
   );

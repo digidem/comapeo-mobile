@@ -615,12 +615,8 @@
   "$1screens.ObservationMetadataVerified.navTitle": {
     "message": "Observation Metadata"
   },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "Go To Map",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "Add Observations",
+    "message": "Start mapping your world.",
     "description": "Title of observation list view when the user has not yet recorded observations"
   },
   "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {

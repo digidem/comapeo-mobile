@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 
 import {BLUE_GREY, WHITE} from '../../lib/styles';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
-import {CellphoneIcon} from '../../sharedComponents/icons';
+import StartMappingIcon from '../../images/StartMapping.svg';
 
 const m = defineMessages({
   noObservationsTitle: {
@@ -20,16 +20,13 @@ const m = defineMessages({
   },
 });
 
-const ICON_SIZE = 80;
-
 export const ObservationEmptyView = () => {
   const {formatMessage: t} = useIntl();
 
   return (
     <View style={styles.container} testID="observationsEmptyView">
       <IconTitleDescription
-        // Placeholder. Waiting on the real icon from design
-        icon={<CellphoneIcon color={BLUE_GREY} size={ICON_SIZE} />}
+        icon={<StartMappingIcon color={BLUE_GREY} />}
         title={t(m.noObservationsTitle)}
         description={t(m.noObservationsDesc)}
       />

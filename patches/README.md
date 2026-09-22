@@ -1,76 +1,49 @@
 # Patches
 
-These patches use [patch-package](https://github.com/ds300/patch-package) to update dependencies which have unpublished
-fixes.
+These patches use [patch-package](https://github.com/ds300/patch-package) to fix dependency bugs that have no released
+fix. They are applied by the `postinstall` script.
 
-## nodejs-mobile-react-native
+A patch that edits an **Expo** module's Android sources only takes effect if that module is listed in
+`expo.autolinking.buildFromSource` in `package.json`. Expo SDK 56 links most of its Android modules as precompiled
+Maven AARs, so otherwise the patch applies cleanly, the build succeeds, and the patched code never reaches the APK.
+Confirm with a `Task :<module>:compileDebugKotlin` line in the Gradle log.
 
-### [Fix CopyNodeProjectAssets Gradle Step](./@comapeo+nodejs-mobile-react-native+18.20.4-2+001+fix-copy-node-project-assets-gradle-step.patch)
+## @maplibre/maplibre-react-native
 
-When copying `comapeo-mobile/nodejs-assets/nodejs-project`
-into `comapeo-mobile/android/build/nodejs-assets/nodejs-project/`, it copies over the `prebuilds` we include for each
-native module (found in `nodejs-project/node_modules/`). These are never deleted in any of the following Gradle tasks so
-the APK includes these, which is not necessary because NMRN will use a target-specific directory that contains the
-native modules for their resolution e.g. `nodejs-native-assets/nodejs-native-assets/armeabi-v7a/node_modules/...`.
+### [New Architecture and RN 0.85 fixes](./@maplibre+maplibre-react-native+10.4.2.patch)
 
-### [Disable BuildNpmModules Gradle step](./@comapeo+nodejs-mobile-react-native+18.20.4-2+002+disable-build-npm-modules-gradle-step.patch)
+`EventEmitter` reached the React context via `ReactApplication#getReactNativeHost()`, which throws under the New
+Architecture. The `ReactApplicationContext` it is handed is already a live `ReactContext`, so it is used directly.
 
-This step assumes that there exists a `package.json` file and other files related to node-gyp in the native modules that
-we include, which isn't the case because we solely rely on using prebuilds. There's no need for `npm run build ...` to
-be called for our native modules, so this step can be skipped entirely.
+`AnimatedPoint` also assigned its own listener map to `this._listeners`, which RN 0.85 changed from a plain object to a
+`Map` on `AnimatedNode`; the subclass now keeps its listeners in `_pointListeners` so `__callListeners` still finds a
+real `Map`.
 
-### [Fix DeleteIncorrectPrebuilds Gradle step](./@comapeo+nodejs-mobile-react-native+18.20.4-2+003+fix-delete-incorrect-prebuilds-gradle-step.patch)
+## expo-file-system
 
-This step deletes all `.node` files found in the temp build directory and always runs after the `CopyNodeProjectAssets`
-step. However, the `DetectCorrectPrebuilds` step runs based on the output of `CopyNodeProjectAssets`, which is a
-timestamp file that indicates that meaningful work was done in the step. If that file doesn't
-change, `DetectCorrectPrebuilds` won't do anything. This becomes problematic in the following sequence:
+### [Cache the SAF content length](./expo-file-system+56.0.8+001+cache-saf-content-length.patch)
 
-Part 1: Assuming no prior runs have ever occurred:
+`CountingSink.write` called `RequestBody.contentLength()` on every 8 KiB segment. For a `content://` URI from the
+document picker that resolves to `SAFDocumentFile.length()` — a `ContentResolver` query over binder — so a 294 MB
+upload made ~36,000 cross-process round-trips. Importing a custom map ran at 1.8 MB/s and looked like a hang on
+low-end phones. The length is now resolved once, both in `CountingRequestBody` and in the `UnifiedFileInterface`
+request body. The same import drops to ~3.1 s (~96 MB/s). Android only; iOS uploads via
+`URLSession.uploadTask(fromFile:)`.
 
-1. `CopyNodeProjectAssets` runs. Notices changes to `node_modules` directory (e.g. native prebuilds that we include) and
-   eventually updates the timestamp file.
-2. `DeleteIncorrectPrebuilds` runs and attempts to delete any existing `.node` files that are not the native prebuilds.
-   Nothing of note is affected.
-3. `DetectCorrectPrebuilds` runs and since step 1 updated the timestamp file, it does actual work. We end up
-   with `node_modules/*/build/Release/*.node` for each native module we have prebuilds for.
-4. `CopyBuiltNpmAssets` runs, moving these `node_modules` to the directories in `nodejs-native-assets`.
+### [Read uploads in 64 KiB chunks](./expo-file-system+56.0.8+002+buffer-upload-reads.patch)
 
-Part 2: Subsequent run without changing anything
+`sink.writeAll(input.source())` makes okio pull one 8 KiB segment per read from the source file descriptor. Reading
+64 KiB at a time cuts read syscalls eightfold on the content-provider fd. Worth ~13% of app-process CPU during an
+import; it does not move wall-clock on an emulator that is not CPU-bound, but should on a constrained phone.
 
-1. `CopyNodeProjectAssets` runs, but detects no changed files so no change to timestamp file.
-2. `DeleteIncorrectPrebuilds` runs, deleting the `.node` in the `build/Release/` directory.
-3. `DetectCorrectPrebuilds` runs, but since `CopyNodeProjectAssets` didn't update the timestamp file, **it doesn't do
-   any work**. **Because of 2, we end up with `node_modules/*/build/Release/` directories that no longer contain
-   relevant `.node` files.**
-4. `CopyBuiltNpmAssets` runs, moving these `node_modules` to the directories in `nodejs-native-assets`.
+Both fixes are unreleased upstream as of expo-file-system 57.0.1.
 
-Ideally we'd use the timestamp file as an input for the `DeleteIncorrectPrebuilds` step too, but that isn't allowed by
-Gradle:
-
-> Note that a task can define either inputs/outputs or destroyables, but not both.
-
-https://docs.gradle.org/current/userguide/incremental_build.html
-
-### [Disable exact development environment Node version check](./@comapeo+nodejs-mobile-react-native+18.20.4-2+004+disable-node-version-check.patch)
-
-This step ensures that the development environment is using the same major Node version as the runtime that comes with
-NodeJS Mobile React Native. The check is most relevant when building native modules, but since we use native prebuilds,
-skipping it does not seem to affect our ability to build the app and is thus (probably) not needed.
-
-### [Fix copying of Intel-based native prebuilds into native assets directory when building apk](./@comapeo+nodejs-mobile-react-native+18.20.4-2+005+fix-copying-x86-prebuilds.patch)
-
-When targeting Intel-based architectures (i.e. `x86_64`), the affected Gradle build steps were attempting to find native prebuilds using the extended target architecture name i.e. in each directory for relevant native Node modules, it was looking for `prebuilds/android-x86_64/` instead of `prebuilds/android-x64/`. This naming discrepancy is due to how our [prebuild template](https://github.com/digidem/nodejs-mobile-prebuilds-template) publishes the output from https://github.com/nodejs-mobile/prebuild-for-nodejs-mobile/, which uses an abbreviated name of the architecture (e.g. `x86_64` is referred to as `x64`).
-
-### [Fix addon resolution for addons using require-addon](./@comapeo+nodejs-mobile-react-native+18.20.4-2+006+fix-bare-prebuilds.patch)
-
-Native addons by the holepunch team use [`require-addon`](https://github.com/holepunchto/require-addon) to load native prebuilds. This package expects the native prebuilds to be in a `prebuilds/` directory at the root of the package, in contrast to modules which use `node-gyp-build`, which, at runtime, looks for prebuilds in `build/Release/`. This patch moves the prebuilds into the correct folder based on the presence of `binding.gyp`, and cleans up any unnecessary prebuilds to keep the APK size down.
-
-## `react-native-confirmation-code-field`
+## react-native-confirmation-code-field
 
 ### [Fix mask symbol logic issue](./react-native-confirmation-code-field+9.0.0+001+fix-mask-symbol-logic-issue.patch)
 
-Fixes a bug in the `MaskSymbol` component where the mask (`*`) briefly un-hides when typing quickly. This patch sets the `visibleFlag` to `false` immediately, preventing the undesired flicker.
+Fixes a bug in the `MaskSymbol` component where the mask (`*`) briefly un-hides when typing quickly. This patch sets the
+`visibleFlag` to `false` immediately, preventing the undesired flicker.
 
 See: [Reviewer context](https://github.com/digidem/comapeo-mobile/pull/1225).
 
@@ -88,9 +61,20 @@ dropped.
 Fixed upstream in v5, which requires the New Architecture. 4.7.3 is the final 4.x release, so there is nothing to
 upgrade to.
 
-## expo
+## react-native-zeroconf
 
-### [Enable streaming file uploads in fetch API](./expo+54.0.33.patch)
+### [Drop the rx2dnssd implementation](./react-native-zeroconf+0.13.8+001+initial.patch)
 
-Modifies Expo's native fetch implementation to stream files directly to the fetch request rather than loading them into memory. This patch enables streaming uploads by modifying the native Android code to read and transmit files in chunks. This prevents out-of-memory (OOM) errors when uploading large files (e.g., over 200MB).
-Refer to this [issue](https://github.com/expo/expo/issues) and this [PR](https://github.com/expo/expo/pull) which have been created to address this limitation in Expo's fetch implementation.
+Removes `DnssdImpl` and its `com.github.andriydruk:rx2dnssd` dependency. We only ever use the `NSD` implementation, and
+the unused one pulls in a native library and a JitPack repository we would otherwise have to keep resolvable.
+
+### [Report publish and unpublish failures](./react-native-zeroconf+0.13.8+001+notify-publish-unpublish-errors.patch)
+
+`NsdManager`'s `onRegistrationFailed` and `onUnregistrationFailed` callbacks were empty, so a service that failed to
+publish looked identical to one still waiting. These now emit `RNZeroconfServiceRegisterError` /
+`RNZeroconfServiceUnregisterError`, surfaced in JS as `publishError` and `unpublishError`. The patch also replaces the
+minified `dist/index.js` with readable source so the new listeners can be wired up.
+
+### [Type the new error events](./@types+react-native-zeroconf+0.13.1.patch)
+
+Adds `publishError` and `unpublishError` overloads to the `Zeroconf#on` declarations, matching the patch above.

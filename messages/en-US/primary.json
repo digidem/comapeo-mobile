@@ -520,12 +520,6 @@
     "message": "Yes",
     "description": "if a location sensor is active yes/no"
   },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On Location"
-  },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Location?"
-  },
   "$1screens.Observation.ObservationView.delete": {
     "message": "Delete",
     "description": "Button to delete an observation"

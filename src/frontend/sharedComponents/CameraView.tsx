@@ -1,5 +1,11 @@
 import React, {useRef} from 'react';
-import {StyleSheet, TouchableOpacity, View, StatusBar} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  StatusBar,
+  Platform,
+} from 'react-native';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 import {
   Camera,
@@ -155,7 +161,12 @@ export const CameraView = ({onAddPress}: Props) => {
 
   return (
     <View style={styles.container} testID="MAIN.camera-scrn">
-      <StatusBar barStyle="light-content" />
+      {/* iOS gets its status bar style from react-navigation's `statusBarStyle`, 
+      which needs UIViewControllerBasedStatusBarAppearance YES in app.json. 
+      And in iOS RN's <StatusBar /> errors unless that same key is NO. */}
+      {Platform.OS === 'android' ? (
+        <StatusBar barStyle="light-content" />
+      ) : null}
       {cameraContent}
 
       <View style={styles.bottomBar}>

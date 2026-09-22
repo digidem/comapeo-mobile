@@ -12,7 +12,7 @@ import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {WHITE, DARK_GREEN, NEW_DARK_GREY} from '../../lib/styles';
 import {useCreateProject, useOwnDeviceInfo} from '@comapeo/core-react';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import MatericalIcon from '@react-native-vector-icons/material-icons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
 import AntDesign from '@react-native-vector-icons/ant-design';
 import TracksIcon from '../../images/Tracks.svg';
 import {usePreventRemove} from '@react-navigation/native';
@@ -80,7 +80,7 @@ export const Success = ({
             text={formatMessage(m.startMapping)}
             iconPosition="left"
             renderIcon={({size, color}) => (
-              <MatericalIcon name="map" size={size} color={color} />
+              <MaterialIcon name="map" size={size} color={color} />
             )}
             onPress={handleGoToMap}
           />
@@ -105,7 +105,7 @@ export const Success = ({
       <View style={{gap: 12, paddingHorizontal: 20, marginTop: 20}}>
         <BulletListItem
           text={formatMessage(m.snapPhotos)}
-          Icon={<MatericalIcon size={26} name="photo-camera" />}
+          Icon={<MaterialIcon size={26} name="photo-camera" />}
         />
         <BulletListItem
           text={formatMessage(m.addAudio)}

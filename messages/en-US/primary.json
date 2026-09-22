@@ -396,7 +396,7 @@
     "message": "Distinct names help collaborators using CoMapeo to recognize you."
   },
   "$1screens.DeviceNaming.header": {
-    "message": "Name Your Device"
+    "message": "Name This Device"
   },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Device Name"

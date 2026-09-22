@@ -33,7 +33,6 @@ const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
   ssid: 'CoMapeo Test Wi-Fi',
   wifiStatus: 'on',
-  wifiConnection: 'connected',
   wifiLinkSpeed: 1234,
 };
 
@@ -41,7 +40,6 @@ const DISCONNECTED_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
   ssid: null,
   wifiStatus: 'off',
-  wifiConnection: 'disconnected',
   wifiLinkSpeed: null,
 };
 

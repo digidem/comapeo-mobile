@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AppState, AppStateStatus, Platform} from 'react-native';
+import {AppState, AppStateStatus} from 'react-native';
 import NetInfo, {
   type NetInfoWifiState,
   type NetInfoState,
@@ -25,10 +25,8 @@ export type LocalDiscoveryState = {
   error?: Error;
   /** Name of WiFi SSID currently connected */
   ssid: string | null;
-  /** Is the device WiFi turned on or off? */
+  /** Is the device joined to a WiFi network? Discovery can only run when 'on' */
   wifiStatus: 'unknown' | 'on' | 'off';
-  /** Is the device connected to a WiFi network? */
-  wifiConnection: 'unknown' | 'connected' | 'disconnected';
   /** Speed in Mbps of the WiFi connection (affects speed) */
   wifiLinkSpeed: number | null;
 };
@@ -90,7 +88,6 @@ export function createLocalDiscoveryController(mapeoApi: ComapeoCoreClientApi) {
     status: 'stopped',
     ssid: null,
     wifiStatus: 'unknown',
-    wifiConnection: 'unknown',
     wifiLinkSpeed: null,
   };
   let cancelNetInfoFetch: undefined | (() => void);
@@ -274,8 +271,7 @@ export function createLocalDiscoveryController(mapeoApi: ComapeoCoreClientApi) {
     }
     netInfo = nextNetInfo;
     updateState({
-      wifiStatus: getWifiStatus(nextNetInfo, isLocalWifiConnected),
-      wifiConnection: isLocalWifiConnected ? 'connected' : 'disconnected',
+      wifiStatus: isLocalWifiConnected ? 'on' : 'off',
       wifiLinkSpeed: nextNetInfo.details.linkSpeed,
       ssid: nextNetInfo.details.ssid,
     });
@@ -443,17 +439,6 @@ function getWifiIpAddress(
 ) {
   const ipAddress = netInfoState?.details?.ipAddress;
   return !ipAddress || ipAddress === UNASSIGNED_IP_ADDRESS ? null : ipAddress;
-}
-
-// `isWifiEnabled` is Android-only — iOS reports only whether or not we are on a wifi network
-function getWifiStatus(
-  netInfoState: NetInfoWifiState,
-  isLocalWifiConnected: boolean,
-): LocalDiscoveryState['wifiStatus'] {
-  if (Platform.OS === 'android') {
-    return netInfoState.isWifiEnabled ? 'on' : 'off';
-  }
-  return isLocalWifiConnected ? 'on' : 'off';
 }
 
 function shallowPartialEqual<T extends {[k: string]: unknown}>(

@@ -8,6 +8,7 @@ import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {LIGHT_BLUE} from '../../lib/styles';
 
 const m = defineMessages({
   start: {
@@ -26,7 +27,12 @@ export const IntroToCoMapeo = ({
 
   return (
     <ScreenContentWithDock
-      contentContainerStyle={{flex: 1, padding: 40}}
+      contentContainerStyle={{
+        flex: 1,
+        padding: 40,
+        backgroundColor: LIGHT_BLUE,
+      }}
+      dockContainerStyle={{backgroundColor: LIGHT_BLUE}}
       dockContent={
         <PrimaryButton
           testID="ONBOARDING.get-started-btn"

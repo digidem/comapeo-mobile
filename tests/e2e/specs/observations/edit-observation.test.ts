@@ -1,7 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
-import {tapAboveElement} from '../../utils/touchActions';
+import {dismissKeyboard} from '../../utils/touchActions';
 import {checkForElementGone} from '../../utils/checkForGone';
 import {handleGPSAlert} from '../../utils/alerts';
 
@@ -23,9 +23,8 @@ describe('Observations - Edit Observation Flow', () => {
     const descriptionInput = await $(byResourceId('OBS.description-inp'));
     await descriptionInput.click();
     await descriptionInput.setValue('Updated description');
-    const addBottomBar = await $(byResourceId('OBS.add-photo-btn-keyboard'));
-    await tapAboveElement(addBottomBar, 100);
-    checkForElementGone(byResourceId('OBS.add-photo-btn-keyboard'));
+    await dismissKeyboard();
+    await checkForElementGone(byResourceId('OBS.add-photo-btn-keyboard'));
   });
 
   it('should navigate to details screen and complete a question', async () => {

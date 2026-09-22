@@ -68,7 +68,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
-    checkForElementGone(byResourceId('securitySettingsButton'));
+    await checkForElementGone(byResourceId('securitySettingsButton'));
   });
   it('should show Observations again after entering regular passcode but not new observation', async () => {
     await driver.terminateApp('com.comapeo.rc');
@@ -84,6 +84,6 @@ describe('Passcode - Obscure Passcode Mode', () => {
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byTextMatches('Community'))).toBeDisplayed();
-    checkForElementGone(byText('Animal'));
+    await checkForElementGone(byText('Animal'));
   });
 });

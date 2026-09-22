@@ -45,7 +45,7 @@ describe('Passcode - setPasscode', () => {
   });
 
   it('should verify keyboard, handle passcode errors, then get to Re-enter screen', async () => {
-    await expect(driver.isKeyboardShown());
+    expect(await driver.isKeyboardShown()).toBe(true);
 
     const nextBtn = await $(byText('Next'));
     await nextBtn.click();

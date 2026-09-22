@@ -1,6 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
+import {waitForMapScreen} from '../../utils/readiness';
 
 describe('Onboarding - Map On Your Own Intro Screen', () => {
   it('should navigate to Map On Your Own Intro screen', async () => {
@@ -42,13 +43,11 @@ describe('Onboarding - Map On Your Own Intro Screen', () => {
     const goToMapButton = await $(byResourceId('ONBOARDING.go-to-map-btn'));
     await goToMapButton.click();
 
-    await driver.pause(3500);
-    await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
+    await waitForMapScreen();
   });
   it('should still be on Map screen after closing app and reopening', async () => {
     await driver.terminateApp('com.comapeo.rc');
     await driver.activateApp('com.comapeo.rc');
-    await driver.pause(3500);
-    await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
+    await waitForMapScreen();
   });
 });

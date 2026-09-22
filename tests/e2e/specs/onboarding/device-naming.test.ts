@@ -2,6 +2,8 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
+import {dismissKeyboard} from '../../utils/touchActions';
+import {setInputValue} from '../../utils/input';
 
 describe('Onboarding - Device Naming Test', () => {
   it('should navigate to Device Naming screen after tapping "Next"', async () => {
@@ -22,6 +24,9 @@ describe('Onboarding - Device Naming Test', () => {
       timeoutMsg: 'The ready message should not appear when input is empty',
     });
 
+    // Plain setValue: this step deliberately enters whitespace, which the
+    // field does not echo back verbatim, so it cannot be read back to
+    // verify. The assertion that follows is what proves it took effect.
     await deviceNameInput.setValue('    ');
     await addNameButton.click();
 
@@ -30,10 +35,9 @@ describe('Onboarding - Device Naming Test', () => {
       timeoutMsg: 'Ready message should not appear when input is only spaces.',
     });
 
-    await deviceNameInput.setValue(output.names.device);
-    // On iOS the software keyboard overlays the Save button; dismiss it so the
-    // tap lands. Safe no-op when no keyboard is shown (e.g. Android).
-    await driver.hideKeyboard().catch(() => {});
+    await setInputValue(deviceNameInput, output.names.device);
+    // The keyboard overlays the Save button; dismiss it so the tap works.
+    await dismissKeyboard();
     await addNameButton.click();
     const deviceReadyMessage = await $(
       byTextMatches(`${output.names.device} is ready`),

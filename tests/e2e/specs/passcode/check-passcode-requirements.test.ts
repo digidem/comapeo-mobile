@@ -31,7 +31,7 @@ describe('Passcode - Check Passcode Requirements Flow', () => {
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();
     await expect($(byResourceId('SETTINGS.auth-passcode-inp'))).toBeDisplayed();
 
-    await expect(driver.isKeyboardShown());
+    expect(await driver.isKeyboardShown()).toBe(true);
   });
 
   it('should press Home, then return to see passcode screen again', async () => {

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {WHITE} from '../lib/styles';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton';
 
 /**
@@ -12,41 +11,12 @@ import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton'
  *
  * When pushing a bottom sheet ontop of another bottom sheet use `navigation.replace`, to close the original bottom sheet first.
  */
-export const BottomSheetWrapper = ({
-  children,
-  closeOnBackButtonPress,
-}: {
-  children: React.ReactNode;
-  closeOnBackButtonPress?: boolean;
-}) => {
-  if (!closeOnBackButtonPress) {
-    return (
-      <BottomSheetWrapperPreventBack>{children}</BottomSheetWrapperPreventBack>
-    );
-  }
-
-  return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
-};
-
-const BottomSheetWrapperPreventBack = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  usePreventAndroidBackButton();
-  return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
-};
-
-const AnimateBottomSheetContainer = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
   const navigation = useNavigation();
-  const route = useRoute();
-  const insets = useSafeAreaInsets();
 
   const [displayContent, setDisplayContent] = React.useState(true);
+
+  usePreventAndroidBackButton();
 
   // This effect is used to prevent the bottom sheet from being removed before the animation is complete
   React.useEffect(() => {
@@ -54,23 +24,14 @@ const AnimateBottomSheetContainer = ({
       e.preventDefault();
       setDisplayContent(false);
       setTimeout(() => {
-        // The route may have already been removed by something other than
-        // this action (e.g. a parent navigator resetting via a changed
-        // `navigationKey`). Replaying a stale action in that case would be
-        // dispatched against a route that no longer exists.
-        const routeStillExists = navigation
-          .getState()
-          ?.routes.some(r => r.key === route.key);
-        if (routeStillExists) {
-          navigation.dispatch(e.data.action);
-        }
+        navigation.dispatch(e.data.action);
       }, 140);
     });
 
     return () => {
       unsubscribe();
     };
-  }, [navigation, route.key]);
+  }, [navigation]);
 
   return (
     <View
@@ -83,12 +44,10 @@ const AnimateBottomSheetContainer = ({
         <Animated.View
           style={{
             backgroundColor: WHITE,
-            paddingHorizontal: 20,
+            padding: 20,
             paddingTop: 40,
-            paddingBottom: 20 + insets.bottom,
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
-            flexShrink: 1,
           }}
           entering={SlideInDown.duration(150)}
           exiting={SlideOutDown.duration(150)}>

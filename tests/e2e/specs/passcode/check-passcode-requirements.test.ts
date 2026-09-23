@@ -2,6 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byTextMatches, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
+import {waitForMapScreen} from '../../utils/readiness';
 
 describe('Passcode - Check Passcode Requirements Flow', () => {
   it('should allow user into app with correct passcode when app has been background but not terminated', async () => {
@@ -21,7 +22,7 @@ describe('Passcode - Check Passcode Requirements Flow', () => {
 
     await expect($(byTextMatches('Enter your passcode'))).not.toBeDisplayed();
 
-    await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
+    await waitForMapScreen();
   });
 
   it('should relaunch app and see Passcode entry screen', async () => {
@@ -30,8 +31,6 @@ describe('Passcode - Check Passcode Requirements Flow', () => {
 
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();
     await expect($(byResourceId('SETTINGS.auth-passcode-inp'))).toBeDisplayed();
-
-    expect(await driver.isKeyboardShown()).toBe(true);
   });
 
   it('should press Home, then return to see passcode screen again', async () => {

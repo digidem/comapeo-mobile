@@ -639,6 +639,15 @@
   "screens.InviteSuccess.youHaveJoined": {
     "message": "You have joined {projectName}"
   },
+  "screens.Invites.RequestToJoin.close": {
+    "message": "Close"
+  },
+  "screens.Invites.RequestToJoin.receivedLinkTo": {
+    "message": "You've received a link to..."
+  },
+  "screens.Invites.RequestToJoin.requestToJoin": {
+    "message": "Request to Join"
+  },
   "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
     "message": "This device will no longer be able to view, contribute to, or adjust the project {projectName}."
   },

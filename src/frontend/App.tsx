@@ -33,6 +33,7 @@ import {
 import {PermissionsAndroid, Platform, AppState} from 'react-native';
 import {requestForegroundPermissionsAsync} from 'expo-location';
 import {AppProviders} from './contexts/AppProviders';
+import NetInfo from '@react-native-community/netinfo';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
@@ -95,6 +96,14 @@ const mapServerApi = {
     return new URL(await comapeoServicesClient.mapServer.getBaseUrl());
   },
 };
+// iOS only reads the wifi SSID when this is set. Must run before local discovery
+// starts (see below), because configure() drops listeners added before it.
+NetInfo.configure({
+  shouldFetchWiFiSSID: true,
+  // Prevents polling an external URL on iOS since it has no native reachability.
+  reachabilityShouldRun: () => false,
+});
+
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 

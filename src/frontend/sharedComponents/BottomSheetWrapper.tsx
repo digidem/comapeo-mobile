@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {WHITE} from '../lib/styles';
 import {useNavigation} from '@react-navigation/native';
 import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton';
@@ -11,12 +12,40 @@ import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton'
  *
  * When pushing a bottom sheet ontop of another bottom sheet use `navigation.replace`, to close the original bottom sheet first.
  */
-export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
+export const BottomSheetWrapper = ({
+  children,
+  closeOnBackButtonPress,
+}: {
+  children: React.ReactNode;
+  closeOnBackButtonPress?: boolean;
+}) => {
+  if (!closeOnBackButtonPress) {
+    return (
+      <BottomSheetWrapperPreventBack>{children}</BottomSheetWrapperPreventBack>
+    );
+  }
+
+  return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
+};
+
+const BottomSheetWrapperPreventBack = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  usePreventAndroidBackButton();
+  return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
+};
+
+const AnimateBottomSheetContainer = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
 
   const [displayContent, setDisplayContent] = React.useState(true);
-
-  usePreventAndroidBackButton();
 
   // This effect is used to prevent the bottom sheet from being removed before the animation is complete
   React.useEffect(() => {
@@ -44,10 +73,12 @@ export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
         <Animated.View
           style={{
             backgroundColor: WHITE,
-            padding: 20,
+            paddingHorizontal: 20,
             paddingTop: 40,
+            paddingBottom: 20 + insets.bottom,
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
+            flexShrink: 1,
           }}
           entering={SlideInDown.duration(150)}
           exiting={SlideOutDown.duration(150)}>

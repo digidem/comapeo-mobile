@@ -80,7 +80,7 @@ export const AllProjects = () => {
   );
 
   return (
-    <BottomSheetWrapper>
+    <BottomSheetWrapper closeOnBackButtonPress>
       <FlatList<ProjectListItem>
         contentContainerStyle={{gap: 20, paddingBottom: 2}}
         data={dataWithCurrentProjOnTop}

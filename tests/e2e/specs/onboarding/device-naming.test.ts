@@ -24,9 +24,6 @@ describe('Onboarding - Device Naming Test', () => {
       timeoutMsg: 'The ready message should not appear when input is empty',
     });
 
-    // Plain setValue: this step deliberately enters whitespace, which the
-    // field does not echo back verbatim, so it cannot be read back to
-    // verify. The assertion that follows is what proves it took effect.
     await deviceNameInput.setValue('    ');
     await addNameButton.click();
 

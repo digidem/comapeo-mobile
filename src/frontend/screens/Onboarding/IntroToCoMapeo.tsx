@@ -35,7 +35,7 @@ export const IntroToCoMapeo = ({
       dockContainerStyle={{backgroundColor: LIGHT_BLUE}}
       dockContent={
         <PrimaryButton
-          testID="ONBOARDING.get-started-btn"
+          testID="ONBOARDING.navigate-to-privacy-policy-btn"
           fullSize
           text={formatMessage(m.start)}
           onPress={() => {

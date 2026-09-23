@@ -27,14 +27,14 @@ describe('Onboarding - Success Screen', () => {
 
   it('should display "Start Mapping" button', async () => {
     const startMappingButton = await $(
-      byResourceId('ONBOARDING.map-on-your-own-btn'),
+      byResourceId('ONBOARDING.navigate-to-map-btn'),
     );
     await expect(startMappingButton).toBeDisplayed();
   });
 
   it('should create project and navigate to map when "Start Mapping" is tapped', async () => {
     const startMappingButton = await $(
-      byResourceId('ONBOARDING.map-on-your-own-btn'),
+      byResourceId('ONBOARDING.navigate-to-map-btn'),
     );
     await startMappingButton.click();
 

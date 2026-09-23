@@ -41,7 +41,7 @@ describe('Onboarding - Device Naming Test', () => {
     await expect(deviceReadyMessage).toBeDisplayed();
 
     const startMappingButton = await $(
-      byResourceId('ONBOARDING.map-on-your-own-btn'),
+      byResourceId('ONBOARDING.navigate-to-map-btn'),
     );
     await expect(startMappingButton).toBeDisplayed();
   });

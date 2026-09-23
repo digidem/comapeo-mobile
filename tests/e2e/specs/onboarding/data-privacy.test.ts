@@ -5,7 +5,7 @@ import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 describe('Onboarding - Data & Privacy Screen', () => {
   it('should display Data & Privacy screen after tapping "Get Started"', async () => {
     const getStartedButton = await $(
-      byResourceId('ONBOARDING.get-started-btn'),
+      byResourceId('ONBOARDING.navigate-to-privacy-policy-btn'),
     );
     await getStartedButton.click();
 

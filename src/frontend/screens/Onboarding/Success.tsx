@@ -75,7 +75,7 @@ export const Success = ({
           <LoadingIndicator />
         ) : (
           <PrimaryButton
-            testID="ONBOARDING.map-on-your-own-btn"
+            testID="ONBOARDING.navigate-to-map-btn"
             fullSize
             text={formatMessage(m.startMapping)}
             iconPosition="left"

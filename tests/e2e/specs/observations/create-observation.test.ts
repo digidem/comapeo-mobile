@@ -1,7 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
-import {tapAboveElement} from '../../utils/touchActions';
+import {dismissKeyboard} from '../../utils/touchActions';
 import {checkForElementGone} from '../../utils/checkForGone';
 import {handleGPSAlert} from '../../utils/alerts';
 
@@ -72,9 +72,8 @@ describe('Observations - Create Observation Flow', () => {
 
     await expect($(byResourceId('OBS.add-photo-btn-keyboard'))).toBeDisplayed();
 
-    const showOptionsElem = $(byTextMatches('Show Options'));
-    await tapAboveElement(showOptionsElem, 150);
-    checkForElementGone(byTextMatches('Show Options'));
+    await dismissKeyboard();
+    await checkForElementGone(byTextMatches('Show Options'));
   });
 
   it('should open camera, cancel, then save observation', async () => {

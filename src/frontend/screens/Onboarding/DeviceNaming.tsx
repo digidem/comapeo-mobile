@@ -90,7 +90,9 @@ export const DeviceNaming = () => {
 
   return (
     <KeyboardAvoidingView style={{width: '100%', height: '100%'}}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      {/* accessible={false} keeps iOS from collapsing the whole form into a
+          single accessibility element, which hides the input and button. */}
+      <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.headerArea}>
             <DeviceIcon width={39} height={60} />

@@ -27,7 +27,10 @@
     "upgrade-deps:dev": "npm-check --update --save-exact --dev-only",
     "test:jest": "dotenv -- jest",
     "test:e2e:nobuild": "wdio run ./wdio.local.config.js",
-    "test:e2e:build": "npm run build:android:e2e && npm run test:e2e:nobuild"
+    "test:e2e:build": "npm run build:android:e2e && npm run test:e2e:nobuild",
+    "prebuild:ios:e2e": "APP_VARIANT=releaseCandidate npx expo prebuild --platform ios --clean",
+    "build:ios:e2e": "EXPO_PUBLIC_E2E_TEST=true APP_VARIANT=releaseCandidate xcodebuild -workspace ios/CoMapeoRC.xcworkspace -scheme CoMapeoRC -configuration Release -sdk iphonesimulator -destination \"platform=iOS Simulator,name=${IOS_SIM_NAME:-iPhone 17}\" -derivedDataPath ios/build ARCHS=arm64 ONLY_ACTIVE_ARCH=YES build",
+    "test:e2e:ios": "wdio run ./wdio.ios.local.config.js"
   },
   "dependencies": {
     "@comapeo/core-react": "12.0.3",

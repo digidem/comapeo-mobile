@@ -1,0 +1,63 @@
+// @ts-check
+const path = require('path');
+
+/** @type {WebdriverIO.Config} */
+const config = {
+  runner: 'local',
+  specs: [
+    path.resolve(__dirname, 'tests/e2e/specs/onboarding/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/menu/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/tracks/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/solo-project/index.tsx'),
+    // path.resolve(__dirname, 'tests/e2e/specs/multiple-projects/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/exchange/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/observations/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/audio/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/team/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/settings/index.test.ts'),
+    // path.resolve(__dirname, 'tests/e2e/specs/passcode/index.test.ts'),
+  ],
+  maxInstances: 1,
+  capabilities: [
+    {
+      platformName: 'iOS',
+      'appium:automationName': 'XCUITest',
+      // Match all three to one simulator from
+      // `xcrun simctl list devices available`.
+      'appium:deviceName': '', // e.g. 'iPhone 17'
+      'appium:platformVersion': '', // e.g. '26.5'
+      'appium:udid': '', // the UUID shown beside that simulator
+      'appium:app': path.resolve(
+        __dirname,
+        'ios/build/Build/Products/Release-iphonesimulator/CoMapeoRC.app',
+      ),
+      'appium:bundleId': 'com.comapeo.rc',
+      'appium:autoAcceptAlerts': true,
+      'appium:newCommandTimeout': 300,
+      // Fresh install per session, matching CI. Onboarding specs assume a
+      // first-run app and will not pass against retained state.
+      'appium:noReset': false,
+      'appium:fullReset': true,
+      // The onboarding numeric/text inputs are unusable if the simulator is
+      // paired with the Mac's hardware keyboard.
+      'appium:connectHardwareKeyboard': false,
+    },
+  ],
+  hostname: '127.0.0.1',
+  port: 4723,
+  logLevel: 'error',
+  waitforTimeout: 15000,
+  connectionRetryTimeout: 180000,
+  connectionRetryCount: 3,
+  // No retries during bring-up: a retry hides which step actually failed.
+  specFileRetries: 0,
+  framework: 'mocha',
+  mochaOpts: {
+    ui: 'bdd',
+    timeout: 300000,
+  },
+  reporters: [['spec', {addConsoleLogs: true}]],
+  outputDir: './test-results-ios',
+};
+
+module.exports = {config};

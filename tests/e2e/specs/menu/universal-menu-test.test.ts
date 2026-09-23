@@ -1,6 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {waitForMapScreen} from '../../utils/readiness';
 
 describe('Menu - basic functionality of the menu', () => {
   it('should open on press of header', async () => {
@@ -26,7 +27,7 @@ describe('Menu - basic functionality of the menu', () => {
     await expect(gatherObservations).not.toBeDisplayed();
     await expect(backgroundMaps).not.toBeDisplayed();
     await expect(coMapeoSettings).not.toBeDisplayed();
-    await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
+    await waitForMapScreen();
   });
 
   it('should navigate to background map screen on background map press', async () => {
@@ -69,9 +70,8 @@ describe('Menu - basic functionality of the menu', () => {
     const gatherObservations = await $(byText('Gather Observations'));
     await gatherObservations.click();
 
-    const mapScreen = await $(byResourceId('MAIN.map-screen'));
+    await waitForMapScreen();
 
-    await expect(mapScreen).toBeDisplayed();
     await expect(addObservationButton).toBeDisplayed();
 
     const obsListTab = await $('~Go to observations list.');
@@ -89,7 +89,7 @@ describe('Menu - basic functionality of the menu', () => {
 
     await expect(observationView).not.toBeDisplayed();
 
-    await expect(mapScreen).toBeDisplayed();
+    await waitForMapScreen();
     await expect(addObservationButton).toBeDisplayed();
   });
 });

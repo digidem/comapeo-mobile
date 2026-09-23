@@ -58,20 +58,20 @@ export const AppUsagePromptInterstitial = ({
     <ScreenContentWithDock
       dockContent={
         <View style={styles.buttonsContainer}>
-          <SecondaryButton
-            fullSize
-            text={t(m.notNow)}
-            onPress={() => {
-              setOptedIn(false);
-              navigation.pop();
-            }}
-          />
           <PrimaryButton
             fullSize
             text={t(m.countIn)}
             onPress={() => {
               setOptedIn(true);
               navigation.replace('AppUsageSharingSuccess');
+            }}
+          />
+          <SecondaryButton
+            fullSize
+            text={t(m.notNow)}
+            onPress={() => {
+              setOptedIn(false);
+              navigation.pop();
             }}
           />
         </View>

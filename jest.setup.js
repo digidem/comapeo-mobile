@@ -86,6 +86,7 @@ jest.mock('expo-audio', () => {
       HIGH_QUALITY: {ios: {}, android: {}, web: {}},
       LOW_QUALITY: {ios: {}, android: {}, web: {}},
     },
+    setAudioModeAsync: jest.fn(() => Promise.resolve()),
   };
 });
 

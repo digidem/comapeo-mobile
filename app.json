@@ -101,7 +101,8 @@
           "data": [
             {
               "scheme": "https",
-              "host": "app.comapeo.org"
+              "host": "a.comapeo.app",
+              "pathPrefix": "/invite"
             }
           ],
           "category": ["BROWSABLE", "DEFAULT"]
@@ -121,6 +122,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.comapeo",
+      "associatedDomains": ["applinks:a.comapeo.app"],
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocalNetworkUsageDescription": "CoMapeo uses the local network to discover and sync with nearby devices in your project.",

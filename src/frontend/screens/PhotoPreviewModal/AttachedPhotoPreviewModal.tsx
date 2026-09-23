@@ -105,7 +105,13 @@ export function AttachedPhotoPreviewModal({
     lang,
   });
 
-  const {data: memberInfo} = useSingleMember({projectId, deviceId: createdBy});
+  // core 7.6.0 makes `createdBy`  optional on derived doc fields; every
+  // observation we can open still has one, so keep the existing lookup until
+  // we know if that is intentional and how to handle it.
+  const {data: memberInfo} = useSingleMember({
+    projectId,
+    deviceId: createdBy ?? '',
+  });
 
   const {formatMessage, formatNumber} = useIntl();
   const unitSystem = useUnitSystem();

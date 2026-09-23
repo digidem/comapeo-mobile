@@ -25,6 +25,7 @@ import {RootStack} from './RootStack';
 import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {InviteReceived} from '../../screens/Invites/InviteReceived';
+import {RequestToJoin} from '../../screens/Invites/RequestToJoin';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
 
@@ -178,6 +179,7 @@ export const RootStackNavigator = () => {
               name="InviteReceived"
               component={InviteReceived}
             />
+            <RootStack.Screen name="RequestToJoin" component={RequestToJoin} />
             <RootStack.Screen
               name="InviteSuccessfullyAccepted"
               component={InviteSuccessfullyAccepted}

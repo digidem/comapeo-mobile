@@ -6,6 +6,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
+import type {InviteLink} from '../lib/inviteLinks';
 import {PermissionResponse} from 'expo-audio';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 
@@ -155,6 +156,7 @@ export type RootStackParamsList = {
     createdAt?: string;
   };
   InviteReceived: {inviteId: string};
+  RequestToJoin: InviteLink;
   InviteSuccessfullyAccepted: {projectName: string; projectId: string};
   InviteCanceled: {projectName: string};
   RemovedFromProjectBottomSheet: undefined;

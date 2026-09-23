@@ -1,7 +1,7 @@
 import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import React from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {File} from 'expo-file-system';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
@@ -116,13 +116,17 @@ export function BackgroundMapsScreen() {
   const selectFileMutation = useMutation({
     mutationKey: FILE_SELECT_MUTATION_KEY,
     mutationFn: async () => {
-      const result = await File.pickFileAsync(undefined, 'application/*');
-      // The return type of `File.pickFileAsync()` is incorrect. See https://github.com/expo/expo/issues/43201
-      const file = (Array.isArray(result) ? result[0] : result) as File;
-      if (!file) {
-        throw new Error('No file selected');
-      }
-      await importCustomMapMutation.mutateAsync({file});
+      // iOS doesn't match files the same way as Android, so 'application/*' greys out
+      // every file. For iOS this object resolves to the .smp UTI that app.json exports.
+      const picked = await File.pickFileAsync({
+        mimeTypes: Platform.select({
+          ios: 'application/vnd.digidem.smp',
+          android: 'application/*',
+        }),
+      });
+      if (picked.canceled) return {canceled: true} as const;
+      await importCustomMapMutation.mutateAsync({file: picked.result});
+      return {canceled: false} as const;
     },
   });
   const importCustomMapMutation = useImportCustomMapFile();
@@ -136,17 +140,11 @@ export function BackgroundMapsScreen() {
 
   const handleChooseFile = () => {
     selectFileMutation.mutate(undefined, {
-      onSuccess: () => {
+      onSuccess: ({canceled}) => {
+        if (canceled) return;
         navigate('MapAddedBottomSheet');
       },
       onError: err => {
-        if (
-          err instanceof Error &&
-          // Error message from expo-file-system's File.pickFileAsync() when user cancels
-          err.message.includes('cancelled by the user')
-        ) {
-          return;
-        }
         Sentry.captureException(err);
         navigate('BackgroundMapErrorBottomSheet', {
           title: t(m.importErrorTitle),

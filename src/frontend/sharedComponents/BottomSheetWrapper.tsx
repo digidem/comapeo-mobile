@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {WHITE} from '../lib/styles';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton';
 
 /**
@@ -43,6 +43,7 @@ const AnimateBottomSheetContainer = ({
   children: React.ReactNode;
 }) => {
   const navigation = useNavigation();
+  const route = useRoute();
   const insets = useSafeAreaInsets();
 
   const [displayContent, setDisplayContent] = React.useState(true);
@@ -53,14 +54,23 @@ const AnimateBottomSheetContainer = ({
       e.preventDefault();
       setDisplayContent(false);
       setTimeout(() => {
-        navigation.dispatch(e.data.action);
+        // The route may have already been removed by something other than
+        // this action (e.g. a parent navigator resetting via a changed
+        // `navigationKey`). Replaying a stale action in that case would be
+        // dispatched against a route that no longer exists.
+        const routeStillExists = navigation
+          .getState()
+          ?.routes.some(r => r.key === route.key);
+        if (routeStillExists) {
+          navigation.dispatch(e.data.action);
+        }
       }, 140);
     });
 
     return () => {
       unsubscribe();
     };
-  }, [navigation]);
+  }, [navigation, route.key]);
 
   return (
     <View

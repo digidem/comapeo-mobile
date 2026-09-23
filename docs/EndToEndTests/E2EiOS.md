@@ -3,7 +3,7 @@
 Status: **onboarding passes (19/19).** No other suite has been tried yet.
 
 `E2E_IOS_ROADMAP.md` is Gregor's original document. Here is more that was learned after the fact.
-[What we learned](#what-we-learned) below.
+See [What was learned](#what-was-learned) below.
 
 ---
 
@@ -112,9 +112,9 @@ curl -u "<user>:<key>" -X POST \
 
 ---
 
-## What we learned
+## What was learned
 
-Things that cost us time, so they don't cost it again.
+Things that cost time, so they don't cost it again.
 
 **Build**
 

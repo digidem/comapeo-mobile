@@ -85,9 +85,6 @@
   "$1screens.DataPrivacy.next": {
     "message": "Tiếp theo"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Tham gia một dự án"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Tên thiết bị"
   },

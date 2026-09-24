@@ -5,6 +5,7 @@ import {
   type QueryKey,
 } from '@tanstack/react-query';
 import * as Location from 'expo-location';
+import * as Notifications from 'expo-notifications';
 import {Camera, type CameraPermissionStatus} from 'react-native-vision-camera';
 import * as Sentry from '@sentry/react-native';
 import {openSettingsAndWait} from '../utils/linking';
@@ -27,11 +28,23 @@ export type Permission = {
 // dialog or Settings is being used (see AuthContext.tsx)
 const LOCATION_KEY = ['background', 'permission', 'location'] as const;
 const CAMERA_KEY = ['background', 'permission', 'camera'] as const;
+const NOTIFICATIONS_KEY = [
+  'background',
+  'permission',
+  'notifications',
+] as const;
+
 function toState(snapshot: PermissionSnapshot | undefined): PermissionState {
   if (!snapshot) return 'pending';
   if (snapshot.granted) return 'granted';
   return snapshot.canAskAgain ? 'askable' : 'blocked';
 }
+
+/**
+ * `enabled: false` stays at `pending` — for a screen that is mounted
+ * but not visible, so it doesn't read permissions before it is needed.
+ */
+type PermissionOptions = {enabled?: boolean};
 
 /**
  * focusManager is wired to AppState in App.tsx, so this re-reads the permission
@@ -41,11 +54,12 @@ function usePermission({
   queryKey,
   get,
   request,
+  enabled,
 }: {
   queryKey: QueryKey;
   get: () => Promise<PermissionSnapshot>;
   request: () => Promise<PermissionSnapshot>;
-}): Permission {
+} & PermissionOptions): Permission {
   const queryClient = useQueryClient();
 
   // The rule wants `get` in the queryKey. Each hook passes its own queryKey and
@@ -54,6 +68,7 @@ function usePermission({
   // eslint-disable-next-line @tanstack/query/exhaustive-deps
   const {data} = useQuery({
     queryKey,
+    enabled,
     // If reading the permission fails, don't leave users stuck on a loading
     // spinner. Falling back to askable shows Allow so users can try again.
     queryFn: () =>
@@ -91,8 +106,9 @@ function usePermission({
   };
 }
 
-export function useLocationPermission() {
+export function useLocationPermission({enabled}: PermissionOptions = {}) {
   return usePermission({
+    enabled,
     queryKey: LOCATION_KEY,
     get: async () => {
       const {granted, canAskAgain} =
@@ -114,13 +130,30 @@ function cameraSnapshot(status: CameraPermissionStatus): PermissionSnapshot {
   };
 }
 
-export function useCameraPermission() {
+export function useCameraPermission({enabled}: PermissionOptions = {}) {
   return usePermission({
+    enabled,
     queryKey: CAMERA_KEY,
     get: async () => cameraSnapshot(Camera.getCameraPermissionStatus()),
     request: async () => {
       await Camera.requestCameraPermission();
       return cameraSnapshot(Camera.getCameraPermissionStatus());
+    },
+  });
+}
+
+export function useNotificationPermission({enabled}: PermissionOptions = {}) {
+  return usePermission({
+    enabled,
+    queryKey: NOTIFICATIONS_KEY,
+    get: async () => {
+      const {granted, canAskAgain} = await Notifications.getPermissionsAsync();
+      return {granted, canAskAgain};
+    },
+    request: async () => {
+      const {granted, canAskAgain} =
+        await Notifications.requestPermissionsAsync();
+      return {granted, canAskAgain};
     },
   });
 }

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
-import {defineMessages, useIntl} from 'react-intl';
+import {useIntl} from 'react-intl';
 
-import {useLocationPermission} from '../../../hooks/usePermissions';
+import {useTrackPermissionRequest} from './useTrackPermissionRequest';
 import {FullScreenCenteredLoader} from '../../../sharedComponents/FullScreenCenteredLoader';
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
@@ -12,17 +12,7 @@ import {
 } from '../../../sharedComponents/PermissionButtons';
 import {DARK_ORANGE} from '../../../lib/styles';
 import HikingIcon from '../../../images/Hiking.svg';
-
-const m = defineMessages({
-  title: {
-    id: '$1screens.MapScreen.TrackBottomSheet.permissionTitle',
-    defaultMessage: 'Record Tracks',
-  },
-  locationRequired: {
-    id: 'screens.MapScreen.TrackBottomSheet.locationRequired',
-    defaultMessage: 'Location required to use.',
-  },
-});
+import NotificationsUnreadIcon from '../../../images/NotificationsUnread.svg';
 
 const ICON_SIZE = 80;
 
@@ -31,39 +21,37 @@ const ICON_SIZE = 80;
  */
 export const TrackPermissionScreen = () => {
   const {formatMessage} = useIntl();
-  const location = useLocationPermission();
+  const request = useTrackPermissionRequest({enabled: true});
 
-  if (location.state === 'pending') {
+  // Only rendered when location isn't granted, so 'granted' can't come back
+  // here — both non-'needed' cases are just "nothing to show yet".
+  if (request.status !== 'needed') {
     return <FullScreenCenteredLoader />;
   }
+
+  const Icon = request.icon === 'hiking' ? HikingIcon : NotificationsUnreadIcon;
 
   return (
     <ScreenContentWithDock
       testID="TRACK.permission"
       contentContainerStyle={styles.content}
       dockContent={
-        location.state === 'blocked' ? (
-          <OpenSettingsButton
-            testID="TRACK.permission-settings-btn"
-            onPress={location.openSettings}
-          />
-        ) : (
+        request.canAsk ? (
           <AllowPermissionButton
             testID="TRACK.permission-allow-btn"
-            onPress={location.request}
+            onPress={request.allow}
+          />
+        ) : (
+          <OpenSettingsButton
+            testID="TRACK.permission-settings-btn"
+            onPress={request.openSettings}
           />
         )
       }>
       <IconTitleDescription
-        icon={
-          <HikingIcon
-            color={DARK_ORANGE}
-            width={ICON_SIZE}
-            height={ICON_SIZE}
-          />
-        }
-        title={formatMessage(m.title)}
-        description={formatMessage(m.locationRequired)}
+        icon={<Icon color={DARK_ORANGE} width={ICON_SIZE} height={ICON_SIZE} />}
+        title={formatMessage(request.title)}
+        description={formatMessage(request.description)}
       />
     </ScreenContentWithDock>
   );

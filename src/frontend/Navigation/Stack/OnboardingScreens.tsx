@@ -3,6 +3,7 @@ import {IntroToCoMapeo} from '../../screens/Onboarding/IntroToCoMapeo';
 import {DataPrivacy} from '../../screens/Onboarding/DataPrivacy';
 import {OnboardingPrivacyPolicy} from '../../screens/Onboarding/OnboardingPrivacyPolicy';
 import {DeviceNaming} from '../../screens/Onboarding/DeviceNaming';
+import {AlwaysStayNotified} from '../../screens/Onboarding/AlwaysStayNotified';
 import {Success} from '../../screens/Onboarding/Success';
 import {MessageDescriptor} from 'react-intl';
 import {RootStack} from './RootStack';
@@ -32,6 +33,11 @@ export const createOnboardingScreens = ({
       <RootStack.Screen
         name="DeviceNaming"
         component={DeviceNaming}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="AlwaysStayNotified"
+        component={AlwaysStayNotified}
         options={{headerShown: false}}
       />
       <RootStack.Screen

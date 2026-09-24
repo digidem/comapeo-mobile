@@ -107,20 +107,34 @@ export function useLocationPermission() {
   });
 }
 
-function cameraSnapshot(status: CameraPermissionStatus): PermissionSnapshot {
+// Android reports "never asked" and "permanently denied" identically, so the
+// first Allow after the android process is killed is a guess. If someone taps Allow and nothing happens then, the
+// button immediately becomes Open Settings.
+let hasRequestedCamera = false;
+
+function markCameraRequested() {
+  hasRequestedCamera = true;
+}
+
+export function cameraSnapshot(
+  status: CameraPermissionStatus,
+  hasRequested: boolean,
+): PermissionSnapshot {
   return {
     granted: status === 'granted',
-    canAskAgain: status === 'not-determined',
+    canAskAgain: status === 'not-determined' || !hasRequested,
   };
 }
 
 export function useCameraPermission() {
   return usePermission({
     queryKey: CAMERA_KEY,
-    get: async () => cameraSnapshot(Camera.getCameraPermissionStatus()),
+    get: async () =>
+      cameraSnapshot(Camera.getCameraPermissionStatus(), hasRequestedCamera),
     request: async () => {
       await Camera.requestCameraPermission();
-      return cameraSnapshot(Camera.getCameraPermissionStatus());
+      markCameraRequested();
+      return cameraSnapshot(Camera.getCameraPermissionStatus(), true);
     },
   });
 }

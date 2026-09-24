@@ -205,9 +205,6 @@ AppState.addEventListener('change', status => {
   focusManager.setFocused(status === 'active');
 });
 
-// Temporarily removing the permission requests that hit before on boarding since we will have
-// separate permissions in the app now. These will be removed in the onboarding PR but
-// I needed to do it remove them to complete this PR
 const App = () => {
   return (
     <Sentry.ErrorBoundary fallback={<FatalErrorUntranslated />}>

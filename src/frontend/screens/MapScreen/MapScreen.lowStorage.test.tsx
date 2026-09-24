@@ -97,16 +97,10 @@ jest.mock('../../hooks/server/presets', () => ({
 }));
 
 let mockLocationState = 'granted';
-let mockNotificationState = 'granted';
 
 jest.mock('../../hooks/usePermissions', () => ({
   useLocationPermission: () => ({
     state: mockLocationState,
-    request: jest.fn(),
-    openSettings: jest.fn(),
-  }),
-  useNotificationPermission: () => ({
-    state: mockNotificationState,
     request: jest.fn(),
     openSettings: jest.fn(),
   }),
@@ -144,7 +138,6 @@ describe('MapScreen', () => {
     mockTotalBytes = 64 * 1024 * 1024 * 1024;
     mockFreeBytes = null;
     mockLocationState = 'granted';
-    mockNotificationState = 'granted';
   });
 
   afterEach(async () => {
@@ -188,13 +181,11 @@ describe('MapScreen', () => {
   it('still reaches the track sheet when location is denied', async () => {
     mockFreeBytes = 600 * 1024 * 1024;
     mockLocationState = 'askable';
-    mockNotificationState = 'askable';
 
     await renderMap({trackingOpen: true});
 
-    expect(
-      await screen.findByText('Location & Notifications required to use.'),
-    ).toBeTruthy();
+    // both screens share the same body copy, so the title is what tells them apart
+    expect(await screen.findByText('Record Tracks')).toBeTruthy();
     // the map's own location card would only compete with the sheet's request
     expect(screen.queryByTestId('MAP.location-permission')).toBeNull();
   });

@@ -790,14 +790,8 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone Number"
   },
-  "screens.MapScreen.TrackBottomSheet.locationAndNotificationsRequired": {
-    "message": "Location & Notifications required to use."
-  },
   "screens.MapScreen.TrackBottomSheet.locationRequired": {
     "message": "Location required to use."
-  },
-  "screens.MapScreen.TrackBottomSheet.notificationsRequired": {
-    "message": "Notifications required to use."
   },
   "screens.MapScreen.locationPermissionDescription": {
     "message": "Location required to use."

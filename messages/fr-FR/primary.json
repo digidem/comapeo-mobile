@@ -255,9 +255,6 @@
     "message": "Enregistrement audio avec CoMapeo",
     "description": "Screen title for audio permission screen"
   },
-  "$1screens.AudioPlaybackNew.backToEditing": {
-    "message": "Retour à l'édition"
-  },
   "$1screens.AudioPlaybackNew.delete": {
     "message": "Effacer"
   },
@@ -307,23 +304,11 @@
   "$1screens.DataPrivacy.title": {
     "message": "CoMapeo est privé par défaut."
   },
-  "$1screens.DeviceNaming.Success.chooseProject": {
-    "message": "Choisissez ci-dessous pour démarrer votre premier projet."
-  },
   "$1screens.DeviceNaming.Success.deviceReady": {
     "message": "{deviceName} est prêt !"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Rejoindre un projet"
-  },
-  "$1screens.DeviceNaming.Success.mapOnYourOwn": {
-    "message": "Carte sur la vôtre"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "Des noms distincts aident les collaborateurs à utiliser CoMapeo pour vous reconnaître."
-  },
-  "$1screens.DeviceNaming.header": {
-    "message": "Nommez votre appareil"
   },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Nom de l'appareil"
@@ -343,32 +328,11 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "Enregistrer"
   },
-  "$1screens.IntroToCoMapeo.collaborate": {
-    "message": "Partagez en toute sécurité avec vos collaborateurs"
-  },
-  "$1screens.IntroToCoMapeo.designedFor": {
-    "message": "Coconçu avec et pour les mappers et moniteurs de territoire indigènes."
-  },
-  "$1screens.IntroToCoMapeo.getStarted": {
-    "message": "Commencer"
-  },
-  "$1screens.IntroToCoMapeo.mapAnywhere": {
-    "message": "Carte partout et n'importe où"
-  },
   "$1screens.IntroToCoMapeo.mapWorldTogether": {
     "message": "Mappez votre monde ensemble."
   },
-  "$1screens.IntroToCoMapeo.ownData": {
-    "message": "Toujours posséder et contrôler vos données"
-  },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Décliner l'invitation"
-  },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "Rejoignez en tant que {role}?"
-  },
-  "$1screens.InviteReceived.joinProject": {
-    "message": "Rejoindre le projet"
   },
   "$1screens.InviteSuccess.done": {
     "message": "Terminé"
@@ -428,9 +392,6 @@
   "$1screens.LocationInfoScreen.yes": {
     "message": "Oui",
     "description": "if a location sensor is active yes/no"
-  },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Emplacement d’allumage"
   },
   "$1screens.Observation.ObservationView.delete": {
     "message": "Effacer",
@@ -503,27 +464,6 @@
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "message": "Ajouter des observations",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
-    "message": "Ajouter des enregistrements audio."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Fermer"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "Explorez CoMapeo—invitez vos collaborateurs à tout moment."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
-    "message": "Aller à la carte"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
-    "message": "Capturez des photos en déplacement."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.title": {
-    "message": "Carte sur la vôtre"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
-    "message": "Chemins de piste parcourus."
   },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Partager les informations de diagnostic"
@@ -748,8 +688,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Quelque chose s'est mal passé"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Commencer un nouveau projet"
   }
 }

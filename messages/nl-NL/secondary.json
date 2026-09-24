@@ -109,9 +109,6 @@
   "Screens.ProjectSettings.editInfo": {
     "message": "Info bewerken"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "Nodig samenwerkers uit"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "Projectstatistieken worden niet gedeeld."
   },
@@ -121,17 +118,11 @@
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Deel met een veilige, gekleurde server. URL is nodig om toegang te krijgen."
   },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "Je bent alleen aan het mappen."
-  },
   "Screens.ProjectSettings.update": {
     "message": "Updaten"
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Set bijwerken"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "Toon"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "Details bekijken"
@@ -771,15 +762,6 @@
   "screens.ObservationsList.filter.justYou": {
     "message": "U alleen"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Afsluiten"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Coördineer met je team om een projectuitnodiging te ontvangen."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Deelnemen aan een project"
-  },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Beleid"
   },
@@ -1170,23 +1152,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Nodig samenwerkers uit"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "Ga terug"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "Veilige en privé manier om te wisselen met medewerkers."
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "Alleen apparaten die voor een project zijn uitgenodigd, kunnen bijdragen."
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "Beheer projectbijdragers en instellingen eenvoudig."
-  },
-  "soloProject.startNewProject.start": {
-    "message": "Beginnen"
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "Elk project is uniek en scheidt."
   }
 }

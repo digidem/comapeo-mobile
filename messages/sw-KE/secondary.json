@@ -22,9 +22,6 @@
   "Screens.ProjectSettings.update": {
     "message": "Sasisha"
   },
-  "Screens.ProjectSettings.view": {
-    "message": "Tazama"
-  },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "message": "Ghairi",
     "description": "Text for cancel action button."
@@ -328,12 +325,6 @@
   "screens.ObservationsList.filter.all": {
     "message": "Yote"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Funga"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Jiunge na Mradi"
-  },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Funga"
   },
@@ -361,9 +352,6 @@
     "message": "Badilisha"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Rudi Nyuma"
-  },
-  "soloProject.startNewProject.goBack": {
     "message": "Rudi Nyuma"
   }
 }

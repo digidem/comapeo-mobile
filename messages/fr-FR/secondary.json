@@ -106,9 +106,6 @@
   "Screens.ProjectSettings.editInfo": {
     "message": "Modifier les infos"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "Inviter des collaborateurs"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "Les statistiques du projet ne sont pas partagées."
   },
@@ -118,17 +115,11 @@
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Partager avec un serveur sécurisé. URL requise pour y accéder."
   },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "Vous êtes en train de cartographier vous-même."
-  },
   "Screens.ProjectSettings.update": {
     "message": "Mise à jour"
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Mettre à jour le jeu"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "Afficher"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "Voir les détails"
@@ -761,15 +752,6 @@
   "screens.ObservationsList.filter.justYou": {
     "message": "Juste vous"
   },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Fermer"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Coordonnez avec votre équipe pour recevoir une invitation de projet."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Rejoindre un projet"
-  },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Politique de confidentialité"
   },
@@ -1156,23 +1138,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Inviter des collaborateurs"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "Retour"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "Un moyen sûr et privé d'échanger avec des collaborateurs."
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "Seuls les appareils invités à un projet peuvent contribuer."
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "Gérez facilement les contributeurs et les paramètres du projet."
-  },
-  "soloProject.startNewProject.start": {
-    "message": "Début"
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "Chaque projet est unique et séparé."
   }
 }

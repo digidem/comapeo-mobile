@@ -58,9 +58,6 @@
   "$1screens.DataPrivacy.next": {
     "message": "அடுத்து"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "திட்டத்தில் சேரவும்"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "சாதனத்தின் பெயர்"
   },
@@ -72,9 +69,6 @@
   },
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "சேமிக்கவும்"
-  },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "அழைப்பை நிராகரி"
   },
   "$1screens.InviteSuccess.done": {
     "message": "முடிந்தது"
@@ -154,9 +148,6 @@
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "message": "அவதானிப்புகளைச் சேர்க்கவும்",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "மூடுக"
   },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "மூடுக"

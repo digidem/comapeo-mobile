@@ -42,9 +42,6 @@
   "$1screens.LeaveProjectWarning.continueButton": {
     "message": "Taastay"
   },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Keer"
-  },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "Keer"
   },

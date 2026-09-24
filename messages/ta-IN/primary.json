@@ -58,9 +58,6 @@
   "$1screens.DataPrivacy.next": {
     "message": "அடுத்து"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "திட்டத்தில் சேரவும்"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "சாதனத்தின் பெயர்"
   },

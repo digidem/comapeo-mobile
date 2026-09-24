@@ -513,6 +513,18 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respects Your Privacy & Autonomy"
   },
+  "screens.DeviceNaming.Success.addAudio": {
+    "message": "Add audio recordings."
+  },
+  "screens.DeviceNaming.Success.coordinateOrMap": {
+    "message": "Coordinate with team to start or map on your own."
+  },
+  "screens.DeviceNaming.Success.snapPhotos": {
+    "message": "Snap photos on-the-go."
+  },
+  "screens.DeviceNaming.Success.tracks": {
+    "message": "Track paths walked."
+  },
   "screens.EarlyAccess.feedbackPrefix": {
     "message": "Have feedback? Share it at"
   },

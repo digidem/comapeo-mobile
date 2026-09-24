@@ -31,7 +31,7 @@ import RNRestart from 'react-native-restart';
 const m = defineMessages({
   header: {
     id: '$1screens.DeviceNaming.header',
-    defaultMessage: 'Name Your Device',
+    defaultMessage: 'Name This Device',
   },
   description: {
     id: '$1screens.DeviceNaming.description',

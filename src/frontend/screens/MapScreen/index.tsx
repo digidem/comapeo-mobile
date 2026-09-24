@@ -42,6 +42,7 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
+import {useForegroundPermissions} from 'expo-location';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -89,6 +90,14 @@ export const MapScreen = ({
   const isLow = isLowStorage(data.freeBytes);
   const insets = useSafeAreaInsets();
   const BANNER_TOP = insets.top + 75;
+  const [status, requestPermission] = useForegroundPermissions();
+
+  React.useEffect(() => {
+    if (status?.granted) return;
+    if (status?.canAskAgain) {
+      requestPermission();
+    }
+  }, [status, requestPermission]);
 
   useCheckDraftObservationAndNavigate({authState});
   useCheckUnsavedTrackAndNavigate({authState});

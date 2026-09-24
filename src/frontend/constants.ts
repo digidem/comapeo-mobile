@@ -44,12 +44,10 @@ export const EDITING_SCREEN_NAMES: (
   'DataPrivacy',
   'DeviceNaming',
   'OnboardingPrivacyPolicy',
-  'Success',
   'AuthScreen',
   'ErrorBottomSheet',
   'ConfirmDiscardObservationBottomSheet',
   'ConfirmDiscardObservationEditBottomSheet',
-  'MapOnYourOwnIntro',
 ];
 
 export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [

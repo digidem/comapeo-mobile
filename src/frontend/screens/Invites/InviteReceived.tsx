@@ -79,7 +79,7 @@ export const InviteReceived = ({
 
   function accept() {
     if (isTracking) {
-      navigation.navigate('TrackRecordingActive');
+      navigation.replace('TrackRecordingActive');
       return;
     }
 
@@ -100,7 +100,7 @@ export const InviteReceived = ({
 
           const isInOnboarding = navigation
             .getState()
-            .routes.find(route => route.name === 'JoinProjectIntro');
+            .routes.find(route => route.name === 'Success');
 
           // If the user is on the onboarding screen, simply show the invites accepted modal
           if (isInOnboarding) {

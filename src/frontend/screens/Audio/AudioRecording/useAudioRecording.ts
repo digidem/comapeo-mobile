@@ -2,10 +2,14 @@ import {useCallback, useEffect, useRef} from 'react';
 import {
   useAudioRecorder,
   useAudioRecorderState,
+  setAudioModeAsync,
   RecordingPresets,
+  RecordingOptions,
 } from 'expo-audio';
 
-const RECORDING_OPTIONS = RecordingPresets.HIGH_QUALITY!;
+const RECORDING_OPTIONS: RecordingOptions = {
+  ...RecordingPresets.HIGH_QUALITY!,
+};
 
 export function useAudioRecording() {
   const recorder = useAudioRecorder(RECORDING_OPTIONS);
@@ -20,10 +24,17 @@ export function useAudioRecording() {
   }, []);
 
   const startRecording = useCallback(async () => {
-    await recorder.prepareToRecordAsync();
+    // iOS gates recording on allowsRecording, which defaults to false; without
+    // this the native recorder throws as soon as record() is called.
+    await setAudioModeAsync({allowsRecording: true, playsInSilentMode: true});
     // expo-audio releases the recorder's native object when this hook unmounts.
-    // If the screen unmounts while prepareToRecordAsync is still awaiting,
-    // record() would run against a released object and crash (Sentry COMAPEO-1Z7).
+    // If the screen unmounts while setAudioModeAsync is still awaiting,
+    // prepareToRecordAsync() would run against a released object and crash.
+    if (!isMountedRef.current) return;
+    await recorder.prepareToRecordAsync();
+    // Same race as above, but around prepareToRecordAsync instead:
+    // if the screen unmounts while it's still awaiting, record() would run
+    // against a released object and crash (Sentry COMAPEO-1Z7).
     if (!isMountedRef.current) return;
     recorder.record();
   }, [recorder]);

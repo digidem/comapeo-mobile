@@ -3,8 +3,6 @@ import {
   type NavigationContainerRef,
 } from '@react-navigation/native';
 import * as React from 'react';
-import {AppState} from 'react-native';
-import * as SplashScreen from 'expo-splash-screen';
 import {type AppStackParamsList} from './sharedTypes/navigation';
 
 import {RootStackNavigator} from './Navigation/Stack';
@@ -25,29 +23,6 @@ export const AppNavigator = ({
   const containerRef =
     React.useRef<NavigationContainerRef<AppStackParamsList>>(null);
   const qaDeviceName = useQADeviceName();
-
-  // Hiding the splash while a system dialog is presented leaves the app
-  // `inactive`, and on iOS the hide silently no-ops in that state. The
-  // local-network prompt still fires on a fresh iOS install, so hide once the
-  // app is active, retrying when it returns to the foreground.
-  React.useEffect(() => {
-    const hide = () => {
-      SplashScreen.hideAsync().catch(() => {});
-    };
-
-    if (AppState.currentState === 'active') {
-      hide();
-      return;
-    }
-
-    const sub = AppState.addEventListener('change', state => {
-      if (state === 'active') {
-        hide();
-        sub.remove();
-      }
-    });
-    return () => sub.remove();
-  }, []);
 
   if (isQABuild && !qaDeviceName) {
     return <SetQADeviceNameScreen />;

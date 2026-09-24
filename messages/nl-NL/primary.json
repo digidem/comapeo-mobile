@@ -301,23 +301,11 @@
   "$1screens.DataPrivacy.title": {
     "message": "CoMapeo is standaard privé."
   },
-  "$1screens.DeviceNaming.Success.chooseProject": {
-    "message": "Kies uit de onderkant om je eerste project te starten."
-  },
   "$1screens.DeviceNaming.Success.deviceReady": {
     "message": "{deviceName} is klaar!"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Deelnemen aan een project"
-  },
-  "$1screens.DeviceNaming.Success.mapOnYourOwn": {
-    "message": "Kaart op uw eigen"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "Verschillende namen helpen medewerkers om CoMapeo te herkennen."
-  },
-  "$1screens.DeviceNaming.header": {
-    "message": "Benoem uw apparaat"
   },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Apparaat Naam"
@@ -337,23 +325,8 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "Opslaan"
   },
-  "$1screens.IntroToCoMapeo.collaborate": {
-    "message": "Deel veilig met medewerkers"
-  },
-  "$1screens.IntroToCoMapeo.designedFor": {
-    "message": "Co-ontworpen met en voor inheemse grondstoffenmappers & -monitors."
-  },
-  "$1screens.IntroToCoMapeo.getStarted": {
-    "message": "Nu inschrijven"
-  },
-  "$1screens.IntroToCoMapeo.mapAnywhere": {
-    "message": "Kaart overal en overal"
-  },
   "$1screens.IntroToCoMapeo.mapWorldTogether": {
     "message": "Verbind je wereld samen."
-  },
-  "$1screens.IntroToCoMapeo.ownData": {
-    "message": "Altijd de eigenaar en controle van je gegevens"
   },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "Deelnemen als een {role}?"
@@ -497,18 +470,6 @@
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "message": "Waarnemingen toevoegen",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
-    "message": "Audio-opnamen toevoegen."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
-    "message": "Houd foto's onderweg."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.title": {
-    "message": "Kaart op uw eigen"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
-    "message": "Track paden lopen."
   },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Diagnostische informatie delen"

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {defineMessages, useIntl} from 'react-intl';
 import {Camera, MapView, UserLocation} from '@maplibre/maplibre-react-native';
 import {
   LocationFollowingIcon,
@@ -11,6 +12,7 @@ import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
+import {TrackPermissionScreen} from './TrackBottomSheet/TrackPermissionScreen';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
@@ -42,7 +44,29 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
-import {useForegroundPermissions} from 'expo-location';
+import {useLocationPermission} from '../../hooks/usePermissions';
+import {
+  AllowPermissionButton,
+  OpenSettingsButton,
+} from '../../sharedComponents/PermissionButtons';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
+import LocationOnIcon from '../../images/LocationOn.svg';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
+import {DARK_ORANGE, WHITE} from '../../lib/styles';
+
+const PERMISSION_ICON_SIZE = 80;
+
+const m = defineMessages({
+  locationPermissionTitle: {
+    id: '$1screens.MapScreen.locationPermissionTitle',
+    defaultMessage: 'Record GPS Points',
+  },
+  locationPermissionDescription: {
+    id: 'screens.MapScreen.locationPermissionDescription',
+    defaultMessage: 'Location required to use.',
+  },
+});
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -90,14 +114,8 @@ export const MapScreen = ({
   const isLow = isLowStorage(data.freeBytes);
   const insets = useSafeAreaInsets();
   const BANNER_TOP = insets.top + 75;
-  const [status, requestPermission] = useForegroundPermissions();
-
-  React.useEffect(() => {
-    if (status?.granted) return;
-    if (status?.canAskAgain) {
-      requestPermission();
-    }
-  }, [status, requestPermission]);
+  const {formatMessage} = useIntl();
+  const locationPermission = useLocationPermission();
 
   useCheckDraftObservationAndNavigate({authState});
   useCheckUnsavedTrackAndNavigate({authState});
@@ -132,6 +150,53 @@ export const MapScreen = ({
 
   function handleDidFinishLoadingStyle() {
     setIsFinishedLoadingStyle(true);
+  }
+
+  if (locationPermission.state === 'pending') {
+    return (
+      <View style={styles.permissionScreen}>
+        <FullScreenCenteredLoader />
+      </View>
+    );
+  }
+
+  if (locationPermission.state !== 'granted') {
+    return (
+      <View style={styles.permissionScreen}>
+        {trackBottomSheetOpen ? (
+          <TrackPermissionScreen />
+        ) : (
+          <ScreenContentWithDock
+            testID="MAP.location-permission"
+            contentContainerStyle={styles.permissionContent}
+            dockContent={
+              locationPermission.state === 'blocked' ? (
+                <OpenSettingsButton
+                  testID="MAP.location-settings-btn"
+                  onPress={locationPermission.openSettings}
+                />
+              ) : (
+                <AllowPermissionButton
+                  testID="MAP.location-allow-btn"
+                  onPress={locationPermission.request}
+                />
+              )
+            }>
+            <IconTitleDescription
+              icon={
+                <LocationOnIcon
+                  color={DARK_ORANGE}
+                  width={PERMISSION_ICON_SIZE}
+                  height={PERMISSION_ICON_SIZE}
+                />
+              }
+              title={formatMessage(m.locationPermissionTitle)}
+              description={formatMessage(m.locationPermissionDescription)}
+            />
+          </ScreenContentWithDock>
+        )}
+      </View>
+    );
   }
 
   return (
@@ -298,6 +363,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 25,
     width: '100%',
+  },
+  permissionScreen: {
+    flex: 1,
+    backgroundColor: WHITE,
+  },
+  permissionContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   lowStorageBanner: {
     position: 'absolute',

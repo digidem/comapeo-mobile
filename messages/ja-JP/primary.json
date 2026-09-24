@@ -298,23 +298,11 @@
   "$1screens.DataPrivacy.title": {
     "message": "CoMapeoはデフォルトで非公開です。"
   },
-  "$1screens.DeviceNaming.Success.chooseProject": {
-    "message": "最初のプロジェクトを開始するには、以下から選択してください。"
-  },
   "$1screens.DeviceNaming.Success.deviceReady": {
     "message": "{deviceName} の準備ができました！"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "プロジェクトに参加"
-  },
-  "$1screens.DeviceNaming.Success.mapOnYourOwn": {
-    "message": "自分自身の地図を作成"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "固有の名前は、CoMapeoを使用してコラボレーターがあなたを認識するのに役立ちます。"
-  },
-  "$1screens.DeviceNaming.header": {
-    "message": "デバイスに名前を付ける"
   },
   "$1screens.DeviceNaming.placeholder": {
     "message": "端末名"
@@ -334,23 +322,8 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "保存"
   },
-  "$1screens.IntroToCoMapeo.collaborate": {
-    "message": "コラボレーターと安全に共有"
-  },
-  "$1screens.IntroToCoMapeo.designedFor": {
-    "message": "先住民の領土マップパー&モニターとの共同設計。"
-  },
-  "$1screens.IntroToCoMapeo.getStarted": {
-    "message": "はじめよう"
-  },
-  "$1screens.IntroToCoMapeo.mapAnywhere": {
-    "message": "どこでもどこでもマップ"
-  },
   "$1screens.IntroToCoMapeo.mapWorldTogether": {
     "message": "あなたの世界を一緒にマップします。"
-  },
-  "$1screens.IntroToCoMapeo.ownData": {
-    "message": "データを常に所有し、制御する"
   },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "{role} として参加しますか？"
@@ -501,18 +474,6 @@
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "message": "観察記録を追加",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
-    "message": "音声録音を追加します。"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
-    "message": "外出先で写真を撮影してください。"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.title": {
-    "message": "自分自身の地図を作成"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
-    "message": "トラックパスを歩いた。"
   },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "診断情報を共有"

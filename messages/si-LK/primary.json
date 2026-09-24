@@ -85,9 +85,6 @@
   "$1screens.DataPrivacy.next": {
     "message": "ඊළඟ"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "ව්යාපෘතියකට සම්බන්ධ වන්න"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "උපාංගයේ නම"
   },

@@ -304,23 +304,11 @@
   "$1screens.DataPrivacy.title": {
     "message": "CoMapeo bersifat pribadi secara default."
   },
-  "$1screens.DeviceNaming.Success.chooseProject": {
-    "message": "Pilih dari bawah ini untuk memulai proyek pertama Anda."
-  },
   "$1screens.DeviceNaming.Success.deviceReady": {
     "message": "{deviceName} sudah siap!"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Bergabung dengan Proyek"
-  },
-  "$1screens.DeviceNaming.Success.mapOnYourOwn": {
-    "message": "Peta Sendiri"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "Nama yang berbeda membantu kolaborator yang menggunakan CoMapeo untuk mengenali Anda."
-  },
-  "$1screens.DeviceNaming.header": {
-    "message": "Beri Nama Perangkat Anda"
   },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Nama Perangkat"
@@ -340,23 +328,8 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "Simpan"
   },
-  "$1screens.IntroToCoMapeo.collaborate": {
-    "message": "Bagikan dengan aman dengan kolaborator"
-  },
-  "$1screens.IntroToCoMapeo.designedFor": {
-    "message": "Dirancang bersama dengan dan untuk pemetaan & monitor wilayah adat."
-  },
-  "$1screens.IntroToCoMapeo.getStarted": {
-    "message": "Memulai"
-  },
-  "$1screens.IntroToCoMapeo.mapAnywhere": {
-    "message": "Peta di mana saja dan di mana saja"
-  },
   "$1screens.IntroToCoMapeo.mapWorldTogether": {
     "message": "Petakan dunia Anda, bersama-sama."
-  },
-  "$1screens.IntroToCoMapeo.ownData": {
-    "message": "Selalu miliki dan kendalikan data Anda"
   },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "Bergabunglah sebagai {role}?"
@@ -503,18 +476,6 @@
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "message": "Tambahkan Pengamatan",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
-    "message": "Tambahkan rekaman audio."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
-    "message": "Ambil foto saat bepergian."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.title": {
-    "message": "Peta Sendiri"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
-    "message": "Lacak jalan yang dilalui."
   },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Bagikan Informasi Diagnostik"

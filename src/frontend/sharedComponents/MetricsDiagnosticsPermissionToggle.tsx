@@ -15,7 +15,11 @@ const m = defineMessages({
   },
 });
 
-export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
+export const MetricsDiagnosticsPermissionToggle = ({
+  onChange,
+}: {
+  onChange?: (enabled: boolean) => void;
+}) => {
   const {formatMessage} = useIntl();
   // this value is not reactive
   const nonReactiveDiagnosticsEnabled = getDiagnosticsEnabled();
@@ -34,6 +38,7 @@ export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
           const newDiagnosticEnabledValue = !reactiveDiagnosticsEnabled;
           setDiagnosticsEnabled(newDiagnosticEnabledValue);
           setReactiveDiagnosticsEnabled(newDiagnosticEnabledValue);
+          onChange?.(newDiagnosticEnabledValue);
         }}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
       />

@@ -88,9 +88,6 @@
   "$1screens.DataPrivacy.next": {
     "message": "Inayofuata"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Jiunge na Mradi"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Jina la Kifaa"
   },

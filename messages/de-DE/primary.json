@@ -304,23 +304,11 @@
   "$1screens.DataPrivacy.title": {
     "message": "CoMapeo ist standardmäßig privat."
   },
-  "$1screens.DeviceNaming.Success.chooseProject": {
-    "message": "Wählen Sie unten aus, um Ihr erstes Projekt zu starten."
-  },
   "$1screens.DeviceNaming.Success.deviceReady": {
     "message": "{deviceName} ist bereit!"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Einem Projekt beitreten"
-  },
-  "$1screens.DeviceNaming.Success.mapOnYourOwn": {
-    "message": "Karte auf Ihrem eigenen"
-  },
   "$1screens.DeviceNaming.description": {
     "message": "Unterschiedliche Namen helfen Kollaborateuren mit CoMapeo Sie zu erkennen."
-  },
-  "$1screens.DeviceNaming.header": {
-    "message": "Benennen Sie Ihr Gerät"
   },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Gerätename"
@@ -340,23 +328,8 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "Speichern"
   },
-  "$1screens.IntroToCoMapeo.collaborate": {
-    "message": "Sicher mit Mitarbeitern teilen"
-  },
-  "$1screens.IntroToCoMapeo.designedFor": {
-    "message": "Co-entworfen mit und für indigene Territorien Landkarten & Monitore."
-  },
-  "$1screens.IntroToCoMapeo.getStarted": {
-    "message": "Los geht's"
-  },
-  "$1screens.IntroToCoMapeo.mapAnywhere": {
-    "message": "Karte überall und überall"
-  },
   "$1screens.IntroToCoMapeo.mapWorldTogether": {
     "message": "Maple deine Welt."
-  },
-  "$1screens.IntroToCoMapeo.ownData": {
-    "message": "Immer besitzen und kontrollieren Sie Ihre Daten"
   },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "Als {role} beitreten?"
@@ -499,18 +472,6 @@
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "message": "Beobachtung(en) hinzufügen",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
-    "message": "Audioaufnahmen hinzufügen."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
-    "message": "Fotos on-the-go schnappen."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.title": {
-    "message": "Karte auf Ihrem eigenen"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
-    "message": "Spurpfade sind gegangen."
   },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Diagnoseinformationen teilen"

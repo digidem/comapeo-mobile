@@ -61,9 +61,6 @@
   "$1screens.DataPrivacy.next": {
     "message": "ถัดไป"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "เข้าร่วมโครงการ"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "ชื่ออุปกรณ์"
   },

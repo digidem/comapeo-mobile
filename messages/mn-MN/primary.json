@@ -88,9 +88,6 @@
   "$1screens.DataPrivacy.next": {
     "message": "Дараагийнх"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Төсөлд нэгдэх"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Төхөөрөмжний нэр"
   },

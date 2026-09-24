@@ -2,12 +2,7 @@ import * as React from 'react';
 import {Platform} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {
-  WHITE,
-  MEDIUM_GREY,
-  COMAPEO_DARK_BLUE,
-  DARK_GREY,
-} from '../../lib/styles';
+import {WHITE, MEDIUM_GREY, DARK_GREY, LIGHT_BLUE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
@@ -41,7 +36,7 @@ export type NavigatorScreenLayout = NonNullable<
 const IOS_BOTTOM_INSET_COLORS: Partial<
   Record<keyof AppStackParamsList, string>
 > = {
-  IntroToCoMapeo: COMAPEO_DARK_BLUE,
+  IntroToCoMapeo: LIGHT_BLUE,
   AudioRecording: DARK_GREY,
 };
 

@@ -18,6 +18,7 @@ export const ScreenContentWithDock = ({
   return (
     <View style={styles.container} testID={testID}>
       <ScrollView
+        bounces={false}
         style={styles.scrollViewRoot}
         contentContainerStyle={[
           styles.scrollViewContentContainer,

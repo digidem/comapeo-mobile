@@ -2,12 +2,7 @@ import * as React from 'react';
 import {Platform} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {
-  WHITE,
-  MEDIUM_GREY,
-  COMAPEO_DARK_BLUE,
-  DARK_GREY,
-} from '../../lib/styles';
+import {WHITE, MEDIUM_GREY, DARK_GREY, LIGHT_BLUE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
@@ -28,6 +23,8 @@ import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {RequestToJoin} from '../../screens/Invites/RequestToJoin';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
+import type {InviteLink} from '../../lib/inviteLinks';
+import {CommonActions, StackActions} from '@react-navigation/native';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -42,7 +39,7 @@ export type NavigatorScreenLayout = NonNullable<
 const IOS_BOTTOM_INSET_COLORS: Partial<
   Record<keyof AppStackParamsList, string>
 > = {
-  IntroToCoMapeo: COMAPEO_DARK_BLUE,
+  IntroToCoMapeo: LIGHT_BLUE,
   AudioRecording: DARK_GREY,
 };
 
@@ -60,6 +57,26 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   headerBackVisible: false,
   statusBarStyle: 'dark',
 };
+
+type LayoutProps = Parameters<NavigatorLayout>[0];
+
+// Anything with the presentation option other than a 'card' is presented as a modal,
+// and iOS keeps a presented modal above whatever arrives after it. So when one is
+// already open, the incoming screen has to replace it rather than stack behind it.
+function openSheetAction(
+  {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
+  name: 'InviteReceived' | 'MapReceivedBottomSheet' | 'RequestToJoin',
+  params: {inviteId: string} | {shareId: string} | InviteLink,
+) {
+  const currentRoute = state.routes[state.index];
+  const presentation = currentRoute
+    ? descriptors[currentRoute.key]?.options.presentation
+    : undefined;
+
+  return presentation && presentation !== 'card'
+    ? StackActions.replace(name, params)
+    : CommonActions.navigate(name, params);
+}
 
 function getInitialRoute(
   authState: 'authenticated' | 'unauthenticated' | 'obscured',
@@ -88,7 +105,12 @@ export const RootStackNavigator = () => {
     !deviceInfo.name ||
     !activeProjectId;
 
-  const layout: NavigatorLayout = ({children, state, navigation}) => (
+  const layout: NavigatorLayout = ({
+    children,
+    state,
+    navigation,
+    descriptors,
+  }) => (
     <SafeAreaView
       edges={['bottom']}
       style={{
@@ -99,18 +121,31 @@ export const RootStackNavigator = () => {
         <PendingInvitesListener
           currentRouteName={state.routes[state.index]?.name}
           navigateToInviteScreen={inviteId =>
-            navigation.navigate('InviteReceived', {inviteId})
+            navigation.dispatch(
+              openSheetAction({state, descriptors}, 'InviteReceived', {
+                inviteId,
+              }),
+            )
           }
         />
         <PendingMapSharesListener
           currentRouteName={state.routes[state.index]?.name}
           navigateToMapShareScreen={shareId =>
-            navigation.navigate('MapReceivedBottomSheet', {shareId})
+            navigation.dispatch(
+              openSheetAction({state, descriptors}, 'MapReceivedBottomSheet', {
+                shareId,
+              }),
+            )
           }
         />
         {!isNotReadyForInvite && (
           <DeepLinkListener
             currentRouteName={state.routes[state.index]?.name}
+            navigateToRequestToJoin={invite =>
+              navigation.dispatch(
+                openSheetAction({state, descriptors}, 'RequestToJoin', invite),
+              )
+            }
           />
         )}
         {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.

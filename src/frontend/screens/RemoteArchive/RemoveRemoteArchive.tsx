@@ -1,5 +1,4 @@
 import {useRemoveServerPeer} from '@comapeo/core-react';
-import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import * as Sentry from '@sentry/react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
@@ -78,7 +77,7 @@ export function RemoveRemoteArchive({
                     {
                       onError: err => {
                         Sentry.captureException(err);
-                        navigation.navigate('ErrorBottomSheet', {error: err});
+                        navigation.replace('ErrorBottomSheet', {error: err});
                       },
                       onSuccess: () => {
                         navigation.goBack();
@@ -101,15 +100,6 @@ export function RemoveRemoteArchive({
     </BottomSheetWrapper>
   );
 }
-
-export const navigationOptions: NativeStackNavigationOptions = {
-  animation: 'none',
-  contentStyle: {
-    backgroundColor: 'transparent',
-  },
-  headerShown: false,
-  presentation: 'transparentModal',
-};
 
 const styles = StyleSheet.create({
   container: {

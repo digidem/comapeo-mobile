@@ -14,7 +14,7 @@ describe('Onboarding - Set QA Device Name', () => {
     await saveButton.click();
 
     const getStartedButton = await $(
-      byResourceId('ONBOARDING.get-started-btn'),
+      byResourceId('ONBOARDING.navigate-to-privacy-policy-btn'),
     );
     await expect(getStartedButton).toBeDisplayed();
   });

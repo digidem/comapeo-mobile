@@ -1,4 +1,5 @@
 import * as NetInfo from '@react-native-community/netinfo';
+import {getInternetStatus} from '../lib/internetStatus';
 import * as Sentry from '@sentry/react-native';
 import * as Application from 'expo-application';
 import {getLastKnownPositionAsync} from 'expo-location';
@@ -124,7 +125,7 @@ export class AppUsageData {
 
     subscriptionCleanupFns.push(
       NetInfo.addEventListener(state => {
-        this.#isOnline = Boolean(state.isInternetReachable);
+        this.#isOnline = getInternetStatus(state) === 'online';
         this.#update();
       }),
     );

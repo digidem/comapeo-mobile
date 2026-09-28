@@ -96,14 +96,17 @@ jest.mock('../../hooks/server/presets', () => ({
   usePresetsQuery: () => ({data: []}),
 }));
 
-let mockLocationState = 'granted';
+let mockLocationGranted = true;
+let mockLocationCanAskAgain = true;
 
-jest.mock('../../hooks/usePermissions', () => ({
-  useLocationPermission: () => ({
-    state: mockLocationState,
-    request: jest.fn(),
-    openSettings: jest.fn(),
-  }),
+jest.mock('../../hooks/useLocationPermissionTracker', () => ({
+  readLocationPermission: () =>
+    Promise.resolve({
+      granted: mockLocationGranted,
+      canAskAgain: mockLocationCanAskAgain,
+    }),
+  requestLocationPermission: jest.fn(),
+  useLocationPermissionMutation: () => ({mutate: jest.fn()}),
 }));
 
 process.env.MAPBOX_ACCESS_TOKEN = 'test-token';
@@ -137,7 +140,8 @@ describe('MapScreen', () => {
 
     mockTotalBytes = 64 * 1024 * 1024 * 1024;
     mockFreeBytes = null;
-    mockLocationState = 'granted';
+    mockLocationGranted = true;
+    mockLocationCanAskAgain = true;
   });
 
   afterEach(async () => {
@@ -180,7 +184,7 @@ describe('MapScreen', () => {
 
   it('still reaches the track sheet when location is denied', async () => {
     mockFreeBytes = 600 * 1024 * 1024;
-    mockLocationState = 'askable';
+    mockLocationGranted = false;
 
     await renderMap({trackingOpen: true});
 
@@ -192,7 +196,7 @@ describe('MapScreen', () => {
 
   it('shows the map location request when the track sheet is closed', async () => {
     mockFreeBytes = 600 * 1024 * 1024;
-    mockLocationState = 'askable';
+    mockLocationGranted = false;
 
     await renderMap();
 

@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import {
+  AppState,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -12,14 +13,19 @@ import {
   useCameraDevice,
   type PhotoFile,
 } from 'react-native-vision-camera';
-import {useCameraPermission} from '../hooks/usePermissions';
+import {
+  type CameraPermission,
+  readCameraPermission,
+  requestCameraPermission,
+  useCameraPermissionMutation,
+} from '../hooks/useCameraPermissionTracker';
+import {openSettingsAndWait} from '../utils/linking';
 
 import {GPSPill} from './GPSPill';
 import {BodyText} from './Text/BodyText';
 import {IconTitleDescription} from './IconTitleDescription';
 import {AllowPermissionButton, OpenSettingsButton} from './PermissionButtons';
 import {ScreenContentWithDock} from './ScreenContentWithDock';
-import {FullScreenCenteredLoader} from './FullScreenCenteredLoader';
 import PhotoLibraryIcon from '../images/PhotoLibrary.svg';
 import {BLUE_GREY, DARK_GREY, WHITE} from '../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
@@ -57,7 +63,9 @@ export const CameraView = ({onAddPress}: Props) => {
   const [cameraReady, setCameraReady] = React.useState(false);
   const accelerometerMeasurement =
     React.useRef<AccelerometerMeasurement | null>(null);
-  const cameraPermission = useCameraPermission();
+  // Reading the camera permission is synchronous, so there is no loading state.
+  const [permission, setPermission] =
+    React.useState<CameraPermission>(readCameraPermission);
   const {formatMessage} = useIntl();
   const camera = useRef<Camera>(null);
   const location = useLocationState(store => store.location);
@@ -86,6 +94,24 @@ export const CameraView = ({onAddPress}: Props) => {
       if (deviceMotionSub) deviceMotionSub.remove();
     };
   }, []);
+
+  // Covers the permission being changed in system settings outside our own
+  // "Open Settings" button, which is the only other way it can change.
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', state => {
+      if (state === 'active') setPermission(readCameraPermission());
+    });
+    return () => subscription.remove();
+  }, []);
+
+  const askPermission = useCameraPermissionMutation(async () => {
+    setPermission(await requestCameraPermission());
+  });
+
+  const goToSettings = useCameraPermissionMutation(async () => {
+    await openSettingsAndWait();
+    setPermission(readCameraPermission());
+  });
 
   function handleAddPress() {
     if (!camera.current || !cameraReady) {
@@ -121,26 +147,22 @@ export const CameraView = ({onAddPress}: Props) => {
       });
   }
 
-  if (cameraPermission.state === 'pending') {
-    return <FullScreenCenteredLoader />;
-  }
-
-  if (cameraPermission.state !== 'granted') {
+  if (!permission.granted) {
     return (
       <View style={styles.permissionScreen}>
         <ScreenContentWithDock
           testID="MAIN.camera-permission"
           contentContainerStyle={styles.permissionContent}
           dockContent={
-            cameraPermission.state === 'blocked' ? (
-              <OpenSettingsButton
-                testID="MAIN.camera-settings-btn"
-                onPress={cameraPermission.openSettings}
-              />
-            ) : (
+            permission.canAskAgain ? (
               <AllowPermissionButton
                 testID="MAIN.camera-allow-btn"
-                onPress={cameraPermission.request}
+                onPress={() => askPermission.mutate()}
+              />
+            ) : (
+              <OpenSettingsButton
+                testID="MAIN.camera-settings-btn"
+                onPress={() => goToSettings.mutate()}
               />
             )
           }>

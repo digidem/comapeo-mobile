@@ -6,7 +6,7 @@ import {
   LocationNoFollowIcon,
 } from '../../sharedComponents/icons';
 
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {AppState, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
@@ -44,7 +44,13 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
-import {useLocationPermission} from '../../hooks/usePermissions';
+import {
+  type LocationPermission,
+  readLocationPermission,
+  requestLocationPermission,
+  useLocationPermissionMutation,
+} from '../../hooks/useLocationPermissionTracker';
+import {openSettingsAndWait} from '../../utils/linking';
 import {
   AllowPermissionButton,
   OpenSettingsButton,
@@ -115,7 +121,31 @@ export const MapScreen = ({
   const insets = useSafeAreaInsets();
   const BANNER_TOP = insets.top + 75;
   const {formatMessage} = useIntl();
-  const locationPermission = useLocationPermission();
+  const [locationPermission, setLocationPermission] =
+    React.useState<LocationPermission | null>(null);
+
+  React.useEffect(() => {
+    readLocationPermission().then(setLocationPermission);
+  }, []);
+
+  // Covers the permission being changed in system settings outside our own
+  // "Open Settings" button, which is the only other way it can change.
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', state => {
+      if (state === 'active')
+        readLocationPermission().then(setLocationPermission);
+    });
+    return () => subscription.remove();
+  }, []);
+
+  const askLocationPermission = useLocationPermissionMutation(async () => {
+    setLocationPermission(await requestLocationPermission());
+  });
+
+  const goToLocationSettings = useLocationPermissionMutation(async () => {
+    await openSettingsAndWait();
+    setLocationPermission(await readLocationPermission());
+  });
 
   useCheckDraftObservationAndNavigate({authState});
   useCheckUnsavedTrackAndNavigate({authState});
@@ -152,7 +182,7 @@ export const MapScreen = ({
     setIsFinishedLoadingStyle(true);
   }
 
-  if (locationPermission.state === 'pending') {
+  if (locationPermission === null) {
     return (
       <View style={styles.permissionScreen}>
         <FullScreenCenteredLoader />
@@ -160,25 +190,29 @@ export const MapScreen = ({
     );
   }
 
-  if (locationPermission.state !== 'granted') {
+  if (!locationPermission.granted) {
     return (
       <View style={styles.permissionScreen}>
         {trackBottomSheetOpen ? (
-          <TrackPermissionScreen />
+          <TrackPermissionScreen
+            canAskAgain={locationPermission.canAskAgain}
+            onAllow={() => askLocationPermission.mutate()}
+            onOpenSettings={() => goToLocationSettings.mutate()}
+          />
         ) : (
           <ScreenContentWithDock
             testID="MAP.location-permission"
             contentContainerStyle={styles.permissionContent}
             dockContent={
-              locationPermission.state === 'blocked' ? (
-                <OpenSettingsButton
-                  testID="MAP.location-settings-btn"
-                  onPress={locationPermission.openSettings}
-                />
-              ) : (
+              locationPermission.canAskAgain ? (
                 <AllowPermissionButton
                   testID="MAP.location-allow-btn"
-                  onPress={locationPermission.request}
+                  onPress={() => askLocationPermission.mutate()}
+                />
+              ) : (
+                <OpenSettingsButton
+                  testID="MAP.location-settings-btn"
+                  onPress={() => goToLocationSettings.mutate()}
                 />
               )
             }>

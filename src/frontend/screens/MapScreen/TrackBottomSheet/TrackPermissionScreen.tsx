@@ -2,8 +2,6 @@ import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {useLocationPermission} from '../../../hooks/usePermissions';
-import {FullScreenCenteredLoader} from '../../../sharedComponents/FullScreenCenteredLoader';
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {
@@ -28,29 +26,34 @@ const ICON_SIZE = 80;
 
 /**
  * For when location was denied and there is no map for the sheet to sit on.
+ * The map screen calculates the permission and passes it down, so the two screens
+ * can't disagree about it.
  */
-export const TrackPermissionScreen = () => {
+export const TrackPermissionScreen = ({
+  canAskAgain,
+  onAllow,
+  onOpenSettings,
+}: {
+  canAskAgain: boolean;
+  onAllow: () => void;
+  onOpenSettings: () => void;
+}) => {
   const {formatMessage} = useIntl();
-  const location = useLocationPermission();
-
-  if (location.state === 'pending') {
-    return <FullScreenCenteredLoader />;
-  }
 
   return (
     <ScreenContentWithDock
       testID="TRACK.permission"
       contentContainerStyle={styles.content}
       dockContent={
-        location.state === 'blocked' ? (
-          <OpenSettingsButton
-            testID="TRACK.permission-settings-btn"
-            onPress={location.openSettings}
-          />
-        ) : (
+        canAskAgain ? (
           <AllowPermissionButton
             testID="TRACK.permission-allow-btn"
-            onPress={location.request}
+            onPress={onAllow}
+          />
+        ) : (
+          <OpenSettingsButton
+            testID="TRACK.permission-settings-btn"
+            onPress={onOpenSettings}
           />
         )
       }>

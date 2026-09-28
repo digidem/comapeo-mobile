@@ -157,6 +157,7 @@ export type RootStackParamsList = {
   };
   InviteReceived: {inviteId: string};
   RequestToJoin: InviteLink;
+  JoinProject: InviteLink;
   InviteSuccessfullyAccepted: {projectName: string; projectId: string};
   InviteCanceled: {projectName: string};
   RemovedFromProjectBottomSheet: undefined;

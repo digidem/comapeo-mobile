@@ -34,12 +34,7 @@ export const RequestToJoin = ({
   const {projectName} = route.params;
 
   function requestToJoin() {
-    // Joining needs `manager.inviteLinks.createJoinRequest`, which is not
-    // reachable from the app until @comapeo/ipc relays the invite-over-internet
-    // events (digidem/comapeo-ipc#96) and @comapeo/core-react wraps them.
-    navigation.replace('ErrorBottomSheet', {
-      error: new Error('Joining by invite link is not implemented yet'),
-    });
+    navigation.replace('JoinProject', route.params);
   }
 
   return (

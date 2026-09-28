@@ -53,6 +53,7 @@ export const EDITING_SCREEN_NAMES: (
 export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [
   'InviteReceived',
   'RequestToJoin',
+  'JoinProject',
   'InviteCanceled',
   'InviteSuccessfullyAccepted',
   'TrackRecordingActive',

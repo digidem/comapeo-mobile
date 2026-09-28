@@ -21,6 +21,7 @@ import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessful
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {RequestToJoin} from '../../screens/Invites/RequestToJoin';
+import {JoinProject} from '../../screens/Invites/JoinProject';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
 import type {InviteLink} from '../../lib/inviteLinks';
@@ -215,6 +216,14 @@ export const RootStackNavigator = () => {
               component={InviteReceived}
             />
             <RootStack.Screen name="RequestToJoin" component={RequestToJoin} />
+            <RootStack.Screen
+              name="JoinProject"
+              component={JoinProject}
+              options={{
+                presentation: 'card',
+                contentStyle: {backgroundColor: WHITE},
+              }}
+            />
             <RootStack.Screen
               name="InviteSuccessfullyAccepted"
               component={InviteSuccessfullyAccepted}

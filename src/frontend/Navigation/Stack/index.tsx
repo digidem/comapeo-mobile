@@ -24,7 +24,7 @@ import {RequestToJoin} from '../../screens/Invites/RequestToJoin';
 import {JoinProject} from '../../screens/Invites/JoinProject';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
-import type {InviteLink} from '../../lib/inviteLinks';
+import type {InviteLinkParams} from '../../lib/inviteLinks';
 import {CommonActions, StackActions} from '@react-navigation/native';
 
 export type NavigatorLayout = NonNullable<
@@ -67,7 +67,7 @@ type LayoutProps = Parameters<NavigatorLayout>[0];
 function openSheetAction(
   {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
   name: 'InviteReceived' | 'MapReceivedBottomSheet' | 'RequestToJoin',
-  params: {inviteId: string} | {shareId: string} | InviteLink,
+  params: {inviteId: string} | {shareId: string} | InviteLinkParams,
 ) {
   const currentRoute = state.routes[state.index];
   const presentation = currentRoute

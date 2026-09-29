@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import ErrorIcon from '../images/Error.svg';
 import {IconTitleDescription} from './IconTitleDescription';
 import {SecondaryButton} from './Buttons';
 
@@ -13,10 +12,12 @@ const m = defineMessages({
 });
 
 export function InviteLinkError({
+  icon,
   title,
   description,
   onClose,
 }: {
+  icon: React.ReactNode;
   title: string;
   description?: string;
   onClose: () => void;
@@ -27,7 +28,7 @@ export function InviteLinkError({
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <IconTitleDescription
-          icon={<ErrorIcon width={100} height={100} />}
+          icon={icon}
           title={title}
           description={description}
         />

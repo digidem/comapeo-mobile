@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     color: BLACK,
   },
   buttonContainer: {
+    alignItems: 'center',
     paddingTop: 18,
     gap: 12,
   },

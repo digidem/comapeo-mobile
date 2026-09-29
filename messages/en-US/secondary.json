@@ -651,6 +651,66 @@
   "screens.InviteSuccess.youHaveJoined": {
     "message": "You have joined {projectName}"
   },
+  "screens.Invites.JoinProject.alreadyJoinedDescription": {
+    "message": "This device has already joined this project."
+  },
+  "screens.Invites.JoinProject.alreadyJoinedTitle": {
+    "message": "Already a member"
+  },
+  "screens.Invites.JoinProject.beingReviewed": {
+    "message": "Request being reviewed..."
+  },
+  "screens.Invites.JoinProject.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Invites.JoinProject.canceledTitle": {
+    "message": "Request Canceled"
+  },
+  "screens.Invites.JoinProject.close": {
+    "message": "Close"
+  },
+  "screens.Invites.JoinProject.connecting": {
+    "message": "Connecting to Project Coordinator..."
+  },
+  "screens.Invites.JoinProject.connectionLostTitle": {
+    "message": "Connection Lost"
+  },
+  "screens.Invites.JoinProject.deniedDescription": {
+    "message": "Coordinate with team for a new Invite Link"
+  },
+  "screens.Invites.JoinProject.deniedTitle": {
+    "message": "Request Denied"
+  },
+  "screens.Invites.JoinProject.expiredDescription": {
+    "message": "Coordinate with team for a new Invite Link"
+  },
+  "screens.Invites.JoinProject.expiredTitle": {
+    "message": "Link has expired."
+  },
+  "screens.Invites.JoinProject.failedToConnectTitle": {
+    "message": "Failed to connect."
+  },
+  "screens.Invites.JoinProject.joined": {
+    "message": "Joined!"
+  },
+  "screens.Invites.JoinProject.joinedProject": {
+    "message": "This device joined project {projectName}"
+  },
+  "screens.Invites.JoinProject.keepOpen": {
+    "message": "Coordinator must have CoMapeo open to review and approve."
+  },
+  "screens.Invites.JoinProject.nowJoining": {
+    "message": "Request accepted, now joining..."
+  },
+  "screens.Invites.JoinProject.unknownDescription": {
+    "message": "Coordinate with team for a new Invite Link"
+  },
+  "screens.Invites.JoinProject.unknownTitle": {
+    "message": "Something went wrong"
+  },
+  "screens.Invites.JoinProject.viewProject": {
+    "message": "View Project"
+  },
   "screens.Invites.RequestToJoin.close": {
     "message": "Close"
   },
@@ -1417,6 +1477,9 @@
   },
   "sharedComponents.ErrorBottomSheet.advanced": {
     "message": "Advanced"
+  },
+  "sharedComponents.InviteLinkError.close": {
+    "message": "Close"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"

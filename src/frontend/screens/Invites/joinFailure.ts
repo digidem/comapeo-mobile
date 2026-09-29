@@ -1,5 +1,7 @@
 import {defineMessages, type MessageDescriptor} from 'react-intl';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
+import type {CircleIcon} from '../../sharedComponents/StatusCircleIcon';
+import {BLUE_GREY} from '../../lib/styles';
 
 // Codes @comapeo/core attaches to the error on a `failed` join request. Errors
 // lose their prototype crossing the IPC boundary, so these are matched on
@@ -74,31 +76,53 @@ const m = defineMessages({
 export type JoinFailureCopy = {
   title: MessageDescriptor;
   description?: MessageDescriptor;
+  icon: CircleIcon;
 };
 
 export function getJoinFailureCopy(code: JoinFailureCode): JoinFailureCopy {
   switch (code) {
     case 'INVITE_CONNECTION_ERROR':
-      return {title: m.failedToConnectTitle};
+      return {
+        title: m.failedToConnectTitle,
+        icon: {name: 'wifi', color: BLUE_GREY},
+      };
     case 'INVITE_REDEEM_CONNECTION_CLOSED_ERROR':
-      return {title: m.connectionLostTitle};
+      return {
+        title: m.connectionLostTitle,
+        icon: {name: 'wifi', color: BLUE_GREY},
+      };
     case 'INVITE_DENIED_BY_INVITER_ERROR':
-      return {title: m.deniedTitle, description: m.deniedDescription};
+      return {
+        title: m.deniedTitle,
+        description: m.deniedDescription,
+        icon: {name: 'send'},
+      };
     case 'UNKNOWN_INVITE_ID_ERROR':
-      return {title: m.expiredTitle, description: m.expiredDescription};
+      return {
+        title: m.expiredTitle,
+        description: m.expiredDescription,
+        icon: {name: 'link', rotate: -45},
+      };
     case 'JOIN_PROJECT_CANCELLED_ERROR':
-      return {title: m.canceledTitle};
+      return {title: m.canceledTitle, icon: {name: 'send'}};
     // No design for these two yet
     case 'ALREADY_JOINED_ERROR':
     case 'PROJECT_EXISTS_ERROR':
       return {
         title: m.alreadyJoinedTitle,
         description: m.alreadyJoinedDescription,
+        // No design for this one yet, so the icon is a guess.
+        icon: {name: 'group'},
       };
     case 'INVITE_NOT_FOUND_ERROR':
     case 'INVITE_SEND_ERROR':
     case 'UNKNOWN':
-      return {title: m.unknownTitle, description: m.unknownDescription};
+      return {
+        title: m.unknownTitle,
+        description: m.unknownDescription,
+        // No design for this one yet, so the icon is a guess.
+        icon: {name: 'error-outline'},
+      };
     default:
       throw new ExhaustivenessError(code);
   }

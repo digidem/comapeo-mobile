@@ -20,12 +20,23 @@ describe('toJoinFailureCode', () => {
 
 describe('getJoinFailureCopy', () => {
   it.each([...JOIN_FAILURE_CODES, 'UNKNOWN' as const])(
-    'returns a title for %s',
+    'returns a title and an icon for %s',
     code => {
       const copy = getJoinFailureCopy(toJoinFailureCode(code));
       expect(copy.title.defaultMessage).toBeTruthy();
+      expect(copy.icon.name).toBeTruthy();
     },
   );
+
+  it.each([
+    ['INVITE_DENIED_BY_INVITER_ERROR', 'send'],
+    ['JOIN_PROJECT_CANCELLED_ERROR', 'send'],
+    ['UNKNOWN_INVITE_ID_ERROR', 'link'],
+    ['INVITE_CONNECTION_ERROR', 'wifi'],
+    ['INVITE_REDEEM_CONNECTION_CLOSED_ERROR', 'wifi'],
+  ] as const)('uses the %s icon the designs call for', (code, iconName) => {
+    expect(getJoinFailureCopy(code).icon.name).toBe(iconName);
+  });
 
   it('distinguishes never-connected from connection-dropped', () => {
     expect(

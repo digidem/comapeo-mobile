@@ -6,6 +6,7 @@ export type ColorCardProps = {
   onPress?: () => void;
   testID?: string;
   borderColor?: string;
+  borderWidth?: number;
   children: React.ReactNode;
   backgroundColor: string;
 };
@@ -15,6 +16,7 @@ export const ColorCard = ({
   onPress,
   backgroundColor,
   borderColor,
+  borderWidth = 1,
   testID,
 }: ColorCardProps) => {
   return (
@@ -27,6 +29,7 @@ export const ColorCard = ({
         {
           backgroundColor: backgroundColor,
           borderColor: borderColor || VERY_LIGHT_GREY,
+          borderWidth,
         },
       ]}>
       {children}
@@ -36,7 +39,6 @@ export const ColorCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    borderWidth: 1,
     borderRadius: 6,
     shadowColor: BLACK,
     shadowOffset: {width: 0, height: 1},

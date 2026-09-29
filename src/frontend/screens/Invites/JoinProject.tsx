@@ -17,12 +17,16 @@ import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreCont
 import {
   BLACK,
   COMAPEO_BLUE,
+  DARK_GREY,
+  DARK_GREEN,
   LIGHT_ORANGE,
-  NEW_DARK_GREY,
+  MANGO,
   VERY_LIGHT_GREY,
+  WARNING_RED,
   WHITE,
 } from '../../lib/styles';
-import ParticipantIcon from '../../images/ProjectParticipant.svg';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
+import {StatusCircleIcon} from '../../sharedComponents/StatusCircleIcon';
 import SuccessCheck from '../../images/Success.svg';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
@@ -83,6 +87,13 @@ export function JoinProject({
     const copy = getJoinFailureCopy(joinRequest.errorCode);
     return (
       <InviteLinkError
+        icon={
+          <StatusCircleIcon
+            icon={copy.icon}
+            badge={{color: WARNING_RED, name: 'priority-high'}}
+            size={100}
+          />
+        }
         title={t(copy.title)}
         description={copy.description && t(copy.description)}
         onClose={handleClose}
@@ -120,9 +131,16 @@ export function JoinProject({
       ? t(m.connecting)
       : t(m.beingReviewed);
 
+  const badgeColor = isJoining
+    ? DARK_GREEN
+    : joinRequest.status === 'connecting'
+      ? MANGO
+      : COMAPEO_BLUE;
+
   return (
     <JoinProgress
       title={progressTitle}
+      badgeColor={badgeColor}
       projectName={invite.projectName}
       isJoining={isJoining}
       onCancel={handleClose}
@@ -132,11 +150,13 @@ export function JoinProject({
 
 function JoinProgress({
   title,
+  badgeColor,
   projectName,
   isJoining,
   onCancel,
 }: {
   title: string;
+  badgeColor: string;
   projectName: string;
   isJoining: boolean;
   onCancel: () => void;
@@ -146,36 +166,54 @@ function JoinProgress({
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <ParticipantIcon width={80} height={80} />
+        <StatusCircleIcon
+          icon={{name: 'manage-accounts', color: DARK_GREY}}
+          badge={{color: badgeColor, name: isJoining ? 'check' : undefined}}
+        />
         <HeaderText variant="header2" style={styles.progressTitle}>
           {title}
         </HeaderText>
 
-        <ColorCard backgroundColor={LIGHT_ORANGE}>
-          <View style={styles.cardContent}>
-            <HeaderText variant="header2" style={styles.projectName}>
-              {projectName}
-            </HeaderText>
-          </View>
-        </ColorCard>
+        <View style={styles.cardWrapper}>
+          <ColorCard
+            backgroundColor={LIGHT_ORANGE}
+            borderColor={isJoining ? DARK_GREEN : undefined}
+            borderWidth={isJoining ? 2 : undefined}>
+            <View style={styles.cardContent}>
+              <HeaderText variant="header2" style={styles.projectName}>
+                {projectName}
+              </HeaderText>
+            </View>
+          </ColorCard>
+        </View>
 
         {/* Indeterminate because join-request-update we can't calculate progress yet. 
             Swap in a real `progress` if core starts sending
             something we can use. */}
         {isJoining ? (
-          <ProgressBar
-            indeterminate
-            indeterminateAnimationDuration={2000}
-            width={250}
-            height={8}
-            borderRadius={0}
-            color={COMAPEO_BLUE}
-            unfilledColor={VERY_LIGHT_GREY}
-            borderWidth={0}
-            borderColor={WHITE}
-          />
+          <View style={styles.progressContainer}>
+            <MaterialIcon
+              name="sync"
+              size={24}
+              color={COMAPEO_BLUE}
+              style={styles.syncIcon}
+            />
+            <ProgressBar
+              indeterminate
+              indeterminateAnimationDuration={2000}
+              width={250}
+              height={8}
+              borderRadius={0}
+              color={COMAPEO_BLUE}
+              unfilledColor={VERY_LIGHT_GREY}
+              borderWidth={0}
+              borderColor={WHITE}
+            />
+          </View>
         ) : (
-          <BodyText style={styles.keepOpen}>{t(m.keepOpen)}</BodyText>
+          <BodyText variant="smallMeta" style={styles.keepOpen}>
+            {t(m.keepOpen)}
+          </BodyText>
         )}
       </View>
 
@@ -201,20 +239,30 @@ const styles = StyleSheet.create({
   },
   progressTitle: {
     textAlign: 'center',
-    color: BLACK,
+  },
+  cardWrapper: {
+    alignSelf: 'stretch',
+  },
+  progressContainer: {
+    gap: 15,
+  },
+  syncIcon: {
+    alignSelf: 'flex-start',
   },
   cardContent: {
     padding: 20,
+    gap: 5,
   },
   projectName: {
     color: BLACK,
   },
   buttonContainer: {
     alignSelf: 'stretch',
+    alignItems: 'center',
     gap: 12,
   },
   keepOpen: {
     textAlign: 'center',
-    color: NEW_DARK_GREY,
+    paddingHorizontal: 8,
   },
 });

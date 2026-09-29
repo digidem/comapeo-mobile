@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useLinkingURL} from 'expo-linking';
-import {parseInviteLink, type InviteLink} from '../../lib/inviteLinks';
+import {parseInviteLink, type InviteLinkParams} from '../../lib/inviteLinks';
 import {isInviteScreen, isEditingScreen} from '../../lib/screenNameChecks';
 
 export const DeepLinkListener = ({
@@ -8,7 +8,7 @@ export const DeepLinkListener = ({
   navigateToRequestToJoin,
 }: {
   currentRouteName: string | undefined;
-  navigateToRequestToJoin: (invite: InviteLink) => void;
+  navigateToRequestToJoin: (invite: InviteLinkParams) => void;
 }) => {
   const url = useLinkingURL();
 

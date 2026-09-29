@@ -80,11 +80,7 @@ export const ObservationsList: React.FC<
   ]);
 
   if ((!observations.length && !tracks.length) || authState === 'obscured') {
-    return (
-      <ObservationEmptyView
-        onPressBack={() => navigation.popTo('Home', {screen: 'Map'})}
-      />
-    );
+    return <ObservationEmptyView />;
   }
 
   return (

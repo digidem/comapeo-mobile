@@ -100,11 +100,13 @@ let mockLocationGranted = true;
 let mockLocationCanAskAgain = true;
 
 jest.mock('../../hooks/useLocationPermissionTracker', () => ({
-  readLocationPermission: () =>
-    Promise.resolve({
+  useLocationPermissionQuery: () => ({
+    data: {
       granted: mockLocationGranted,
       canAskAgain: mockLocationCanAskAgain,
-    }),
+    },
+  }),
+  useInvalidateLocationPermission: () => jest.fn(),
   requestLocationPermission: jest.fn(),
   useLocationPermissionMutation: () => ({mutate: jest.fn()}),
 }));

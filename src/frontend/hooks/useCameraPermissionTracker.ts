@@ -1,4 +1,8 @@
-import {useMutation} from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import {Camera, type CameraPermissionStatus} from 'react-native-vision-camera';
 
 // 'background' key prefix prevents passcode prompt during permission dialog (see AuthContext.tsx)
@@ -8,7 +12,20 @@ const CAMERA_PERMISSION_MUTATION_KEY = [
   'permission',
 ] as const;
 
-export const CAMERA_PERMISSION_QUERY_KEY = ['permission', 'camera'] as const;
+const CAMERA_PERMISSION_QUERY_KEY = ['permission', 'camera'] as const;
+
+export function useCameraPermissionQuery() {
+  return useSuspenseQuery({
+    queryKey: CAMERA_PERMISSION_QUERY_KEY,
+    queryFn: readCameraPermission,
+  });
+}
+
+export function useInvalidateCameraPermission() {
+  const queryClient = useQueryClient();
+  return () =>
+    queryClient.invalidateQueries({queryKey: CAMERA_PERMISSION_QUERY_KEY});
+}
 
 export function useCameraPermissionMutation<T>(fn: () => Promise<T>) {
   return useMutation({

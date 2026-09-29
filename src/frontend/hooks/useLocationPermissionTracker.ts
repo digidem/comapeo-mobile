@@ -1,4 +1,8 @@
-import {useMutation} from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import * as Location from 'expo-location';
 
 // 'background' key prefix prevents passcode prompt during permission dialog (see AuthContext.tsx)
@@ -8,10 +12,20 @@ const LOCATION_PERMISSION_MUTATION_KEY = [
   'permission',
 ] as const;
 
-export const LOCATION_PERMISSION_QUERY_KEY = [
-  'permission',
-  'location',
-] as const;
+const LOCATION_PERMISSION_QUERY_KEY = ['permission', 'location'] as const;
+
+export function useLocationPermissionQuery() {
+  return useSuspenseQuery({
+    queryKey: LOCATION_PERMISSION_QUERY_KEY,
+    queryFn: readLocationPermission,
+  });
+}
+
+export function useInvalidateLocationPermission() {
+  const queryClient = useQueryClient();
+  return () =>
+    queryClient.invalidateQueries({queryKey: LOCATION_PERMISSION_QUERY_KEY});
+}
 
 export function useLocationPermissionMutation<T>(fn: () => Promise<T>) {
   return useMutation({

@@ -35,7 +35,6 @@ import {
   useLowStorageBannerState,
 } from '../../contexts/LowStorageBannerContext';
 import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
-import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {isLowStorage} from '../../lib/storage';
 import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
 import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
@@ -46,10 +45,10 @@ import {
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
 import {
-  LOCATION_PERMISSION_QUERY_KEY,
-  readLocationPermission,
   requestLocationPermission,
+  useInvalidateLocationPermission,
   useLocationPermissionMutation,
+  useLocationPermissionQuery,
 } from '../../hooks/useLocationPermissionTracker';
 import {openSettingsAndWait} from '../../utils/linking';
 import {
@@ -121,15 +120,8 @@ export const MapScreen = ({
   const insets = useSafeAreaInsets();
   const BANNER_TOP = insets.top + 75;
   const {formatMessage} = useIntl();
-  const queryClient = useQueryClient();
-  //  covering a permission changed in system settings.
-  const {data: locationPermission} = useSuspenseQuery({
-    queryKey: LOCATION_PERMISSION_QUERY_KEY,
-    queryFn: readLocationPermission,
-  });
-
-  const invalidateLocationPermission = () =>
-    queryClient.invalidateQueries({queryKey: LOCATION_PERMISSION_QUERY_KEY});
+  const {data: locationPermission} = useLocationPermissionQuery();
+  const invalidateLocationPermission = useInvalidateLocationPermission();
 
   const askLocationPermission = useLocationPermissionMutation(async () => {
     await requestLocationPermission();

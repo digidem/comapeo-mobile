@@ -13,12 +13,11 @@ import {
   type PhotoFile,
 } from 'react-native-vision-camera';
 import {
-  CAMERA_PERMISSION_QUERY_KEY,
-  readCameraPermission,
   requestCameraPermission,
   useCameraPermissionMutation,
+  useCameraPermissionQuery,
+  useInvalidateCameraPermission,
 } from '../hooks/useCameraPermissionTracker';
-import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {openSettingsAndWait} from '../utils/linking';
 
 import {GPSPill} from './GPSPill';
@@ -63,13 +62,7 @@ export const CameraView = ({onAddPress}: Props) => {
   const [cameraReady, setCameraReady] = React.useState(false);
   const accelerometerMeasurement =
     React.useRef<AccelerometerMeasurement | null>(null);
-  const queryClient = useQueryClient();
-  // re-reads whenever the app returns to the
-  // foreground - covering a permission changed in system settings.
-  const {data: permission} = useSuspenseQuery({
-    queryKey: CAMERA_PERMISSION_QUERY_KEY,
-    queryFn: readCameraPermission,
-  });
+  const {data: permission} = useCameraPermissionQuery();
   const {formatMessage} = useIntl();
   const camera = useRef<Camera>(null);
   const location = useLocationState(store => store.location);
@@ -99,8 +92,7 @@ export const CameraView = ({onAddPress}: Props) => {
     };
   }, []);
 
-  const invalidateCameraPermission = () =>
-    queryClient.invalidateQueries({queryKey: CAMERA_PERMISSION_QUERY_KEY});
+  const invalidateCameraPermission = useInvalidateCameraPermission();
 
   const askPermission = useCameraPermissionMutation(async () => {
     await requestCameraPermission();

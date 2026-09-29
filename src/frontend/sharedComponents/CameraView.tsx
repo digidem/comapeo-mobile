@@ -14,7 +14,7 @@ import {
 } from 'react-native-vision-camera';
 import {
   requestCameraPermission,
-  useCameraPermissionMutation,
+  useCameraPermissionWithoutPasscode,
   useCameraPermissionQuery,
   useInvalidateCameraPermission,
 } from '../hooks/useCameraPermissionTracker';
@@ -94,12 +94,12 @@ export const CameraView = ({onAddPress}: Props) => {
 
   const invalidateCameraPermission = useInvalidateCameraPermission();
 
-  const askPermission = useCameraPermissionMutation(async () => {
+  const askPermission = useCameraPermissionWithoutPasscode(async () => {
     await requestCameraPermission();
     await invalidateCameraPermission();
   });
 
-  const goToSettings = useCameraPermissionMutation(async () => {
+  const goToSettings = useCameraPermissionWithoutPasscode(async () => {
     await openSettingsAndWait();
     await invalidateCameraPermission();
   });

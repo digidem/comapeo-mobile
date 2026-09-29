@@ -108,7 +108,7 @@ jest.mock('../../hooks/useLocationPermissionTracker', () => ({
   }),
   useInvalidateLocationPermission: () => jest.fn(),
   requestLocationPermission: jest.fn(),
-  useLocationPermissionMutation: () => ({mutate: jest.fn()}),
+  useLocationPermissionWithoutPasscode: () => ({mutate: jest.fn()}),
 }));
 
 process.env.MAPBOX_ACCESS_TOKEN = 'test-token';

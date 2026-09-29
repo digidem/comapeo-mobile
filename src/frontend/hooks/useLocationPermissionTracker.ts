@@ -27,7 +27,7 @@ export function useInvalidateLocationPermission() {
     queryClient.invalidateQueries({queryKey: LOCATION_PERMISSION_QUERY_KEY});
 }
 
-export function useLocationPermissionMutation<T>(fn: () => Promise<T>) {
+export function useLocationPermissionWithoutPasscode<T>(fn: () => Promise<T>) {
   return useMutation({
     mutationKey: LOCATION_PERMISSION_MUTATION_KEY,
     mutationFn: fn,

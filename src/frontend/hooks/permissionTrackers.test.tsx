@@ -2,23 +2,54 @@ import * as React from 'react';
 import {renderHook, act, waitFor} from '@testing-library/react-native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
-import {
-  cameraPermissionFrom,
-  useCameraPermissionMutation,
-} from './useCameraPermissionTracker';
-import {useLocationPermissionMutation} from './useLocationPermissionTracker';
+import {useCameraPermissionWithoutPasscode} from './useCameraPermissionTracker';
+import {useLocationPermissionWithoutPasscode} from './useLocationPermissionTracker';
 
-test.each([
-  ['granted', false, {granted: true, canAskAgain: true}],
-  ['denied', false, {granted: false, canAskAgain: true}], // fresh install
-  ['not-determined', true, {granted: false, canAskAgain: true}], // denied once
-  ['denied', true, {granted: false, canAskAgain: false}], // denied for good
-] as const)(
-  'camera: %s with hasRequested=%s',
-  (status, hasRequested, expected) => {
-    expect(cameraPermissionFrom(status, hasRequested)).toEqual(expected);
-  },
-);
+// Android reports a never-asked permission as "denied", exactly like a
+// permanently denied one, so the "have we asked" flag is what
+// separates them.
+//
+// That flag lives for the life of the module, so each case needs a fresh copy.
+function freshCameraTracker(status: string) {
+  jest.resetModules();
+  const {Camera} = jest.requireMock('react-native-vision-camera') as {
+    Camera: {
+      getCameraPermissionStatus: jest.Mock;
+      requestCameraPermission: jest.Mock;
+    };
+  };
+  Camera.getCameraPermissionStatus.mockReturnValue(status);
+  Camera.requestCameraPermission.mockResolvedValue(status);
+  return jest.requireActual(
+    './useCameraPermissionTracker',
+  ) as typeof import('./useCameraPermissionTracker');
+}
+
+test('camera: granted', async () => {
+  const tracker = freshCameraTracker('granted');
+
+  expect(tracker.readCameraPermission().granted).toBe(true);
+});
+
+test('camera: fresh install offers Allow even though Android says denied', async () => {
+  const tracker = freshCameraTracker('denied');
+
+  expect(tracker.readCameraPermission().canAskAgain).toBe(true);
+});
+
+test('camera: still offers Allow after a single denial', async () => {
+  const tracker = freshCameraTracker('not-determined');
+  await tracker.requestCameraPermission();
+
+  expect(tracker.readCameraPermission().canAskAgain).toBe(true);
+});
+
+test('camera: falls back to Settings once denied for good', async () => {
+  const tracker = freshCameraTracker('denied');
+  await tracker.requestCameraPermission();
+
+  expect(tracker.readCameraPermission().canAskAgain).toBe(false);
+});
 
 // AuthContext suppresses the passcode screen while any mutation with the key
 // ['background', ...] is pending.
@@ -31,8 +62,8 @@ test('permission requests hide the passcode screen', async () => {
   const neverResolves = () => new Promise<void>(() => {});
   const {result} = await renderHook(
     () => ({
-      camera: useCameraPermissionMutation(neverResolves),
-      location: useLocationPermissionMutation(neverResolves),
+      camera: useCameraPermissionWithoutPasscode(neverResolves),
+      location: useLocationPermissionWithoutPasscode(neverResolves),
     }),
     {wrapper},
   );

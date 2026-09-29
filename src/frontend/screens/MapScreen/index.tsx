@@ -47,7 +47,7 @@ import {
 import {
   requestLocationPermission,
   useInvalidateLocationPermission,
-  useLocationPermissionMutation,
+  useLocationPermissionWithoutPasscode,
   useLocationPermissionQuery,
 } from '../../hooks/useLocationPermissionTracker';
 import {openSettingsAndWait} from '../../utils/linking';
@@ -123,15 +123,19 @@ export const MapScreen = ({
   const {data: locationPermission} = useLocationPermissionQuery();
   const invalidateLocationPermission = useInvalidateLocationPermission();
 
-  const askLocationPermission = useLocationPermissionMutation(async () => {
-    await requestLocationPermission();
-    await invalidateLocationPermission();
-  });
+  const askLocationPermission = useLocationPermissionWithoutPasscode(
+    async () => {
+      await requestLocationPermission();
+      await invalidateLocationPermission();
+    },
+  );
 
-  const goToLocationSettings = useLocationPermissionMutation(async () => {
-    await openSettingsAndWait();
-    await invalidateLocationPermission();
-  });
+  const goToLocationSettings = useLocationPermissionWithoutPasscode(
+    async () => {
+      await openSettingsAndWait();
+      await invalidateLocationPermission();
+    },
+  );
 
   useCheckDraftObservationAndNavigate({authState});
   useCheckUnsavedTrackAndNavigate({authState});

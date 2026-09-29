@@ -1,6 +1,5 @@
 import React, {useRef} from 'react';
 import {
-  AppState,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -14,11 +13,12 @@ import {
   type PhotoFile,
 } from 'react-native-vision-camera';
 import {
-  type CameraPermission,
+  CAMERA_PERMISSION_QUERY_KEY,
   readCameraPermission,
   requestCameraPermission,
   useCameraPermissionMutation,
 } from '../hooks/useCameraPermissionTracker';
+import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {openSettingsAndWait} from '../utils/linking';
 
 import {GPSPill} from './GPSPill';
@@ -63,9 +63,13 @@ export const CameraView = ({onAddPress}: Props) => {
   const [cameraReady, setCameraReady] = React.useState(false);
   const accelerometerMeasurement =
     React.useRef<AccelerometerMeasurement | null>(null);
-  // Reading the camera permission is synchronous, so there is no loading state.
-  const [permission, setPermission] =
-    React.useState<CameraPermission>(readCameraPermission);
+  const queryClient = useQueryClient();
+  // re-reads whenever the app returns to the
+  // foreground - covering a permission changed in system settings.
+  const {data: permission} = useSuspenseQuery({
+    queryKey: CAMERA_PERMISSION_QUERY_KEY,
+    queryFn: readCameraPermission,
+  });
   const {formatMessage} = useIntl();
   const camera = useRef<Camera>(null);
   const location = useLocationState(store => store.location);
@@ -95,22 +99,17 @@ export const CameraView = ({onAddPress}: Props) => {
     };
   }, []);
 
-  // Covers the permission being changed in system settings outside our own
-  // "Open Settings" button, which is the only other way it can change.
-  React.useEffect(() => {
-    const subscription = AppState.addEventListener('change', state => {
-      if (state === 'active') setPermission(readCameraPermission());
-    });
-    return () => subscription.remove();
-  }, []);
+  const invalidateCameraPermission = () =>
+    queryClient.invalidateQueries({queryKey: CAMERA_PERMISSION_QUERY_KEY});
 
   const askPermission = useCameraPermissionMutation(async () => {
-    setPermission(await requestCameraPermission());
+    await requestCameraPermission();
+    await invalidateCameraPermission();
   });
 
   const goToSettings = useCameraPermissionMutation(async () => {
     await openSettingsAndWait();
-    setPermission(readCameraPermission());
+    await invalidateCameraPermission();
   });
 
   function handleAddPress() {

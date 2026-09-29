@@ -6,7 +6,7 @@ import {
   LocationNoFollowIcon,
 } from '../../sharedComponents/icons';
 
-import {AppState, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
@@ -35,6 +35,7 @@ import {
   useLowStorageBannerState,
 } from '../../contexts/LowStorageBannerContext';
 import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
+import {useQueryClient, useSuspenseQuery} from '@tanstack/react-query';
 import {isLowStorage} from '../../lib/storage';
 import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
 import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
@@ -45,7 +46,7 @@ import {
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
 import {
-  type LocationPermission,
+  LOCATION_PERMISSION_QUERY_KEY,
   readLocationPermission,
   requestLocationPermission,
   useLocationPermissionMutation,
@@ -58,7 +59,6 @@ import {
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import LocationOnIcon from '../../images/LocationOn.svg';
-import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {DARK_ORANGE, WHITE} from '../../lib/styles';
 
 const PERMISSION_ICON_SIZE = 80;
@@ -121,30 +121,24 @@ export const MapScreen = ({
   const insets = useSafeAreaInsets();
   const BANNER_TOP = insets.top + 75;
   const {formatMessage} = useIntl();
-  const [locationPermission, setLocationPermission] =
-    React.useState<LocationPermission | null>(null);
+  const queryClient = useQueryClient();
+  //  covering a permission changed in system settings.
+  const {data: locationPermission} = useSuspenseQuery({
+    queryKey: LOCATION_PERMISSION_QUERY_KEY,
+    queryFn: readLocationPermission,
+  });
 
-  React.useEffect(() => {
-    readLocationPermission().then(setLocationPermission);
-  }, []);
-
-  // Covers the permission being changed in system settings outside our own
-  // "Open Settings" button, which is the only other way it can change.
-  React.useEffect(() => {
-    const subscription = AppState.addEventListener('change', state => {
-      if (state === 'active')
-        readLocationPermission().then(setLocationPermission);
-    });
-    return () => subscription.remove();
-  }, []);
+  const invalidateLocationPermission = () =>
+    queryClient.invalidateQueries({queryKey: LOCATION_PERMISSION_QUERY_KEY});
 
   const askLocationPermission = useLocationPermissionMutation(async () => {
-    setLocationPermission(await requestLocationPermission());
+    await requestLocationPermission();
+    await invalidateLocationPermission();
   });
 
   const goToLocationSettings = useLocationPermissionMutation(async () => {
     await openSettingsAndWait();
-    setLocationPermission(await readLocationPermission());
+    await invalidateLocationPermission();
   });
 
   useCheckDraftObservationAndNavigate({authState});
@@ -180,14 +174,6 @@ export const MapScreen = ({
 
   function handleDidFinishLoadingStyle() {
     setIsFinishedLoadingStyle(true);
-  }
-
-  if (locationPermission === null) {
-    return (
-      <View style={styles.permissionScreen}>
-        <FullScreenCenteredLoader />
-      </View>
-    );
   }
 
   if (!locationPermission.granted) {

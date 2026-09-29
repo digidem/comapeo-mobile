@@ -2,11 +2,17 @@ import {useMutation} from '@tanstack/react-query';
 import {Camera, type CameraPermissionStatus} from 'react-native-vision-camera';
 
 // 'background' key prefix prevents passcode prompt during permission dialog (see AuthContext.tsx)
-const CAMERA_PERMISSION_KEY = ['background', 'camera', 'permission'] as const;
+const CAMERA_PERMISSION_MUTATION_KEY = [
+  'background',
+  'camera',
+  'permission',
+] as const;
+
+export const CAMERA_PERMISSION_QUERY_KEY = ['permission', 'camera'] as const;
 
 export function useCameraPermissionMutation<T>(fn: () => Promise<T>) {
   return useMutation({
-    mutationKey: CAMERA_PERMISSION_KEY,
+    mutationKey: CAMERA_PERMISSION_MUTATION_KEY,
     mutationFn: fn,
     networkMode: 'always',
   });
@@ -40,8 +46,9 @@ export function readCameraPermission(): CameraPermission {
   );
 }
 
-export async function requestCameraPermission(): Promise<CameraPermission> {
+// Returns nothing on purpose, so the query stays the only source of truth and
+// callers invalidate it rather than storing what the request resolved with.
+export async function requestCameraPermission(): Promise<void> {
   await Camera.requestCameraPermission();
   markCameraRequested();
-  return cameraPermissionFrom(Camera.getCameraPermissionStatus(), true);
 }

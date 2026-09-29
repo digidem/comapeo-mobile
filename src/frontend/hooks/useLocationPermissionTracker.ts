@@ -21,11 +21,9 @@ export function useLocationPermissionMutation<T>(fn: () => Promise<T>) {
   });
 }
 
-export type LocationPermission = {granted: boolean; canAskAgain: boolean};
-
 // These functions are here so MapScreen's tests can mock this file rather than mocking
 // expo-location itself, which much of that screen's included components also use.
-export async function readLocationPermission(): Promise<LocationPermission> {
+export async function readLocationPermission() {
   const {granted, canAskAgain} = await Location.getForegroundPermissionsAsync();
   return {granted, canAskAgain};
 }
@@ -33,6 +31,6 @@ export async function readLocationPermission(): Promise<LocationPermission> {
 // Returns nothing on purpose. What the request resolves with can disagree with
 // what a later read reports, so the query stays the only source of truth and
 // callers invalidate it instead of storing this.
-export async function requestLocationPermission(): Promise<void> {
+export async function requestLocationPermission() {
   await Location.requestForegroundPermissionsAsync();
 }

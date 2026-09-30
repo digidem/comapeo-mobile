@@ -298,10 +298,6 @@
   "screens.ObservationMetadataVerified.longitude": {
     "message": "ลองจิจูด"
   },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "เริ่มจากมุมมองแผนที่หรือกล้องเพื่อเริ่มบันทึกการสังเกตแรก",
-    "description": "Description of observation list view when the user has not yet recorded observations"
-  },
   "screens.ObservationsList.filter.all": {
     "message": "ทั้งหมด"
   },

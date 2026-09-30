@@ -457,14 +457,6 @@
   "$1screens.ObservationMetadataVerified.navTitle": {
     "message": "Métadonnées d'observation"
   },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "Aller à la carte",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
-  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "Ajouter des observations",
-    "description": "Title of observation list view when the user has not yet recorded observations"
-  },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Partager les informations de diagnostic"
   },

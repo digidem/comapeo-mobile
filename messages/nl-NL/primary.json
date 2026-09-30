@@ -463,14 +463,6 @@
   "$1screens.ObservationMetadataVerified.navTitle": {
     "message": "Metadata waarneming"
   },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "Ga naar de kaart",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
-  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "Waarnemingen toevoegen",
-    "description": "Title of observation list view when the user has not yet recorded observations"
-  },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Diagnostische informatie delen"
   },

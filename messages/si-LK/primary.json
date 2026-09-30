@@ -174,14 +174,6 @@
     "message": "නිරීක්ෂණ සංස්කරණය කරන්න",
     "description": "screen title for edit observation screen"
   },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "සිතියම වෙත යන්න",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
-  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "නිරීක්ෂණය එකතු කරන්න",
-    "description": "Title of observation list view when the user has not yet recorded observations"
-  },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "වසන්න"
   },

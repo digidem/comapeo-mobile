@@ -122,6 +122,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.comapeo",
+      "icon": "./assets/icon-ios.png",
       "entitlements": {
         "com.apple.developer.networking.wifi-info": true
       },

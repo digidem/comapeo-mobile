@@ -28,9 +28,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Gehe zurück"
   },
-  "Modal.GPSDisable.title": {
-    "message": "GPS deaktiviert"
-  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "Wenn Projektteilnehmer ihre Daten austauschen, werden sie auch im Internet archiviert. Ihre Projektdaten werden über das Internet mit dem gesicherten, verschlüsselten Server synchronisiert. Der Serverbesitzer kann die Daten einsehen."
   },
@@ -752,10 +749,6 @@
   },
   "screens.ObservationMetadataVerified.validatedByCoMapeo": {
     "message": "Gesendet und bestätigt von CoMapeo"
-  },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "Starte in der Karten- oder Kameraansicht, um deine erste Beobachtung aufzuzeichnen.",
-    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "Alle"

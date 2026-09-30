@@ -179,10 +179,6 @@
     "message": "अवलाेकनहरू",
     "description": "Title of screen with list of observations"
   },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "पहिलो अवलोकन रेकर्ड गर्न नक्सा वा क्यामेरा दृश्यबाट सुरू गर्नु.",
-    "description": "Description of observation list view when the user has not yet recorded observations"
-  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "message": "यहाँ के भइ राखेकाे छ?",
     "description": "Placeholder for description/notes field"

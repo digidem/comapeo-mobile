@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {useKeepAwake} from 'expo-keep-awake';
 
 import {useJoinRequest} from '../../hooks/useJoinRequest';
@@ -57,7 +57,7 @@ const m = defineMessages({
   },
   joinedProject: {
     id: 'screens.Invites.JoinProject.joinedProject',
-    defaultMessage: 'This device joined project {projectName}',
+    defaultMessage: 'This device joined project <bold>{projectName}</bold>',
   },
   viewProject: {
     id: 'screens.Invites.JoinProject.viewProject',
@@ -109,7 +109,17 @@ export function JoinProject({
           <IconTitleDescription
             icon={<SuccessCheck width={100} height={100} />}
             title={t(m.joined)}
-            description={t(m.joinedProject, {projectName: invite.projectName})}
+            description={
+              <FormattedMessage
+                {...m.joinedProject}
+                values={{
+                  projectName: invite.projectName,
+                  bold: (chunks: React.ReactNode) => (
+                    <HeaderText variant="header5">{chunks}</HeaderText>
+                  ),
+                }}
+              />
+            }
           />
         </View>
         <View style={styles.buttonContainer}>

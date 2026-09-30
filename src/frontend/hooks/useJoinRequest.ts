@@ -13,5 +13,5 @@ export type JoinRequestState =
 // this yet. Once it does, replace the body below with useSingleJoinRequest.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- the real version passes invite.inviteIdString to useSingleJoinRequest
 export function useJoinRequest(invite: InviteLinkParams): JoinRequestState {
-  return {status: 'failed', errorCode: 'JOIN_PROJECT_CANCELLED_ERROR'};
+  return {status: 'failed', errorCode: 'INVITE_REDEEM_CONNECTION_CLOSED_ERROR'};
 }

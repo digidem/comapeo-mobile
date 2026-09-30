@@ -694,7 +694,7 @@
     "message": "Joined!"
   },
   "screens.Invites.JoinProject.joinedProject": {
-    "message": "This device joined project {projectName}"
+    "message": "This device joined project <bold>{projectName}</bold>"
   },
   "screens.Invites.JoinProject.keepOpen": {
     "message": "Coordinator must have CoMapeo open to review and approve."

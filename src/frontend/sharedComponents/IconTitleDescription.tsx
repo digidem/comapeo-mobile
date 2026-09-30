@@ -24,7 +24,7 @@ export const IconTitleDescription = ({
 }: {
   icon: React.ReactNode;
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   style?: ViewStyleProp;
 }) => {
   return (

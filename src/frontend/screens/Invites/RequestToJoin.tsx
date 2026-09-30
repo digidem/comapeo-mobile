@@ -59,7 +59,7 @@ export const RequestToJoin = ({
             onPress={requestToJoin}
             text={formatMessage(m.requestToJoin)}
             renderIcon={({color, size}) => (
-              <Ionicons color={color} size={size} name="send-outline" />
+              <Ionicons color={color} size={size} name="send" />
             )}
           />
           <SecondaryButton

@@ -28,9 +28,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Ga terug"
   },
-  "Modal.GPSDisable.title": {
-    "message": "GPS uitgeschakeld"
-  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "Wanneer projectdeelnemers hun gegevens uitwisselen, worden ze ook gearchiveerd op het internet. Uw projectgegevens synchroniseren naar het archief via het internet naar de veilige, versleutelde server hieronder. De eigenaar van de server kan de gegevens bekijken."
   },
@@ -751,10 +748,6 @@
   },
   "screens.ObservationMetadataVerified.validatedByCoMapeo": {
     "message": "Verzonden en gevalideerd door CoMapeo"
-  },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "Begin van de kaart- of camera weergave om de eerste waarneming op te nemen.",
-    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "Allemaal"

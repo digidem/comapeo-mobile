@@ -22,9 +22,6 @@
   "Screens.ProjectSettings.update": {
     "message": "Sasisha"
   },
-  "Screens.ProjectSettings.view": {
-    "message": "Tazama"
-  },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "message": "Ghairi",
     "description": "Text for cancel action button."
@@ -321,18 +318,8 @@
   "screens.ObservationMetadataVerified.longitude": {
     "message": "Longitudo"
   },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "Anza kwenye ramani au mwonekano wa kamera ili urekodi uchunguzi wako wa kwanza.",
-    "description": "Description of observation list view when the user has not yet recorded observations"
-  },
   "screens.ObservationsList.filter.all": {
     "message": "Yote"
-  },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Funga"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Jiunge na Mradi"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Funga"
@@ -361,9 +348,6 @@
     "message": "Badilisha"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Rudi Nyuma"
-  },
-  "soloProject.startNewProject.goBack": {
     "message": "Rudi Nyuma"
   }
 }

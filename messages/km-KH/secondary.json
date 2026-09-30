@@ -185,10 +185,6 @@
   "screens.ObservationMetadataVerified.location": {
     "message": "ទីតាំង"
   },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "ចាប់ផ្តើមពីទិដ្ឋភាពផែនទីឬកាមេរ៉ាដើម្បីកត់ត្រាការសង្កេតដំបូងរបស់អ្នក។",
-    "description": "Description of observation list view when the user has not yet recorded observations"
-  },
   "screens.ObservationsList.filter.all": {
     "message": "ទាំងអស់"
   },

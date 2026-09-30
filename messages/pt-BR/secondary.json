@@ -28,15 +28,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Voltar"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Habilitado"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "Para criar uma trilha, CoMapeo precisa acessar sua localização e GPS."
-  },
-  "Modal.GPSDisable.title": {
-    "message": "GPS desativado"
-  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "Quando os participantes do projeto trocam seus dados, eles também serão arquivados na internet. Os dados do seu projeto estão sendo sincronizados com a internet para o servidor seguro e criptografado abaixo. O proprietário do servidor pode ver os dados."
   },
@@ -799,10 +790,6 @@
   },
   "screens.ObservationMetadataVerified.validatedByCoMapeo": {
     "message": "Enviado e validado pelo CoMapeo"
-  },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "Comece pela tela de mapa ou da câmera para criar sua primeira observação.",
-    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "Todas"

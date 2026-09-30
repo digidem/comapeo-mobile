@@ -301,10 +301,6 @@
   "screens.ObservationMetadataVerified.longitude": {
     "message": "தீர்க்கரேகை"
   },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "உங்கள் முதல் கண்காணிப்பைப் பதிவு செய்ய வரைபடம் அல்லது கேமரா காட்சியிலிருந்து தொடங்கவும்.",
-    "description": "Description of observation list view when the user has not yet recorded observations"
-  },
   "screens.ObservationsList.filter.all": {
     "message": "அனைத்தும்"
   },

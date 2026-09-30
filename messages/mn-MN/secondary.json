@@ -301,10 +301,6 @@
   "screens.ObservationMetadataVerified.longitude": {
     "message": "Уртраг"
   },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "Анхны сануулгаа бичхийн тулд газрын зураг эсвэл камерын харагдацаас эхэл.",
-    "description": "Description of observation list view when the user has not yet recorded observations"
-  },
   "screens.ObservationsList.filter.all": {
     "message": "Бүгд"
   },

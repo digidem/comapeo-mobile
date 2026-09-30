@@ -6,7 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "updates": {
       "enabled": false
     },
@@ -20,7 +22,9 @@
       "expo-secure-store",
       "expo-document-picker",
       "react-native-vision-camera",
-      ["@maplibre/maplibre-react-native"],
+      [
+        "@maplibre/maplibre-react-native"
+      ],
       [
         "expo-splash-screen",
         {
@@ -70,13 +74,27 @@
           }
         }
       ],
-      ["./expo-config-plugins/removeExpoInputStyles.js"],
-      ["./expo-config-plugins/targetArmArchsOnly.js"],
-      ["./expo-config-plugins/increaseJavaMemory.js"],
-      ["./expo-config-plugins/flagSecure/index.js"],
-      ["./expo-config-plugins/customPermissionText.js"],
-      ["./expo-config-plugins/removeMediaPlaybackPermission.js"],
-      ["./expo-config-plugins/mergeBackupRules.js"],
+      [
+        "./expo-config-plugins/removeExpoInputStyles.js"
+      ],
+      [
+        "./expo-config-plugins/targetArmArchsOnly.js"
+      ],
+      [
+        "./expo-config-plugins/increaseJavaMemory.js"
+      ],
+      [
+        "./expo-config-plugins/flagSecure/index.js"
+      ],
+      [
+        "./expo-config-plugins/customPermissionText.js"
+      ],
+      [
+        "./expo-config-plugins/removeMediaPlaybackPermission.js"
+      ],
+      [
+        "./expo-config-plugins/mergeBackupRules.js"
+      ],
       [
         "react-native-share",
         {
@@ -105,7 +123,10 @@
               "host": "app.comapeo.org"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ],
       "permissions": [
@@ -122,26 +143,36 @@
     },
     "ios": {
       "bundleIdentifier": "com.comapeo",
+      "icon": "./assets/icon-ios.png",
       "entitlements": {
         "com.apple.developer.networking.wifi-info": true
       },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocalNetworkUsageDescription": "CoMapeo uses the local network to discover and sync with nearby devices in your project.",
-        "NSBonjourServices": ["_comapeo._tcp"],
+        "NSBonjourServices": [
+          "_comapeo._tcp"
+        ],
         "UIViewControllerBasedStatusBarAppearance": true,
         "UTExportedTypeDeclarations": [
           {
             "UTTypeIdentifier": "org.digidem.styled-map-package",
             "UTTypeDescription": "Styled Map Package",
-            "UTTypeConformsTo": ["public.zip-archive"],
+            "UTTypeConformsTo": [
+              "public.zip-archive"
+            ],
             "UTTypeTagSpecification": {
-              "public.filename-extension": ["smp"],
-              "public.mime-type": ["application/vnd.digidem.smp"]
+              "public.filename-extension": [
+                "smp"
+              ],
+              "public.mime-type": [
+                "application/vnd.digidem.smp"
+              ]
             }
           }
         ]
-      }
+      },
+      "appleTeamId": "V38QL3ZC3T"
     },
     "extra": {
       "eas": {

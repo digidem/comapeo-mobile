@@ -28,9 +28,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "戻る"
   },
-  "Modal.GPSDisable.title": {
-    "message": "GPS 無効"
-  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "プロジェクト参加者がデータを交換する際には、インターネット上でアーカイブされます。 あなたのプロジェクト データは、以下の安全な暗号化されたサーバーにインターネット経由でアーカイブに同期されています。サーバーの所有者はデータを表示できます。"
   },
@@ -744,10 +741,6 @@
   },
   "screens.ObservationMetadataVerified.validatedByCoMapeo": {
     "message": "CoMapeoによって送信および検証されました"
-  },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "最初の観察記録を記録するには、マップまたはカメラビューから開始します。",
-    "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
     "message": "すべて"

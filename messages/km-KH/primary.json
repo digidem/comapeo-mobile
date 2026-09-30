@@ -122,14 +122,6 @@
     "message": "កែសម្រួលការសង្កេត",
     "description": "screen title for edit observation screen"
   },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "ចូលទៅផែនទី",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
-  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "បន្ថែមការសង្កេត",
-    "description": "Title of observation list view when the user has not yet recorded observations"
-  },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "បិទ"
   },

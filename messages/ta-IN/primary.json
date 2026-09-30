@@ -141,14 +141,6 @@
     "message": "கவனிப்பைத் திருத்து",
     "description": "screen title for edit observation screen"
   },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "வரைபடத்திற்குச் செல்லவும்",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
-  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "அவதானிப்புகளைச் சேர்க்கவும்",
-    "description": "Title of observation list view when the user has not yet recorded observations"
-  },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "மூடுக"
   },

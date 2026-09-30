@@ -469,14 +469,6 @@
   "$1screens.ObservationMetadataVerified.navTitle": {
     "message": "Metadata Pengamatan"
   },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "Pergi ke Peta",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
-  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "Tambahkan Pengamatan",
-    "description": "Title of observation list view when the user has not yet recorded observations"
-  },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Bagikan Informasi Diagnostik"
   },

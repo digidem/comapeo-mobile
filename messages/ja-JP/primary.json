@@ -467,14 +467,6 @@
   "$1screens.ObservationMetadataVerified.navTitle": {
     "message": "観察記録メタデータ"
   },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "マップに移動",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
-  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "観察記録を追加",
-    "description": "Title of observation list view when the user has not yet recorded observations"
-  },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "診断情報を共有"
   },

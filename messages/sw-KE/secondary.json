@@ -318,10 +318,6 @@
   "screens.ObservationMetadataVerified.longitude": {
     "message": "Longitudo"
   },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "Anza kwenye ramani au mwonekano wa kamera ili urekodi uchunguzi wako wa kwanza.",
-    "description": "Description of observation list view when the user has not yet recorded observations"
-  },
   "screens.ObservationsList.filter.all": {
     "message": "Yote"
   },

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Logger, setConnected} from '@maplibre/maplibre-react-native';
+import {LogManager} from '@maplibre/maplibre-react-native';
 
 // Maplibre logs when tile requests are cancelled, which is often.
 // this turns off the unneccessary noise in the console logs
-Logger.setLogCallback(log => {
+LogManager.onLog(log => {
   if (
     log.tag === 'Mbgl-HttpRequest' &&
     log.message.startsWith('Request failed due to a permanent error: Canceled')
@@ -12,13 +12,6 @@ Logger.setLogCallback(log => {
   }
   return false;
 });
-
-// All styles are served via localhost and we need to bypass the internal connectivity manager in MapLibre React Native
-// in order for things to work while the app is offline.
-// https://github.com/maplibre/maplibre-react-native/blob/6f99de530eec2e06de485ef86f4be61f941e0e09/docs/content/modules/mlrn-module.md#setconnectedconnected
-// `setConnected` is backed by the Android-only MLRNModule.setConnected; it's
-// undefined on iOS (no equivalent connectivity manager), so guard the call.
-setConnected?.(true);
 
 import {
   QueryClient,

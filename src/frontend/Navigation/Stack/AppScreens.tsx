@@ -27,6 +27,10 @@ import {YourTeam} from '../../screens/YourTeam';
 import {SelectInviteDevice} from '../../screens/YourTeam/SelectInviteDevice';
 import {SelectMapShareDevice} from '../../screens/BackgroundMaps/SelectMapShareDevice';
 import {SelectInviteeRole} from '../../screens/YourTeam/SelectInviteeRole';
+import {InviteLinkIntro} from '../../screens/YourTeam/InviteLinkIntro';
+import {InviteLinkReady} from '../../screens/YourTeam/InviteLinkReady';
+import {DeleteInviteLink} from '../../screens/YourTeam/DeleteInviteLink';
+import {InviteLinkDeleted} from '../../screens/YourTeam/InviteLinkDeleted';
 import {ReviewInvitation} from '../../screens/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/YourTeam/InviteAccepted';
 import {ReviewAndInvite} from '../../screens/YourTeam/ReviewAndInvite';
@@ -278,6 +282,31 @@ export const createAppScreens = ({
         name="SelectInviteeRole"
         component={SelectInviteeRole}
         options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
+      />
+      <RootStack.Screen
+        name="InviteLinkIntro"
+        component={InviteLinkIntro}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="InviteLinkReady"
+        component={InviteLinkReady}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="DeleteInviteLink"
+        component={DeleteInviteLink}
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+          animation: 'none',
+          contentStyle: {backgroundColor: 'transparent'},
+        }}
+      />
+      <RootStack.Screen
+        name="InviteLinkDeleted"
+        component={InviteLinkDeleted}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="ReviewAndInvite"

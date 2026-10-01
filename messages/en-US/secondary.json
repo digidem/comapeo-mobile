@@ -319,6 +319,9 @@
   "screen.EditProjectDetails.projectColors": {
     "message": "Project Card Colors"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.connected": {
+    "message": "Connected:"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "As a Coordinator this device can invite and remove users, and manage project details."
   },
@@ -327,6 +330,9 @@
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice": {
     "message": "You are selecting a role for this device:"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingForLink": {
+    "message": "Select a role for this Invite Link"
   },
   "screens.AboutSettings.CoMapeoBuild": {
     "message": "CoMapeo build",
@@ -1443,6 +1449,18 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "Tracks is recording. Stop Tracks to continue."
   },
+  "screens.YourTeam.DeleteInviteLink.cancel": {
+    "message": "Cancel"
+  },
+  "screens.YourTeam.DeleteInviteLink.confirm": {
+    "message": "Yes, Delete"
+  },
+  "screens.YourTeam.DeleteInviteLink.description": {
+    "message": "This link will no longer work for new devices joining the project."
+  },
+  "screens.YourTeam.DeleteInviteLink.title": {
+    "message": "Delete Invite Link?"
+  },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Device removed."
   },
@@ -1451,6 +1469,54 @@
   },
   "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
     "message": "Return to Team"
+  },
+  "screens.YourTeam.InviteLinkDeleted.deleted": {
+    "message": "Deleted"
+  },
+  "screens.YourTeam.InviteLinkDeleted.hasBeenDeleted": {
+    "message": "<bold>Invite {shortId}</bold> has been deleted."
+  },
+  "screens.YourTeam.InviteLinkDeleted.returnToTeam": {
+    "message": "Return to Team"
+  },
+  "screens.YourTeam.InviteLinkIntro.close": {
+    "message": "Close"
+  },
+  "screens.YourTeam.InviteLinkIntro.continue": {
+    "message": "Continue"
+  },
+  "screens.YourTeam.InviteLinkIntro.description": {
+    "message": "Easily invite remote devices using an internet connection"
+  },
+  "screens.YourTeam.InviteLinkIntro.multipleUses": {
+    "message": "Can be used multiple times"
+  },
+  "screens.YourTeam.InviteLinkIntro.secure": {
+    "message": "Private, secure, shareable links"
+  },
+  "screens.YourTeam.InviteLinkIntro.title": {
+    "message": "Introducing Invite Links"
+  },
+  "screens.YourTeam.InviteLinkIntro.validFor": {
+    "message": "Valid for 24 hours"
+  },
+  "screens.YourTeam.InviteLinkReady.deleteLink": {
+    "message": "Delete Invite Link"
+  },
+  "screens.YourTeam.InviteLinkReady.expiresIn": {
+    "message": "Expires in {timeRemaining}"
+  },
+  "screens.YourTeam.InviteLinkReady.keepOpen": {
+    "message": "Keep app open to approve requests."
+  },
+  "screens.YourTeam.InviteLinkReady.readyToShare": {
+    "message": "Invite {shortId} ready to share!"
+  },
+  "screens.YourTeam.InviteLinkReady.returnToTeam": {
+    "message": "Return to Team"
+  },
+  "screens.YourTeam.InviteLinkReady.share": {
+    "message": "Share"
   },
   "screens.YourTeam.RemoveDevice.reasonLabel": {
     "message": "Reason for removal?"

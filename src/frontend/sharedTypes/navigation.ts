@@ -7,6 +7,7 @@ import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
 import type {InviteLinkParams} from '../lib/inviteLinks';
+import type {InviteLink} from '../hooks/useInviteLinks';
 import {PermissionResponse} from 'expo-audio';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 
@@ -107,7 +108,18 @@ export type RootStackParamsList = {
   YourTeam: undefined;
   SelectDevice: undefined;
   SelectMapShareDevice: undefined;
-  SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
+  SelectInviteeRole:
+    | {
+        invitee: 'device';
+        name: string;
+        deviceType: DeviceType;
+        deviceId: string;
+      }
+    | {invitee: 'link'};
+  InviteLinkIntro: undefined;
+  InviteLinkReady: InviteLink;
+  DeleteInviteLink: InviteLink;
+  InviteLinkDeleted: {inviteId: string};
   ReviewAndInvite: InviteProps;
   InviteAccepted: {name: string};
   InviteDeclined: InviteProps;

@@ -7,7 +7,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {LinkIcon} from '../../sharedComponents/LinkIcon';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {DARK_GREY, DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
+import {DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
 import SafetyIcon from '../../images/Safety.svg';
 import StopwatchIcon from '../../images/Stopwatch.svg';
 import GreenSquareCheckmark from '../../images/GreenSquareCheckmark.svg';
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    color: DARK_GREY,
   },
   body: {
     alignSelf: 'stretch',
@@ -144,7 +143,6 @@ const styles = StyleSheet.create({
   },
   description: {
     textAlign: 'center',
-    color: DARK_GREY,
   },
   points: {
     alignSelf: 'stretch',

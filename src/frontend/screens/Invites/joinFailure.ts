@@ -1,21 +1,33 @@
 import {defineMessages, type MessageDescriptor} from 'react-intl';
+import {
+  AlreadyJoinedError,
+  InviteConnectionError,
+  InviteDeniedByInviterError,
+  InviteNotFoundError,
+  InviteRedeemConnectionClosedError,
+  InviteSendError,
+  JoinProjectCancelledError,
+  ProjectExistsError,
+  UnknownInviteIDError,
+} from '@comapeo/core/errors.js';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import type {CircleIcon} from '../../sharedComponents/StatusCircleIcon';
+import {LINK_ICON_ROTATION} from '../../sharedComponents/LinkIcon';
 import {BLUE_GREY} from '../../lib/styles';
 
 // Codes @comapeo/core attaches to the error on a `failed` join request. Errors
 // lose their prototype crossing the IPC boundary, so these are matched on
 // `error.code`, never with `instanceof`.
 export const JOIN_FAILURE_CODES = [
-  'INVITE_CONNECTION_ERROR',
-  'INVITE_REDEEM_CONNECTION_CLOSED_ERROR',
-  'INVITE_DENIED_BY_INVITER_ERROR',
-  'UNKNOWN_INVITE_ID_ERROR',
-  'JOIN_PROJECT_CANCELLED_ERROR',
-  'ALREADY_JOINED_ERROR',
-  'PROJECT_EXISTS_ERROR',
-  'INVITE_NOT_FOUND_ERROR',
-  'INVITE_SEND_ERROR',
+  InviteConnectionError.code,
+  InviteRedeemConnectionClosedError.code,
+  InviteDeniedByInviterError.code,
+  UnknownInviteIDError.code,
+  JoinProjectCancelledError.code,
+  AlreadyJoinedError.code,
+  ProjectExistsError.code,
+  InviteNotFoundError.code,
+  InviteSendError.code,
 ] as const;
 
 export type JoinFailureCode = (typeof JOIN_FAILURE_CODES)[number] | 'UNKNOWN';
@@ -81,41 +93,41 @@ export type JoinFailureCopy = {
 
 export function getJoinFailureCopy(code: JoinFailureCode): JoinFailureCopy {
   switch (code) {
-    case 'INVITE_CONNECTION_ERROR':
+    case InviteConnectionError.code:
       return {
         title: m.failedToConnectTitle,
         icon: {name: 'wifi', color: BLUE_GREY},
       };
-    case 'INVITE_REDEEM_CONNECTION_CLOSED_ERROR':
+    case InviteRedeemConnectionClosedError.code:
       return {
         title: m.connectionLostTitle,
         icon: {name: 'wifi', color: BLUE_GREY},
       };
-    case 'INVITE_DENIED_BY_INVITER_ERROR':
+    case InviteDeniedByInviterError.code:
       return {
         title: m.deniedTitle,
         description: m.deniedDescription,
         icon: {name: 'send'},
       };
-    case 'UNKNOWN_INVITE_ID_ERROR':
+    case UnknownInviteIDError.code:
       return {
         title: m.expiredTitle,
         description: m.expiredDescription,
-        icon: {name: 'link', rotate: -45},
+        icon: {name: 'link', rotate: LINK_ICON_ROTATION},
       };
-    case 'JOIN_PROJECT_CANCELLED_ERROR':
+    case JoinProjectCancelledError.code:
       return {title: m.canceledTitle, icon: {name: 'send'}};
     // No design for these two yet
-    case 'ALREADY_JOINED_ERROR':
-    case 'PROJECT_EXISTS_ERROR':
+    case AlreadyJoinedError.code:
+    case ProjectExistsError.code:
       return {
         title: m.alreadyJoinedTitle,
         description: m.alreadyJoinedDescription,
         // No design for this one yet, so the icon is a guess.
         icon: {name: 'group'},
       };
-    case 'INVITE_NOT_FOUND_ERROR':
-    case 'INVITE_SEND_ERROR':
+    case InviteNotFoundError.code:
+    case InviteSendError.code:
     case 'UNKNOWN':
       return {
         title: m.unknownTitle,

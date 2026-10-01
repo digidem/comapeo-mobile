@@ -1195,8 +1195,23 @@
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
     "message": "Can invite devices, edit and delete data, and manage project details."
   },
+  "screens.Setting.ProjectSettings.YourTeam.coordinatorRole": {
+    "message": "Coordinator"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.inviteLinkMeta": {
+    "message": "{role} - {timeRemaining} left"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.inviteLinkName": {
+    "message": "Invite {shortId}"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.inviteLinks": {
+    "message": "Invite Links"
+  },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Can take and share observations but not manage users or project details."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.participantRole": {
+    "message": "Participant"
   },
   "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
     "message": "Devices no longer contributing to this project."
@@ -1509,6 +1524,9 @@
   "screens.YourTeam.InviteLinkReady.keepOpen": {
     "message": "Keep app open to approve requests."
   },
+  "screens.YourTeam.InviteLinkReady.navTitle": {
+    "message": "Invite Link"
+  },
   "screens.YourTeam.InviteLinkReady.readyToShare": {
     "message": "Invite {shortId} ready to share!"
   },
@@ -1518,8 +1536,35 @@
   "screens.YourTeam.InviteLinkReady.share": {
     "message": "Share"
   },
+  "screens.YourTeam.JoinRequestAccepted.accepted": {
+    "message": "Accepted!"
+  },
+  "screens.YourTeam.JoinRequestAccepted.close": {
+    "message": "Close"
+  },
+  "screens.YourTeam.JoinRequestAccepted.joinedProject": {
+    "message": "<bold>{deviceName}</bold> joined project <bold>{projectName}</bold>"
+  },
+  "screens.YourTeam.JoinRequestDenied.close": {
+    "message": "Close"
+  },
+  "screens.YourTeam.JoinRequestDenied.createNewLink": {
+    "message": "Create a new Invite Link to re-invite a device"
+  },
+  "screens.YourTeam.JoinRequestDenied.denied": {
+    "message": "Request Denied"
+  },
   "screens.YourTeam.RemoveDevice.reasonLabel": {
     "message": "Reason for removal?"
+  },
+  "screens.YourTeam.ReviewJoinRequest.accept": {
+    "message": "Accept"
+  },
+  "screens.YourTeam.ReviewJoinRequest.deny": {
+    "message": "Deny"
+  },
+  "screens.YourTeam.ReviewJoinRequest.requestingToJoin": {
+    "message": "Requesting to join..."
   },
   "screens.YourTeam.TeamMemberCard.thisDevice": {
     "message": "This device"

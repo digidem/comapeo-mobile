@@ -48,7 +48,10 @@ export const SelectInviteeRole: NativeNavigationComponent<
   async function selectRole(roleId: MemberApi.RoleIdForNewInvite) {
     if (params.invitee === 'link') {
       const inviteLink = await createInviteLink(roleId);
-      navigation.replace('InviteLinkReady', inviteLink);
+      navigation.replace('InviteLinkReady', {
+        ...inviteLink,
+        openedFrom: 'create',
+      });
       return;
     }
 

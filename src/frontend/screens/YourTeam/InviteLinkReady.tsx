@@ -12,6 +12,7 @@ import {RoleWithIcon} from '../../sharedComponents/RoleWithIcon';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {useOpenShareDialog} from '../../hooks/share';
 import {formatTimeRemaining} from '../../lib/expiry';
+import {useNow} from '../../hooks/useNow';
 import {COORDINATOR_ROLE_ID} from '../../sharedTypes';
 import {BLUE_GREY, COMAPEO_BLUE, LIGHT_ORANGE} from '../../lib/styles';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -20,6 +21,10 @@ import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 const SHORT_ID_LENGTH = 7;
 
 const m = defineMessages({
+  navTitle: {
+    id: 'screens.YourTeam.InviteLinkReady.navTitle',
+    defaultMessage: 'Invite Link',
+  },
   keepOpen: {
     id: 'screens.YourTeam.InviteLinkReady.keepOpen',
     defaultMessage: 'Keep app open to approve requests.',
@@ -51,13 +56,18 @@ export function InviteLinkReady({
   navigation,
 }: NativeRootNavigationProps<'InviteLinkReady'>) {
   const {formatMessage: t} = useIntl();
-  const {url, inviteId, roleId, expiresAt} = route.params;
+  const {url, inviteId, roleId, expiresAt, openedFrom} = route.params;
   const openShare = useOpenShareDialog();
-  const timeRemaining = useTimeRemaining(expiresAt);
+  const now = useNow();
+  const timeRemaining = formatTimeRemaining(expiresAt - now);
 
   return (
     <ScreenContentWithDock
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[
+        styles.content,
+        // instead of the header the Team route shows with a page title.
+        openedFrom === 'create' && styles.noHeaderOffset,
+      ]}
       dockContent={
         <View style={styles.dock}>
           <PrimaryButton
@@ -68,14 +78,16 @@ export function InviteLinkReady({
               <MaterialIcon name="share" size={size} color={color} />
             )}
           />
-          <SecondaryButton
-            fullSize
-            text={t(m.returnToTeam)}
-            onPress={() => navigation.navigate('YourTeam')}
-            renderIcon={({color, size}) => (
-              <MaterialIcon name="people" size={size} color={color} />
-            )}
-          />
+          {openedFrom === 'create' ? (
+            <SecondaryButton
+              fullSize
+              text={t(m.returnToTeam)}
+              onPress={() => navigation.navigate('YourTeam')}
+              renderIcon={({color, size}) => (
+                <MaterialIcon name="people" size={size} color={color} />
+              )}
+            />
+          ) : null}
         </View>
       }>
       <View style={styles.warningBanner}>
@@ -110,16 +122,7 @@ export function InviteLinkReady({
   );
 }
 
-function useTimeRemaining(expiresAt: number) {
-  const [now, setNow] = React.useState(() => Date.now());
-
-  React.useEffect(() => {
-    const interval = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return formatTimeRemaining(expiresAt - now);
-}
+InviteLinkReady.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
   content: {
@@ -127,8 +130,10 @@ const styles = StyleSheet.create({
     padding: 20,
     gap: 30,
   },
-  warningBanner: {
+  noHeaderOffset: {
     marginTop: 50,
+  },
+  warningBanner: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',

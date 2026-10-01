@@ -7,7 +7,7 @@ import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
 import type {InviteLinkParams} from '../lib/inviteLinks';
-import type {InviteLink} from '../hooks/useInviteLinks';
+import type {InviteLink, JoinRequestDetails} from '../hooks/useInviteLinks';
 import {PermissionResponse} from 'expo-audio';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 
@@ -117,9 +117,12 @@ export type RootStackParamsList = {
       }
     | {invitee: 'link'};
   InviteLinkIntro: undefined;
-  InviteLinkReady: InviteLink;
+  InviteLinkReady: InviteLink & {openedFrom: 'create' | 'team'};
   DeleteInviteLink: InviteLink;
   InviteLinkDeleted: {inviteId: string};
+  ReviewJoinRequest: JoinRequestDetails;
+  JoinRequestAccepted: {deviceName: string; projectName: string};
+  JoinRequestDenied: undefined;
   ReviewAndInvite: InviteProps;
   InviteAccepted: {name: string};
   InviteDeclined: InviteProps;

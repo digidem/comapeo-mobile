@@ -27,7 +27,7 @@ export const ObservationMapLayer = () => {
   return (
     <GeoJSONSource
       onPress={event => {
-        const properties = event.nativeEvent.features[0];
+        const properties = event.nativeEvent.features[0]?.properties;
         if (
           !properties ||
           !('id' in properties) ||

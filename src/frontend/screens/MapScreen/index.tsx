@@ -12,7 +12,7 @@ import {
 } from '../../sharedComponents/icons';
 
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-// import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
+import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -269,15 +269,15 @@ export const MapScreen = ({
             <UserLocation minDisplacement={isTracking ? 0 : MIN_DISPLACEMENT} />
           )}
 
-          {/* {isFinishedLoadingStyle && authState !== 'obscured' && (
+          {authState !== 'obscured' && (
             <>
-              <RemoteDetectionAlertsMapLayer />
+              {/* <RemoteDetectionAlertsMapLayer />
               <CurrentTrackMapLayer location={location} />
               {isTracking && <UserTooltipMarker />}
-              <TracksMapLayer />
+              <TracksMapLayer /> */}
               <ObservationMapLayer />
             </>
-          )} */}
+          )}
         </Map>
       )}
       <View style={styles.bottomContainer}>

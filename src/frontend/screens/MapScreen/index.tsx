@@ -21,7 +21,7 @@ import {TrackPermissionScreen} from './TrackBottomSheet/TrackPermissionScreen';
 // import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
-// import {TracksMapLayer} from './MapLayers/TracksMapLayer';
+import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 // import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
@@ -273,8 +273,8 @@ export const MapScreen = ({
             <>
               {/* <RemoteDetectionAlertsMapLayer />
               <CurrentTrackMapLayer location={location} />
-              {isTracking && <UserTooltipMarker />}
-              <TracksMapLayer /> */}
+              {isTracking && <UserTooltipMarker />} */}
+              <TracksMapLayer />
               <ObservationMapLayer />
             </>
           )}

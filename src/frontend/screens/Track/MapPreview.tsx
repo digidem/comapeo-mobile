@@ -17,7 +17,7 @@ import {
 } from '../../lib/ObservationMapLayer.ts';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps.ts';
 import {
-  SAVED_TRACK_LINE_JOIN,
+  LINE_LAYOUT_ROUND,
   SAVED_TRACK_LINE_PAINT,
 } from '../../lib/trackMapStyles';
 interface TrackScreenMapPreview {
@@ -91,7 +91,7 @@ function TrackMapLayer({
       <Layer
         type="line"
         id="trackLines"
-        layout={SAVED_TRACK_LINE_JOIN}
+        layout={LINE_LAYOUT_ROUND}
         paint={SAVED_TRACK_LINE_PAINT}
       />
     </GeoJSONSource>

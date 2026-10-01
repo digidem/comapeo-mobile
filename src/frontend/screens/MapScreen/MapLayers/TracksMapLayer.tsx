@@ -6,7 +6,7 @@ import {useTracks} from '../../../hooks/server/track';
 import {Track} from '@comapeo/schema';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 import {
-  SAVED_TRACK_LINE_JOIN,
+  LINE_LAYOUT_ROUND,
   SAVED_TRACK_LINE_PAINT,
 } from '../../../lib/trackMapStyles';
 export const TracksMapLayer = () => {
@@ -32,7 +32,7 @@ export const TracksMapLayer = () => {
         type="line"
         id="trackLines"
         paint={SAVED_TRACK_LINE_PAINT}
-        layout={SAVED_TRACK_LINE_JOIN}
+        layout={LINE_LAYOUT_ROUND}
       />
     </GeoJSONSource>
   );

@@ -18,7 +18,7 @@ import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {TrackPermissionScreen} from './TrackBottomSheet/TrackPermissionScreen';
-// import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
+import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
@@ -271,9 +271,9 @@ export const MapScreen = ({
 
           {authState !== 'obscured' && (
             <>
-              {/* <RemoteDetectionAlertsMapLayer />
+              {/* <RemoteDetectionAlertsMapLayer /> */}
               <CurrentTrackMapLayer location={location} />
-              {isTracking && <UserTooltipMarker />} */}
+              {/* {isTracking && <UserTooltipMarker />} */}
               <TracksMapLayer />
               <ObservationMapLayer />
             </>

@@ -169,7 +169,6 @@ export const MapScreen = ({
 
   function handleLocationPress() {
     setFollowing(prev => !prev);
-    setZoomForScaleBar(DEFAULT_ZOOM);
   }
 
   if (!locationPermission.granted) {

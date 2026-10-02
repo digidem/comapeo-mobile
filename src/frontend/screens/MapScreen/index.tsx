@@ -114,7 +114,6 @@ export const MapScreen = ({
 
   const {authState} = useAuthContext();
   const {savedLocation} = useNonReactiveSavedLocation();
-  // const initialPositionSet = React.useRef(false);
   const dismissedMapBannerSession = useLowStorageBannerState(
     s => s.dismissedMapBannerSession,
   );

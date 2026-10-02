@@ -4,9 +4,9 @@ import * as React from 'react';
 import {useTrackState} from '../../../contexts/TrackStoreContext';
 import {convertToLineString} from '../../../lib/utils';
 import {
-  BASE_TRACK_LINE_STYLE,
+  BASE_TRACK_LINE_PAINT,
   LINE_LAYOUT_ROUND,
-  OVERLAY_TRACK_LINE_STYLE,
+  OVERLAY_TRACK_LINE_PAINT,
 } from '../../../lib/trackMapStyles';
 import {LocationObject} from 'expo-location';
 
@@ -44,14 +44,14 @@ export const CurrentTrackMapLayer = ({
         id="currentTrackBase"
         // render below maplibre's user location puck
         beforeId="mlrn-user-location-puck-white"
-        paint={BASE_TRACK_LINE_STYLE}
+        paint={BASE_TRACK_LINE_PAINT}
         layout={LINE_LAYOUT_ROUND}
       />
       <Layer
         type="line"
         id="currentTrackOverlay"
         beforeId="mlrn-user-location-puck-white"
-        paint={OVERLAY_TRACK_LINE_STYLE}
+        paint={OVERLAY_TRACK_LINE_PAINT}
         layout={LINE_LAYOUT_ROUND}
       />
     </GeoJSONSource>

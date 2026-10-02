@@ -23,7 +23,7 @@ import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
-// import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
+import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {GPSPill} from '../../sharedComponents/GPSPill';
@@ -271,7 +271,7 @@ export const MapScreen = ({
 
           {authState !== 'obscured' && (
             <>
-              {/* <RemoteDetectionAlertsMapLayer /> */}
+              <RemoteDetectionAlertsMapLayer />
               <CurrentTrackMapLayer location={location} />
               {isTracking && <UserTooltipMarker />}
               <TracksMapLayer />

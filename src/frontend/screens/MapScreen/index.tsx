@@ -32,7 +32,7 @@ import {AuthState, useAuthContext} from '../../contexts/AuthContext';
 import {useLocationState} from '../../contexts/LocationContext';
 import {getCoords} from '../../lib/coordinateFormat';
 import {useTracking} from '../../hooks/useTracking';
-// import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
+import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
 import {useResetMapLayout} from '../../hooks/useResetMapLayout';
 import {
@@ -273,7 +273,7 @@ export const MapScreen = ({
             <>
               {/* <RemoteDetectionAlertsMapLayer /> */}
               <CurrentTrackMapLayer location={location} />
-              {/* {isTracking && <UserTooltipMarker />} */}
+              {isTracking && <UserTooltipMarker />}
               <TracksMapLayer />
               <ObservationMapLayer />
             </>

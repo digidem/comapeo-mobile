@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
   Map,
   Camera,
@@ -35,29 +35,31 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
   const {data: styleUrl} = useMapStyleJsonUrl();
 
   return (
-    <Map
-      touchZoom={false}
-      doubleTapHoldZoom={false}
-      doubleTapZoom={false}
-      logo={false}
-      dragPan={false}
-      touchRotate={false}
-      compass={false}
-      touchPitch={false}
-      androidView="texture"
-      mapStyle={styleUrl}>
-      <Camera
-        padding={{
-          top: MAP_PADDING,
-          right: MAP_PADDING,
-          left: MAP_PADDING,
-          bottom: MAP_PADDING,
-        }}
-        bounds={bounds}
-      />
-      <TrackMapLayer locationHistory={locationHistory} />
-      <ObservationMapLayer observations={observations} />
-    </Map>
+    <View style={styles.map}>
+      <Map
+        touchZoom={false}
+        doubleTapHoldZoom={false}
+        doubleTapZoom={false}
+        logo={false}
+        dragPan={false}
+        touchRotate={false}
+        compass={false}
+        touchPitch={false}
+        androidView="texture"
+        mapStyle={styleUrl}>
+        <Camera
+          padding={{
+            top: MAP_PADDING,
+            right: MAP_PADDING,
+            left: MAP_PADDING,
+            bottom: MAP_PADDING,
+          }}
+          bounds={bounds}
+        />
+        <TrackMapLayer locationHistory={locationHistory} />
+        <ObservationMapLayer observations={observations} />
+      </Map>
+    </View>
   );
 };
 
@@ -111,25 +113,25 @@ const getAdjustedBounds = (
   let north = -Infinity;
 
   locationHistory.forEach(point => {
-    west = Math.min(west, point.latitude);
-    east = Math.max(east, point.latitude);
-    south = Math.min(south, point.longitude);
-    north = Math.max(north, point.longitude);
+    west = Math.min(west, point.longitude);
+    east = Math.max(east, point.longitude);
+    south = Math.min(south, point.latitude);
+    north = Math.max(north, point.latitude);
   });
 
   // Calculate the current bounds size
-  const latDiff = east - west;
-  const lngDiff = north - south;
+  const lngDiff = east - west;
+  const latDiff = north - south;
 
   // Adjust bounds if they are too small
-  if (latDiff < MIN_BOUND_SIZE) {
-    west -= (MIN_BOUND_SIZE - latDiff) / 2;
-    east += (MIN_BOUND_SIZE - latDiff) / 2;
+  if (lngDiff < MIN_BOUND_SIZE) {
+    west -= (MIN_BOUND_SIZE - lngDiff) / 2;
+    east += (MIN_BOUND_SIZE - lngDiff) / 2;
   }
 
-  if (lngDiff < MIN_BOUND_SIZE) {
-    south -= (MIN_BOUND_SIZE - lngDiff) / 2;
-    north += (MIN_BOUND_SIZE - lngDiff) / 2;
+  if (latDiff < MIN_BOUND_SIZE) {
+    south -= (MIN_BOUND_SIZE - latDiff) / 2;
+    north += (MIN_BOUND_SIZE - latDiff) / 2;
   }
 
   return [west, south, east, north];

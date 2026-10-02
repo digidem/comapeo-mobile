@@ -42,16 +42,15 @@ export const CurrentTrackMapLayer = ({
       <Layer
         type="line"
         id="currentTrackBase"
-
-        // map libre's bot tom-most user location layer
-        beforeId="mlrn-user-location-puck-pulse"
+        // render below maplibre's user location puck
+        beforeId="mlrn-user-location-puck-white"
         paint={BASE_TRACK_LINE_STYLE}
         layout={LINE_LAYOUT_ROUND}
       />
       <Layer
         type="line"
         id="currentTrackOverlay"
-        beforeId="mlrn-user-location-puck-pulse"
+        beforeId="mlrn-user-location-puck-white"
         paint={OVERLAY_TRACK_LINE_STYLE}
         layout={LINE_LAYOUT_ROUND}
       />

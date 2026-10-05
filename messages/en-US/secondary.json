@@ -1560,8 +1560,14 @@
   "screens.YourTeam.ReviewJoinRequest.accept": {
     "message": "Accept"
   },
+  "screens.YourTeam.ReviewJoinRequest.coordinator": {
+    "message": "Coordinator"
+  },
   "screens.YourTeam.ReviewJoinRequest.deny": {
     "message": "Deny"
+  },
+  "screens.YourTeam.ReviewJoinRequest.participant": {
+    "message": "Participant"
   },
   "screens.YourTeam.ReviewJoinRequest.requestingToJoin": {
     "message": "Requesting to join..."

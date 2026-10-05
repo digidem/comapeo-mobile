@@ -4,11 +4,10 @@ import {defineMessages, useIntl} from 'react-intl';
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
-import {ColorCard} from '../../sharedComponents/ColorCard';
+import {ProjectCard} from '../../sharedComponents/ProjectCard';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BLACK, LIGHT_ORANGE} from '../../lib/styles';
+import {BLACK} from '../../lib/styles';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
@@ -44,13 +43,7 @@ export const RequestToJoin = ({
           {formatMessage(m.receivedLinkTo)}
         </BodyText>
 
-        <ColorCard backgroundColor={LIGHT_ORANGE}>
-          <View style={styles.cardContent}>
-            <HeaderText variant="header2" style={styles.projectName}>
-              {projectName}
-            </HeaderText>
-          </View>
-        </ColorCard>
+        <ProjectCard projectName={projectName} />
 
         <View style={styles.buttonContainer}>
           <PrimaryButton
@@ -82,14 +75,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: '500',
     alignSelf: 'stretch',
-    color: BLACK,
-  },
-  cardContent: {
-    padding: 20,
-    gap: 20,
-  },
-  projectName: {
-    lineHeight: 28,
     color: BLACK,
   },
   buttonContainer: {

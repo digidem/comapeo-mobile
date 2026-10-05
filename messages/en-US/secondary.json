@@ -1195,23 +1195,11 @@
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
     "message": "Can invite devices, edit and delete data, and manage project details."
   },
-  "screens.Setting.ProjectSettings.YourTeam.coordinatorRole": {
-    "message": "Coordinator"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.inviteLinkMeta": {
-    "message": "{role} - {timeRemaining} left"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.inviteLinkName": {
-    "message": "Invite {shortId}"
-  },
   "screens.Setting.ProjectSettings.YourTeam.inviteLinks": {
     "message": "Invite Links"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Can take and share observations but not manage users or project details."
-  },
-  "screens.Setting.ProjectSettings.YourTeam.participantRole": {
-    "message": "Participant"
   },
   "screens.Setting.ProjectSettings.YourTeam.pastCollaboratorsDescription": {
     "message": "Devices no longer contributing to this project."
@@ -1484,6 +1472,18 @@
   },
   "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
     "message": "Return to Team"
+  },
+  "screens.YourTeam.InviteLinkCard.coordinator": {
+    "message": "Coordinator"
+  },
+  "screens.YourTeam.InviteLinkCard.meta": {
+    "message": "{role} - {timeRemaining} left"
+  },
+  "screens.YourTeam.InviteLinkCard.name": {
+    "message": "Invite {shortId}"
+  },
+  "screens.YourTeam.InviteLinkCard.participant": {
+    "message": "Participant"
   },
   "screens.YourTeam.InviteLinkDeleted.deleted": {
     "message": "Deleted"

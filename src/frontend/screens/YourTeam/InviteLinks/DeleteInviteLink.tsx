@@ -3,16 +3,16 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
-import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
+import {BottomSheetWrapper} from '../../../sharedComponents/BottomSheetWrapper';
 import {
   DestructiveButton,
   SecondaryButton,
-} from '../../sharedComponents/Buttons';
-import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
-import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import {useCancelInviteLink} from '../../hooks/useInviteLinks';
-import {WARNING_RED} from '../../lib/styles';
-import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+} from '../../../sharedComponents/Buttons';
+import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
+import {LoadingIndicator} from '../../../sharedComponents/LoadingIndicator';
+import {useCancelInviteLink} from '../../../hooks/useInviteLinks';
+import {WARNING_RED} from '../../../lib/styles';
+import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {

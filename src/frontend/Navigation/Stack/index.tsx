@@ -11,6 +11,7 @@ import {createOnboardingScreens} from './OnboardingScreens';
 import {createAppScreens} from './AppScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {PendingMapSharesListener} from '../../sharedComponents/PendingMapSharesListener';
+import {PendingJoinRequestsListener} from '../../sharedComponents/PendingJoinRequestsListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {AuthScreen} from '../../screens/AuthScreen';
@@ -25,6 +26,7 @@ import {JoinProject} from '../../screens/Invites/JoinProject';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
 import type {InviteLinkParams} from '../../lib/inviteLinks';
+import type {JoinRequestDetails} from '../../hooks/useInviteLinks';
 import {CommonActions, StackActions} from '@react-navigation/native';
 
 export type NavigatorLayout = NonNullable<
@@ -66,8 +68,16 @@ type LayoutProps = Parameters<NavigatorLayout>[0];
 // already open, the incoming screen has to replace it rather than stack behind it.
 function openSheetAction(
   {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
-  name: 'InviteReceived' | 'MapReceivedBottomSheet' | 'RequestToJoin',
-  params: {inviteId: string} | {shareId: string} | InviteLinkParams,
+  name:
+    | 'InviteReceived'
+    | 'MapReceivedBottomSheet'
+    | 'RequestToJoin'
+    | 'ReviewJoinRequest',
+  params:
+    | {inviteId: string}
+    | {shareId: string}
+    | InviteLinkParams
+    | JoinRequestDetails,
 ) {
   const currentRoute = state.routes[state.index];
   const presentation = currentRoute
@@ -136,6 +146,18 @@ export const RootStackNavigator = () => {
               openSheetAction({state, descriptors}, 'MapReceivedBottomSheet', {
                 shareId,
               }),
+            )
+          }
+        />
+        <PendingJoinRequestsListener
+          currentRouteName={state.routes[state.index]?.name}
+          navigateToJoinRequestScreen={request =>
+            navigation.dispatch(
+              openSheetAction(
+                {state, descriptors},
+                'ReviewJoinRequest',
+                request,
+              ),
             )
           }
         />

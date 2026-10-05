@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type {MemberApi} from '@comapeo/core';
-import type {DeviceType} from '../sharedTypes';
+import {MEMBER_ROLE_ID, type DeviceType} from '../sharedTypes';
 
 export type InviteLink = {
   url: string;
@@ -17,6 +17,7 @@ export type JoinRequestDetails = {
   deviceName: string;
   deviceType: DeviceType;
   projectName: string;
+  projectColor?: string;
   roleId: MemberApi.RoleIdForNewInvite;
 };
 
@@ -35,6 +36,8 @@ const STUB_URL =
 
 // Stands in for the links core would be storing, so the screens can be clicked
 // through before the real API is reachable. Goes away with the rest of the stubs.
+const STUB_INVITE_ID = 'a1'.repeat(32);
+
 let storedLinks: InviteLink[] = [];
 const listeners = new Set<() => void>();
 
@@ -81,9 +84,23 @@ export function useCancelInviteLink() {
   };
 }
 
+// Flip to true to make an incoming join request appear, so the review screens
+// can be looked at before the invite-link-join-request event is reachable.
+const SIMULATE_INCOMING_JOIN_REQUEST = false;
+
+const STUB_JOIN_REQUEST: JoinRequestDetails = {
+  inviteId: STUB_INVITE_ID,
+  deviceId: 'b2'.repeat(16),
+  deviceName: 'Joy',
+  deviceType: 'mobile',
+  projectName: 'Treeline East',
+  projectColor: '#CCE5CC',
+  roleId: MEMBER_ROLE_ID,
+};
+
 /** The request the invitor is being asked to approve, or null when there is none. */
 export function useJoinRequestReceived(): JoinRequestDetails | null {
-  return null;
+  return SIMULATE_INCOMING_JOIN_REQUEST ? STUB_JOIN_REQUEST : null;
 }
 
 export function useAcceptJoinRequest() {

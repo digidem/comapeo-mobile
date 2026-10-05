@@ -21,7 +21,7 @@ import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 import {LinkIcon} from '../../sharedComponents/LinkIcon';
 import {useManyInviteLinks} from '../../hooks/useInviteLinks';
-import {InviteLinkCard} from './InviteLinkCard';
+import {InviteLinkCard} from './InviteLinks/InviteLinkCard';
 
 const m = defineMessages({
   title: {

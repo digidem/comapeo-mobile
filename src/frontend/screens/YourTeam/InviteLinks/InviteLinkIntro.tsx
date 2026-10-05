@@ -2,16 +2,19 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {LinkIcon} from '../../sharedComponents/LinkIcon';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
-import SafetyIcon from '../../images/Safety.svg';
-import StopwatchIcon from '../../images/Stopwatch.svg';
-import GreenSquareCheckmark from '../../images/GreenSquareCheckmark.svg';
-import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from '../../../sharedComponents/Buttons';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {LinkIcon} from '../../../sharedComponents/LinkIcon';
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {DARK_ORANGE, NEW_DARK_GREY} from '../../../lib/styles';
+import SafetyIcon from '../../../images/Safety.svg';
+import StopwatchIcon from '../../../images/Stopwatch.svg';
+import GreenSquareCheckmark from '../../../images/GreenSquareCheckmark.svg';
+import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 const POINT_ICON_SIZE = 26;
 

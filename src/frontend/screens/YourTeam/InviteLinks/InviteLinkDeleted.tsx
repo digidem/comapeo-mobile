@@ -3,12 +3,12 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
-import {SecondaryButton} from '../../sharedComponents/Buttons';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import TrashCan from '../../images/TrashCan.svg';
-import {DARK_GREEN, WHITE} from '../../lib/styles';
-import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {SecondaryButton} from '../../../sharedComponents/Buttons';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import TrashCan from '../../../images/TrashCan.svg';
+import {DARK_GREEN, WHITE} from '../../../lib/styles';
+import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 const SHORT_ID_LENGTH = 7;
 const BADGE_SIZE = 30;

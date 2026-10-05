@@ -2,20 +2,23 @@ import * as React from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
-import {LinkIcon} from '../../sharedComponents/LinkIcon';
+import {LinkIcon} from '../../../sharedComponents/LinkIcon';
 
-import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import WarningYellow from '../../images/WarningYellow.svg';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {RoleWithIcon} from '../../sharedComponents/RoleWithIcon';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {useOpenShareDialog} from '../../hooks/share';
-import {formatTimeRemaining} from '../../lib/expiry';
-import {useNow} from '../../hooks/useNow';
-import {COORDINATOR_ROLE_ID} from '../../sharedTypes';
-import {BLUE_GREY, COMAPEO_BLUE, LIGHT_ORANGE} from '../../lib/styles';
-import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from '../../../sharedComponents/Buttons';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import WarningYellow from '../../../images/WarningYellow.svg';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {useOpenShareDialog} from '../../../hooks/share';
+import {formatTimeRemaining} from '../../../lib/expiry';
+import {useNow} from '../../../hooks/useNow';
+import {COORDINATOR_ROLE_ID} from '../../../sharedTypes';
+import {BLUE_GREY, COMAPEO_BLUE, LIGHT_ORANGE} from '../../../lib/styles';
+import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 // Enough to tell two links apart in the list without showing the whole hash.
 const SHORT_ID_LENGTH = 7;

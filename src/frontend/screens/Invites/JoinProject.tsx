@@ -6,7 +6,7 @@ import {useKeepAwake} from 'expo-keep-awake';
 import {useJoinRequest} from '../../hooks/useJoinRequest';
 import {getJoinFailureCopy} from './joinFailure';
 import {InviteLinkError} from '../../sharedComponents/InviteLinkError';
-import {ColorCard} from '../../sharedComponents/ColorCard';
+import {ProjectCard} from '../../sharedComponents/ProjectCard';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {Bar as ProgressBar} from 'react-native-progress';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
@@ -15,11 +15,9 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {
-  BLACK,
   COMAPEO_BLUE,
   DARK_GREY,
   DARK_GREEN,
-  LIGHT_ORANGE,
   MANGO,
   VERY_LIGHT_GREY,
   WARNING_RED,
@@ -184,18 +182,10 @@ function JoinProgress({
           {title}
         </HeaderText>
 
-        <View style={styles.cardWrapper}>
-          <ColorCard
-            backgroundColor={LIGHT_ORANGE}
-            borderColor={isJoining ? DARK_GREEN : undefined}
-            borderWidth={isJoining ? 2 : undefined}>
-            <View style={styles.cardContent}>
-              <HeaderText variant="header2" style={styles.projectName}>
-                {projectName}
-              </HeaderText>
-            </View>
-          </ColorCard>
-        </View>
+        <ProjectCard
+          projectName={projectName}
+          borderColor={isJoining ? DARK_GREEN : undefined}
+        />
 
         {/* Indeterminate because join-request-update we can't calculate progress yet. 
             Swap in a real `progress` if core starts sending
@@ -250,21 +240,11 @@ const styles = StyleSheet.create({
   progressTitle: {
     textAlign: 'center',
   },
-  cardWrapper: {
-    alignSelf: 'stretch',
-  },
   progressContainer: {
     gap: 15,
   },
   syncIcon: {
     alignSelf: 'flex-start',
-  },
-  cardContent: {
-    padding: 20,
-    gap: 5,
-  },
-  projectName: {
-    color: BLACK,
   },
   buttonContainer: {
     alignSelf: 'stretch',

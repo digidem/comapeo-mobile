@@ -3,14 +3,14 @@ import {Pressable, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
-import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {formatTimeRemaining} from '../../lib/expiry';
-import {useNow} from '../../hooks/useNow';
-import {COORDINATOR_ROLE_ID} from '../../sharedTypes';
-import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
-import type {InviteLink} from '../../hooks/useInviteLinks';
+import {DeviceIcon} from '../../../sharedComponents/DeviceIcon';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {formatTimeRemaining} from '../../../lib/expiry';
+import {useNow} from '../../../hooks/useNow';
+import {COORDINATOR_ROLE_ID} from '../../../sharedTypes';
+import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../../lib/styles';
+import type {InviteLink} from '../../../hooks/useInviteLinks';
 
 // Enough to tell two links apart without showing the whole hash.
 const SHORT_ID_LENGTH = 7;
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     gap: 15,
     padding: 15,
     borderWidth: 1,
-    borderColor: VERY_LIGHT_GREY,
+    borderColor: BLUE_GREY,
     borderRadius: 6,
   },
   pressed: {

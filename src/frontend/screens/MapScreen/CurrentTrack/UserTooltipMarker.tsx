@@ -1,4 +1,4 @@
-import {ViewAnnotation} from '@maplibre/maplibre-react-native';
+import {Marker} from '@maplibre/maplibre-react-native';
 import {StyleSheet, Text, View} from 'react-native';
 
 import {useTrackState} from '../../../contexts/TrackStoreContext';
@@ -21,7 +21,7 @@ export const UserTooltipMarker = () => {
   return (
     // We dont want to put this check in the parent because it will cause the parent (the map) to render too often
     location?.coords && (
-      <ViewAnnotation
+      <Marker
         id="locationView"
         lngLat={[location.coords.longitude, location.coords.latitude]}
         anchor="bottom">
@@ -38,7 +38,7 @@ export const UserTooltipMarker = () => {
           </View>
           <View style={styles.arrow} />
         </View>
-      </ViewAnnotation>
+      </Marker>
     )
   );
 };

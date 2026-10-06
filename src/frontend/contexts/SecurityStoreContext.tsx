@@ -1,4 +1,5 @@
 import {deleteItemAsync, getItem, setItem} from 'expo-secure-store';
+import * as Sentry from '@sentry/react-native';
 import {createContext, useContext} from 'react';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
@@ -15,6 +16,7 @@ import {
   StoredPasscodeSchema,
 } from '../lib/security';
 import {FullScreenCenteredLoader} from '../sharedComponents/FullScreenCenteredLoader';
+import {isFreshInstall} from '../lib/freshInstall';
 
 const SecurityStateSchema = v.variant('passcode', [
   v.object({
@@ -97,7 +99,17 @@ export function createSecurityStore({persist} = {persist: false}) {
         version: 1,
         migrate,
         storage: createJSONStorage((): StateStorage => ({
-          getItem: key => getItem(key),
+          getItem: key => {
+            // A passcode by a previous install on iOS is left in the keychain. So it would
+            // lock this installation before onboarding can finish. Here we report it as
+            // absent so this launch is unlocked, and delete it so the next one
+            // reads nothing.
+            if (isFreshInstall) {
+              deleteItemAsync(key).catch(err => Sentry.captureException(err));
+              return null;
+            }
+            return getItem(key);
+          },
           setItem: (key, value) => setItem(key, value),
           removeItem: key => deleteItemAsync(key),
         })),

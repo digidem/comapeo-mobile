@@ -105,8 +105,6 @@ export function AttachedPhotoPreviewModal({
     lang,
   });
 
-  const {data: memberInfo} = useSingleMember({projectId, deviceId: createdBy});
-
   const {formatMessage, formatNumber} = useIntl();
   const unitSystem = useUnitSystem();
 
@@ -249,21 +247,7 @@ export function AttachedPhotoPreviewModal({
                     </InfoItem>
                   )}
 
-                  {memberInfo.name && (
-                    <InfoItem
-                      icon={
-                        <MaterialIcons
-                          name="devices"
-                          size={20}
-                          color={NEW_DARK_GREY}
-                          allowFontScaling
-                        />
-                      }>
-                      <BodyText selectable style={sharedStyles.primaryInfoText}>
-                        {formatMessage(m.attachedBy, {name: memberInfo.name})}
-                      </BodyText>
-                    </InfoItem>
-                  )}
+                  {createdBy && <MemberInfo createdBy={createdBy} />}
                 </View>
               }
             />
@@ -299,23 +283,39 @@ export function AttachedPhotoPreviewModal({
           </BodyText>
         </InfoItem>
 
-        <InfoItem
-          icon={
-            <MaterialIcons
-              name="devices"
-              size={20}
-              color={NEW_DARK_GREY}
-              allowFontScaling
-            />
-          }>
-          <BodyText
-            selectable
-            style={sharedStyles.primaryInfoText}
-            numberOfLines={1}>
-            {memberInfo.deviceId.slice(0, 15)}
-          </BodyText>
-        </InfoItem>
+        {createdBy && <MemberDeviceId createdBy={createdBy} />}
       </View>
     </ScrollView>
   );
 }
+
+const MemberInfo = ({createdBy}: {createdBy: string}) => {
+  const {projectId} = useActiveProject();
+  const {data: memberInfo} = useSingleMember({projectId, deviceId: createdBy});
+  const {formatMessage} = useIntl();
+  return (
+    <InfoItem
+      icon={
+        <MaterialIcons
+          name="devices"
+          size={20}
+          color={NEW_DARK_GREY}
+          allowFontScaling
+        />
+      }>
+      <BodyText selectable style={sharedStyles.primaryInfoText}>
+        {formatMessage(m.attachedBy, {name: memberInfo.name})}
+      </BodyText>
+    </InfoItem>
+  );
+};
+
+const MemberDeviceId = ({createdBy}: {createdBy: string}) => {
+  const {projectId} = useActiveProject();
+  const {data: memberInfo} = useSingleMember({projectId, deviceId: createdBy});
+  return (
+    <BodyText selectable style={sharedStyles.primaryInfoText} numberOfLines={1}>
+      {memberInfo.deviceId.slice(0, 15)}
+    </BodyText>
+  );
+};

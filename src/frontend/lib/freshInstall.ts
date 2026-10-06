@@ -20,7 +20,7 @@ export function detectFreshInstall(mmkv: InstallMarkerStorage): boolean {
   if (mmkv.contains(INSTALL_MARKER_KEY)) return false;
 
   const isFirstLaunchOfThisInstall = mmkv.length === 0;
-  mmkv.set(INSTALL_MARKER_KEY, new Date().toISOString());
+  mmkv.set(INSTALL_MARKER_KEY, true);
 
   return isFirstLaunchOfThisInstall;
 }

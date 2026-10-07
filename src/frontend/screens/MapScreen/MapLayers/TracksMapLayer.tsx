@@ -1,33 +1,40 @@
-import {
-  LineLayer,
-  ShapeSource,
-  type OnPressEvent,
-} from '@maplibre/maplibre-react-native';
+import {Layer, GeoJSONSource} from '@maplibre/maplibre-react-native';
 import * as React from 'react';
 
 import {FeatureCollection} from 'geojson';
 import {useTracks} from '../../../hooks/server/track';
 import {Track} from '@comapeo/schema';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
-import {SAVED_TRACK_LINE_STYLE} from '../../../lib/trackMapStyles';
+import {
+  LINE_LAYOUT_ROUND,
+  SAVED_TRACK_LINE_PAINT,
+} from '../../../lib/trackMapStyles';
 export const TracksMapLayer = () => {
   const {data: tracks} = useTracks();
   const {navigate} = useNavigationFromHomeTabs();
 
-  function handlePress(event: OnPressEvent) {
-    const properties = event.features[0]?.properties;
-    if (!properties || !('id' in properties)) return;
-
-    navigate('Track', {trackId: properties.id});
-  }
-
   return (
-    <ShapeSource
-      onPress={handlePress}
+    <GeoJSONSource
+      onPress={event => {
+        const properties = event.nativeEvent.features[0]?.properties;
+        if (
+          !properties ||
+          !('id' in properties) ||
+          typeof properties.id !== 'string'
+        )
+          return;
+
+        navigate('Track', {trackId: properties.id});
+      }}
       id="tracks"
-      shape={convertTracksToFeatures(tracks)}>
-      <LineLayer id="trackLines" style={SAVED_TRACK_LINE_STYLE} />
-    </ShapeSource>
+      data={convertTracksToFeatures(tracks)}>
+      <Layer
+        type="line"
+        id="trackLines"
+        paint={SAVED_TRACK_LINE_PAINT}
+        layout={LINE_LAYOUT_ROUND}
+      />
+    </GeoJSONSource>
   );
 };
 

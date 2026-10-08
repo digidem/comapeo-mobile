@@ -38,7 +38,8 @@ export const HeaderText = ({
     <RNText
       style={[
         {
-          fontFamily: 'Rubik_500Medium',
+          fontFamily: 'Rubik',
+          fontWeight: '500',
           color: DARK_GREY,
           fontSize: fontSizeMap[variant || 'header1'],
         },

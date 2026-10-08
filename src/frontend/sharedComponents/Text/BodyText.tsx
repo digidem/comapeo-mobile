@@ -10,7 +10,7 @@ interface BodyProps extends Omit<TextProps, 'style'> {
 }
 
 /**
- * Body text uses system font and opinated font sizes and font weight. Should be used for most text.
+ * Body text uses the Rubik font and opinionted font sizes and font weight. Should be used for most text.
  *
  * Different `variant` types (default to 'regular'):
  *
@@ -34,6 +34,7 @@ export const BodyText = ({
     <RNText
       style={[
         {
+          fontFamily: 'Rubik',
           color: DARK_GREY,
           fontSize: fontSizeMap[variant || 'regular'],
         },

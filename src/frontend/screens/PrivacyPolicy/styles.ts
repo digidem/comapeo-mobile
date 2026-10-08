@@ -94,7 +94,6 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: NEW_DARK_GREY,
     fontWeight: 'normal',
-    fontFamily: undefined,
   },
   horizontalLineSmall: {
     borderBottomColor: BLUE_GREY,

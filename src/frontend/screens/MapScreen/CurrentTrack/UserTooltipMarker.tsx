@@ -1,11 +1,12 @@
 import {Marker} from '@maplibre/maplibre-react-native';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import {useTrackState} from '../../../contexts/TrackStoreContext';
 import {useLocationState} from '../../../contexts/LocationContext';
 import {useTrackTimer} from '../../../hooks/useTrackTimer.ts';
 import {useUnitSystem} from '../../../contexts/UnitSystemStoreContext';
 import {kmOrConversion} from '../../../lib/unitConversion';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 
 export const UserTooltipMarker = () => {
   const timer = useTrackTimer();
@@ -28,12 +29,14 @@ export const UserTooltipMarker = () => {
         <View style={styles.container} collapsable={false}>
           <View style={styles.wrapper}>
             <View>
-              <Text style={styles.text}>
+              <BodyText variant="smallMeta" style={styles.text}>
                 {formattedDistance} {distanceUnit}
-              </Text>
+              </BodyText>
             </View>
             <View style={styles.separator} />
-            <Text style={styles.text}>{timer}</Text>
+            <BodyText variant="smallMeta" style={styles.text}>
+              {timer}
+            </BodyText>
             <View style={styles.indicator} />
           </View>
           <View style={styles.arrow} />

@@ -78,7 +78,8 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
                 {
                   flex: 1,
                   color: BLACK,
-                  fontFamily: 'Rubik_500Medium',
+                  fontFamily: 'Rubik',
+                  fontWeight: '500',
                   fontSize: 16,
                 },
                 RNInputProp.style,

@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   },
   mark: {
     color: WHITE,
+    fontFamily: 'Rubik',
     fontSize: 7,
     fontWeight: '700',
     includeFontPadding: false,

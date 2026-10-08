@@ -12,7 +12,7 @@ export const Text = ({
   ...otherTextProps
 }: React.PropsWithChildren<TextProps>) => (
   <RNText
-    style={[{fontFamily: 'Roboto', color: BLACK, fontSize: 16}, style]}
+    style={[{fontFamily: 'Rubik', color: BLACK, fontSize: 16}, style]}
     {...otherTextProps}>
     {children}
   </RNText>

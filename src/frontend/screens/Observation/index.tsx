@@ -20,7 +20,6 @@ import {
 import {TrackAccordian} from './TrackAccordian.tsx';
 import {Divider} from '../../sharedComponents/Divider.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import VerifiedBadge from '../../images/verifiedBadge.svg';
 import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader.tsx';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
@@ -129,9 +128,9 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             <TrackAccordian observationId={observationId} />
           </React.Suspense>
           {observation?.tags?.notes ? (
-            <HeaderText variant="header3" style={styles.textNotes}>
+            <BodyText variant="large" style={styles.textNotes}>
               {observation.tags.notes}
-            </HeaderText>
+            </BodyText>
           ) : null}
           {attachments.length > 0 && (
             <HorizontalScrollView
@@ -211,7 +210,6 @@ const styles = StyleSheet.create({
   },
   textNotes: {
     color: DARK_GREY,
-    fontWeight: '100',
     padding: 20,
   },
   time: {

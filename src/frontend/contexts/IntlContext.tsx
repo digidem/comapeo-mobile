@@ -103,6 +103,7 @@ function onError(e: Error) {
 
 const styles = StyleSheet.create({
   bold: {
+    fontFamily: 'Rubik',
     fontWeight: 'bold',
   },
 });

@@ -127,7 +127,13 @@ export function DraftPhotoPreviewModalNavOptions({
               paddingVertical: 6,
             }}>
             <MaterialIcons name="delete" size={18} color={WHITE} />
-            <Text style={{marginLeft: 4, color: WHITE, fontSize: 13}}>
+            <Text
+              style={{
+                marginLeft: 4,
+                color: WHITE,
+                fontSize: 13,
+                fontFamily: 'Rubik',
+              }}>
               {intl(m.headerDeleteButtonText)}
             </Text>
           </TouchableOpacity>

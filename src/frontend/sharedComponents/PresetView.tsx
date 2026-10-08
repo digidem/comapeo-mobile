@@ -1,6 +1,8 @@
 import * as React from 'react';
-import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import {BLACK, COMAPEO_BLUE} from '../lib/styles';
+import {BodyText} from './Text/BodyText';
+import {HeaderText} from './Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
 
 const m = defineMessages({
@@ -31,10 +33,14 @@ export const PresetView = ({
       style={styles.preset}>
       <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
         {PresetIcon}
-        <Text style={styles.categoryName}>{presetName}</Text>
+        <BodyText variant="large" style={styles.categoryName}>
+          {presetName}
+        </BodyText>
       </View>
       {!presetDisabled && (
-        <Text style={styles.changeButtonText}>{formatMessage(m.change)}</Text>
+        <HeaderText variant="header6" style={styles.changeButtonText}>
+          {formatMessage(m.change)}
+        </HeaderText>
       )}
     </TouchableOpacity>
   );
@@ -43,8 +49,6 @@ export const PresetView = ({
 const styles = StyleSheet.create({
   changeButtonText: {
     color: COMAPEO_BLUE,
-    fontSize: 14,
-    fontWeight: '500',
   },
   preset: {
     padding: 10,
@@ -55,7 +59,6 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     color: BLACK,
-    fontSize: 20,
     marginLeft: 10,
     fontWeight: 'bold',
     flexShrink: 1,

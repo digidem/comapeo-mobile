@@ -3,13 +3,13 @@ import {
   FlatList,
   Dimensions,
   View,
-  Text,
   StyleSheet,
   TouchableHighlight,
 } from 'react-native';
 import {Preset} from '@comapeo/schema';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {FormattedMessage} from 'react-intl';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const ROW_HEIGHT = 120;
 const MIN_COL_WIDTH = 100;
@@ -42,12 +42,15 @@ const Item = React.memo(
           size="medium"
           color={item.color}
         />
-        <Text numberOfLines={3} style={styles.categoryName}>
+        <BodyText
+          variant="smallMeta"
+          numberOfLines={3}
+          style={styles.categoryName}>
           <DynFormattedMessage
             id={`presets.${item.docId}.name`}
             defaultMessage={item.name}
           />
-        </Text>
+        </BodyText>
       </View>
     </TouchableHighlight>
   ),

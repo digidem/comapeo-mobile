@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {
   BLUE_GREY,
   DARK_GREY,
@@ -110,9 +110,9 @@ export const TrackScreen = ({
           ) : (
             <TrackIcon />
           )}
-          <Text style={styles.trackTitle}>
+          <BodyText variant="large" style={styles.trackTitle}>
             {preset ? preset.name : <FormattedMessage {...m.tracks} />}
-          </Text>
+          </BodyText>
         </View>
         <View style={styles.divider} />
         <ObservationList observations={trackObservations} />
@@ -148,7 +148,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-  trackTitle: {fontSize: 20, fontWeight: '700', color: DARK_GREY},
+  trackTitle: {fontWeight: '700', color: DARK_GREY},
   text: {
     margin: 10,
     fontSize: 22,

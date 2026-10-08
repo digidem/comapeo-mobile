@@ -42,7 +42,8 @@ export const audioStyles = StyleSheet.create({
     color: WHITE,
     textAlign: 'center',
     fontSize: 96,
-    fontFamily: 'Rubik_500Medium',
+    fontFamily: 'Rubik',
+    fontWeight: '500',
   },
   textStyle: {
     color: NEW_DARK_GREY,

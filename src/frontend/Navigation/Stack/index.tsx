@@ -50,7 +50,7 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
   contentStyle: {backgroundColor: WHITE},
   headerStyle: {backgroundColor: WHITE},
-  headerTitleStyle: {fontFamily: 'Rubik_500Medium'},
+  headerTitleStyle: {fontFamily: 'Rubik', fontWeight: '500'},
   headerLeft: props => <CustomHeaderLeft headerBackButtonProps={props} />,
   headerBackVisible: false,
   statusBarStyle: 'dark',

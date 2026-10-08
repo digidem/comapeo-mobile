@@ -293,6 +293,10 @@ const MemberInfo = ({createdBy}: {createdBy: string}) => {
   const {projectId} = useActiveProject();
   const {data: memberInfo} = useSingleMember({projectId, deviceId: createdBy});
   const {formatMessage} = useIntl();
+  const name = memberInfo.name;
+
+  if (!name) return null;
+
   return (
     <InfoItem
       icon={
@@ -314,8 +318,21 @@ const MemberDeviceId = ({createdBy}: {createdBy: string}) => {
   const {projectId} = useActiveProject();
   const {data: memberInfo} = useSingleMember({projectId, deviceId: createdBy});
   return (
-    <BodyText selectable style={sharedStyles.primaryInfoText} numberOfLines={1}>
-      {memberInfo.deviceId.slice(0, 15)}
-    </BodyText>
+    <InfoItem
+      icon={
+        <MaterialIcons
+          name="devices"
+          size={20}
+          color={NEW_DARK_GREY}
+          allowFontScaling
+        />
+      }>
+      <BodyText
+        selectable
+        style={sharedStyles.primaryInfoText}
+        numberOfLines={1}>
+        {memberInfo.deviceId.slice(0, 15)}
+      </BodyText>
+    </InfoItem>
   );
 };

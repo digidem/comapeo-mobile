@@ -42,11 +42,9 @@ export const CustomHeaderLeft = ({
 export const CustomHeaderLeftStyles = StyleSheet.create({
   headerStyles: {
     marginLeft: 0,
-    // iOS 26 draws a glass capsule around the button's frame ("liquid glass"),
-    // so the frame has to match the header buttons on the right or the capsules
-    // come out different shapes. A trailing margin would sit inside the capsule
-    // and push the arrow off center; Android has no capsule and needs the gap
-    // before the title.
+    // iOS 26 draws a glass capsule around the button ("liquid glass"),
+    // in order to match the header buttons on the right, we need to set the width explicitly on iOS.
+    // the margin is only needed for Android because it would be inside the capsule on iOS
     ...Platform.select({
       ios: {width: HEADER_BUTTON_SIZE, justifyContent: 'center' as const},
       default: {marginRight: 15},

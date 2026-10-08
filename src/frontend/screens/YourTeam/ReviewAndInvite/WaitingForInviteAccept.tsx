@@ -6,7 +6,7 @@ import {TextButton} from '../../../sharedComponents/TextButton';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {usePreventAndroidBackButton} from '../../../hooks/usePreventAndroidBackButton';
+import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
 
 const m = defineMessages({
   waitingMessage: {
@@ -36,7 +36,7 @@ export const WaitingForInviteAccept = ({
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
-  usePreventAndroidBackButton();
+  usePreventBackNavigation();
 
   React.useEffect(() => {
     // cancels invite if app goes into background

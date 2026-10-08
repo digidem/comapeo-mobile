@@ -4,6 +4,7 @@ import * as React from 'react';
 import {BackHandler} from 'react-native';
 
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {usePreventBackSwipe} from '../../hooks/usePreventBackSwipe';
 import {HeaderLeftClose} from '../../sharedComponents/HeaderLeftClose';
 
 type HeaderLeftProps = {
@@ -36,6 +37,8 @@ export const HeaderLeft = ({
       return () => subscription.remove();
     }, [navigateToBottomSheet]),
   );
+
+  usePreventBackSwipe(navigateToBottomSheet);
 
   return (
     <HeaderLeftClose

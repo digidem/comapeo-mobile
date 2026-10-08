@@ -128,7 +128,7 @@
     "@babel/preset-env": "7.29.7",
     "@babel/runtime": "7.29.7",
     "@comapeo/cloud": "0.4.0",
-    "@comapeo/core": "7.6.1",
+    "@comapeo/core": "7.5.2",
     "@comapeo/ipc": "11.0.0",
     "@comapeo/schema": "2.3.0",
     "@digidem/types": "2.4.1",

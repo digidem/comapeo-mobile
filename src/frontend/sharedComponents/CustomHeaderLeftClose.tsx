@@ -13,6 +13,7 @@ import {ClientGeneratedObservation} from '../sharedTypes';
 import {Observation} from '@comapeo/schema';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useDraftObservationState} from '../contexts/DraftObservationContext';
+import {usePreventBackSwipe} from '../hooks/usePreventBackSwipe';
 
 // We use a slightly larger back icon, to improve accessibility
 // TODO iOS: This should probably be a chevron not an arrow
@@ -81,6 +82,8 @@ const HeaderBackNewObservation = ({
       return () => subscription.remove();
     }, [openBottomSheet]),
   );
+
+  usePreventBackSwipe(openBottomSheet);
 
   return (
     <SharedBackButton

@@ -4,6 +4,7 @@ import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useFocusEffect} from '@react-navigation/native';
 import {BackHandler} from 'react-native';
+import {usePreventBackSwipe} from '../../hooks/usePreventBackSwipe';
 
 type HeaderLeftProps = {
   headerBackButtonProps: HeaderBackButtonProps;
@@ -31,6 +32,8 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
       return () => subscription.remove();
     }, [handlePress]),
   );
+
+  usePreventBackSwipe(handlePress);
 
   return (
     <HeaderLeftClose

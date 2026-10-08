@@ -1,13 +1,13 @@
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import GreenCheck from '../../images/Success.svg';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import React from 'react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {SecondaryButton, PrimaryButton} from '../../sharedComponents/Buttons';
-import {useFocusEffect} from '@react-navigation/native';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLACK} from '../../lib/styles';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 
 const m = defineMessages({
   inviteAccepted: {
@@ -35,16 +35,7 @@ export const InviteAccepted = ({
   const {formatMessage: t} = useIntl();
   const {name} = route.params;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        () => true,
-      );
-
-      return () => subscription.remove();
-    }, []),
-  );
+  usePreventBackNavigation();
 
   return (
     <View style={styles.container}>

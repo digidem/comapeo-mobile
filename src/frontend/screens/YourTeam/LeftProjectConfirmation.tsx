@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
@@ -8,7 +8,7 @@ import {DARK_ORANGE} from '../../lib/styles';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
-import {useFocusEffect} from '@react-navigation/native';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 
 const m = defineMessages({
   youveLeftProject: {
@@ -30,16 +30,7 @@ export const LeftProjectConfirmation = ({
   const {data} = useOwnDeviceInfo();
   const deviceName = data?.name;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        () => true,
-      );
-
-      return () => subscription.remove();
-    }, []),
-  );
+  usePreventBackNavigation();
 
   function handleOpenDefaultProject() {
     navigation.popToTop();

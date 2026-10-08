@@ -6,7 +6,6 @@ import {useFocusEffect} from '@react-navigation/native';
 import {SaveTrackButton} from './SaveTrackButton';
 import {TrackDescriptionField} from './TrackDescriptionField';
 import {HeaderLeft} from './HeaderLeft';
-import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {useTrackState} from '../../contexts/TrackStoreContext';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import TrackIcon from '../../images/Track.svg';
@@ -25,7 +24,6 @@ export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
   const preset = useTrackState(state => state.preset);
-  usePreventAndroidBackButton();
   const locationHistory = useTrackState(state => state.locationHistory);
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
   const {data: presets} = usePresetsQuery();

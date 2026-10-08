@@ -18,7 +18,7 @@ import SuccessIcon from '../../images/Success.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {toError} from '../../utils/errors';
-import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {ReceivingMapProgressBar} from './ReceivingMapProgressBar';
@@ -67,7 +67,7 @@ export function ReceivingBackgroundMap({
     useAbortReceivedMapShareDownload();
   const mapShare = useSingleReceivedMapShare({shareId});
 
-  usePreventAndroidBackButton();
+  usePreventBackNavigation();
   useKeepAwake();
 
   const handleCancel = React.useCallback(() => {

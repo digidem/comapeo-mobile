@@ -1421,6 +1421,9 @@
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participant"
   },
+  "sharedComponents.Select.cancel": {
+    "message": "Cancel"
+  },
   "soloProject.inviteCollaborators.goBack": {
     "message": "Go Back"
   },

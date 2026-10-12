@@ -28,8 +28,8 @@ export const IntroToCoMapeo = ({
   return (
     <ScreenContentWithDock
       contentContainerStyle={{
-        flex: 1,
-        padding: 40,
+        flexGrow: 1,
+        justifyContent: 'center',
         backgroundColor: LIGHT_BLUE,
       }}
       dockContainerStyle={{backgroundColor: LIGHT_BLUE}}
@@ -51,24 +51,23 @@ export const IntroToCoMapeo = ({
           )}
         />
       }>
-      <View
-        style={{
-          alignItems: 'center',
-          height: '100%',
-          justifyContent: 'space-between',
-        }}>
-        <ComapeoIntro />
-        <HeaderText variant="header3" style={styles.mainText}>
-          {formatMessage(m.mapWorldTogether)}
-        </HeaderText>
+      <View style={styles.image}>
+        <ComapeoIntro width="100%" height="100%" />
       </View>
+      <HeaderText variant="header3" style={styles.mainText}>
+        {formatMessage(m.mapWorldTogether)}
+      </HeaderText>
     </ScreenContentWithDock>
   );
 };
 
 const styles = StyleSheet.create({
+  image: {
+    aspectRatio: 342 / 496,
+  },
   mainText: {
     fontSize: 24,
     textAlign: 'center',
+    paddingHorizontal: 40,
   },
 });

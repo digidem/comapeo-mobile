@@ -10,13 +10,15 @@ describe('Observations - Filter Toggle (Early Access)', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
     const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
+    await earlyAccessItem.scrollIntoView();
     await earlyAccessItem.click();
     const offCheckbox = await $(byResourceId('EA.checkbox-off'));
     await offCheckbox.click();
     await expect($(byResourceId('EA.checkbox-on'))).toBeDisplayed();
-    const backBtn = $(byResourceId('MAIN.header-back-btn'));
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await backBtn.click();
+    const backBtnAgain = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtnAgain.click();
     await $(byResourceId('MAIN.map-screen')).click();
   });
 
@@ -65,6 +67,7 @@ describe('Observations - Filter Toggle (Early Access)', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
     const earlyAccessItem = await $(byResourceId('earlyAccessFlag'));
+    await earlyAccessItem.scrollIntoView();
     await earlyAccessItem.click();
     const onCheckbox = await $(byResourceId('EA.checkbox-on'));
     await onCheckbox.click();
@@ -73,8 +76,10 @@ describe('Observations - Filter Toggle (Early Access)', () => {
     const closeBtn = await $(byText('Close'));
     await closeBtn.click();
     await checkForElementGone(byResourceId('EA.turned-off-sheet'));
-    await $(byResourceId('MAIN.header-back-btn')).click();
-    await $(byResourceId('MAIN.header-back-btn')).click();
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
+    await backButton.click();
+    const backButtonAgain = await $(byResourceId('MAIN.header-back-btn'));
+    await backButtonAgain.click();
     await $(byResourceId('MAIN.map-screen')).click();
   });
 

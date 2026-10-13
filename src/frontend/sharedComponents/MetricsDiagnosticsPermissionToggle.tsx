@@ -1,11 +1,10 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-
 import {
-  useMetricsDiagnosticsActions,
-  useMetricsDiagnosticsEnabled,
-} from '../contexts/MetricsDiagnosticsStoreContext';
+  getDiagnosticsEnabled,
+  setDiagnosticsEnabled,
+} from '@comapeo/core-react-native/sentry';
 import {WHITE, BLACK} from '../lib/styles';
 import {Checkbox} from './Checkbox';
 
@@ -18,8 +17,10 @@ const m = defineMessages({
 
 export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
   const {formatMessage} = useIntl();
-  const isEnabled = useMetricsDiagnosticsEnabled();
-  const {setIsEnabled} = useMetricsDiagnosticsActions();
+  // this value is not reactive
+  const nonReactiveDiagnosticsEnabled = getDiagnosticsEnabled();
+  const [reactiveDiagnosticsEnabled, setReactiveDiagnosticsEnabled] =
+    React.useState(nonReactiveDiagnosticsEnabled);
 
   return (
     <View style={styles.container}>
@@ -27,10 +28,12 @@ export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
         {formatMessage(m.shareDiagnostics)}
       </Text>
       <Checkbox
-        value={isEnabled}
+        value={reactiveDiagnosticsEnabled}
         error={false}
         onPress={() => {
-          setIsEnabled(!isEnabled);
+          const newDiagnosticEnabledValue = !reactiveDiagnosticsEnabled;
+          setDiagnosticsEnabled(newDiagnosticEnabledValue);
+          setReactiveDiagnosticsEnabled(newDiagnosticEnabledValue);
         }}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
       />

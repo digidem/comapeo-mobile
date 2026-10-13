@@ -1,10 +1,18 @@
 import * as http from 'node:http';
 import {buffer} from 'node:stream/consumers';
 import {promisify} from 'node:util';
+import {useRealFetch} from '../../../tests/integration/helpers/core';
 import {sendMetricsData} from './sendMetricsData';
 
 describe('sendMetricsReport', () => {
   let teardowns: Array<() => unknown>;
+  let callFetch: () => void;
+
+  beforeAll(() => {
+    callFetch = useRealFetch();
+  });
+
+  afterAll(() => callFetch());
 
   beforeEach(() => {
     teardowns = [];

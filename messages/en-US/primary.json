@@ -325,11 +325,11 @@
     "message": "Recording Audio with CoMapeo",
     "description": "Screen title for audio permission screen"
   },
-  "$1screens.AudioPlaybackNew.backToEditing": {
-    "message": "Back to Editing"
-  },
   "$1screens.AudioPlaybackNew.delete": {
     "message": "Delete"
+  },
+  "$1screens.AudioPlaybackNew.done": {
+    "message": "Done"
   },
   "$1screens.AudioPlaybackNew.recordingSaved": {
     "message": "Recording Saved!"
@@ -337,14 +337,11 @@
   "$1screens.AudioRecording.nowRecording": {
     "message": "Now Recording..."
   },
+  "$1screens.CameraScreen.cameraPermissionTitle": {
+    "message": "Document with Photos"
+  },
   "$1screens.CameraScreen.cameraUnavailable": {
     "message": "Camera unavailable. Please close and reopen CoMapeo to try again."
-  },
-  "$1screens.CameraScreen.noCameraAccess": {
-    "message": "No access to camera. Please allow access in settings."
-  },
-  "$1screens.CameraScreen.openSettings": {
-    "message": "Open Settings"
   },
   "$1screens.CollaboratorInfo.navTitle": {
     "message": "Collaborator Info"
@@ -386,23 +383,17 @@
   "$1screens.DataPrivacy.title": {
     "message": "CoMapeo is private by default."
   },
-  "$1screens.DeviceNaming.Success.chooseProject": {
-    "message": "Choose from below to start your first project."
-  },
   "$1screens.DeviceNaming.Success.deviceReady": {
     "message": "{deviceName} is ready!"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Join a Project"
-  },
-  "$1screens.DeviceNaming.Success.mapOnYourOwn": {
-    "message": "Map On Your Own"
+  "$1screens.DeviceNaming.Success.startMapping": {
+    "message": "Start Mapping"
   },
   "$1screens.DeviceNaming.description": {
     "message": "Distinct names help collaborators using CoMapeo to recognize you."
   },
   "$1screens.DeviceNaming.header": {
-    "message": "Name Your Device"
+    "message": "Name This Device"
   },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Device Name"
@@ -422,32 +413,20 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "Save"
   },
-  "$1screens.IntroToCoMapeo.collaborate": {
-    "message": "Securely share with collaborators"
-  },
-  "$1screens.IntroToCoMapeo.designedFor": {
-    "message": "Co-designed with and for Indigenous territory mappers & monitors."
-  },
-  "$1screens.IntroToCoMapeo.getStarted": {
-    "message": "Get Started"
-  },
-  "$1screens.IntroToCoMapeo.mapAnywhere": {
-    "message": "Map anywhere and everywhere"
-  },
   "$1screens.IntroToCoMapeo.mapWorldTogether": {
     "message": "Map your world, together."
   },
-  "$1screens.IntroToCoMapeo.ownData": {
-    "message": "Always own and control your data"
+  "$1screens.IntroToCoMapeo.start": {
+    "message": "Start"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Decline Invite"
+  "$1screens.InviteReceived.decline": {
+    "message": "Decline"
+  },
+  "$1screens.InviteReceived.join": {
+    "message": "Join"
   },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "Join as a {role}?"
-  },
-  "$1screens.InviteReceived.joinProject": {
-    "message": "Join Project"
   },
   "$1screens.InviteSuccess.done": {
     "message": "Done"
@@ -520,11 +499,11 @@
     "message": "Yes",
     "description": "if a location sensor is active yes/no"
   },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On Location"
+  "$1screens.MapScreen.TrackBottomSheet.permissionTitle": {
+    "message": "Record Tracks"
   },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Location?"
+  "$1screens.MapScreen.locationPermissionTitle": {
+    "message": "Record GPS Points"
   },
   "$1screens.Observation.ObservationView.delete": {
     "message": "Delete",
@@ -618,34 +597,9 @@
   "$1screens.ObservationMetadataVerified.navTitle": {
     "message": "Observation Metadata"
   },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "Go To Map",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "Add Observations",
+    "message": "Start mapping your world.",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
-    "message": "Add audio recordings."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Close"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "Explore CoMapeo—invite collaborators anytime."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
-    "message": "Go to Map"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
-    "message": "Snap photos on-the-go."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.title": {
-    "message": "Map On Your Own"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
-    "message": "Track paths walked."
   },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Share Diagnostic Information"
@@ -942,8 +896,5 @@
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Start New Project"
   }
 }

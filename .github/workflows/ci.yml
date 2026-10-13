@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [develop, 'release/**']
+    branches: [develop, "release/**"]
   pull_request:
     # By default, a workflow only runs when a pull_request's activity type is
     # opened, synchronize, or reopened. Adding ready_for_review here ensures
@@ -14,14 +14,12 @@ jobs:
   all:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      fail-fast: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - name: Install deps
         run: npm ci
       - name: Check formatting
@@ -29,38 +27,15 @@ jobs:
       - name: Run ESLint
         run: npm run lint:eslint
 
-  backend:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-    defaults:
-      run:
-        working-directory: './src/backend'
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-      - name: Install deps
-        run: |
-          npm ci --ignore-scripts
-          npm run postinstall
-      - name: Check types
-        run: npm run lint:types
-
   frontend:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      fail-fast: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - name: Install deps
         run: npm ci
       - name: Build translations

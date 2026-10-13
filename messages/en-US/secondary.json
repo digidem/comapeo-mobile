@@ -32,15 +32,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Go Back"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Enable GPS"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "GPS and location needed to record tracks."
-  },
-  "Modal.GPSDisable.title": {
-    "message": "GPS Disabled"
-  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "When project participants exchange their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
   },
@@ -119,9 +110,6 @@
   "Screens.ProjectSettings.editInfo": {
     "message": "Edit Info"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "Invite Collaborators"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "Project statistics are not being shared."
   },
@@ -131,17 +119,11 @@
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Share with a secure, encypted server. URL required to access."
   },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "You’re mapping on your own."
-  },
   "Screens.ProjectSettings.update": {
     "message": "Update"
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Update Set"
-  },
-  "Screens.ProjectSettings.view": {
-    "message": "View"
   },
   "Screens.ProjectSettings.viewDetails": {
     "message": "View Details"
@@ -459,6 +441,9 @@
   "screens.AudioRecording.lessThan5": {
     "message": "Less than 5 minutes left"
   },
+  "screens.CameraScreen.cameraPermissionDescription": {
+    "message": "Camera required to use."
+  },
   "screens.CollaboratorInfo.addedOn": {
     "message": "Added on {date}"
   },
@@ -521,6 +506,18 @@
   },
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respects Your Privacy & Autonomy"
+  },
+  "screens.DeviceNaming.Success.addAudio": {
+    "message": "Add audio recordings."
+  },
+  "screens.DeviceNaming.Success.coordinateOrMap": {
+    "message": "Coordinate with team to start or map on your own."
+  },
+  "screens.DeviceNaming.Success.snapPhotos": {
+    "message": "Snap photos on-the-go."
+  },
+  "screens.DeviceNaming.Success.tracks": {
+    "message": "Track paths walked."
   },
   "screens.EarlyAccess.feedbackPrefix": {
     "message": "Have feedback? Share it at"
@@ -793,8 +790,11 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone Number"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "Use Location? Tracks location even when closed. Data remains on device only."
+  "screens.MapScreen.TrackBottomSheet.locationRequired": {
+    "message": "Location required to use."
+  },
+  "screens.MapScreen.locationPermissionDescription": {
+    "message": "Location required to use."
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
@@ -919,7 +919,7 @@
     "message": "Sent and Validated by CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "Start from map or camera view to record your first observation.",
+    "message": "All observations and tracks will be listed here.",
     "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
@@ -927,15 +927,6 @@
   },
   "screens.ObservationsList.filter.justYou": {
     "message": "Just You"
-  },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Close"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Coordinate with your team to receive a project invitation."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Join a Project"
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
@@ -1418,6 +1409,12 @@
   "sharedComponents.ErrorBottomSheet.advanced": {
     "message": "Advanced"
   },
+  "sharedComponents.PermissionButtons.allow": {
+    "message": "Allow"
+  },
+  "sharedComponents.PermissionButtons.openSettings": {
+    "message": "Open Settings"
+  },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"
   },
@@ -1444,23 +1441,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Invite Collaborators"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "Go Back"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "Secure and private way to exchange with collaborators."
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "Only devices invited to a project can contribute."
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "Easily manage project contributors and settings."
-  },
-  "soloProject.startNewProject.start": {
-    "message": "Start"
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "Each project is unique and separate."
   }
 }

@@ -13,7 +13,8 @@ import {LoadingIndicator} from '../sharedComponents/LoadingIndicator';
 import {useObservations} from '../hooks/server/observations';
 import {useTracks} from '../hooks/server/track';
 import * as Sentry from '@sentry/react-native';
-import {isUserCancelled, useExportObservations} from '../hooks/server/projects';
+import {useExportObservations} from '../hooks/server/projects';
+import {errorCodes, isErrorWithCode} from '@react-native-documents/picker';
 import {toError} from '../utils/errors';
 
 const m = defineMessages({
@@ -78,7 +79,10 @@ export const ExportObservations = ({
           navigation.replace('ExportSuccess', {exportType: typeToExport});
         },
         onError: err => {
-          if (isUserCancelled(err)) {
+          if (
+            isErrorWithCode(err) &&
+            err.code === errorCodes.OPERATION_CANCELED
+          ) {
             return;
           }
           Sentry.captureException(err);

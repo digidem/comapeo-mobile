@@ -1,7 +1,7 @@
 import {act, renderHook, waitFor} from '@testing-library/react-native';
 import React, {type ReactNode} from 'react';
 import type {MapeoManager} from '@comapeo/core';
-import type {MapeoClientApi} from '@comapeo/ipc';
+import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 
 import {
   ActiveProjectIdStoreProvider,
@@ -13,7 +13,10 @@ import {
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {MapeoApiWrapper} from '../../../tests/integration/helpers/MapeoApiWrapper';
 
-function createWrapper(store: ActiveProjectIdStore, client: MapeoClientApi) {
+function createWrapper(
+  store: ActiveProjectIdStore,
+  client: ComapeoCoreClientApi,
+) {
   return ({children}: {children: ReactNode}) => {
     return (
       <MapeoApiWrapper mapeoApi={client}>
@@ -27,7 +30,7 @@ function createWrapper(store: ActiveProjectIdStore, client: MapeoClientApi) {
 
 describe('ActiveProjectIdStore', () => {
   let manager: MapeoManager;
-  let client: MapeoClientApi;
+  let client: ComapeoCoreClientApi;
   let onTeardown: Array<() => unknown> = [];
 
   beforeEach(async () => {
@@ -65,6 +68,8 @@ describe('ActiveProjectIdStore', () => {
     await waitFor(() => {
       expect(stateHook.result.current).toBeUndefined();
     });
+
+    stateHook.unmount();
   });
 
   test('if project is available, store will populate with project', async () => {
@@ -82,6 +87,8 @@ describe('ActiveProjectIdStore', () => {
     await waitFor(() => {
       expect(stateHook.result.current).toStrictEqual(projectId);
     });
+
+    stateHook.unmount();
   });
 
   test('setActiveProjectId action sets the active project ID', async () => {
@@ -107,5 +114,8 @@ describe('ActiveProjectIdStore', () => {
     );
 
     expect(stateHook.result.current).toBe('12345');
+
+    actionsHook.unmount();
+    stateHook.unmount();
   });
 });

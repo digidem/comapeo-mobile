@@ -5,7 +5,7 @@ import * as Sentry from '@sentry/react-native';
 
 import {useSendMapShare, useManyMembers} from '@comapeo/core-react';
 import type {MemberApi} from '@comapeo/core';
-import {type MapeoClientApi} from '@comapeo/ipc';
+import {type ComapeoCoreClientApi} from '@comapeo/ipc';
 import {toError} from '../../utils/errors';
 import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
 import WifiIcon from '../../images/WifiIcon.svg';
@@ -19,7 +19,7 @@ import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useInitiallyConnectedPeers} from '../YourTeam/useInitiallyConnectedPeers';
 
 type PublicPeerInfo = Awaited<
-  ReturnType<MapeoClientApi['listLocalPeers']>
+  ReturnType<ComapeoCoreClientApi['listLocalPeers']>
 >[number];
 
 export function getSelectableDevicesForMapShare({

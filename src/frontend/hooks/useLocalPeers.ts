@@ -1,8 +1,10 @@
 import {useSyncExternalStore} from 'react';
 import {useClientApi} from '@comapeo/core-react';
-import {type MapeoClientApi} from '@comapeo/ipc';
+import {type ComapeoCoreClientApi} from '@comapeo/ipc';
 
-type LocalPeer = Awaited<ReturnType<MapeoClientApi['listLocalPeers']>>[number];
+type LocalPeer = Awaited<
+  ReturnType<ComapeoCoreClientApi['listLocalPeers']>
+>[number];
 
 let localPeerState: ReturnType<typeof createLocalPeerState> | undefined;
 
@@ -19,7 +21,7 @@ export function useLocalPeers(): LocalPeer[] {
   return useSyncExternalStore(subscribe, getSnapshot);
 }
 
-function createLocalPeerState(api: MapeoClientApi) {
+function createLocalPeerState(api: ComapeoCoreClientApi) {
   let state: LocalPeer[] = [];
   let isSubscribedInternal = false;
   let error: Error | undefined;

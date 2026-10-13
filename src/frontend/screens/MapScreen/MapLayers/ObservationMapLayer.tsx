@@ -1,5 +1,5 @@
 import React from 'react';
-import {CircleLayer, ShapeSource} from '@maplibre/maplibre-react-native';
+import {GeoJSONSource, Layer} from '@maplibre/maplibre-react-native';
 import {useObservations} from '../../../hooks/server/observations';
 import {usePresetsQuery} from '../../../hooks/server/presets';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
@@ -25,17 +25,21 @@ export const ObservationMapLayer = () => {
   }, [presets]);
 
   return (
-    <ShapeSource
+    <GeoJSONSource
       onPress={event => {
-        const properties = event.features[0]?.properties;
-        if (!properties) return;
-        if (!('id' in properties)) return;
+        const properties = event.nativeEvent.features[0]?.properties;
+        if (
+          !properties ||
+          !('id' in properties) ||
+          typeof properties.id !== 'string'
+        )
+          return;
 
         navigate('Observation', {observationId: properties.id});
       }}
       id="observations-source"
-      shape={displayedFeatures}>
-      <CircleLayer id="circles" style={layerStyles} />
-    </ShapeSource>
+      data={displayedFeatures}>
+      <Layer type="circle" id="circles" paint={layerStyles} />
+    </GeoJSONSource>
   );
 };

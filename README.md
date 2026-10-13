@@ -72,6 +72,9 @@ The next version of Mapeo Mobile
         npm run android-no-backend-rebuild
         ```
 
+   5. Build and install on a physical iOS device
+      - To build a standalone, offline-capable build and install it directly onto a connected iPhone (e.g. for field testing without Metro), see [docs/iOSDeviceBuilds.md](./docs/iOSDeviceBuilds.md).
+
 ## Ethos and Guidelines
 
 [See documentation](./docs/EthosAndGuidelines.md)

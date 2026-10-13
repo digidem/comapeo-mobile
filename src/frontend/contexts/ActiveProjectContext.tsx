@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {useSingleProject} from '@comapeo/core-react';
-import {type MapeoProjectApi} from '@comapeo/ipc';
+import {type ComapeoProjectClientApi} from '@comapeo/ipc';
 
 const ActiveProjectContext = React.createContext<
-  {projectId: string; projectApi: MapeoProjectApi} | undefined
+  {projectId: string; projectApi: ComapeoProjectClientApi} | undefined
 >(undefined);
 
 type Props = {

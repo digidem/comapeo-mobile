@@ -1,7 +1,5 @@
 {
   "expo": {
-    "newArchEnabled": false,
-    "jsEngine": "hermes",
     "name": "CoMapeo",
     "slug": "comapeo",
     "scheme": "comapeo",
@@ -27,7 +25,7 @@
         "expo-splash-screen",
         {
           "image": "./assets/splash.png",
-          "backgroundColor": "#050F77",
+          "backgroundColor": "#3333FF",
           "imageWidth": 300,
           "android": {
             "resizeMode": "contain"
@@ -40,8 +38,8 @@
       [
         "expo-location",
         {
+          "isAndroidForegroundServiceEnabled": true,
           "isIosBackgroundLocationEnabled": true,
-          "isAndroidBackgroundLocationEnabled": true,
           "locationPermission": "Allow $(PRODUCT_NAME) to use location?"
         }
       ],
@@ -78,6 +76,7 @@
       ["./expo-config-plugins/flagSecure/index.js"],
       ["./expo-config-plugins/customPermissionText.js"],
       ["./expo-config-plugins/removeMediaPlaybackPermission.js"],
+      ["./expo-config-plugins/mergeBackupRules.js"],
       [
         "react-native-share",
         {
@@ -112,17 +111,38 @@
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
-        "android.permission.ACCESS_BACKGROUND_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
         "android.permission.FOREGROUND_SERVICE_LOCATION",
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO",
-        "android.permission.CHANGE_WIFI_MULTICAST_STATE"
+        "android.permission.CHANGE_WIFI_MULTICAST_STATE",
+        "android.permission.RECEIVE_BOOT_COMPLETED"
       ],
       "package": "com.comapeo"
     },
     "ios": {
-      "bundleIdentifier": "com.comapeo"
+      "bundleIdentifier": "com.comapeo",
+      "icon": "./assets/icon-ios.png",
+      "entitlements": {
+        "com.apple.developer.networking.wifi-info": true
+      },
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSLocalNetworkUsageDescription": "CoMapeo uses the local network to discover and sync with nearby devices in your project.",
+        "NSBonjourServices": ["_comapeo._tcp"],
+        "UIViewControllerBasedStatusBarAppearance": true,
+        "UTExportedTypeDeclarations": [
+          {
+            "UTTypeIdentifier": "org.digidem.styled-map-package",
+            "UTTypeDescription": "Styled Map Package",
+            "UTTypeConformsTo": ["public.zip-archive"],
+            "UTTypeTagSpecification": {
+              "public.filename-extension": ["smp"],
+              "public.mime-type": ["application/vnd.digidem.smp"]
+            }
+          }
+        ]
+      }
     },
     "extra": {
       "eas": {

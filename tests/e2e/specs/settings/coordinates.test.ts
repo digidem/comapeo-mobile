@@ -28,12 +28,11 @@ describe('Settings - Coordinates Settings Flow', () => {
     const dmsOption = await $(byTextMatches('Degrees/Minutes/Seconds'));
     await dmsOption.click();
 
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
 
     await expect($(byTextMatches('CoMapeo Settings'))).toBeDisplayed();
 
-    await backBtn.click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
     await $(byResourceId('MAIN.map-screen')).click();
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });

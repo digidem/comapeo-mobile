@@ -4,7 +4,7 @@ import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import {useManyMembers} from '@comapeo/core-react';
 import type {MemberApi} from '@comapeo/core';
-import {type MapeoClientApi} from '@comapeo/ipc';
+import {type ComapeoCoreClientApi} from '@comapeo/ipc';
 import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
 import WifiIcon from '../../images/WifiIcon.svg';
 import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
@@ -22,7 +22,7 @@ import {
 import {useInitiallyConnectedPeers} from './useInitiallyConnectedPeers';
 
 type PublicPeerInfo = Awaited<
-  ReturnType<MapeoClientApi['listLocalPeers']>
+  ReturnType<ComapeoCoreClientApi['listLocalPeers']>
 >[number];
 
 export function getSelectableDevicesForInvite({

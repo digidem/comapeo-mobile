@@ -212,31 +212,28 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   } else {
     switch (syncStage.name) {
       case 'idle': {
-        dockContent =
-          syncStage.connectedPeersCount > 0 ? (
-            <PrimaryButton
-              fullSize
-              text={t(m.start)}
-              renderIcon={({size}) => <SyncIcon size={size} />}
-              onPress={() => {
-                // TODO: Catch/surface error
-                startSync.mutate(undefined);
-              }}
-            />
-          ) : (
-            <SecondaryButton
-              fullSize={true}
-              text={t(m.close)}
-              onPress={() => navigation.goBack()}
-            />
-          );
+        const hasConnectedPeers = syncStage.connectedPeersCount > 0;
+
+        dockContent = (
+          <PrimaryButton
+            fullSize
+            text={t(m.start)}
+            disabled={!hasConnectedPeers}
+            testID="EXCHANGE.start-btn"
+            renderIcon={({color, size}) => (
+              <SyncIcon color={color} size={size} />
+            )}
+            onPress={() => {
+              // TODO: Catch/surface error
+              startSync.mutate(undefined);
+            }}
+          />
+        );
 
         syncInfoContent = (
           <>
             <HeaderText variant="header2" style={styles.exchangeInfoText}>
-              {syncStage.connectedPeersCount > 0
-                ? t(m.devicesFound)
-                : t(m.noDevicesFound)}
+              {hasConnectedPeers ? t(m.devicesFound) : t(m.noDevicesFound)}
             </HeaderText>
           </>
         );

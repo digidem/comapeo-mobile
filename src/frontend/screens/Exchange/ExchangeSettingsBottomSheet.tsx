@@ -49,7 +49,7 @@ export const ExchangeSettingsBottomSheet = () => {
   const [selected, setSelected] = useState<MediaSyncSetting>(() => {
     return currentSetting;
   });
-  const {goBack, navigate} = useNavigationFromRoot();
+  const {goBack, replace} = useNavigationFromRoot();
 
   const handleSave = () => {
     setIsArchiveDevice(
@@ -60,7 +60,7 @@ export const ExchangeSettingsBottomSheet = () => {
         },
         onError: error => {
           Sentry.captureException(error);
-          navigate('ErrorBottomSheet', {error});
+          replace('ErrorBottomSheet', {error});
         },
       },
     );
@@ -95,6 +95,7 @@ export const ExchangeSettingsBottomSheet = () => {
             text={t(m.save)}
           />
           <SecondaryButton
+            testID="EXCHANGE.settings-close"
             fullSize
             style={styles.closeButton}
             text={t(m.close)}

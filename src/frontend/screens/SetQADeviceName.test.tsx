@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react-native';
 
 import type {MapeoManager} from '@comapeo/core';
-import type {MapeoClientApi} from '@comapeo/ipc';
+import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
@@ -31,7 +31,7 @@ jest.mock('@comapeo/core-react', () => {
 
 describe('On QA Device require existence of a QA Device name', () => {
   let manager: MapeoManager;
-  let client: MapeoClientApi;
+  let client: ComapeoCoreClientApi;
   let onTeardown: Array<() => unknown> = [];
 
   beforeEach(async () => {
@@ -59,15 +59,13 @@ describe('On QA Device require existence of a QA Device name', () => {
     const app = createAppProvidersWrapper({mapeoApi: client});
     onTeardown.push(app.teardown);
 
-    await render(
+    const {unmount} = await render(
       <React.Suspense fallback={null}>
-        <AppNavigator
-          permissionAsked={false}
-          navigationIntegration={undefined}
-        />
+        <AppNavigator navigationIntegration={undefined} />
       </React.Suspense>,
       {wrapper: app.wrapper},
     );
+    onTeardown.unshift(unmount);
 
     await waitFor(() => {
       expect(screen.getByText('Set QA Device Name')).toBeOnTheScreen();
@@ -84,15 +82,13 @@ describe('On QA Device require existence of a QA Device name', () => {
     });
     onTeardown.push(app.teardown);
 
-    await render(
+    const {unmount} = await render(
       <React.Suspense fallback={null}>
-        <AppNavigator
-          permissionAsked={false}
-          navigationIntegration={undefined}
-        />
+        <AppNavigator navigationIntegration={undefined} />
       </React.Suspense>,
       {wrapper: app.wrapper},
     );
+    onTeardown.unshift(unmount);
 
     await waitFor(() => {
       expect(screen.queryByText('Set QA Device Name')).not.toBeOnTheScreen();
@@ -103,15 +99,13 @@ describe('On QA Device require existence of a QA Device name', () => {
     const app = createAppProvidersWrapper({mapeoApi: client});
     onTeardown.push(app.teardown);
 
-    await render(
+    const {unmount} = await render(
       <React.Suspense fallback={null}>
-        <AppNavigator
-          permissionAsked={false}
-          navigationIntegration={undefined}
-        />
+        <AppNavigator navigationIntegration={undefined} />
       </React.Suspense>,
       {wrapper: app.wrapper},
     );
+    onTeardown.unshift(unmount);
 
     await waitFor(() => {
       expect(
@@ -130,6 +124,6 @@ describe('On QA Device require existence of a QA Device name', () => {
     await waitFor(() => {
       expect(screen.queryByText('Set QA Device Name')).not.toBeOnTheScreen();
     });
-    expect(screen.getByText('Map On Your Own')).toBeOnTheScreen();
+    expect(screen.getByText('Start Mapping')).toBeOnTheScreen();
   });
 });

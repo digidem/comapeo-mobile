@@ -49,17 +49,17 @@ export function AudioRecording({
 
   React.useEffect(() => {
     const start = async () => {
-      await startRecording();
-      setIsLoading(false);
+      try {
+        await startRecording();
+        setIsLoading(false);
+      } catch (error) {
+        Sentry.captureException(error);
+        navigation.replace('ErrorBottomSheet', {
+          error: toError(error, 'Error starting recording'),
+        });
+      }
     };
-    try {
-      start();
-    } catch (error) {
-      Sentry.captureException(error);
-      navigation.replace('ErrorBottomSheet', {
-        error: toError(error, 'Error starting recording'),
-      });
-    }
+    start();
   }, [startRecording, navigation]);
 
   const finishRecording = React.useCallback(async () => {
@@ -105,6 +105,8 @@ export function AudioRecording({
 
   return (
     <View style={styles.background}>
+      {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
+      {!isE2E && <AnimatedBackground timeElapsed={timeElapsed} />}
       <ScreenContentWithDock
         contentContainerStyle={styles.contentContainer}
         dockContainerStyle={styles.dockContainer}
@@ -140,8 +142,6 @@ export function AudioRecording({
           </View>
         </View>
       </ScreenContentWithDock>
-      {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
-      {!isE2E && <AnimatedBackground timeElapsed={timeElapsed} />}
     </View>
   );
 }

@@ -1,4 +1,4 @@
-import {type MapeoClientApi} from '@comapeo/ipc';
+import {type ComapeoCoreClientApi} from '@comapeo/ipc';
 import {getLocales} from 'expo-localization';
 import {Component, type ComponentPropsWithoutRef, type ReactNode} from 'react';
 
@@ -15,12 +15,11 @@ import {
   LocaleStore,
 } from '../../../src/frontend/contexts/LocaleStoreContext';
 import {createManualEntryCoordinateFormatStore} from '../../../src/frontend/contexts/ManualEntryCoordinateFormatStoreContext';
-import {createMetricsDiagnosticsStore} from '../../../src/frontend/contexts/MetricsDiagnosticsStoreContext';
 import {createDraftObservationStore} from '../../../src/frontend/contexts/PersistedStores/DraftObservationStore';
 import {createSecurityStore} from '../../../src/frontend/contexts/SecurityStoreContext';
 import {createTrackStore} from '../../../src/frontend/contexts/TrackStoreContext';
-import {AppDiagnosticMetrics} from '../../../src/frontend/metrics/AppDiagnosticMetrics';
-import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
+import {AppUsageData} from '../../../src/frontend/metrics/AppUsageData';
+import {DeviceDiagnostics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
@@ -34,7 +33,6 @@ const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
   ssid: 'CoMapeo Test Wi-Fi',
   wifiStatus: 'on',
-  wifiConnection: 'connected',
   wifiLinkSpeed: 1234,
 };
 
@@ -42,7 +40,6 @@ const DISCONNECTED_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
   ssid: null,
   wifiStatus: 'off',
-  wifiConnection: 'disconnected',
   wifiLinkSpeed: null,
 };
 
@@ -76,7 +73,7 @@ export function createAppProvidersWrapper({
   activeProjectId,
   qaDeviceName,
 }: {
-  mapeoApi: MapeoClientApi;
+  mapeoApi: ComapeoCoreClientApi;
   isOnline?: boolean;
   activeProjectId?: string;
   qaDeviceName?: string;
@@ -98,7 +95,7 @@ export function createAppProvidersWrapper({
     persist: true,
   });
 
-  const appDiagnosticMetrics = new AppDiagnosticMetrics({
+  const appDiagnosticMetrics = new AppUsageData({
     getLocaleInfo: () => {
       const systemLocales = getLocales();
       const {languageTag} = persistedLocaleStore.instance.getState();
@@ -110,25 +107,7 @@ export function createAppProvidersWrapper({
     },
   });
 
-  const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
-
-  const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
-    persist: true,
-  });
-
-  // Ensure that these metrics instances are initially in sync with initial state of relevant store
-  const metricsIsEnabled =
-    persistedMetricsDiagnosticsStore.instance.getState().isEnabled;
-  appDiagnosticMetrics.setEnabled(metricsIsEnabled);
-  deviceDiagnosticMetrics.setEnabled(metricsIsEnabled);
-
-  // Sync metrics instances with subsequent changes in relevant store state
-  persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
-    if (previous.isEnabled !== current.isEnabled) {
-      appDiagnosticMetrics.setEnabled(current.isEnabled);
-      deviceDiagnosticMetrics.setEnabled(current.isEnabled);
-    }
-  });
+  const deviceDiagnosticMetrics = new DeviceDiagnostics();
 
   const localDiscoveryController: ReturnType<
     typeof createLocalDiscoveryController
@@ -210,7 +189,6 @@ export function createAppProvidersWrapper({
           localDiscoveryController={localDiscoveryController}
           activeProjectIdStore={persistedActiveProjectIdStore}
           persistedDrafObservationStore={persistedDraftObservationStore}
-          metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
           securityStore={persistedSecurityStore}
           manualEntryCoordinateFormatStore={
             persistedManualEntryCoordinateFormatStore

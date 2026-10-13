@@ -1,9 +1,8 @@
 import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useIntl} from 'react-intl';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 import CoMapeoShield from '../../images/CoMapeoShield.svg';
 import LockedWithKeyIcon from '../../images/LockedWithKey.svg';
@@ -11,11 +10,11 @@ import HandshakeMediumMediumDarkIcon from '../../images/HandshakeMediumMediumDar
 import SafetyIcon from '../../images/Safety.svg';
 
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
-import {NEW_DARK_GREY} from '../../lib/styles';
+import {COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {m} from './DataPrivacyMessages';
 
@@ -28,17 +27,14 @@ export const DataPrivacy = ({
     <ScreenContentWithDock
       dockContent={
         <View style={styles.buttonsContainer}>
-          <SecondaryButton
-            fullSize
-            text={t(m.learnMore)}
-            iconPosition="left"
-            renderIcon={({color, size}) => (
-              <MaterialIcons name="info-outline" color={color} size={size} />
-            )}
+          <TouchableOpacity
             onPress={() => {
               navigation.navigate('OnboardingPrivacyPolicy');
-            }}
-          />
+            }}>
+            <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
+              {t(m.learnMore)}
+            </HeaderText>
+          </TouchableOpacity>
           <PrimaryButton
             fullSize
             text={t(m.next)}
@@ -123,6 +119,7 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
   },
   buttonsContainer: {
-    gap: 10,
+    gap: 30,
+    alignItems: 'center',
   },
 });

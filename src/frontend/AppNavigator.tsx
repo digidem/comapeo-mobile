@@ -3,7 +3,6 @@ import {
   type NavigationContainerRef,
 } from '@react-navigation/native';
 import * as React from 'react';
-import * as SplashScreen from 'expo-splash-screen';
 import {type AppStackParamsList} from './sharedTypes/navigation';
 
 import {RootStackNavigator} from './Navigation/Stack';
@@ -16,20 +15,14 @@ import {SetQADeviceNameScreen} from './screens/SetQADeviceName';
 import {isQABuild} from './lib/appVariant';
 
 export const AppNavigator = ({
-  permissionAsked,
   navigationIntegration,
 }: {
-  permissionAsked: boolean;
   navigationIntegration:
     ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined;
 }) => {
   const containerRef =
     React.useRef<NavigationContainerRef<AppStackParamsList>>(null);
   const qaDeviceName = useQADeviceName();
-
-  if (permissionAsked) {
-    SplashScreen.hide();
-  }
 
   if (isQABuild && !qaDeviceName) {
     return <SetQADeviceNameScreen />;

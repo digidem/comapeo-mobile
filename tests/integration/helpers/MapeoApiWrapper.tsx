@@ -1,4 +1,4 @@
-import {type MapeoClientApi} from '@comapeo/ipc';
+import {type ComapeoCoreClientApi} from '@comapeo/ipc';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import {ComapeoCoreProvider} from '@comapeo/core-react';
@@ -8,7 +8,7 @@ export const MapeoApiWrapper = ({
   mapeoApi,
   children,
 }: {
-  mapeoApi: MapeoClientApi;
+  mapeoApi: ComapeoCoreClientApi;
   children: ReactNode;
 }) => {
   const queryClient = new QueryClient({

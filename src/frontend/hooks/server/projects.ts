@@ -17,15 +17,6 @@ import {useLocaleState} from '../../contexts/LocaleStoreContext';
 import {useIntl} from 'react-intl';
 import noop from '../../lib/noop';
 
-export function isUserCancelled(err: unknown): boolean {
-  return (
-    typeof err === 'object' &&
-    err !== null &&
-    'message' in err &&
-    (err as {message?: string}).message === 'user canceled the document picker'
-  );
-}
-
 export function useProjectSettings() {
   const {projectId} = useActiveProject();
   return useComapeoProjectSettings({projectId});

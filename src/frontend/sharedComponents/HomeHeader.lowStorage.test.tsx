@@ -8,7 +8,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {render, screen} from '@testing-library/react-native';
 import type {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 import type {MapeoManager} from '@comapeo/core';
-import type {MapeoClientApi} from '@comapeo/ipc';
+import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
@@ -63,7 +63,7 @@ function HomeHeaderScreen() {
 
 describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
   let manager: MapeoManager;
-  let client: MapeoClientApi;
+  let client: ComapeoCoreClientApi;
   let onTeardown: Array<() => unknown> = [];
   let projectId: string;
 

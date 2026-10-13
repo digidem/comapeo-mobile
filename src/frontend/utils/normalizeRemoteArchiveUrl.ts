@@ -67,9 +67,19 @@ export function normalizeRemoteArchiveUrl(userInput: string): string {
     assert(parts.every(Boolean), 'server URL must not have empty parts');
   }
 
-  url.search = '';
-  url.hash = '';
-  if (!url.pathname.endsWith('/')) url.pathname += '/';
+  // RN 0.85 types URL#hash and URL#pathname as read-only, but the
+  // react-native-url-polyfill runtime implements the WHATWG setters: assigning
+  // '' to search/hash drops an empty trailing `?`/`#` from href, and pathname
+  // takes a normalizing trailing slash.
+  const writableUrl: {
+    search: string;
+    hash: string;
+    pathname: string;
+    readonly href: string;
+  } = url;
+  writableUrl.search = '';
+  writableUrl.hash = '';
+  if (!writableUrl.pathname.endsWith('/')) writableUrl.pathname += '/';
 
-  return url.href;
+  return writableUrl.href;
 }

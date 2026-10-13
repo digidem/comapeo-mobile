@@ -18,15 +18,17 @@ import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
 import {useTracking} from '../../hooks/useTracking';
 import GraphIcon from '../../images/Graph.svg';
+import CollaborateIcon from '../../images/ProjectParticipant.svg';
+import Ionicons from '@react-native-vector-icons/ionicons';
 
 const m = defineMessages({
-  joinProject: {
-    id: '$1screens.InviteReceived.joinProject',
-    defaultMessage: 'Join Project',
+  join: {
+    id: '$1screens.InviteReceived.join',
+    defaultMessage: 'Join',
   },
-  declineInvite: {
-    id: '$1screens.InviteReceived.declineInvite',
-    defaultMessage: 'Decline Invite',
+  decline: {
+    id: '$1screens.InviteReceived.decline',
+    defaultMessage: 'Decline',
   },
   invitedToJoin: {
     id: 'screens.InviteReceived.invitedToJoin',
@@ -77,7 +79,7 @@ export const InviteReceived = ({
 
   function accept() {
     if (isTracking) {
-      navigation.navigate('TrackRecordingActive');
+      navigation.replace('TrackRecordingActive');
       return;
     }
 
@@ -98,7 +100,7 @@ export const InviteReceived = ({
 
           const isInOnboarding = navigation
             .getState()
-            .routes.find(route => route.name === 'JoinProjectIntro');
+            .routes.find(route => route.name === 'Success');
 
           // If the user is on the onboarding screen, simply show the invites accepted modal
           if (isInOnboarding) {
@@ -177,15 +179,23 @@ export const InviteReceived = ({
             <LoadingIndicator style={{marginVertical: 20}} />
           ) : (
             <>
-              <SecondaryButton
-                fullSize
-                onPress={reject}
-                text={formatMessage(m.declineInvite)}
-              />
               <PrimaryButton
                 fullSize
                 onPress={accept}
-                text={formatMessage(m.joinProject)}
+                text={formatMessage(m.join)}
+                renderIcon={({color}) => <CollaborateIcon color={color} />}
+              />
+              <SecondaryButton
+                fullSize
+                onPress={reject}
+                text={formatMessage(m.decline)}
+                renderIcon={({color, size}) => (
+                  <Ionicons
+                    color={color}
+                    size={size}
+                    name="close-circle-outline"
+                  />
+                )}
               />
             </>
           )}

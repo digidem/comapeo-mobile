@@ -128,11 +128,6 @@ export const AudioAskPermissionBottomSheet = ({
         </View>
         <View
           style={{width: '100%', gap: 20, alignItems: 'center', marginTop: 30}}>
-          <SecondaryButton
-            fullSize
-            text={formatMessage(m.notNowButtonText)}
-            onPress={goBack}
-          />
           {permission.canAskAgain ? (
             <PrimaryButton
               fullSize
@@ -146,6 +141,11 @@ export const AudioAskPermissionBottomSheet = ({
               onPress={() => goToSettingsMutation.mutateAsync()}
             />
           )}
+          <SecondaryButton
+            fullSize
+            text={formatMessage(m.notNowButtonText)}
+            onPress={goBack}
+          />
         </View>
       </View>
     </BottomSheetWrapper>

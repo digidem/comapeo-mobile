@@ -163,7 +163,6 @@ export type RootStackParamsList = {
   BackgroundMapErrorBottomSheet: {title: string; description: string};
   AllProjects: undefined;
   InviteCollaborators: undefined;
-  StartNewProject: undefined;
   EditProjectDetails: undefined;
   TrackRecordingActive: undefined;
   RemoteArchive: undefined;
@@ -216,8 +215,6 @@ export type OnboardingParamsList = {
   DeviceNaming: undefined;
   OnboardingPrivacyPolicy: undefined;
   Success: undefined;
-  JoinProjectIntro: undefined;
-  MapOnYourOwnIntro: undefined;
   ErrorBottomSheet: {error: Error};
 };
 

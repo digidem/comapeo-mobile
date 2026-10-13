@@ -5,62 +5,53 @@ import {output} from '../../utils/naming';
 
 describe('Project - Edit Device Name Test', () => {
   it('should navigate to project settings and edit the device name', async () => {
-    const drawerIcon = await $('~Open Menu');
-    await drawerIcon.tap();
+    await $('~Open Menu').tap();
 
-    const appSettingsItem = await $('~Go to app settings screen.');
-    await appSettingsItem.tap();
+    await $('~Go to app settings screen.').tap();
 
-    const deviceNameListItem = await $(byResourceId('device-name-list-item'));
-    await deviceNameListItem.click();
+    await $(byResourceId('device-name-list-item')).click();
 
-    const editIcon = await $(byResourceId('edit-icon'));
-    await editIcon.click();
+    await $(byResourceId('edit-icon')).click();
     const editDeviceNameField = await $(byResourceId('edit-device-name'));
     await editDeviceNameField.click();
     await editDeviceNameField.clearValue();
     await editDeviceNameField.setValue(output.names.editdevice);
 
-    const backButton = await $(byResourceId('MAIN.header-back-btn'));
-    await backButton.click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
 
-    const discardAlert = await $(byText('DISCARD CHANGES'));
-    await expect(discardAlert).toBeDisplayed();
+    await expect($(byText('DISCARD CHANGES'))).toBeDisplayed();
 
-    await discardAlert.click();
+    await $(byText('DISCARD CHANGES')).click();
 
-    const originalDeviceName = await $(byText(output.names.device));
-    await expect(originalDeviceName).toBeDisplayed();
+    await expect($(byText(output.names.device))).toBeDisplayed();
 
-    await editIcon.click();
-    await editDeviceNameField.click();
-    await editDeviceNameField.clearValue();
-    await editDeviceNameField.setValue(output.names.editdevice);
+    await $(byResourceId('edit-icon')).click();
+    const editDeviceNameFieldAgain = await $(byResourceId('edit-device-name'));
+    await editDeviceNameFieldAgain.click();
+    await editDeviceNameFieldAgain.clearValue();
+    await editDeviceNameFieldAgain.setValue(output.names.editdevice);
 
-    await backButton.click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
 
-    await expect(discardAlert).toBeDisplayed();
+    await expect($(byText('DISCARD CHANGES'))).toBeDisplayed();
 
-    const continueEditing = await $(byText('CONTINUE EDITING'));
-    await continueEditing.click();
+    await $(byText('CONTINUE EDITING')).click();
 
-    const editedDeviceName = await $(byText(output.names.editdevice));
-    await expect(editedDeviceName).toBeDisplayed();
+    await expect($(byText(output.names.editdevice))).toBeDisplayed();
 
-    const saveIcon = await $(byResourceId('save-icon'));
-    await saveIcon.click();
+    await $(byResourceId('save-icon')).click();
 
-    await expect(editedDeviceName).toBeDisplayed();
+    await expect($(byText(output.names.editdevice))).toBeDisplayed();
 
     await driver.back();
     await driver.back();
     await $(byResourceId('MAIN.map-screen')).click();
 
-    await drawerIcon.tap();
-    await appSettingsItem.click();
-    await deviceNameListItem.click();
+    await $('~Open Menu').tap();
+    await $('~Go to app settings screen.').click();
+    await $(byResourceId('device-name-list-item')).click();
 
-    await expect(editedDeviceName).toBeDisplayed();
+    await expect($(byText(output.names.editdevice))).toBeDisplayed();
 
     await driver.back();
     await driver.back();

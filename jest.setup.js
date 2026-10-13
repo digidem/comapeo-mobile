@@ -1,4 +1,11 @@
 import {jest, afterAll} from '@jest/globals';
+import {performance as nodePerformance} from 'node:perf_hooks';
+
+// undici reads `performance.markResourceTiming` at import time (as early as
+// @comapeo/core's own imports), so it must be patched before any test file loads.
+
+globalThis.performance.markResourceTiming =
+  nodePerformance.markResourceTiming.bind(nodePerformance);
 
 jest.mock('./translations/index', () => {
   const actual = jest.requireActual('./translations/index');
@@ -79,6 +86,7 @@ jest.mock('expo-audio', () => {
       HIGH_QUALITY: {ios: {}, android: {}, web: {}},
       LOW_QUALITY: {ios: {}, android: {}, web: {}},
     },
+    setAudioModeAsync: jest.fn(() => Promise.resolve()),
   };
 });
 
@@ -123,14 +131,61 @@ jest.mock('@maplibre/maplibre-react-native', () => ({
   LineCap: {Round: 'round', Butt: 'butt', Square: 'square'},
 }));
 
-jest.mock('react-native-vision-camera', () => ({
-  Camera: 'Camera',
-  useCameraDevice: jest.fn(() => undefined),
-  useCameraPermission: jest.fn(() => ({
-    hasPermission: true,
-    requestPermission: jest.fn(() => Promise.resolve(true)),
-  })),
+// `ComapeoCoreModule.ts` calls `requireNativeModule("ComapeoCore")` at
+// import time, which throws in tests since there's no native module and
+// no `mocks/ComapeoCore.js` for jest-expo to pick up. Tests that need a real
+// backend build one themselves and pass it in as `mapeoApi`.
+jest.mock('@comapeo/core-react-native', () => {
+  const grantedPermission = {
+    status: 'granted',
+    expires: 'never',
+    granted: true,
+    canAskAgain: true,
+  };
+  return {
+    comapeo: {},
+    state: {addListener: jest.fn(() => ({remove: jest.fn()}))},
+    comapeoServicesClient: {mapServer: {getBaseUrl: jest.fn()}},
+    getNotificationPermissionsAsync: jest.fn(() =>
+      Promise.resolve(grantedPermission),
+    ),
+    requestNotificationPermissionsAsync: jest.fn(() =>
+      Promise.resolve(grantedPermission),
+    ),
+  };
+});
+
+jest.mock('@comapeo/core-react-native/sentry', () => ({
+  sentryConfig: {},
+  getDiagnosticsEnabled: jest.fn(() => false),
+  setDiagnosticsEnabled: jest.fn(() => Promise.resolve()),
+  getApplicationUsageData: jest.fn(() => false),
+  setApplicationUsageData: jest.fn(() => Promise.resolve()),
+  getDebugEnabled: jest.fn(() => false),
+  setDebugEnabled: jest.fn(() => Promise.resolve()),
+  getRootUserId: jest.fn(() => 'TEST-TEST-TEST'),
+  initSentry: jest.fn(),
 }));
+
+jest.mock('react-native-vision-camera', () => {
+  const React = jest.requireActual('react');
+  // Camera has to be a component with properties
+  // because it has to check for permission status.
+  const Camera = Object.assign(
+    React.forwardRef((props, ref) =>
+      React.createElement('Camera', {...props, ref}),
+    ),
+    {
+      getCameraPermissionStatus: jest.fn(() => 'granted'),
+      requestCameraPermission: jest.fn(() => Promise.resolve('granted')),
+    },
+  );
+
+  return {
+    Camera,
+    useCameraDevice: jest.fn(() => undefined),
+  };
+});
 
 function temporaryDirectory() {
   const result = path.join(

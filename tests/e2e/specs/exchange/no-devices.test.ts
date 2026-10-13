@@ -13,6 +13,8 @@ describe('Exchange - Exchange Screen No Devices', () => {
     await expect($(byResourceId('wifi-icon'))).toBeDisplayed();
 
     await expect($(byTextMatches('No devices found.'))).toBeDisplayed();
-    await expect($(byTextMatches('Close'))).toBeDisplayed();
+    const startBtn = await $(byResourceId('EXCHANGE.start-btn'));
+    await expect(startBtn).toBeDisplayed();
+    await expect(startBtn).not.toBeEnabled();
   });
 });

@@ -1,0 +1,39 @@
+diff --git a/node_modules/expo-file-system/android/src/main/java/expo/modules/filesystem/FileSystemUploadTask.kt b/node_modules/expo-file-system/android/src/main/java/expo/modules/filesystem/FileSystemUploadTask.kt
+index da4ec5b..5cfa95e 100644
+--- a/node_modules/expo-file-system/android/src/main/java/expo/modules/filesystem/FileSystemUploadTask.kt
++++ b/node_modules/expo-file-system/android/src/main/java/expo/modules/filesystem/FileSystemUploadTask.kt
+@@ -20,7 +20,6 @@ import okio.BufferedSink
+ import okio.ForwardingSink
+ import okio.Sink
+ import okio.buffer
+-import okio.source
+ import java.io.IOException
+ import java.net.URLConnection
+ import java.util.concurrent.TimeUnit
+@@ -259,6 +258,8 @@ private class CountingSink(
+   }
+ }
+ 
++private const val UPLOAD_READ_BUFFER_SIZE = 64 * 1024
++
+ private fun UnifiedFileInterface.asRequestBody(contentType: String?): RequestBody {
+   // length() on a SAF document is a ContentResolver query; resolve it once.
+   val resolvedLength = length()
+@@ -267,8 +268,15 @@ private fun UnifiedFileInterface.asRequestBody(contentType: String?): RequestBod
+     override fun contentLength() = resolvedLength
+     override fun writeTo(sink: BufferedSink) {
+       inputStream().use { input ->
+-        val source = input.source()
+-        sink.writeAll(source)
++        // Read 64 KiB at a time rather than letting okio pull one 8 KiB segment
++        // per read: the source is usually a content-provider file descriptor,
++        // where read granularity dominates the cost of the copy.
++        val buffer = ByteArray(UPLOAD_READ_BUFFER_SIZE)
++        while (true) {
++          val read = input.read(buffer)
++          if (read == -1) break
++          sink.write(buffer, 0, read)
++        }
+       }
+     }
+   }

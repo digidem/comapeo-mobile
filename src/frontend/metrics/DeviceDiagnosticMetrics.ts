@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/react-native';
 import {AppState, Dimensions, PixelRatio, Platform} from 'react-native';
 import * as NetInfo from '@react-native-community/netinfo';
+import {getInternetStatus} from '../lib/internetStatus';
 import * as Application from 'expo-application';
 import * as Device from 'expo-device';
 import {getMonthlyHash} from './getMonthlyHash';
@@ -13,7 +14,7 @@ import {getMetricsDeviceId} from './getMetricsDeviceId';
 
 const STORAGE_KEY = 'DeviceDiagnosticMetricsLastSentAt';
 
-type DeviceDiagnosticMetricsData = {
+type DeviceDiagnosticsData = {
   type: 'device diagnostics v1';
   monthlyDeviceHash: string;
   appId?: string;
@@ -45,10 +46,10 @@ function deviceTypeToString(deviceType: null | Device.DeviceType): string {
   }
 }
 
-async function generateDeviceDiagnosticMetricsData(): Promise<DeviceDiagnosticMetricsData> {
+async function generateDeviceDiagnosticsData(): Promise<DeviceDiagnosticsData> {
   const screen = Dimensions.get('screen');
 
-  const result: DeviceDiagnosticMetricsData = {
+  const result: DeviceDiagnosticsData = {
     type: 'device diagnostics v1',
     os: Platform.OS,
     screen: {
@@ -90,7 +91,7 @@ const hasEnoughTimeElapsed = (): boolean => {
   );
 };
 
-export class DeviceDiagnosticMetrics {
+export class DeviceDiagnostics {
   #isEnabled = false;
   #isOnline = false;
   #isCurrentlySendingMetrics = false;
@@ -116,7 +117,7 @@ export class DeviceDiagnosticMetrics {
 
     subscriptionCleanupFns.push(
       NetInfo.addEventListener(state => {
-        this.#isOnline = Boolean(state.isInternetReachable);
+        this.#isOnline = getInternetStatus(state) === 'online';
         this.#update();
       }),
     );
@@ -148,7 +149,7 @@ export class DeviceDiagnosticMetrics {
     try {
       await sendMetricsData({
         ...getMetricsRequestInfo(),
-        dataToSend: await generateDeviceDiagnosticMetricsData(),
+        dataToSend: await generateDeviceDiagnosticsData(),
       });
       storage.set(STORAGE_KEY, Date.now());
     } catch (err) {

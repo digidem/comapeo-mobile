@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Exchange - Exchange Settings for Everything', () => {
   it('should have exchange everything set to defaul', async () => {
@@ -17,6 +17,7 @@ describe('Exchange - Exchange Settings for Everything', () => {
     await expect(
       $(byResourceId('EXCHANGE.radio-selected-everything')),
     ).toBeDisplayed();
-    await $(byText('Close')).click();
+    const closeButtonSelector = byResourceId('EXCHANGE.settings-close');
+    await $(closeButtonSelector).click();
   });
 });

@@ -6,6 +6,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useCreateDocument} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import type {Position} from '@comapeo/schema/dist/schema/track';
+import {headerItemStyle} from '../../sharedComponents/IconButton';
 
 export const SaveTrackButton: FC = () => {
   const navigation = useNavigationFromRoot();
@@ -61,7 +62,8 @@ export const SaveTrackButton: FC = () => {
     <Pressable
       disabled={status === 'pending'}
       onPress={handleSaveClick}
-      accessibilityLabel="Save track.">
+      accessibilityLabel="Save track."
+      style={headerItemStyle}>
       <Image
         style={styles.completeIcon}
         source={require('../../images/completed/checkComplete.png')}

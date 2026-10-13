@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View} from 'react-native';
 
-import {IconButton} from '../../sharedComponents/IconButton';
+import {IconButton, headerItemStyle} from '../../sharedComponents/IconButton';
 import {useSingleDocByDocId} from '@comapeo/core-react';
 import {EditIcon} from '../../sharedComponents/icons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
@@ -27,16 +27,6 @@ export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
       <EditIcon />
     </IconButton>
   ) : (
-    <View style={styles.syncIconContainer} />
+    <View style={headerItemStyle} />
   );
 };
-
-const styles = StyleSheet.create({
-  syncIconContainer: {
-    width: 60,
-    height: 60,
-    flex: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

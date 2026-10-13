@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import {LoadingIndicator} from './LoadingIndicator';
-import {IconButton} from './IconButton';
+import {headerItemStyle, IconButton} from './IconButton';
 import SaveCheck from '../images/CheckMark.svg';
 export const SaveButton = ({
   onPress,
@@ -11,7 +11,7 @@ export const SaveButton = ({
   isLoading: boolean;
 }) => {
   return isLoading ? (
-    <View style={{marginRight: 10}}>
+    <View style={headerItemStyle}>
       <LoadingIndicator size="large" />
     </View>
   ) : (

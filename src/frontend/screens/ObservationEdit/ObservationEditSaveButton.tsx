@@ -6,7 +6,7 @@ import {
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {STORAGE_QUERY_KEY} from '../../hooks/useStorageReadingQuery';
 import SaveCheck from '../../images/CheckMark.svg';
-import {IconButton} from '../../sharedComponents/IconButton';
+import {IconButton, headerItemStyle} from '../../sharedComponents/IconButton';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
 
@@ -128,7 +128,7 @@ export const ObservationEditSaveButton = () => {
   }
 
   return isLoading ? (
-    <View style={{marginRight: 10}}>
+    <View style={headerItemStyle}>
       <LoadingIndicator size="large" />
     </View>
   ) : (

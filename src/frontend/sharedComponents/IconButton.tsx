@@ -5,6 +5,17 @@ import {TouchableNativeFeedback} from './Touchables';
 import {VERY_LIGHT_BLUE} from '../lib/styles';
 import type {ViewStyleProp} from '../sharedTypes';
 
+// specific width and height applied for iOS pre 26 to ensure proper alignment of header items
+export const headerItemStyle = StyleSheet.create({
+  container: {
+    width: 44,
+    height: 44,
+    flex: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}).container;
+
 type Props = {
   children: React.ReactNode;
   onPress?: ((event: GestureResponderEvent) => void) | (() => void);
@@ -22,9 +33,10 @@ const IconButtonNotMemoized = ({
 }: Props) => (
   <TouchableNativeFeedback
     onPress={onPress}
+    hitSlop={8}
     background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, true)}>
     <View
-      style={[styles.container, style]}
+      style={[headerItemStyle, style]}
       testID={testID}
       accessibilityLabel={accessibilityLabel}>
       {children}
@@ -33,13 +45,3 @@ const IconButtonNotMemoized = ({
 );
 
 export const IconButton = React.memo<Props>(IconButtonNotMemoized);
-
-const styles = StyleSheet.create({
-  container: {
-    width: 60,
-    height: 60,
-    flex: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

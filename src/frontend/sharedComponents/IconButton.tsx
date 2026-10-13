@@ -5,10 +5,11 @@ import {TouchableNativeFeedback} from './Touchables';
 import {VERY_LIGHT_BLUE} from '../lib/styles';
 import type {ViewStyleProp} from '../sharedTypes';
 
-// specific width and height applied for iOS pre 26 to ensure proper alignment of header items
+// specific height applied for iOS pre 26 to ensure header item centered in the navigation bar
+// specific width applied so iOS with liquid glass has the correct-sized oval around header item
 export const headerItemStyle = StyleSheet.create({
   container: {
-    width: 44,
+    width: 60,
     height: 44,
     flex: 0,
     justifyContent: 'center',
@@ -33,7 +34,7 @@ const IconButtonNotMemoized = ({
 }: Props) => (
   <TouchableNativeFeedback
     onPress={onPress}
-    hitSlop={8}
+    hitSlop={{top: 8, bottom: 8}}
     background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, true)}>
     <View
       style={[headerItemStyle, style]}

@@ -52,7 +52,11 @@ export const IntroToCoMapeo = ({
         />
       }>
       <View style={styles.image}>
-        <ComapeoIntro width="100%" height="100%" />
+        <ComapeoIntro
+          width="100%"
+          height="100%"
+          preserveAspectRatio="xMidYMax meet"
+        />
       </View>
       <HeaderText variant="header3" style={styles.mainText}>
         {formatMessage(m.mapWorldTogether)}
@@ -63,7 +67,7 @@ export const IntroToCoMapeo = ({
 
 const styles = StyleSheet.create({
   image: {
-    aspectRatio: 342 / 496,
+    flex: 1,
   },
   mainText: {
     fontSize: 24,

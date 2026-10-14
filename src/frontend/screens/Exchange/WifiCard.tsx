@@ -5,6 +5,7 @@ import {Circle} from '../../sharedComponents/icons/Circle';
 import {WifiIcon, WifiOffIcon} from '../../sharedComponents/icons';
 import {BLACK, BLUE_GREY, WHITE} from '../../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
+import {RUBIK} from '../../lib/fonts';
 
 type Props = {
   ssid?: string | null;
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
   },
   wifiName: {
-    fontWeight: '500',
+    fontFamily: RUBIK[500],
   },
   signalIndicator: {
     elevation: 0,

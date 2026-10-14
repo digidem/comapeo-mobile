@@ -20,6 +20,7 @@ import {
 } from './helpers.ts';
 import {sharedPhotoPreviewNavOptions} from './sharedNavOptions.tsx';
 import {sharedStyles} from './sharedStyles.ts';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   headerDeleteButtonText: {
@@ -132,7 +133,7 @@ export function DraftPhotoPreviewModalNavOptions({
                 marginLeft: 4,
                 color: WHITE,
                 fontSize: 13,
-                fontFamily: 'Rubik',
+                fontFamily: RUBIK[400],
               }}>
               {intl(m.headerDeleteButtonText)}
             </Text>

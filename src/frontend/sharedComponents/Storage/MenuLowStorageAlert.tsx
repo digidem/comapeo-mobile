@@ -7,6 +7,7 @@ import {BodyText} from '../Text/BodyText';
 import {BLACK, DARK_ORANGE, BLUE_GREY, COMAPEO_BLUE} from '../../lib/styles';
 import {HeaderText} from '../Text/HeaderText';
 import {Bar} from 'react-native-progress';
+import {RUBIK} from '../../lib/fonts';
 
 export type MenuLowStorageAlertProps = {
   freeBytes: number | null;
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   headerTextWrap: {flex: 1},
-  title: {fontWeight: '700'},
+  title: {fontFamily: RUBIK[700]},
   detailsColumn: {
     paddingLeft: 30,
     flexDirection: 'column',

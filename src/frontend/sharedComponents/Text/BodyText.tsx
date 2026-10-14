@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {Text as RNText, TextProps, TextStyle} from 'react-native';
 import {DARK_GREY} from '../../lib/styles';
+import {RUBIK} from '../../lib/fonts';
 
 type Variant = 'large' | 'medium' | 'regular' | 'smallMeta' | 'tinyMeta';
 
 interface BodyProps extends Omit<TextProps, 'style'> {
-  style?: Omit<TextStyle, 'fontSize' | 'fontFamily'>;
+  style?: Omit<TextStyle, 'fontSize' | 'fontWeight'>;
   variant?: Variant;
 }
 
@@ -34,7 +35,7 @@ export const BodyText = ({
     <RNText
       style={[
         {
-          fontFamily: 'Rubik',
+          fontFamily: RUBIK[400],
           color: DARK_GREY,
           fontSize: fontSizeMap[variant || 'regular'],
         },

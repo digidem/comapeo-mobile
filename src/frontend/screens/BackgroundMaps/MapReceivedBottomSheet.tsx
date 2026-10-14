@@ -35,6 +35,7 @@ import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
 import {kmOrConversion} from '../../lib/unitConversion';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   sharingDevice: {
@@ -279,7 +280,7 @@ const styles = StyleSheet.create({
   header: {
     textTransform: 'uppercase',
     color: BLACK,
-    fontWeight: '500',
+    fontFamily: RUBIK[500],
   },
   mapCard: {
     backgroundColor: LIGHT_GREEN,

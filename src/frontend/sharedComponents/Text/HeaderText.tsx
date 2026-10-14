@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {Text as RNText, TextProps, TextStyle} from 'react-native';
 import {DARK_GREY} from '../../lib/styles';
+import {RUBIK} from '../../lib/fonts';
 
 type Variant =
   'header1' | 'header2' | 'header3' | 'header4' | 'header5' | 'header6';
 
 interface HeaderProps extends Omit<TextProps, 'style'> {
-  style?: Omit<TextStyle, 'fontSize' | 'fontFamily' | 'fontWeight'>;
+  style?: Omit<TextStyle, 'fontSize' | 'fontWeight'>;
   variant?: Variant;
 }
 
@@ -38,8 +39,7 @@ export const HeaderText = ({
     <RNText
       style={[
         {
-          fontFamily: 'Rubik',
-          fontWeight: '500',
+          fontFamily: RUBIK[500],
           color: DARK_GREY,
           fontSize: fontSizeMap[variant || 'header1'],
         },

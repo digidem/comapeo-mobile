@@ -1,11 +1,13 @@
 import {useEffect, useRef, useState} from 'react';
 import {Calendar, type DateData} from 'react-native-calendars';
-import {TouchableOpacity, StyleSheet, View, Text} from 'react-native';
+import {TouchableOpacity, StyleSheet, View} from 'react-native';
 import {BLACK, BLUE_GREY, COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import IonIcon from '@react-native-vector-icons/ionicons';
 import {defineMessages, useIntl} from 'react-intl';
 import {Observation} from '@comapeo/schema';
 import {isISODateString} from '../../sharedComponents/FormattedData';
+import {RUBIK} from '../../lib/fonts';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   date: {
@@ -69,20 +71,24 @@ export const DatePicker = ({tagValue, updateTag}: DatePickerProps) => {
       <View style={styles.container}>
         {valueAsDate && (
           <View style={styles.labelContainer}>
-            <Text style={styles.labelText}>{formatMessage(m.date)}</Text>
+            <BodyText variant="smallMeta" style={styles.labelText}>
+              {formatMessage(m.date)}
+            </BodyText>
           </View>
         )}
         <TouchableOpacity
           style={styles.textInput}
           testID="OBS.DateInput"
           onPress={() => setCalendarVisible(val => !val)}>
-          <Text style={valueAsDate ? styles.valueText : styles.placeholderText}>
+          <BodyText
+            variant="large"
+            style={valueAsDate ? styles.valueText : styles.placeholderText}>
             {valueAsDate
               ? formatDate(valueAsDate, {
                   dateStyle: 'medium',
                 })
               : formatMessage(m.date)}
-          </Text>
+          </BodyText>
         </TouchableOpacity>
       </View>
       {calendarVisible && (
@@ -136,8 +142,7 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   labelText: {
-    fontSize: 14,
-    fontFamily: 'Rubik',
+    fontFamily: RUBIK[400],
     color: NEW_DARK_GREY,
   },
 
@@ -152,11 +157,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   valueText: {
-    fontSize: 20,
     color: BLACK,
   },
   placeholderText: {
-    fontSize: 20,
     color: BLUE_GREY,
   },
   calendarStyle: {

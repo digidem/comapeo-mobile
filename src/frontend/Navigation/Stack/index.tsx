@@ -23,6 +23,7 @@ import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
 import {CommonActions, StackActions} from '@react-navigation/native';
+import {RUBIK} from '../../lib/fonts';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -50,7 +51,7 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
   contentStyle: {backgroundColor: WHITE},
   headerStyle: {backgroundColor: WHITE},
-  headerTitleStyle: {fontFamily: 'Rubik', fontWeight: '500'},
+  headerTitleStyle: {fontFamily: RUBIK[500]},
   headerLeft: props => <CustomHeaderLeft headerBackButtonProps={props} />,
   headerBackVisible: false,
   statusBarStyle: 'dark',

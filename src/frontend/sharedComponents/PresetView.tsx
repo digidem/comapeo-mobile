@@ -4,6 +4,7 @@ import {BLACK, COMAPEO_BLUE} from '../lib/styles';
 import {BodyText} from './Text/BodyText';
 import {HeaderText} from './Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
+import {RUBIK} from '../lib/fonts';
 
 const m = defineMessages({
   change: {
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   categoryName: {
     color: BLACK,
     marginLeft: 10,
-    fontWeight: 'bold',
+    fontFamily: RUBIK[700],
     flexShrink: 1,
   },
 });

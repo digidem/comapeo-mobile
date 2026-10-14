@@ -19,6 +19,7 @@ import HeartCheckIcon from '../../images/HeartCheck.svg';
 import AngleRulerIcon from '../../images/AngleRuler.svg';
 import {isQABuild} from '../../lib/appVariant';
 import {useQADeviceName} from '../../contexts/QADeviceNameStoreContext';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   title: {
@@ -372,7 +373,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.4,
     textTransform: 'uppercase',
     color: BLACK,
-    fontWeight: '500',
+    fontFamily: RUBIK[500],
   },
   row: {
     flexDirection: 'row',

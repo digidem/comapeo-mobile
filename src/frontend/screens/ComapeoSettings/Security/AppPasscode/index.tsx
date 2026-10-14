@@ -8,6 +8,7 @@ import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {PrimaryButton} from '../../../../sharedComponents/Buttons';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {RUBIK} from '../../../../lib/fonts';
 
 const m = defineMessages({
   navTitle: {
@@ -57,7 +58,9 @@ export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = () => {
           {...m.warning}
           values={{
             bold: (chunks: React.ReactNode) => (
-              <BodyText key={chunks?.toString()} style={{fontWeight: 'bold'}}>
+              <BodyText
+                key={chunks?.toString()}
+                style={{fontFamily: RUBIK[700]}}>
                 {chunks}
               </BodyText>
             ),

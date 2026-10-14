@@ -3,9 +3,11 @@ import {toLatLon as origToLatLon, fromLatLon} from 'utm';
 import {View, TextInput, StyleSheet} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
-import {Text} from '../../sharedComponents/Text';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BLACK, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 import {FormProps, parseNumber} from './shared';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   zoneNumber: {
@@ -102,9 +104,9 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     <View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <Text style={styles.inputLabel}>
+          <HeaderText variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.zoneNumber} />
-          </Text>
+          </HeaderText>
           <TextInput
             accessibilityLabel={t(m.zoneNumber)}
             placeholder="DD"
@@ -118,9 +120,9 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
           />
         </View>
         <View style={styles.column}>
-          <Text style={styles.inputLabel}>
+          <HeaderText variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.zoneLetter} />
-          </Text>
+          </HeaderText>
           <TextInput
             accessibilityLabel={t(m.zoneLetter)}
             placeholder="S"
@@ -136,9 +138,9 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
       </View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <Text style={styles.inputLabel}>
+          <HeaderText variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.easting} />
-          </Text>
+          </HeaderText>
           <View style={styles.inputContainer}>
             <TextInput
               accessibilityLabel={t(m.easting)}
@@ -150,15 +152,15 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
               style={styles.input}
               value={easting}
             />
-            <Text style={styles.suffix}>
+            <BodyText variant="large" style={styles.suffix}>
               <FormattedMessage {...m.eastingSuffix} />
-            </Text>
+            </BodyText>
           </View>
         </View>
         <View style={styles.column}>
-          <Text style={styles.inputLabel}>
+          <HeaderText variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.northing} />
-          </Text>
+          </HeaderText>
           <View style={styles.inputContainer}>
             <TextInput
               accessibilityLabel={t(m.northing)}
@@ -170,9 +172,9 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
               style={styles.input}
               value={northing}
             />
-            <Text style={styles.suffix}>
+            <BodyText variant="large" style={styles.suffix}>
               <FormattedMessage {...m.northingSuffix} />
-            </Text>
+            </BodyText>
           </View>
         </View>
       </View>
@@ -272,7 +274,7 @@ export function toLatLon({
 
 const styles = StyleSheet.create({
   inputLabel: {
-    fontWeight: 'bold',
+    fontFamily: RUBIK[700],
     color: BLACK,
   },
   inputContainer: {flexDirection: 'row', alignItems: 'center'},
@@ -296,7 +298,7 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   suffix: {
-    fontSize: 20,
+    color: BLACK,
     marginLeft: 5,
     paddingTop: 5,
   },

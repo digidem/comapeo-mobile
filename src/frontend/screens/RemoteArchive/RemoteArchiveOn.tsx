@@ -6,6 +6,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {LIGHT_GREY, MAGENTA, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   remoteArchiveOn: {
@@ -87,7 +88,7 @@ export function RemoteArchiveOn({
 
       {isCoordinator ? (
         <View>
-          <BodyText variant="smallMeta" style={{fontWeight: 'bold'}}>
+          <BodyText variant="smallMeta" style={{fontFamily: RUBIK[700]}}>
             {t(m.thisIncludes)}
           </BodyText>
           <BodyText variant="smallMeta">{t(m.observations)}</BodyText>
@@ -126,7 +127,7 @@ export function RemoteArchiveOn({
                   onRemove();
                 }}>
                 <BodyText
-                  style={{color: MAGENTA, fontWeight: 'bold'}}
+                  style={{color: MAGENTA, fontFamily: RUBIK[700]}}
                   variant="smallMeta">
                   {t(m.removeServer)}
                 </BodyText>

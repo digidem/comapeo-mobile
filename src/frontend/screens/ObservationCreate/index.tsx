@@ -35,6 +35,7 @@ import {
   isUnsavedAudioAttachment,
   isUnsavedPhotoAttachment,
 } from '../../lib/attachmentTypeChecks';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   observation: {
@@ -177,14 +178,16 @@ export const ObservationCreate = ({
                       }}
                       accessibilityLabel="Play audio recording.">
                       <PlayArrow width={48} height={48} />
-                      <BodyText variant="tinyMeta" style={{fontWeight: '500'}}>
+                      <BodyText
+                        variant="tinyMeta"
+                        style={{fontFamily: RUBIK[500]}}>
                         {millisecondsToMMSS(att.duration)}
                       </BodyText>
                       <DateDistance
                         date={new Date(att.timestamp)}
                         style={{
                           fontSize: 12,
-                          fontWeight: '400',
+                          fontFamily: RUBIK[400],
                           color: DARK_GREY,
                         }}
                       />

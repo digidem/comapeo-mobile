@@ -29,6 +29,7 @@ import {
 import {useOpenShareDialog} from '../hooks/share';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
 import {formatCoords} from '../lib/coordinateFormat';
+import {RUBIK} from '../lib/fonts';
 
 const m = defineMessages({
   navTitle: {
@@ -371,7 +372,7 @@ export const ObservationMetadata: NativeNavigationComponent<
                     style={{
                       textAlign: 'left',
                       marginLeft: 5,
-                      fontWeight: '700',
+                      fontFamily: RUBIK[700],
                     }}
                     variant="smallMeta">
                     {item[key]!.label}{' '}

@@ -1,5 +1,6 @@
 import {BLUE_GREY, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
 import {StyleSheet} from 'react-native';
+import {RUBIK} from '../../lib/fonts';
 
 export const styles = StyleSheet.create({
   overviewBox: {
@@ -93,7 +94,7 @@ export const styles = StyleSheet.create({
   diagnosticsDescription: {
     fontSize: 14,
     color: NEW_DARK_GREY,
-    fontWeight: 'normal',
+    fontFamily: RUBIK[400],
   },
   horizontalLineSmall: {
     borderBottomColor: BLUE_GREY,

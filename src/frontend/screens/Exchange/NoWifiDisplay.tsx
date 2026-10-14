@@ -9,6 +9,7 @@ import {WifiIcon, WifiOffIcon} from '../../sharedComponents/icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   title: {
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
   },
   wifiName: {
-    fontWeight: '500',
+    fontFamily: RUBIK[500],
   },
   projectInfoContainer: {
     alignItems: 'center',

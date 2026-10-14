@@ -20,6 +20,7 @@ import {useTracking} from '../../hooks/useTracking';
 import GraphIcon from '../../images/Graph.svg';
 import CollaborateIcon from '../../images/ProjectParticipant.svg';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   join: {
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
   },
   invitedLabel: {
     textTransform: 'uppercase',
-    fontWeight: '500',
+    fontFamily: RUBIK[500],
     alignSelf: 'stretch',
     color: BLACK,
   },

@@ -2,7 +2,8 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import ErrorIcon from '../../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../../sharedComponents/Text';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {BLACK} from '../../../lib/styles';
 import {DeviceNameWithIcon} from '../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
 import {COORDINATOR_ROLE_ID} from '../../../sharedTypes';
@@ -10,6 +11,7 @@ import {useProjectSettings} from '../../../hooks/server/projects';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {resetToYourTeam} from '../../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../../sharedComponents/Buttons';
+import {RUBIK} from '../../../lib/fonts';
 
 const m = defineMessages({
   unableToCancel: {
@@ -38,13 +40,15 @@ export const UnableToCancelInvite = ({
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <ErrorIcon />
-        <Text style={{marginTop: 20, fontSize: 20, fontWeight: 'bold'}}>
+        <BodyText
+          variant="large"
+          style={{marginTop: 20, fontFamily: RUBIK[700], color: BLACK}}>
           {formatMessage(m.unableToCancel)}
-        </Text>
+        </BodyText>
         {data?.name && (
-          <Text style={{marginTop: 10}}>
+          <BodyText style={{marginTop: 10, color: BLACK}}>
             {formatMessage(m.deviceHasJoined, {projectName: data.name})}
-          </Text>
+          </BodyText>
         )}
         <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />
         <RoleWithIcon

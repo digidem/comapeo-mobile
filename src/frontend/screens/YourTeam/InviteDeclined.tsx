@@ -2,12 +2,14 @@ import * as React from 'react';
 import {BackHandler, StyleSheet, View} from 'react-native';
 import ErrorIcon from '../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../sharedComponents/Text';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {BLACK} from '../../lib/styles';
 import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {resetToYourTeam} from '../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   inviteDeclined: {
@@ -47,12 +49,14 @@ export const InviteDeclined = ({
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <ErrorIcon />
-        <Text style={{marginTop: 20, fontSize: 20, fontWeight: 'bold'}}>
+        <BodyText
+          variant="large"
+          style={{marginTop: 20, fontFamily: RUBIK[700], color: BLACK}}>
           {formatMessage(m.inviteDeclined)}
-        </Text>
-        <Text style={{marginTop: 10, textAlign: 'center'}}>
+        </BodyText>
+        <BodyText style={{marginTop: 10, textAlign: 'center', color: BLACK}}>
           {formatMessage(m.inviteDeclinedDes)}
-        </Text>
+        </BodyText>
         <DeviceNameWithIcon
           name={name}
           deviceType={deviceType}

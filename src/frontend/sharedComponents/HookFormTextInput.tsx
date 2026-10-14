@@ -13,7 +13,8 @@ import {TextInput as RNTextInput, StyleSheet, View} from 'react-native';
 import {BLACK, NEW_DARK_GREY, RED, LIGHT_GREY} from '../lib/styles';
 import {ErrorIcon} from './icons';
 import {ViewStyleProp} from '../sharedTypes';
-import {Text} from './Text';
+import {BodyText} from './Text/BodyText';
+import {RUBIK} from '../lib/fonts';
 
 type TextInputProps<InputFields extends FieldValues> = {
   containerStyle?: ViewStyleProp;
@@ -78,8 +79,7 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
                 {
                   flex: 1,
                   color: BLACK,
-                  fontFamily: 'Rubik',
-                  fontWeight: '500',
+                  fontFamily: RUBIK[500],
                   fontSize: 16,
                 },
                 RNInputProp.style,
@@ -98,7 +98,7 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
       <View style={styles.underContainer}>
         <View>
           {errorMessage && (
-            <Text style={{color: RED}}>{errorMessage.toString()}</Text>
+            <BodyText style={{color: RED}}>{errorMessage.toString()}</BodyText>
           )}
         </View>
         <View>
@@ -126,10 +126,10 @@ const Counter = <InputFields extends FieldValues>({
   const inputCount = watcher?.length || 0;
 
   return (
-    <Text
+    <BodyText
       style={{
         color: isMaxLengthError ? RED : LIGHT_GREY,
-      }}>{`${inputCount}/${maxLength}`}</Text>
+      }}>{`${inputCount}/${maxLength}`}</BodyText>
   );
 };
 

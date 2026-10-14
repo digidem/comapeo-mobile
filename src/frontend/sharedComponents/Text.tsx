@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Text as RNText, TextProps} from 'react-native';
 import {BLACK} from '../lib/styles';
+import {RUBIK} from '../lib/fonts';
 
 /**
  *
@@ -12,7 +13,7 @@ export const Text = ({
   ...otherTextProps
 }: React.PropsWithChildren<TextProps>) => (
   <RNText
-    style={[{fontFamily: 'Rubik', color: BLACK, fontSize: 16}, style]}
+    style={[{fontFamily: RUBIK[400], color: BLACK, fontSize: 16}, style]}
     {...otherTextProps}>
     {children}
   </RNText>

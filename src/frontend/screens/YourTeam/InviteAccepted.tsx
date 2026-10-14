@@ -8,6 +8,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLACK} from '../../lib/styles';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   inviteAccepted: {
@@ -59,7 +60,7 @@ export const InviteAccepted = ({
             values={{
               deviceName: name,
               bold: (chunks: React.ReactNode) => (
-                <BodyText key="bold" style={{fontWeight: 'bold'}}>
+                <BodyText key="bold" style={{fontFamily: RUBIK[700]}}>
                   {chunks}
                 </BodyText>
               ),

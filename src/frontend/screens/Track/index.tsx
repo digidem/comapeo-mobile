@@ -31,6 +31,7 @@ import {TrackStats} from '../../sharedComponents/TrackStats.tsx';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
+import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   title: {
@@ -148,7 +149,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-  trackTitle: {fontWeight: '700', color: DARK_GREY},
+  trackTitle: {fontFamily: RUBIK[700]},
   text: {
     margin: 10,
     fontSize: 22,

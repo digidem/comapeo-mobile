@@ -12,7 +12,7 @@ interface BodyProps extends Omit<TextProps, 'style'> {
 }
 
 /**
- * Body text uses the Rubik font and opinionted font sizes and font weight. Should be used for most text.
+ * Body text uses the Rubik font and opinionated font sizes and font weight. Should be used for most text.
  *
  * `weight` picks the Rubik face (400 default, 500, 700). `fontWeight` cannot
  * select a face — see `lib/fonts`.

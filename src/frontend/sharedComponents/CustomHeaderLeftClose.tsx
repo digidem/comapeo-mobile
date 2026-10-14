@@ -2,7 +2,6 @@ import React from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {CustomHeaderLeftStyles} from './CustomHeaderLeft';
-import {BackHandler} from 'react-native';
 import isEqual from 'lodash.isequal';
 
 import {CloseIcon} from './icons';
@@ -11,9 +10,9 @@ import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
 import {ClientGeneratedObservation} from '../sharedTypes';
 import {Observation} from '@comapeo/schema';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {useDraftObservationState} from '../contexts/DraftObservationContext';
-import {usePreventBackSwipe} from '../hooks/usePreventBackSwipe';
+import {useReplaceBackNavigation} from '../hooks/useReplaceBackNavigation';
 
 // We use a slightly larger back icon, to improve accessibility
 // TODO iOS: This should probably be a chevron not an arrow
@@ -67,23 +66,7 @@ const HeaderBackNewObservation = ({
   headerBackButtonProps,
   openBottomSheet,
 }: SharedBackButtonProps & {openBottomSheet: () => void}) => {
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        openBottomSheet();
-        return true;
-      };
-
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-
-      return () => subscription.remove();
-    }, [openBottomSheet]),
-  );
-
-  usePreventBackSwipe(openBottomSheet);
+  useReplaceBackNavigation(openBottomSheet);
 
   return (
     <SharedBackButton

@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {useCallback} from 'react';
+import {useCallback, useLayoutEffect} from 'react';
 import {BackHandler} from 'react-native';
 
 import {useNavigationFromRoot} from './useNavigationWithTypes';
@@ -9,16 +9,18 @@ import {useNavigationFromRoot} from './useNavigationWithTypes';
 export const usePreventBackNavigation = () => {
   const navigation = useNavigationFromRoot();
 
+  useLayoutEffect(() => {
+    navigation.setOptions({gestureEnabled: false});
+  }, [navigation]);
+
   useFocusEffect(
     useCallback(() => {
-      navigation.setOptions({gestureEnabled: false});
-
       const subscription = BackHandler.addEventListener(
         'hardwareBackPress',
         () => true,
       );
 
       return () => subscription.remove();
-    }, [navigation]),
+    }, []),
   );
 };

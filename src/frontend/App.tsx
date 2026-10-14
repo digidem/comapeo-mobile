@@ -65,12 +65,6 @@ import {postHog} from './lib/posthog.ts';
 import {getLocales} from 'expo-localization';
 import {AppUsageData} from './metrics/AppUsageData.ts';
 import {DeviceDiagnostics} from './metrics/DeviceDiagnosticMetrics.ts';
-import {
-  Rubik_400Regular,
-  Rubik_500Medium,
-  Rubik_700Bold,
-  useFonts,
-} from '@expo-google-fonts/rubik';
 
 let navigationIntegration:
   ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined =
@@ -210,18 +204,6 @@ AppState.addEventListener('change', status => {
 });
 
 const App = () => {
-  const [fontsLoaded, fontError] = useFonts({
-    Rubik_400Regular,
-    Rubik_500Medium,
-    Rubik_700Bold,
-  });
-
-  // Render anyway on failure, so a font that never loads falls back to the
-  // system font instead of leaving the app on a blank screen forever.
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
-
   return (
     <Sentry.ErrorBoundary fallback={<FatalErrorUntranslated />}>
       <QueryClientProvider client={queryClient}>

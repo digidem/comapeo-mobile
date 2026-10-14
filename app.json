@@ -53,6 +53,16 @@
         }
       ],
       [
+        "expo-font",
+        {
+          "fonts": [
+            "node_modules/@expo-google-fonts/rubik/400Regular/Rubik_400Regular.ttf",
+            "node_modules/@expo-google-fonts/rubik/500Medium/Rubik_500Medium.ttf",
+            "node_modules/@expo-google-fonts/rubik/700Bold/Rubik_700Bold.ttf"
+          ]
+        }
+      ],
+      [
         "expo-build-properties",
         {
           "android": {

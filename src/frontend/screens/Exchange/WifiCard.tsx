@@ -5,7 +5,6 @@ import {Circle} from '../../sharedComponents/icons/Circle';
 import {WifiIcon, WifiOffIcon} from '../../sharedComponents/icons';
 import {BLACK, BLUE_GREY, WHITE} from '../../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
-import {RUBIK} from '../../lib/fonts';
 
 type Props = {
   ssid?: string | null;
@@ -34,11 +33,11 @@ export const WifiCard = ({ssid}: Props) => {
         </Circle>
         <View style={styles.textContainer}>
           {ssid ? (
-            <BodyText style={styles.wifiName}>{ssid}</BodyText>
+            <BodyText weight={500}>{ssid}</BodyText>
           ) : (
             <>
               <BodyText>--</BodyText>
-              <BodyText style={styles.wifiName}>{t(m.noWifi)}</BodyText>
+              <BodyText weight={500}>{t(m.noWifi)}</BodyText>
             </>
           )}
         </View>
@@ -72,9 +71,6 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexBasis: 'auto',
     maxWidth: '80%',
-  },
-  wifiName: {
-    fontFamily: RUBIK[500],
   },
   signalIndicator: {
     elevation: 0,

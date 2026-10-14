@@ -10,7 +10,6 @@ import {Preset} from '@comapeo/schema';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {FormattedMessage} from 'react-intl';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {RUBIK} from '../../lib/fonts';
 
 const ROW_HEIGHT = 120;
 const MIN_COL_WIDTH = 100;
@@ -106,7 +105,6 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     color: 'black',
-    fontFamily: RUBIK[400],
     textAlign: 'center',
     marginTop: 5,
     paddingLeft: 5,

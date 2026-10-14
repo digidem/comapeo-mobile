@@ -229,9 +229,7 @@ export const ObservationEdit = ({
                         }}
                         accessibilityLabel="Play audio recording.">
                         <PlayArrow width={48} height={48} />
-                        <BodyText
-                          variant="tinyMeta"
-                          style={{fontFamily: RUBIK[500]}}>
+                        <BodyText variant="tinyMeta" weight={500}>
                           {millisecondsToMMSS(att.duration)}
                         </BodyText>
                         <DateDistance

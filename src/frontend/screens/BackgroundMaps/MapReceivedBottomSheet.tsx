@@ -35,7 +35,6 @@ import {useUnitSystem} from '../../contexts/UnitSystemStoreContext';
 import {kmOrConversion} from '../../lib/unitConversion';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
-import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   sharingDevice: {
@@ -206,7 +205,7 @@ export function MapReceivedBottomSheet({
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
-        <BodyText variant="tinyMeta" style={styles.header}>
+        <BodyText weight={500} variant="tinyMeta" style={styles.header}>
           {t(m.sharingDevice, {deviceName: mapShare.senderDeviceName})}
         </BodyText>
 
@@ -280,7 +279,6 @@ const styles = StyleSheet.create({
   header: {
     textTransform: 'uppercase',
     color: BLACK,
-    fontFamily: RUBIK[500],
   },
   mapCard: {
     backgroundColor: LIGHT_GREEN,

@@ -10,7 +10,6 @@ import {RoleWithIcon} from '../../sharedComponents/RoleWithIcon';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   title: {
@@ -40,7 +39,7 @@ export const SelectInviteeRole: NativeNavigationComponent<
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <BodyText variant="medium" style={styles.descriptionText}>
+      <BodyText weight={700} variant="medium" style={styles.descriptionText}>
         {t(m.selectingDevice)}
       </BodyText>
 
@@ -106,7 +105,6 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     color: BLACK,
-    fontFamily: RUBIK[700],
   },
   roleOptionsContainer: {
     gap: 20,

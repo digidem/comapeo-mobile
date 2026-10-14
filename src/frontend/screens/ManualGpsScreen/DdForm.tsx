@@ -19,7 +19,6 @@ import {
   longitudeIsValid,
   latitudeIsValid,
 } from './shared';
-import {RUBIK} from '../../lib/fonts';
 
 const MAX_COORDINATE_INPUT_LENGTH = 11;
 
@@ -175,7 +174,7 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     <View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.latitude} />
           </HeaderText>
           <TextInput
@@ -205,7 +204,7 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
       </View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.longitude} />
           </HeaderText>
           <TextInput
@@ -239,7 +238,6 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
 
 const styles = StyleSheet.create({
   inputLabel: {
-    fontFamily: RUBIK[700],
     color: BLACK,
   },
   input: {

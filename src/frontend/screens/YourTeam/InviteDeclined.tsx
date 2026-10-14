@@ -9,7 +9,6 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {resetToYourTeam} from '../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
-import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   inviteDeclined: {
@@ -51,7 +50,8 @@ export const InviteDeclined = ({
         <ErrorIcon />
         <BodyText
           variant="large"
-          style={{marginTop: 20, fontFamily: RUBIK[700], color: BLACK}}>
+          weight={700}
+          style={{marginTop: 20, color: BLACK}}>
           {formatMessage(m.inviteDeclined)}
         </BodyText>
         <BodyText style={{marginTop: 10, textAlign: 'center', color: BLACK}}>

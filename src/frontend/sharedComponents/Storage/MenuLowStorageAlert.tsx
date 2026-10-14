@@ -7,7 +7,6 @@ import {BodyText} from '../Text/BodyText';
 import {BLACK, DARK_ORANGE, BLUE_GREY, COMAPEO_BLUE} from '../../lib/styles';
 import {HeaderText} from '../Text/HeaderText';
 import {Bar} from 'react-native-progress';
-import {RUBIK} from '../../lib/fonts';
 
 export type MenuLowStorageAlertProps = {
   freeBytes: number | null;
@@ -53,7 +52,7 @@ export function MenuLowStorageAlert({
       <View style={styles.headerRow}>
         <MaterialIcons name="warning" size={20} color={DARK_ORANGE} />
         <View style={styles.headerTextWrap}>
-          <BodyText variant="smallMeta" style={styles.title}>
+          <BodyText variant="smallMeta" weight={700}>
             {formatMessage(m.title)}
           </BodyText>
           <BodyText variant="smallMeta">{formatMessage(m.subtitle)}</BodyText>
@@ -112,7 +111,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   headerTextWrap: {flex: 1},
-  title: {fontFamily: RUBIK[700]},
   detailsColumn: {
     paddingLeft: 30,
     flexDirection: 'column',

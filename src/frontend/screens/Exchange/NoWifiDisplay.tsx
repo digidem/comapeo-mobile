@@ -9,7 +9,6 @@ import {WifiIcon, WifiOffIcon} from '../../sharedComponents/icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
-import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   title: {
@@ -45,7 +44,7 @@ export const NoWifiDisplay = ({onGoBack}: {onGoBack: () => void}) => {
             <WifiIcon size={16} color={WHITE} />
           </Circle>
           <View style={styles.wifiCardTextContainer}>
-            <BodyText style={styles.wifiName}>--</BodyText>
+            <BodyText weight={500}>--</BodyText>
           </View>
         </View>
       </View>
@@ -116,9 +115,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 10,
     paddingHorizontal: 40,
-  },
-  wifiName: {
-    fontFamily: RUBIK[500],
   },
   projectInfoContainer: {
     alignItems: 'center',

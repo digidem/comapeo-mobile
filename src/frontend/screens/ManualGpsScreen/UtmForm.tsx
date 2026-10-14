@@ -7,7 +7,6 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BLACK, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 import {FormProps, parseNumber} from './shared';
-import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   zoneNumber: {
@@ -104,7 +103,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     <View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.zoneNumber} />
           </HeaderText>
           <TextInput
@@ -120,7 +119,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
           />
         </View>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.zoneLetter} />
           </HeaderText>
           <TextInput
@@ -138,7 +137,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
       </View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.easting} />
           </HeaderText>
           <View style={styles.inputContainer}>
@@ -158,7 +157,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
           </View>
         </View>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.northing} />
           </HeaderText>
           <View style={styles.inputContainer}>
@@ -274,7 +273,6 @@ export function toLatLon({
 
 const styles = StyleSheet.create({
   inputLabel: {
-    fontFamily: RUBIK[700],
     color: BLACK,
   },
   inputContainer: {flexDirection: 'row', alignItems: 'center'},

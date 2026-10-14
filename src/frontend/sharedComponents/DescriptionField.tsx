@@ -3,7 +3,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, TextInput, View} from 'react-native';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../lib/styles';
 import {useKeyboardListener} from '../hooks/useKeyboardListener';
-import {RUBIK} from '../lib/fonts';
 import {BodyText} from './Text/BodyText';
 
 const m = defineMessages({
@@ -60,7 +59,6 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   labelText: {
-    fontFamily: RUBIK[400],
     color: NEW_DARK_GREY,
   },
 

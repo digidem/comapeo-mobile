@@ -3,7 +3,6 @@ import {View, Pressable, StyleSheet} from 'react-native';
 import {NEW_DARK_GREY} from '../../lib/styles';
 import Plus from '../../images/observationEdit/Plus.svg';
 import {defineMessages, FormattedMessage} from 'react-intl';
-import {RUBIK} from '../../lib/fonts';
 import {BodyText} from '../Text/BodyText';
 
 const m = defineMessages({
@@ -67,7 +66,6 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
-    fontFamily: RUBIK[400],
     color: NEW_DARK_GREY,
   },
   containerPadding: {

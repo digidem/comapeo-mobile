@@ -12,3 +12,5 @@ export const RUBIK = {
   500: Platform.select({ios: 'Rubik-Medium', default: 'Rubik_500Medium'}),
   700: Platform.select({ios: 'Rubik-Bold', default: 'Rubik_700Bold'}),
 };
+
+export type RubikWeight = keyof typeof RUBIK;

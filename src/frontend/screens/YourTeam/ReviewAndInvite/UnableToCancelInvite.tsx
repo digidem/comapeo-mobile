@@ -11,7 +11,6 @@ import {useProjectSettings} from '../../../hooks/server/projects';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {resetToYourTeam} from '../../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../../sharedComponents/Buttons';
-import {RUBIK} from '../../../lib/fonts';
 
 const m = defineMessages({
   unableToCancel: {
@@ -42,7 +41,8 @@ export const UnableToCancelInvite = ({
         <ErrorIcon />
         <BodyText
           variant="large"
-          style={{marginTop: 20, fontFamily: RUBIK[700], color: BLACK}}>
+          weight={700}
+          style={{marginTop: 20, color: BLACK}}>
           {formatMessage(m.unableToCancel)}
         </BodyText>
         {data?.name && (

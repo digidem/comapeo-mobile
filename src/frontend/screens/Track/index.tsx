@@ -31,7 +31,6 @@ import {TrackStats} from '../../sharedComponents/TrackStats.tsx';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
-import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   title: {
@@ -111,7 +110,7 @@ export const TrackScreen = ({
           ) : (
             <TrackIcon />
           )}
-          <BodyText variant="large" style={styles.trackTitle}>
+          <BodyText variant="large" weight={700}>
             {preset ? preset.name : <FormattedMessage {...m.tracks} />}
           </BodyText>
         </View>
@@ -149,7 +148,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-  trackTitle: {fontFamily: RUBIK[700]},
   text: {
     margin: 10,
     fontSize: 22,

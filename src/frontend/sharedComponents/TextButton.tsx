@@ -5,7 +5,6 @@ import {TouchableNativeFeedback} from '../sharedComponents/Touchables';
 
 import {COMAPEO_BLUE, VERY_LIGHT_BLUE} from '../lib/styles';
 import type {ViewStyleProp} from '../sharedTypes';
-import {RUBIK} from '../lib/fonts';
 
 type Props = {
   onPress: () => void;
@@ -25,7 +24,10 @@ export const TextButton = ({
     style={[styles.buttonContainer, containerStyle]}
     background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, true)}
     onPress={onPress}>
-    <HeaderText variant="header5" style={{...styles.buttonText, ...textStyle}}>
+    <HeaderText
+      weight={700}
+      variant="header5"
+      style={{...styles.buttonText, ...textStyle}}>
       {title}
     </HeaderText>
   </TouchableNativeFeedback>
@@ -39,6 +41,5 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COMAPEO_BLUE,
-    fontFamily: RUBIK[700],
   },
 });

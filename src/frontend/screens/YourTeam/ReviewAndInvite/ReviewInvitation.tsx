@@ -9,7 +9,6 @@ import {DeviceNameWithIcon} from '../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
 import {DeviceType, MEMBER_ROLE_ID} from '../../../sharedTypes';
 import {DeviceRole} from '../../../sharedTypes';
-import {RUBIK} from '../../../lib/fonts';
 
 const m = defineMessages({
   title: {
@@ -51,9 +50,7 @@ export const ReviewInvitation = ({
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <BodyText
-          variant="medium"
-          style={{fontFamily: RUBIK[700], color: BLACK}}>
+        <BodyText variant="medium" weight={700} style={{color: BLACK}}>
           {t(m.youAreInviting)}
         </BodyText>
         <DeviceNameWithIcon
@@ -70,8 +67,7 @@ export const ReviewInvitation = ({
       <Button fullWidth onPress={sendInvite}>
         <View style={styles.flexRow}>
           <MaterialIcon name="send" size={25} color={WHITE} />
-          <BodyText
-            style={{color: WHITE, fontFamily: RUBIK[700], marginLeft: 10}}>
+          <BodyText weight={700} style={{color: WHITE, marginLeft: 10}}>
             {t(m.sendInvite)}
           </BodyText>
         </View>

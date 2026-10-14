@@ -6,7 +6,6 @@ import IonIcon from '@react-native-vector-icons/ionicons';
 import {defineMessages, useIntl} from 'react-intl';
 import {Observation} from '@comapeo/schema';
 import {isISODateString} from '../../sharedComponents/FormattedData';
-import {RUBIK} from '../../lib/fonts';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
@@ -142,7 +141,6 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   labelText: {
-    fontFamily: RUBIK[400],
     color: NEW_DARK_GREY,
   },
 

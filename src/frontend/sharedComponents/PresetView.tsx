@@ -4,7 +4,6 @@ import {BLACK, COMAPEO_BLUE} from '../lib/styles';
 import {BodyText} from './Text/BodyText';
 import {HeaderText} from './Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
-import {RUBIK} from '../lib/fonts';
 
 const m = defineMessages({
   change: {
@@ -34,7 +33,7 @@ export const PresetView = ({
       style={styles.preset}>
       <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
         {PresetIcon}
-        <BodyText variant="large" style={styles.categoryName}>
+        <BodyText weight={700} variant="large" style={styles.categoryName}>
           {presetName}
         </BodyText>
       </View>
@@ -61,7 +60,6 @@ const styles = StyleSheet.create({
   categoryName: {
     color: BLACK,
     marginLeft: 10,
-    fontFamily: RUBIK[700],
     flexShrink: 1,
   },
 });

@@ -38,7 +38,6 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
-import {RUBIK} from '../../lib/fonts';
 
 const m = defineMessages({
   title: {
@@ -154,7 +153,10 @@ export const ManualGpsScreen = ({
       <KeyboardAvoidingView>
         <ScrollView contentContainerStyle={styles.scrollContentContainer}>
           <View style={styles.formatSelect}>
-            <HeaderText variant="header5" style={styles.inputLabel}>
+            <HeaderText
+              weight={700}
+              variant="header5"
+              style={styles.inputLabel}>
               <FormattedMessage {...m.coordinateFormat} />
             </HeaderText>
             <Select
@@ -231,7 +233,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   inputLabel: {
-    fontFamily: RUBIK[700],
     color: BLACK,
   },
   formatSelect: {

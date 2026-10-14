@@ -14,7 +14,6 @@ import {Select} from '../../../sharedComponents/Select';
 import {BLACK, DARK_GREY, LIGHT_GREY} from '../../../lib/styles';
 import {INTEGER_REGEX, parseNumber} from '../shared';
 import {DmsData, DmsUnit} from './types';
-import {RUBIK} from '../../../lib/fonts';
 
 const m = defineMessages({
   degrees: {
@@ -105,7 +104,7 @@ export const DmsInputGroup = ({
     <View style={styles.groupContainer}>
       <View style={styles.row}>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             {label}
           </HeaderText>
           <View style={styles.inputsContainer}>
@@ -209,7 +208,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inputLabel: {
-    fontFamily: RUBIK[700],
     color: BLACK,
   },
   input: {

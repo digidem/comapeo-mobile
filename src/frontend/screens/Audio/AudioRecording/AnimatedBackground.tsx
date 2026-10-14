@@ -1,4 +1,4 @@
-import {StyleSheet, useWindowDimensions} from 'react-native';
+import {Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -11,7 +11,8 @@ import {COMAPEO_BLUE} from '../../../lib/styles';
 export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
   const {bottom} = useSafeAreaInsets();
   const {height} = useWindowDimensions();
-  const targetHeight = height - bottom;
+  // Different calculation for Android and iOS due to safe area insets
+  const targetHeight = Platform.OS === 'android' ? height - bottom : height;
 
   const elapsedTimeValue = useDerivedValue(() => {
     return withTiming(timeElapsed, {duration: 500});

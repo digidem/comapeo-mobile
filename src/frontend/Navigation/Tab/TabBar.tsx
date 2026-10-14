@@ -1,6 +1,6 @@
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import NotebookPenIcon from '../../images/NotebookPen.svg';
 import TracksIcon from '../../images/Tracks.svg';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -10,6 +10,8 @@ import {useTracking} from '../../hooks/useTracking';
 import {useTrackTimer} from '../../hooks/useTrackTimer.ts';
 
 const BUTTON_SIZE = 25;
+// iOS is not using the bottom edge from safe area view so needs a bit of extra margin bottom
+const BUTTON_MARGIN_BOTTOM = Platform.OS === 'ios' ? 33 : 25;
 const HIT_SLOP = 20;
 
 export const TabBar = ({navigation, state}: BottomTabBarProps) => {
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     marginTop: 25,
-    marginBottom: 25,
+    marginBottom: BUTTON_MARGIN_BOTTOM,
     flex: 1,
     alignItems: 'center',
   },

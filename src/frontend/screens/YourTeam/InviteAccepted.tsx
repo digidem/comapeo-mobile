@@ -59,7 +59,7 @@ export const InviteAccepted = ({
             values={{
               deviceName: name,
               bold: (chunks: React.ReactNode) => (
-                <BodyText key="bold" style={{fontWeight: 'bold'}}>
+                <BodyText key="bold" weight={700}>
                   {chunks}
                 </BodyText>
               ),

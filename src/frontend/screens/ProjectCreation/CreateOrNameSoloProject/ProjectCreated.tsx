@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import GreenCheck from '../../../images/Success.svg';
 import GraphIcon from '../../../images/Graph.svg';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
-import {useFocusEffect} from '@react-navigation/native';
 import {
   PrimaryButton,
   SecondaryButton,
@@ -12,6 +11,7 @@ import {
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BLACK, NEW_DARK_GREY} from '../../../lib/styles';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
 
 const m = defineMessages({
   success: {
@@ -43,17 +43,7 @@ export const ProjectCreated = ({
   const {formatMessage: t} = useIntl();
   const {name, statsShared} = route.params;
 
-  // disables back button
-  useFocusEffect(
-    React.useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        () => true,
-      );
-
-      return () => subscription.remove();
-    }, []),
-  );
+  usePreventBackNavigation();
 
   function handleGoToMap() {
     navigation.popToTop();

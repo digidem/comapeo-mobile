@@ -17,6 +17,7 @@ import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 import {useSecurityState} from '../../../../contexts/SecurityStoreContext';
 import {useReplaceBackNavigation} from '../../../../hooks/useReplaceBackNavigation';
+import {RUBIK} from '../../../../lib/fonts';
 
 const m = defineMessages({
   appUsePasscode: {
@@ -115,7 +116,7 @@ TurnOffPasscode.navTitle = m.title;
 const styles = StyleSheet.create({
   text: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: RUBIK[700],
   },
   checkBoxContainer: {
     display: 'flex',

@@ -87,7 +87,7 @@ export function RemoteArchiveOn({
 
       {isCoordinator ? (
         <View>
-          <BodyText variant="smallMeta" style={{fontWeight: 'bold'}}>
+          <BodyText variant="smallMeta" weight={700}>
             {t(m.thisIncludes)}
           </BodyText>
           <BodyText variant="smallMeta">{t(m.observations)}</BodyText>
@@ -126,7 +126,8 @@ export function RemoteArchiveOn({
                   onRemove();
                 }}>
                 <BodyText
-                  style={{color: MAGENTA, fontWeight: 'bold'}}
+                  style={{color: MAGENTA}}
+                  weight={700}
                   variant="smallMeta">
                   {t(m.removeServer)}
                 </BodyText>

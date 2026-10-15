@@ -205,7 +205,7 @@ export function MapReceivedBottomSheet({
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
-        <BodyText variant="tinyMeta" style={styles.header}>
+        <BodyText weight={500} variant="tinyMeta" style={styles.header}>
           {t(m.sharingDevice, {deviceName: mapShare.senderDeviceName})}
         </BodyText>
 
@@ -279,7 +279,6 @@ const styles = StyleSheet.create({
   header: {
     textTransform: 'uppercase',
     color: BLACK,
-    fontWeight: '500',
   },
   mapCard: {
     backgroundColor: LIGHT_GREEN,

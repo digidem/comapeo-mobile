@@ -174,7 +174,7 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     <View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.latitude} />
           </HeaderText>
           <TextInput
@@ -204,7 +204,7 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
       </View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.longitude} />
           </HeaderText>
           <TextInput

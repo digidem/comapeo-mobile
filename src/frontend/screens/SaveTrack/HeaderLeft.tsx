@@ -2,8 +2,7 @@ import * as React from 'react';
 import {HeaderLeftClose} from '../../sharedComponents/HeaderLeftClose';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useFocusEffect} from '@react-navigation/native';
-import {BackHandler} from 'react-native';
+import {useReplaceBackNavigation} from '../../hooks/useReplaceBackNavigation';
 
 type HeaderLeftProps = {
   headerBackButtonProps: HeaderBackButtonProps;
@@ -16,21 +15,7 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
     navigation.navigate('ConfirmDiscardTrackBottomSheet');
   }, [navigation]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        handlePress();
-        return true;
-      };
-
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-
-      return () => subscription.remove();
-    }, [handlePress]),
-  );
+  useReplaceBackNavigation(handlePress);
 
   return (
     <HeaderLeftClose

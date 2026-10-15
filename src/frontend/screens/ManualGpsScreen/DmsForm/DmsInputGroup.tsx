@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {Select} from '../../../sharedComponents/Select';
 import {BLACK, DARK_GREY, LIGHT_GREY} from '../../../lib/styles';
 import {INTEGER_REGEX, parseNumber} from '../shared';
@@ -104,7 +104,7 @@ export const DmsInputGroup = ({
     <View style={styles.groupContainer}>
       <View style={styles.row}>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             {label}
           </HeaderText>
           <View style={styles.inputsContainer}>

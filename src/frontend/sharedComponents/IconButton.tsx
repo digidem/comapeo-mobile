@@ -5,6 +5,8 @@ import {TouchableNativeFeedback} from './Touchables';
 import {VERY_LIGHT_BLUE} from '../lib/styles';
 import type {ViewStyleProp} from '../sharedTypes';
 
+export const HEADER_BUTTON_SIZE = 60;
+
 type Props = {
   children: React.ReactNode;
   onPress?: ((event: GestureResponderEvent) => void) | (() => void);
@@ -36,8 +38,8 @@ export const IconButton = React.memo<Props>(IconButtonNotMemoized);
 
 const styles = StyleSheet.create({
   container: {
-    width: 60,
-    height: 60,
+    width: HEADER_BUTTON_SIZE,
+    height: HEADER_BUTTON_SIZE,
     flex: 0,
     justifyContent: 'center',
     alignItems: 'center',

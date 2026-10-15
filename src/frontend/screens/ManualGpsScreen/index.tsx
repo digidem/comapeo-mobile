@@ -150,7 +150,7 @@ export const ManualGpsScreen = ({
       style={styles.keyboardAvoidingView}>
       <ScrollView contentContainerStyle={styles.scrollContentContainer}>
         <View style={styles.formatSelect}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.coordinateFormat} />
           </HeaderText>
           <Select

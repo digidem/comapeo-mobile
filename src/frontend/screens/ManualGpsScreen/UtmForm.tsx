@@ -3,8 +3,8 @@ import {toLatLon as origToLatLon, fromLatLon} from 'utm';
 import {View, TextInput, StyleSheet} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BLACK, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 import {FormProps, parseNumber} from './shared';
 
@@ -103,7 +103,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     <View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.zoneNumber} />
           </HeaderText>
           <TextInput
@@ -119,7 +119,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
           />
         </View>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.zoneLetter} />
           </HeaderText>
           <TextInput
@@ -137,7 +137,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
       </View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.easting} />
           </HeaderText>
           <View style={styles.inputContainer}>
@@ -157,7 +157,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
           </View>
         </View>
         <View style={styles.column}>
-          <HeaderText variant="header5" style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.northing} />
           </HeaderText>
           <View style={styles.inputContainer}>

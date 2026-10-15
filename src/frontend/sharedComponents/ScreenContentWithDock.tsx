@@ -2,10 +2,9 @@ import {ReactNode, type PropsWithChildren} from 'react';
 import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 
 import {ViewStyleProp} from '../sharedTypes';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-// since we are not using the safe area bottom edge on iOS, adds a little clearance from
-// the home indicator for buttons at the bottom of the screen
-const DOCK_BOTTOM_SPACE = Platform.OS === 'ios' ? 5 : 0;
+const DOCK_PADDING = 20;
 
 export const ScreenContentWithDock = ({
   children,
@@ -19,6 +18,11 @@ export const ScreenContentWithDock = ({
   contentContainerStyle?: ViewStyleProp;
   testID?: string;
 }>) => {
+  // Since we are not using the safe area bottom edge on iOS, this is so that buttons at the
+  // bottom are above the home indicator when it is needed
+  const {bottom} = useSafeAreaInsets();
+  const dockBottomSpace =
+    Platform.OS === 'ios' ? Math.max(bottom - DOCK_PADDING, 0) : 0;
   return (
     <View style={styles.container} testID={testID}>
       <ScrollView
@@ -30,7 +34,7 @@ export const ScreenContentWithDock = ({
         ]}>
         {children}
       </ScrollView>
-      <View style={{paddingBottom: DOCK_BOTTOM_SPACE}}>
+      <View style={{paddingBottom: dockBottomSpace}}>
         <View style={[styles.dockedContentContainer, dockContainerStyle]}>
           {dockContent}
         </View>
@@ -47,7 +51,7 @@ const styles = StyleSheet.create({
   },
   dockedContentContainer: {
     flex: 0,
-    padding: 20,
+    padding: DOCK_PADDING,
     alignItems: 'center',
   },
 });

@@ -8,13 +8,19 @@ import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useTracking} from '../../hooks/useTracking';
 import {useTrackTimer} from '../../hooks/useTrackTimer.ts';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const BUTTON_SIZE = 25;
-// iOS is not using the bottom edge from safe area view so needs a bit of extra margin bottom
-const BUTTON_MARGIN_BOTTOM = Platform.OS === 'ios' ? 33 : 25;
+const BUTTON_MARGIN = 25;
 const HIT_SLOP = 20;
 
 export const TabBar = ({navigation, state}: BottomTabBarProps) => {
+  // iOS is not using the bottom edge from safe area view so needs a bit of extra margin bottom
+  // on devices that have the home indicator
+
+  const {bottom} = useSafeAreaInsets();
+  const paddingBottom =
+    Platform.OS === 'ios' ? Math.max(bottom - BUTTON_MARGIN, 0) : 0;
   const currentIndex = state.index;
   const currentTab = state.routes[currentIndex];
 
@@ -26,7 +32,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
     navigation.navigate('Map', {trackingOpen: true});
   }
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom}]}>
       <TouchableOpacity
         hitSlop={HIT_SLOP}
         testID="tabBarButtonObservationsList"
@@ -122,8 +128,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonStyle: {
-    marginTop: 25,
-    marginBottom: BUTTON_MARGIN_BOTTOM,
+    marginTop: BUTTON_MARGIN,
+    marginBottom: BUTTON_MARGIN,
     flex: 1,
     alignItems: 'center',
   },

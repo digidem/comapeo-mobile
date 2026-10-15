@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {Platform} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {WHITE, MEDIUM_GREY, DARK_GREY, LIGHT_BLUE} from '../../lib/styles';
+import {SafeAreaView, type Edge} from 'react-native-safe-area-context';
+import {WHITE, MEDIUM_GREY} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
@@ -31,20 +31,9 @@ export type NavigatorScreenLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
 >;
 
-// Android's bottom inset sits behind the system navigation bar, where grey is a
-// deliberate visual choice. iOS's is the home activity indicator, which should
-// match the screen above it: white like the tabs, except on these screens.
-const IOS_BOTTOM_INSET_COLORS: Partial<
-  Record<keyof AppStackParamsList, string>
-> = {
-  IntroToCoMapeo: LIGHT_BLUE,
-  AudioRecording: DARK_GREY,
-};
-
-function getBottomInsetColor(routeName: keyof AppStackParamsList | undefined) {
-  if (Platform.OS === 'android') return MEDIUM_GREY;
-  return (routeName && IOS_BOTTOM_INSET_COLORS[routeName]) ?? WHITE;
-}
+// Only Android uses the bottom inset, where grey matches the system
+// navigation bar.
+const BOTTOM_INSET_EDGES: Edge[] = Platform.OS === 'android' ? ['bottom'] : [];
 
 const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
@@ -110,11 +99,8 @@ export const RootStackNavigator = () => {
     descriptors,
   }) => (
     <SafeAreaView
-      edges={['bottom']}
-      style={{
-        flex: 1,
-        backgroundColor: getBottomInsetColor(state.routes[state.index]?.name),
-      }}>
+      edges={BOTTOM_INSET_EDGES}
+      style={{flex: 1, backgroundColor: MEDIUM_GREY}}>
       <React.Suspense fallback={<FullScreenCenteredLoader />}>
         <PendingInvitesListener
           currentRouteName={state.routes[state.index]?.name}

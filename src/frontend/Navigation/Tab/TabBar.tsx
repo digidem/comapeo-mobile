@@ -1,6 +1,6 @@
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
 import NotebookPenIcon from '../../images/NotebookPen.svg';
 import TracksIcon from '../../images/Tracks.svg';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -8,11 +8,19 @@ import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useTracking} from '../../hooks/useTracking';
 import {useTrackTimer} from '../../hooks/useTrackTimer.ts';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const BUTTON_SIZE = 25;
+const BUTTON_MARGIN = 25;
 const HIT_SLOP = 20;
 
 export const TabBar = ({navigation, state}: BottomTabBarProps) => {
+  // iOS is not using the bottom edge from safe area view so needs a bit of extra margin bottom
+  // on devices that have the home indicator
+
+  const {bottom} = useSafeAreaInsets();
+  const paddingBottom =
+    Platform.OS === 'ios' ? Math.max(bottom - BUTTON_MARGIN, 0) : 0;
   const currentIndex = state.index;
   const currentTab = state.routes[currentIndex];
 
@@ -24,7 +32,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
     navigation.navigate('Map', {trackingOpen: true});
   }
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom}]}>
       <TouchableOpacity
         hitSlop={HIT_SLOP}
         testID="tabBarButtonObservationsList"
@@ -120,8 +128,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonStyle: {
-    marginTop: 25,
-    marginBottom: 25,
+    marginTop: BUTTON_MARGIN,
+    marginBottom: BUTTON_MARGIN,
     flex: 1,
     alignItems: 'center',
   },

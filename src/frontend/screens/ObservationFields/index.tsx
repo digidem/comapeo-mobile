@@ -1,5 +1,11 @@
 import React from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Platform,
+} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 
@@ -18,6 +24,7 @@ import {
 import {COMAPEO_BLUE} from '../../lib/styles';
 import {usePreventRemove} from '@react-navigation/native';
 import {DatePicker} from './Date';
+import {headerItemStyle} from '../../sharedComponents/IconButton';
 
 const m = defineMessages({
   nextQuestion: {
@@ -77,10 +84,14 @@ export const ObservationFields = ({
               return;
             }
             setCurrent(current + 1);
-          }}>
+          }}
+          style={headerItemStyle}>
           <HeaderText
             variant="header5"
-            style={{color: COMAPEO_BLUE, marginRight: 10}}>
+            style={{
+              color: COMAPEO_BLUE,
+              ...Platform.select({android: {marginRight: 10}}),
+            }}>
             {current === fieldIds.length
               ? formatMessage(m.done)
               : formatMessage(m.nextQuestion)}

@@ -1,14 +1,14 @@
 import * as React from 'react';
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import ErrorIcon from '../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLACK} from '../../lib/styles';
 import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {useFocusEffect} from '@react-navigation/native';
 import {resetToYourTeam} from '../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 
 const m = defineMessages({
   inviteDeclined: {
@@ -33,16 +33,7 @@ export const InviteDeclined = ({
   const {formatMessage} = useIntl();
   const {name, deviceType, deviceId} = route.params;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        () => true,
-      );
-
-      return () => subscription.remove();
-    }, []),
-  );
+  usePreventBackNavigation();
 
   return (
     <View style={styles.container}>

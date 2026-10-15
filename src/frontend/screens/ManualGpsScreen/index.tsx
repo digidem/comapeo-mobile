@@ -5,6 +5,8 @@ import {
   StyleSheet,
   ToastAndroid,
   KeyboardAvoidingView,
+  Platform,
+  Alert,
 } from 'react-native';
 import {
   FormattedMessage,
@@ -13,6 +15,7 @@ import {
   useIntl,
 } from 'react-intl';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {useHeaderHeight} from '@react-navigation/elements';
 
 import {BLACK} from '../../lib/styles';
 import {IconButton} from '../../sharedComponents/IconButton';
@@ -72,6 +75,7 @@ export const ManualGpsScreen = ({
   navigation,
 }: NativeRootNavigationProps<'ManualGpsScreen'>) => {
   const {formatMessage: t} = useIntl();
+  const headerHeight = useHeaderHeight();
 
   const [convertedData, setConvertedData] =
     React.useState<ConvertedCoordinateData>({});
@@ -95,11 +99,7 @@ export const ManualGpsScreen = ({
   React.useEffect(() => {
     function handleSavePress() {
       if (convertedData.error) {
-        return ToastAndroid.showWithGravity(
-          convertedData.error.message,
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
+        return showSavingError(convertedData.error.message);
       }
 
       const {lon: longitude, lat: latitude} = convertedData.coords || {};
@@ -108,11 +108,7 @@ export const ManualGpsScreen = ({
       const latIsValid = latitude !== undefined && latitudeIsValid(latitude);
 
       if (!lonIsValid || !latIsValid) {
-        return ToastAndroid.showWithGravity(
-          t(m.invalidCoordinates),
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
+        return showSavingError(t(m.invalidCoordinates));
       }
 
       updatePosition({
@@ -148,52 +144,49 @@ export const ManualGpsScreen = ({
       : undefined;
 
   return (
-    <View>
-      {/* TODO: Set `behavior` to "padding" when iOS is supported */}
-      <KeyboardAvoidingView>
-        <ScrollView contentContainerStyle={styles.scrollContentContainer}>
-          <View style={styles.formatSelect}>
-            <HeaderText
-              weight={700}
-              variant="header5"
-              style={styles.inputLabel}>
-              <FormattedMessage {...m.coordinateFormat} />
-            </HeaderText>
-            <Select
-              containerStyles={styles.selectContainer}
-              onChange={value => {
-                if (!isCoordinateFormat(value)) {
-                  return;
-                }
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={headerHeight}
+      style={styles.keyboardAvoidingView}>
+      <ScrollView contentContainerStyle={styles.scrollContentContainer}>
+        <View style={styles.formatSelect}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
+            <FormattedMessage {...m.coordinateFormat} />
+          </HeaderText>
+          <Select
+            containerStyles={styles.selectContainer}
+            onChange={value => {
+              if (!isCoordinateFormat(value)) {
+                return;
+              }
 
-                setFormat(value);
-              }}
-              options={ENTRY_FORMAT_OPTIONS}
-              selectedValue={entryCoordinateFormat}
+              setFormat(value);
+            }}
+            options={ENTRY_FORMAT_OPTIONS}
+            selectedValue={entryCoordinateFormat}
+          />
+        </View>
+
+        <View style={styles.formContainer}>
+          {entryCoordinateFormat === 'dd' ? (
+            <DdForm
+              initialCoordinates={locationCoordinates}
+              onValueUpdate={setConvertedData}
             />
-          </View>
-
-          <View style={styles.formContainer}>
-            {entryCoordinateFormat === 'dd' ? (
-              <DdForm
-                initialCoordinates={locationCoordinates}
-                onValueUpdate={setConvertedData}
-              />
-            ) : entryCoordinateFormat === 'dms' ? (
-              <DmsForm
-                initialCoordinates={locationCoordinates}
-                onValueUpdate={setConvertedData}
-              />
-            ) : (
-              <UtmForm
-                initialCoordinates={locationCoordinates}
-                onValueUpdate={setConvertedData}
-              />
-            )}
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </View>
+          ) : entryCoordinateFormat === 'dms' ? (
+            <DmsForm
+              initialCoordinates={locationCoordinates}
+              onValueUpdate={setConvertedData}
+            />
+          ) : (
+            <UtmForm
+              initialCoordinates={locationCoordinates}
+              onValueUpdate={setConvertedData}
+            />
+          )}
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -220,11 +213,22 @@ function observationValueSelector(
   return state.value;
 }
 
+function showSavingError(message: string) {
+  if (Platform.OS === 'android') {
+    ToastAndroid.showWithGravity(message, ToastAndroid.LONG, ToastAndroid.TOP);
+  } else {
+    Alert.alert(message);
+  }
+}
+
 function isCoordinateFormat(value: string): value is CoordinateFormat {
   return value === 'dd' || value === 'dms' || value === 'utm';
 }
 
 const styles = StyleSheet.create({
+  keyboardAvoidingView: {
+    flex: 1,
+  },
   scrollContentContainer: {
     paddingHorizontal: 10,
     paddingVertical: 20,

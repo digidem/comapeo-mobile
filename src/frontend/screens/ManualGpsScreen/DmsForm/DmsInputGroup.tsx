@@ -123,7 +123,7 @@ export const DmsInputGroup = ({
                 underlineColorAndroid="transparent"
                 value={coordinate.degrees}
               />
-              <BodyText style={{color: BLACK}}>
+              <BodyText style={styles.bodyText}>
                 <FormattedMessage {...m.degrees} />
               </BodyText>
             </View>
@@ -145,7 +145,7 @@ export const DmsInputGroup = ({
                 underlineColorAndroid="transparent"
                 value={coordinate.minutes}
               />
-              <BodyText style={{color: BLACK}}>
+              <BodyText style={styles.bodyText}>
                 <FormattedMessage {...m.minutes} />
               </BodyText>
             </View>
@@ -167,7 +167,7 @@ export const DmsInputGroup = ({
                 underlineColorAndroid="transparent"
                 value={coordinate.seconds}
               />
-              <BodyText style={{color: BLACK}}>
+              <BodyText style={styles.bodyText}>
                 <FormattedMessage {...m.seconds} />
               </BodyText>
             </View>
@@ -178,7 +178,7 @@ export const DmsInputGroup = ({
         </View>
       </View>
       <View style={styles.directionSelectContainer}>
-        <BodyText style={{color: BLACK}}>
+        <BodyText style={styles.bodyText}>
           <FormattedMessage {...m.direction} />:
         </BodyText>
         <Select
@@ -196,6 +196,9 @@ export const DmsInputGroup = ({
 };
 
 const styles = StyleSheet.create({
+  bodyText: {
+    color: BLACK,
+  },
   groupContainer: {
     marginBottom: 40,
     marginHorizontal: 10,

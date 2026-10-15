@@ -22,9 +22,6 @@
   "Screens.ProjectSettings.update": {
     "message": "Cập nhật"
   },
-  "Screens.ProjectSettings.view": {
-    "message": "Xem"
-  },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "message": "Hủy",
     "description": "Text for cancel action button."
@@ -316,18 +313,8 @@
   "screens.ObservationMetadataVerified.longitude": {
     "message": "Kinh độ"
   },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "Bắt đầu từ chế độ xem bản đồ hoặc máy ảnh để ghi lại quan sát đầu tiên của bạn.",
-    "description": "Description of observation list view when the user has not yet recorded observations"
-  },
   "screens.ObservationsList.filter.all": {
     "message": "Tất cả"
-  },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Đóng"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Tham gia một dự án"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "Đóng"
@@ -356,9 +343,6 @@
     "message": "Thay đổi"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Quay trở lại"
-  },
-  "soloProject.startNewProject.goBack": {
     "message": "Quay trở lại"
   }
 }

@@ -18,7 +18,7 @@ import {BLACK} from '../../lib/styles';
 import {IconButton} from '../../sharedComponents/IconButton';
 import SaveCheck from '../../images/CheckMark.svg';
 import {Select} from '../../sharedComponents/Select';
-import {Text} from '../../sharedComponents/Text';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {type CoordinateFormat} from '../../lib/coordinateFormat';
 
 import {
@@ -153,9 +153,12 @@ export const ManualGpsScreen = ({
       <KeyboardAvoidingView>
         <ScrollView contentContainerStyle={styles.scrollContentContainer}>
           <View style={styles.formatSelect}>
-            <Text style={styles.inputLabel}>
+            <HeaderText
+              weight={700}
+              variant="header5"
+              style={styles.inputLabel}>
               <FormattedMessage {...m.coordinateFormat} />
-            </Text>
+            </HeaderText>
             <Select
               containerStyles={styles.selectContainer}
               onChange={value => {
@@ -230,7 +233,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   inputLabel: {
-    fontWeight: 'bold',
     color: BLACK,
   },
   formatSelect: {

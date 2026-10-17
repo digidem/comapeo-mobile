@@ -1,5 +1,6 @@
 import {act, renderHook} from '@testing-library/react-native';
 import {type ReactNode} from 'react';
+import {deleteItemAsync, getItem} from 'expo-secure-store';
 
 import {
   createSecurityStore,
@@ -9,6 +10,19 @@ import {
   useSecurityState,
 } from './SecurityStoreContext';
 import {DEFAULT_OBSCURE_CODE, verifyPasscode} from '../lib/security';
+
+jest.mock('expo-secure-store', () => ({
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  deleteItemAsync: jest.fn(),
+}));
+
+let mockIsFreshInstall = false;
+jest.mock('../lib/freshInstall', () => ({
+  get isFreshInstall() {
+    return mockIsFreshInstall;
+  },
+}));
 
 function createWrapper(settingsStore: SecurityStore) {
   return ({children}: {children: ReactNode}) => {
@@ -227,4 +241,43 @@ test('resets attempts and lockout', async () => {
 
   expect(stateHook.result.current.failedAttempts).toBe(0);
   expect(stateHook.result.current.lockUntil).toBe(0);
+});
+
+describe('stale Keychain data after a reinstall', () => {
+  const STORED = JSON.stringify({
+    version: 1,
+    state: {
+      passcode: `${'a'.repeat(16)}:${'b'.repeat(64)}`,
+      obscureCodeEnabled: false,
+      failedAttempts: 0,
+      lockUntil: 0,
+      _hasHydrated: true,
+    },
+  });
+
+  beforeEach(() => {
+    jest.mocked(getItem).mockReturnValue(STORED);
+    jest.mocked(deleteItemAsync).mockResolvedValue(undefined);
+  });
+
+  afterEach(() => {
+    mockIsFreshInstall = false;
+    jest.clearAllMocks();
+  });
+
+  test('a passcode left by a previous install is ignored and deleted', () => {
+    mockIsFreshInstall = true;
+
+    const store = createSecurityStore({persist: true});
+
+    expect(store.instance.getState().passcode).toBeNull();
+    expect(deleteItemAsync).toHaveBeenCalledWith('security');
+  });
+
+  test('a passcode belonging to this install is kept', () => {
+    const store = createSecurityStore({persist: true});
+
+    expect(store.instance.getState().passcode).not.toBeNull();
+    expect(deleteItemAsync).not.toHaveBeenCalled();
+  });
 });

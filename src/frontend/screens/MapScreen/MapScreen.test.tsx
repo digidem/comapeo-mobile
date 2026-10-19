@@ -96,20 +96,19 @@ jest.mock('../../hooks/server/presets', () => ({
   usePresetsQuery: () => ({data: []}),
 }));
 
-let mockLocationState = 'granted';
-let mockNotificationState = 'granted';
+let mockLocationGranted = true;
+let mockLocationCanAskAgain = true;
 
-jest.mock('../../hooks/usePermissions', () => ({
-  useLocationPermission: () => ({
-    state: mockLocationState,
-    request: jest.fn(),
-    openSettings: jest.fn(),
+jest.mock('../../hooks/useLocationPermissionTracker', () => ({
+  useLocationPermissionQuery: () => ({
+    data: {
+      granted: mockLocationGranted,
+      canAskAgain: mockLocationCanAskAgain,
+    },
   }),
-  useNotificationPermission: () => ({
-    state: mockNotificationState,
-    request: jest.fn(),
-    openSettings: jest.fn(),
-  }),
+  useInvalidateLocationPermission: () => jest.fn(),
+  requestLocationPermission: jest.fn(),
+  useLocationPermissionWithoutPasscode: () => ({mutate: jest.fn()}),
 }));
 
 process.env.MAPBOX_ACCESS_TOKEN = 'test-token';
@@ -143,8 +142,8 @@ describe('MapScreen', () => {
 
     mockTotalBytes = 64 * 1024 * 1024 * 1024;
     mockFreeBytes = null;
-    mockLocationState = 'granted';
-    mockNotificationState = 'granted';
+    mockLocationGranted = true;
+    mockLocationCanAskAgain = true;
   });
 
   afterEach(async () => {
@@ -187,21 +186,19 @@ describe('MapScreen', () => {
 
   it('still reaches the track sheet when location is denied', async () => {
     mockFreeBytes = 600 * 1024 * 1024;
-    mockLocationState = 'askable';
-    mockNotificationState = 'askable';
+    mockLocationGranted = false;
 
     await renderMap({trackingOpen: true});
 
-    expect(
-      await screen.findByText('Location & Notifications required to use.'),
-    ).toBeTruthy();
+    // both screens share the same body copy, so the title is what tells them apart
+    expect(await screen.findByText('Record Tracks')).toBeTruthy();
     // the map's own location card would only compete with the sheet's request
     expect(screen.queryByTestId('MAP.location-permission')).toBeNull();
   });
 
   it('shows the map location request when the track sheet is closed', async () => {
     mockFreeBytes = 600 * 1024 * 1024;
-    mockLocationState = 'askable';
+    mockLocationGranted = false;
 
     await renderMap();
 

@@ -2,6 +2,12 @@
 
 set -e
 
+# Android-only: this uploads an APK to the downloads bucket. iOS ad-hoc builds
+# are distributed from their EAS build page instead.
+if [ "$EAS_BUILD_PLATFORM" != "android" ]; then
+  exit 0
+fi
+
 if [ "$EAS_BUILD_PROFILE" = "production" ]; then
   BUILD_PROFILE='release'
 elif [ "$EAS_BUILD_PROFILE" = "release-candidate" ]; then

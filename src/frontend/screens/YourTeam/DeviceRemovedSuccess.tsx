@@ -1,7 +1,6 @@
 import * as React from 'react';
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {useFocusEffect} from '@react-navigation/native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import SuccessIcon from '../../images/Success.svg';
@@ -11,6 +10,7 @@ import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDoc
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 
 const m = defineMessages({
   deviceRemoved: {
@@ -35,16 +35,7 @@ export const DeviceRemovedSuccess = ({
   const {formatMessage: t} = useIntl();
   const {deviceName, projectName} = route.params;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        () => true,
-      );
-
-      return () => subscription.remove();
-    }, []),
-  );
+  usePreventBackNavigation();
 
   const handleReturnToTeam = () => {
     navigation.popTo('YourTeam');

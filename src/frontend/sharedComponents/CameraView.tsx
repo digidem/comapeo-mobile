@@ -12,14 +12,19 @@ import {
   useCameraDevice,
   type PhotoFile,
 } from 'react-native-vision-camera';
-import {useCameraPermission} from '../hooks/usePermissions';
+import {
+  requestCameraPermission,
+  useCameraPermissionWithoutPasscode,
+  useCameraPermissionQuery,
+  useInvalidateCameraPermission,
+} from '../hooks/useCameraPermissionTracker';
+import {openSettingsAndWait} from '../utils/linking';
 
 import {GPSPill} from './GPSPill';
 import {BodyText} from './Text/BodyText';
 import {IconTitleDescription} from './IconTitleDescription';
 import {AllowPermissionButton, OpenSettingsButton} from './PermissionButtons';
 import {ScreenContentWithDock} from './ScreenContentWithDock';
-import {FullScreenCenteredLoader} from './FullScreenCenteredLoader';
 import PhotoLibraryIcon from '../images/PhotoLibrary.svg';
 import {BLUE_GREY, DARK_GREY, WHITE} from '../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
@@ -57,7 +62,7 @@ export const CameraView = ({onAddPress}: Props) => {
   const [cameraReady, setCameraReady] = React.useState(false);
   const accelerometerMeasurement =
     React.useRef<AccelerometerMeasurement | null>(null);
-  const cameraPermission = useCameraPermission();
+  const {data: permission} = useCameraPermissionQuery();
   const {formatMessage} = useIntl();
   const camera = useRef<Camera>(null);
   const location = useLocationState(store => store.location);
@@ -86,6 +91,18 @@ export const CameraView = ({onAddPress}: Props) => {
       if (deviceMotionSub) deviceMotionSub.remove();
     };
   }, []);
+
+  const invalidateCameraPermission = useInvalidateCameraPermission();
+
+  const askPermission = useCameraPermissionWithoutPasscode(async () => {
+    await requestCameraPermission();
+    await invalidateCameraPermission();
+  });
+
+  const goToSettings = useCameraPermissionWithoutPasscode(async () => {
+    await openSettingsAndWait();
+    await invalidateCameraPermission();
+  });
 
   function handleAddPress() {
     if (!camera.current || !cameraReady) {
@@ -121,26 +138,22 @@ export const CameraView = ({onAddPress}: Props) => {
       });
   }
 
-  if (cameraPermission.state === 'pending') {
-    return <FullScreenCenteredLoader />;
-  }
-
-  if (cameraPermission.state !== 'granted') {
+  if (!permission.granted) {
     return (
       <View style={styles.permissionScreen}>
         <ScreenContentWithDock
           testID="MAIN.camera-permission"
           contentContainerStyle={styles.permissionContent}
           dockContent={
-            cameraPermission.state === 'blocked' ? (
-              <OpenSettingsButton
-                testID="MAIN.camera-settings-btn"
-                onPress={cameraPermission.openSettings}
-              />
-            ) : (
+            permission.canAskAgain ? (
               <AllowPermissionButton
                 testID="MAIN.camera-allow-btn"
-                onPress={cameraPermission.request}
+                onPress={() => askPermission.mutate()}
+              />
+            ) : (
+              <OpenSettingsButton
+                testID="MAIN.camera-settings-btn"
+                onPress={() => goToSettings.mutate()}
               />
             )
           }>

@@ -11,7 +11,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {WHITE} from '../../../lib/styles';
-import {TrackSheetContent} from './TrackSheetContent';
+import {StartStopTrack} from './StartStopTrack';
 
 const ANIMATION_DURATION = 250;
 
@@ -47,7 +47,7 @@ export const TrackBottomSheet = React.memo(({isOpen}: {isOpen: boolean}) => {
     return (
       <View style={styles.container}>
         <View style={styles.animatedBackground}>
-          <TrackSheetContent isOpen={isOpen} />
+          <StartStopTrack />
         </View>
       </View>
     );
@@ -58,7 +58,7 @@ export const TrackBottomSheet = React.memo(({isOpen}: {isOpen: boolean}) => {
       style={[styles.animatedBackground, animatedStyle]}
       onLayout={onLayoutSheet}
       pointerEvents={isOpen ? 'auto' : 'none'}>
-      <TrackSheetContent isOpen={isOpen} />
+      <StartStopTrack />
     </Animated.View>
   );
 });

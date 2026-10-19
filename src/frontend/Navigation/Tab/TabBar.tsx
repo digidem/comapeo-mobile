@@ -100,7 +100,11 @@ const TrackButtonContent = ({isSelected}: {isSelected: boolean}) => {
       {isTracking && (
         <View style={styles.runtimeWrapper}>
           <View style={styles.indicator} />
-          <BodyText variant="tinyMeta" style={styles.timer}>
+          <BodyText
+            variant="tinyMeta"
+            numberOfLines={1}
+            maxFontSizeMultiplier={1.15}
+            style={styles.timer}>
             {timer}
           </BodyText>
         </View>
@@ -131,7 +135,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   indicator: {
-    marginRight: 5,
     height: 10,
     width: 10,
     borderRadius: 99,
@@ -139,6 +142,8 @@ const styles = StyleSheet.create({
   },
   timer: {
     marginLeft: 5,
+    // the clock redraws the numbers every second without fixed-width digits
+    fontVariant: ['tabular-nums'],
   },
   trackContainer: {
     flex: 1,

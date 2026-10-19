@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     color: BLACK,
     fontSize: 16,
+    minHeight: 56,
     paddingHorizontal: 16,
   },
   counterText: {

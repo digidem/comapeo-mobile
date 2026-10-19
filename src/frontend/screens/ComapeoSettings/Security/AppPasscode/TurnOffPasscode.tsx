@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BackHandler, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
@@ -11,11 +11,13 @@ import {
 } from '../../../../sharedComponents/List';
 import {MEDIUM_GREY, WHITE} from '../../../../lib/styles';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {useFocusEffect, StackActions} from '@react-navigation/native';
+import {StackActions} from '@react-navigation/native';
 import {CustomHeaderLeft} from '../../../../sharedComponents/CustomHeaderLeft';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 import {useSecurityState} from '../../../../contexts/SecurityStoreContext';
+import {useReplaceBackNavigation} from '../../../../hooks/useReplaceBackNavigation';
+import {RUBIK} from '../../../../lib/fonts';
 
 const m = defineMessages({
   appUsePasscode: {
@@ -62,21 +64,7 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
     });
   }, [backPress, navigation]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        backPress();
-        return true;
-      };
-
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-
-      return () => subscription.remove();
-    }, [backPress]),
-  );
+  useReplaceBackNavigation(backPress);
 
   function openTurnOffPasscodeSheet() {
     navigation.navigate('TurnOffPasscodeBottomSheet');
@@ -128,7 +116,7 @@ TurnOffPasscode.navTitle = m.title;
 const styles = StyleSheet.create({
   text: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: RUBIK[700],
   },
   checkBoxContainer: {
     display: 'flex',

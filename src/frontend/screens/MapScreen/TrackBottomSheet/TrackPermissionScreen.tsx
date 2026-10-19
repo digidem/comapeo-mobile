@@ -20,6 +20,10 @@ const m = defineMessages({
     id: 'screens.MapScreen.TrackBottomSheet.locationRequired',
     defaultMessage: 'Location required to use.',
   },
+  locationAndNotificationsRequired: {
+    id: 'screens.MapScreen.TrackBottomSheet.locationAndNotificationsRequired',
+    defaultMessage: 'Location & Notifications required to use.',
+  },
 });
 
 const ICON_SIZE = 80;
@@ -30,10 +34,12 @@ const ICON_SIZE = 80;
  * can't disagree about it.
  */
 export const TrackPermissionScreen = ({
+  missing,
   canAskAgain,
   onAllow,
   onOpenSettings,
 }: {
+  missing: 'location' | 'locationAndNotifications';
   canAskAgain: boolean;
   onAllow: () => void;
   onOpenSettings: () => void;
@@ -66,7 +72,11 @@ export const TrackPermissionScreen = ({
           />
         }
         title={formatMessage(m.title)}
-        description={formatMessage(m.locationRequired)}
+        description={formatMessage(
+          missing === 'location'
+            ? m.locationRequired
+            : m.locationAndNotificationsRequired,
+        )}
       />
     </ScreenContentWithDock>
   );

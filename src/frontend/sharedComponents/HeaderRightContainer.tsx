@@ -38,7 +38,7 @@ export const HeaderRightIconContainer = ({
   children,
   testID,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   testID?: string;
 }) => {
   return (

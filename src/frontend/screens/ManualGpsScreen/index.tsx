@@ -15,7 +15,6 @@ import {
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {BLACK} from '../../lib/styles';
-import {IconButton} from '../../sharedComponents/IconButton';
 import SaveCheck from '../../images/CheckMark.svg';
 import {Select} from '../../sharedComponents/Select';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -38,6 +37,7 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
+import {HeaderRightIconContainerButton} from '../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   title: {
@@ -130,9 +130,11 @@ export const ManualGpsScreen = ({
 
     navigation.setOptions({
       headerRight: () => (
-        <IconButton onPress={handleSavePress}>
+        <HeaderRightIconContainerButton
+          loading={false}
+          onPress={handleSavePress}>
           <SaveCheck />
-        </IconButton>
+        </HeaderRightIconContainerButton>
       ),
     });
   }, [navigation, convertedData, updatePosition, t]);
@@ -206,9 +208,9 @@ export function createNavigationOptions({
     return {
       headerTitle: intl(m.title),
       headerRight: () => (
-        <IconButton>
+        <HeaderRightIconContainerButton loading={false} onPress={() => {}}>
           <SaveCheck />
-        </IconButton>
+        </HeaderRightIconContainerButton>
       ),
     };
   };

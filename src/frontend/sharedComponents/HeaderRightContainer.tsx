@@ -5,27 +5,42 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {LoadingIndicator} from './LoadingIndicator';
+import {HEADER_LIQUID_GLASS_WIDTH} from '../constants';
 
-type Props = {
+type HeaderRightIconContainerButtonProps = {
   children: React.ReactNode;
-  onPress?: ((event: GestureResponderEvent) => void) | (() => void);
+  onPress: ((event: GestureResponderEvent) => void) | (() => void);
   testID?: string;
+  loading: boolean;
+};
+
+export const HeaderRightIconContainerButton = ({
+  children,
+  onPress,
+  testID,
+  loading,
+}: HeaderRightIconContainerButtonProps) => {
+  return (
+    <View style={styles.container} testID={testID}>
+      {loading ? (
+        <LoadingIndicator size="large" />
+      ) : (
+        <TouchableOpacity style={styles.container} onPress={onPress}>
+          {children}
+        </TouchableOpacity>
+      )}
+    </View>
+  );
 };
 
 export const HeaderRightIconContainer = ({
   children,
-  onPress,
   testID,
-}: Props) => {
-  if (onPress) {
-    return (
-      <TouchableOpacity onPress={onPress}>
-        <View style={styles.container} testID={testID}>
-          {children}
-        </View>
-      </TouchableOpacity>
-    );
-  }
+}: {
+  children: React.ReactNode;
+  testID?: string;
+}) => {
   return (
     <View style={styles.container} testID={testID}>
       {children}
@@ -35,7 +50,7 @@ export const HeaderRightIconContainer = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: 60,
+    width: HEADER_LIQUID_GLASS_WIDTH,
     height: 44,
     flex: 0,
     justifyContent: 'center',

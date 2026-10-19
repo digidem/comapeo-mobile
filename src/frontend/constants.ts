@@ -84,3 +84,5 @@ export const projectColors: projectColor[] = [
 ];
 
 export const DEFAULT_PROJECT_COLOR = '#FFF5EB';
+
+export const HEADER_LIQUID_GLASS_WIDTH = 60;

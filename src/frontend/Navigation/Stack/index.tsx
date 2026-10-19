@@ -59,9 +59,9 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
 
 type LayoutProps = Parameters<NavigatorLayout>[0];
 
-// Anything with the presentation option other than a 'card' is presented as a modal,
-// and iOS keeps a presented modal above whatever arrives after it. So when one is
-// already open, the incoming screen has to replace it rather than stack behind it.
+// Android's bottom inset sits behind the system navigation bar, where grey is a
+// deliberate visual choice. iOS's is the home activity indicator, which should
+// match the screen above it: white like the tabs, except on these screens.
 function openSheetAction(
   {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
   name: 'InviteReceived' | 'MapReceivedBottomSheet',

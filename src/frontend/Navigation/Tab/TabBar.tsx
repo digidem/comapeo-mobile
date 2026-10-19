@@ -1,6 +1,6 @@
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, Platform} from 'react-native';
 import NotebookPenIcon from '../../images/NotebookPen.svg';
 import TracksIcon from '../../images/Tracks.svg';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -75,7 +75,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
         hitSlop={HIT_SLOP}
         testID="tabBarButtonTracking"
         accessibilityLabel="Go to tracking."
-        style={styles.trackContainer}
+        style={styles.buttonStyle}
         onPress={onPressTracks}>
         <TrackButtonContent
           isSelected={
@@ -109,10 +109,7 @@ const TrackButtonContent = ({isSelected}: {isSelected: boolean}) => {
           </BodyText>
         </View>
       )}
-      <TracksIcon
-        color={isSelected ? COMAPEO_BLUE : MEDIUM_GREY}
-        height={BUTTON_SIZE}
-      />
+      <TracksIcon fill={isSelected ? COMAPEO_BLUE : MEDIUM_GREY} height={20} />
     </>
   );
 };
@@ -122,10 +119,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    paddingBottom: Platform.OS === 'android' ? 20 : 0,
   },
   buttonStyle: {
     marginTop: 25,
-    marginBottom: 25,
     flex: 1,
     alignItems: 'center',
   },
@@ -144,9 +141,5 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     // the clock redraws the numbers every second without fixed-width digits
     fontVariant: ['tabular-nums'],
-  },
-  trackContainer: {
-    flex: 1,
-    alignItems: 'center',
   },
 });

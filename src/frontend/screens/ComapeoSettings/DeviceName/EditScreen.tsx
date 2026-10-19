@@ -3,18 +3,17 @@ import {Alert, ScrollView, StyleSheet} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {useForm} from 'react-hook-form';
-import {LoadingIndicator} from '../../../sharedComponents/LoadingIndicator';
 
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {useOwnDeviceInfo, useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {BLACK} from '../../../lib/styles';
 import {HookFormTextInput} from '../../../sharedComponents/HookFormTextInput';
-import {IconButton} from '../../../sharedComponents/IconButton';
 import SaveIcon from '../../../images/CheckMark.svg';
 import {FieldRow} from './FieldRow';
 import {expoToCoreDeviceType} from '../../../lib/deviceTypeMap';
 import {deviceType} from 'expo-device';
 import * as Sentry from '@sentry/react-native';
+import {HeaderRightIconContainerButton} from '../../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   title: {
@@ -49,9 +48,9 @@ export function createNavigationOptions({
       headerTitle: intl(m.title),
       animation: 'none',
       headerRight: () => (
-        <IconButton onPress={() => {}}>
+        <HeaderRightIconContainerButton onPress={() => {}} loading={false}>
           <SaveIcon />
-        </IconButton>
+        </HeaderRightIconContainerButton>
       ),
     };
   };
@@ -120,7 +119,7 @@ export const EditScreen = ({
         },
         {
           onSuccess: () => {
-            navigation.popTo('DeviceNameDisplay');
+            navigation.goBack();
           },
           onError: err => {
             Sentry.captureException(err);
@@ -135,14 +134,12 @@ export const EditScreen = ({
     function updateNavigationOptions() {
       navigation.setOptions({
         headerRight: () => {
-          return isPending ? (
-            <IconButton>
-              <LoadingIndicator size="large" />
-            </IconButton>
-          ) : (
-            <IconButton testID="save-icon" onPress={onSubmit}>
+          return (
+            <HeaderRightIconContainerButton
+              onPress={onSubmit}
+              loading={isPending}>
               <SaveIcon />
-            </IconButton>
+            </HeaderRightIconContainerButton>
           );
         },
       });

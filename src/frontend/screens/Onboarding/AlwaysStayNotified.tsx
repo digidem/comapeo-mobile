@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import RNRestart from 'react-native-restart';
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import type {SvgProps} from 'react-native-svg';
 
 import NotificationsUnread from '../../images/NotificationsUnread.svg';
@@ -12,7 +12,12 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import {useNotificationPermission} from '../../hooks/usePermissions';
+import {
+  requestNotificationPermission,
+  useInvalidateNotificationPermission,
+  useNotificationPermissionWithoutPasscode,
+} from '../../hooks/useNotificationPermissionTracker';
+import type {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {COMAPEO_BLUE, DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
 
 const m = defineMessages({
@@ -47,22 +52,20 @@ const m = defineMessages({
   },
 });
 
-/**
- * Restarts here instead of in device naming. It re-runs
- * getInitialRoute, which sends a named device with no project to Success. It
- * also applies the diagnostics choice made earlier in onboarding, which only
- * takes effect in the backend on a fresh start.
- */
-export const AlwaysStayNotified = () => {
+export const AlwaysStayNotified = ({
+  navigation,
+}: NativeStackScreenProps<OnboardingParamsList, 'AlwaysStayNotified'>) => {
   const {formatMessage: t} = useIntl();
-  const [isAsking, setIsAsking] = React.useState(false);
-  const notifications = useNotificationPermission();
+  const invalidateNotificationPermission =
+    useInvalidateNotificationPermission();
 
-  async function handleAllow() {
-    setIsAsking(true);
-    await notifications.request();
-    RNRestart.restart();
-  }
+  const askNotificationPermission = useNotificationPermissionWithoutPasscode(
+    async () => {
+      await requestNotificationPermission();
+      await invalidateNotificationPermission();
+      navigation.replace('Success');
+    },
+  );
 
   return (
     <View style={styles.container}>
@@ -85,13 +88,13 @@ export const AlwaysStayNotified = () => {
       </View>
 
       <View style={styles.actions}>
-        {isAsking ? (
+        {askNotificationPermission.status === 'pending' ? (
           <LoadingIndicator size="large" />
         ) : (
           <>
             <Pressable
               testID="ONBOARDING.notifications-not-now-btn"
-              onPress={() => RNRestart.restart()}
+              onPress={() => navigation.replace('Success')}
               hitSlop={{top: 12, bottom: 12, left: 12, right: 12}}>
               <BodyText style={styles.notNow}>{t(m.notNow)}</BodyText>
             </Pressable>
@@ -99,7 +102,7 @@ export const AlwaysStayNotified = () => {
               testID="ONBOARDING.notifications-allow-btn"
               fullSize
               text={t(m.allow)}
-              onPress={handleAllow}
+              onPress={() => askNotificationPermission.mutate()}
             />
           </>
         )}

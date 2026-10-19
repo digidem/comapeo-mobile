@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type {SvgProps} from 'react-native-svg';
 
 import NotificationsUnread from '../../images/NotificationsUnread.svg';
@@ -12,6 +13,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {
   requestNotificationPermission,
   useInvalidateNotificationPermission,
@@ -52,6 +54,8 @@ const m = defineMessages({
   },
 });
 
+const ICON_SIZE = 72;
+
 export const AlwaysStayNotified = ({
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'AlwaysStayNotified'>) => {
@@ -68,32 +72,17 @@ export const AlwaysStayNotified = ({
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.titleSection}>
-        <NotificationsUnread color={DARK_ORANGE} width={40} height={40} />
-        <HeaderText variant="header2" style={styles.headerText}>
-          {t(m.alwaysStayNotified)}
-        </HeaderText>
-      </View>
-
-      <BodyText style={styles.bodyText}>{t(m.allowTheFollowing)}</BodyText>
-
-      <View style={styles.bulletList}>
-        <InfoListItem
-          Icon={PhoneNotification}
-          text={t(m.realTimeCommunicate)}
-        />
-        <InfoListItem Icon={LocationIcon} text={t(m.workInBackground)} />
-        <InfoListItem Icon={Refresh} text={t(m.securelySync)} />
-      </View>
-
-      <View style={styles.actions}>
-        {askNotificationPermission.status === 'pending' ? (
+    <ScreenContentWithDock
+      contentContainerStyle={styles.content}
+      dockContainerStyle={styles.actions}
+      dockContent={
+        askNotificationPermission.status === 'pending' ? (
           <LoadingIndicator size="large" />
         ) : (
           <>
             <Pressable
               testID="ONBOARDING.notifications-not-now-btn"
+              style={styles.notNowButton}
               onPress={() => navigation.replace('Success')}
               hitSlop={{top: 12, bottom: 12, left: 12, right: 12}}>
               <BodyText style={styles.notNow}>{t(m.notNow)}</BodyText>
@@ -103,11 +92,39 @@ export const AlwaysStayNotified = ({
               fullSize
               text={t(m.allow)}
               onPress={() => askNotificationPermission.mutate()}
+              renderIcon={({color, size}) => (
+                <MaterialIcons
+                  name="check-circle-outline"
+                  color={color}
+                  size={size}
+                />
+              )}
             />
           </>
-        )}
+        )
+      }>
+      <View style={styles.titleSection}>
+        <NotificationsUnread
+          color={DARK_ORANGE}
+          width={ICON_SIZE}
+          height={ICON_SIZE}
+        />
+        <HeaderText variant="header2">{t(m.alwaysStayNotified)}</HeaderText>
       </View>
-    </View>
+
+      <View style={styles.benefitsSection}>
+        <BodyText style={styles.introText}>{t(m.allowTheFollowing)}</BodyText>
+
+        <View style={styles.bulletList}>
+          <InfoListItem
+            Icon={PhoneNotification}
+            text={t(m.realTimeCommunicate)}
+          />
+          <InfoListItem Icon={LocationIcon} text={t(m.workInBackground)} />
+          <InfoListItem Icon={Refresh} text={t(m.securelySync)} />
+        </View>
+      </View>
+    </ScreenContentWithDock>
   );
 };
 
@@ -123,26 +140,27 @@ function InfoListItem({text, Icon}: {text: string; Icon: React.FC<SvgProps>}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingTop: 60,
+  content: {
+    paddingTop: 80,
+    paddingHorizontal: 40,
+    gap: 20,
+    alignItems: 'center',
   },
   titleSection: {
     alignItems: 'center',
     gap: 10,
   },
-  headerText: {
-    marginTop: 10,
-    textAlign: 'center',
+  benefitsSection: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    gap: 30,
   },
-  bodyText: {
+  introText: {
     textAlign: 'center',
-    paddingHorizontal: 20,
   },
   bulletList: {
+    alignSelf: 'stretch',
     gap: 12,
-    paddingHorizontal: 20,
   },
   bulletItem: {
     flexDirection: 'row',
@@ -152,11 +170,14 @@ const styles = StyleSheet.create({
   bulletText: {
     flexShrink: 1,
     color: NEW_DARK_GREY,
+    lineHeight: 18,
   },
   actions: {
-    alignItems: 'center',
-    paddingVertical: 20,
-    gap: 20,
+    gap: 10,
+  },
+  notNowButton: {
+    height: 50,
+    justifyContent: 'center',
   },
   notNow: {
     color: COMAPEO_BLUE,

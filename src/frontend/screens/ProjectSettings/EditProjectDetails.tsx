@@ -9,11 +9,12 @@ import {COMAPEO_BLUE} from '../../lib/styles';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {HorizontalScrollView} from '../../sharedComponents/HorizontalScrollView';
-import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useEffect} from 'react';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
 import {projectColors} from '../../constants';
+import SaveCheck from '../../images/CheckMark.svg';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   projectName: {
@@ -64,8 +65,8 @@ export const EditProjectDetails: NativeNavigationComponent<
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <SaveButton
-          isLoading={status === 'pending'}
+        <HeaderRightContainerButton
+          loading={status === 'pending'}
           onPress={handleSubmit(details => {
             if (!details.projectName.trim()) {
               setError('projectName', {type: 'required'});
@@ -86,8 +87,9 @@ export const EditProjectDetails: NativeNavigationComponent<
                 },
               },
             );
-          })}
-        />
+          })}>
+          <SaveCheck />
+        </HeaderRightContainerButton>
       ),
     });
   }, [navigation, handleSubmit, mutate, status, setError]);

@@ -49,7 +49,8 @@ export const InsetMapView = ({
       compass={false}
       touchPitch={false}
       androidView="texture"
-      mapStyle={styleUrl}>
+      mapStyle={styleUrl}
+      testID="OBS.inset-map">
       <Camera center={[lon, lat]} zoom={12} easing="ease" />
       <Marker
         id="locationIndicator"
@@ -57,7 +58,6 @@ export const InsetMapView = ({
         offset={[0, -20]}
         lngLat={[lon, lat]}>
         <TouchableOpacity
-          accessibilityLabel="Open observation metadata via map pin"
           onPress={() => navigate('ObservationMetadata', {observationId})}
           style={{alignSelf: 'center'}}>
           <View style={styles.coords}>

@@ -89,3 +89,7 @@ export const DEFAULT_PROJECT_COLOR = '#FFF5EB';
 // in order to match the header buttons on the right, we need to set the width explicitly on iOS.
 // the margin is only needed for Android because it would be inside the capsule on iOS
 export const HEADER_LIQUID_GLASS_WIDTH = 60;
+
+// 44pt is the height of the iOS navigation bar on an iPhone in portrait mode.
+// React Navigation hardcodes it as the defualt, but it is resized base on the size of the content
+export const HEADER_LIQUID_GLASS_HEIGHT = 44;

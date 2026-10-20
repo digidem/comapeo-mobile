@@ -6,7 +6,10 @@ import {
   View,
 } from 'react-native';
 import {LoadingIndicator} from './LoadingIndicator';
-import {HEADER_LIQUID_GLASS_WIDTH} from '../constants';
+import {
+  HEADER_LIQUID_GLASS_HEIGHT,
+  HEADER_LIQUID_GLASS_WIDTH,
+} from '../constants';
 
 type HeaderRightIconContainerButtonProps = {
   children: React.ReactNode;
@@ -51,7 +54,7 @@ export const HeaderRightIconContainer = ({
 const styles = StyleSheet.create({
   container: {
     width: HEADER_LIQUID_GLASS_WIDTH,
-    height: 44,
+    height: HEADER_LIQUID_GLASS_HEIGHT,
     flex: 0,
     justifyContent: 'center',
     alignItems: 'center',

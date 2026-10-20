@@ -119,7 +119,7 @@ export const EditScreen = ({
         },
         {
           onSuccess: () => {
-            navigation.goBack();
+            navigation.popTo('DeviceNameDisplay');
           },
           onError: err => {
             Sentry.captureException(err);

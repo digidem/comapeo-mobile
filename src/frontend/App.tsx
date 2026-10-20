@@ -35,6 +35,7 @@ import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
+import * as Notifications from 'expo-notifications';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {
   initSentry,
@@ -52,6 +53,7 @@ import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext
 import {createLocaleStore, LocaleContext} from './contexts/LocaleStoreContext';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
+import {TrackingNotification} from './TrackingNotification';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
@@ -105,6 +107,15 @@ const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 
 SplashScreen.setOptions({fade: true});
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowBanner: false,
+    shouldShowList: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const persistedDraftObservationStore = createDraftObservationStore({
   persist: true,
@@ -234,6 +245,7 @@ const App = () => {
                     earlyAccessStore={earlyAccessStore}
                     unitSystemStore={persistedUnitSystemStore}
                     qaDeviceNameStore={qaDeviceNameStore}>
+                    <TrackingNotification />
                     <AppNavigator
                       navigationIntegration={navigationIntegration}
                     />

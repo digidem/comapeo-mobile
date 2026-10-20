@@ -1,5 +1,6 @@
 import * as Location from 'expo-location';
 import {useCallback} from 'react';
+import {useIntl} from 'react-intl';
 import {
   useTrackActions,
   useTrackState,
@@ -9,9 +10,15 @@ import {useNavigation} from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import {useLocationContext} from '../contexts/LocationContext';
 import {toError} from '../utils/errors';
+import {
+  hideTrackingNotification,
+  showTrackingNotification,
+  trackingNotificationMessages as m,
+} from '../lib/trackingNotification';
 
 export function useTracking() {
   const {setTracking, addNewLocations, clearCurrentTrack} = useTrackActions();
+  const {formatMessage} = useIntl();
   const navigation = useNavigation();
   const isTracking = useTrackState(state => state.isTracking);
   // TODO: Once use() is available, we can put this in the cancel tracking function
@@ -27,19 +34,26 @@ export function useTracking() {
       accuracy: Location.Accuracy.Highest,
       activityType: Location.LocationActivityType.Fitness,
       distanceInterval: 1,
+      // Android requires this notification and keeps it up for as long as the foreground service runs
       foregroundService: {
-        notificationTitle: 'CoMapeo is tracking your location',
-        notificationBody: 'Open CoMapeo to stop tracking at any time.',
+        notificationTitle: formatMessage(m.title),
+        notificationBody: formatMessage(m.subtitle),
       },
-    }).catch(err => {
-      Sentry.captureException(err);
-      setTracking(false);
-      // @ts-expect-error - this is a typing issue, we are using the non-strongly typed hook as this can technically be used in any screen. But regardless of the screen, we want to show the error bottom sheet.
-      navigation.navigate('ErrorBottomSheet', {
-        error: toError(err, 'Tracking failed'),
+    })
+      .then(() => {
+        showTrackingNotification(formatMessage).catch(err =>
+          Sentry.captureException(err),
+        );
+      })
+      .catch(err => {
+        Sentry.captureException(err);
+        setTracking(false);
+        // @ts-expect-error - this is a typing issue, we are using the non-strongly typed hook as this can technically be used in any screen. But regardless of the screen, we want to show the error bottom sheet.
+        navigation.navigate('ErrorBottomSheet', {
+          error: toError(err, 'Tracking failed'),
+        });
       });
-    });
-  }, [isTracking, setTracking, navigation]);
+  }, [isTracking, setTracking, navigation, formatMessage]);
 
   /**
    * Stops location tracking and finalizes the track.
@@ -50,6 +64,7 @@ export function useTracking() {
     Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
       Sentry.captureException(err);
     });
+    hideTrackingNotification().catch(err => Sentry.captureException(err));
 
     const currentLocation = locationContext.getState().location;
 
@@ -74,6 +89,7 @@ export function useTracking() {
     Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
       Sentry.captureException(err);
     });
+    hideTrackingNotification().catch(err => Sentry.captureException(err));
 
     setTracking(false);
     clearCurrentTrack();

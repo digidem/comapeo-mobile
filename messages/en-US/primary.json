@@ -209,6 +209,15 @@
   "$1allProjects.newCollab": {
     "message": "New Collaboration"
   },
+  "$1lib.trackingNotification.description": {
+    "message": "CoMapeo is using location to record real-time progress on Tracks. Data remains on this device only and could affect its storage. To stop recording, open CoMapeo, tap Tracks, and then tap End."
+  },
+  "$1lib.trackingNotification.subtitle": {
+    "message": "View real-time Tracks progress."
+  },
+  "$1lib.trackingNotification.title": {
+    "message": "CoMapeo Tracks Recording"
+  },
   "$1screen.EditProjectDetails.navTitle": {
     "message": "Edit Info"
   },

@@ -6,7 +6,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 import {
-  HeaderRightIconContainer,
+  HeaderRightContainer,
   HeaderRightIconContainerButton,
 } from '../../sharedComponents/HeaderRightContainer.tsx';
 
@@ -30,6 +30,6 @@ export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
       <EditIcon />
     </HeaderRightIconContainerButton>
   ) : (
-    <HeaderRightIconContainer />
+    <HeaderRightContainer />
   );
 };

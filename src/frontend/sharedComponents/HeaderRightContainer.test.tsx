@@ -3,7 +3,7 @@ import {Text} from 'react-native';
 import {render, screen, fireEvent} from '@testing-library/react-native';
 
 import {
-  HeaderRightIconContainer,
+  HeaderRightContainer,
   HeaderRightIconContainerButton,
 } from './HeaderRightContainer';
 
@@ -54,9 +54,9 @@ describe('HeaderRightIconContainerButton', () => {
 describe('HeaderRightIconContainer', () => {
   test('renders children and testID', async () => {
     await render(
-      <HeaderRightIconContainer testID="header-container">
+      <HeaderRightContainer testID="header-container">
         <Text>Icon</Text>
-      </HeaderRightIconContainer>,
+      </HeaderRightContainer>,
     );
 
     expect(screen.getByTestId('header-container')).toBeOnTheScreen();
@@ -64,7 +64,7 @@ describe('HeaderRightIconContainer', () => {
   });
 
   test('renders with no children', async () => {
-    await render(<HeaderRightIconContainer testID="header-container" />);
+    await render(<HeaderRightContainer testID="header-container" />);
 
     expect(screen.getByTestId('header-container')).toBeOnTheScreen();
   });

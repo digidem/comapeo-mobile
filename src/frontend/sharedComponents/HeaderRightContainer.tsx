@@ -11,7 +11,7 @@ import {
   HEADER_LIQUID_GLASS_WIDTH,
 } from '../constants';
 
-type HeaderRightIconContainerButtonProps = {
+type HeaderRightContainerButtonProps = {
   children: React.ReactNode;
   onPress: ((event: GestureResponderEvent) => void) | (() => void);
   testID?: string;
@@ -23,7 +23,7 @@ export const HeaderRightIconContainerButton = ({
   onPress,
   testID,
   loading,
-}: HeaderRightIconContainerButtonProps) => {
+}: HeaderRightContainerButtonProps) => {
   return (
     <View style={styles.container} testID={testID}>
       {loading ? (
@@ -37,7 +37,7 @@ export const HeaderRightIconContainerButton = ({
   );
 };
 
-export const HeaderRightIconContainer = ({
+export const HeaderRightContainer = ({
   children,
   testID,
 }: {

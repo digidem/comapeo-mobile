@@ -2,7 +2,7 @@ import * as React from 'react';
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons';
 import {
-  HeaderRightIconContainer,
+  HeaderRightContainer,
   HeaderRightIconContainerButton,
 } from '../../sharedComponents/HeaderRightContainer';
 
@@ -19,8 +19,8 @@ export const ObservationHeaderRight = (props: ObservationHeaderRightProps) => {
       <EditIcon />
     </HeaderRightIconContainerButton>
   ) : (
-    <HeaderRightIconContainer>
+    <HeaderRightContainer>
       <SyncIcon color="#3C69F6" />
-    </HeaderRightIconContainer>
+    </HeaderRightContainer>
   );
 };

@@ -42,6 +42,7 @@ export const CustomHeaderLeft = ({
 export const CustomHeaderLeftStyles = StyleSheet.create({
   headerStyles: {
     marginLeft: 0,
+    // the margin is only needed for Android because it would be inside the capsule on iOS
     ...Platform.select({
       ios: {
         width: HEADER_LIQUID_GLASS_WIDTH,

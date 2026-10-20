@@ -13,7 +13,7 @@ import {FieldRow} from './FieldRow';
 import {expoToCoreDeviceType} from '../../../lib/deviceTypeMap';
 import {deviceType} from 'expo-device';
 import * as Sentry from '@sentry/react-native';
-import {HeaderRightIconContainerButton} from '../../../sharedComponents/HeaderRightContainer';
+import {HeaderRightContainerButton} from '../../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   title: {
@@ -48,9 +48,9 @@ export function createNavigationOptions({
       headerTitle: intl(m.title),
       animation: 'none',
       headerRight: () => (
-        <HeaderRightIconContainerButton onPress={() => {}} loading={false}>
+        <HeaderRightContainerButton onPress={() => {}} loading={false}>
           <SaveIcon />
-        </HeaderRightIconContainerButton>
+        </HeaderRightContainerButton>
       ),
     };
   };
@@ -135,11 +135,9 @@ export const EditScreen = ({
       navigation.setOptions({
         headerRight: () => {
           return (
-            <HeaderRightIconContainerButton
-              onPress={onSubmit}
-              loading={isPending}>
+            <HeaderRightContainerButton onPress={onSubmit} loading={isPending}>
               <SaveIcon />
-            </HeaderRightIconContainerButton>
+            </HeaderRightContainerButton>
           );
         },
       });

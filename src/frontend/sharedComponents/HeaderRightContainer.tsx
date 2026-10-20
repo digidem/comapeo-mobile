@@ -18,7 +18,7 @@ type HeaderRightContainerButtonProps = {
   loading: boolean;
 };
 
-export const HeaderRightIconContainerButton = ({
+export const HeaderRightContainerButton = ({
   children,
   onPress,
   testID,

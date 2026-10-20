@@ -8,7 +8,7 @@ import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {Text} from '../../../sharedComponents/Text';
 import {EditIcon} from '../../../sharedComponents/icons';
 import {FieldRow} from './FieldRow';
-import {HeaderRightIconContainerButton} from '../../../sharedComponents/HeaderRightContainer';
+import {HeaderRightContainerButton} from '../../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   title: {
@@ -32,12 +32,12 @@ export function createNavigationOptions({
     return {
       headerTitle: intl(m.title),
       headerRight: () => (
-        <HeaderRightIconContainerButton
+        <HeaderRightContainerButton
           testID="edit-icon"
           loading={false}
           onPress={() => navigation.navigate('DeviceNameEdit')}>
           <EditIcon />
-        </HeaderRightIconContainerButton>
+        </HeaderRightContainerButton>
       ),
     };
   };

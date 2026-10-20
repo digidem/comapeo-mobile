@@ -27,7 +27,7 @@ import {
   isUnsavedAudioAttachment,
   isUnsavedPhotoAttachment,
 } from '../../lib/attachmentTypeChecks';
-import {HeaderRightIconContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
 
 const MAXIMUM_ACCURACY = 10;
 
@@ -260,11 +260,11 @@ export const ObservationCreateSaveButton = () => {
     }
   }
   return (
-    <HeaderRightIconContainerButton
+    <HeaderRightContainerButton
       loading={isLoading}
       onPress={handlePressSave}
       testID="OBS.edit-save-btn">
       <SaveCheck />
-    </HeaderRightIconContainerButton>
+    </HeaderRightContainerButton>
   );
 };

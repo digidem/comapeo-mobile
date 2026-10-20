@@ -4,18 +4,18 @@ import {render, screen, fireEvent} from '@testing-library/react-native';
 
 import {
   HeaderRightContainer,
-  HeaderRightIconContainerButton,
+  HeaderRightContainerButton,
 } from './HeaderRightContainer';
 
 describe('HeaderRightIconContainerButton', () => {
   test('renders children and testID when not loading', async () => {
     await render(
-      <HeaderRightIconContainerButton
+      <HeaderRightContainerButton
         onPress={() => {}}
         loading={false}
         testID="header-button">
         <Text>Icon</Text>
-      </HeaderRightIconContainerButton>,
+      </HeaderRightContainerButton>,
     );
 
     expect(screen.getByTestId('header-button')).toBeOnTheScreen();
@@ -25,9 +25,9 @@ describe('HeaderRightIconContainerButton', () => {
   test('calls onPress when pressed and not loading', async () => {
     const onPress = jest.fn();
     await render(
-      <HeaderRightIconContainerButton onPress={onPress} loading={false}>
+      <HeaderRightContainerButton onPress={onPress} loading={false}>
         <Text>Icon</Text>
-      </HeaderRightIconContainerButton>,
+      </HeaderRightContainerButton>,
     );
 
     await fireEvent.press(screen.getByText('Icon'));
@@ -38,12 +38,12 @@ describe('HeaderRightIconContainerButton', () => {
   test('shows a loading indicator and hides children when loading', async () => {
     const onPress = jest.fn();
     await render(
-      <HeaderRightIconContainerButton
+      <HeaderRightContainerButton
         onPress={onPress}
         loading={true}
         testID="header-button">
         <Text>Icon</Text>
-      </HeaderRightIconContainerButton>,
+      </HeaderRightContainerButton>,
     );
 
     expect(screen.getByTestId('header-button')).toBeOnTheScreen();

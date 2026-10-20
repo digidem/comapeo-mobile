@@ -5,7 +5,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useCreateDocument} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import type {Position} from '@comapeo/schema/dist/schema/track';
-import {HeaderRightIconContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
 import SaveCheck from '../../images/CheckMark.svg';
 
 export const SaveTrackButton: FC = () => {
@@ -59,10 +59,10 @@ export const SaveTrackButton: FC = () => {
   };
 
   return (
-    <HeaderRightIconContainerButton
+    <HeaderRightContainerButton
       loading={status === 'pending'}
       onPress={handleSaveClick}>
       <SaveCheck />
-    </HeaderRightIconContainerButton>
+    </HeaderRightContainerButton>
   );
 };

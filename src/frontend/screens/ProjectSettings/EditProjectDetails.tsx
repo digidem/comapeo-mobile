@@ -14,7 +14,7 @@ import {useUpdateProjectSettings} from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
 import {projectColors} from '../../constants';
 import SaveCheck from '../../images/CheckMark.svg';
-import {HeaderRightIconContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   projectName: {
@@ -65,7 +65,7 @@ export const EditProjectDetails: NativeNavigationComponent<
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <HeaderRightIconContainerButton
+        <HeaderRightContainerButton
           loading={status === 'pending'}
           onPress={handleSubmit(details => {
             if (!details.projectName.trim()) {
@@ -89,7 +89,7 @@ export const EditProjectDetails: NativeNavigationComponent<
             );
           })}>
           <SaveCheck />
-        </HeaderRightIconContainerButton>
+        </HeaderRightContainerButton>
       ),
     });
   }, [navigation, handleSubmit, mutate, status, setError]);

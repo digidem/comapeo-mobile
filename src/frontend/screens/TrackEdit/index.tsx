@@ -26,7 +26,7 @@ import {Divider} from '../../sharedComponents/Divider';
 import {TrackStats} from '../../sharedComponents/TrackStats';
 import {ScrollView} from 'react-native-gesture-handler';
 import SaveCheck from '../../images/CheckMark.svg';
-import {HeaderRightIconContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   trackEditScreenTitle: {
@@ -98,11 +98,11 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <HeaderRightIconContainerButton
+        <HeaderRightContainerButton
           onPress={saveTrack}
           loading={status === 'pending'}>
           <SaveCheck />
-        </HeaderRightIconContainerButton>
+        </HeaderRightContainerButton>
       ),
     });
   }, [saveTrack, navigation, status]);

@@ -37,7 +37,7 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
-import {HeaderRightIconContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   title: {
@@ -130,11 +130,9 @@ export const ManualGpsScreen = ({
 
     navigation.setOptions({
       headerRight: () => (
-        <HeaderRightIconContainerButton
-          loading={false}
-          onPress={handleSavePress}>
+        <HeaderRightContainerButton loading={false} onPress={handleSavePress}>
           <SaveCheck />
-        </HeaderRightIconContainerButton>
+        </HeaderRightContainerButton>
       ),
     });
   }, [navigation, convertedData, updatePosition, t]);
@@ -208,9 +206,9 @@ export function createNavigationOptions({
     return {
       headerTitle: intl(m.title),
       headerRight: () => (
-        <HeaderRightIconContainerButton loading={false} onPress={() => {}}>
+        <HeaderRightContainerButton loading={false} onPress={() => {}}>
           <SaveCheck />
-        </HeaderRightIconContainerButton>
+        </HeaderRightContainerButton>
       ),
     };
   };

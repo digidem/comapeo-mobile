@@ -7,7 +7,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 import {
   HeaderRightContainer,
-  HeaderRightIconContainerButton,
+  HeaderRightContainerButton,
 } from '../../sharedComponents/HeaderRightContainer.tsx';
 
 export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
@@ -23,12 +23,12 @@ export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
   const canEdit = useCanEditOrDelete(track.createdBy);
 
   return canEdit ? (
-    <HeaderRightIconContainerButton
+    <HeaderRightContainerButton
       loading={false}
       onPress={() => navigation.navigate('TrackEdit', {trackId})}
       testID="editButton">
       <EditIcon />
-    </HeaderRightIconContainerButton>
+    </HeaderRightContainerButton>
   ) : (
     <HeaderRightContainer />
   );

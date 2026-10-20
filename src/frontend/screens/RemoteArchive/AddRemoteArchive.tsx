@@ -18,7 +18,7 @@ import {useAddServerPeer} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
 import SaveCheck from '../../images/CheckMark.svg';
-import {HeaderRightIconContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   navTitle: {
@@ -100,11 +100,11 @@ export const AddRemoteArchive: NativeNavigationComponent<
     navigation.setOptions({
       headerRight: () =>
         !archiveName ? (
-          <HeaderRightIconContainerButton
+          <HeaderRightContainerButton
             onPress={handleSubmit(handleFindRemoteArchive)}
             loading={false}>
             <SaveCheck />
-          </HeaderRightIconContainerButton>
+          </HeaderRightContainerButton>
         ) : null,
     });
   }, [handleFindRemoteArchive, handleSubmit, navigation, archiveName]);

@@ -3,7 +3,7 @@ import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons';
 import {
   HeaderRightContainer,
-  HeaderRightIconContainerButton,
+  HeaderRightContainerButton,
 } from '../../sharedComponents/HeaderRightContainer';
 
 type ObservationHeaderRightProps =
@@ -12,12 +12,12 @@ type ObservationHeaderRightProps =
 
 export const ObservationHeaderRight = (props: ObservationHeaderRightProps) => {
   return props.canEdit ? (
-    <HeaderRightIconContainerButton
+    <HeaderRightContainerButton
       loading={false}
       onPress={props.setObservationToStoreAndNavigateToEdit}
       testID="editButton">
       <EditIcon />
-    </HeaderRightIconContainerButton>
+    </HeaderRightContainerButton>
   ) : (
     <HeaderRightContainer>
       <SyncIcon color="#3C69F6" />

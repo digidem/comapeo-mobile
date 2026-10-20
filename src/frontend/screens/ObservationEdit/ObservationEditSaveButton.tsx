@@ -19,7 +19,7 @@ import {
   isUnsavedPhotoAttachment,
 } from '../../lib/attachmentTypeChecks';
 import {toError} from '../../utils/errors';
-import {HeaderRightIconContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
 
 export const ObservationEditSaveButton = () => {
   const value = useDraftObservationState(store => store.value);
@@ -125,11 +125,11 @@ export const ObservationEditSaveButton = () => {
   }
 
   return (
-    <HeaderRightIconContainerButton
+    <HeaderRightContainerButton
       loading={isLoading}
       onPress={handlePressSave}
       testID="OBS.edit-save-btn">
       <SaveCheck />
-    </HeaderRightIconContainerButton>
+    </HeaderRightContainerButton>
   );
 };

@@ -141,7 +141,7 @@ import {MapShareCanceledBottomSheet} from '../../screens/BackgroundMaps/MapShare
 import {EditQADeviceNameScreen} from '../../screens/SetQADeviceName.tsx';
 import {isQABuild} from '../../lib/appVariant';
 import {RootStack} from './RootStack.ts';
-import {HeaderRightIconContainerButton} from '../../sharedComponents/HeaderRightContainer.tsx';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -450,9 +450,9 @@ export const createAppScreens = ({
         options={{
           headerTitle: intl(AddRemoteArchive.navTitle),
           headerRight: () => (
-            <HeaderRightIconContainerButton onPress={() => {}} loading={false}>
+            <HeaderRightContainerButton onPress={() => {}} loading={false}>
               <SaveCheck />
-            </HeaderRightIconContainerButton>
+            </HeaderRightContainerButton>
           ),
         }}
       />
@@ -494,9 +494,9 @@ export const createAppScreens = ({
         options={{
           headerTitle: intl(EditProjectDetails.navTitle),
           headerRight: () => (
-            <HeaderRightIconContainerButton onPress={() => {}} loading={false}>
+            <HeaderRightContainerButton onPress={() => {}} loading={false}>
               <SaveCheck />
-            </HeaderRightIconContainerButton>
+            </HeaderRightContainerButton>
           ),
         }}
       />

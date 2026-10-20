@@ -1,11 +1,12 @@
 import React, {FC} from 'react';
-import {Image, Pressable, StyleSheet} from 'react-native';
 
 import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useCreateDocument} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import type {Position} from '@comapeo/schema/dist/schema/track';
+import {HeaderRightIconContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import SaveCheck from '../../images/CheckMark.svg';
 
 export const SaveTrackButton: FC = () => {
   const navigation = useNavigationFromRoot();
@@ -58,18 +59,10 @@ export const SaveTrackButton: FC = () => {
   };
 
   return (
-    <Pressable
-      disabled={status === 'pending'}
-      onPress={handleSaveClick}
-      accessibilityLabel="Save track.">
-      <Image
-        style={styles.completeIcon}
-        source={require('../../images/completed/checkComplete.png')}
-      />
-    </Pressable>
+    <HeaderRightIconContainerButton
+      loading={status === 'pending'}
+      onPress={handleSaveClick}>
+      <SaveCheck />
+    </HeaderRightIconContainerButton>
   );
 };
-
-const styles = StyleSheet.create({
-  completeIcon: {width: 30, height: 30},
-});

@@ -11,9 +11,12 @@ import LocationIcon from '../../images/LocationIcon.svg';
 import PhoneNotification from '../../images/PhoneNotification.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {BUTTON_MIN_HEIGHT, PrimaryButton} from '../../sharedComponents/Buttons';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {
+  DOCK_PADDING,
+  ScreenContentWithDock,
+} from '../../sharedComponents/ScreenContentWithDock';
 import {
   requestNotificationPermission,
   useInvalidateNotificationPermission,
@@ -55,6 +58,8 @@ const m = defineMessages({
 });
 
 const ICON_SIZE = 72;
+// Using the padding and height of the dock to center the content
+const DOCK_HEIGHT = BUTTON_MIN_HEIGHT * 2 + DOCK_PADDING * 2;
 
 export const AlwaysStayNotified = ({
   navigation,
@@ -141,10 +146,12 @@ function InfoListItem({text, Icon}: {text: string; Icon: React.FC<SvgProps>}) {
 
 const styles = StyleSheet.create({
   content: {
-    paddingTop: 80,
+    paddingTop: DOCK_HEIGHT,
     paddingHorizontal: 40,
     gap: 20,
     alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   titleSection: {
     alignItems: 'center',

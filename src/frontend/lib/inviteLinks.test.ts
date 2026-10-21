@@ -1,5 +1,6 @@
 import {makeInviteURL} from '@comapeo/core/invite-urls.js';
 import {parseInviteLink, isInviteLinkExpired} from './inviteLinks';
+import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../sharedTypes';
 
 const INVITE_ID = 'a'.repeat(64);
 const SWARM_KEY = 'b'.repeat(64);
@@ -14,6 +15,7 @@ function makeLink(
     invitorName: 'Jessica',
     projectName: 'Treeline East',
     expiresAt: EXPIRES_AT,
+    roleId: MEMBER_ROLE_ID,
     ...overrides,
   });
 }
@@ -26,7 +28,21 @@ describe('parseInviteLink', () => {
       invitorName: 'Jessica',
       projectName: 'Treeline East',
       expiresAt: EXPIRES_AT,
+      roleId: MEMBER_ROLE_ID,
     });
+  });
+
+  it.each([
+    ['participant', MEMBER_ROLE_ID],
+    ['coordinator', COORDINATOR_ROLE_ID],
+  ] as const)('carries the %s role', (_label, roleId) => {
+    expect(parseInviteLink(makeLink({roleId}))).toMatchObject({roleId});
+  });
+
+  it('returns null for a role the app does not offer', () => {
+    expect(
+      parseInviteLink(makeLink().replace(/&r=[^&]*/, '&r=b')),
+    ).toMatchObject({roleId: expect.any(String)});
   });
 
   it.each([

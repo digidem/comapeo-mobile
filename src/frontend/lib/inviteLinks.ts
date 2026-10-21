@@ -1,5 +1,10 @@
 import * as v from 'valibot';
 import {parseInviteURL} from '@comapeo/core/invite-urls.js';
+import {
+  BLOCKED_ROLE_ID,
+  COORDINATOR_ROLE_ID,
+  MEMBER_ROLE_ID,
+} from '../sharedTypes';
 
 const HEX_KEY_LENGTH = 64;
 
@@ -14,6 +19,7 @@ const InviteLinkSchema = v.object({
   // negative or absurd expiry parses fine. Bound it so callers can treat
   // expiresAt as a real timestamp.
   expiresAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
+  roleId: v.picklist([COORDINATOR_ROLE_ID, MEMBER_ROLE_ID, BLOCKED_ROLE_ID]),
 });
 
 export type InviteLinkParams = v.InferOutput<typeof InviteLinkSchema>;

@@ -165,3 +165,28 @@ PR #2141: chore: upgrade map libre
 PR #2143: chore: latest core deps
 [closed #2109](https://github.com/digidem/comapeo-mobile/issues/2109)
 [closed #2136](https://github.com/digidem/comapeo-mobile/issues/2136)
+
+## Closed Prs cherry picked onto RC created on 2026-10-21 14:29:44 EDT
+PR #2167: New Crowdin updates
+
+PR #2155: fix: use rubik as default font and make sure bold fonts work
+[closed #2149](https://github.com/digidem/comapeo-mobile/issues/2149)
+
+PR #2159: fix: back swipe and back arrow on iOS
+[closed #2156](https://github.com/digidem/comapeo-mobile/issues/2156)
+[closed #2151](https://github.com/digidem/comapeo-mobile/issues/2151)
+
+PR #2162: fix: welcome screen
+[closed #2144](https://github.com/digidem/comapeo-mobile/issues/2144)
+
+PR #2174: chore: remove observation filter from early access
+[closed #2164](https://github.com/digidem/comapeo-mobile/issues/2164)
+
+PR #2176: feat: reduce spacing under tabs for ios
+[closed #2150](https://github.com/digidem/comapeo-mobile/issues/2150)
+
+PR #2177: chore: consolidate header right container
+[closed #2147](https://github.com/digidem/comapeo-mobile/issues/2147)
+
+PR #2181: New Crowdin updates
+

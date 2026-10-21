@@ -87,3 +87,19 @@
 [closed #2128](https://github.com/digidem/comapeo-mobile/issues/2128): Map files greyed out on iOS
 
 [closed #2136](https://github.com/digidem/comapeo-mobile/issues/2136): Manually test Sync State and Role Change
+
+## Closed Issues Added to RC created on 2026-10-21 14:29:44 EDT
+[closed #2144](https://github.com/digidem/comapeo-mobile/issues/2144): Image on Welcome Screen
+
+[closed #2147](https://github.com/digidem/comapeo-mobile/issues/2147): Save Button for Editing or Creating an Observation
+
+[closed #2149](https://github.com/digidem/comapeo-mobile/issues/2149): Use Rubik as default font, make sure bolding works on iOS
+
+[closed #2150](https://github.com/digidem/comapeo-mobile/issues/2150): Remove white space from bottom on iOS
+
+[closed #2151](https://github.com/digidem/comapeo-mobile/issues/2151): Button around Back button on iOS should be an oval
+
+[closed #2156](https://github.com/digidem/comapeo-mobile/issues/2156): Back swipe not disabled in iOS
+
+[closed #2164](https://github.com/digidem/comapeo-mobile/issues/2164): Remove obvs filter from early access
+

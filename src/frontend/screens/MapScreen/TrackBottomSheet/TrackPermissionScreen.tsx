@@ -3,15 +3,11 @@ import {StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
-import {
-  DOCK_PADDING,
-  ScreenContentWithDock,
-} from '../../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {
   AllowPermissionButton,
   OpenSettingsButton,
 } from '../../../sharedComponents/PermissionButtons';
-import {BUTTON_MIN_HEIGHT} from '../../../sharedComponents/Buttons';
 import {DARK_ORANGE} from '../../../lib/styles';
 import HikingIcon from '../../../images/Hiking.svg';
 
@@ -32,9 +28,6 @@ const m = defineMessages({
 
 // The hiker fills only part of its viewBox's width, so it needs a bigger box to match the look design specified
 const ICON_SIZE = 100;
-
-// Using the padding and height of the dock to center the content
-const DOCK_HEIGHT = BUTTON_MIN_HEIGHT + DOCK_PADDING * 2;
 
 /**
  * For when location was denied and there is no map for the sheet to sit on.
@@ -95,7 +88,5 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     paddingHorizontal: 40,
-    paddingTop: DOCK_HEIGHT,
-    paddingBottom: 0,
   },
 });

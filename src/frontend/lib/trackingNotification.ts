@@ -7,15 +7,15 @@ const TRACKING_NOTIFICATION_ID = 'comapeo-tracks-recording';
 
 export const trackingNotificationMessages = defineMessages({
   title: {
-    id: '$1lib.trackingNotification.title',
+    id: 'lib.trackingNotification.title',
     defaultMessage: 'CoMapeo Tracks Recording',
   },
   subtitle: {
-    id: '$1lib.trackingNotification.subtitle',
+    id: 'lib.trackingNotification.subtitle',
     defaultMessage: 'View real-time Tracks progress.',
   },
   description: {
-    id: '$1lib.trackingNotification.description',
+    id: 'lib.trackingNotification.description',
     defaultMessage:
       'CoMapeo is using location to record real-time progress on Tracks. Data remains on this device only and could affect its storage. To stop recording, open CoMapeo, tap Tracks, and then tap End.',
   },

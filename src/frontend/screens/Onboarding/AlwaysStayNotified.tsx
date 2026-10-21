@@ -11,12 +11,9 @@ import LocationIcon from '../../images/LocationIcon.svg';
 import PhoneNotification from '../../images/PhoneNotification.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {BUTTON_MIN_HEIGHT, PrimaryButton} from '../../sharedComponents/Buttons';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import {
-  DOCK_PADDING,
-  ScreenContentWithDock,
-} from '../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {
   requestNotificationPermission,
   useInvalidateNotificationPermission,
@@ -31,35 +28,33 @@ const m = defineMessages({
     defaultMessage: 'Always Stay Notified',
   },
   allowTheFollowing: {
-    id: '$1screens.StayNotified.allowTheFollowing',
+    id: 'screens.StayNotified.allowTheFollowing',
     defaultMessage: 'Notifications allow CoMapeo to do the following:',
   },
   notNow: {
-    id: '$1screens.StayNotified.NotNow',
+    id: 'screens.StayNotified.NotNow',
     defaultMessage: 'Not Now',
   },
   allow: {
-    id: '$1screens.StayNotified.allow',
+    id: 'screens.StayNotified.allow',
     defaultMessage: 'Allow',
   },
   realTimeCommunicate: {
-    id: '$1screens.StayNotified.realTimeCommunicate',
+    id: 'screens.StayNotified.realTimeCommunicate',
     defaultMessage: 'Communicate about activity updates in real time.',
   },
   workInBackground: {
-    id: '$1screens.StayNotified.workInBackground',
+    id: 'screens.StayNotified.workInBackground',
     defaultMessage:
       'Work in the background to ensure location stays current and accurate.',
   },
   securelySync: {
-    id: '$1screens.StayNotified.SecurelySync',
+    id: 'screens.StayNotified.SecurelySync',
     defaultMessage: 'Securely syncs and processes data with few interruptions.',
   },
 });
 
 const ICON_SIZE = 72;
-// Using the padding and height of the dock to center the content
-const DOCK_HEIGHT = BUTTON_MIN_HEIGHT * 2 + DOCK_PADDING * 2;
 
 export const AlwaysStayNotified = ({
   navigation,
@@ -146,7 +141,6 @@ function InfoListItem({text, Icon}: {text: string; Icon: React.FC<SvgProps>}) {
 
 const styles = StyleSheet.create({
   content: {
-    paddingTop: DOCK_HEIGHT,
     paddingHorizontal: 40,
     gap: 20,
     alignItems: 'center',

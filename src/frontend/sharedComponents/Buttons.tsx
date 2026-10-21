@@ -4,8 +4,6 @@ import {HeaderText} from './Text/HeaderText';
 import {BLUE_GREY, COMAPEO_BLUE, WARNING_RED, WHITE} from '../lib/styles';
 import {ViewStyleProp} from '../sharedTypes';
 
-export const BUTTON_MIN_HEIGHT = 50;
-
 type ButtonProps = {
   renderIcon?: (props: {color: string; size: number}) => React.ReactNode;
   iconPosition?: 'left' | 'right';
@@ -158,7 +156,7 @@ export const SecondaryDestructiveButton = (props: ButtonProps) => {
 
 export const buttonStyles = StyleSheet.create({
   base: {
-    minHeight: BUTTON_MIN_HEIGHT,
+    minHeight: 50,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

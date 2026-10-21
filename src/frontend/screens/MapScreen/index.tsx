@@ -151,14 +151,15 @@ export const MapScreen = ({
     },
   );
 
-  const askTrackPermissions = useLocationPermissionWithoutPasscode(async () => {
-    await requestLocationPermission();
-    if (!notificationPermission.granted) {
-      await requestNotificationPermission();
-    }
-    await invalidateLocationPermission();
-    await invalidateNotificationPermission();
-  });
+  const askLocationAndNotificationPermissions =
+    useLocationPermissionWithoutPasscode(async () => {
+      await requestLocationPermission();
+      if (!notificationPermission.granted) {
+        await requestNotificationPermission();
+      }
+      await invalidateLocationPermission();
+      await invalidateNotificationPermission();
+    });
 
   const askNotificationPermission = useNotificationPermissionWithoutPasscode(
     async () => {
@@ -215,7 +216,7 @@ export const MapScreen = ({
                 : 'locationAndNotifications'
             }
             canAskAgain={locationPermission.canAskAgain}
-            onAllow={() => askTrackPermissions.mutate()}
+            onAllow={() => askLocationAndNotificationPermissions.mutate()}
             onOpenSettings={() => goToLocationSettings.mutate()}
           />
         ) : (

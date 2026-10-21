@@ -28,7 +28,7 @@ import {
   comapeo as mapeoApi,
   comapeoServicesClient,
 } from '@comapeo/core-react-native';
-import {AppState} from 'react-native';
+import {AppState, Platform} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import NetInfo from '@react-native-community/netinfo';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
@@ -245,7 +245,7 @@ const App = () => {
                     earlyAccessStore={earlyAccessStore}
                     unitSystemStore={persistedUnitSystemStore}
                     qaDeviceNameStore={qaDeviceNameStore}>
-                    <TrackingNotification />
+                    {Platform.OS === 'ios' && <TrackingNotification />}
                     <AppNavigator
                       navigationIntegration={navigationIntegration}
                     />

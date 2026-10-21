@@ -283,6 +283,15 @@
   "lib.intl.calendarMonth.september": {
     "message": "September"
   },
+  "lib.trackingNotification.description": {
+    "message": "CoMapeo is using location to record real-time progress on Tracks. Data remains on this device only and could affect its storage. To stop recording, open CoMapeo, tap Tracks, and then tap End."
+  },
+  "lib.trackingNotification.subtitle": {
+    "message": "View real-time Tracks progress."
+  },
+  "lib.trackingNotification.title": {
+    "message": "CoMapeo Tracks Recording"
+  },
   "projectInfoCard.coordinator": {
     "message": "You are a coordinator on this project."
   },
@@ -1317,6 +1326,24 @@
   },
   "screens.ShareProjectStats.infoAnonymized": {
     "message": "Shared information will be completely anonymized"
+  },
+  "screens.StayNotified.NotNow": {
+    "message": "Not Now"
+  },
+  "screens.StayNotified.SecurelySync": {
+    "message": "Securely syncs and processes data with few interruptions."
+  },
+  "screens.StayNotified.allow": {
+    "message": "Allow"
+  },
+  "screens.StayNotified.allowTheFollowing": {
+    "message": "Notifications allow CoMapeo to do the following:"
+  },
+  "screens.StayNotified.realTimeCommunicate": {
+    "message": "Communicate about activity updates in real time."
+  },
+  "screens.StayNotified.workInBackground": {
+    "message": "Work in the background to ensure location stays current and accurate."
   },
   "screens.Sync.NoWifiDisplay.description": {
     "message": "Check device’s settings and connectivity."

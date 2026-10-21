@@ -3,8 +3,6 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 
 import {ViewStyleProp} from '../sharedTypes';
 
-export const DOCK_PADDING = 20;
-
 export const ScreenContentWithDock = ({
   children,
   contentContainerStyle,
@@ -43,7 +41,7 @@ const styles = StyleSheet.create({
   },
   dockedContentContainer: {
     flex: 0,
-    padding: DOCK_PADDING,
+    padding: 20,
     alignItems: 'center',
   },
 });

@@ -33,9 +33,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     await obsListTab.waitForDisplayed();
     await obsListTab.click();
     const emptyStateText = await $(
-      byTextMatches(
-        'Start from map or camera view to record your first observation.',
-      ),
+      byTextMatches('All observations and tracks will be listed here.'),
     );
     await expect(emptyStateText).toBeDisplayed();
     const mapTab = await $('~Go to map.');
@@ -55,9 +53,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     const emptyStateText = await $(
-      byTextMatches(
-        'Start from map or camera view to record your first observation.',
-      ),
+      byTextMatches('All observations and tracks will be listed here.'),
     );
     await expect(emptyStateText).toBeDisplayed();
   });

@@ -4,11 +4,10 @@ import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import type {MemberApi} from '@comapeo/core';
 
-import {LIGHT_GREY, MEDIUM_GREY} from '../../lib/styles';
+import {BLACK, LIGHT_GREY, MEDIUM_GREY} from '../../lib/styles';
 import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../sharedComponents/RoleWithIcon';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {useCreateInviteLink} from '../../hooks/useInviteLinks';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -66,11 +65,11 @@ export const SelectInviteeRole: NativeNavigationComponent<
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <HeaderText variant="header4">
+      <BodyText weight={700} variant="medium" style={styles.descriptionText}>
         {params.invitee === 'link'
           ? t(m.selectingForLink)
           : t(m.selectingDevice)}
-      </HeaderText>
+      </BodyText>
 
       {params.invitee === 'device' ? <DeviceNameWithIcon {...params} /> : null}
 
@@ -109,7 +108,7 @@ function RoleCard({
       <MaterialIcon name="radio-button-off" size={24} color={MEDIUM_GREY} />
       <View style={styles.flex}>
         <RoleWithIcon role={role} />
-        <BodyText>{description}</BodyText>
+        <BodyText style={styles.roleDescription}>{description}</BodyText>
       </View>
     </Pressable>
   );
@@ -122,6 +121,12 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
     paddingHorizontal: 20,
     gap: 40,
+  },
+  descriptionText: {
+    color: BLACK,
+  },
+  roleDescription: {
+    color: BLACK,
   },
   roleOptionsContainer: {
     gap: 20,

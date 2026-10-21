@@ -5,7 +5,6 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {COMAPEO_BLUE, BLUE_GREY, RED, VERY_LIGHT_GREY} from '../../lib/styles';
 import {HookFormTextInput} from '../../sharedComponents/HookFormTextInput';
 import {Control, FieldErrors, useForm} from 'react-hook-form';
-import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useFindRemoteArchive} from '../../hooks/server/projects';
 import {Bar} from 'react-native-progress';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
@@ -18,6 +17,8 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useAddServerPeer} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
+import SaveCheck from '../../images/CheckMark.svg';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   navTitle: {
@@ -99,10 +100,11 @@ export const AddRemoteArchive: NativeNavigationComponent<
     navigation.setOptions({
       headerRight: () =>
         !archiveName ? (
-          <SaveButton
+          <HeaderRightContainerButton
             onPress={handleSubmit(handleFindRemoteArchive)}
-            isLoading={false}
-          />
+            loading={false}>
+            <SaveCheck />
+          </HeaderRightContainerButton>
         ) : null,
     });
   }, [handleFindRemoteArchive, handleSubmit, navigation, archiveName]);

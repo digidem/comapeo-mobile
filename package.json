@@ -1,6 +1,6 @@
 {
   "name": "comapeo-mobile",
-  "version": "1.14.0-pre",
+  "version": "1.15.0-pre",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -30,8 +30,8 @@
     "test:e2e:build": "npm run build:android:e2e && npm run test:e2e:nobuild"
   },
   "dependencies": {
-    "@comapeo/core-react": "12.0.3",
-    "@comapeo/core-react-native": "1.0.0-pre.14",
+    "@comapeo/core-react": "12.0.5",
+    "@comapeo/core-react-native": "1.1.0",
     "@comapeo/default-categories": "1.1.2",
     "@expo-google-fonts/rubik": "0.4.2",
     "@formatjs/intl-datetimeformat": "7.6.1",
@@ -40,7 +40,7 @@
     "@formatjs/intl-pluralrules": "6.3.13",
     "@formatjs/intl-relativetimeformat": "12.3.13",
     "@lodev09/react-native-exify": "1.0.3",
-    "@maplibre/maplibre-react-native": "10.4.2",
+    "@maplibre/maplibre-react-native": "11.4.1",
     "@osm_borders/maritime_10000m": "1.1.0",
     "@react-native-community/hooks": "100.1.0",
     "@react-native-community/netinfo": "12.0.1",
@@ -129,7 +129,7 @@
     "@babel/runtime": "7.29.7",
     "@comapeo/cloud": "0.4.0",
     "@comapeo/core": "7.6.0",
-    "@comapeo/ipc": "9.0.1",
+    "@comapeo/ipc": "11.0.0",
     "@comapeo/schema": "2.3.0",
     "@digidem/types": "2.4.1",
     "@eslint-react/eslint-plugin": "5.11.2",

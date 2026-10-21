@@ -78,7 +78,7 @@ import {SettingsPrivacyPolicy} from '../../screens/ComapeoSettings/DataAndPrivac
 import {TrackEdit} from '../../screens/TrackEdit';
 import {HeaderLeft as HeaderLeftTrackEdit} from '../../screens/TrackEdit/HeaderLeft';
 import {Categories} from '../../screens/Categories.tsx';
-import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
+import SaveCheck from '../../images/CheckMark.svg';
 import {AddRemoteArchive} from '../../screens/RemoteArchive/AddRemoteArchive.tsx';
 import {SuccessfullyAddedArchive} from '../../screens/RemoteArchive/SuccessfullyAddedArchive.tsx';
 import {
@@ -148,6 +148,7 @@ import {MapShareCanceledBottomSheet} from '../../screens/BackgroundMaps/MapShare
 import {EditQADeviceNameScreen} from '../../screens/SetQADeviceName.tsx';
 import {isQABuild} from '../../lib/appVariant';
 import {RootStack} from './RootStack.ts';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -484,7 +485,9 @@ export const createAppScreens = ({
         options={{
           headerTitle: intl(AddRemoteArchive.navTitle),
           headerRight: () => (
-            <SaveButton onPress={() => {}} isLoading={false} />
+            <HeaderRightContainerButton onPress={() => {}} loading={false}>
+              <SaveCheck />
+            </HeaderRightContainerButton>
           ),
         }}
       />
@@ -526,7 +529,9 @@ export const createAppScreens = ({
         options={{
           headerTitle: intl(EditProjectDetails.navTitle),
           headerRight: () => (
-            <SaveButton onPress={() => {}} isLoading={false} />
+            <HeaderRightContainerButton onPress={() => {}} loading={false}>
+              <SaveCheck />
+            </HeaderRightContainerButton>
           ),
         }}
       />

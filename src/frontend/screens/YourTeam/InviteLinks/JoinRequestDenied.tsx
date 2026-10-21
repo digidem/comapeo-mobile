@@ -7,6 +7,7 @@ import {SecondaryButton} from '../../../sharedComponents/Buttons';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {DARK_GREEN, DARK_ORANGE, WHITE} from '../../../lib/styles';
+import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
 import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 const ICON_SIZE = 100;
@@ -31,6 +32,7 @@ export function JoinRequestDenied({
   navigation,
 }: NativeRootNavigationProps<'JoinRequestDenied'>) {
   const {formatMessage: t} = useIntl();
+  usePreventBackNavigation();
 
   return (
     <View style={styles.container}>

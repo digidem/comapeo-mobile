@@ -1,5 +1,11 @@
 import * as React from 'react';
-import {Camera, MapView, UserLocation} from '@maplibre/maplibre-react-native';
+import {defineMessages, useIntl} from 'react-intl';
+import {
+  Camera,
+  CameraRef,
+  Map,
+  UserLocation,
+} from '@maplibre/maplibre-react-native';
 import {
   LocationFollowingIcon,
   LocationNoFollowIcon,
@@ -11,6 +17,7 @@ import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
+import {TrackPermissionScreen} from './TrackBottomSheet/TrackPermissionScreen';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
@@ -42,7 +49,34 @@ import {
   useDraftObservationActions,
   useDraftObservationState,
 } from '../../contexts/DraftObservationContext';
-import {useForegroundPermissions} from 'expo-location';
+import {
+  requestLocationPermission,
+  useInvalidateLocationPermission,
+  useLocationPermissionWithoutPasscode,
+  useLocationPermissionQuery,
+} from '../../hooks/useLocationPermissionTracker';
+import {openSettingsAndWait} from '../../utils/linking';
+import {
+  AllowPermissionButton,
+  OpenSettingsButton,
+} from '../../sharedComponents/PermissionButtons';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
+import LocationOnIcon from '../../images/LocationOn.svg';
+import {DARK_ORANGE, WHITE} from '../../lib/styles';
+
+const PERMISSION_ICON_SIZE = 80;
+
+const m = defineMessages({
+  locationPermissionTitle: {
+    id: '$1screens.MapScreen.locationPermissionTitle',
+    defaultMessage: 'Record GPS Points',
+  },
+  locationPermissionDescription: {
+    id: 'screens.MapScreen.locationPermissionDescription',
+    defaultMessage: 'Location required to use.',
+  },
+});
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -50,7 +84,7 @@ import {useForegroundPermissions} from 'expo-location';
 const DEFAULT_ZOOM = 12;
 
 // Where Peru, Columbia, and Brazil Meet
-const FALLBACK_COORDINATE = [-69.945, -4.231944];
+const FALLBACK_COORDINATE: [number, number] = [-69.945, -4.231944];
 
 assert(
   process.env.MAPBOX_ACCESS_TOKEN,
@@ -63,9 +97,7 @@ export const MapScreen = ({
   navigation,
 }: NativeHomeTabsNavigationProps<'Map'>) => {
   const trackBottomSheetOpen = route.params?.trackingOpen;
-  const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
-  const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
-    React.useState(false);
+  const [zoomForScaleBar, setZoomForScaleBar] = React.useState(DEFAULT_ZOOM);
   const {dimensions, mapKey, onLayout} = useResetMapLayout();
   const {createDraft} = useDraftObservationActions();
   const {navigate} = useNavigationFromHomeTabs();
@@ -76,12 +108,12 @@ export const MapScreen = ({
   const coords = location && getCoords(location);
   const [following, setFollowing] = React.useState(true);
   const appUsageStore = useAppUsageStatsStore();
+  const cameraRef = React.useRef<CameraRef>(null);
 
   const {data: styleUrl} = useMapStyleJsonUrl();
 
   const {authState} = useAuthContext();
   const {savedLocation} = useNonReactiveSavedLocation();
-  const initialPositionSet = React.useRef(false);
   const dismissedMapBannerSession = useLowStorageBannerState(
     s => s.dismissedMapBannerSession,
   );
@@ -90,14 +122,23 @@ export const MapScreen = ({
   const isLow = isLowStorage(data.freeBytes);
   const insets = useSafeAreaInsets();
   const BANNER_TOP = insets.top + 75;
-  const [status, requestPermission] = useForegroundPermissions();
+  const {formatMessage} = useIntl();
+  const {data: locationPermission} = useLocationPermissionQuery();
+  const invalidateLocationPermission = useInvalidateLocationPermission();
 
-  React.useEffect(() => {
-    if (status?.granted) return;
-    if (status?.canAskAgain) {
-      requestPermission();
-    }
-  }, [status, requestPermission]);
+  const askLocationPermission = useLocationPermissionWithoutPasscode(
+    async () => {
+      await requestLocationPermission();
+      await invalidateLocationPermission();
+    },
+  );
+
+  const goToLocationSettings = useLocationPermissionWithoutPasscode(
+    async () => {
+      await openSettingsAndWait();
+      await invalidateLocationPermission();
+    },
+  );
 
   useCheckDraftObservationAndNavigate({authState});
   useCheckUnsavedTrackAndNavigate({authState});
@@ -126,12 +167,50 @@ export const MapScreen = ({
   };
 
   function handleLocationPress() {
-    setZoom(DEFAULT_ZOOM);
     setFollowing(prev => !prev);
   }
 
-  function handleDidFinishLoadingStyle() {
-    setIsFinishedLoadingStyle(true);
+  if (!locationPermission.granted) {
+    return (
+      <View style={styles.permissionScreen}>
+        {trackBottomSheetOpen ? (
+          <TrackPermissionScreen
+            canAskAgain={locationPermission.canAskAgain}
+            onAllow={() => askLocationPermission.mutate()}
+            onOpenSettings={() => goToLocationSettings.mutate()}
+          />
+        ) : (
+          <ScreenContentWithDock
+            testID="MAP.location-permission"
+            contentContainerStyle={styles.permissionContent}
+            dockContent={
+              locationPermission.canAskAgain ? (
+                <AllowPermissionButton
+                  testID="MAP.location-allow-btn"
+                  onPress={() => askLocationPermission.mutate()}
+                />
+              ) : (
+                <OpenSettingsButton
+                  testID="MAP.location-settings-btn"
+                  onPress={() => goToLocationSettings.mutate()}
+                />
+              )
+            }>
+            <IconTitleDescription
+              icon={
+                <LocationOnIcon
+                  color={DARK_ORANGE}
+                  width={PERMISSION_ICON_SIZE}
+                  height={PERMISSION_ICON_SIZE}
+                />
+              }
+              title={formatMessage(m.locationPermissionTitle)}
+              description={formatMessage(m.locationPermissionDescription)}
+            />
+          </ScreenContentWithDock>
+        )}
+      </View>
+    );
   }
 
   return (
@@ -147,52 +226,49 @@ export const MapScreen = ({
         )}
       </View>
       {dimensions && (
-        <MapView
+        <Map
           key={mapKey}
           testID="MAIN.mapbox-map-view"
           style={{width: dimensions.width, height: dimensions.height}}
-          logoEnabled={false}
-          pitchEnabled={false}
-          rotateEnabled={false}
-          surfaceView={true}
+          logo={false}
+          touchPitch={false}
+          touchRotate={false}
           attributionPosition={{right: 8, bottom: 8}}
-          compassEnabled={false}
+          compass={false}
           mapStyle={styleUrl}
-          onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
           onRegionWillChange={event => {
-            if (event.properties.isUserInteraction && following) {
+            if (event.nativeEvent.userInteraction && following) {
               setFollowing(false);
             }
           }}
+
           onRegionDidChange={event => {
-            setZoom(event.properties.zoomLevel);
+            if (following) {
+              if (event.nativeEvent.zoom < DEFAULT_ZOOM)
+                cameraRef.current?.zoomTo(DEFAULT_ZOOM);
+            }
+            setZoomForScaleBar(event.nativeEvent.zoom);
           }}>
           <Camera
-            ref={cam => {
-              if (cam && !initialPositionSet.current) {
-                cam.setCamera({
-                  centerCoordinate: coords
-                    ? coords
-                    : savedLocation
-                      ? getCoords(savedLocation)
-                      : FALLBACK_COORDINATE,
-                  zoomLevel: DEFAULT_ZOOM,
-                  animationDuration: 50,
-                });
-                initialPositionSet.current = true;
-              }
+            ref={ref => {
+              cameraRef.current = ref;
             }}
-            centerCoordinate={following ? coords : undefined}
-            zoomLevel={DEFAULT_ZOOM}
-            animationDuration={0}
-            followUserLocation={false}
+            initialViewState={{
+              center: coords
+                ? coords
+                : savedLocation
+                  ? getCoords(savedLocation)
+                  : FALLBACK_COORDINATE,
+              zoom: DEFAULT_ZOOM,
+            }}
+            trackUserLocation={following && coords ? 'default' : undefined}
           />
 
           {coords && (
             <UserLocation minDisplacement={isTracking ? 0 : MIN_DISPLACEMENT} />
           )}
 
-          {isFinishedLoadingStyle && authState !== 'obscured' && (
+          {authState !== 'obscured' && (
             <>
               <RemoteDetectionAlertsMapLayer />
               <CurrentTrackMapLayer location={location} />
@@ -201,7 +277,7 @@ export const MapScreen = ({
               <ObservationMapLayer />
             </>
           )}
-        </MapView>
+        </Map>
       )}
       <View style={styles.bottomContainer}>
         <View style={{flex: 1, alignItems: 'center'}}>
@@ -226,7 +302,7 @@ export const MapScreen = ({
         )}
       </View>
       <ScaleBar
-        zoom={zoom || 10}
+        zoom={zoomForScaleBar}
         latitude={coords ? coords[1] : undefined}
         bottom={20}
       />
@@ -298,6 +374,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 25,
     width: '100%',
+  },
+  permissionScreen: {
+    flex: 1,
+    backgroundColor: WHITE,
+  },
+  permissionContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   lowStorageBanner: {
     position: 'absolute',

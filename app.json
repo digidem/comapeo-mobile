@@ -25,8 +25,8 @@
         "expo-splash-screen",
         {
           "image": "./assets/splash.png",
-          "backgroundColor": "#3333FF",
-          "imageWidth": 300,
+          "backgroundColor": "#0332AD",
+          "imageWidth": 184,
           "android": {
             "resizeMode": "contain"
           },
@@ -58,7 +58,7 @@
           "fonts": [
             "node_modules/@expo-google-fonts/rubik/400Regular/Rubik_400Regular.ttf",
             "node_modules/@expo-google-fonts/rubik/500Medium/Rubik_500Medium.ttf",
-            "node_modules/@expo-google-fonts/rubik/600SemiBold/Rubik_600SemiBold.ttf"
+            "node_modules/@expo-google-fonts/rubik/700Bold/Rubik_700Bold.ttf"
           ]
         }
       ],
@@ -124,6 +124,7 @@
     "ios": {
       "bundleIdentifier": "com.comapeo",
       "associatedDomains": ["applinks:a.comapeo.app"],
+      "icon": "./assets/icon-ios.png",
       "entitlements": {
         "com.apple.developer.networking.wifi-info": true
       },

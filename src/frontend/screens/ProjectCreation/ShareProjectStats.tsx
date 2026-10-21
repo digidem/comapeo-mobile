@@ -14,7 +14,7 @@ import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCentere
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {toError} from '../../utils/errors';
 
 const m = defineMessages({
@@ -55,7 +55,7 @@ export const ShareProjectStats = ({
   const {projectId} = useActiveProject();
   const updateSettings = useUpdateProjectSettings({projectId});
 
-  usePreventAndroidBackButton();
+  usePreventBackNavigation();
 
   const goToSuccess = React.useCallback(
     (statsShared: boolean) => {

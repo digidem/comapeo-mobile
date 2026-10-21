@@ -16,7 +16,7 @@ import {MapShareError} from '../../sharedComponents/MapShareError';
 import SendingIcon from '../../images/SendingIcon.svg';
 import StackSvg from '../../images/Stack.svg';
 import SuccessIcon from '../../images/Success.svg';
-import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -87,7 +87,7 @@ export function SendingBackgroundMap({
   const currentTime = useCurrentTime(1000);
   useKeepAwake();
 
-  usePreventAndroidBackButton();
+  usePreventBackNavigation();
 
   const elapsedSeconds = mapShare
     ? Math.floor((currentTime.getTime() - mapShare.mapShareCreatedAt) / 1000)

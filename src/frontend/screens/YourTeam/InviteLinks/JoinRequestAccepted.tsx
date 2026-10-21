@@ -6,6 +6,7 @@ import {SecondaryButton} from '../../../sharedComponents/Buttons';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import SuccessCheck from '../../../images/Success.svg';
+import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
 import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
@@ -29,6 +30,7 @@ export function JoinRequestAccepted({
   navigation,
 }: NativeRootNavigationProps<'JoinRequestAccepted'>) {
   const {formatMessage: t} = useIntl();
+  usePreventBackNavigation();
   const {deviceName, projectName} = route.params;
 
   return (

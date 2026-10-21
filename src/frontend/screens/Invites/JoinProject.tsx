@@ -2,6 +2,7 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {useKeepAwake} from 'expo-keep-awake';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 
 import {useJoinRequest} from '../../hooks/useJoinRequest';
 import {getJoinFailureCopy} from './joinFailure';
@@ -12,7 +13,6 @@ import {Bar as ProgressBar} from 'react-native-progress';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {
   COMAPEO_BLUE,
@@ -76,7 +76,7 @@ export function JoinProject({
   const joinRequest = useJoinRequest(invite);
   const {setActiveProjectId} = useActiveProjectIdActions();
 
-  usePreventAndroidBackButton();
+  usePreventBackNavigation();
   useKeepAwake();
 
   const handleClose = () => navigation.goBack();

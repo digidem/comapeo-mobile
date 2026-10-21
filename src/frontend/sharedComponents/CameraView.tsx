@@ -13,14 +13,20 @@ import {
   type PhotoFile,
 } from 'react-native-vision-camera';
 import {
-  useCameraPermissionMutation,
-  useRequestCameraPermissionOnMount,
+  requestCameraPermission,
+  useCameraPermissionWithoutPasscode,
+  useCameraPermissionQuery,
+  useInvalidateCameraPermission,
 } from '../hooks/useCameraPermissionTracker';
 import {openSettingsAndWait} from '../utils/linking';
 
 import {GPSPill} from './GPSPill';
-import {PrimaryButton} from './Buttons';
 import {BodyText} from './Text/BodyText';
+import {IconTitleDescription} from './IconTitleDescription';
+import {AllowPermissionButton, OpenSettingsButton} from './PermissionButtons';
+import {ScreenContentWithDock} from './ScreenContentWithDock';
+import PhotoLibraryIcon from '../images/PhotoLibrary.svg';
+import {BLUE_GREY, DARK_GREY, WHITE} from '../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
 import {useLocationState} from '../contexts/LocationContext';
@@ -31,13 +37,13 @@ import {toError} from '../utils/errors';
 import AddButtonSVG from '../images/AddButton.svg';
 
 const m = defineMessages({
-  noCameraAccess: {
-    id: '$1screens.CameraScreen.noCameraAccess',
-    defaultMessage: 'No access to camera. Please allow access in settings.',
+  cameraPermissionTitle: {
+    id: '$1screens.CameraScreen.cameraPermissionTitle',
+    defaultMessage: 'Document with Photos',
   },
-  openSettings: {
-    id: '$1screens.CameraScreen.openSettings',
-    defaultMessage: 'Open Settings',
+  cameraPermissionDescription: {
+    id: 'screens.CameraScreen.cameraPermissionDescription',
+    defaultMessage: 'Camera required to use.',
   },
   cameraUnavailable: {
     id: '$1screens.CameraScreen.cameraUnavailable',
@@ -56,13 +62,12 @@ export const CameraView = ({onAddPress}: Props) => {
   const [cameraReady, setCameraReady] = React.useState(false);
   const accelerometerMeasurement =
     React.useRef<AccelerometerMeasurement | null>(null);
-  const {hasPermission} = useRequestCameraPermissionOnMount();
+  const {data: permission} = useCameraPermissionQuery();
   const {formatMessage} = useIntl();
   const camera = useRef<Camera>(null);
   const location = useLocationState(store => store.location);
   const navigation = useNavigationFromRoot();
   const device = useCameraDevice('back');
-  const openSettingsMutation = useCameraPermissionMutation(openSettingsAndWait);
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -86,6 +91,18 @@ export const CameraView = ({onAddPress}: Props) => {
       if (deviceMotionSub) deviceMotionSub.remove();
     };
   }, []);
+
+  const invalidateCameraPermission = useInvalidateCameraPermission();
+
+  const askPermission = useCameraPermissionWithoutPasscode(async () => {
+    await requestCameraPermission();
+    await invalidateCameraPermission();
+  });
+
+  const goToSettings = useCameraPermissionWithoutPasscode(async () => {
+    await openSettingsAndWait();
+    await invalidateCameraPermission();
+  });
 
   function handleAddPress() {
     if (!camera.current || !cameraReady) {
@@ -121,23 +138,40 @@ export const CameraView = ({onAddPress}: Props) => {
       });
   }
 
-  const disableButton = capturing || !cameraReady || !hasPermission;
-
-  let cameraContent;
-  if (!hasPermission) {
-    cameraContent = (
-      <View style={styles.messageContainer}>
-        <BodyText variant="tinyMeta" style={styles.messageText}>
-          {formatMessage(m.noCameraAccess)}
-        </BodyText>
-        <PrimaryButton
-          fullSize
-          text={formatMessage(m.openSettings)}
-          onPress={() => openSettingsMutation.mutateAsync()}
-        />
+  if (!permission.granted) {
+    return (
+      <View style={styles.permissionScreen}>
+        <ScreenContentWithDock
+          testID="MAIN.camera-permission"
+          contentContainerStyle={styles.permissionContent}
+          dockContent={
+            permission.canAskAgain ? (
+              <AllowPermissionButton
+                testID="MAIN.camera-allow-btn"
+                onPress={() => askPermission.mutate()}
+              />
+            ) : (
+              <OpenSettingsButton
+                testID="MAIN.camera-settings-btn"
+                onPress={() => goToSettings.mutate()}
+              />
+            )
+          }>
+          <IconTitleDescription
+            color={WHITE}
+            icon={<PhotoLibraryIcon color={BLUE_GREY} width={80} height={80} />}
+            title={formatMessage(m.cameraPermissionTitle)}
+            description={formatMessage(m.cameraPermissionDescription)}
+          />
+        </ScreenContentWithDock>
       </View>
     );
-  } else if (!device) {
+  }
+
+  const disableButton = capturing || !cameraReady;
+
+  let cameraContent;
+  if (!device) {
     cameraContent = (
       <View style={styles.messageContainer}>
         <BodyText variant="tinyMeta" style={styles.messageText}>
@@ -191,6 +225,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
+  },
+  permissionScreen: {
+    flex: 1,
+    backgroundColor: DARK_GREY,
+  },
+  permissionContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   messageContainer: {
     flex: 1,

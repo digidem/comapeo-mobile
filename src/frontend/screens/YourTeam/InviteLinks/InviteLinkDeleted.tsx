@@ -8,6 +8,7 @@ import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import TrashCan from '../../../images/TrashCan.svg';
 import {DARK_GREEN, WHITE} from '../../../lib/styles';
+import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
 import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 const SHORT_ID_LENGTH = 7;
@@ -33,6 +34,7 @@ export function InviteLinkDeleted({
   navigation,
 }: NativeRootNavigationProps<'InviteLinkDeleted'>) {
   const {formatMessage: t} = useIntl();
+  usePreventBackNavigation();
   const shortId = route.params.inviteId.slice(0, SHORT_ID_LENGTH);
 
   return (

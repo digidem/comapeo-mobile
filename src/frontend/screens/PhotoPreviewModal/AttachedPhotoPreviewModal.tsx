@@ -105,14 +105,6 @@ export function AttachedPhotoPreviewModal({
     lang,
   });
 
-  // core 7.6.0 makes `createdBy`  optional on derived doc fields; every
-  // observation we can open still has one, so keep the existing lookup until
-  // we know if that is intentional and how to handle it.
-  const {data: memberInfo} = useSingleMember({
-    projectId,
-    deviceId: createdBy ?? '',
-  });
-
   const {formatMessage, formatNumber} = useIntl();
   const unitSystem = useUnitSystem();
 
@@ -255,21 +247,7 @@ export function AttachedPhotoPreviewModal({
                     </InfoItem>
                   )}
 
-                  {memberInfo.name && (
-                    <InfoItem
-                      icon={
-                        <MaterialIcons
-                          name="devices"
-                          size={20}
-                          color={NEW_DARK_GREY}
-                          allowFontScaling
-                        />
-                      }>
-                      <BodyText selectable style={sharedStyles.primaryInfoText}>
-                        {formatMessage(m.attachedBy, {name: memberInfo.name})}
-                      </BodyText>
-                    </InfoItem>
-                  )}
+                  {createdBy && <MemberInfo createdBy={createdBy} />}
                 </View>
               }
             />
@@ -305,23 +283,56 @@ export function AttachedPhotoPreviewModal({
           </BodyText>
         </InfoItem>
 
-        <InfoItem
-          icon={
-            <MaterialIcons
-              name="devices"
-              size={20}
-              color={NEW_DARK_GREY}
-              allowFontScaling
-            />
-          }>
-          <BodyText
-            selectable
-            style={sharedStyles.primaryInfoText}
-            numberOfLines={1}>
-            {memberInfo.deviceId.slice(0, 15)}
-          </BodyText>
-        </InfoItem>
+        {createdBy && <MemberDeviceId createdBy={createdBy} />}
       </View>
     </ScrollView>
   );
 }
+
+const MemberInfo = ({createdBy}: {createdBy: string}) => {
+  const {projectId} = useActiveProject();
+  const {data: memberInfo} = useSingleMember({projectId, deviceId: createdBy});
+  const {formatMessage} = useIntl();
+  const name = memberInfo.name;
+
+  if (!name) return null;
+
+  return (
+    <InfoItem
+      icon={
+        <MaterialIcons
+          name="devices"
+          size={20}
+          color={NEW_DARK_GREY}
+          allowFontScaling
+        />
+      }>
+      <BodyText selectable style={sharedStyles.primaryInfoText}>
+        {formatMessage(m.attachedBy, {name: memberInfo.name})}
+      </BodyText>
+    </InfoItem>
+  );
+};
+
+const MemberDeviceId = ({createdBy}: {createdBy: string}) => {
+  const {projectId} = useActiveProject();
+  const {data: memberInfo} = useSingleMember({projectId, deviceId: createdBy});
+  return (
+    <InfoItem
+      icon={
+        <MaterialIcons
+          name="devices"
+          size={20}
+          color={NEW_DARK_GREY}
+          allowFontScaling
+        />
+      }>
+      <BodyText
+        selectable
+        style={sharedStyles.primaryInfoText}
+        numberOfLines={1}>
+        {memberInfo.deviceId.slice(0, 15)}
+      </BodyText>
+    </InfoItem>
+  );
+};

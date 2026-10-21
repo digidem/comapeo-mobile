@@ -10,7 +10,7 @@ import {formatTimeRemaining} from '../../../lib/expiry';
 import {useNow} from '../../../hooks/useNow';
 import {COORDINATOR_ROLE_ID} from '../../../sharedTypes';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../../lib/styles';
-import type {InviteLink} from '../../../hooks/useInviteLinks';
+import type {MemberApi} from '@comapeo/core';
 
 // Enough to tell two links apart without showing the whole hash.
 const SHORT_ID_LENGTH = 7;
@@ -38,7 +38,7 @@ export function InviteLinkCard({
   inviteLink,
   onPress,
 }: {
-  inviteLink: InviteLink;
+  inviteLink: MemberApi.InviteLink;
   onPress: () => void;
 }) {
   const {formatMessage: t} = useIntl();

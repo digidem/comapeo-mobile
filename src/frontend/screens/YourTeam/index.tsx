@@ -12,7 +12,11 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {BLACK, DARK_GREY, NEW_DARK_GREY} from '../../lib/styles';
 import {TeamMemberCard} from './TeamMemberCard';
-import {useOwnDeviceInfo, useManyMembers} from '@comapeo/core-react';
+import {
+  useOwnDeviceInfo,
+  useManyMembers,
+  useManyInviteLinks,
+} from '@comapeo/core-react';
 import InactivePersonIcon from '../../images/NoPeople.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -20,7 +24,6 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 import {LinkIcon} from '../../sharedComponents/LinkIcon';
-import {useManyInviteLinks} from '../../hooks/useInviteLinks';
 import {InviteLinkCard} from './InviteLinks/InviteLinkCard';
 
 const m = defineMessages({
@@ -73,7 +76,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const {formatMessage: t} = useIntl();
   const {projectId} = useActiveProject();
   const membersQuery = useManyMembers({projectId, includeLeft: true});
-  const inviteLinks = useManyInviteLinks();
+  const {data: inviteLinks} = useManyInviteLinks({projectId});
   const {data: deviceInfo} = useOwnDeviceInfo();
 
   const coordinators = membersQuery.data.filter(member =>

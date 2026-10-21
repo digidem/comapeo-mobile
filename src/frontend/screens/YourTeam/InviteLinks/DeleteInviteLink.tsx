@@ -10,7 +10,8 @@ import {
 } from '../../../sharedComponents/Buttons';
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {LoadingIndicator} from '../../../sharedComponents/LoadingIndicator';
-import {useCancelInviteLink} from '../../../hooks/useInviteLinks';
+import {useCancelInviteLink} from '@comapeo/core-react';
+import {useActiveProject} from '../../../contexts/ActiveProjectContext';
 import {WARNING_RED} from '../../../lib/styles';
 import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
@@ -39,13 +40,14 @@ export function DeleteInviteLink({
   navigation,
 }: NativeRootNavigationProps<'DeleteInviteLink'>) {
   const {formatMessage: t} = useIntl();
-  const {url, inviteId} = route.params;
+  const {inviteId} = route.params;
   const cancelInviteLink = useCancelInviteLink();
+  const {projectId} = useActiveProject();
   const [isDeleting, setIsDeleting] = React.useState(false);
 
   async function confirmDelete() {
     setIsDeleting(true);
-    await cancelInviteLink(url);
+    await cancelInviteLink.mutateAsync({projectId, inviteId});
     navigation.replace('InviteLinkDeleted', {inviteId});
   }
 

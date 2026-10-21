@@ -8,7 +8,9 @@ import {BLACK, LIGHT_GREY, MEDIUM_GREY} from '../../lib/styles';
 import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../sharedComponents/RoleWithIcon';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {useCreateInviteLink} from '../../hooks/useInviteLinks';
+import {useCreateInviteLink} from '@comapeo/core-react';
+import {parseInviteLink} from '../../lib/inviteLinks';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
 
@@ -43,12 +45,20 @@ export const SelectInviteeRole: NativeNavigationComponent<
   const {formatMessage: t} = useIntl();
   const params = route.params;
   const createInviteLink = useCreateInviteLink();
+  const {projectId} = useActiveProject();
 
   async function selectRole(roleId: MemberApi.RoleIdForNewInvite) {
     if (params.invitee === 'link') {
-      const inviteLink = await createInviteLink(roleId);
+      const url = await createInviteLink.mutateAsync({projectId, roleId});
+      const inviteLink = parseInviteLink(url);
+      if (!inviteLink)
+        throw new Error(`Could not parse new invite link: ${url}`);
+
       navigation.replace('InviteLinkReady', {
-        ...inviteLink,
+        url,
+        inviteId: inviteLink.inviteIdString,
+        roleId: inviteLink.roleId,
+        expiresAt: inviteLink.expiresAt,
         openedFrom: 'create',
       });
       return;

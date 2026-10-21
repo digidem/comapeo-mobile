@@ -7,7 +7,8 @@ import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
 import type {InviteLinkParams} from '../lib/inviteLinks';
-import type {InviteLink, JoinRequestDetails} from '../hooks/useInviteLinks';
+import type {MemberApi} from '@comapeo/core';
+import type {JoinRequestDetails} from '../hooks/useInviteLinks';
 import {PermissionResponse} from 'expo-audio';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 
@@ -117,8 +118,11 @@ export type RootStackParamsList = {
       }
     | {invitee: 'link'};
   InviteLinkIntro: undefined;
-  InviteLinkReady: InviteLink & {openedFrom: 'create' | 'team'};
-  DeleteInviteLink: InviteLink;
+  InviteLinkReady: Pick<
+    MemberApi.InviteLink,
+    'url' | 'inviteId' | 'roleId' | 'expiresAt'
+  > & {openedFrom: 'create' | 'team'};
+  DeleteInviteLink: Pick<MemberApi.InviteLink, 'url' | 'inviteId'>;
   InviteLinkDeleted: {inviteId: string};
   ReviewJoinRequest: JoinRequestDetails;
   JoinRequestAccepted: {deviceName: string; projectName: string};

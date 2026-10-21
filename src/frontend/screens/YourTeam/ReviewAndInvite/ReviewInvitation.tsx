@@ -1,9 +1,9 @@
 import {StyleSheet, View} from 'react-native';
-import {Text} from '../../../sharedComponents/Text';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import React from 'react';
-import {WHITE} from '../../../lib/styles';
+import {BLACK, WHITE} from '../../../lib/styles';
 import {Button} from '../../../sharedComponents/Button';
 import {DeviceNameWithIcon} from '../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
@@ -50,9 +50,9 @@ export const ReviewInvitation = ({
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+        <BodyText variant="medium" weight={700} style={{color: BLACK}}>
           {t(m.youAreInviting)}
-        </Text>
+        </BodyText>
         <DeviceNameWithIcon
           name={name}
           deviceId={deviceId}
@@ -67,9 +67,9 @@ export const ReviewInvitation = ({
       <Button fullWidth onPress={sendInvite}>
         <View style={styles.flexRow}>
           <MaterialIcon name="send" size={25} color={WHITE} />
-          <Text style={{color: WHITE, fontWeight: 'bold', marginLeft: 10}}>
+          <BodyText weight={700} style={{color: WHITE, marginLeft: 10}}>
             {t(m.sendInvite)}
-          </Text>
+          </BodyText>
         </View>
       </Button>
     </View>

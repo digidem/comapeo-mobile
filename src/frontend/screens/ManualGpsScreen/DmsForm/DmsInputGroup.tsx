@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 
-import {Text} from '../../../sharedComponents/Text';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {Select} from '../../../sharedComponents/Select';
 import {BLACK, DARK_GREY, LIGHT_GREY} from '../../../lib/styles';
 import {INTEGER_REGEX, parseNumber} from '../shared';
@@ -103,7 +104,9 @@ export const DmsInputGroup = ({
     <View style={styles.groupContainer}>
       <View style={styles.row}>
         <View style={styles.column}>
-          <Text style={styles.inputLabel}>{label}</Text>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
+            {label}
+          </HeaderText>
           <View style={styles.inputsContainer}>
             <View style={styles.inputContainer}>
               <TextInput
@@ -120,11 +123,13 @@ export const DmsInputGroup = ({
                 underlineColorAndroid="transparent"
                 value={coordinate.degrees}
               />
-              <Text>
+              <BodyText style={{color: BLACK}}>
                 <FormattedMessage {...m.degrees} />
-              </Text>
+              </BodyText>
             </View>
-            <Text style={styles.suffix}>{'°'}</Text>
+            <BodyText variant="large" style={styles.suffix}>
+              {'°'}
+            </BodyText>
             <View style={styles.inputContainer}>
               <TextInput
                 accessibilityLabel={t(m.minutesInputLabel, {
@@ -140,11 +145,13 @@ export const DmsInputGroup = ({
                 underlineColorAndroid="transparent"
                 value={coordinate.minutes}
               />
-              <Text>
+              <BodyText style={{color: BLACK}}>
                 <FormattedMessage {...m.minutes} />
-              </Text>
+              </BodyText>
             </View>
-            <Text style={styles.suffix}>{"'"}</Text>
+            <BodyText variant="large" style={styles.suffix}>
+              {"'"}
+            </BodyText>
             <View style={styles.inputContainer}>
               <TextInput
                 accessibilityLabel={t(m.secondsInputLabel, {
@@ -160,18 +167,20 @@ export const DmsInputGroup = ({
                 underlineColorAndroid="transparent"
                 value={coordinate.seconds}
               />
-              <Text>
+              <BodyText style={{color: BLACK}}>
                 <FormattedMessage {...m.seconds} />
-              </Text>
+              </BodyText>
             </View>
-            <Text style={styles.suffix}>{'"'}</Text>
+            <BodyText variant="large" style={styles.suffix}>
+              {'"'}
+            </BodyText>
           </View>
         </View>
       </View>
       <View style={styles.directionSelectContainer}>
-        <Text>
+        <BodyText style={{color: BLACK}}>
           <FormattedMessage {...m.direction} />:
-        </Text>
+        </BodyText>
         <Select
           containerStyles={{width: 150, marginHorizontal: 20}}
           label={selectCardinaltiyAccessibilityLabel}
@@ -199,7 +208,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inputLabel: {
-    fontWeight: 'bold',
     color: BLACK,
   },
   input: {
@@ -220,7 +228,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   suffix: {
-    fontSize: 20,
+    color: BLACK,
     marginLeft: 5,
     marginRight: 10,
     paddingTop: 5,

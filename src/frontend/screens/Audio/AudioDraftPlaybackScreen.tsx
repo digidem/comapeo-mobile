@@ -7,7 +7,11 @@ import {
   DestructiveButton,
   SecondaryButton,
 } from '../../sharedComponents/Buttons';
-import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio';
+import {
+  useAudioPlayer,
+  useAudioPlayerStatus,
+  setAudioModeAsync,
+} from 'expo-audio';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {Bar} from 'react-native-progress';
 import {COMAPEO_BLUE, WHITE, VERY_LIGHT_GREY, BLACK} from '../../lib/styles';
@@ -45,6 +49,14 @@ export const AudioDraftPlaybackScreen = ({
   const {uri, createdAt, showRecordingSavedText, audioId} = route.params;
   const player = useAudioPlayer({uri});
   const status = useAudioPlayerStatus(player);
+
+  // needed for iOS to ensure audio plays even when the silent switch is on
+  React.useEffect(() => {
+    setAudioModeAsync({playsInSilentMode: true}).catch(err => {
+      Sentry.captureException(err);
+    });
+  }, []);
+
   const {formatMessage} = useIntl();
   const {deleteUnsavedAttachment} = useDraftObservationActions();
 

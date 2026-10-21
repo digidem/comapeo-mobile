@@ -44,7 +44,7 @@ export const NoWifiDisplay = ({onGoBack}: {onGoBack: () => void}) => {
             <WifiIcon size={16} color={WHITE} />
           </Circle>
           <View style={styles.wifiCardTextContainer}>
-            <BodyText style={styles.wifiName}>--</BodyText>
+            <BodyText weight={500}>--</BodyText>
           </View>
         </View>
       </View>
@@ -115,9 +115,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 10,
     paddingHorizontal: 40,
-  },
-  wifiName: {
-    fontWeight: '500',
   },
   projectInfoContainer: {
     alignItems: 'center',

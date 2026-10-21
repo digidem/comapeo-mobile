@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Platform} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {WHITE, MEDIUM_GREY, DARK_GREY, LIGHT_BLUE} from '../../lib/styles';
+import {WHITE, DARK_GREY, LIGHT_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
@@ -23,6 +23,7 @@ import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
 import {CommonActions, StackActions} from '@react-navigation/native';
+import {RUBIK} from '../../lib/fonts';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -31,8 +32,8 @@ export type NavigatorScreenLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
 >;
 
-// Android's bottom inset sits behind the system navigation bar, where grey is a
-// deliberate visual choice. iOS's is the home activity indicator, which should
+// The bottom inset sits behind the home indicator (iOS) or, since the nav bar is
+// transparent and edge-to-edge, the system navigation bar (Android). It should
 // match the screen above it: white like the tabs, except on these screens.
 const IOS_BOTTOM_INSET_COLORS: Partial<
   Record<keyof AppStackParamsList, string>
@@ -50,7 +51,7 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
   contentStyle: {backgroundColor: WHITE},
   headerStyle: {backgroundColor: WHITE},
-  headerTitleStyle: {fontFamily: 'Rubik_500Medium'},
+  headerTitleStyle: {fontFamily: RUBIK[500]},
   headerLeft: props => <CustomHeaderLeft headerBackButtonProps={props} />,
   headerBackVisible: false,
   statusBarStyle: 'dark',
@@ -58,9 +59,9 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
 
 type LayoutProps = Parameters<NavigatorLayout>[0];
 
-// Anything with the presentation option other than a 'card' is presented as a modal,
-// and iOS keeps a presented modal above whatever arrives after it. So when one is
-// already open, the incoming screen has to replace it rather than stack behind it.
+// Android's bottom inset sits behind the system navigation bar, where grey is a
+// deliberate visual choice. iOS's is the home activity indicator, which should
+// match the screen above it: white like the tabs, except on these screens.
 function openSheetAction(
   {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
   name: 'InviteReceived' | 'MapReceivedBottomSheet',
@@ -110,9 +111,10 @@ export const RootStackNavigator = () => {
     descriptors,
   }) => (
     <SafeAreaView
-      edges={['bottom']}
+      edges={{bottom: 'maximum'}}
       style={{
         flex: 1,
+        paddingBottom: 20,
         backgroundColor: getBottomInsetColor(state.routes[state.index]?.name),
       }}>
       <React.Suspense fallback={<FullScreenCenteredLoader />}>

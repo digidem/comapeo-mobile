@@ -57,7 +57,7 @@ export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = () => {
           {...m.warning}
           values={{
             bold: (chunks: React.ReactNode) => (
-              <BodyText key={chunks?.toString()} style={{fontWeight: 'bold'}}>
+              <BodyText key={chunks?.toString()} weight={700}>
                 {chunks}
               </BodyText>
             ),

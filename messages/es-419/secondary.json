@@ -3,6 +3,10 @@
     "message": "Seguir Editando",
     "description": "Button on dialog to keep editing (cancelling close action)"
   },
+  "AppContainer.EditHeader.discardObservationButton": {
+    "message": "Descartar",
+    "description": "Title of dialog that shows when cancelling observation edits"
+  },
   "AppContainer.EditHeader.discardObservationDescription": {
     "message": "Tu observación no se guardará. Esto no se puede deshacer."
   },
@@ -27,15 +31,6 @@
   },
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Regresar"
-  },
-  "Modal.GPSDisable.button": {
-    "message": "Habilitar"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "Para crear un Trayecto, CoMapeo necesita acceso a tu ubicación y GPS."
-  },
-  "Modal.GPSDisable.title": {
-    "message": "GPS desactivado"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "Cuando los participantes del proyecto intercambien sus datos, también se archivarán en Internet. Los datos de su proyecto están sincronizando con el archivo a través de internet para el servidor seguro y cifrado a continuación. El propietario del servidor puede ver los datos."
@@ -115,9 +110,6 @@
   "Screens.ProjectSettings.editInfo": {
     "message": "Editar información"
   },
-  "Screens.ProjectSettings.invite": {
-    "message": "Invita Colaboradores"
-  },
   "Screens.ProjectSettings.projectStatsOffDesc": {
     "message": "Las estadísticas del Proyecto no están siendo compartidas."
   },
@@ -127,20 +119,23 @@
   "Screens.ProjectSettings.remoteArchiveDesc": {
     "message": "Compartir con un servidor seguro encriptado. Se requiere una URL para acceder."
   },
-  "Screens.ProjectSettings.soloDescription": {
-    "message": "Estás mapeando por tu cuenta."
-  },
   "Screens.ProjectSettings.update": {
     "message": "Actualizar"
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Actualizar conjunto de categorías"
   },
-  "Screens.ProjectSettings.view": {
-    "message": "Ver"
-  },
   "Screens.ProjectSettings.viewDetails": {
     "message": "Ver detalles"
+  },
+  "Screens.Settings.AppSettings.createTestData": {
+    "message": "Crear datos de prueba"
+  },
+  "Screens.Settings.AppSettings.qaDeviceName": {
+    "message": "Nombre del dispositivo QA"
+  },
+  "Screens.Settings.AppSettings.testData": {
+    "message": "Datos de prueba"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "message": "Cancelar",
@@ -210,6 +205,84 @@
   "constants.red": {
     "message": "Rojo"
   },
+  "lib.intl.calendarDay.friday": {
+    "message": "Viernes"
+  },
+  "lib.intl.calendarDay.monday": {
+    "message": "Lunes"
+  },
+  "lib.intl.calendarDay.saturday": {
+    "message": "Sábado"
+  },
+  "lib.intl.calendarDay.sunday": {
+    "message": "Domingo"
+  },
+  "lib.intl.calendarDay.thursday": {
+    "message": "Jueves"
+  },
+  "lib.intl.calendarDay.tuesday": {
+    "message": "Martes"
+  },
+  "lib.intl.calendarDay.wednesday": {
+    "message": "Miércoles"
+  },
+  "lib.intl.calendarDayShort.friday": {
+    "message": "Vie"
+  },
+  "lib.intl.calendarDayShort.monday": {
+    "message": "Lun"
+  },
+  "lib.intl.calendarDayShort.saturday": {
+    "message": "Sáb"
+  },
+  "lib.intl.calendarDayShort.sunday": {
+    "message": "Dom"
+  },
+  "lib.intl.calendarDayShort.thursday": {
+    "message": "Jue"
+  },
+  "lib.intl.calendarDayShort.tuesday": {
+    "message": "Mar"
+  },
+  "lib.intl.calendarDayShort.wednesday": {
+    "message": "Mié"
+  },
+  "lib.intl.calendarMonth.april": {
+    "message": "Abril"
+  },
+  "lib.intl.calendarMonth.august": {
+    "message": "Agosto"
+  },
+  "lib.intl.calendarMonth.december": {
+    "message": "Diciembre"
+  },
+  "lib.intl.calendarMonth.february": {
+    "message": "Febrero"
+  },
+  "lib.intl.calendarMonth.january": {
+    "message": "Enero"
+  },
+  "lib.intl.calendarMonth.july": {
+    "message": "Julio"
+  },
+  "lib.intl.calendarMonth.june": {
+    "message": "Junio"
+  },
+  "lib.intl.calendarMonth.march": {
+    "message": "Marzo"
+  },
+  "lib.intl.calendarMonth.may": {
+    "message": "Mayo"
+  },
+  "lib.intl.calendarMonth.november": {
+    "message": "Noviembre"
+  },
+  "lib.intl.calendarMonth.october": {
+    "message": "Octubre"
+  },
+  "lib.intl.calendarMonth.september": {
+    "message": "Septiembre"
+  },
   "projectInfoCard.coordinator": {
     "message": "Eres Coordinador de este proyecto."
   },
@@ -218,6 +291,18 @@
   },
   "projectInfoCard.participant": {
     "message": "Eres participante en este proyecto."
+  },
+  "screen.BackgroundMaps.SelectDevice.notSeeingDevice": {
+    "message": "¿No ves un dispositivo?"
+  },
+  "screen.BackgroundMaps.SelectDevice.sameVersion": {
+    "message": "Comprueba de que ambos dispositivos estén en la misma red de Wifi"
+  },
+  "screen.BackgroundMaps.SelectDevice.sameWifi": {
+    "message": "Verifica de que ambos dispositivos estén en la misma red de Wifi"
+  },
+  "screen.BackgroundMaps.SelectDevice.titleMapShare": {
+    "message": "Selecciona un dispositivo"
   },
   "screen.EditProjectDetails.descriptionPlaceholder": {
     "message": "Breve descripción del proyecto, menos de 60 caracteres."
@@ -356,6 +441,9 @@
   "screens.AudioRecording.lessThan5": {
     "message": "Quedan menos de 5 minutos"
   },
+  "screens.CameraScreen.cameraPermissionDescription": {
+    "message": "Cámara requerida para usar."
+  },
   "screens.CollaboratorInfo.addedOn": {
     "message": "Añadido el {date}"
   },
@@ -419,6 +507,21 @@
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo respeta tu privacidad y autonomía"
   },
+  "screens.DeviceNaming.Success.addAudio": {
+    "message": "Añade grabaciones de audio."
+  },
+  "screens.DeviceNaming.Success.coordinateOrMap": {
+    "message": "Coordínate con el equipo para comenzar o mapea por tu cuenta."
+  },
+  "screens.DeviceNaming.Success.snapPhotos": {
+    "message": "Toma fotos sobre la marcha."
+  },
+  "screens.DeviceNaming.Success.tracks": {
+    "message": "Documenta senderos caminados."
+  },
+  "screens.EarlyAccess.feedbackPrefix": {
+    "message": "¿Tienes comentarios? Compártelo en"
+  },
   "screens.EarlyAccess.infoBox": {
     "message": "Los datos de acceso anticipado no serán visibles para los colaboradores que no hayan optado por participar."
   },
@@ -451,6 +554,9 @@
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Contraseña incorrecta, inténtelo de nuevo"
+  },
+  "screens.Exchange.WifiCard.noWifi": {
+    "message": "No hay red de Wifi"
   },
   "screens.ExchangeSettingsBottomSheet.everythingDesc": {
     "message": "Las fotos de tamaño completo y  el audio, usan más almacenamiento."
@@ -684,8 +790,11 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Número de zona"
   },
-  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "¿Usar la ubicación? Rastrea la ubicación incluso cuando está cerrado. Los datos permanecen solo en el dispositivo."
+  "screens.MapScreen.TrackBottomSheet.locationRequired": {
+    "message": "Ubicación necesaria para usar."
+  },
+  "screens.MapScreen.locationPermissionDescription": {
+    "message": "Ubicación necesaria para usar."
   },
   "screens.ObscurePasscode.description": {
     "message": "La Contraseña Oscura es una funcionalidad de seguridad que te permite abrir CoMapeo en un modo que oculta toda tu información. Al introducir la Constraseña Oscura en la pantalla de inicio, se mostrará una versión vacía de CoMapeo que te permite crear observaciones de demostración que no se guardan en la base de datos de CoMapeo."
@@ -810,7 +919,7 @@
     "message": "Enviado y validado por CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "Comienza desde la vista de mapa o cámara para grabar tu primera observación.",
+    "message": "Todas las observaciones y trayectos se mostrarán aquí.",
     "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
@@ -818,15 +927,6 @@
   },
   "screens.ObservationsList.filter.justYou": {
     "message": "Solo tú"
-  },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "Cerrar"
-  },
-  "screens.Onboarding.JoinProjectIntro.description": {
-    "message": "Coordine con su equipo para recibir una invitación al proyecto."
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "Unirse a un proyecto"
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Política de privacidad"
@@ -1053,6 +1153,12 @@
   "screens.Settings.CreateOrJoinProject.requestInvites": {
     "message": "Solicitar invitaciones para unirse a proyectos existentes."
   },
+  "screens.Settings.MapManagement.BackgroundMapUpdated.done": {
+    "message": "Listo"
+  },
+  "screens.Settings.MapManagement.BackgroundMapUpdated.mapUpdated": {
+    "message": "Mapa de fondo actualizado."
+  },
   "screens.Settings.MapManagement.BackgroundMaps.acceptedFileTypes": {
     "message": "Los tipos de archivo aceptados son .smp"
   },
@@ -1083,6 +1189,93 @@
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Eliminar archivo de mapa"
   },
+  "screens.Settings.MapManagement.MapReceived.accept": {
+    "message": "Aceptar"
+  },
+  "screens.Settings.MapManagement.MapReceived.decline": {
+    "message": "Rechazar"
+  },
+  "screens.Settings.MapManagement.MapReceived.distanceAway": {
+    "message": "{distance} Lejos"
+  },
+  "screens.Settings.MapManagement.MapReceived.locationNotCovered": {
+    "message": "¡La ubicación actual no está disponible!"
+  },
+  "screens.Settings.MapManagement.MapReceived.mbNeeded": {
+    "message": "Se necesitan {size}MB"
+  },
+  "screens.Settings.MapManagement.MapReceived.megabytes": {
+    "message": "{size}MB"
+  },
+  "screens.Settings.MapManagement.MapReceived.notEnoughSpace": {
+    "message": "¡No hay suficiente espacio libre!"
+  },
+  "screens.Settings.MapManagement.MapReceived.sharingDevice": {
+    "message": "{deviceName} quiere compartir..."
+  },
+  "screens.Settings.MapManagement.MapShareCanceled.close": {
+    "message": "Cerrar"
+  },
+  "screens.Settings.MapManagement.MapShareCanceled.message": {
+    "message": "El Colaborador canceló el uso compartido antes de completarlo."
+  },
+  "screens.Settings.MapManagement.MapShareCanceled.title": {
+    "message": "Compartir cancelado"
+  },
+  "screens.Settings.MapManagement.ReceivingBackgroundMap.downloadErrorDescription": {
+    "message": "Se interrumpió el intercambio de mapas. Asegúrate de que ambos dispositivos estén conectados a la misma red y vuelve a intentarlo."
+  },
+  "screens.Settings.MapManagement.ReceivingBackgroundMap.downloadErrorTitle": {
+    "message": "Se perdió la conexión"
+  },
+  "screens.Settings.MapManagement.ReceivingBackgroundMap.downloadFailedTitle": {
+    "message": "Descarga de mapa fallida"
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.cancel": {
+    "message": "Cancelar"
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.replaceMapDescription": {
+    "message": "Este dispositivo tiene un mapa de fondo que se reemplazará si continúa."
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.replaceMapTitle": {
+    "message": "¿Reemplazar el mapa de fondo actual?"
+  },
+  "screens.Settings.MapManagement.ReplaceBackgroundMap.yesReplace": {
+    "message": "Sí, reemplazar"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.cancel": {
+    "message": "Cancelar"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.close": {
+    "message": "Cerrar"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.deviceNoSpace": {
+    "message": "El dispositivo no tiene espacio suficiente."
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.done": {
+    "message": "Listo"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.mapDeclined": {
+    "message": "Mapa rechazado."
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.mapSent": {
+    "message": "¡Mapa enviado!"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.sending": {
+    "message": "Enviando..."
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.timerMessage": {
+    "message": "Mapa enviado hace {time}"
+  },
+  "screens.Settings.MapManagement.SendingBackgroundMap.waitingMessage": {
+    "message": "Esperando a que el dispositivo acepte el mapa"
+  },
+  "screens.Settings.MapManagement.UpdatingBackgroundMap.cancel": {
+    "message": "Cancelar"
+  },
+  "screens.Settings.MapManagement.UpdatingBackgroundMap.updating": {
+    "message": "Actualizando..."
+  },
   "screens.Settings.NameDefaultProjectIntro.description": {
     "message": "Invita dispositivos a un nuevo proyecto con todas tus observaciones."
   },
@@ -1094,6 +1287,9 @@
   },
   "screens.Settings.NameDefaultProjectIntro.title": {
     "message": "Invitar dispositivos"
+  },
+  "screens.Settings.YourTeam.close": {
+    "message": "Cerrar"
   },
   "screens.Settings.YourTeam.deviceHasJoined": {
     "message": "Este dispositivo ha unido a {projectName}"
@@ -1213,6 +1409,12 @@
   "sharedComponents.ErrorBottomSheet.advanced": {
     "message": "Avanzado"
   },
+  "sharedComponents.PermissionButtons.allow": {
+    "message": "Permitir"
+  },
+  "sharedComponents.PermissionButtons.openSettings": {
+    "message": "Abrir Ajustes"
+  },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinador"
   },
@@ -1239,23 +1441,5 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Invita Colaboradores"
-  },
-  "soloProject.startNewProject.goBack": {
-    "message": "Regresar"
-  },
-  "soloProject.startNewProject.introText": {
-    "message": "Forma segura y privada de intercambio con colaboradores."
-  },
-  "soloProject.startNewProject.inviteOnly": {
-    "message": "Solo los dispositivos invitados a un proyecto pueden contribuir."
-  },
-  "soloProject.startNewProject.manageControl": {
-    "message": "Administrar fácilmente los colaboradores y ajustes del proyecto."
-  },
-  "soloProject.startNewProject.start": {
-    "message": "Comenzar"
-  },
-  "soloProject.startNewProject.uniqueProject": {
-    "message": "Cada proyecto es único y separado."
   }
 }

@@ -19,8 +19,6 @@ describe('Onboarding - Always Stay Notified Screen', () => {
     await expect(allowButton).toBeDisplayed();
   });
 
-  // "Not Now" is used rather than "Allow" so the run never depends on a system
-  // permission dialog. Both restart the app and land on Success.
   it('should continue to the success screen after declining', async () => {
     const notNowButton = await $(
       byResourceId('ONBOARDING.notifications-not-now-btn'),

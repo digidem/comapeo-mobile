@@ -5,7 +5,7 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type {SvgProps} from 'react-native-svg';
 
-import NotificationsUnread from '../../images/NotificationsUnread.svg';
+import NotifiedIcon from '../../images/Notified.svg';
 import Refresh from '../../images/Refresh.svg';
 import LocationIcon from '../../images/LocationIcon.svg';
 import PhoneNotification from '../../images/PhoneNotification.svg';
@@ -20,7 +20,7 @@ import {
   useNotificationPermissionWithoutPasscode,
 } from '../../hooks/useNotificationPermissionTracker';
 import type {OnboardingParamsList} from '../../sharedTypes/navigation';
-import {COMAPEO_BLUE, DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
+import {COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 
 const m = defineMessages({
   alwaysStayNotified: {
@@ -104,11 +104,7 @@ export const AlwaysStayNotified = ({
         )
       }>
       <View style={styles.titleSection}>
-        <NotificationsUnread
-          color={DARK_ORANGE}
-          width={ICON_SIZE}
-          height={ICON_SIZE}
-        />
+        <NotifiedIcon width={ICON_SIZE} height={ICON_SIZE} />
         <HeaderText variant="header2">{t(m.alwaysStayNotified)}</HeaderText>
       </View>
 

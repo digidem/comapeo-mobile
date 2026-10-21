@@ -7,8 +7,7 @@ import {
   AllowPermissionButton,
   OpenSettingsButton,
 } from '../../../sharedComponents/PermissionButtons';
-import {DARK_ORANGE} from '../../../lib/styles';
-import NotificationsUnreadIcon from '../../../images/NotificationsUnread.svg';
+import NotifiedIcon from '../../../images/Notified.svg';
 
 const m = defineMessages({
   title: {
@@ -38,13 +37,7 @@ export const TrackNotificationPermission = ({
   return (
     <View style={styles.container} testID="TRACK.notification-permission">
       <IconTitleDescription
-        icon={
-          <NotificationsUnreadIcon
-            color={DARK_ORANGE}
-            width={ICON_SIZE}
-            height={ICON_SIZE}
-          />
-        }
+        icon={<NotifiedIcon width={ICON_SIZE} height={ICON_SIZE} />}
         title={formatMessage(m.title)}
         description={formatMessage(m.notificationsRequired)}
       />

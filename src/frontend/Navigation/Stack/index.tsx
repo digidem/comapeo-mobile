@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {Platform} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {WHITE, DARK_GREY, LIGHT_BLUE, MEDIUM_GREY} from '../../lib/styles';
+import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
@@ -31,21 +29,6 @@ export type NavigatorLayout = NonNullable<
 export type NavigatorScreenLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
 >;
-
-// The bottom inset sits behind the home indicator (iOS) or, since the nav bar is
-// transparent and edge-to-edge, the system navigation bar (Android). It should
-// match the screen above it: white like the tabs, except on these screens.
-const IOS_BOTTOM_INSET_COLORS: Partial<
-  Record<keyof AppStackParamsList, string>
-> = {
-  IntroToCoMapeo: LIGHT_BLUE,
-  AudioRecording: DARK_GREY,
-};
-
-function getBottomInsetColor(routeName: keyof AppStackParamsList | undefined) {
-  if (Platform.OS === 'android') return MEDIUM_GREY;
-  return (routeName && IOS_BOTTOM_INSET_COLORS[routeName]) ?? WHITE;
-}
 
 const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
@@ -110,15 +93,29 @@ export const RootStackNavigator = () => {
     navigation,
     descriptors,
   }) => (
-    <SafeAreaView
-      edges={{bottom: 'maximum'}}
-      style={{
-        flex: 1,
-        paddingBottom: 20,
-        backgroundColor: getBottomInsetColor(state.routes[state.index]?.name),
-      }}>
-      <React.Suspense fallback={<FullScreenCenteredLoader />}>
-        <PendingInvitesListener
+    <React.Suspense fallback={<FullScreenCenteredLoader />}>
+      <PendingInvitesListener
+        currentRouteName={state.routes[state.index]?.name}
+        navigateToInviteScreen={inviteId =>
+          navigation.dispatch(
+            openSheetAction({state, descriptors}, 'InviteReceived', {
+              inviteId,
+            }),
+          )
+        }
+      />
+      <PendingMapSharesListener
+        currentRouteName={state.routes[state.index]?.name}
+        navigateToMapShareScreen={shareId =>
+          navigation.dispatch(
+            openSheetAction({state, descriptors}, 'MapReceivedBottomSheet', {
+              shareId,
+            }),
+          )
+        }
+      />
+      {!isNotReadyForInvite && (
+        <DeepLinkListener
           currentRouteName={state.routes[state.index]?.name}
           navigateToInviteScreen={inviteId =>
             navigation.dispatch(
@@ -128,39 +125,17 @@ export const RootStackNavigator = () => {
             )
           }
         />
-        <PendingMapSharesListener
-          currentRouteName={state.routes[state.index]?.name}
-          navigateToMapShareScreen={shareId =>
-            navigation.dispatch(
-              openSheetAction({state, descriptors}, 'MapReceivedBottomSheet', {
-                shareId,
-              }),
-            )
-          }
-        />
-        {!isNotReadyForInvite && (
-          <DeepLinkListener
-            currentRouteName={state.routes[state.index]?.name}
-            navigateToInviteScreen={inviteId =>
-              navigation.dispatch(
-                openSheetAction({state, descriptors}, 'InviteReceived', {
-                  inviteId,
-                }),
-              )
-            }
-          />
-        )}
-        {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.
+      )}
+      {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.
             activeProjectId is always set before any app screen renders. */}
-        {activeProjectId ? (
-          <ActiveProjectProvider activeProjectId={activeProjectId}>
-            {children}
-          </ActiveProjectProvider>
-        ) : (
-          children
-        )}
-      </React.Suspense>
-    </SafeAreaView>
+      {activeProjectId ? (
+        <ActiveProjectProvider activeProjectId={activeProjectId}>
+          {children}
+        </ActiveProjectProvider>
+      ) : (
+        children
+      )}
+    </React.Suspense>
   );
 
   const screenLayout: NavigatorScreenLayout = ({children}) => (

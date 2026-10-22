@@ -2,6 +2,7 @@ import {ReactNode, type PropsWithChildren} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 
 import {ViewStyleProp} from '../sharedTypes';
+import {useCustomSafeAreaInsets} from '../hooks/useCustomSafeAreaInsets';
 
 export const ScreenContentWithDock = ({
   children,
@@ -15,6 +16,7 @@ export const ScreenContentWithDock = ({
   contentContainerStyle?: ViewStyleProp;
   testID?: string;
 }>) => {
+  const {bottom} = useCustomSafeAreaInsets();
   return (
     <View style={styles.container} testID={testID}>
       <ScrollView
@@ -26,7 +28,12 @@ export const ScreenContentWithDock = ({
         ]}>
         {children}
       </ScrollView>
-      <View style={[styles.dockedContentContainer, dockContainerStyle]}>
+      <View
+        style={[
+          styles.dockedContentContainer,
+          {paddingBottom: bottom},
+          dockContainerStyle,
+        ]}>
         {dockContent}
       </View>
     </View>
@@ -41,7 +48,6 @@ const styles = StyleSheet.create({
   },
   dockedContentContainer: {
     flex: 0,
-    padding: 20,
     alignItems: 'center',
   },
 });

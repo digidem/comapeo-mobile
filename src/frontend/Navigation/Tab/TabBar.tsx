@@ -1,6 +1,6 @@
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-import {StyleSheet, TouchableOpacity, View, Platform} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import NotebookPenIcon from '../../images/NotebookPen.svg';
 import TracksIcon from '../../images/Tracks.svg';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -8,6 +8,7 @@ import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useTracking} from '../../hooks/useTracking';
 import {useTrackTimer} from '../../hooks/useTrackTimer.ts';
+import {useCustomSafeAreaInsets} from '../../hooks/useCustomSafeAreaInsets.tsx';
 
 const BUTTON_SIZE = 25;
 const HIT_SLOP = 20;
@@ -15,6 +16,7 @@ const HIT_SLOP = 20;
 export const TabBar = ({navigation, state}: BottomTabBarProps) => {
   const currentIndex = state.index;
   const currentTab = state.routes[currentIndex];
+  const {bottom} = useCustomSafeAreaInsets();
 
   function onPressMap() {
     navigation.navigate('Map', {trackingOpen: false});
@@ -24,7 +26,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
     navigation.navigate('Map', {trackingOpen: true});
   }
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom: bottom}]}>
       <TouchableOpacity
         hitSlop={HIT_SLOP}
         testID="tabBarButtonObservationsList"
@@ -119,7 +121,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingBottom: Platform.OS === 'android' ? 20 : 0,
   },
   buttonStyle: {
     marginTop: 25,

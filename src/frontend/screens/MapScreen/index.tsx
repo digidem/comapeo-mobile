@@ -163,8 +163,7 @@ export const MapScreen = ({
   );
 
   const handleAddPress = () => {
-    createDraft();
-    navigate('ObservationCategoryChooser');
+    navigate('ShareProjectStats', {projectName: 'TESTER'});
   };
 
   function handleLocationPress() {

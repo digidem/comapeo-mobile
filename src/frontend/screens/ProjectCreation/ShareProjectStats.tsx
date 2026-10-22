@@ -5,7 +5,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 
 import GraphIcon from '../../images/Graph.svg';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
@@ -16,6 +15,8 @@ import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {toError} from '../../utils/errors';
+import {useCustomSafeAreaInsets} from '../../hooks/useCustomSafeAreaInsets';
+import {ScreenContentWithNoHeaderAndTopPadding} from '../../sharedComponents/ScreenContentWithNoHeaderAndTopPadding';
 
 const m = defineMessages({
   shareProjectStats: {
@@ -54,6 +55,7 @@ export const ShareProjectStats = ({
 
   const {projectId} = useActiveProject();
   const updateSettings = useUpdateProjectSettings({projectId});
+  const {top} = useCustomSafeAreaInsets();
 
   usePreventBackNavigation();
 
@@ -93,8 +95,8 @@ export const ShareProjectStats = ({
   const isSubmitting = updateSettings.status === 'pending';
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={styles.content}
+    <ScreenContentWithNoHeaderAndTopPadding
+      contentContainerStyle={[styles.content, {paddingTop: top}]}
       dockContainerStyle={styles.dock}
       dockContent={
         isSubmitting ? (
@@ -150,14 +152,13 @@ export const ShareProjectStats = ({
           </BodyText>
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithNoHeaderAndTopPadding>
   );
 };
 
 const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
-    paddingTop: 40,
     gap: 30,
   },
   headerBlock: {
@@ -187,7 +188,6 @@ const styles = StyleSheet.create({
   },
   dock: {
     alignItems: 'center',
-    paddingBottom: 20,
   },
   buttons: {
     gap: 10,

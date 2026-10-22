@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {WHITE} from '../lib/styles';
 import {useNavigation} from '@react-navigation/native';
 import {usePreventBackNavigation} from '../hooks/usePreventBackNavigation';
+import {useCustomSafeAreaInsets} from '../hooks/useCustomSafeAreaInsets';
 
 /**
  *
@@ -43,7 +43,7 @@ const AnimateBottomSheetContainer = ({
   children: React.ReactNode;
 }) => {
   const navigation = useNavigation();
-  const insets = useSafeAreaInsets();
+  const insets = useCustomSafeAreaInsets();
 
   const [displayContent, setDisplayContent] = React.useState(true);
 
@@ -75,7 +75,7 @@ const AnimateBottomSheetContainer = ({
             backgroundColor: WHITE,
             paddingHorizontal: 20,
             paddingTop: 40,
-            paddingBottom: 20 + insets.bottom,
+            paddingBottom: insets.bottom,
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
             flexShrink: 1,

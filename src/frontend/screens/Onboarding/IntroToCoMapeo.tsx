@@ -27,12 +27,11 @@ export const IntroToCoMapeo = ({
 
   return (
     <ScreenContentWithDock
+      backgroundColor={LIGHT_BLUE}
       contentContainerStyle={{
         flexGrow: 1,
         justifyContent: 'center',
-        backgroundColor: LIGHT_BLUE,
       }}
-      dockContainerStyle={{backgroundColor: LIGHT_BLUE}}
       dockContent={
         <PrimaryButton
           testID="ONBOARDING.navigate-to-privacy-policy-btn"

@@ -9,7 +9,6 @@ import LockedWithKeyIcon from '../../images/LockedWithKey.svg';
 import HandshakeMediumMediumDarkIcon from '../../images/HandshakeMediumMediumDark.svg';
 import SafetyIcon from '../../images/Safety.svg';
 
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -17,6 +16,7 @@ import {SvgProps} from 'react-native-svg';
 import {COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {m} from './DataPrivacyMessages';
+import {ScreenContentWithNoHeaderAndTopPadding} from '../../sharedComponents/ScreenContentWithNoHeaderAndTopPadding';
 
 export const DataPrivacy = ({
   navigation,
@@ -24,7 +24,7 @@ export const DataPrivacy = ({
   const {formatMessage: t} = useIntl();
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithNoHeaderAndTopPadding
       dockContent={
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
@@ -70,7 +70,7 @@ export const DataPrivacy = ({
           <InfoListItem Icon={SafetyIcon} text={t(m.dataPrivacyDiagnostic)} />
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithNoHeaderAndTopPadding>
   );
 };
 
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     gap: 10,
-    paddingTop: 60,
   },
   title: {
     textAlign: 'center',

@@ -159,7 +159,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   dockContainer: {
-    paddingVertical: 24,
     backgroundColor: 'transparent',
   },
   center: {

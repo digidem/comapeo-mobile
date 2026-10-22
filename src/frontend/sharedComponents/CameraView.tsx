@@ -24,7 +24,6 @@ import {GPSPill} from './GPSPill';
 import {BodyText} from './Text/BodyText';
 import {IconTitleDescription} from './IconTitleDescription';
 import {AllowPermissionButton, OpenSettingsButton} from './PermissionButtons';
-import {ScreenContentWithDock} from './ScreenContentWithDock';
 import PhotoLibraryIcon from '../images/PhotoLibrary.svg';
 import {BLUE_GREY, DARK_GREY, WHITE} from '../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
@@ -35,6 +34,7 @@ import * as Sentry from '@sentry/react-native';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {toError} from '../utils/errors';
 import AddButtonSVG from '../images/AddButton.svg';
+import {useHeaderHeight} from '@react-navigation/elements';
 
 const m = defineMessages({
   cameraPermissionTitle: {
@@ -68,6 +68,7 @@ export const CameraView = ({onAddPress}: Props) => {
   const location = useLocationState(store => store.location);
   const navigation = useNavigationFromRoot();
   const device = useCameraDevice('back');
+  const headerHeight = useHeaderHeight();
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -140,30 +141,38 @@ export const CameraView = ({onAddPress}: Props) => {
 
   if (!permission.granted) {
     return (
-      <View style={styles.permissionScreen}>
-        <ScreenContentWithDock
-          testID="MAIN.camera-permission"
-          contentContainerStyle={styles.permissionContent}
-          dockContent={
-            permission.canAskAgain ? (
-              <AllowPermissionButton
-                testID="MAIN.camera-allow-btn"
-                onPress={() => askPermission.mutate()}
-              />
-            ) : (
-              <OpenSettingsButton
-                testID="MAIN.camera-settings-btn"
-                onPress={() => goToSettings.mutate()}
-              />
-            )
-          }>
+      <View
+        style={{
+          flex: 1,
+          paddingBottom: 30,
+        }}>
+        <View
+          testID="MAP.location-permission"
+          style={{
+            flexGrow: 1,
+            justifyContent: 'center',
+            marginTop: headerHeight,
+          }}>
           <IconTitleDescription
             color={WHITE}
             icon={<PhotoLibraryIcon color={BLUE_GREY} width={80} height={80} />}
             title={formatMessage(m.cameraPermissionTitle)}
             description={formatMessage(m.cameraPermissionDescription)}
           />
-        </ScreenContentWithDock>
+        </View>
+        <View style={{flex: 0, alignItems: 'center'}}>
+          {permission.canAskAgain ? (
+            <AllowPermissionButton
+              testID="MAIN.camera-allow-btn"
+              onPress={() => askPermission.mutate()}
+            />
+          ) : (
+            <OpenSettingsButton
+              testID="MAIN.camera-settings-btn"
+              onPress={() => goToSettings.mutate()}
+            />
+          )}
+        </View>
       </View>
     );
   }

@@ -16,6 +16,7 @@ import {openSettingsAndWait} from '../../utils/linking';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {useAudioPermissionModalMutation} from '../../hooks/useAudioPermissionTracker';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
+import {useCustomSafeAreaInsets} from '../../hooks/useCustomSafeAreaInsets';
 
 const m = defineMessages({
   title: {
@@ -58,6 +59,7 @@ export const AudioAskPermissionBottomSheet = ({
   );
   const hasNavigatedRef = React.useRef(false);
   const {passcode} = useSecurityState();
+  const {top} = useCustomSafeAreaInsets();
 
   // Re-check microphone permission in case it was granted via system settings,
   // and navigate to AudioRecording if so.
@@ -114,7 +116,7 @@ export const AudioAskPermissionBottomSheet = ({
 
   return (
     <BottomSheetWrapper>
-      <View style={styles.container}>
+      <View style={[styles.container, {paddingTop: top}]}>
         <View style={{alignItems: 'center'}}>
           <AudioPermission />
           <HeaderText

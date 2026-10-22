@@ -26,6 +26,7 @@ import {audioStyles} from './shared';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
+import {useCustomSafeAreaInsets} from '../../hooks/useCustomSafeAreaInsets';
 
 const m = defineMessages({
   recordingSaved: {
@@ -49,6 +50,7 @@ export const AudioDraftPlaybackScreen = ({
   const {uri, createdAt, showRecordingSavedText, audioId} = route.params;
   const player = useAudioPlayer({uri});
   const status = useAudioPlayerStatus(player);
+  const {top} = useCustomSafeAreaInsets();
 
   // needed for iOS to ensure audio plays even when the silent switch is on
   React.useEffect(() => {
@@ -86,7 +88,7 @@ export const AudioDraftPlaybackScreen = ({
 
   return (
     <ScreenContentWithDock
-      contentContainerStyle={styles.container}
+      contentContainerStyle={[styles.container, {paddingTop: top}]}
       dockContainerStyle={{gap: 20, backgroundColor: WHITE}}
       dockContent={
         <>
@@ -115,13 +117,12 @@ export const AudioDraftPlaybackScreen = ({
           />
         </>
       }>
-      <View style={{paddingTop: 65}}>
-        {showRecordingSavedText && (
-          <BodyText variant="large" style={audioStyles.textStyle}>
-            {formatMessage(m.recordingSaved)}
-          </BodyText>
-        )}
-      </View>
+      {showRecordingSavedText && (
+        <BodyText variant="large" style={audioStyles.textStyle}>
+          {formatMessage(m.recordingSaved)}
+        </BodyText>
+      )}
+
       <View style={audioStyles.audioBox}>
         <TouchableOpacity
           onPress={handlePlayPause}

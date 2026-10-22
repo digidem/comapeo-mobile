@@ -15,6 +15,7 @@ import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {useDraftObservationActions} from '../../../contexts/DraftObservationContext';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../../utils/errors';
+import {useCustomSafeAreaInsets} from '../../../hooks/useCustomSafeAreaInsets';
 
 const m = defineMessages({
   lessThan5: {
@@ -40,6 +41,7 @@ export function AudioRecording({
   const timeElapsed = status.durationMillis;
   const [isLoading, setIsLoading] = React.useState(true);
   const {addAudio} = useDraftObservationActions();
+  const {top} = useCustomSafeAreaInsets();
 
   const {formatMessage} = useIntl();
 
@@ -108,7 +110,7 @@ export function AudioRecording({
       {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
       {!isE2E && <AnimatedBackground timeElapsed={timeElapsed} />}
       <ScreenContentWithDock
-        contentContainerStyle={styles.contentContainer}
+        contentContainerStyle={[styles.contentContainer, {paddingTop: top}]}
         dockContainerStyle={styles.dockContainer}
         dockContent={
           isLoading ? (
@@ -169,7 +171,6 @@ const styles = StyleSheet.create({
   recordingText: {
     color: WHITE,
     textAlign: 'center',
-    paddingTop: 65,
   },
   messageText: {
     color: BLUE_GREY,

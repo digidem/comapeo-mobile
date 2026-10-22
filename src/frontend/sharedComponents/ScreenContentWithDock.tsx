@@ -18,22 +18,14 @@ export const ScreenContentWithDock = ({
 }>) => {
   const {bottom} = useCustomSafeAreaInsets();
   return (
-    <View style={styles.container} testID={testID}>
+    <View style={[styles.container, {paddingBottom: bottom}]} testID={testID}>
       <ScrollView
         bounces={false}
         style={styles.scrollViewRoot}
-        contentContainerStyle={[
-          styles.scrollViewContentContainer,
-          contentContainerStyle,
-        ]}>
+        contentContainerStyle={contentContainerStyle}>
         {children}
       </ScrollView>
-      <View
-        style={[
-          styles.dockedContentContainer,
-          {paddingBottom: bottom},
-          dockContainerStyle,
-        ]}>
+      <View style={[styles.dockedContentContainer, dockContainerStyle]}>
         {dockContent}
       </View>
     </View>
@@ -41,11 +33,8 @@ export const ScreenContentWithDock = ({
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {flex: 1, padding: 20},
   scrollViewRoot: {flex: 1},
-  scrollViewContentContainer: {
-    padding: 20,
-  },
   dockedContentContainer: {
     flex: 0,
     alignItems: 'center',

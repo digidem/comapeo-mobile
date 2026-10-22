@@ -9,16 +9,20 @@ export const ScreenContentWithDock = ({
   contentContainerStyle,
   dockContainerStyle,
   dockContent,
+  backgroundColor,
   testID,
 }: PropsWithChildren<{
   dockContent: ReactNode;
   dockContainerStyle?: ViewStyleProp;
   contentContainerStyle?: ViewStyleProp;
   testID?: string;
+  backgroundColor?: string;
 }>) => {
   const {bottom} = useCustomSafeAreaInsets();
   return (
-    <View style={[styles.container, {paddingBottom: bottom}]} testID={testID}>
+    <View
+      style={[styles.container, {paddingBottom: bottom, backgroundColor}]}
+      testID={testID}>
       <ScrollView
         bounces={false}
         style={styles.scrollViewRoot}

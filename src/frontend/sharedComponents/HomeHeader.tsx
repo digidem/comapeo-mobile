@@ -38,7 +38,7 @@ export function HomeHeader({
           backgroundColor,
           borderBottomWidth: showBottomBorder ? 1 : 0,
           borderBottomColor: showBottomBorder ? BLUE_GREY : 'transparent',
-          paddingTop: insets.top,
+          paddingTop: insets.top + 10,
         },
       ]}>
       <View style={styles.headerRow}>

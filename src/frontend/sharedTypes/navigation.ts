@@ -6,9 +6,9 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {Attachment, DeviceRoleForNewInvite, DeviceType, PhotoEXIF} from '.';
-import type {InviteLinkParams} from '../lib/inviteLinks';
+import type {ReceivedInviteLink} from '../lib/inviteLinks';
 import type {MemberApi} from '@comapeo/core';
-import type {JoinRequestDetails} from '../hooks/useInviteLinks';
+import type {ReceivedJoinRequest} from '../hooks/useInviteLinks';
 import {PermissionResponse} from 'expo-audio';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 
@@ -124,7 +124,7 @@ export type RootStackParamsList = {
   > & {openedFrom: 'create' | 'team'};
   DeleteInviteLink: Pick<MemberApi.InviteLink, 'url' | 'inviteId'>;
   InviteLinkDeleted: {inviteId: string};
-  ReviewJoinRequest: JoinRequestDetails;
+  ReviewJoinRequest: ReceivedJoinRequest;
   JoinRequestAccepted: {deviceName: string; projectName: string};
   JoinRequestDenied: undefined;
   ReviewAndInvite: InviteProps;
@@ -175,8 +175,8 @@ export type RootStackParamsList = {
     createdAt?: string;
   };
   InviteReceived: {inviteId: string};
-  RequestToJoin: InviteLinkParams;
-  JoinProject: InviteLinkParams;
+  RequestToJoin: ReceivedInviteLink;
+  JoinProject: ReceivedInviteLink;
   InviteSuccessfullyAccepted: {projectName: string; projectId: string};
   InviteCanceled: {projectName: string};
   RemovedFromProjectBottomSheet: undefined;

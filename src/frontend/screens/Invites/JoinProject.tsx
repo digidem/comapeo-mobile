@@ -1,19 +1,23 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {ErrorBoundary} from '@sentry/react-native';
 import {useKeepAwake} from 'expo-keep-awake';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 
-import {useJoinRequest} from '../../hooks/useJoinRequest';
-import {getJoinFailureCopy} from './joinFailure';
+import {useSingleJoinRequest} from '@comapeo/core-react';
+import {getErrorCode} from '@comapeo/core/errors.js';
+import {getJoinFailureCopy, toJoinFailureCode} from './joinFailure';
 import {InviteLinkError} from '../../sharedComponents/InviteLinkError';
 import {ProjectCard} from '../../sharedComponents/ProjectCard';
+import {InviteRoleRow} from '../../sharedComponents/InviteRoleRow';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {Bar as ProgressBar} from 'react-native-progress';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
+import {COORDINATOR_ROLE_ID} from '../../sharedTypes';
 import {
   COMAPEO_BLUE,
   DARK_GREY,
@@ -67,13 +71,42 @@ const m = defineMessages({
   },
 });
 
-export function JoinProject({
+export function JoinProject(props: NativeRootNavigationProps<'JoinProject'>) {
+  const {formatMessage: t} = useIntl();
+  const copy = getJoinFailureCopy('UNKNOWN');
+
+  // Join requests only live in memory, so an app restart loses one that is
+  // still in flight and useSingleJoinRequest throws JoinRequestNotFoundError.
+  return (
+    <ErrorBoundary
+      fallback={() => (
+        <InviteLinkError
+          icon={
+            <StatusCircleIcon
+              icon={copy.icon}
+              badge={{color: WARNING_RED, name: 'priority-high'}}
+              size={100}
+            />
+          }
+          title={t(copy.title)}
+          description={copy.description && t(copy.description)}
+          onClose={() => props.navigation.goBack()}
+        />
+      )}>
+      <JoinProjectStatus {...props} />
+    </ErrorBoundary>
+  );
+}
+
+function JoinProjectStatus({
   route,
   navigation,
 }: NativeRootNavigationProps<'JoinProject'>) {
   const {formatMessage: t} = useIntl();
   const invite = route.params;
-  const joinRequest = useJoinRequest(invite);
+  const {data: joinRequest} = useSingleJoinRequest({
+    inviteId: invite.inviteIdString,
+  });
   const {setActiveProjectId} = useActiveProjectIdActions();
 
   usePreventBackNavigation();
@@ -82,7 +115,9 @@ export function JoinProject({
   const handleClose = () => navigation.goBack();
 
   if (joinRequest.status === 'failed') {
-    const copy = getJoinFailureCopy(joinRequest.errorCode);
+    const copy = getJoinFailureCopy(
+      toJoinFailureCode(getErrorCode(joinRequest.error)),
+    );
     return (
       <InviteLinkError
         icon={
@@ -99,7 +134,7 @@ export function JoinProject({
     );
   }
 
-  if (joinRequest.status === 'completed') {
+  if (joinRequest.status === 'completed' && joinRequest.projectId) {
     const {projectId} = joinRequest;
     return (
       <View style={styles.container}>
@@ -150,6 +185,7 @@ export function JoinProject({
       title={progressTitle}
       badgeColor={badgeColor}
       projectName={invite.projectName}
+      isCoordinator={invite.roleId === COORDINATOR_ROLE_ID}
       isJoining={isJoining}
       onCancel={handleClose}
     />
@@ -160,12 +196,14 @@ function JoinProgress({
   title,
   badgeColor,
   projectName,
+  isCoordinator,
   isJoining,
   onCancel,
 }: {
   title: string;
   badgeColor: string;
   projectName: string;
+  isCoordinator: boolean;
   isJoining: boolean;
   onCancel: () => void;
 }) {
@@ -184,8 +222,9 @@ function JoinProgress({
 
         <ProjectCard
           projectName={projectName}
-          borderColor={isJoining ? DARK_GREEN : undefined}
-        />
+          borderColor={isJoining ? DARK_GREEN : undefined}>
+          <InviteRoleRow isCoordinator={isCoordinator} />
+        </ProjectCard>
 
         {/* Indeterminate because join-request-update we can't calculate progress yet. 
             Swap in a real `progress` if core starts sending
@@ -239,6 +278,7 @@ const styles = StyleSheet.create({
   },
   progressTitle: {
     textAlign: 'center',
+    paddingHorizontal: 20,
   },
   progressContainer: {
     gap: 15,

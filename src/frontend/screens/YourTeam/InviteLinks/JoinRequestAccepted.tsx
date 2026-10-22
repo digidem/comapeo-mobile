@@ -40,7 +40,7 @@ export function JoinRequestAccepted({
 
         <HeaderText variant="header1">{t(m.accepted)}</HeaderText>
 
-        <BodyText>
+        <BodyText style={{paddingHorizontal: 20, textAlign: 'center'}}>
           <FormattedMessage
             {...m.joinedProject}
             values={{

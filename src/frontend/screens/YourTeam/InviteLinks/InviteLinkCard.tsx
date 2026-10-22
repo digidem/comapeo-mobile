@@ -1,13 +1,10 @@
-import * as React from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
-import {DeviceIcon} from '../../../sharedComponents/DeviceIcon';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
-import {formatTimeRemaining} from '../../../lib/expiry';
-import {useNow} from '../../../hooks/useNow';
+import {useTimeRemaining} from '../../../hooks/useTimeRemaining';
 import {COORDINATOR_ROLE_ID} from '../../../sharedTypes';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../../lib/styles';
 import type {MemberApi} from '@comapeo/core';
@@ -42,15 +39,13 @@ export function InviteLinkCard({
   onPress: () => void;
 }) {
   const {formatMessage: t} = useIntl();
-  const now = useNow();
+  const timeRemaining = useTimeRemaining(inviteLink.expiresAt);
   const isCoordinator = inviteLink.roleId === COORDINATOR_ROLE_ID;
 
   return (
     <Pressable
       onPress={onPress}
       style={({pressed}) => [styles.card, pressed && styles.pressed]}>
-      <DeviceIcon deviceType="mobile" size={30} />
-
       <View style={styles.text}>
         <HeaderText variant="header5">
           {t(m.name, {shortId: inviteLink.inviteId.slice(0, SHORT_ID_LENGTH)})}
@@ -65,7 +60,7 @@ export function InviteLinkCard({
           <BodyText variant="smallMeta" style={styles.meta}>
             {t(m.meta, {
               role: isCoordinator ? t(m.coordinator) : t(m.participant),
-              timeRemaining: formatTimeRemaining(inviteLink.expiresAt - now),
+              timeRemaining,
             })}
           </BodyText>
         </View>

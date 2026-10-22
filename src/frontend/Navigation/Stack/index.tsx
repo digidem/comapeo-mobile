@@ -25,8 +25,8 @@ import {RequestToJoin} from '../../screens/Invites/RequestToJoin';
 import {JoinProject} from '../../screens/Invites/JoinProject';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
-import type {InviteLinkParams} from '../../lib/inviteLinks';
-import type {JoinRequestDetails} from '../../hooks/useInviteLinks';
+import type {ReceivedInviteLink} from '../../lib/inviteLinks';
+import type {ReceivedJoinRequest} from '../../hooks/useInviteLinks';
 import {CommonActions, StackActions} from '@react-navigation/native';
 import {RUBIK} from '../../lib/fonts';
 
@@ -77,8 +77,8 @@ function openSheetAction(
   params:
     | {inviteId: string}
     | {shareId: string}
-    | InviteLinkParams
-    | JoinRequestDetails,
+    | ReceivedInviteLink
+    | ReceivedJoinRequest,
 ) {
   const currentRoute = state.routes[state.index];
   const presentation = currentRoute

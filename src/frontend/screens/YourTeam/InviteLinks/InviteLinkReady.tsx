@@ -14,8 +14,7 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {useOpenShareDialog} from '../../../hooks/share';
-import {formatTimeRemaining} from '../../../lib/expiry';
-import {useNow} from '../../../hooks/useNow';
+import {useTimeRemaining} from '../../../hooks/useTimeRemaining';
 import {COORDINATOR_ROLE_ID} from '../../../sharedTypes';
 import {BLUE_GREY, COMAPEO_BLUE, LIGHT_ORANGE} from '../../../lib/styles';
 import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
@@ -61,16 +60,11 @@ export function InviteLinkReady({
   const {formatMessage: t} = useIntl();
   const {url, inviteId, roleId, expiresAt, openedFrom} = route.params;
   const openShare = useOpenShareDialog();
-  const now = useNow();
-  const timeRemaining = formatTimeRemaining(expiresAt - now);
+  const timeRemaining = useTimeRemaining(expiresAt);
 
   return (
     <ScreenContentWithDock
-      contentContainerStyle={[
-        styles.content,
-        // instead of the header the Team route shows with a page title.
-        openedFrom === 'create' && styles.noHeaderOffset,
-      ]}
+      contentContainerStyle={styles.content}
       dockContent={
         <View style={styles.dock}>
           <PrimaryButton
@@ -130,11 +124,9 @@ InviteLinkReady.navTitle = m.navTitle;
 const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
-    padding: 20,
-    gap: 30,
-  },
-  noHeaderOffset: {
-    marginTop: 50,
+    gap: 20,
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   warningBanner: {
     flexDirection: 'row',

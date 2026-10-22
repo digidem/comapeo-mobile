@@ -1,10 +1,10 @@
-import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {BottomSheetWrapper} from '../../../sharedComponents/BottomSheetWrapper';
 import {ProjectCard} from '../../../sharedComponents/ProjectCard';
+import {InviteRoleRow} from '../../../sharedComponents/InviteRoleRow';
 import {DeviceIcon} from '../../../sharedComponents/DeviceIcon';
 import {
   PrimaryButton,
@@ -14,11 +14,15 @@ import {LoadingIndicator} from '../../../sharedComponents/LoadingIndicator';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {
-  useAcceptJoinRequest,
-  useDenyJoinRequest,
-} from '../../../hooks/useInviteLinks';
+  useAcceptInviteLinkRequest,
+  useDenyInviteLinkRequest,
+  useManyInviteLinks,
+} from '@comapeo/core-react';
+import {useProjectRoleAndDetails} from '../../../hooks/useProjectRoleAndDetails';
+import {useLocalPeers} from '../../../hooks/useLocalPeers';
+import {toError} from '../../../utils/errors';
 import {COORDINATOR_ROLE_ID} from '../../../sharedTypes';
-import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../../lib/styles';
+import {BLACK, BLUE_GREY} from '../../../lib/styles';
 import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
@@ -34,13 +38,9 @@ const m = defineMessages({
     id: 'screens.YourTeam.ReviewJoinRequest.deny',
     defaultMessage: 'Deny',
   },
-  coordinator: {
-    id: 'screens.YourTeam.ReviewJoinRequest.coordinator',
-    defaultMessage: 'Coordinator',
-  },
-  participant: {
-    id: 'screens.YourTeam.ReviewJoinRequest.participant',
-    defaultMessage: 'Participant',
+  unnamedDevice: {
+    id: 'screens.YourTeam.ReviewJoinRequest.unnamedDevice',
+    defaultMessage: 'New device',
   },
 });
 
@@ -49,39 +49,54 @@ export function ReviewJoinRequest({
   navigation,
 }: NativeRootNavigationProps<'ReviewJoinRequest'>) {
   const {formatMessage: t} = useIntl();
-  const request = route.params;
-  const acceptJoinRequest = useAcceptJoinRequest();
-  const denyJoinRequest = useDenyJoinRequest();
-  const [isResponding, setIsResponding] = React.useState(false);
+  const {projectId, deviceId, inviteId} = route.params;
+  const {projectHeader: projectName, projectColor} =
+    useProjectRoleAndDetails(projectId);
+  const {data: inviteLinks} = useManyInviteLinks({projectId});
+  const peer = useLocalPeers().find(({deviceId: id}) => id === deviceId);
 
-  const {
-    inviteId,
-    deviceId,
-    deviceName,
-    deviceType,
-    projectName,
-    projectColor,
-    roleId,
-  } = request;
+  const roleId = inviteLinks.find(link => link.inviteId === inviteId)?.roleId;
+  // The name arrives with device info once the peer is trusted, so it can be
+  // missing for the moment between the request landing and that exchange.
+  const deviceName = peer?.name || t(m.unnamedDevice);
+  const acceptJoinRequest = useAcceptInviteLinkRequest();
+  const denyJoinRequest = useDenyInviteLinkRequest();
+
   const isCoordinator = roleId === COORDINATOR_ROLE_ID;
+  const isResponding =
+    acceptJoinRequest.status === 'pending' ||
+    denyJoinRequest.status === 'pending';
 
-  async function accept() {
-    setIsResponding(true);
-    await acceptJoinRequest({inviteId, deviceId});
-    navigation.replace('JoinRequestAccepted', {deviceName, projectName});
+  function showError(error: unknown, message: string) {
+    navigation.replace('ErrorBottomSheet', {error: toError(error, message)});
   }
 
-  async function deny() {
-    setIsResponding(true);
-    await denyJoinRequest({inviteId, deviceId});
-    navigation.replace('JoinRequestDenied');
+  function accept() {
+    acceptJoinRequest.mutate(
+      {projectId, inviteId, deviceId},
+      {
+        onSuccess: () =>
+          navigation.replace('JoinRequestAccepted', {deviceName, projectName}),
+        onError: error => showError(error, 'Could not accept the join request'),
+      },
+    );
+  }
+
+  function deny() {
+    denyJoinRequest.mutate(
+      {projectId, inviteId, deviceId},
+      {
+        onSuccess: () => navigation.replace('JoinRequestDenied'),
+        onError: error => showError(error, 'Could not deny the join request'),
+      },
+    );
   }
 
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
         <View style={styles.deviceCard}>
-          <DeviceIcon deviceType={deviceType} size={40} />
+          <DeviceIcon deviceType={peer?.deviceType} size={40} />
           <HeaderText variant="header5" style={styles.flex}>
             {deviceName}
           </HeaderText>
@@ -92,16 +107,7 @@ export function ReviewJoinRequest({
         </BodyText>
 
         <ProjectCard projectName={projectName} color={projectColor}>
-          <View style={styles.roleRow}>
-            <MaterialIcon
-              name={isCoordinator ? 'manage-accounts' : 'people'}
-              size={20}
-              color={NEW_DARK_GREY}
-            />
-            <BodyText style={styles.roleLabel}>
-              {isCoordinator ? t(m.coordinator) : t(m.participant)}
-            </BodyText>
-          </View>
+          {roleId ? <InviteRoleRow isCoordinator={isCoordinator} /> : null}
         </ProjectCard>
 
         <View style={styles.buttonContainer}>
@@ -150,14 +156,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: '500',
     color: BLACK,
-  },
-  roleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  roleLabel: {
-    color: NEW_DARK_GREY,
   },
   buttonContainer: {
     alignItems: 'center',

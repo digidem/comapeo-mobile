@@ -24,6 +24,8 @@ const InviteLinkSchema = v.object({
 
 export type InviteLinkParams = v.InferOutput<typeof InviteLinkSchema>;
 
+export type ReceivedInviteLink = InviteLinkParams & {url: string};
+
 export function parseInviteLink(url: string): InviteLinkParams | null {
   let params: unknown;
   try {

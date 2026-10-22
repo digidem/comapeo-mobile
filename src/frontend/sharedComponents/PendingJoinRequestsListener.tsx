@@ -1,24 +1,34 @@
-import {useEffect} from 'react';
+import * as React from 'react';
 import {useJoinRequestReceived} from '../hooks/useInviteLinks';
 import {isEditingScreen, isInviteScreen} from '../lib/screenNameChecks';
-import type {JoinRequestDetails} from '../hooks/useInviteLinks';
+import type {
+  JoinRequestArrival,
+  ReceivedJoinRequest,
+} from '../hooks/useInviteLinks';
 
 export const PendingJoinRequestsListener = ({
   currentRouteName,
   navigateToJoinRequestScreen,
 }: {
   currentRouteName: string | undefined;
-  navigateToJoinRequestScreen: (request: JoinRequestDetails) => void;
+  navigateToJoinRequestScreen: (request: ReceivedJoinRequest) => void;
 }) => {
-  const joinRequest = useJoinRequestReceived();
+  const inviteArrival = useJoinRequestReceived();
+  const handled = React.useRef<JoinRequestArrival | null>(null);
 
-  useEffect(() => {
-    if (!joinRequest || !currentRouteName) return;
+  React.useEffect(() => {
+    if (
+      !inviteArrival ||
+      inviteArrival === handled.current ||
+      !currentRouteName
+    )
+      return;
     if (isInviteScreen(currentRouteName)) return;
     if (isEditingScreen(currentRouteName)) return;
 
-    navigateToJoinRequestScreen(joinRequest);
-  }, [joinRequest, currentRouteName, navigateToJoinRequestScreen]);
+    handled.current = inviteArrival;
+    navigateToJoinRequestScreen(inviteArrival.request);
+  }, [inviteArrival, currentRouteName, navigateToJoinRequestScreen]);
 
   return null;
 };

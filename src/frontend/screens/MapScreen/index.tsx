@@ -15,6 +15,7 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import ScaleBar from 'react-native-scale-bar';
+import {useHeaderHeight} from '@react-navigation/elements';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {TrackPermissionScreen} from './TrackBottomSheet/TrackPermissionScreen';
@@ -60,7 +61,6 @@ import {
   AllowPermissionButton,
   OpenSettingsButton,
 } from '../../sharedComponents/PermissionButtons';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import LocationOnIcon from '../../images/LocationOn.svg';
 import {DARK_ORANGE, WHITE} from '../../lib/styles';
@@ -121,6 +121,7 @@ export const MapScreen = ({
   const {data} = useStorageReadingQuery();
   const isLow = isLowStorage(data.freeBytes);
   const insets = useSafeAreaInsets();
+  const headerHeight = useHeaderHeight();
   const BANNER_TOP = insets.top + 75;
   const {formatMessage} = useIntl();
   const {data: locationPermission} = useLocationPermissionQuery();
@@ -162,7 +163,8 @@ export const MapScreen = ({
   );
 
   const handleAddPress = () => {
-    navigate('InviteCollaborators');
+    createDraft();
+    navigate('ObservationCategoryChooser');
   };
 
   function handleLocationPress() {
@@ -171,7 +173,12 @@ export const MapScreen = ({
 
   if (!locationPermission.granted) {
     return (
-      <View style={styles.permissionScreen}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: WHITE,
+          paddingBottom: 30,
+        }}>
         {trackBottomSheetOpen ? (
           <TrackPermissionScreen
             canAskAgain={locationPermission.canAskAgain}
@@ -179,11 +186,28 @@ export const MapScreen = ({
             onOpenSettings={() => goToLocationSettings.mutate()}
           />
         ) : (
-          <ScreenContentWithDock
-            testID="MAP.location-permission"
-            contentContainerStyle={styles.permissionContent}
-            dockContent={
-              locationPermission.canAskAgain ? (
+          <>
+            <View
+              testID="MAP.location-permission"
+              style={{
+                flexGrow: 1,
+                justifyContent: 'center',
+                marginTop: headerHeight,
+              }}>
+              <IconTitleDescription
+                icon={
+                  <LocationOnIcon
+                    color={DARK_ORANGE}
+                    width={PERMISSION_ICON_SIZE}
+                    height={PERMISSION_ICON_SIZE}
+                  />
+                }
+                title={formatMessage(m.locationPermissionTitle)}
+                description={formatMessage(m.locationPermissionDescription)}
+              />
+            </View>
+            <View style={{flex: 0, alignItems: 'center'}}>
+              {locationPermission.canAskAgain ? (
                 <AllowPermissionButton
                   testID="MAP.location-allow-btn"
                   onPress={() => askLocationPermission.mutate()}
@@ -193,20 +217,9 @@ export const MapScreen = ({
                   testID="MAP.location-settings-btn"
                   onPress={() => goToLocationSettings.mutate()}
                 />
-              )
-            }>
-            <IconTitleDescription
-              icon={
-                <LocationOnIcon
-                  color={DARK_ORANGE}
-                  width={PERMISSION_ICON_SIZE}
-                  height={PERMISSION_ICON_SIZE}
-                />
-              }
-              title={formatMessage(m.locationPermissionTitle)}
-              description={formatMessage(m.locationPermissionDescription)}
-            />
-          </ScreenContentWithDock>
+              )}
+            </View>
+          </>
         )}
       </View>
     );
@@ -373,14 +386,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 25,
     width: '100%',
-  },
-  permissionScreen: {
-    flex: 1,
-    backgroundColor: WHITE,
-  },
-  permissionContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
   },
   lowStorageBanner: {
     position: 'absolute',

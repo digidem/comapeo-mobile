@@ -50,6 +50,7 @@ export const AudioDraftPlaybackScreen = ({
   const {uri, createdAt, showRecordingSavedText, audioId} = route.params;
   const player = useAudioPlayer({uri});
   const status = useAudioPlayerStatus(player);
+  // this screen has no header, so we need to push the content down below the notch
   const {top} = useCustomSafeAreaInsets();
 
   // needed for iOS to ensure audio plays even when the silent switch is on

@@ -59,6 +59,7 @@ export const AudioAskPermissionBottomSheet = ({
   );
   const hasNavigatedRef = React.useRef(false);
   const {passcode} = useSecurityState();
+  // this screen has no header, so we need to push the content down below the notch.
   const {top} = useCustomSafeAreaInsets();
 
   // Re-check microphone permission in case it was granted via system settings,

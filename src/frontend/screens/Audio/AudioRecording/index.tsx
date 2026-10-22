@@ -41,6 +41,7 @@ export function AudioRecording({
   const timeElapsed = status.durationMillis;
   const [isLoading, setIsLoading] = React.useState(true);
   const {addAudio} = useDraftObservationActions();
+  // this screen has no header, so we need to push the content down below the notch.
   const {top} = useCustomSafeAreaInsets();
 
   const {formatMessage} = useIntl();

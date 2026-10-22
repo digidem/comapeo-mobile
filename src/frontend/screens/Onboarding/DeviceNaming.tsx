@@ -27,6 +27,7 @@ import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import RNRestart from 'react-native-restart';
+import {ScreenContentWithNoHeaderAndTopPadding} from '../../sharedComponents/ScreenContentWithNoHeaderAndTopPadding';
 
 const m = defineMessages({
   header: {
@@ -89,7 +90,29 @@ export const DeviceNaming = () => {
   }
 
   return (
-    <KeyboardAvoidingView style={{width: '100%', height: '100%'}}>
+    <ScreenContentWithNoHeaderAndTopPadding
+      dockContainerStyle={styles.buttonContainer}
+      dockContent={
+        <KeyboardAvoidingView behavior="padding">
+          {status === 'pending' ? (
+            <LoadingIndicator size="large" style={{flex: 0}} />
+          ) : (
+            <PrimaryButton
+              testID="ONBOARDING.add-name-btn"
+              fullSize
+              onPress={handleSavePress}
+              text={t(m.save)}
+              renderIcon={({color, size}) => (
+                <Ionicons
+                  name="checkmark-circle-outline"
+                  color={color}
+                  size={size}
+                />
+              )}
+            />
+          )}
+        </KeyboardAvoidingView>
+      }>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.headerArea}>
@@ -124,28 +147,9 @@ export const DeviceNaming = () => {
               </View>
             </View>
           </View>
-          <View style={styles.buttonContainer}>
-            {status === 'pending' ? (
-              <LoadingIndicator size="large" style={{flex: 0}} />
-            ) : (
-              <PrimaryButton
-                testID="ONBOARDING.add-name-btn"
-                fullSize
-                onPress={handleSavePress}
-                text={t(m.save)}
-                renderIcon={({color, size}) => (
-                  <Ionicons
-                    name="checkmark-circle-outline"
-                    color={color}
-                    size={size}
-                  />
-                )}
-              />
-            )}
-          </View>
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </ScreenContentWithNoHeaderAndTopPadding>
   );
 };
 
@@ -178,7 +182,6 @@ function useTemporaryError() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 60,
     paddingHorizontal: 20,
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -218,7 +221,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonContainer: {
-    paddingVertical: 20,
     alignItems: 'center',
   },
 });

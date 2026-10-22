@@ -11,13 +11,13 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {WHITE, DARK_GREEN, NEW_DARK_GREY} from '../../lib/styles';
 import {useCreateProject, useOwnDeviceInfo} from '@comapeo/core-react';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import AntDesign from '@react-native-vector-icons/ant-design';
 import TracksIcon from '../../images/Tracks.svg';
 import {usePreventRemove} from '@react-navigation/native';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
+import {ScreenContentWithNoHeaderAndTopPadding} from '../../sharedComponents/ScreenContentWithNoHeaderAndTopPadding';
 const m = defineMessages({
   deviceReady: {
     id: '$1screens.DeviceNaming.Success.deviceReady',
@@ -68,8 +68,8 @@ export const Success = ({
   }
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={{paddingTop: 85, alignItems: 'center', gap: 20}}
+    <ScreenContentWithNoHeaderAndTopPadding
+      contentContainerStyle={{alignItems: 'center', gap: 20}}
       dockContent={
         status === 'pending' ? (
           <LoadingIndicator />
@@ -116,7 +116,7 @@ export const Success = ({
           Icon={<TracksIcon height={26} />}
         />
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithNoHeaderAndTopPadding>
   );
 };
 

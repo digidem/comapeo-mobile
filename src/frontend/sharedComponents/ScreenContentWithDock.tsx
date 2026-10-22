@@ -3,13 +3,14 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 
 import {ViewStyleProp} from '../sharedTypes';
 import {useCustomSafeAreaInsets} from '../hooks/useCustomSafeAreaInsets';
+import {WHITE} from '../lib/styles';
 
 export const ScreenContentWithDock = ({
   children,
   contentContainerStyle,
   dockContainerStyle,
   dockContent,
-  backgroundColor,
+  backgroundColor = WHITE,
   testID,
 }: PropsWithChildren<{
   dockContent: ReactNode;

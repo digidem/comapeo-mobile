@@ -76,11 +76,8 @@ export function HomeHeader({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
+  container: {padding: 10},
   headerRow: {
-    minHeight: 58,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

@@ -16,6 +16,7 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import AntDesign from '@react-native-vector-icons/ant-design';
 import TracksIcon from '../../images/Tracks.svg';
 import {usePreventRemove} from '@react-navigation/native';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 const m = defineMessages({
@@ -55,6 +56,7 @@ export const Success = ({
 
   // Prevent navigating away during loading, but allow programmatic navigation
   usePreventRemove(status === 'pending', () => {});
+  usePreventBackNavigation();
 
   function handleGoToMap() {
     createProject(undefined, {

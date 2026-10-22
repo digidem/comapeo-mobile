@@ -5,5 +5,6 @@ describe('onboarding', function () {
   require('./data-privacy.test');
   require('./privacy-policy.test');
   require('./device-naming.test');
+  require('./always-stay-notified.test');
   require('./success.test');
 });

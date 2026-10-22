@@ -162,8 +162,7 @@ export const MapScreen = ({
   );
 
   const handleAddPress = () => {
-    createDraft();
-    navigate('ObservationCategoryChooser');
+    navigate('InviteCollaborators');
   };
 
   function handleLocationPress() {

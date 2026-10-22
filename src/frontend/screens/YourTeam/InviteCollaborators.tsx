@@ -13,6 +13,7 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {SvgProps} from 'react-native-svg';
 import {NEW_DARK_GREY, DARK_ORANGE} from '../../lib/styles';
+import {useCustomSafeAreaInsets} from '../../hooks/useCustomSafeAreaInsets';
 
 const m = defineMessages({
   screenTitle: {
@@ -49,6 +50,7 @@ type Props = NativeRootNavigationProps<'InviteCollaborators'>;
 
 export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
   const {formatMessage: t} = useIntl();
+  const {top} = useCustomSafeAreaInsets();
 
   function handleGoBack() {
     navigation.goBack();
@@ -60,6 +62,7 @@ export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
 
   return (
     <ScreenContentWithDock
+      contentContainerStyle={{paddingTop: top}}
       dockContent={
         <View style={styles.buttonsContainer}>
           <PrimaryButton
@@ -110,7 +113,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     gap: 30,
-    paddingTop: 30,
     flexWrap: 'wrap',
   },
   title: {

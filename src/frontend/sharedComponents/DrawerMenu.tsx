@@ -7,7 +7,6 @@ import {
   Pressable,
 } from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import IonIcon from '@react-native-vector-icons/ionicons';
 import Octicons from '@react-native-vector-icons/octicons';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -34,6 +33,7 @@ import {buttonStyles, PrimaryButton} from '../sharedComponents/Buttons.tsx';
 import DownArrow from '../images/DownArrow.svg';
 import {isLowStorage, calcUsedPercentage} from '../lib/storage';
 import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
+import {useCustomSafeAreaInsets} from '../hooks/useCustomSafeAreaInsets.tsx';
 
 const m = defineMessages({
   appSettings: {
@@ -108,10 +108,14 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   const percentUsed = calcUsedPercentage(freeBytes, totalBytes);
 
   const isEarly = useEarlyAccessState(s => s.isEarlyAccessEnabled);
-  const insets = useSafeAreaInsets();
+  const insets = useCustomSafeAreaInsets();
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
+    <View
+      style={[
+        styles.container,
+        {paddingTop: insets.top, paddingBottom: insets.bottom},
+      ]}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.topCardsContainer}>
           {isLow && (
@@ -267,7 +271,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <View style={{marginBottom: 20, marginHorizontal: 20}}>
+      <View style={{marginHorizontal: 20}}>
         <PrimaryButton
           testID="MENU.main-action-button"
           style={{

@@ -42,9 +42,6 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
 
 type LayoutProps = Parameters<NavigatorLayout>[0];
 
-// Android's bottom inset sits behind the system navigation bar, where grey is a
-// deliberate visual choice. iOS's is the home activity indicator, which should
-// match the screen above it: white like the tabs, except on these screens.
 function openSheetAction(
   {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
   name: 'InviteReceived' | 'MapReceivedBottomSheet',

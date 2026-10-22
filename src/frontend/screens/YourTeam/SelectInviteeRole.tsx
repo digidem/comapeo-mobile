@@ -75,11 +75,15 @@ export const SelectInviteeRole: NativeNavigationComponent<
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <BodyText weight={700} variant="medium" style={styles.descriptionText}>
-        {params.invitee === 'link'
-          ? t(m.selectingForLink)
-          : t(m.selectingDevice)}
-      </BodyText>
+      {params.invitee === 'link' ? (
+        <BodyText variant="medium" style={styles.linkPrompt}>
+          {t(m.selectingForLink)}
+        </BodyText>
+      ) : (
+        <BodyText weight={700} variant="medium" style={styles.devicePrompt}>
+          {t(m.selectingDevice)}
+        </BodyText>
+      )}
 
       {params.invitee === 'device' ? <DeviceNameWithIcon {...params} /> : null}
 
@@ -132,7 +136,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     gap: 40,
   },
-  descriptionText: {
+  linkPrompt: {
+    textAlign: 'center',
+  },
+  devicePrompt: {
     color: BLACK,
   },
   roleDescription: {

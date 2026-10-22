@@ -49,7 +49,7 @@ export function InviteLinkDeleted({
 
         <HeaderText variant="header1">{t(m.deleted)}</HeaderText>
 
-        <BodyText>
+        <BodyText style={{paddingHorizontal: 20, textAlign: 'center'}}>
           <FormattedMessage
             {...m.hasBeenDeleted}
             values={{

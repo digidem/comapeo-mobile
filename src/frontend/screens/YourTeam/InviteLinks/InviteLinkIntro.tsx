@@ -125,15 +125,15 @@ function Point({icon, text}: {icon: React.ReactNode; text: string}) {
 const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
-    paddingTop: 40,
-    paddingHorizontal: 30,
-    paddingBottom: 20,
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
     gap: 15,
+    paddingTop: 64,
   },
   header: {
     alignItems: 'center',
     gap: 20,
-    paddingTop: 120,
   },
   title: {
     textAlign: 'center',

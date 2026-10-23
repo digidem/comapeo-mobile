@@ -145,6 +145,7 @@ export const CameraView = ({onAddPress}: Props) => {
         style={{
           flex: 1,
           paddingBottom: 30,
+          backgroundColor: DARK_GREY,
         }}>
         <View
           testID="MAP.location-permission"
@@ -234,10 +235,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
-  },
-  permissionScreen: {
-    flex: 1,
-    backgroundColor: DARK_GREY,
   },
   permissionContent: {
     flexGrow: 1,

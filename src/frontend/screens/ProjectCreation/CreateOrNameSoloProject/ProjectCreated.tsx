@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import GreenCheck from '../../../images/Success.svg';
 import GraphIcon from '../../../images/Graph.svg';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
@@ -12,6 +12,7 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BLACK, NEW_DARK_GREY} from '../../../lib/styles';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
+import {ScreenContentWithNoHeaderAndTopPadding} from '../../../sharedComponents/ScreenContentWithNoHeaderAndTopPadding';
 
 const m = defineMessages({
   success: {
@@ -53,8 +54,20 @@ export const ProjectCreated = ({
   }
 
   return (
-    <View style={styles.container}>
-      <View style={{alignItems: 'center', gap: 30}}>
+    <ScreenContentWithNoHeaderAndTopPadding
+      dockContainerStyle={{gap: 12}}
+      contentContainerStyle={{alignItems: 'center', gap: 30}}
+      dockContent={
+        <>
+          <PrimaryButton
+            fullSize
+            onPress={handleGoToInviteScreen}
+            text={t(m.inviteDevice)}
+          />
+          <SecondaryButton fullSize text={t(m.done)} onPress={handleGoToMap} />
+        </>
+      }>
+      <>
         <GreenCheck />
         <HeaderText
           variant="header1"
@@ -84,26 +97,7 @@ export const ProjectCreated = ({
             </View>
           ) : null}
         </View>
-      </View>
-
-      <View style={{gap: 12}}>
-        <PrimaryButton
-          fullSize
-          onPress={handleGoToInviteScreen}
-          text={t(m.inviteDevice)}
-        />
-        <SecondaryButton fullSize text={t(m.done)} onPress={handleGoToMap} />
-      </View>
-    </View>
+      </>
+    </ScreenContentWithNoHeaderAndTopPadding>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingTop: 80,
-    alignItems: 'center',
-    height: '100%',
-    justifyContent: 'space-between',
-  },
-});

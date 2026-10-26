@@ -681,6 +681,9 @@
   "screens.Invites.JoinProject.connecting": {
     "message": "Connecting to Project Coordinator..."
   },
+  "screens.Invites.JoinProject.connectionLostDescription": {
+    "message": "Use same link to request again."
+  },
   "screens.Invites.JoinProject.connectionLostTitle": {
     "message": "Connection Lost"
   },
@@ -706,7 +709,7 @@
     "message": "This device joined project <bold>{projectName}</bold>"
   },
   "screens.Invites.JoinProject.keepOpen": {
-    "message": "Coordinator must have CoMapeo open to review and approve."
+    "message": "Both Coordinator and Invited Device must keep CoMapeo open until the request is approved."
   },
   "screens.Invites.JoinProject.nowJoining": {
     "message": "Request accepted, now joining..."
@@ -1553,6 +1556,12 @@
   },
   "screens.YourTeam.JoinRequestAccepted.joinedProject": {
     "message": "<bold>{deviceName}</bold> joined project <bold>{projectName}</bold>"
+  },
+  "screens.YourTeam.JoinRequestConnectionLost.connectionLost": {
+    "message": "Requesting Device Lost Connection"
+  },
+  "screens.YourTeam.JoinRequestConnectionLost.requestAgain": {
+    "message": "Device can request again using the same link."
   },
   "screens.YourTeam.JoinRequestDenied.close": {
     "message": "Close"

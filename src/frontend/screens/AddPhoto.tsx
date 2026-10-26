@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableNativeFeedback,
-  Platform,
-} from 'react-native';
+import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {CameraView} from '../sharedComponents/CameraView';
@@ -13,7 +8,6 @@ import {useDraftObservationActions} from '../contexts/DraftObservationContext';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import type {PhotoFile} from 'react-native-vision-camera';
-import {useCustomSafeAreaInsets} from '../hooks/useCustomSafeAreaInsets';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {DARK_GREY, RED} from '../lib/styles';
 

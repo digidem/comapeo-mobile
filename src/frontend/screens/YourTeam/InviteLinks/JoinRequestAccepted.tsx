@@ -57,7 +57,7 @@ export function JoinRequestAccepted({
       <SecondaryButton
         fullSize
         text={t(m.close)}
-        onPress={() => navigation.navigate('YourTeam')}
+        onPress={() => navigation.popTo('YourTeam')}
       />
     </View>
   );

@@ -102,7 +102,9 @@ export const SelectInviteDevice = ({
       <View style={styles.connectedRow}>
         <WifiIcon width={20} height={20} />
         <BodyText>
-          <BodyText style={styles.connectedLabel}>{t(m.connected)}</BodyText>{' '}
+          <BodyText style={styles.connectedLabel} weight={500}>
+            {t(m.connected)}
+          </BodyText>{' '}
           <BodyText style={styles.ssid}>{ssid}</BodyText>
         </BodyText>
       </View>
@@ -161,7 +163,10 @@ export const SelectInviteDevice = ({
       </View>
       <Divider />
       <View style={styles.additionalOptions}>
-        <BodyText variant="tinyMeta" style={styles.additionalOptionsLabel}>
+        <BodyText
+          variant="tinyMeta"
+          weight={500}
+          style={styles.additionalOptionsLabel}>
           {t(m.additionalOptions)}
         </BodyText>
         <View style={{alignItems: 'center'}}>
@@ -194,7 +199,6 @@ const styles = StyleSheet.create({
   },
   connectedLabel: {
     textTransform: 'uppercase',
-    fontWeight: '500',
     color: BLACK,
   },
   ssid: {
@@ -207,7 +211,6 @@ const styles = StyleSheet.create({
   },
   additionalOptionsLabel: {
     textTransform: 'uppercase',
-    fontWeight: '500',
     color: BLACK,
   },
   deviceListContainer: {

@@ -70,11 +70,13 @@ type LayoutProps = Parameters<NavigatorLayout>[0];
 function openSheetAction(
   {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
   name:
+    | 'ErrorBottomSheet'
     | 'InviteReceived'
     | 'MapReceivedBottomSheet'
     | 'RequestToJoin'
     | 'ReviewJoinRequest',
   params:
+    | {error: Error}
     | {inviteId: string}
     | {shareId: string}
     | ReceivedInviteLink
@@ -160,6 +162,13 @@ export const RootStackNavigator = () => {
                 'ReviewJoinRequest',
                 request,
               ),
+            )
+          }
+          navigateToJoinRequestError={error =>
+            navigation.dispatch(
+              openSheetAction({state, descriptors}, 'ErrorBottomSheet', {
+                error,
+              }),
             )
           }
         />

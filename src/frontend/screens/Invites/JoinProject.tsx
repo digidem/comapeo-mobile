@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {ErrorBoundary} from '@sentry/react-native';
 import {useKeepAwake} from 'expo-keep-awake';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 
-import {useSingleJoinRequest} from '@comapeo/core-react';
+import {useCancelJoinRequest, useManyJoinRequests} from '@comapeo/core-react';
+import {useJoinRequestUpdate} from '../../hooks/useInviteLinks';
 import {getErrorCode} from '@comapeo/core/errors.js';
 import {getJoinFailureCopy, toJoinFailureCode} from './joinFailure';
 import {InviteLinkError} from '../../sharedComponents/InviteLinkError';
@@ -71,62 +71,52 @@ const m = defineMessages({
   },
 });
 
-export function JoinProject(props: NativeRootNavigationProps<'JoinProject'>) {
-  const {formatMessage: t} = useIntl();
-  const copy = getJoinFailureCopy('UNKNOWN');
-
-  // Join requests only live in memory, so an app restart loses one that is
-  // still in flight and useSingleJoinRequest throws JoinRequestNotFoundError.
-  return (
-    <ErrorBoundary
-      fallback={() => (
-        <InviteLinkError
-          icon={
-            <StatusCircleIcon
-              icon={copy.icon}
-              badge={{color: WARNING_RED, name: 'priority-high'}}
-              size={100}
-            />
-          }
-          title={t(copy.title)}
-          description={copy.description && t(copy.description)}
-          onClose={() => props.navigation.goBack()}
-        />
-      )}>
-      <JoinProjectStatus {...props} />
-    </ErrorBoundary>
-  );
-}
-
-function JoinProjectStatus({
+export function JoinProject({
   route,
   navigation,
 }: NativeRootNavigationProps<'JoinProject'>) {
   const {formatMessage: t} = useIntl();
   const invite = route.params;
-  const {data: joinRequest} = useSingleJoinRequest({
-    inviteId: invite.inviteIdString,
-  });
+  const {data: joinRequests} = useManyJoinRequests();
+  const update = useJoinRequestUpdate(invite.inviteIdString);
   const {setActiveProjectId} = useActiveProjectIdActions();
+  const cancelJoinRequest = useCancelJoinRequest();
 
   usePreventBackNavigation();
   useKeepAwake();
 
   const handleClose = () => navigation.goBack();
 
-  if (joinRequest.status === 'failed') {
-    const copy = getJoinFailureCopy(
-      toJoinFailureCode(getErrorCode(joinRequest.error)),
+  // Leaving the screen does not stop the join, so the request has to be
+  // cancelled explicitly or it keeps running with nothing watching it.
+  const handleCancel = () =>
+    cancelJoinRequest.mutate(
+      {inviteId: invite.inviteIdString},
+      {onSettled: handleClose},
     );
+
+  // The list is only the state at mount; once core reports an update it is the
+  // authority, because a settled request is no longer in the list at all.
+  const active = joinRequests.find(
+    request => request.inviteId === invite.inviteIdString,
+  );
+  const status = update?.status ?? active?.status;
+
+  const failureIcon = (copy: ReturnType<typeof getJoinFailureCopy>) => (
+    <StatusCircleIcon
+      icon={copy.icon}
+      badge={{color: WARNING_RED, name: 'priority-high'}}
+      size={100}
+    />
+  );
+
+  // Join requests only live in memory, so an app restart loses one that was
+  // still in flight and there is nothing left to report on.
+  if (!status) {
+    const copy = getJoinFailureCopy('UNKNOWN');
     return (
       <InviteLinkError
-        icon={
-          <StatusCircleIcon
-            icon={copy.icon}
-            badge={{color: WARNING_RED, name: 'priority-high'}}
-            size={100}
-          />
-        }
+        icon={failureIcon(copy)}
         title={t(copy.title)}
         description={copy.description && t(copy.description)}
         onClose={handleClose}
@@ -134,8 +124,22 @@ function JoinProjectStatus({
     );
   }
 
-  if (joinRequest.status === 'completed' && joinRequest.projectId) {
-    const {projectId} = joinRequest;
+  if (status === 'failed') {
+    const error = update?.error ?? active?.error;
+    const copy = getJoinFailureCopy(toJoinFailureCode(getErrorCode(error)));
+    return (
+      <InviteLinkError
+        icon={failureIcon(copy)}
+        title={t(copy.title)}
+        description={copy.description && t(copy.description)}
+        onClose={handleClose}
+      />
+    );
+  }
+
+  const projectId = update?.projectId ?? active?.projectId;
+
+  if (status === 'completed' && projectId) {
     return (
       <View style={styles.container}>
         <View style={styles.contentContainer}>
@@ -167,16 +171,16 @@ function JoinProjectStatus({
     );
   }
 
-  const isJoining = joinRequest.status === 'accepted';
+  const isJoining = status === 'accepted' || status === 'completed';
   const progressTitle = isJoining
     ? t(m.nowJoining)
-    : joinRequest.status === 'connecting'
+    : status === 'connecting'
       ? t(m.connecting)
       : t(m.beingReviewed);
 
   const badgeColor = isJoining
     ? DARK_GREEN
-    : joinRequest.status === 'connecting'
+    : status === 'connecting'
       ? MANGO
       : COMAPEO_BLUE;
 
@@ -187,7 +191,7 @@ function JoinProjectStatus({
       projectName={invite.projectName}
       isCoordinator={invite.roleId === COORDINATOR_ROLE_ID}
       isJoining={isJoining}
-      onCancel={handleClose}
+      onCancel={handleCancel}
     />
   );
 }

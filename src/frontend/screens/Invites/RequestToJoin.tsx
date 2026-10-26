@@ -67,7 +67,7 @@ export const RequestToJoin = ({
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
-        <BodyText variant="tinyMeta" style={styles.receivedLabel}>
+        <BodyText variant="tinyMeta" weight={500} style={styles.receivedLabel}>
           {formatMessage(m.receivedLinkTo)}
         </BodyText>
 
@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
   },
   receivedLabel: {
     textTransform: 'uppercase',
-    fontWeight: '500',
     alignSelf: 'stretch',
     color: BLACK,
   },

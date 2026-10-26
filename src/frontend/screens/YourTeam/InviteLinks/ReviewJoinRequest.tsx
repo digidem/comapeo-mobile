@@ -102,7 +102,10 @@ export function ReviewJoinRequest({
           </HeaderText>
         </View>
 
-        <BodyText variant="tinyMeta" style={styles.requestingLabel}>
+        <BodyText
+          variant="tinyMeta"
+          style={styles.requestingLabel}
+          weight={500}>
           {t(m.requestingToJoin)}
         </BodyText>
 
@@ -154,7 +157,6 @@ const styles = StyleSheet.create({
   },
   requestingLabel: {
     textTransform: 'uppercase',
-    fontWeight: '500',
     color: BLACK,
   },
   buttonContainer: {

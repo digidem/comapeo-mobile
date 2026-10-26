@@ -93,11 +93,11 @@ const persistedLocaleStore = createLocaleStore({
 
 const serviceNotificationMessages = defineMessages({
   title: {
-    id: 'App.serviceNotification.title',
+    id: '$1App.serviceNotification.title',
     defaultMessage: 'Running in the background',
   },
   body: {
-    id: 'App.serviceNotification.body',
+    id: '$1App.serviceNotification.body',
     defaultMessage: 'Sync with connected devices continues in the background',
   },
 });

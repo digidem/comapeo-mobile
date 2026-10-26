@@ -18,12 +18,24 @@ import {
   useDenyInviteLinkRequest,
   useManyInviteLinks,
 } from '@comapeo/core-react';
+import {
+  getErrorCode,
+  InviteNotYetRedeemedError,
+  PeerDisconnectedSinceRedeemingInviteError,
+} from '@comapeo/core/errors.js';
 import {useProjectRoleAndDetails} from '../../../hooks/useProjectRoleAndDetails';
 import {useLocalPeers} from '../../../hooks/useLocalPeers';
 import {toError} from '../../../utils/errors';
 import {COORDINATOR_ROLE_ID} from '../../../sharedTypes';
 import {BLACK, BLUE_GREY} from '../../../lib/styles';
 import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
+
+// Both of these mean the requesting device is no longer connected, which has
+// its own screen rather than the generic error sheet.
+const DISCONNECTED_CODES: string[] = [
+  InviteNotYetRedeemedError.code,
+  PeerDisconnectedSinceRedeemingInviteError.code,
+];
 
 const m = defineMessages({
   requestingToJoin: {
@@ -68,6 +80,11 @@ export function ReviewJoinRequest({
     denyJoinRequest.status === 'pending';
 
   function showError(error: unknown, message: string) {
+    if (DISCONNECTED_CODES.includes(getErrorCode(error) ?? '')) {
+      navigation.replace('JoinRequestConnectionLost');
+      return;
+    }
+
     navigation.replace('ErrorBottomSheet', {error: toError(error, message)});
   }
 

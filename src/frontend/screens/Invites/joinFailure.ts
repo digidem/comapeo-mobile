@@ -47,6 +47,10 @@ const m = defineMessages({
     id: 'screens.Invites.JoinProject.connectionLostTitle',
     defaultMessage: 'Connection Lost',
   },
+  connectionLostDescription: {
+    id: 'screens.Invites.JoinProject.connectionLostDescription',
+    defaultMessage: 'Use same link to request again.',
+  },
   deniedTitle: {
     id: 'screens.Invites.JoinProject.deniedTitle',
     defaultMessage: 'Request Denied',
@@ -101,6 +105,7 @@ export function getJoinFailureCopy(code: JoinFailureCode): JoinFailureCopy {
     case InviteRedeemConnectionClosedError.code:
       return {
         title: m.connectionLostTitle,
+        description: m.connectionLostDescription,
         icon: {name: 'wifi', color: BLUE_GREY},
       };
     case InviteDeniedByInviterError.code:

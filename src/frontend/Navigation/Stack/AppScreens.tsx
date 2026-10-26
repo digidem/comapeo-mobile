@@ -34,6 +34,7 @@ import {InviteLinkDeleted} from '../../screens/YourTeam/InviteLinks/InviteLinkDe
 import {ReviewJoinRequest} from '../../screens/YourTeam/InviteLinks/ReviewJoinRequest';
 import {JoinRequestAccepted} from '../../screens/YourTeam/InviteLinks/JoinRequestAccepted';
 import {JoinRequestDenied} from '../../screens/YourTeam/InviteLinks/JoinRequestDenied';
+import {JoinRequestConnectionLost} from '../../screens/YourTeam/InviteLinks/JoinRequestConnectionLost';
 import {ReviewInvitation} from '../../screens/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/YourTeam/InviteAccepted';
 import {ReviewAndInvite} from '../../screens/YourTeam/ReviewAndInvite';
@@ -308,6 +309,11 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="JoinRequestDenied"
         component={JoinRequestDenied}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="JoinRequestConnectionLost"
+        component={JoinRequestConnectionLost}
         options={{headerShown: false}}
       />
       <RootStack.Screen

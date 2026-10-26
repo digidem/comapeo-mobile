@@ -47,7 +47,8 @@ const m = defineMessages({
   },
   keepOpen: {
     id: 'screens.Invites.JoinProject.keepOpen',
-    defaultMessage: 'Coordinator must have CoMapeo open to review and approve.',
+    defaultMessage:
+      'Both Coordinator and Invited Device must keep CoMapeo open until the request is approved.',
   },
   cancel: {
     id: 'screens.Invites.JoinProject.cancel',

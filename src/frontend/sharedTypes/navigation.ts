@@ -127,6 +127,7 @@ export type RootStackParamsList = {
   ReviewJoinRequest: ReceivedJoinRequest;
   JoinRequestAccepted: {deviceName: string; projectName: string};
   JoinRequestDenied: undefined;
+  JoinRequestConnectionLost: undefined;
   ReviewAndInvite: InviteProps;
   InviteAccepted: {name: string};
   InviteDeclined: InviteProps;

@@ -2,7 +2,7 @@ import {useOwnDeviceInfo, useOwnRoleInProject} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 
-export function useCanEditOrDelete(createdById: string) {
+export function useCanEditOrDelete(createdById: string | undefined) {
   const {projectId} = useActiveProject();
 
   const {data: deviceInfo} = useOwnDeviceInfo();

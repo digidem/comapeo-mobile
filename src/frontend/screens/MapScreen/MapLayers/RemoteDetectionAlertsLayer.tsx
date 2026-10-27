@@ -1,11 +1,8 @@
 import React from 'react';
 import {
-  CircleLayer,
-  FillLayer,
-  LineLayer,
-  ShapeSource,
-  SymbolLayer,
-  type Expression,
+  type FilterSpecification,
+  GeoJSONSource,
+  Layer,
 } from '@maplibre/maplibre-react-native';
 
 import {RemoteDetectionAlert} from '@comapeo/schema';
@@ -16,7 +13,7 @@ import {useRemoteDetectionAlerts} from '../../../hooks/server/remoteDetectionAle
 // legacy `$type` filter form. The legacy form crashes MapLibre iOS 6.17.1's
 // `predicateWithMLNJSONObject:` with an unrecognized-selector abort when the
 // layer is added to the map (Android's SDK tolerates it; iOS does not).
-const LABEL_FILTER: Expression = [
+const LABEL_FILTER: FilterSpecification = [
   'all',
   [
     'match',
@@ -37,7 +34,7 @@ const LABEL_FILTER: Expression = [
   ['has', 'yearDetec'],
 ];
 
-const POINT_FILTER: Expression = [
+const POINT_FILTER: FilterSpecification = [
   'match',
   ['geometry-type'],
   ['Point', 'MultiPoint'],
@@ -45,7 +42,7 @@ const POINT_FILTER: Expression = [
   false,
 ];
 
-const LINESTRING_FILTER: Expression = [
+const LINESTRING_FILTER: FilterSpecification = [
   'match',
   ['geometry-type'],
   ['LineString', 'MultiLineString'],
@@ -53,7 +50,7 @@ const LINESTRING_FILTER: Expression = [
   false,
 ];
 
-const POLYGON_STROKE_FILTER: Expression = [
+const POLYGON_STROKE_FILTER: FilterSpecification = [
   'match',
   ['geometry-type'],
   ['Polygon', 'MultiPolygon'],
@@ -61,7 +58,7 @@ const POLYGON_STROKE_FILTER: Expression = [
   false,
 ];
 
-const POLYGON_FILL_FILTER: Expression = [
+const POLYGON_FILL_FILTER: FilterSpecification = [
   'match',
   ['geometry-type'],
   ['Polygon', 'MultiPolygon'],
@@ -77,52 +74,57 @@ export const RemoteDetectionAlertsMapLayer = () => {
   }
 
   return (
-    <ShapeSource
+    <GeoJSONSource
       id="alerts-source"
-      shape={convertRemoteDetectionAlertsToFeatures(alerts)}>
+      data={convertRemoteDetectionAlertsToFeatures(alerts)}>
       {/* Fill Layer for Polygon Fill */}
-      <FillLayer
+      <Layer
+        type="fill"
         id="comapeo-alerts-polygon-fill"
         filter={POLYGON_FILL_FILTER}
-        style={{
-          fillColor: '#FF0000',
-          fillOpacity: 0.5,
+        paint={{
+          'fill-color': '#FF0000',
+          'fill-opacity': 0.5,
         }}
       />
 
       {/* Line Layer for Polygon Stroke */}
-      <LineLayer
+      <Layer
+        type="line"
         id="comapeo-alerts-polygon-stroke"
         filter={POLYGON_STROKE_FILTER}
-        style={{
-          lineColor: '#FF0000',
-          lineWidth: 2,
+        paint={{
+          'line-color': '#FF0000',
+          'line-width': 2,
         }}
       />
 
       {/* Line Layer for LineStrings and MultiLineStrings */}
-      <LineLayer
+      <Layer
+        type="line"
         id="comapeo-alerts-linestring"
         filter={LINESTRING_FILTER}
-        style={{
-          lineColor: '#FF0000',
-          lineWidth: 3,
-          lineOpacity: 0.8,
+        paint={{
+          'line-color': '#FF0000',
+          'line-width': 3,
+          'line-opacity': 0.8,
         }}
       />
 
       {/* Circle Layer for Points */}
-      <CircleLayer
+      <Layer
+        type="circle"
         id="comapeo-alerts-point"
         filter={POINT_FILTER}
-        style={{
-          circleRadius: 5,
-          circleColor: '#FF0000',
+        paint={{
+          'circle-radius': 5,
+          'circle-color': '#FF0000',
         }}
       />
 
       {/* Symbol Layer for Labels */}
-      <SymbolLayer
+      <Layer
+        type="symbol"
         id="comapeo-alerts-label"
         filter={LABEL_FILTER}
         style={{
@@ -143,7 +145,7 @@ export const RemoteDetectionAlertsMapLayer = () => {
           textHaloBlur: 1,
         }}
       />
-    </ShapeSource>
+    </GeoJSONSource>
   );
 };
 

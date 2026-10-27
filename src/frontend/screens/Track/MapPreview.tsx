@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {
-  MapView,
+  Map,
   Camera,
-  ShapeSource,
-  CircleLayer,
-  LineLayer,
+  GeoJSONSource,
+  Layer,
+  type LngLatBounds,
 } from '@maplibre/maplibre-react-native';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import {convertToLineString} from '../../lib/utils.ts';
@@ -16,7 +16,10 @@ import {
   observationsToFeatureCollection,
 } from '../../lib/ObservationMapLayer.ts';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps.ts';
-import {SAVED_TRACK_LINE_STYLE} from '../../lib/trackMapStyles';
+import {
+  LINE_LAYOUT_ROUND,
+  SAVED_TRACK_LINE_PAINT,
+} from '../../lib/trackMapStyles';
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
   observations: Observation[];
@@ -28,35 +31,35 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
   locationHistory,
   observations,
 }) => {
-  const [swBoundary, neBoundary] = getAdjustedBounds(locationHistory);
-  const styleUrlQuery = useMapStyleJsonUrl();
+  const bounds = getAdjustedBounds(locationHistory);
+  const {data: styleUrl} = useMapStyleJsonUrl();
 
   return (
-    <MapView
-      style={styles.map}
-      zoomEnabled={false}
-      logoEnabled={false}
-      scrollEnabled={false}
-      pitchEnabled={false}
-      rotateEnabled={false}
-      compassEnabled={false}
-      mapStyle={styleUrlQuery.data}>
-      <Camera
-        animationMode="moveTo"
-        padding={{
-          paddingTop: MAP_PADDING,
-          paddingRight: MAP_PADDING,
-          paddingLeft: MAP_PADDING,
-          paddingBottom: MAP_PADDING,
-        }}
-        bounds={{
-          ne: neBoundary!,
-          sw: swBoundary!,
-        }}
-      />
-      <TrackMapLayer locationHistory={locationHistory} />
-      <ObservationMapLayer observations={observations} />
-    </MapView>
+    <View style={styles.map}>
+      <Map
+        touchZoom={false}
+        doubleTapHoldZoom={false}
+        doubleTapZoom={false}
+        logo={false}
+        dragPan={false}
+        touchRotate={false}
+        compass={false}
+        touchPitch={false}
+        androidView="texture"
+        mapStyle={styleUrl}>
+        <Camera
+          padding={{
+            top: MAP_PADDING,
+            right: MAP_PADDING,
+            left: MAP_PADDING,
+            bottom: MAP_PADDING,
+          }}
+          bounds={bounds}
+        />
+        <TrackMapLayer locationHistory={locationHistory} />
+        <ObservationMapLayer observations={observations} />
+      </Map>
+    </View>
   );
 };
 
@@ -72,9 +75,9 @@ function ObservationMapLayer({observations}: {observations: Observation[]}) {
   }, [presets]);
 
   return (
-    <ShapeSource id="observations-source" shape={displayedFeatures}>
-      <CircleLayer id="circles" style={layerStyles} />
-    </ShapeSource>
+    <GeoJSONSource id="observations-source" data={displayedFeatures}>
+      <Layer type="circle" id="circles" paint={layerStyles} />
+    </GeoJSONSource>
   );
 }
 
@@ -84,11 +87,16 @@ function TrackMapLayer({
   locationHistory: LocationHistoryPoint[];
 }) {
   return (
-    <ShapeSource
+    <GeoJSONSource
       id="trackShapeSource"
-      shape={convertToLineString(locationHistory)}>
-      <LineLayer id="trackLines" style={SAVED_TRACK_LINE_STYLE} />
-    </ShapeSource>
+      data={convertToLineString(locationHistory)}>
+      <Layer
+        type="line"
+        id="trackLines"
+        layout={LINE_LAYOUT_ROUND}
+        paint={SAVED_TRACK_LINE_PAINT}
+      />
+    </GeoJSONSource>
   );
 }
 
@@ -96,38 +104,37 @@ const MAP_HEIGHT = 250;
 // Minimum bound size to ensure sufficient map detail
 const MIN_BOUND_SIZE = 0.0003;
 
-const getAdjustedBounds = (locationHistory: LocationHistoryPoint[]) => {
-  let minLat = Infinity;
-  let maxLat = -Infinity;
-  let minLng = Infinity;
-  let maxLng = -Infinity;
+const getAdjustedBounds = (
+  locationHistory: LocationHistoryPoint[],
+): LngLatBounds => {
+  let west = Infinity;
+  let east = -Infinity;
+  let south = Infinity;
+  let north = -Infinity;
 
   locationHistory.forEach(point => {
-    minLat = Math.min(minLat, point.latitude);
-    maxLat = Math.max(maxLat, point.latitude);
-    minLng = Math.min(minLng, point.longitude);
-    maxLng = Math.max(maxLng, point.longitude);
+    west = Math.min(west, point.longitude);
+    east = Math.max(east, point.longitude);
+    south = Math.min(south, point.latitude);
+    north = Math.max(north, point.latitude);
   });
 
   // Calculate the current bounds size
-  const latDiff = maxLat - minLat;
-  const lngDiff = maxLng - minLng;
+  const lngDiff = east - west;
+  const latDiff = north - south;
 
   // Adjust bounds if they are too small
-  if (latDiff < MIN_BOUND_SIZE) {
-    minLat -= (MIN_BOUND_SIZE - latDiff) / 2;
-    maxLat += (MIN_BOUND_SIZE - latDiff) / 2;
-  }
-
   if (lngDiff < MIN_BOUND_SIZE) {
-    minLng -= (MIN_BOUND_SIZE - lngDiff) / 2;
-    maxLng += (MIN_BOUND_SIZE - lngDiff) / 2;
+    west -= (MIN_BOUND_SIZE - lngDiff) / 2;
+    east += (MIN_BOUND_SIZE - lngDiff) / 2;
   }
 
-  return [
-    [minLng, minLat], // southWest
-    [maxLng, maxLat], // northEast
-  ];
+  if (latDiff < MIN_BOUND_SIZE) {
+    south -= (MIN_BOUND_SIZE - latDiff) / 2;
+    north += (MIN_BOUND_SIZE - latDiff) / 2;
+  }
+
+  return [west, south, east, north];
 };
 
 export const styles = StyleSheet.create({

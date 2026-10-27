@@ -3,7 +3,11 @@ import {StyleSheet, View, TouchableOpacity, Pressable} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio';
+import {
+  setAudioModeAsync,
+  useAudioPlayer,
+  useAudioPlayerStatus,
+} from 'expo-audio';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {Bar} from 'react-native-progress';
 import {
@@ -58,6 +62,14 @@ export const AudioAttachmentPlaybackScreen = ({
   });
   const player = useAudioPlayer({uri});
   const status = useAudioPlayerStatus(player);
+
+  // needed for iOS to ensure audio plays even when the silent switch is on
+  React.useEffect(() => {
+    setAudioModeAsync({playsInSilentMode: true}).catch(err => {
+      Sentry.captureException(err);
+    });
+  }, []);
+
   const {formatMessage} = useIntl();
   const [localUri, setLocalUri] = React.useState<string | null>(null);
   const {mutate: openShareDialog, isPending: shareLoading} =

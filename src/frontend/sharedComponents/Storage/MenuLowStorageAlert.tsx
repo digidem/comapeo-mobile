@@ -52,7 +52,7 @@ export function MenuLowStorageAlert({
       <View style={styles.headerRow}>
         <MaterialIcons name="warning" size={20} color={DARK_ORANGE} />
         <View style={styles.headerTextWrap}>
-          <BodyText variant="smallMeta" style={styles.title}>
+          <BodyText variant="smallMeta" weight={700}>
             {formatMessage(m.title)}
           </BodyText>
           <BodyText variant="smallMeta">{formatMessage(m.subtitle)}</BodyText>
@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   headerTextWrap: {flex: 1},
-  title: {fontWeight: '700'},
   detailsColumn: {
     paddingLeft: 30,
     flexDirection: 'column',

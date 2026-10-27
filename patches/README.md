@@ -8,17 +8,6 @@ A patch that edits an **Expo** module's Android sources only takes effect if tha
 Maven AARs, so otherwise the patch applies cleanly, the build succeeds, and the patched code never reaches the APK.
 Confirm with a `Task :<module>:compileDebugKotlin` line in the Gradle log.
 
-## @maplibre/maplibre-react-native
-
-### [New Architecture and RN 0.85 fixes](./@maplibre+maplibre-react-native+10.4.2.patch)
-
-`EventEmitter` reached the React context via `ReactApplication#getReactNativeHost()`, which throws under the New
-Architecture. The `ReactApplicationContext` it is handed is already a live `ReactContext`, so it is used directly.
-
-`AnimatedPoint` also assigned its own listener map to `this._listeners`, which RN 0.85 changed from a plain object to a
-`Map` on `AnimatedNode`; the subclass now keeps its listeners in `_pointListeners` so `__callListeners` still finds a
-real `Map`.
-
 ## expo-file-system
 
 ### [Cache the SAF content length](./expo-file-system+56.0.8+001+cache-saf-content-length.patch)

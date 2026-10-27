@@ -133,7 +133,7 @@ export const AudioAskPermissionBottomSheet = ({
           </BodyText>
         </View>
         <View
-          style={{width: '100%', gap: 20, alignItems: 'center', marginTop: 30}}>
+          style={{width: '100%', gap: 15, alignItems: 'center', marginTop: 30}}>
           {permission.canAskAgain ? (
             <PrimaryButton
               fullSize

@@ -206,7 +206,8 @@ const appUsageData = new AppUsageData({
   },
 });
 
-// App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
+// The backend only picks up a change to this after a force close and reopen,
+// so on app launch we set the front end to match what the backend is actually doing.
 appUsageData.setEnabled(backendAppUsageDataEnabled);
 
 const appUsagePromptStore = createAppUsageStatsStore({
@@ -214,7 +215,7 @@ const appUsagePromptStore = createAppUsageStatsStore({
   appUsageMetricsOptIn: () => {
     postHog.optIn();
     appUsageData.setEnabled(true);
-    // Restart-to-activate: takes effect next launch, not this session.
+    // Won't take effect in the backend until a force close and reopen.
     setApplicationUsageData(true).catch(err => {
       Sentry.captureException(err);
     });
@@ -230,7 +231,8 @@ const appUsagePromptStore = createAppUsageStatsStore({
 
 const deviceDiagnostics = new DeviceDiagnostics();
 const backendDiagnosticsEnabled = getDiagnosticsEnabled();
-// App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
+// Same here: only changes in the backend after a force close and reopen,
+// so match it on app launch.
 deviceDiagnostics.setEnabled(backendDiagnosticsEnabled);
 
 const queryClient = new QueryClient();

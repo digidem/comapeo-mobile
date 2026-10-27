@@ -74,6 +74,7 @@
       ["./expo-config-plugins/targetArmArchsOnly.js"],
       ["./expo-config-plugins/increaseJavaMemory.js"],
       ["./expo-config-plugins/flagSecure/index.js"],
+      ["./expo-config-plugins/disableLocationNotificationBadge.js"],
       ["./expo-config-plugins/customPermissionText.js"],
       ["./expo-config-plugins/removeMediaPlaybackPermission.js"],
       ["./expo-config-plugins/mergeBackupRules.js"],

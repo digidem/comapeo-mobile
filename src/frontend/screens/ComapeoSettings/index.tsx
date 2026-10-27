@@ -19,6 +19,7 @@ import HeartCheckIcon from '../../images/HeartCheck.svg';
 import AngleRulerIcon from '../../images/AngleRuler.svg';
 import {isQABuild} from '../../lib/appVariant';
 import {useQADeviceName} from '../../contexts/QADeviceNameStoreContext';
+import {useCustomSafeAreaInsets} from '../../hooks/useCustomSafeAreaInsets';
 
 const m = defineMessages({
   title: {
@@ -130,6 +131,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   const passcode = useSecurityState(s => s.passcode);
   const {data: deviceInfo} = useOwnDeviceInfo();
   const unitSystem = useUnitSystem();
+  const {bottom} = useCustomSafeAreaInsets();
 
   const currentLanguageName =
     USABLE_LANGUAGES.find(l => l.languageTag === appLocale)?.nativeName ??
@@ -145,7 +147,8 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   const qaDeviceName = useQADeviceName();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={[styles.container, {paddingBottom: bottom}]}>
       <BodyText weight={500} variant="tinyMeta" style={styles.sectionHeader}>
         {formatMessage(m.deviceName)}
       </BodyText>
@@ -371,7 +374,7 @@ function SettingsRow({
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingVertical: 22,
+    paddingTop: 20,
     gap: 12,
   },
   sectionHeader: {

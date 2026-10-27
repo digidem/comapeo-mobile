@@ -100,10 +100,10 @@ export function createSecurityStore({persist} = {persist: false}) {
         migrate,
         storage: createJSONStorage((): StateStorage => ({
           getItem: key => {
-            // A passcode by a previous install on iOS is left in the keychain. So it would
-            // lock this installation before onboarding can finish. Here we report it as
-            // absent so this launch is unlocked, and delete it so the next one
-            // reads nothing.
+            // On iOS a passcode from a previous install is still in the keychain,
+            // so it would show up before onboarding. Returning null starts the
+            // store with no passcode, and deleting it means the next launch
+            // finds nothing.
             if (isFreshInstall) {
               deleteItemAsync(key).catch(err => Sentry.captureException(err));
               return null;

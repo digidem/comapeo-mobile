@@ -35,6 +35,7 @@ import {
 import {bytesToMegabytes} from '../../lib/bytesToMegabytes';
 import {DownloadIcon} from '../../sharedComponents/icons';
 import {useMutation} from '@tanstack/react-query';
+import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
 
 const m = defineMessages({
   screenTitle: {
@@ -112,6 +113,7 @@ export function createNavigationOptions({
 export function BackgroundMapsScreen() {
   const {formatMessage: t} = useIntl();
   const {navigate} = useNavigationFromRoot();
+  const {bottom} = usePaddingWithSafeArea();
 
   const selectFileMutation = useMutation({
     mutationKey: FILE_SELECT_MUTATION_KEY,
@@ -162,7 +164,8 @@ export function BackgroundMapsScreen() {
 
   return (
     <>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView
+        contentContainerStyle={[styles.container, {paddingBottom: bottom}]}>
         {isRefetching || mapInfoStatus === 'pending' ? (
           <FullScreenCenteredLoader />
         ) : mapInfoStatus !== 'success' || !customMapInfo ? (
@@ -320,8 +323,7 @@ function MapInfoScreen({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    padding: 20,
     gap: 36,
     flexGrow: 1,
   },

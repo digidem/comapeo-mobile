@@ -26,7 +26,7 @@ import {audioStyles} from './shared';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
-import {useCustomSafeAreaInsets} from '../../hooks/useCustomSafeAreaInsets';
+import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
 
 const m = defineMessages({
   recordingSaved: {
@@ -51,7 +51,7 @@ export const AudioDraftPlaybackScreen = ({
   const player = useAudioPlayer({uri});
   const status = useAudioPlayerStatus(player);
   // this screen has no header, so we need to push the content down below the notch
-  const {top} = useCustomSafeAreaInsets();
+  const {top} = usePaddingWithSafeArea();
 
   // needed for iOS to ensure audio plays even when the silent switch is on
   React.useEffect(() => {

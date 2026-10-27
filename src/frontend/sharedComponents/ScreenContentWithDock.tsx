@@ -2,7 +2,7 @@ import {ReactNode, type PropsWithChildren} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 
 import {ViewStyleProp} from '../sharedTypes';
-import {useCustomSafeAreaInsets} from '../hooks/useCustomSafeAreaInsets';
+import {usePaddingWithSafeArea} from '../hooks/usePaddingWithSafeArea';
 import {WHITE} from '../lib/styles';
 
 export const ScreenContentWithDock = ({
@@ -19,7 +19,7 @@ export const ScreenContentWithDock = ({
   testID?: string;
   backgroundColor?: string;
 }>) => {
-  const {bottom} = useCustomSafeAreaInsets();
+  const {bottom} = usePaddingWithSafeArea();
   return (
     <View
       style={[styles.container, {paddingBottom: bottom, backgroundColor}]}

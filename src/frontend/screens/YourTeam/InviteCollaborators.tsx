@@ -13,7 +13,7 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {SvgProps} from 'react-native-svg';
 import {NEW_DARK_GREY, DARK_ORANGE} from '../../lib/styles';
-import {useCustomSafeAreaInsets} from '../../hooks/useCustomSafeAreaInsets';
+import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
 
 const m = defineMessages({
   screenTitle: {
@@ -50,7 +50,7 @@ type Props = NativeRootNavigationProps<'InviteCollaborators'>;
 
 export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
   const {formatMessage: t} = useIntl();
-  const {top} = useCustomSafeAreaInsets();
+  const {top} = usePaddingWithSafeArea();
 
   function handleGoBack() {
     navigation.goBack();

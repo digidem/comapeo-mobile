@@ -33,7 +33,7 @@ import {buttonStyles, PrimaryButton} from '../sharedComponents/Buttons.tsx';
 import DownArrow from '../images/DownArrow.svg';
 import {isLowStorage, calcUsedPercentage} from '../lib/storage';
 import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
-import {useCustomSafeAreaInsets} from '../hooks/useCustomSafeAreaInsets.tsx';
+import {usePaddingWithSafeArea} from '../hooks/usePaddingWithSafeArea.tsx';
 
 const m = defineMessages({
   appSettings: {
@@ -108,7 +108,7 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   const percentUsed = calcUsedPercentage(freeBytes, totalBytes);
 
   const isEarly = useEarlyAccessState(s => s.isEarlyAccessEnabled);
-  const insets = useCustomSafeAreaInsets();
+  const insets = usePaddingWithSafeArea();
 
   return (
     <View

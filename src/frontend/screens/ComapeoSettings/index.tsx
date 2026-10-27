@@ -19,7 +19,7 @@ import HeartCheckIcon from '../../images/HeartCheck.svg';
 import AngleRulerIcon from '../../images/AngleRuler.svg';
 import {isQABuild} from '../../lib/appVariant';
 import {useQADeviceName} from '../../contexts/QADeviceNameStoreContext';
-import {useCustomSafeAreaInsets} from '../../hooks/useCustomSafeAreaInsets';
+import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -131,7 +131,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   const passcode = useSecurityState(s => s.passcode);
   const {data: deviceInfo} = useOwnDeviceInfo();
   const unitSystem = useUnitSystem();
-  const {bottom} = useCustomSafeAreaInsets();
+  const {bottom} = usePaddingWithSafeArea();
 
   const currentLanguageName =
     USABLE_LANGUAGES.find(l => l.languageTag === appLocale)?.nativeName ??

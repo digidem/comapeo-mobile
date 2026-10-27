@@ -117,7 +117,10 @@ export const AudioAskPermissionBottomSheet = ({
 
   return (
     <BottomSheetWrapper>
-      <View style={[styles.container, {paddingTop: top}]}>
+      {/* This padding is a litte weird. this should have a padding of 80 from the top
+        40 of the padding comes from bottom sheet wrapper, plus this 40, plus the 
+        inset for th top notch */}
+      <View style={[styles.container, {paddingTop: top + 40}]}>
         <View style={{alignItems: 'center'}}>
           <AudioPermission />
           <HeaderText

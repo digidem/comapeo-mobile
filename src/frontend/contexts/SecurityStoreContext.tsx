@@ -16,7 +16,7 @@ import {
   StoredPasscodeSchema,
 } from '../lib/security';
 import {FullScreenCenteredLoader} from '../sharedComponents/FullScreenCenteredLoader';
-import {isFreshInstall} from '../lib/freshInstall';
+import {storage} from '../hooks/persistedState/createPersistedState';
 
 const SecurityStateSchema = v.variant('passcode', [
   v.object({
@@ -39,6 +39,14 @@ export type SecurityState = v.InferOutput<typeof SecurityStateSchema>;
 
 // NOTE: Do not change!
 const STORAGE_KEY = 'security' as const;
+
+// iOS keeps Keychain items when an app is deleted, but MMKV gets emptied when the app does.
+// So an empty MMKV means this container is new and any passcode still in the
+// Keychain belongs to a previous install. A passcode can't exist without a
+// project having been created first, which writes to MMKV, so a real one is
+// never missed. This runs once when the file is first loaded, which is before
+// any store exists to write to MMKV and make it look used.
+const isFreshInstall = storage.length === 0;
 
 function createInitialState(): SecurityState {
   return {

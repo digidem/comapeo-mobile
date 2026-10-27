@@ -26,6 +26,7 @@ import SpeechBubbleIcon from '../../../images/SpeechBubble.svg';
 import {BLUE_GREY, NEW_DARK_GREY} from '../../../lib/styles';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
+import {usePaddingWithSafeArea} from '../../../hooks/usePaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -79,6 +80,7 @@ export const CreateOrNameSoloProject = ({
   const isSolo = route.name === 'NameSoloProject';
 
   const {formatMessage: t} = useIntl();
+  const {bottom} = usePaddingWithSafeArea();
 
   const {setActiveProjectId} = useActiveProjectIdActions();
   const createProjectMutation = useCreateProject();
@@ -163,7 +165,7 @@ export const CreateOrNameSoloProject = ({
     <KeyboardAvoidingView style={{flex: 1}}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <View style={styles.container}>
+          <View style={[styles.container, {paddingBottom: bottom}]}>
             <View>
               <HeaderText variant="header5" style={{marginHorizontal: 20}}>
                 {t(m.enterName)}
@@ -199,7 +201,7 @@ export const CreateOrNameSoloProject = ({
                 paddingTop: 10,
               }}>
               {mutationIsPending ? (
-                <LoadingIndicator size="large" style={{marginBottom: 20}} />
+                <LoadingIndicator size="large" />
               ) : (
                 <PrimaryButton
                   testID="PROJECT.create-btn"

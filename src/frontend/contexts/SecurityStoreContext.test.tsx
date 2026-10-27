@@ -9,7 +9,12 @@ import {
   useSecurityActions,
   useSecurityState,
 } from './SecurityStoreContext';
-import {DEFAULT_OBSCURE_CODE, verifyPasscode} from '../lib/security';
+import {
+  DEFAULT_OBSCURE_CODE,
+  generateSalt,
+  hashPasscode,
+  verifyPasscode,
+} from '../lib/security';
 
 jest.mock('expo-secure-store', () => ({
   getItem: jest.fn(),
@@ -244,19 +249,23 @@ test('resets attempts and lockout', async () => {
 });
 
 describe('stale Keychain data after a reinstall', () => {
-  const STORED = JSON.stringify({
-    version: 1,
-    state: {
-      passcode: `${'a'.repeat(16)}:${'b'.repeat(64)}`,
-      obscureCodeEnabled: false,
-      failedAttempts: 0,
-      lockUntil: 0,
-      _hasHydrated: true,
-    },
+  let stored: string;
+
+  beforeAll(async () => {
+    stored = JSON.stringify({
+      version: 1,
+      state: {
+        passcode: await hashPasscode({passcode: '12345', salt: generateSalt()}),
+        obscureCodeEnabled: false,
+        failedAttempts: 0,
+        lockUntil: 0,
+        _hasHydrated: true,
+      },
+    });
   });
 
   beforeEach(() => {
-    jest.mocked(getItem).mockReturnValue(STORED);
+    jest.mocked(getItem).mockReturnValue(stored);
     jest.mocked(deleteItemAsync).mockResolvedValue(undefined);
   });
 

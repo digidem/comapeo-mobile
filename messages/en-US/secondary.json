@@ -1584,9 +1584,6 @@
   "screens.YourTeam.ReviewJoinRequest.requestingToJoin": {
     "message": "Requesting to join..."
   },
-  "screens.YourTeam.ReviewJoinRequest.unnamedDevice": {
-    "message": "New device"
-  },
   "screens.YourTeam.TeamMemberCard.thisDevice": {
     "message": "This device"
   },

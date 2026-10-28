@@ -1,8 +1,43 @@
 import {
   JOIN_FAILURE_CODES,
   getJoinFailureCopy,
+  getJoinRequestErrorCode,
   toJoinFailureCode,
 } from './joinFailure';
+
+describe('getJoinRequestErrorCode', () => {
+  // The shape core actually delivers: an event payload, so the prototype is
+  // gone and `instanceof Error` is false.
+  it('reads the code off an error that crossed ipc as a plain object', () => {
+    expect(
+      getJoinRequestErrorCode({
+        code: 'INVITE_DENIED_BY_INVITER_ERROR',
+        name: 'InviteDeniedByInviterError',
+        status: 403,
+      }),
+    ).toBe('INVITE_DENIED_BY_INVITER_ERROR');
+  });
+
+  it('reads the code off a real Error', () => {
+    expect(
+      getJoinRequestErrorCode(
+        Object.assign(new Error('denied'), {
+          code: 'INVITE_DENIED_BY_INVITER_ERROR',
+        }),
+      ),
+    ).toBe('INVITE_DENIED_BY_INVITER_ERROR');
+  });
+
+  it.each([
+    ['null', null],
+    ['undefined', undefined],
+    ['a string', 'INVITE_DENIED_BY_INVITER_ERROR'],
+    ['an object with no code', {name: 'Error'}],
+    ['an object with a non-string code', {code: 403}],
+  ])('returns undefined for %s', (_label, error) => {
+    expect(getJoinRequestErrorCode(error)).toBeUndefined();
+  });
+});
 
 describe('toJoinFailureCode', () => {
   it.each(JOIN_FAILURE_CODES)('passes through %s', code => {

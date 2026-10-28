@@ -6,9 +6,9 @@ import {ErrorBoundary} from '@sentry/react-native';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 
 import {useCancelJoinRequest, useSingleJoinRequest} from '@comapeo/core-react';
-import {getErrorCode} from '@comapeo/core/errors.js';
 import {
   getJoinFailureCopy,
+  getJoinRequestErrorCode,
   toJoinFailureCode,
   type JoinFailureCode,
 } from './joinFailure';
@@ -126,7 +126,7 @@ function JoinRequestStatus({
   if (status === 'failed') {
     return (
       <JoinFailure
-        code={toJoinFailureCode(getErrorCode(joinRequest.error))}
+        code={toJoinFailureCode(getJoinRequestErrorCode(joinRequest.error))}
         onClose={onClose}
       />
     );

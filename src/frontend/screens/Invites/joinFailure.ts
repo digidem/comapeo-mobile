@@ -32,6 +32,18 @@ export const JOIN_FAILURE_CODES = [
 
 export type JoinFailureCode = (typeof JOIN_FAILURE_CODES)[number] | 'UNKNOWN';
 
+/**
+ * core's `getErrorCode` requires an `instanceof Error`, which the error on a
+ * `join-request-update` never is: it reaches the app as a plain object through
+ * an event payload, not as a rejection ipc puts back together.
+ */
+export function getJoinRequestErrorCode(error: unknown): string | undefined {
+  if (typeof error !== 'object' || error === null || !('code' in error)) {
+    return undefined;
+  }
+  return typeof error.code === 'string' ? error.code : undefined;
+}
+
 export function toJoinFailureCode(code: string | undefined): JoinFailureCode {
   return (JOIN_FAILURE_CODES as readonly string[]).includes(code ?? '')
     ? (code as JoinFailureCode)

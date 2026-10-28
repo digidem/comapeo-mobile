@@ -9,7 +9,7 @@ import {RoleWithIcon} from '../../sharedComponents/RoleWithIcon';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -36,14 +36,11 @@ export const SelectInviteeRole: NativeNavigationComponent<
   'SelectInviteeRole'
 > = ({route, navigation}) => {
   const {formatMessage: t} = useIntl();
-  const {bottom} = usePaddingWithSafeArea();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
     <ScrollView
-      contentContainerStyle={[
-        styles.contentContainer,
-        {paddingBottom: bottom},
-      ]}>
+      contentContainerStyle={[styles.contentContainer, {paddingBottom}]}>
       <BodyText weight={700} variant="medium" style={styles.descriptionText}>
         {t(m.selectingDevice)}
       </BodyText>

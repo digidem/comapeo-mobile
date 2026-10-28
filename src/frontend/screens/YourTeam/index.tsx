@@ -19,7 +19,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
-import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -68,7 +68,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const {projectId} = useActiveProject();
   const membersQuery = useManyMembers({projectId, includeLeft: true});
   const {data: deviceInfo} = useOwnDeviceInfo();
-  const {bottom} = usePaddingWithSafeArea();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const coordinators = membersQuery.data.filter(member =>
     COORDINATOR_ROLES.has(member.role.roleId),
@@ -85,7 +85,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={[styles.content, {paddingBottom: bottom}]}>
+      contentContainerStyle={[styles.content, {paddingBottom}]}>
       {!deviceInfo ||
       !coordinators.some(
         coordinator => coordinator.deviceId === deviceInfo.deviceId,

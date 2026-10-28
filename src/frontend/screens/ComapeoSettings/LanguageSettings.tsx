@@ -12,7 +12,7 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLUE_GREY} from '../../lib/styles';
-import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 const m = defineMessages({
   title: {
     id: '$1screens.LanguageSettings.title',
@@ -49,7 +49,7 @@ export const LanguageSettings: NativeNavigationComponent<
   const locale = useLocaleState();
   const appLocale = locale.languageTag;
   const {setLanguageTag} = useLocaleActions();
-  const {bottom} = usePaddingWithSafeArea();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const options = React.useMemo(() => {
     return [
@@ -65,7 +65,7 @@ export const LanguageSettings: NativeNavigationComponent<
     <FlatList
       testID="languageScrollView"
       style={styles.container}
-      contentContainerStyle={{paddingBottom: bottom}}
+      contentContainerStyle={{paddingBottom}}
       data={options}
       ListHeaderComponent={
         <>

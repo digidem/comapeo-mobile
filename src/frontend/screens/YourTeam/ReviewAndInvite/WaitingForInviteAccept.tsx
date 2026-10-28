@@ -7,7 +7,7 @@ import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
-import {usePaddingWithSafeArea} from '../../../hooks/usePaddingWithSafeArea';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   waitingMessage: {
@@ -32,7 +32,7 @@ export const WaitingForInviteAccept = ({
   const {formatMessage: t} = useIntl();
   const [time, setTime] = React.useState(0);
   const navigation = useNavigationFromRoot();
-  const {top} = usePaddingWithSafeArea();
+  const {top} = useSafeAreaInsets();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({headerShown: false});

@@ -33,7 +33,8 @@ import {buttonStyles, PrimaryButton} from '../sharedComponents/Buttons.tsx';
 import DownArrow from '../images/DownArrow.svg';
 import {isLowStorage, calcUsedPercentage} from '../lib/storage';
 import {useEarlyAccessState} from '../contexts/EarlyAccessContext';
-import {usePaddingWithSafeArea} from '../hooks/usePaddingWithSafeArea.tsx';
+import {useBottomPaddingWithSafeArea} from '../hooks/useBottomPaddingWithSafeArea.tsx';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   appSettings: {
@@ -108,14 +109,11 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
   const percentUsed = calcUsedPercentage(freeBytes, totalBytes);
 
   const isEarly = useEarlyAccessState(s => s.isEarlyAccessEnabled);
-  const insets = usePaddingWithSafeArea();
+  const paddingBottom = useBottomPaddingWithSafeArea();
+  const {top} = useSafeAreaInsets();
 
   return (
-    <View
-      style={[
-        styles.container,
-        {paddingTop: insets.top, paddingBottom: insets.bottom},
-      ]}>
+    <View style={[styles.container, {paddingTop: top + 20, paddingBottom}]}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.topCardsContainer}>
           {isLow && (
@@ -306,7 +304,6 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    padding: 20,
     flexDirection: 'column',
     justifyContent: 'space-between',
   },

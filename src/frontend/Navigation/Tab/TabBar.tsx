@@ -8,7 +8,7 @@ import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useTracking} from '../../hooks/useTracking';
 import {useTrackTimer} from '../../hooks/useTrackTimer.ts';
-import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea.tsx';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea.tsx';
 
 const BUTTON_SIZE = 25;
 const HIT_SLOP = 20;
@@ -16,7 +16,7 @@ const HIT_SLOP = 20;
 export const TabBar = ({navigation, state}: BottomTabBarProps) => {
   const currentIndex = state.index;
   const currentTab = state.routes[currentIndex];
-  const {bottom} = usePaddingWithSafeArea();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   function onPressMap() {
     navigation.navigate('Map', {trackingOpen: false});
@@ -26,7 +26,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
     navigation.navigate('Map', {trackingOpen: true});
   }
   return (
-    <View style={[styles.container, {paddingBottom: bottom}]}>
+    <View style={[styles.container, {paddingBottom}]}>
       <TouchableOpacity
         hitSlop={HIT_SLOP}
         testID="tabBarButtonObservationsList"

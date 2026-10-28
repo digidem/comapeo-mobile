@@ -15,8 +15,8 @@ import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {toError} from '../../utils/errors';
-import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
 import {ScreenContentWithNoHeaderAndTopPadding} from '../../sharedComponents/ScreenContentWithNoHeaderAndTopPadding';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   shareProjectStats: {
@@ -55,7 +55,7 @@ export const ShareProjectStats = ({
 
   const {projectId} = useActiveProject();
   const updateSettings = useUpdateProjectSettings({projectId});
-  const {top} = usePaddingWithSafeArea();
+  const {top} = useSafeAreaInsets();
 
   usePreventBackNavigation();
 

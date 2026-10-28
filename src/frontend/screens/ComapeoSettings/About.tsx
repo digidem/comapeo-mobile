@@ -11,7 +11,7 @@ import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {BLUE_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
 import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   aboutCoMapeoTitle: {
@@ -110,11 +110,10 @@ const DeviceInfoListItem = ({
 export const AboutSettings = () => {
   const {formatMessage: t} = useIntl();
   const isEarly = useEarlyAccessState(s => s.isEarlyAccessEnabled);
-  const {bottom} = usePaddingWithSafeArea();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <ScrollView
-      contentContainerStyle={[styles.container, {paddingBottom: bottom}]}>
+    <ScrollView contentContainerStyle={[styles.container, {paddingBottom}]}>
       {isEarly ? (
         <View style={styles.banner} testID="ABOUT.ea-banner">
           <MaterialIcon name="flag" size={20} />

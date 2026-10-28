@@ -23,7 +23,7 @@ import {
   useProjectSettings,
 } from '../../hooks/server/projects';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -86,13 +86,12 @@ export const ProjectSettings = () => {
   const {navigate} = useNavigationFromRoot();
   const {data: configData} = useProjectSettings();
   const remoteArchiveOn = !!useActiveArchiveServer({projectId});
-  const {bottom} = usePaddingWithSafeArea();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const sendStatsOn = configData.sendStats;
 
   return (
-    <ScrollView
-      contentContainerStyle={[styles.container, {paddingBottom: bottom}]}>
+    <ScrollView contentContainerStyle={[styles.container, {paddingBottom}]}>
       <SettingsCardRow
         icon={<NoProjectIcon width={24} height={24} />}
         title={projectInfo.projectHeader}

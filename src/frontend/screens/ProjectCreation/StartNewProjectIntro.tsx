@@ -7,7 +7,7 @@ import {PrimaryButton} from '../../sharedComponents/Buttons';
 import ProjectCoordinator from '../../images/ProjectCoordinator.svg';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
-import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 const m = defineMessages({
   title: {
     id: '$1screens.Settings.StartNewProjectIntro.title',
@@ -31,10 +31,10 @@ export const StartNewProjectIntro: NativeNavigationComponent<
   'StartNewProjectIntro'
 > = ({navigation}) => {
   const {formatMessage} = useIntl();
-  const {bottom} = usePaddingWithSafeArea();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={[styles.container, {paddingBottom: bottom}]}>
+    <View style={[styles.container, {paddingBottom}]}>
       <View style={styles.content}>
         <IconTitleDescription
           icon={

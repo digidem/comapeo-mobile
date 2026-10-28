@@ -1,9 +1,9 @@
 import {ReactNode, type PropsWithChildren} from 'react';
 
 import {ViewStyleProp} from '../sharedTypes';
-import {usePaddingWithSafeArea} from '../hooks/usePaddingWithSafeArea';
 import {WHITE} from '../lib/styles';
 import {ScreenContentWithDock} from './ScreenContentWithDock';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export const ScreenContentWithNoHeaderAndTopPadding = ({
   children,
@@ -19,7 +19,7 @@ export const ScreenContentWithNoHeaderAndTopPadding = ({
   testID?: string;
   backgroundColor?: string;
 }>) => {
-  const {top} = usePaddingWithSafeArea();
+  const {top} = useSafeAreaInsets();
   return (
     <ScreenContentWithDock
       dockContent={dockContent}

@@ -15,7 +15,7 @@ import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {useDraftObservationActions} from '../../../contexts/DraftObservationContext';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../../utils/errors';
-import {usePaddingWithSafeArea} from '../../../hooks/usePaddingWithSafeArea';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   lessThan5: {
@@ -41,8 +41,7 @@ export function AudioRecording({
   const timeElapsed = status.durationMillis;
   const [isLoading, setIsLoading] = React.useState(true);
   const {addAudio} = useDraftObservationActions();
-  // this screen has no header, so we need to push the content down below the notch.
-  const {top} = usePaddingWithSafeArea();
+  const {top} = useSafeAreaInsets();
 
   const {formatMessage} = useIntl();
 

@@ -16,7 +16,7 @@ import {openSettingsAndWait} from '../../utils/linking';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {useAudioPermissionModalMutation} from '../../hooks/useAudioPermissionTracker';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
-import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   title: {
@@ -60,7 +60,7 @@ export const AudioAskPermissionBottomSheet = ({
   const hasNavigatedRef = React.useRef(false);
   const {passcode} = useSecurityState();
   // this screen has no header, so we need to push the content down below the notch.
-  const {top} = usePaddingWithSafeArea();
+  const {top} = useSafeAreaInsets();
 
   // Re-check microphone permission in case it was granted via system settings,
   // and navigate to AudioRecording if so.

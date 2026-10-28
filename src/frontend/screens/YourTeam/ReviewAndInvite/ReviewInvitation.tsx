@@ -9,7 +9,7 @@ import {DeviceNameWithIcon} from '../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
 import {DeviceType, MEMBER_ROLE_ID} from '../../../sharedTypes';
 import {DeviceRole} from '../../../sharedTypes';
-import {usePaddingWithSafeArea} from '../../../hooks/usePaddingWithSafeArea';
+import {useBottomPaddingWithSafeArea} from '../../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -42,10 +42,10 @@ export const ReviewInvitation = ({
   deviceType,
 }: ReviewInvitationProps) => {
   const {formatMessage: t} = useIntl();
-  const {bottom} = usePaddingWithSafeArea();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={[styles.container, {paddingBottom: bottom}]}>
+    <View style={[styles.container, {paddingBottom}]}>
       <View
         style={{
           width: '100%',

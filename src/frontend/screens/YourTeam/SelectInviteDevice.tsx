@@ -20,7 +20,7 @@ import {
   MEMBER_ROLE_ID,
 } from '../../sharedTypes';
 import {useInitiallyConnectedPeers} from './useInitiallyConnectedPeers';
-import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 type PublicPeerInfo = Awaited<
   ReturnType<ComapeoCoreClientApi['listLocalPeers']>
@@ -70,7 +70,7 @@ export const SelectInviteDevice = ({
 }: NativeRootNavigationProps<'SelectDevice'>) => {
   const ssid = useLocalDiscoveryState(state => state.ssid);
   const {formatMessage: t} = useIntl();
-  const {bottom} = usePaddingWithSafeArea();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const availablePeers = useInitiallyConnectedPeers();
   const {projectId} = useActiveProject();
@@ -84,7 +84,7 @@ export const SelectInviteDevice = ({
 
   return (
     <ScrollView
-      contentContainerStyle={[styles.container, {paddingBottom: bottom}]}
+      contentContainerStyle={[styles.container, {paddingBottom}]}
       testID="PROJECT.select-invite-device-scrn">
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <WifiIcon style={{marginRight: 10}} width={30} height={30} />

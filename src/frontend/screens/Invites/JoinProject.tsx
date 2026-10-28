@@ -2,12 +2,16 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {useKeepAwake} from 'expo-keep-awake';
+import {ErrorBoundary} from '@sentry/react-native';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 
-import {useCancelJoinRequest, useManyJoinRequests} from '@comapeo/core-react';
-import {useJoinRequestUpdate} from '../../hooks/useInviteLinks';
+import {useCancelJoinRequest, useSingleJoinRequest} from '@comapeo/core-react';
 import {getErrorCode} from '@comapeo/core/errors.js';
-import {getJoinFailureCopy, toJoinFailureCode} from './joinFailure';
+import {
+  getJoinFailureCopy,
+  toJoinFailureCode,
+  type JoinFailureCode,
+} from './joinFailure';
 import {InviteLinkError} from '../../sharedComponents/InviteLinkError';
 import {ProjectCard} from '../../sharedComponents/ProjectCard';
 import {InviteRoleRow} from '../../sharedComponents/InviteRoleRow';
@@ -30,6 +34,7 @@ import {
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {StatusCircleIcon} from '../../sharedComponents/StatusCircleIcon';
 import SuccessCheck from '../../images/Success.svg';
+import type {ReceivedInviteLink} from '../../lib/inviteLinks';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
@@ -76,69 +81,56 @@ export function JoinProject({
   route,
   navigation,
 }: NativeRootNavigationProps<'JoinProject'>) {
-  const {formatMessage: t} = useIntl();
   const invite = route.params;
-  const {data: joinRequests} = useManyJoinRequests();
-  const update = useJoinRequestUpdate(invite.inviteIdString);
-  const {setActiveProjectId} = useActiveProjectIdActions();
-  const cancelJoinRequest = useCancelJoinRequest();
 
   usePreventBackNavigation();
   useKeepAwake();
 
   const handleClose = () => navigation.goBack();
 
+  // core drops a join request from memory as soon as it settles, so one that
+  // failed before this screen mounted can no longer be read and the query
+  // throws instead of reporting a status.
+  return (
+    <ErrorBoundary
+      fallback={() => <JoinFailure code="UNKNOWN" onClose={handleClose} />}>
+      <JoinRequestStatus invite={invite} onClose={handleClose} />
+    </ErrorBoundary>
+  );
+}
+
+function JoinRequestStatus({
+  invite,
+  onClose,
+}: {
+  invite: ReceivedInviteLink;
+  onClose: () => void;
+}) {
+  const {formatMessage: t} = useIntl();
+  const {data: joinRequest} = useSingleJoinRequest({
+    inviteId: invite.inviteIdString,
+  });
+  const {setActiveProjectId} = useActiveProjectIdActions();
+  const cancelJoinRequest = useCancelJoinRequest();
+
   // Leaving the screen does not stop the join, so the request has to be
   // cancelled explicitly or it keeps running with nothing watching it.
   const handleCancel = () =>
     cancelJoinRequest.mutate(
       {inviteId: invite.inviteIdString},
-      {onSettled: handleClose},
+      {onSettled: onClose},
     );
 
-  // The list is only the state at mount; once core reports an update it is the
-  // authority, because a settled request is no longer in the list at all.
-  const active = joinRequests.find(
-    request => request.inviteId === invite.inviteIdString,
-  );
-  const status = update?.status ?? active?.status;
-
-  const failureIcon = (copy: ReturnType<typeof getJoinFailureCopy>) => (
-    <StatusCircleIcon
-      icon={copy.icon}
-      badge={{color: WARNING_RED, name: 'priority-high'}}
-      size={100}
-    />
-  );
-
-  // Join requests only live in memory, so an app restart loses one that was
-  // still in flight and there is nothing left to report on.
-  if (!status) {
-    const copy = getJoinFailureCopy('UNKNOWN');
-    return (
-      <InviteLinkError
-        icon={failureIcon(copy)}
-        title={t(copy.title)}
-        description={copy.description && t(copy.description)}
-        onClose={handleClose}
-      />
-    );
-  }
+  const {status, projectId} = joinRequest;
 
   if (status === 'failed') {
-    const error = update?.error ?? active?.error;
-    const copy = getJoinFailureCopy(toJoinFailureCode(getErrorCode(error)));
     return (
-      <InviteLinkError
-        icon={failureIcon(copy)}
-        title={t(copy.title)}
-        description={copy.description && t(copy.description)}
-        onClose={handleClose}
+      <JoinFailure
+        code={toJoinFailureCode(getErrorCode(joinRequest.error))}
+        onClose={onClose}
       />
     );
   }
-
-  const projectId = update?.projectId ?? active?.projectId;
 
   if (status === 'completed' && projectId) {
     return (
@@ -166,7 +158,7 @@ export function JoinProject({
             text={t(m.viewProject)}
             onPress={() => setActiveProjectId(projectId)}
           />
-          <SecondaryButton fullSize text={t(m.close)} onPress={handleClose} />
+          <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
         </View>
       </View>
     );
@@ -193,6 +185,32 @@ export function JoinProject({
       isCoordinator={invite.roleId === COORDINATOR_ROLE_ID}
       isJoining={isJoining}
       onCancel={handleCancel}
+    />
+  );
+}
+
+function JoinFailure({
+  code,
+  onClose,
+}: {
+  code: JoinFailureCode;
+  onClose: () => void;
+}) {
+  const {formatMessage: t} = useIntl();
+  const copy = getJoinFailureCopy(code);
+
+  return (
+    <InviteLinkError
+      icon={
+        <StatusCircleIcon
+          icon={copy.icon}
+          badge={{color: WARNING_RED, name: 'priority-high'}}
+          size={100}
+        />
+      }
+      title={t(copy.title)}
+      description={copy.description && t(copy.description)}
+      onClose={onClose}
     />
   );
 }
@@ -231,9 +249,8 @@ function JoinProgress({
           <InviteRoleRow isCoordinator={isCoordinator} />
         </ProjectCard>
 
-        {/* Indeterminate because join-request-update we can't calculate progress yet. 
-            Swap in a real `progress` if core starts sending
-            something we can use. */}
+        {/* Indeterminate because join-request-update carries no progress we can
+            use. Swap in a real `progress` if core starts sending one. */}
         {isJoining ? (
           <View style={styles.progressContainer}>
             <MaterialIcon

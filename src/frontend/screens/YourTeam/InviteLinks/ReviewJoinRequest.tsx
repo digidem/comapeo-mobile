@@ -50,10 +50,6 @@ const m = defineMessages({
     id: 'screens.YourTeam.ReviewJoinRequest.deny',
     defaultMessage: 'Deny',
   },
-  unnamedDevice: {
-    id: 'screens.YourTeam.ReviewJoinRequest.unnamedDevice',
-    defaultMessage: 'New device',
-  },
 });
 
 export function ReviewJoinRequest({
@@ -61,16 +57,13 @@ export function ReviewJoinRequest({
   navigation,
 }: NativeRootNavigationProps<'ReviewJoinRequest'>) {
   const {formatMessage: t} = useIntl();
-  const {projectId, deviceId, inviteId} = route.params;
+  const {projectId, deviceId, inviteId, deviceName} = route.params;
   const {projectHeader: projectName, projectColor} =
     useProjectRoleAndDetails(projectId);
   const {data: inviteLinks} = useManyInviteLinks({projectId});
   const peer = useLocalPeers().find(({deviceId: id}) => id === deviceId);
 
   const roleId = inviteLinks.find(link => link.inviteId === inviteId)?.roleId;
-  // The name arrives with device info once the peer is trusted, so it can be
-  // missing for the moment between the request landing and that exchange.
-  const deviceName = peer?.name || t(m.unnamedDevice);
   const acceptJoinRequest = useAcceptInviteLinkRequest();
   const denyJoinRequest = useDenyInviteLinkRequest();
 

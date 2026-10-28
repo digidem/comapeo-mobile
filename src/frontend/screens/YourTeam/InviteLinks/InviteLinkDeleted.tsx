@@ -65,7 +65,7 @@ export function InviteLinkDeleted({
       <SecondaryButton
         fullSize
         text={t(m.returnToTeam)}
-        onPress={() => navigation.navigate('YourTeam')}
+        onPress={() => navigation.popTo('YourTeam')}
         renderIcon={({color, size}) => (
           <MaterialIcon name="people" size={size} color={color} />
         )}

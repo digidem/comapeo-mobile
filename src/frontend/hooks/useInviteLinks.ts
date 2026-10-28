@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {useClientApi} from '@comapeo/core-react';
-import type {InviteLinkJoiner} from '@comapeo/core';
 
 /** What core tells us when someone redeems one of our invite links. */
 export type ReceivedJoinRequest = {
   projectId: string;
   deviceId: string;
   inviteId: string;
+  deviceName: string;
 };
 
 /**
@@ -24,8 +24,9 @@ export function useJoinRequestReceived(): JoinRequestArrival | null {
       projectId: string,
       deviceId: string,
       inviteId: string,
+      deviceName: string,
     ) {
-      setArrival({request: {projectId, deviceId, inviteId}});
+      setArrival({request: {projectId, deviceId, inviteId, deviceName}});
     }
 
     clientApi.on('invite-link-join-request', onJoinRequest);
@@ -35,37 +36,6 @@ export function useJoinRequestReceived(): JoinRequestArrival | null {
   }, [clientApi]);
 
   return arrival;
-}
-
-/**
- * The latest status core has reported for one of our own join requests.
- *
- * core drops a join request from memory as soon as it settles, so
- * `useSingleJoinRequest` can never report `completed` or `failed` — by the time
- * the refetch lands there is nothing left to read. The event carries the
- * status, the resolved projectId and the error, so it is the only source for a
- * terminal state.
- */
-export function useJoinRequestUpdate(
-  inviteId: string,
-): InviteLinkJoiner.JoinRequestUpdate | null {
-  const clientApi = useClientApi();
-  const [update, setUpdate] =
-    React.useState<InviteLinkJoiner.JoinRequestUpdate | null>(null);
-
-  React.useEffect(() => {
-    function onUpdate(next: InviteLinkJoiner.JoinRequestUpdate) {
-      if (next.inviteId !== inviteId) return;
-      setUpdate(next);
-    }
-
-    clientApi.inviteLinks.on('join-request-update', onUpdate);
-    return () => {
-      clientApi.inviteLinks.off('join-request-update', onUpdate);
-    };
-  }, [clientApi, inviteId]);
-
-  return update;
 }
 
 /** What core tells us when an incoming redeem of one of our links fails. */

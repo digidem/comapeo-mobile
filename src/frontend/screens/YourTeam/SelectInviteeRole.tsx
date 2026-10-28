@@ -9,7 +9,9 @@ import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../sharedComponents/RoleWithIcon';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useCreateInviteLink} from '@comapeo/core-react';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {parseInviteLink} from '../../lib/inviteLinks';
+import {toError} from '../../utils/errors';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -47,20 +49,35 @@ export const SelectInviteeRole: NativeNavigationComponent<
   const createInviteLink = useCreateInviteLink();
   const {projectId} = useActiveProject();
 
-  async function selectRole(roleId: MemberApi.RoleIdForNewInvite) {
-    if (params.invitee === 'link') {
-      const url = await createInviteLink.mutateAsync({projectId, roleId});
-      const inviteLink = parseInviteLink(url);
-      if (!inviteLink)
-        throw new Error(`Could not parse new invite link: ${url}`);
+  function showError(error: unknown) {
+    navigation.navigate('ErrorBottomSheet', {
+      error: toError(error, 'Could not create the invite link'),
+    });
+  }
 
-      navigation.replace('InviteLinkReady', {
-        url,
-        inviteId: inviteLink.inviteIdString,
-        roleId: inviteLink.roleId,
-        expiresAt: inviteLink.expiresAt,
-        openedFrom: 'create',
-      });
+  function selectRole(roleId: MemberApi.RoleIdForNewInvite) {
+    if (params.invitee === 'link') {
+      createInviteLink.mutate(
+        {projectId, roleId},
+        {
+          onSuccess: url => {
+            const inviteLink = parseInviteLink(url);
+            if (!inviteLink) {
+              showError(new Error(`Could not parse new invite link: ${url}`));
+              return;
+            }
+
+            navigation.replace('InviteLinkReady', {
+              url,
+              inviteId: inviteLink.inviteIdString,
+              roleId: inviteLink.roleId,
+              expiresAt: inviteLink.expiresAt,
+              openedFrom: 'create',
+            });
+          },
+          onError: showError,
+        },
+      );
       return;
     }
 
@@ -71,6 +88,12 @@ export const SelectInviteeRole: NativeNavigationComponent<
       deviceId,
       role: roleId,
     });
+  }
+
+  // Creating a link is a round trip to the backend. Without this the role cards
+  // stay tappable and each extra tap creates another link.
+  if (createInviteLink.status === 'pending') {
+    return <FullScreenCenteredLoader />;
   }
 
   return (

@@ -1,7 +1,6 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
 import {BLACK, LIGHT_GREY, MEDIUM_GREY} from '../../lib/styles';
@@ -10,6 +9,7 @@ import {RoleWithIcon} from '../../sharedComponents/RoleWithIcon';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {usePaddingWithSafeArea} from '../../hooks/usePaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -36,9 +36,14 @@ export const SelectInviteeRole: NativeNavigationComponent<
   'SelectInviteeRole'
 > = ({route, navigation}) => {
   const {formatMessage: t} = useIntl();
+  const {bottom} = usePaddingWithSafeArea();
 
   return (
-    <ScrollView contentContainerStyle={styles.contentContainer}>
+    <ScrollView
+      contentContainerStyle={[
+        styles.contentContainer,
+        {paddingBottom: bottom},
+      ]}>
       <BodyText weight={700} variant="medium" style={styles.descriptionText}>
         {t(m.selectingDevice)}
       </BodyText>

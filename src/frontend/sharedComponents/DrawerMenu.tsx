@@ -114,7 +114,9 @@ export function DrawerMenu({closeMenu}: {closeMenu: () => void}) {
 
   return (
     <View style={[styles.container, {paddingTop: top + 20, paddingBottom}]}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView
+        bounces={false}
+        contentContainerStyle={styles.scrollContainer}>
         <View style={styles.topCardsContainer}>
           {isLow && (
             <MenuLowStorageAlert
@@ -301,6 +303,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: WHITE,
+    paddingHorizontal: 20,
   },
   scrollContainer: {
     flexGrow: 1,

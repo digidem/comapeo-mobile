@@ -8,10 +8,10 @@ import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {useCancelJoinRequest, useSingleJoinRequest} from '@comapeo/core-react';
 import {
   getJoinFailureCopy,
-  getJoinRequestErrorCode,
   toJoinFailureCode,
   type JoinFailureCode,
 } from './joinFailure';
+import {getEventErrorCode} from '../../utils/errors';
 import {InviteLinkError} from '../../sharedComponents/InviteLinkError';
 import {ProjectCard} from '../../sharedComponents/ProjectCard';
 import {InviteRoleRow} from '../../sharedComponents/InviteRoleRow';
@@ -126,7 +126,7 @@ function JoinRequestStatus({
   if (status === 'failed') {
     return (
       <JoinFailure
-        code={toJoinFailureCode(getJoinRequestErrorCode(joinRequest.error))}
+        code={toJoinFailureCode(getEventErrorCode(joinRequest.error))}
         onClose={onClose}
       />
     );

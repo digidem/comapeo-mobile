@@ -1,9 +1,11 @@
 import * as React from 'react';
+import {UnknownInviteIDRedeemAttemptError} from '@comapeo/core/errors.js';
 import {
   useJoinRequestFailed,
   useJoinRequestReceived,
 } from '../hooks/useInviteLinks';
 import {isEditingScreen, isInviteScreen} from '../lib/screenNameChecks';
+import {getEventErrorCode} from '../utils/errors';
 import type {
   FailedJoinRequestArrival,
   JoinRequestArrival,
@@ -48,6 +50,17 @@ export const PendingJoinRequestsListener = ({
     if (isEditingScreen(currentRouteName)) return;
 
     handledFailure.current = failureArrival;
+
+    // In the case where someone redeems a link we have already deleted, core denies and
+    // disconnects them on its own, so there is nothing for the coordinator to act on and
+    // nothing the coordinator did wrong so they should not see an error.
+    if (
+      getEventErrorCode(failureArrival.failure.error) ===
+      UnknownInviteIDRedeemAttemptError.code
+    ) {
+      return;
+    }
+
     navigateToJoinRequestError(failureArrival.failure.error);
   }, [failureArrival, currentRouteName, navigateToJoinRequestError]);
 

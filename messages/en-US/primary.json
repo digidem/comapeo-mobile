@@ -1,4 +1,10 @@
 {
+  "$1App.serviceNotification.body": {
+    "message": "Sync with connected devices continues in the background"
+  },
+  "$1App.serviceNotification.title": {
+    "message": "Running in the background"
+  },
   "$1Modal.GPSEnable.button.default": {
     "message": "Start Tracks"
   },
@@ -208,6 +214,12 @@
   },
   "$1allProjects.newCollab": {
     "message": "New Collaboration"
+  },
+  "$1hooks.useTracking.notificationBody": {
+    "message": "Location saved on this device. Open app to end track."
+  },
+  "$1hooks.useTracking.notificationTitle": {
+    "message": "Recording a track"
   },
   "$1screen.EditProjectDetails.navTitle": {
     "message": "Edit Info"

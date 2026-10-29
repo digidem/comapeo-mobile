@@ -26,7 +26,8 @@ import {
 import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {OnboardingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   header: {
@@ -48,8 +49,9 @@ const m = defineMessages({
   },
 });
 
-export const DeviceNaming = () => {
-  const navigation = useNavigationFromRoot();
+export const DeviceNaming = ({
+  navigation,
+}: NativeStackScreenProps<OnboardingParamsList, 'DeviceNaming'>) => {
   const [name, setName] = React.useState('');
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const {formatMessage: t} = useIntl();
@@ -77,7 +79,8 @@ export const DeviceNaming = () => {
       },
       {
         onSuccess: () => {
-          navigation.navigate('AlwaysStayNotified');
+          // Reset so that someone can't go back to the onboarding screens after saving the device name
+          navigation.reset({index: 0, routes: [{name: 'AlwaysStayNotified'}]});
         },
       },
     );

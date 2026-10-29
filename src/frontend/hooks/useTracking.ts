@@ -1,6 +1,6 @@
 import * as Location from 'expo-location';
 import {useCallback} from 'react';
-import {useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {
   useTrackActions,
   useTrackState,
@@ -13,8 +13,18 @@ import {toError} from '../utils/errors';
 import {
   hideTrackingNotification,
   showTrackingNotification,
-  trackingNotificationMessages as m,
 } from '../lib/trackingNotification';
+
+const m = defineMessages({
+  notificationTitle: {
+    id: '$1hooks.useTracking.notificationTitle',
+    defaultMessage: 'Recording a track',
+  },
+  notificationBody: {
+    id: '$1hooks.useTracking.notificationBody',
+    defaultMessage: 'Location saved on this device. Open app to end track.',
+  },
+});
 
 export function useTracking() {
   const {setTracking, addNewLocations, clearCurrentTrack} = useTrackActions();
@@ -36,8 +46,8 @@ export function useTracking() {
       distanceInterval: 1,
       // Android requires this notification and keeps it up for as long as the foreground service runs
       foregroundService: {
-        notificationTitle: formatMessage(m.title),
-        notificationBody: formatMessage(m.subtitle),
+        notificationTitle: formatMessage(m.notificationTitle),
+        notificationBody: formatMessage(m.notificationBody),
       },
     })
       .then(() => {

@@ -23,13 +23,13 @@
       [
         "react-native-vision-camera",
         {
-          "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera."
+          "cameraPermissionText": "CoMapeo can add photos to observations made."
         }
       ],
       [
         "expo-audio",
         {
-          "microphonePermission": "To record audio while using the app and in the background CoMapeo needs to access your microphone. Please enable microphone permissions in your app settings."
+          "microphonePermission": "CoMapeo can record audio while using the app to add to observations made."
         }
       ],
       [

@@ -23,11 +23,14 @@ import {
   QueryClientProvider,
   focusManager,
 } from '@tanstack/react-query';
+import {createIntl, createIntlCache, defineMessages} from 'react-intl';
 import {AppNavigator} from './AppNavigator';
 import {
   comapeo as mapeoApi,
   comapeoServicesClient,
+  setServiceNotification,
 } from '@comapeo/core-react-native';
+import {localeImports} from '../../translations/index';
 import {AppState} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import NetInfo from '@react-native-community/netinfo';
@@ -87,6 +90,39 @@ initSentry({
 const persistedLocaleStore = createLocaleStore({
   persist: true,
 });
+
+const serviceNotificationMessages = defineMessages({
+  title: {
+    id: '$1App.serviceNotification.title',
+    defaultMessage: 'Running in the background',
+  },
+  body: {
+    id: '$1App.serviceNotification.body',
+    defaultMessage: 'Sync with connected devices continues in the background',
+  },
+});
+
+// Sets the Android foreground-service notification's wording to match the
+// app's in-app language, instead of the native module's own en/es/pt
+// defaults (which follow the OS locale, not this app's language picker).
+// Deliberately a one-shot startup call rather than reactive to later in-app
+// language changes — those take effect on the next cold start.
+const {languageTag: initialLanguageTag} =
+  persistedLocaleStore.instance.getState();
+localeImports[initialLanguageTag]()
+  .then(({default: messages}) => {
+    const intl = createIntl(
+      {locale: initialLanguageTag, messages},
+      createIntlCache(),
+    );
+    return setServiceNotification({
+      title: intl.formatMessage(serviceNotificationMessages.title),
+      body: intl.formatMessage(serviceNotificationMessages.body),
+    });
+  })
+  .catch(err => {
+    Sentry.captureException(err);
+  });
 
 const mapServerApi = {
   async getBaseUrl() {
@@ -170,7 +206,8 @@ const appUsageData = new AppUsageData({
   },
 });
 
-// App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
+// The backend only picks up a change to this after a force close and reopen,
+// so on app launch we set the front end to match what the backend is actually doing.
 appUsageData.setEnabled(backendAppUsageDataEnabled);
 
 const appUsagePromptStore = createAppUsageStatsStore({
@@ -178,7 +215,7 @@ const appUsagePromptStore = createAppUsageStatsStore({
   appUsageMetricsOptIn: () => {
     postHog.optIn();
     appUsageData.setEnabled(true);
-    // Restart-to-activate: takes effect next launch, not this session.
+    // Won't take effect in the backend until a force close and reopen.
     setApplicationUsageData(true).catch(err => {
       Sentry.captureException(err);
     });
@@ -194,7 +231,8 @@ const appUsagePromptStore = createAppUsageStatsStore({
 
 const deviceDiagnostics = new DeviceDiagnostics();
 const backendDiagnosticsEnabled = getDiagnosticsEnabled();
-// App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
+// Same here: only changes in the backend after a force close and reopen,
+// so match it on app launch.
 deviceDiagnostics.setEnabled(backendDiagnosticsEnabled);
 
 const queryClient = new QueryClient();

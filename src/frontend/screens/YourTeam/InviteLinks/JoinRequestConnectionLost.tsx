@@ -1,6 +1,8 @@
 import {defineMessages, useIntl} from 'react-intl';
 
-import {InviteLinkError} from '../../../sharedComponents/InviteLinkError';
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
+import {SecondaryButton} from '../../../sharedComponents/Buttons';
 import {StatusCircleIcon} from '../../../sharedComponents/StatusCircleIcon';
 import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
 import {BLUE_GREY, WARNING_RED} from '../../../lib/styles';
@@ -17,6 +19,10 @@ const m = defineMessages({
     id: 'screens.YourTeam.JoinRequestConnectionLost.requestAgain',
     defaultMessage: 'Device can request again using the same link.',
   },
+  close: {
+    id: 'screens.YourTeam.JoinRequestConnectionLost.close',
+    defaultMessage: 'Close',
+  },
 });
 
 /** The coordinator's half of the invitee's "Connection Lost" */
@@ -27,17 +33,26 @@ export function JoinRequestConnectionLost({
   usePreventBackNavigation();
 
   return (
-    <InviteLinkError
-      icon={
-        <StatusCircleIcon
-          icon={{name: 'wifi', color: BLUE_GREY}}
-          badge={{color: WARNING_RED, name: 'priority-high'}}
-          size={ICON_SIZE}
+    <ScreenContentWithDock
+      contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+      dockContent={
+        <SecondaryButton
+          fullSize
+          text={t(m.close)}
+          onPress={() => navigation.popTo('YourTeam')}
         />
-      }
-      title={t(m.connectionLost)}
-      description={t(m.requestAgain)}
-      onClose={() => navigation.popTo('YourTeam')}
-    />
+      }>
+      <IconTitleDescription
+        icon={
+          <StatusCircleIcon
+            icon={{name: 'wifi', color: BLUE_GREY}}
+            badge={{color: WARNING_RED, name: 'priority-high'}}
+            size={ICON_SIZE}
+          />
+        }
+        title={t(m.connectionLost)}
+        description={t(m.requestAgain)}
+      />
+    </ScreenContentWithDock>
   );
 }

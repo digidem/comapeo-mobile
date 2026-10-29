@@ -17,6 +17,12 @@ export type CircleBadge = {
   name?: MaterialIconName;
 };
 
+const DEFAULT_SIZE = 80;
+const BADGE_SIZE_RATIO = 0.375;
+const ICON_SIZE_RATIO = 0.625;
+const BADGE_ICON_SIZE_RATIO = 0.75;
+const BADGE_OVERHANG = 5;
+
 /**
  * Grey circle with an icon in it and a badge overlapping the bottom
  * right, used in many of the invite link screens to show what is happening.
@@ -24,13 +30,13 @@ export type CircleBadge = {
 export function StatusCircleIcon({
   icon,
   badge,
-  size = 80,
+  size = DEFAULT_SIZE,
 }: {
   icon: CircleIcon;
   badge: CircleBadge;
   size?: number;
 }) {
-  const badgeSize = Math.round(size * 0.375);
+  const badgeSize = Math.round(size * BADGE_SIZE_RATIO);
 
   return (
     <View
@@ -40,7 +46,7 @@ export function StatusCircleIcon({
       ]}>
       <MaterialIcon
         name={icon.name}
-        size={Math.round(size * 0.625)}
+        size={Math.round(size * ICON_SIZE_RATIO)}
         color={icon.color || NEW_DARK_GREY}
         style={
           icon.rotate ? {transform: [{rotate: `${icon.rotate}deg`}]} : undefined
@@ -59,7 +65,7 @@ export function StatusCircleIcon({
         {badge.name ? (
           <MaterialIcon
             name={badge.name}
-            size={badgeSize * 0.75}
+            size={badgeSize * BADGE_ICON_SIZE_RATIO}
             color={WHITE}
           />
         ) : null}
@@ -76,8 +82,8 @@ const styles = StyleSheet.create({
   },
   badge: {
     position: 'absolute',
-    right: -5,
-    bottom: -5,
+    right: -BADGE_OVERHANG,
+    bottom: -BADGE_OVERHANG,
     alignItems: 'center',
     justifyContent: 'center',
   },

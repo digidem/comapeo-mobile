@@ -12,10 +12,10 @@ import {
   type JoinFailureCode,
 } from './joinFailure';
 import {getEventErrorCode} from '../../utils/errors';
-import {InviteLinkError} from '../../sharedComponents/InviteLinkError';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {ProjectCard} from '../../sharedComponents/ProjectCard';
 import {InviteRoleRow} from '../../sharedComponents/InviteRoleRow';
-import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {Bar as ProgressBar} from 'react-native-progress';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -36,6 +36,8 @@ import {StatusCircleIcon} from '../../sharedComponents/StatusCircleIcon';
 import SuccessCheck from '../../images/Success.svg';
 import type {ReceivedInviteLink} from '../../lib/inviteLinks';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+
+const SUCCESS_ICON_SIZE = 100;
 
 const m = defineMessages({
   connecting: {
@@ -134,33 +136,41 @@ function JoinRequestStatus({
 
   if (status === 'completed' && projectId) {
     return (
-      <View style={styles.container}>
-        <View style={styles.contentContainer}>
-          <IconTitleDescription
-            icon={<SuccessCheck width={100} height={100} />}
-            title={t(m.joined)}
-            description={
-              <FormattedMessage
-                {...m.joinedProject}
-                values={{
-                  projectName: invite.projectName,
-                  bold: (chunks: React.ReactNode) => (
-                    <HeaderText variant="header5">{chunks}</HeaderText>
-                  ),
-                }}
-              />
-            }
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton
-            fullSize
-            text={t(m.viewProject)}
-            onPress={() => setActiveProjectId(projectId)}
-          />
-          <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
-        </View>
-      </View>
+      <ScreenContentWithDock
+        contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+        dockContainerStyle={styles.buttonContainer}
+        dockContent={
+          <>
+            <PrimaryButton
+              fullSize
+              text={t(m.viewProject)}
+              onPress={() => setActiveProjectId(projectId)}
+            />
+            <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
+          </>
+        }>
+        <IconTitleDescription
+          icon={
+            <SuccessCheck
+              width={SUCCESS_ICON_SIZE}
+              height={SUCCESS_ICON_SIZE}
+            />
+          }
+          title={t(m.joined)}
+          titleVariant="header1"
+          description={
+            <FormattedMessage
+              {...m.joinedProject}
+              values={{
+                projectName: invite.projectName,
+                bold: (chunks: React.ReactNode) => (
+                  <HeaderText variant="header5">{chunks}</HeaderText>
+                ),
+              }}
+            />
+          }
+        />
+      </ScreenContentWithDock>
     );
   }
 
@@ -200,18 +210,23 @@ function JoinFailure({
   const copy = getJoinFailureCopy(code);
 
   return (
-    <InviteLinkError
-      icon={
-        <StatusCircleIcon
-          icon={copy.icon}
-          badge={{color: WARNING_RED, name: 'priority-high'}}
-          size={100}
-        />
-      }
-      title={t(copy.title)}
-      description={copy.description && t(copy.description)}
-      onClose={onClose}
-    />
+    <ScreenContentWithDock
+      contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+      dockContent={
+        <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
+      }>
+      <IconTitleDescription
+        icon={
+          <StatusCircleIcon
+            icon={copy.icon}
+            badge={{color: WARNING_RED, name: 'priority-high'}}
+            size={SUCCESS_ICON_SIZE}
+          />
+        }
+        title={t(copy.title)}
+        description={copy.description && t(copy.description)}
+      />
+    </ScreenContentWithDock>
   );
 }
 

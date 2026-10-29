@@ -1,13 +1,15 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {SecondaryButton} from '../../../sharedComponents/Buttons';
-import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import SuccessCheck from '../../../images/Success.svg';
 import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
 import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
+
+const ICON_SIZE = 100;
 
 const m = defineMessages({
   accepted: {
@@ -34,13 +36,20 @@ export function JoinRequestAccepted({
   const {deviceName, projectName} = route.params;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <SuccessCheck width={100} height={100} />
-
-        <HeaderText variant="header1">{t(m.accepted)}</HeaderText>
-
-        <BodyText style={{paddingHorizontal: 20, textAlign: 'center'}}>
+    <ScreenContentWithDock
+      contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+      dockContent={
+        <SecondaryButton
+          fullSize
+          text={t(m.close)}
+          onPress={() => navigation.popTo('YourTeam')}
+        />
+      }>
+      <IconTitleDescription
+        icon={<SuccessCheck width={ICON_SIZE} height={ICON_SIZE} />}
+        title={t(m.accepted)}
+        titleVariant="header1"
+        description={
           <FormattedMessage
             {...m.joinedProject}
             values={{
@@ -51,29 +60,8 @@ export function JoinRequestAccepted({
               ),
             }}
           />
-        </BodyText>
-      </View>
-
-      <SecondaryButton
-        fullSize
-        text={t(m.close)}
-        onPress={() => navigation.popTo('YourTeam')}
+        }
       />
-    </View>
+    </ScreenContentWithDock>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    alignItems: 'center',
-    padding: 20,
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 20,
-    paddingHorizontal: 20,
-  },
-});

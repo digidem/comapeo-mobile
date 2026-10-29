@@ -3,9 +3,9 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {SecondaryButton} from '../../../sharedComponents/Buttons';
-import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {DARK_GREEN, DARK_ORANGE, WHITE} from '../../../lib/styles';
 import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
 import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
@@ -35,48 +35,36 @@ export function JoinRequestDenied({
   usePreventBackNavigation();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <View>
-          <MaterialIcon
-            name="remove-circle-outline"
-            size={ICON_SIZE}
-            color={DARK_ORANGE}
-          />
-          <View style={styles.badge}>
-            <MaterialIcon name="check" size={24} color={WHITE} />
+    <ScreenContentWithDock
+      contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+      dockContent={
+        <SecondaryButton
+          fullSize
+          text={t(m.close)}
+          onPress={() => navigation.popTo('YourTeam')}
+        />
+      }>
+      <IconTitleDescription
+        icon={
+          <View>
+            <MaterialIcon
+              name="remove-circle-outline"
+              size={ICON_SIZE}
+              color={DARK_ORANGE}
+            />
+            <View style={styles.badge}>
+              <MaterialIcon name="check" size={24} color={WHITE} />
+            </View>
           </View>
-        </View>
-
-        <HeaderText variant="header1" style={styles.title}>
-          {t(m.denied)}
-        </HeaderText>
-
-        <BodyText style={styles.description}>{t(m.createNewLink)}</BodyText>
-      </View>
-
-      <SecondaryButton
-        fullSize
-        text={t(m.close)}
-        onPress={() => navigation.popTo('YourTeam')}
+        }
+        title={t(m.denied)}
+        description={t(m.createNewLink)}
       />
-    </View>
+    </ScreenContentWithDock>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    alignItems: 'center',
-    padding: 20,
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 20,
-    paddingHorizontal: 20,
-  },
   badge: {
     position: 'absolute',
     right: 0,
@@ -87,11 +75,5 @@ const styles = StyleSheet.create({
     backgroundColor: DARK_GREEN,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  title: {
-    textAlign: 'center',
-  },
-  description: {
-    textAlign: 'center',
   },
 });

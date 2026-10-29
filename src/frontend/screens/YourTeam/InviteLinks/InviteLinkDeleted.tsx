@@ -3,8 +3,9 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {SecondaryButton} from '../../../sharedComponents/Buttons';
-import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import TrashCan from '../../../images/TrashCan.svg';
 import {DARK_GREEN, WHITE} from '../../../lib/styles';
@@ -12,6 +13,7 @@ import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation'
 import type {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 const SHORT_ID_LENGTH = 7;
+const ICON_SIZE = 80;
 const BADGE_SIZE = 30;
 
 const m = defineMessages({
@@ -38,18 +40,30 @@ export function InviteLinkDeleted({
   const shortId = route.params.inviteId.slice(0, SHORT_ID_LENGTH);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <View>
-          <TrashCan width={80} />
-          <View style={styles.badge}>
-            <MaterialIcon name="check" size={22} color={WHITE} />
+    <ScreenContentWithDock
+      contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
+      dockContent={
+        <SecondaryButton
+          fullSize
+          text={t(m.returnToTeam)}
+          onPress={() => navigation.popTo('YourTeam')}
+          renderIcon={({color, size}) => (
+            <MaterialIcon name="people" size={size} color={color} />
+          )}
+        />
+      }>
+      <IconTitleDescription
+        icon={
+          <View>
+            <TrashCan width={ICON_SIZE} />
+            <View style={styles.badge}>
+              <MaterialIcon name="check" size={22} color={WHITE} />
+            </View>
           </View>
-        </View>
-
-        <HeaderText variant="header1">{t(m.deleted)}</HeaderText>
-
-        <BodyText style={{paddingHorizontal: 20, textAlign: 'center'}}>
+        }
+        title={t(m.deleted)}
+        titleVariant="header1"
+        description={
           <FormattedMessage
             {...m.hasBeenDeleted}
             values={{
@@ -59,33 +73,13 @@ export function InviteLinkDeleted({
               ),
             }}
           />
-        </BodyText>
-      </View>
-
-      <SecondaryButton
-        fullSize
-        text={t(m.returnToTeam)}
-        onPress={() => navigation.popTo('YourTeam')}
-        renderIcon={({color, size}) => (
-          <MaterialIcon name="people" size={size} color={color} />
-        )}
+        }
       />
-    </View>
+    </ScreenContentWithDock>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    alignItems: 'center',
-    padding: 20,
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 20,
-  },
   badge: {
     position: 'absolute',
     right: -14,

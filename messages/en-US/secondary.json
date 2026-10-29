@@ -1557,6 +1557,9 @@
   "screens.YourTeam.JoinRequestAccepted.joinedProject": {
     "message": "<bold>{deviceName}</bold> joined project <bold>{projectName}</bold>"
   },
+  "screens.YourTeam.JoinRequestConnectionLost.close": {
+    "message": "Close"
+  },
   "screens.YourTeam.JoinRequestConnectionLost.connectionLost": {
     "message": "Requesting Device Lost Connection"
   },
@@ -1606,9 +1609,6 @@
   },
   "sharedComponents.ErrorBottomSheet.advanced": {
     "message": "Advanced"
-  },
-  "sharedComponents.InviteLinkError.close": {
-    "message": "Close"
   },
   "sharedComponents.InviteRoleRow.coordinator": {
     "message": "Coordinator"

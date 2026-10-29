@@ -9,13 +9,14 @@ import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
-import {WHITE, DARK_GREEN, NEW_DARK_GREY} from '../../lib/styles';
+import {BLACK, WHITE, DARK_GREEN, NEW_DARK_GREY} from '../../lib/styles';
 import {useCreateProject, useOwnDeviceInfo} from '@comapeo/core-react';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import AntDesign from '@react-native-vector-icons/ant-design';
 import TracksIcon from '../../images/Tracks.svg';
 import {usePreventRemove} from '@react-navigation/native';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 const m = defineMessages({
@@ -55,6 +56,7 @@ export const Success = ({
 
   // Prevent navigating away during loading, but allow programmatic navigation
   usePreventRemove(status === 'pending', () => {});
+  usePreventBackNavigation();
 
   function handleGoToMap() {
     createProject(undefined, {
@@ -113,7 +115,7 @@ export const Success = ({
         />
         <BulletListItem
           text={formatMessage(m.tracks)}
-          Icon={<TracksIcon height={26} />}
+          Icon={<TracksIcon fill={BLACK} height={26} />}
         />
       </View>
     </ScreenContentWithDock>

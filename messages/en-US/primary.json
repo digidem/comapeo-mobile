@@ -821,6 +821,9 @@
   "$1screens.ShareProjectStats.yesShare": {
     "message": "Yes, Share Stats"
   },
+  "$1screens.StayNotified.StayNotified": {
+    "message": "Always Stay Notified"
+  },
   "$1screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Close"
   },

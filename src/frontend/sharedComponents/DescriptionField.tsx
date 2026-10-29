@@ -1,8 +1,9 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../lib/styles';
 import {useKeyboardListener} from '../hooks/useKeyboardListener';
+import {BodyText} from './Text/BodyText';
 
 const m = defineMessages({
   descriptionPlaceholder: {
@@ -26,7 +27,9 @@ export const DescriptionField = ({
     <View style={styles.container}>
       {keyboardVisible && (
         <View style={styles.labelContainer}>
-          <Text style={styles.labelText}>{t(m.descriptionPlaceholder)}</Text>
+          <BodyText variant="smallMeta" style={styles.labelText}>
+            {t(m.descriptionPlaceholder)}
+          </BodyText>
         </View>
       )}
       <TextInput
@@ -56,8 +59,6 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   labelText: {
-    fontSize: 14,
-    fontFamily: 'Rubik',
     color: NEW_DARK_GREY,
   },
 

@@ -24,8 +24,10 @@ describe('Observation - Metadata View Flow', () => {
   });
 
   it('should view metadata via GPS bubble tap on map', async () => {
-    const gpsBubble = await $('~Open observation metadata via map pin');
-    await gpsBubble.click();
+    // MapLibre 11 hides Marker content from the Android accessibility tree.
+    // The pin always sits at the map's centre, which is where click() taps.
+    const insetMap = await $(byResourceId('OBS.inset-map'));
+    await insetMap.click();
 
     await expect($(byTextMatches('Observation Metadata'))).toBeDisplayed();
     await expect($(byTextMatches('Accuracy'))).toBeDisplayed();

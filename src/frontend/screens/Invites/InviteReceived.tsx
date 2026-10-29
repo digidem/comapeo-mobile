@@ -149,7 +149,7 @@ export const InviteReceived = ({
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
-        <BodyText variant="tinyMeta" style={styles.invitedLabel}>
+        <BodyText weight={500} variant="tinyMeta" style={styles.invitedLabel}>
           {formatMessage(m.invitedToJoin)}
         </BodyText>
 
@@ -211,7 +211,6 @@ const styles = StyleSheet.create({
   },
   invitedLabel: {
     textTransform: 'uppercase',
-    fontWeight: '500',
     alignSelf: 'stretch',
     color: BLACK,
   },

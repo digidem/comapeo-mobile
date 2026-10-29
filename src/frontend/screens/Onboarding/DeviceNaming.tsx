@@ -26,7 +26,8 @@ import {
 import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import RNRestart from 'react-native-restart';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {OnboardingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   header: {
@@ -48,7 +49,9 @@ const m = defineMessages({
   },
 });
 
-export const DeviceNaming = () => {
+export const DeviceNaming = ({
+  navigation,
+}: NativeStackScreenProps<OnboardingParamsList, 'DeviceNaming'>) => {
   const [name, setName] = React.useState('');
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const {formatMessage: t} = useIntl();
@@ -76,13 +79,8 @@ export const DeviceNaming = () => {
       },
       {
         onSuccess: () => {
-          // Always restart the app here
-          // If the user has toggled off diagnosticEnabled in `OnboardingPrivacyPolicy`
-          // the app need to restart for sending diagnostic to be disabled in the backend.
-          // This guarantees that app restart, while still navigating the user to the
-          // `Success` screen after it has restart - as the navigation sets
-          // the default screen to the success screen when the user has a name set
-          RNRestart.restart();
+          // Reset so that someone can't go back to the onboarding screens after saving the device name
+          navigation.reset({index: 0, routes: [{name: 'Success'}]});
         },
       },
     );
@@ -200,6 +198,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     color: BLACK,
     fontSize: 16,
+    minHeight: 56,
     paddingHorizontal: 16,
   },
   counterText: {

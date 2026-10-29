@@ -15,18 +15,29 @@
     },
     "plugins": [
       "expo-system-ui",
-      "expo-audio",
       "expo-localization",
       "expo-secure-store",
       "expo-document-picker",
       "react-native-vision-camera",
       ["@maplibre/maplibre-react-native"],
       [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "CoMapeo can add photos to observations made."
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "CoMapeo can record audio while using the app to add to observations made."
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/splash.png",
-          "backgroundColor": "#3333FF",
-          "imageWidth": 300,
+          "backgroundColor": "#0332AD",
+          "imageWidth": 184,
           "android": {
             "resizeMode": "contain"
           },
@@ -40,7 +51,8 @@
         {
           "isAndroidForegroundServiceEnabled": true,
           "isIosBackgroundLocationEnabled": true,
-          "locationPermission": "Allow $(PRODUCT_NAME) to use location?"
+          "locationWhenInUsePermission": "CoMapeo records GPS location for each observation made to accurately display it on the map.",
+          "locationAlwaysAndWhenInUsePermission": "CoMapeo keeps recording GPS location in the background for each track started including when the screen is off."
         }
       ],
       [
@@ -58,7 +70,7 @@
           "fonts": [
             "node_modules/@expo-google-fonts/rubik/400Regular/Rubik_400Regular.ttf",
             "node_modules/@expo-google-fonts/rubik/500Medium/Rubik_500Medium.ttf",
-            "node_modules/@expo-google-fonts/rubik/600SemiBold/Rubik_600SemiBold.ttf"
+            "node_modules/@expo-google-fonts/rubik/700Bold/Rubik_700Bold.ttf"
           ]
         }
       ],
@@ -74,6 +86,7 @@
       ["./expo-config-plugins/targetArmArchsOnly.js"],
       ["./expo-config-plugins/increaseJavaMemory.js"],
       ["./expo-config-plugins/flagSecure/index.js"],
+      ["./expo-config-plugins/disableLocationNotificationBadge.js"],
       ["./expo-config-plugins/customPermissionText.js"],
       ["./expo-config-plugins/removeMediaPlaybackPermission.js"],
       ["./expo-config-plugins/mergeBackupRules.js"],

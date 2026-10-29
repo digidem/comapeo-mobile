@@ -2,7 +2,7 @@
   "cli": {
     "version": ">= 7.8.0",
     "appVersionSource": "remote",
-    "requireCommit": true
+    "requireCommit": false
   },
   "build": {
     "base": {
@@ -11,7 +11,7 @@
         "node": "24.13.0"
       },
       "ios": {
-        "image": "latest",
+        "image": "macos-tahoe-26.5-xcode-26.6",
         "node": "24.13.0"
       }
     },
@@ -60,6 +60,9 @@
       "android": {
         "track": "production",
         "releaseStatus": "completed"
+      },
+      "ios": {
+        "ascAppId": "6752997539"
       }
     }
   }

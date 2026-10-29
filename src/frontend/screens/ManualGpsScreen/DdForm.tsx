@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 
-import {Text} from '../../sharedComponents/Text';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {Select} from '../../sharedComponents/Select';
 import {BLACK, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 import {
@@ -174,9 +174,9 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     <View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <Text style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.latitude} />
-          </Text>
+          </HeaderText>
           <TextInput
             accessibilityLabel={t(m.latInputLabel)}
             keyboardType="decimal-pad"
@@ -204,9 +204,9 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
       </View>
       <View style={styles.row}>
         <View style={styles.column}>
-          <Text style={styles.inputLabel}>
+          <HeaderText weight={700} variant="header5" style={styles.inputLabel}>
             <FormattedMessage {...m.longitude} />
-          </Text>
+          </HeaderText>
           <TextInput
             accessibilityLabel={t(m.lonInputLabel)}
             keyboardType="decimal-pad"
@@ -238,7 +238,6 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
 
 const styles = StyleSheet.create({
   inputLabel: {
-    fontWeight: 'bold',
     color: BLACK,
   },
   input: {

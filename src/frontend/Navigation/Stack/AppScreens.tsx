@@ -27,6 +27,14 @@ import {YourTeam} from '../../screens/YourTeam';
 import {SelectInviteDevice} from '../../screens/YourTeam/SelectInviteDevice';
 import {SelectMapShareDevice} from '../../screens/BackgroundMaps/SelectMapShareDevice';
 import {SelectInviteeRole} from '../../screens/YourTeam/SelectInviteeRole';
+import {InviteLinkIntro} from '../../screens/YourTeam/InviteLinks/InviteLinkIntro';
+import {InviteLinkReady} from '../../screens/YourTeam/InviteLinks/InviteLinkReady';
+import {DeleteInviteLink} from '../../screens/YourTeam/InviteLinks/DeleteInviteLink';
+import {InviteLinkDeleted} from '../../screens/YourTeam/InviteLinks/InviteLinkDeleted';
+import {ReviewJoinRequest} from '../../screens/YourTeam/InviteLinks/ReviewJoinRequest';
+import {JoinRequestAccepted} from '../../screens/YourTeam/InviteLinks/JoinRequestAccepted';
+import {JoinRequestDenied} from '../../screens/YourTeam/InviteLinks/JoinRequestDenied';
+import {JoinRequestConnectionLost} from '../../screens/YourTeam/InviteLinks/JoinRequestConnectionLost';
 import {ReviewInvitation} from '../../screens/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/YourTeam/InviteAccepted';
 import {ReviewAndInvite} from '../../screens/YourTeam/ReviewAndInvite';
@@ -279,6 +287,39 @@ export const createAppScreens = ({
         name="SelectInviteeRole"
         component={SelectInviteeRole}
         options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
+      />
+      <RootStack.Screen
+        name="InviteLinkIntro"
+        component={InviteLinkIntro}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="InviteLinkReady"
+        component={InviteLinkReady}
+        options={({route}) => ({
+          headerShown: route.params.openedFrom === 'team',
+          headerTitle: intl(InviteLinkReady.navTitle),
+        })}
+      />
+      <RootStack.Screen
+        name="JoinRequestAccepted"
+        component={JoinRequestAccepted}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="JoinRequestDenied"
+        component={JoinRequestDenied}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="JoinRequestConnectionLost"
+        component={JoinRequestConnectionLost}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="InviteLinkDeleted"
+        component={InviteLinkDeleted}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="ReviewAndInvite"
@@ -577,6 +618,11 @@ export const createAppScreens = ({
         name="ExchangeSettingsBottomSheet"
         component={ExchangeSettingsBottomSheet}
       />
+      <RootStack.Screen
+        name="ReviewJoinRequest"
+        component={ReviewJoinRequest}
+      />
+      <RootStack.Screen name="DeleteInviteLink" component={DeleteInviteLink} />
       <RootStack.Screen
         name="AudioAskPermissionBottomSheet"
         component={AudioAskPermissionBottomSheet}

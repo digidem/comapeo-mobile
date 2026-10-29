@@ -205,6 +205,15 @@
   "constants.red": {
     "message": "Red"
   },
+  "hooks.useTimeRemaining.hours": {
+    "message": "{value, plural, one {# hour} other {# hours}}"
+  },
+  "hooks.useTimeRemaining.minutes": {
+    "message": "{value, plural, one {# minute} other {# minutes}}"
+  },
+  "hooks.useTimeRemaining.seconds": {
+    "message": "{value, plural, one {# second} other {# seconds}}"
+  },
   "lib.intl.calendarDay.friday": {
     "message": "Friday"
   },
@@ -310,6 +319,9 @@
   "screen.EditProjectDetails.projectColors": {
     "message": "Project Card Colors"
   },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.connected": {
+    "message": "Connected:"
+  },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "As a Coordinator this device can invite and remove users, and manage project details."
   },
@@ -318,6 +330,9 @@
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice": {
     "message": "You are selecting a role for this device:"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingForLink": {
+    "message": "Select a role for this Invite Link"
   },
   "screens.AboutSettings.CoMapeoBuild": {
     "message": "CoMapeo build",
@@ -644,6 +659,78 @@
   },
   "screens.InviteSuccess.youHaveJoined": {
     "message": "You have joined {projectName}"
+  },
+  "screens.Invites.JoinProject.alreadyJoinedDescription": {
+    "message": "This device has already joined this project."
+  },
+  "screens.Invites.JoinProject.alreadyJoinedTitle": {
+    "message": "Already a member"
+  },
+  "screens.Invites.JoinProject.beingReviewed": {
+    "message": "Request being reviewed..."
+  },
+  "screens.Invites.JoinProject.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Invites.JoinProject.canceledTitle": {
+    "message": "Request Canceled"
+  },
+  "screens.Invites.JoinProject.close": {
+    "message": "Close"
+  },
+  "screens.Invites.JoinProject.connecting": {
+    "message": "Connecting to Project Coordinator..."
+  },
+  "screens.Invites.JoinProject.connectionLostDescription": {
+    "message": "Use same link to request again."
+  },
+  "screens.Invites.JoinProject.connectionLostTitle": {
+    "message": "Connection Lost"
+  },
+  "screens.Invites.JoinProject.deniedDescription": {
+    "message": "Coordinate with team for a new Invite Link"
+  },
+  "screens.Invites.JoinProject.deniedTitle": {
+    "message": "Request Denied"
+  },
+  "screens.Invites.JoinProject.expiredDescription": {
+    "message": "Coordinate with team for a new Invite Link"
+  },
+  "screens.Invites.JoinProject.expiredTitle": {
+    "message": "Link has expired."
+  },
+  "screens.Invites.JoinProject.failedToConnectTitle": {
+    "message": "Failed to connect."
+  },
+  "screens.Invites.JoinProject.joined": {
+    "message": "Joined!"
+  },
+  "screens.Invites.JoinProject.joinedProject": {
+    "message": "This device joined project <bold>{projectName}</bold>"
+  },
+  "screens.Invites.JoinProject.keepOpen": {
+    "message": "Both Coordinator and Invited Device must keep CoMapeo open until the request is approved."
+  },
+  "screens.Invites.JoinProject.nowJoining": {
+    "message": "Request accepted, now joining..."
+  },
+  "screens.Invites.JoinProject.unknownDescription": {
+    "message": "Coordinate with team for a new Invite Link"
+  },
+  "screens.Invites.JoinProject.unknownTitle": {
+    "message": "Something went wrong"
+  },
+  "screens.Invites.JoinProject.viewProject": {
+    "message": "View Project"
+  },
+  "screens.Invites.RequestToJoin.close": {
+    "message": "Close"
+  },
+  "screens.Invites.RequestToJoin.receivedLinkTo": {
+    "message": "You've received a link to..."
+  },
+  "screens.Invites.RequestToJoin.requestToJoin": {
+    "message": "Request to Join"
   },
   "screens.LeaveProject.leaveProjectDescriptionCoordinator": {
     "message": "This device will no longer be able to view, contribute to, or adjust the project {projectName}."
@@ -1120,6 +1207,9 @@
   "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
     "message": "Can invite devices, edit and delete data, and manage project details."
   },
+  "screens.Setting.ProjectSettings.YourTeam.inviteLinks": {
+    "message": "Invite Links"
+  },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Can take and share observations but not manage users or project details."
   },
@@ -1374,6 +1464,18 @@
   "screens.TrackRecordingActive.warningMessage": {
     "message": "Tracks is recording. Stop Tracks to continue."
   },
+  "screens.YourTeam.DeleteInviteLink.cancel": {
+    "message": "Cancel"
+  },
+  "screens.YourTeam.DeleteInviteLink.confirm": {
+    "message": "Yes, Delete"
+  },
+  "screens.YourTeam.DeleteInviteLink.description": {
+    "message": "This link will no longer work for new devices joining the project."
+  },
+  "screens.YourTeam.DeleteInviteLink.title": {
+    "message": "Delete Invite Link?"
+  },
   "screens.YourTeam.DeviceRemovedSuccess.deviceRemoved": {
     "message": "Device removed."
   },
@@ -1383,8 +1485,107 @@
   "screens.YourTeam.DeviceRemovedSuccess.returnToTeam": {
     "message": "Return to Team"
   },
+  "screens.YourTeam.InviteLinkCard.coordinator": {
+    "message": "Coordinator"
+  },
+  "screens.YourTeam.InviteLinkCard.meta": {
+    "message": "{role} - {timeRemaining} left"
+  },
+  "screens.YourTeam.InviteLinkCard.name": {
+    "message": "Invite {shortId}"
+  },
+  "screens.YourTeam.InviteLinkCard.participant": {
+    "message": "Participant"
+  },
+  "screens.YourTeam.InviteLinkDeleted.deleted": {
+    "message": "Deleted"
+  },
+  "screens.YourTeam.InviteLinkDeleted.hasBeenDeleted": {
+    "message": "<bold>Invite {shortId}</bold> has been deleted."
+  },
+  "screens.YourTeam.InviteLinkDeleted.returnToTeam": {
+    "message": "Return to Team"
+  },
+  "screens.YourTeam.InviteLinkIntro.close": {
+    "message": "Close"
+  },
+  "screens.YourTeam.InviteLinkIntro.continue": {
+    "message": "Continue"
+  },
+  "screens.YourTeam.InviteLinkIntro.description": {
+    "message": "Easily invite remote devices using an internet connection"
+  },
+  "screens.YourTeam.InviteLinkIntro.multipleUses": {
+    "message": "Can be used multiple times"
+  },
+  "screens.YourTeam.InviteLinkIntro.secure": {
+    "message": "Private, secure, shareable links"
+  },
+  "screens.YourTeam.InviteLinkIntro.title": {
+    "message": "Introducing Invite Links"
+  },
+  "screens.YourTeam.InviteLinkIntro.validFor": {
+    "message": "Valid for 24 hours"
+  },
+  "screens.YourTeam.InviteLinkReady.deleteLink": {
+    "message": "Delete Invite Link"
+  },
+  "screens.YourTeam.InviteLinkReady.expiresIn": {
+    "message": "Expires in {timeRemaining}"
+  },
+  "screens.YourTeam.InviteLinkReady.keepOpen": {
+    "message": "Keep app open to approve requests."
+  },
+  "screens.YourTeam.InviteLinkReady.navTitle": {
+    "message": "Invite Link"
+  },
+  "screens.YourTeam.InviteLinkReady.readyToShare": {
+    "message": "Invite {shortId} ready to share!"
+  },
+  "screens.YourTeam.InviteLinkReady.returnToTeam": {
+    "message": "Return to Team"
+  },
+  "screens.YourTeam.InviteLinkReady.share": {
+    "message": "Share"
+  },
+  "screens.YourTeam.JoinRequestAccepted.accepted": {
+    "message": "Accepted!"
+  },
+  "screens.YourTeam.JoinRequestAccepted.close": {
+    "message": "Close"
+  },
+  "screens.YourTeam.JoinRequestAccepted.joinedProject": {
+    "message": "<bold>{deviceName}</bold> joined project <bold>{projectName}</bold>"
+  },
+  "screens.YourTeam.JoinRequestConnectionLost.close": {
+    "message": "Close"
+  },
+  "screens.YourTeam.JoinRequestConnectionLost.connectionLost": {
+    "message": "Requesting Device Lost Connection"
+  },
+  "screens.YourTeam.JoinRequestConnectionLost.requestAgain": {
+    "message": "Device can request again using the same link."
+  },
+  "screens.YourTeam.JoinRequestDenied.close": {
+    "message": "Close"
+  },
+  "screens.YourTeam.JoinRequestDenied.createNewLink": {
+    "message": "Create a new Invite Link to re-invite a device"
+  },
+  "screens.YourTeam.JoinRequestDenied.denied": {
+    "message": "Request Denied"
+  },
   "screens.YourTeam.RemoveDevice.reasonLabel": {
     "message": "Reason for removal?"
+  },
+  "screens.YourTeam.ReviewJoinRequest.accept": {
+    "message": "Accept"
+  },
+  "screens.YourTeam.ReviewJoinRequest.deny": {
+    "message": "Deny"
+  },
+  "screens.YourTeam.ReviewJoinRequest.requestingToJoin": {
+    "message": "Requesting to join..."
   },
   "screens.YourTeam.TeamMemberCard.thisDevice": {
     "message": "This device"
@@ -1408,6 +1609,12 @@
   },
   "sharedComponents.ErrorBottomSheet.advanced": {
     "message": "Advanced"
+  },
+  "sharedComponents.InviteRoleRow.coordinator": {
+    "message": "Coordinator"
+  },
+  "sharedComponents.InviteRoleRow.participant": {
+    "message": "Participant"
   },
   "sharedComponents.PermissionButtons.allow": {
     "message": "Allow"

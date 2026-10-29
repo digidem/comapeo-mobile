@@ -1,24 +1,33 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
+import type {MemberApi} from '@comapeo/core';
 
 import {BLACK, LIGHT_GREY, MEDIUM_GREY} from '../../lib/styles';
 import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../sharedComponents/RoleWithIcon';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {useCreateInviteLink} from '@comapeo/core-react';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
+import {parseInviteLink} from '../../lib/inviteLinks';
+import {toError} from '../../utils/errors';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
     id: '$1screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title',
-    defaultMessage: 'Select a Role',
+    defaultMessage: 'Select Device Role',
   },
   selectingDevice: {
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice',
     defaultMessage: 'You are selecting a role for this device:',
+  },
+  selectingForLink: {
+    id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingForLink',
+    defaultMessage: 'Select a role for this Invite Link',
   },
   participantDescription: {
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.participantDescription',
@@ -36,64 +45,111 @@ export const SelectInviteeRole: NativeNavigationComponent<
   'SelectInviteeRole'
 > = ({route, navigation}) => {
   const {formatMessage: t} = useIntl();
+  const params = route.params;
+  const createInviteLink = useCreateInviteLink();
+  const {projectId} = useActiveProject();
+
+  function showError(error: unknown) {
+    navigation.navigate('ErrorBottomSheet', {
+      error: toError(error, 'Could not create the invite link'),
+    });
+  }
+
+  function selectRole(roleId: MemberApi.RoleIdForNewInvite) {
+    if (params.invitee === 'link') {
+      createInviteLink.mutate(
+        {projectId, roleId},
+        {
+          onSuccess: url => {
+            const inviteLink = parseInviteLink(url);
+            if (!inviteLink) {
+              showError(new Error(`Could not parse new invite link: ${url}`));
+              return;
+            }
+
+            navigation.replace('InviteLinkReady', {
+              url,
+              inviteId: inviteLink.inviteIdString,
+              roleId: inviteLink.roleId,
+              expiresAt: inviteLink.expiresAt,
+              openedFrom: 'create',
+            });
+          },
+          onError: showError,
+        },
+      );
+      return;
+    }
+
+    const {name, deviceType, deviceId} = params;
+    navigation.navigate('ReviewAndInvite', {
+      name,
+      deviceType,
+      deviceId,
+      role: roleId,
+    });
+  }
+
+  // Creating a link is a round trip to the backend. Without this the role cards
+  // stay tappable and each extra tap creates another link.
+  if (createInviteLink.status === 'pending') {
+    return <FullScreenCenteredLoader />;
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <BodyText weight={700} variant="medium" style={styles.descriptionText}>
-        {t(m.selectingDevice)}
-      </BodyText>
+      {params.invitee === 'link' ? (
+        <BodyText variant="medium" style={styles.linkPrompt}>
+          {t(m.selectingForLink)}
+        </BodyText>
+      ) : (
+        <BodyText weight={700} variant="medium" style={styles.devicePrompt}>
+          {t(m.selectingDevice)}
+        </BodyText>
+      )}
 
-      <DeviceNameWithIcon {...route.params} />
+      {params.invitee === 'device' ? <DeviceNameWithIcon {...params} /> : null}
 
       <View style={styles.roleOptionsContainer}>
         <RoleCard
           role="participant"
-          onPress={() =>
-            navigation.navigate('ReviewAndInvite', {
-              ...route.params,
-              role: MEMBER_ROLE_ID,
-            })
-          }
+          description={t(m.participantDescription)}
+          onPress={() => selectRole(MEMBER_ROLE_ID)}
         />
         <RoleCard
           role="coordinator"
-          onPress={() =>
-            navigation.navigate('ReviewAndInvite', {
-              ...route.params,
-              role: COORDINATOR_ROLE_ID,
-            })
-          }
+          description={t(m.coordinatorDescription)}
+          onPress={() => selectRole(COORDINATOR_ROLE_ID)}
         />
       </View>
     </ScrollView>
   );
 };
 
-type RoleCardProps = {
+function RoleCard({
+  role,
+  description,
+  onPress,
+}: {
   role: 'participant' | 'coordinator';
+  description: string;
   onPress: () => void;
-};
-
-const RoleCard = ({role, onPress}: RoleCardProps) => {
-  const {formatMessage} = useIntl();
+}) {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.roleCardContentContainer}>
-        <MaterialIcon name="radio-button-off" size={24} color={MEDIUM_GREY} />
-        <View style={styles.flex}>
-          <RoleWithIcon role={role} />
-          <BodyText style={{color: BLACK}}>
-            {formatMessage(
-              role === 'coordinator'
-                ? m.coordinatorDescription
-                : m.participantDescription,
-            )}
-          </BodyText>
-        </View>
+    <Pressable
+      onPress={onPress}
+      style={({pressed}) => [
+        styles.roleCardContentContainer,
+        pressed && styles.pressed,
+      ]}>
+      <MaterialIcon name="radio-button-off" size={24} color={MEDIUM_GREY} />
+      <View style={styles.flex}>
+        <RoleWithIcon role={role} />
+        <BodyText style={styles.roleDescription}>{description}</BodyText>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
-};
+}
 
 SelectInviteeRole.navTitle = m.title;
 
@@ -103,7 +159,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     gap: 40,
   },
-  descriptionText: {
+  linkPrompt: {
+    textAlign: 'center',
+  },
+  devicePrompt: {
+    color: BLACK,
+  },
+  roleDescription: {
     color: BLACK,
   },
   roleOptionsContainer: {
@@ -120,5 +182,8 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
+  },
+  pressed: {
+    opacity: 0.7,
   },
 });

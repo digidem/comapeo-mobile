@@ -49,6 +49,11 @@ export const ProjectCreated = ({
     navigation.popToTop();
   }
   function handleGoToInviteScreen() {
+    // The invite flow ends by returning to Team, so Team has to be underneath
+    // it. Without this the whole project creation flow stays on the stack and
+    // going back walks through screens that no longer make sense.
+    navigation.popToTop();
+    navigation.navigate('YourTeam');
     navigation.navigate('SelectDevice');
   }
 

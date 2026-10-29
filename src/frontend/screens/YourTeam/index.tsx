@@ -10,15 +10,21 @@ import {
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
-import {BLACK, NEW_DARK_GREY} from '../../lib/styles';
+import {BLACK, DARK_GREY, NEW_DARK_GREY} from '../../lib/styles';
 import {TeamMemberCard} from './TeamMemberCard';
-import {useOwnDeviceInfo, useManyMembers} from '@comapeo/core-react';
+import {
+  useOwnDeviceInfo,
+  useManyMembers,
+  useManyInviteLinks,
+} from '@comapeo/core-react';
 import InactivePersonIcon from '../../images/NoPeople.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
+import {LinkIcon} from '../../sharedComponents/LinkIcon';
+import {InviteLinkCard} from './InviteLinks/InviteLinkCard';
 
 const m = defineMessages({
   title: {
@@ -47,6 +53,10 @@ const m = defineMessages({
     defaultMessage:
       'Can take and share observations but not manage users or project details.',
   },
+  inviteLinks: {
+    id: 'screens.Setting.ProjectSettings.YourTeam.inviteLinks',
+    defaultMessage: 'Invite Links',
+  },
   pastCollaborators: {
     id: '$1screens.Setting.ProjectSettings.YourTeam.pastCollaborators',
     defaultMessage: 'Past Collaborators',
@@ -66,6 +76,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const {formatMessage: t} = useIntl();
   const {projectId} = useActiveProject();
   const membersQuery = useManyMembers({projectId, includeLeft: true});
+  const {data: inviteLinks} = useManyInviteLinks({projectId});
   const {data: deviceInfo} = useOwnDeviceInfo();
 
   const coordinators = membersQuery.data.filter(member =>
@@ -98,6 +109,27 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           )}
           text={t(m.inviteDevice)}
         />
+      )}
+
+      {inviteLinks.length === 0 ? null : (
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <LinkIcon size={32} color={DARK_GREY} />
+            <HeaderText variant="header5">{t(m.inviteLinks)}</HeaderText>
+          </View>
+          {inviteLinks.map(inviteLink => (
+            <InviteLinkCard
+              key={inviteLink.inviteId}
+              inviteLink={inviteLink}
+              onPress={() =>
+                navigation.navigate('InviteLinkReady', {
+                  ...inviteLink,
+                  openedFrom: 'team',
+                })
+              }
+            />
+          ))}
+        </View>
       )}
 
       <View style={styles.section}>

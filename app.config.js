@@ -27,7 +27,8 @@ validateAppVersion(APP_VERSION);
 // These constants define the suffixes used for the app name, the app ID (bundle
 // identifier/package name), and the version pre-release suffix based on the
 // APP_VARIANT.
-const APP_ID_BASE = 'com.comapeo';
+const ANDROID_APP_ID_BASE = 'com.comapeo';
+const IOS_APP_ID_BASE = 'app.comapeo';
 const VARIANT_TO_APP_ID_SUFFIX =
   /** @satisfies {Record<AppVariant, string>} */ ({
     development: '.dev',
@@ -50,8 +51,11 @@ const VARIANT_TO_VERSION_PRE_RELEASE =
     releaseCandidate: '-rc',
     preRelease: '-pre',
   });
-const APP_ID = /** @type {const} */ (
-  `${APP_ID_BASE}${VARIANT_TO_APP_ID_SUFFIX[APP_VARIANT]}`
+const ANDROID_APP_ID = /** @type {const} */ (
+  `${ANDROID_APP_ID_BASE}${VARIANT_TO_APP_ID_SUFFIX[APP_VARIANT]}`
+);
+const IOS_APP_ID = /** @type {const} */ (
+  `${IOS_APP_ID_BASE}${VARIANT_TO_APP_ID_SUFFIX[APP_VARIANT]}`
 );
 const APP_NAME = /** @type {const} */ (
   `${APP_NAME_BASE}${VARIANT_TO_APP_NAME_SUFFIX[APP_VARIANT]}`
@@ -114,11 +118,11 @@ module.exports = ({config}) => {
     name: APP_NAME,
     ios: {
       ...config.ios,
-      bundleIdentifier: APP_ID,
+      bundleIdentifier: IOS_APP_ID,
     },
     android: {
       ...config.android,
-      package: APP_ID,
+      package: ANDROID_APP_ID,
       googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     },
     updates: {

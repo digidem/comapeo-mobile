@@ -6,7 +6,7 @@ import {ViewStyleProp} from '../sharedTypes';
 
 type ButtonProps = {
   renderIcon?: (props: {color: string; size: number}) => React.ReactNode;
-  iconPosition?: 'left' | 'right';
+  iconPosition?: 'left' | 'right' | 'leftEdge';
   fullSize: boolean;
   text: string;
   onPress: () => void;
@@ -49,6 +49,11 @@ const BaseButton = ({
         fullSize && {width: 280},
       ]}
       onPress={onPress}>
+      {renderIcon && iconPosition === 'leftEdge' && (
+        <View style={buttonStyles.iconLeftEdge}>
+          {renderIcon({color: colors.icon, size: 25})}
+        </View>
+      )}
       {renderIcon && iconPosition === 'left' && (
         <View style={buttonStyles.iconSpacingLeft}>
           {renderIcon({color: colors.icon, size: 25})}
@@ -163,6 +168,10 @@ export const buttonStyles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 30,
     overflow: 'hidden',
+  },
+  iconLeftEdge: {
+    position: 'absolute',
+    left: 30,
   },
   iconSpacingLeft: {
     marginRight: 10,

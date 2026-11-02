@@ -1,6 +1,7 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 import {useTracking} from '../../../hooks/useTracking.ts';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
@@ -12,19 +13,22 @@ import {
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
 import {usePresetsQuery} from '../../../hooks/server/presets';
 import {useTrackState} from '../../../contexts/TrackStoreContext.tsx';
+import {DARK_GREY} from '../../../lib/styles.ts';
+
+const STATUS_ICON_SIZE = 24;
 
 const m = defineMessages({
-  defaultButtonText: {
-    id: '$1Modal.GPSEnable.button.default',
-    defaultMessage: 'Start Tracks',
+  start: {
+    id: '$1TrackBottomSheet.StartStopTrack.start',
+    defaultMessage: 'Start',
   },
-  stopButtonText: {
-    id: '$1Modal.GPSEnable.button.stop',
-    defaultMessage: 'Stop Tracks',
+  end: {
+    id: '$1TrackBottomSheet.StartStopTrack.end',
+    defaultMessage: 'End',
   },
-  trackingRequirement: {
-    id: '$1TrackBottomSheet.StartStopTrack.trackingRequirement',
-    defaultMessage: 'Move one meter to see track.',
+  recording: {
+    id: '$1TrackBottomSheet.StartStopTrack.recording',
+    defaultMessage: 'Recording…',
   },
   readyToRecord: {
     id: 'TrackBottomSheet.StartStopTrack.readyToRecord',
@@ -70,24 +74,42 @@ export const StartStopTrack = () => {
     <View style={{alignItems: 'center', flex: 1}}>
       {!isTracking ? (
         <>
-          <HeaderText style={styles.aboveButton} variant="header6">
-            {formatMessage(m.readyToRecord)}
-          </HeaderText>
+          <View style={styles.aboveButton}>
+            <MaterialIcons
+              name="emoji-people"
+              size={STATUS_ICON_SIZE}
+              color={DARK_GREY}
+            />
+            <HeaderText style={styles.status} variant="header6">
+              {formatMessage(m.readyToRecord)}
+            </HeaderText>
+          </View>
           <PrimaryButton
+            testID="TRACK.start-btn"
             fullSize={true}
-            text={formatMessage(m.defaultButtonText)}
+            text={formatMessage(m.start)}
             onPress={handleStartTracking}
+            iconPosition="leftEdge"
             renderIcon={() => <StartTrackingIcon />}
           />
         </>
       ) : (
         <>
-          <HeaderText style={styles.aboveButton} variant="header6">
-            {formatMessage(m.trackingRequirement)}
-          </HeaderText>
+          <View style={styles.aboveButton}>
+            <MaterialIcons
+              name="directions-walk"
+              size={STATUS_ICON_SIZE}
+              color={DARK_GREY}
+            />
+            <HeaderText style={styles.status} variant="header6">
+              {formatMessage(m.recording)}
+            </HeaderText>
+          </View>
           <DestructiveButton
-            text={formatMessage(m.stopButtonText)}
+            testID="TRACK.end-btn"
+            text={formatMessage(m.end)}
             fullSize={true}
+            iconPosition="leftEdge"
             renderIcon={() => <StopTrackingIcon />}
             onPress={finishTracking}
           />
@@ -99,7 +121,12 @@ export const StartStopTrack = () => {
 
 const styles = StyleSheet.create({
   aboveButton: {
-    textAlign: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
     paddingBottom: 10,
+  },
+  status: {
+    flexShrink: 1,
   },
 });

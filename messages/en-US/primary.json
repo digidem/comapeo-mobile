@@ -5,12 +5,6 @@
   "$1App.serviceNotification.title": {
     "message": "Running in the background"
   },
-  "$1Modal.GPSEnable.button.default": {
-    "message": "Start Tracks"
-  },
-  "$1Modal.GPSEnable.button.stop": {
-    "message": "Stop Tracks"
-  },
   "$1Navigation.Menu.Settings": {
     "message": "CoMapeo Settings"
   },
@@ -206,8 +200,14 @@
   "$1TrackBottomSheet.DidNotMove.noTrackRecorded": {
     "message": "No Track Recorded"
   },
-  "$1TrackBottomSheet.StartStopTrack.trackingRequirement": {
-    "message": "Move one meter to see track."
+  "$1TrackBottomSheet.StartStopTrack.end": {
+    "message": "End"
+  },
+  "$1TrackBottomSheet.StartStopTrack.recording": {
+    "message": "Recording…"
+  },
+  "$1TrackBottomSheet.StartStopTrack.start": {
+    "message": "Start"
   },
   "$1allProjects.close": {
     "message": "Close"

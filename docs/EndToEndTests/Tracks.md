@@ -85,8 +85,8 @@ This test validates the warning and recovery flow when a user attempts to stop t
 - Verify track can be started from Tracks tab
 - Confirm stopping track immediately (without movement) triggers warning modal
 - Verify "No Track Recorded" warning message is displayed
-- Confirm explanatory text appears: "You didn't move beyond one meter."
-- Verify "Continue Recording" button allows user to resume tracking
+- Confirm explanatory text appears: "This device didn't move."
+- Verify "Keep Recording" button allows user to resume tracking
 - Confirm user can exit tracks normally after continuing recording
 
 ### Special Considerations

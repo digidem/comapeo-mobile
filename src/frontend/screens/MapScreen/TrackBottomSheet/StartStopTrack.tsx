@@ -41,7 +41,9 @@ export const StartStopTrack = () => {
   const {isTracking, endTracking, startTracking} = useTracking();
   const navigation = useNavigationFromHomeTabs();
   const {data: presets} = usePresetsQuery();
-  const distance = useTrackState(store => store.distance);
+  const hasSecondPoint = useTrackState(
+    store => store.locationHistory.length > 1,
+  );
 
   const trackPresets = React.useMemo(
     () => presets?.filter(p => p.geometry.includes('line')) ?? [],
@@ -49,9 +51,7 @@ export const StartStopTrack = () => {
   );
 
   async function finishTracking() {
-    const hasMovedEnough = distance > 0.001;
-
-    if (!hasMovedEnough) {
+    if (!hasSecondPoint) {
       navigation.navigate('DidNotMoveBottomSheet');
       return;
     }

@@ -172,6 +172,15 @@
   "Storage.MenuAlert.title": {
     "message": "Your device has low storage."
   },
+  "TrackBottomSheet.DidNotMove.didNotMove": {
+    "message": "This device didn't move."
+  },
+  "TrackBottomSheet.DidNotMove.discard": {
+    "message": "Discard"
+  },
+  "TrackBottomSheet.DidNotMove.keepRecording": {
+    "message": "Keep Recording"
+  },
   "TrackBottomSheet.StartStopTrack.readyToRecord": {
     "message": "Ready to record new track?"
   },

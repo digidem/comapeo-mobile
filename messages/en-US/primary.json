@@ -188,15 +188,6 @@
   "$1Screens.Settings.AppSettings.unitSystem": {
     "message": "Unit System"
   },
-  "$1TrackBottomSheet.DidNotMove.delete": {
-    "message": "Exit Tracks"
-  },
-  "$1TrackBottomSheet.DidNotMove.didNotMove": {
-    "message": "You didn't move beyond one meter."
-  },
-  "$1TrackBottomSheet.DidNotMove.keepRecording": {
-    "message": "Continue Recording"
-  },
   "$1TrackBottomSheet.DidNotMove.noTrackRecorded": {
     "message": "No Track Recorded"
   },

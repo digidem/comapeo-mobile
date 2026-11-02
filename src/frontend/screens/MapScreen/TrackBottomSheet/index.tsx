@@ -56,7 +56,7 @@ export const TrackBottomSheet = React.memo(
         style={[styles.animatedBackground, animatedStyle]}
         onLayout={onLayoutSheet}
         pointerEvents={isOpen ? 'auto' : 'none'}>
-        {children}
+        {isOpen && children}
       </Animated.View>
     );
   },

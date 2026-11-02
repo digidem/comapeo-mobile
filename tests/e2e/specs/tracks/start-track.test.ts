@@ -17,6 +17,6 @@ describe('Tracks - Start Track Flow (Permissions Pre-Granted)', () => {
 
     await startBtn.click();
 
-    await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
+    await expect($(byResourceId('TRACK.end-btn'))).toBeDisplayed();
   });
 });

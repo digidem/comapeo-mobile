@@ -48,11 +48,6 @@ export const StartStopTrack = () => {
     [presets],
   );
 
-  function handleStartTracking() {
-    startTracking();
-    navigation.setParams({trackingOpen: false});
-  }
-
   async function finishTracking() {
     const hasMovedEnough = distance > 0.001;
 
@@ -61,6 +56,7 @@ export const StartStopTrack = () => {
       return;
     }
 
+    navigation.setParams({trackingOpen: false});
     endTracking();
 
     if (trackPresets.length === 0) {
@@ -88,7 +84,7 @@ export const StartStopTrack = () => {
             testID="TRACK.start-btn"
             fullSize={true}
             text={formatMessage(m.start)}
-            onPress={handleStartTracking}
+            onPress={startTracking}
             iconPosition="leftEdge"
             renderIcon={() => <StartTrackingIcon />}
           />

@@ -20,10 +20,12 @@ import {TrackBottomSheet} from './TrackBottomSheet';
 import {StartStopTrack} from './TrackBottomSheet/StartStopTrack';
 import {TrackPermissionScreen} from './TrackBottomSheet/TrackPermissionScreen';
 import {TrackNotificationPermission} from './TrackBottomSheet/TrackNotificationPermission';
+import {WaitingForPosition} from './TrackBottomSheet/WaitingForPosition';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
+import {LastKnownLocationLayer} from './MapLayers/LastKnownLocationLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
@@ -33,6 +35,7 @@ import AddButtonSVG from '../../images/AddButton.svg';
 import {AuthState, useAuthContext} from '../../contexts/AuthContext';
 import {useLocationState} from '../../contexts/LocationContext';
 import {getCoords} from '../../lib/coordinateFormat';
+import {getLocationStatus} from '../../lib/utils';
 import {useTracking} from '../../hooks/useTracking';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
@@ -114,6 +117,12 @@ export const MapScreen = ({
     isTracking ? store.location : store.throttledMapLocation,
   );
   const coords = location && getCoords(location);
+  const hasPosition = useLocationState(
+    ({location: latest, providerStatus}) =>
+      getLocationStatus({location: latest, providerStatus}).status === 'good',
+  );
+  const isWaitingForPosition =
+    !!trackBottomSheetOpen && !isTracking && !hasPosition;
   const [following, setFollowing] = React.useState(true);
   const appUsageStore = useAppUsageStatsStore();
   const cameraRef = React.useRef<CameraRef>(null);
@@ -122,6 +131,8 @@ export const MapScreen = ({
 
   const {authState} = useAuthContext();
   const {savedLocation} = useNonReactiveSavedLocation();
+  const lastKnownCoords =
+    coords ?? (savedLocation ? getCoords(savedLocation) : undefined);
   const dismissedMapBannerSession = useLowStorageBannerState(
     s => s.dismissedMapBannerSession,
   );
@@ -304,9 +315,15 @@ export const MapScreen = ({
             trackUserLocation={following && coords ? 'default' : undefined}
           />
 
-          {coords && (
-            <UserLocation minDisplacement={isTracking ? 0 : MIN_DISPLACEMENT} />
-          )}
+          {isWaitingForPosition
+            ? lastKnownCoords && (
+                <LastKnownLocationLayer coords={lastKnownCoords} />
+              )
+            : coords && (
+                <UserLocation
+                  minDisplacement={isTracking ? 0 : MIN_DISPLACEMENT}
+                />
+              )}
 
           {authState !== 'obscured' && (
             <>
@@ -348,14 +365,16 @@ export const MapScreen = ({
       />
 
       <TrackBottomSheet isOpen={!!trackBottomSheetOpen}>
-        {notificationPermission.granted ? (
-          <StartStopTrack />
-        ) : (
+        {!notificationPermission.granted ? (
           <TrackNotificationPermission
             canAskAgain={notificationPermission.canAskAgain}
             onAllow={() => askNotificationPermission.mutate()}
             onOpenSettings={() => goToNotificationSettings.mutate()}
           />
+        ) : isWaitingForPosition ? (
+          <WaitingForPosition />
+        ) : (
+          <StartStopTrack />
         )}
       </TrackBottomSheet>
     </View>

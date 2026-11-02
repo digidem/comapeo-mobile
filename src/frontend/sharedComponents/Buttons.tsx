@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {HeaderText} from './Text/HeaderText';
+import {FULL_SIZE_BUTTON_WIDTH} from '../constants';
 import {BLUE_GREY, COMAPEO_BLUE, WARNING_RED, WHITE} from '../lib/styles';
 import {ViewStyleProp} from '../sharedTypes';
 
@@ -46,7 +47,7 @@ const BaseButton = ({
           borderWidth: 1.5,
           borderColor: colors.border,
         },
-        fullSize && {width: 280},
+        fullSize && {width: FULL_SIZE_BUTTON_WIDTH},
       ]}
       onPress={onPress}>
       {renderIcon && iconPosition === 'leftEdge' && (

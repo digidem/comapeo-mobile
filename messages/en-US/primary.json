@@ -200,6 +200,9 @@
   "$1TrackBottomSheet.StartStopTrack.start": {
     "message": "Start"
   },
+  "$1TrackBottomSheet.WaitingForPosition.waitingForPosition": {
+    "message": "Waiting for position…"
+  },
   "$1allProjects.close": {
     "message": "Close"
   },

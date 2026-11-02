@@ -1,6 +1,6 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 import {useTracking} from '../../../hooks/useTracking.ts';
@@ -10,12 +10,9 @@ import {
   DestructiveButton,
   PrimaryButton,
 } from '../../../sharedComponents/Buttons.tsx';
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
 import {usePresetsQuery} from '../../../hooks/server/presets';
 import {useTrackState} from '../../../contexts/TrackStoreContext.tsx';
-import {DARK_GREY} from '../../../lib/styles.ts';
-
-const STATUS_ICON_SIZE = 24;
+import {TrackStatusLabel} from './TrackStatusLabel.tsx';
 
 const m = defineMessages({
   start: {
@@ -70,16 +67,12 @@ export const StartStopTrack = () => {
     <View style={{alignItems: 'center', flex: 1}}>
       {!isTracking ? (
         <>
-          <View style={styles.aboveButton}>
-            <MaterialIcons
-              name="emoji-people"
-              size={STATUS_ICON_SIZE}
-              color={DARK_GREY}
-            />
-            <HeaderText style={styles.status} variant="header6">
-              {formatMessage(m.readyToRecord)}
-            </HeaderText>
-          </View>
+          <TrackStatusLabel
+            renderIcon={({color, size}) => (
+              <MaterialIcons name="emoji-people" size={size} color={color} />
+            )}
+            text={formatMessage(m.readyToRecord)}
+          />
           <PrimaryButton
             testID="TRACK.start-btn"
             fullSize={true}
@@ -91,16 +84,12 @@ export const StartStopTrack = () => {
         </>
       ) : (
         <>
-          <View style={styles.aboveButton}>
-            <MaterialIcons
-              name="directions-walk"
-              size={STATUS_ICON_SIZE}
-              color={DARK_GREY}
-            />
-            <HeaderText style={styles.status} variant="header6">
-              {formatMessage(m.recording)}
-            </HeaderText>
-          </View>
+          <TrackStatusLabel
+            renderIcon={({color, size}) => (
+              <MaterialIcons name="directions-walk" size={size} color={color} />
+            )}
+            text={formatMessage(m.recording)}
+          />
           <DestructiveButton
             testID="TRACK.end-btn"
             text={formatMessage(m.end)}
@@ -114,15 +103,3 @@ export const StartStopTrack = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  aboveButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    paddingBottom: 10,
-  },
-  status: {
-    flexShrink: 1,
-  },
-});

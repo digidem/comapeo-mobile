@@ -141,6 +141,7 @@
       },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
+        "NSPhotoLibraryUsageDescription": "CoMapeo reads location and timestamp metadata (EXIF data) from photos taken within the app to attach to your observations.",
         "NSLocalNetworkUsageDescription": "CoMapeo uses the local network to discover and sync with nearby devices in your project.",
         "NSBonjourServices": ["_comapeo._tcp"],
         "UIViewControllerBasedStatusBarAppearance": true,

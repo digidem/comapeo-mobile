@@ -9,6 +9,8 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {resetToYourTeam} from '../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   inviteDeclined: {
@@ -32,11 +34,13 @@ export const InviteDeclined = ({
 }: NativeRootNavigationProps<'InviteDeclined'>) => {
   const {formatMessage} = useIntl();
   const {name, deviceType, deviceId} = route.params;
+  const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   usePreventBackNavigation();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: top + 80, paddingBottom}]}>
       <View style={{alignItems: 'center'}}>
         <ErrorIcon />
         <BodyText
@@ -68,7 +72,6 @@ export const InviteDeclined = ({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 80,
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 1,

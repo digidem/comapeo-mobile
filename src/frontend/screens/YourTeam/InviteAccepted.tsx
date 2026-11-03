@@ -8,6 +8,8 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLACK} from '../../lib/styles';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   inviteAccepted: {
@@ -34,11 +36,13 @@ export const InviteAccepted = ({
 }: NativeRootNavigationProps<'InviteAccepted'>) => {
   const {formatMessage: t} = useIntl();
   const {name} = route.params;
+  const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   usePreventBackNavigation();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: top + 80, paddingBottom}]}>
       <View style={{alignItems: 'center', gap: 30}}>
         <GreenCheck width="80" height="80" />
         <HeaderText variant="header1" style={{color: BLACK}}>
@@ -79,7 +83,6 @@ export const InviteAccepted = ({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 80,
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 1,

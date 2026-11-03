@@ -8,7 +8,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import ExchangeIcon from '../../images/OrangeExchange.svg';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 
 const m = defineMessages({
   screenTitle: {

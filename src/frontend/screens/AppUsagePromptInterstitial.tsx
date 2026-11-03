@@ -7,7 +7,7 @@ import PuzzlePieceIcon from '../images/PuzzlePiece.svg';
 import RedOutlinedExIcon from '../images/RedOutlinedEx.svg';
 import SwitchIcon from '../images/Switch.svg';
 
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';

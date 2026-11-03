@@ -11,7 +11,7 @@ import {
   useEarlyAccessState,
 } from '../../contexts/EarlyAccessContext';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 
 const m = defineMessages({
   navTitle: {

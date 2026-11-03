@@ -1,9 +1,9 @@
 import {ReactNode, type PropsWithChildren} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 
-import {ViewStyleProp} from '../sharedTypes';
-import {useBottomPaddingWithSafeArea} from '../hooks/useBottomPaddingWithSafeArea';
-import {WHITE} from '../lib/styles';
+import {ViewStyleProp} from '../../sharedTypes';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
+import {WHITE} from '../../lib/styles';
 
 export const ScreenContentWithDock = ({
   children,
@@ -21,16 +21,19 @@ export const ScreenContentWithDock = ({
 }>) => {
   const paddingBottom = useBottomPaddingWithSafeArea();
   return (
-    <View
-      style={[styles.container, {paddingBottom, backgroundColor}]}
-      testID={testID}>
+    <View style={{backgroundColor, flex: 1}} testID={testID}>
       <ScrollView
         bounces={false}
         style={styles.scrollViewRoot}
-        contentContainerStyle={contentContainerStyle}>
+        contentContainerStyle={[{paddingTop: 20}, contentContainerStyle]}>
         {children}
       </ScrollView>
-      <View style={[styles.dockedContentContainer, dockContainerStyle]}>
+      <View
+        style={[
+          styles.dockedContentContainer,
+          {paddingBottom},
+          dockContainerStyle,
+        ]}>
         {dockContent}
       </View>
     </View>
@@ -38,7 +41,6 @@ export const ScreenContentWithDock = ({
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 20},
   scrollViewRoot: {flex: 1},
   dockedContentContainer: {
     flex: 0,

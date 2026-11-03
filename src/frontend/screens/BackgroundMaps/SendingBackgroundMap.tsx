@@ -34,6 +34,8 @@ import {
   COMAPEO_BLUE,
 } from '../../lib/styles';
 import {useCurrentTime} from '../../hooks/useCurrentTime';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   waitingMessage: {
@@ -209,6 +211,7 @@ function MapDeclined({
   onClose: () => void;
 }) {
   const {formatMessage: t} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
   const isDiskSpaceIssue = reason === 'disk_full';
   const headerText = isDiskSpaceIssue ? t(m.deviceNoSpace) : t(m.mapDeclined);
 
@@ -229,7 +232,7 @@ function MapDeclined({
         </HeaderText>
       </View>
 
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, {paddingBottom}]}>
         <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
       </View>
     </View>
@@ -244,10 +247,11 @@ function SendingMap({
   onCancel: () => void;
 }) {
   const {formatMessage: t} = useIntl();
+  const {top} = useSafeAreaInsets();
 
   return (
     <View style={[styles.baseContainer, {alignItems: 'center'}]}>
-      <View style={styles.sendingTopSection}>
+      <View style={[styles.sendingTopSection, {marginTop: top + 120}]}>
         <View style={styles.iconBackground}>
           <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
         </View>
@@ -276,15 +280,17 @@ function SendingMap({
 
 function MapSent({onDone}: {onDone: () => void}) {
   const {formatMessage: t} = useIntl();
+  const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
     <View style={[styles.baseContainer, {justifyContent: 'space-between'}]}>
       <IconTitleDescription
-        style={styles.sentContent}
+        style={{paddingTop: top + 180}}
         icon={<SuccessIcon />}
         title={t(m.mapSent)}
       />
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, {paddingBottom}]}>
         <SecondaryButton fullSize text={t(m.done)} onPress={onDone} />
       </View>
     </View>
@@ -328,7 +334,6 @@ const styles = StyleSheet.create({
   sendingTopSection: {
     alignItems: 'center',
     gap: 20,
-    marginTop: 120,
   },
   progressContainer: {
     gap: 15,
@@ -344,8 +349,5 @@ const styles = StyleSheet.create({
   },
   cancelText: {
     color: COMAPEO_BLUE,
-  },
-  sentContent: {
-    paddingTop: 180,
   },
 });

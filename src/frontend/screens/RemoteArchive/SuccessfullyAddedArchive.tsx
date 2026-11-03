@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 import {Button} from '../../sharedComponents/Button';
 import GreenCheck from '../../images/Success.svg';
 import {MEDIUM_GREY} from '../../lib/styles';

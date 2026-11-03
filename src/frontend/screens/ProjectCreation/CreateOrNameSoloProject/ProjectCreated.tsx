@@ -12,7 +12,7 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BLACK, NEW_DARK_GREY} from '../../../lib/styles';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
-import {ScreenContentWithNoHeaderAndTopPadding} from '../../../sharedComponents/ScreenContentWithNoHeaderAndTopPadding';
+import {ScreenContentWithNoHeaderAndTopPadding} from '../../../sharedComponents/ScreenContentWithDock/ScreenContentWithNoHeaderAndTopPadding';
 
 const m = defineMessages({
   success: {

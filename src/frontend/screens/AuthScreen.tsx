@@ -11,7 +11,7 @@ import ClockIcon from '../images/ClockOutlined.svg';
 import {RED, BLACK} from '../lib/styles';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 import {usePasscodeLockout} from '../hooks/usePasscodeLockout';
 import {useSecurityState} from '../contexts/SecurityStoreContext';
 

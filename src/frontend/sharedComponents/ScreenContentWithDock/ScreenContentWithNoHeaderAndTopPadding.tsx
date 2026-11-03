@@ -1,7 +1,7 @@
 import {ReactNode, type PropsWithChildren} from 'react';
 
-import {ViewStyleProp} from '../sharedTypes';
-import {WHITE} from '../lib/styles';
+import {ViewStyleProp} from '../../sharedTypes';
+import {WHITE} from '../../lib/styles';
 import {ScreenContentWithDock} from './ScreenContentWithDock';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 

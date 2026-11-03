@@ -24,6 +24,8 @@ import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription'
 import {ReceivingMapProgressBar} from './ReceivingMapProgressBar';
 import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {VERY_LIGHT_GREY, NEW_DARK_GREY, COMAPEO_BLUE} from '../../lib/styles';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   updating: {
@@ -66,6 +68,7 @@ export function ReceivingBackgroundMap({
   const {mutate: abortDownload, status: abortStatus} =
     useAbortReceivedMapShareDownload();
   const mapShare = useSingleReceivedMapShare({shareId});
+  const {top} = useSafeAreaInsets();
 
   usePreventBackNavigation();
   useKeepAwake();
@@ -148,7 +151,7 @@ export function ReceivingBackgroundMap({
 
   return (
     <View style={styles.container}>
-      <View style={styles.topSection}>
+      <View style={[styles.topSection, {marginTop: top + 120}]}>
         <View style={styles.iconBackground}>
           <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
         </View>
@@ -177,13 +180,14 @@ export function ReceivingBackgroundMap({
 
 function MapUpdated({onDone}: {onDone: () => void}) {
   const {formatMessage: t} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
     <View style={styles.successContainer}>
       <View style={styles.successContent}>
         <IconTitleDescription icon={<SuccessIcon />} title={t(m.mapUpdated)} />
       </View>
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, {paddingBottom}]}>
         <SecondaryButton fullSize text={t(m.done)} onPress={onDone} />
       </View>
     </View>
@@ -199,7 +203,6 @@ const styles = StyleSheet.create({
   topSection: {
     alignItems: 'center',
     gap: 20,
-    marginTop: 120,
   },
   iconBackground: {
     width: 80,

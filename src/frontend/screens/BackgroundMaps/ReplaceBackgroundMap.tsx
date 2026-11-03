@@ -19,6 +19,8 @@ import {
 } from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   replaceMapTitle: {
@@ -48,6 +50,8 @@ export function ReplaceBackgroundMap({
   const {shareId} = route.params;
   const {mutate: declineMapShare} = useDeclineReceivedMapShare();
   const {mutate: downloadMapShare} = useDownloadReceivedMapShare();
+  const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const handleReplace = () => {
     downloadMapShare(
@@ -115,7 +119,7 @@ export function ReplaceBackgroundMap({
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: top + 20, paddingBottom}]}>
       <View style={styles.content}>
         <IconTitleDescription
           icon={icon}
@@ -143,7 +147,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 40,
-    paddingVertical: 20,
   },
   content: {
     flex: 1,

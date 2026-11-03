@@ -14,7 +14,7 @@ import {
   CELL_COUNT,
   PasscodeInput,
 } from '../../../../sharedComponents/PasscodeInput';
-import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 

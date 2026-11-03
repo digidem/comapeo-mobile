@@ -3,7 +3,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {StyleSheet} from 'react-native';
 
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {PrimaryButton} from '../../../../sharedComponents/Buttons';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';

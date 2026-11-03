@@ -10,7 +10,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 import {SvgProps} from 'react-native-svg';
 import {NEW_DARK_GREY, DARK_ORANGE} from '../../lib/styles';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';

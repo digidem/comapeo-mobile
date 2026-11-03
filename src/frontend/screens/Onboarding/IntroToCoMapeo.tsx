@@ -7,7 +7,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 import {LIGHT_BLUE} from '../../lib/styles';
 
 const m = defineMessages({

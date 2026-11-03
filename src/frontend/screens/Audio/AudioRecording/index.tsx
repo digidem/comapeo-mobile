@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, View, AppState, Text} from 'react-native';
 import {useKeepAwake} from 'expo-keep-awake';
 import {BLUE_GREY, DARK_GREY, WHITE} from '../../../lib/styles';
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 import {AnimatedBackground} from './AnimatedBackground';
 import {useAudioRecording} from './useAudioRecording';
 import {usePreventBackButtonWhileRecording} from './usePreventBackButtonWhileRecording';

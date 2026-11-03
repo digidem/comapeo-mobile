@@ -6,7 +6,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {NEW_DARK_GREY} from '../lib/styles';
 import {SecondaryButton} from '../sharedComponents/Buttons';
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';

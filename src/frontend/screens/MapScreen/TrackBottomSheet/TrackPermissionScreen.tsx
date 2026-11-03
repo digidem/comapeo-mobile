@@ -20,9 +20,14 @@ const m = defineMessages({
     id: 'screens.MapScreen.TrackBottomSheet.locationRequired',
     defaultMessage: 'Location required to use.',
   },
+  locationAndNotificationsRequired: {
+    id: 'screens.MapScreen.TrackBottomSheet.locationAndNotificationsRequired',
+    defaultMessage: 'Location & Notifications required to use.',
+  },
 });
 
-const ICON_SIZE = 80;
+// The hiker fills only part of its viewBox's width, so it needs a bigger box to match the look design specified
+const ICON_SIZE = 100;
 
 /**
  * For when location was denied and there is no map for the sheet to sit on.
@@ -30,10 +35,12 @@ const ICON_SIZE = 80;
  * can't disagree about it.
  */
 export const TrackPermissionScreen = ({
+  missing,
   canAskAgain,
   onAllow,
   onOpenSettings,
 }: {
+  missing: 'location' | 'locationAndNotifications';
   canAskAgain: boolean;
   onAllow: () => void;
   onOpenSettings: () => void;
@@ -66,7 +73,11 @@ export const TrackPermissionScreen = ({
           />
         }
         title={formatMessage(m.title)}
-        description={formatMessage(m.locationRequired)}
+        description={formatMessage(
+          missing === 'location'
+            ? m.locationRequired
+            : m.locationAndNotificationsRequired,
+        )}
       />
     </ScreenContentWithDock>
   );
@@ -76,6 +87,6 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     justifyContent: 'center',
-    paddingHorizontal: 80,
+    paddingHorizontal: 40,
   },
 });

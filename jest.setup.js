@@ -131,6 +131,23 @@ jest.mock('@maplibre/maplibre-react-native', () => ({
   LineCap: {Round: 'round', Butt: 'butt', Square: 'square'},
 }));
 
+jest.mock('expo-notifications', () => {
+  const grantedPermission = {
+    status: 'granted',
+    expires: 'never',
+    granted: true,
+    canAskAgain: true,
+  };
+  return {
+    getPermissionsAsync: jest.fn(() => Promise.resolve(grantedPermission)),
+    requestPermissionsAsync: jest.fn(() => Promise.resolve(grantedPermission)),
+    setNotificationHandler: jest.fn(),
+    getPresentedNotificationsAsync: jest.fn(() => Promise.resolve([])),
+    scheduleNotificationAsync: jest.fn(() => Promise.resolve('id')),
+    dismissNotificationAsync: jest.fn(() => Promise.resolve()),
+  };
+});
+
 // `ComapeoCoreModule.ts` calls `requireNativeModule("ComapeoCore")` at
 // import time, which throws in tests since there's no native module and
 // no `mocks/ComapeoCore.js` for jest-expo to pick up. Tests that need a real

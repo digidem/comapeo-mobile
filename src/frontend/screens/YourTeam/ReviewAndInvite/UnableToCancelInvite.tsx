@@ -11,6 +11,8 @@ import {useProjectSettings} from '../../../hooks/server/projects';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {resetToYourTeam} from '../../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../../sharedComponents/Buttons';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   unableToCancel: {
@@ -34,9 +36,11 @@ export const UnableToCancelInvite = ({
   const {formatMessage} = useIntl();
   const {role, ...deviceInfo} = route.params;
   const {data} = useProjectSettings();
+  const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: top + 80, paddingBottom}]}>
       <View style={{alignItems: 'center'}}>
         <ErrorIcon />
         <BodyText
@@ -69,7 +73,6 @@ export const UnableToCancelInvite = ({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 80,
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 1,

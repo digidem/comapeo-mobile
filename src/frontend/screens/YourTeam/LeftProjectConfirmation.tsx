@@ -9,6 +9,8 @@ import MaterialDesignIcons from '@react-native-vector-icons/material-design-icon
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   youveLeftProject: {
@@ -29,6 +31,8 @@ export const LeftProjectConfirmation = ({
   const {formatMessage} = useIntl();
   const {data} = useOwnDeviceInfo();
   const deviceName = data?.name;
+  const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   usePreventBackNavigation();
 
@@ -37,7 +41,7 @@ export const LeftProjectConfirmation = ({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: top, paddingBottom}]}>
       <View style={styles.mainCard}>
         <MaterialDesignIcons
           name="hand-wave-outline"
@@ -82,6 +86,5 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    paddingBottom: 20,
   },
 });

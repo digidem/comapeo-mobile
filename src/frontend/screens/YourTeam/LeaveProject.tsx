@@ -18,6 +18,8 @@ import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreCont
 import * as Sentry from '@sentry/react-native';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {toError} from '../../utils/errors';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   leaveProjectTitle: {
@@ -54,6 +56,8 @@ export const LeaveProject = ({
   const leaveProject = useLeaveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
   const {data: projects} = useManyProjects();
+  const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const isCoordinator = route.params.memberType === 'coordinator';
 
@@ -100,7 +104,7 @@ export const LeaveProject = ({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: top, paddingBottom}]}>
       <View style={styles.content}>
         <View style={styles.deviceInfo}>
           <MaterialDesignIcons name="export" size={60} color={BLUE_GREY} />
@@ -167,6 +171,5 @@ const styles = StyleSheet.create({
   buttons: {
     alignItems: 'center',
     gap: 12,
-    paddingBottom: 20,
   },
 });

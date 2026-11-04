@@ -11,9 +11,9 @@ import ClockIcon from '../images/ClockOutlined.svg';
 import {RED, BLACK} from '../lib/styles';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
-import {ScreenContentWithButtonDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {usePasscodeLockout} from '../hooks/usePasscodeLockout';
 import {useSecurityState} from '../contexts/SecurityStoreContext';
+import {useBottomPaddingWithSafeArea} from '../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   enterPass: {
@@ -69,45 +69,48 @@ export const AuthScreen = () => {
   }
 
   const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
   const window = useWindowDimensions();
 
   return (
-    <ScreenContentWithButtonDock
-      contentContainerStyle={[
-        styles.contentContainer,
-        {paddingTop: top + 20, paddingBottom: 20},
-      ]}
-      dockContent={
-        error && <BodyText style={styles.wrongPass}>{t(m.wrongPass)}</BodyText>
-      }>
-      {/* Hide SVG logo in E2E mode to reduce rendering lag on BrowserStack */}
-      {process.env.EXPO_PUBLIC_E2E_TEST !== 'true' && (
-        <CoMapeoLogoSvg style={{height: window.height / 3, aspectRatio: 1}} />
-      )}
-      {lockedOutMinutes > 0 ? (
-        <View style={styles.lockoutContainer}>
-          <ClockIcon width={20} height={20} />
-          <BodyText style={styles.lockoutText}>
-            {t(m.lockoutMessage, {minutes: lockedOutMinutes})}
-          </BodyText>
-        </View>
-      ) : (
-        <BodyText>{t(m.enterPass)}</BodyText>
-      )}
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <LoadingIndicator size="large" />
-        </View>
-      ) : (
-        <PasscodeInput
-          testID="SETTINGS.auth-passcode-inp"
-          error={error}
-          inputValue={inputtedPass}
-          onChangeTextWithValidation={setInputWithValidation}
-          editable={lockedOutMinutes <= 0}
-        />
-      )}
-    </ScreenContentWithButtonDock>
+    <View
+      style={{
+        paddingBottom,
+        paddingTop: top + 20,
+        flex: 1,
+        justifyContent: 'space-between',
+      }}>
+      <View style={{alignItems: 'center'}}>
+        {/* Hide SVG logo in E2E mode to reduce rendering lag on BrowserStack */}
+        {process.env.EXPO_PUBLIC_E2E_TEST !== 'true' && (
+          <CoMapeoLogoSvg style={{height: window.height / 3, aspectRatio: 1}} />
+        )}
+        {lockedOutMinutes > 0 ? (
+          <View style={styles.lockoutContainer}>
+            <ClockIcon width={20} height={20} />
+            <BodyText style={styles.lockoutText}>
+              {t(m.lockoutMessage, {minutes: lockedOutMinutes})}
+            </BodyText>
+          </View>
+        ) : (
+          <BodyText>{t(m.enterPass)}</BodyText>
+        )}
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <LoadingIndicator size="large" />
+          </View>
+        ) : (
+          <PasscodeInput
+            testID="SETTINGS.auth-passcode-inp"
+            error={error}
+            inputValue={inputtedPass}
+            onChangeTextWithValidation={setInputWithValidation}
+            editable={lockedOutMinutes <= 0}
+          />
+        )}
+      </View>
+      {error && <BodyText style={styles.wrongPass}>{t(m.wrongPass)}</BodyText>}
+    </View>
   );
 };
 

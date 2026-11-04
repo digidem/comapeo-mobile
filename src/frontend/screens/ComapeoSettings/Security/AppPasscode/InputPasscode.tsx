@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {KeyboardAvoidingView} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
 import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
 
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
@@ -78,36 +77,36 @@ export const InputPasscode = ({
   return (
     <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
       <ScreenContentWithButtonDock
-        contentContainerStyle={styles.contentContainer}
-        dockContent={
-          <View style={styles.buttonsContainer}>
-            {showNext && (
-              <PrimaryButton
-                fullSize
-                onPress={() => {
-                  if (validate(inputValue)) {
-                    navigate('ConfirmPasscodeSheet', {
-                      passcode: inputValue,
-                    });
-                  }
-                }}
-                text={t(m.button)}
-              />
-            )}
-
-            <SecondaryButton
+        contentContainerStyle={{gap: 20}}
+        topButton={
+          showNext && (
+            <PrimaryButton
               fullSize
               onPress={() => {
-                popTo('Security');
+                if (validate(inputValue)) {
+                  navigate('ConfirmPasscodeSheet', {
+                    passcode: inputValue,
+                  });
+                }
               }}
-              text={t(m.cancel)}
+              text={t(m.button)}
             />
-          </View>
+          )
+        }
+
+        bottomButton={
+          <SecondaryButton
+            fullSize
+            onPress={() => {
+              popTo('Security');
+            }}
+            text={t(m.cancel)}
+          />
         }>
-        <HeaderText variant="header1" style={styles.header}>
+        <HeaderText variant="header1" style={{textAlign: 'center'}}>
           {title}
         </HeaderText>
-        <BodyText style={styles.subtext}>{subtitle}</BodyText>
+        <BodyText style={{textAlign: 'center'}}>{subtitle}</BodyText>
 
         <PasscodeInput
           testID="SETTINGS.passcode-inp"
@@ -119,7 +118,9 @@ export const InputPasscode = ({
         />
 
         {error && (
-          <HeaderText variant="header5" style={styles.error}>
+          <HeaderText
+            variant="header5"
+            style={{textAlign: 'center', color: RED}}>
             {errorMessage}
           </HeaderText>
         )}
@@ -127,22 +128,3 @@ export const InputPasscode = ({
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    gap: 20,
-  },
-  header: {
-    textAlign: 'center',
-  },
-  buttonsContainer: {
-    gap: 20,
-  },
-  subtext: {
-    textAlign: 'center',
-  },
-  error: {
-    textAlign: 'center',
-    color: RED,
-  },
-});

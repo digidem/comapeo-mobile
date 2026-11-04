@@ -6,7 +6,7 @@ import {useForm} from 'react-hook-form';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {BLUE_GREY} from '../../lib/styles';
 import {DestructiveButton} from '../../sharedComponents/Buttons';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectSettings, useRemoveMember} from '@comapeo/core-react';
@@ -73,7 +73,7 @@ export const RemoveDevice: NativeNavigationComponent<'RemoveDevice'> = ({
   });
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       dockContent={
         <DestructiveButton
           fullSize
@@ -95,7 +95,7 @@ export const RemoveDevice: NativeNavigationComponent<'RemoveDevice'> = ({
           name="reason"
         />
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

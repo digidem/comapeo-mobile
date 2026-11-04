@@ -163,8 +163,8 @@ export const MapScreen = ({
   );
 
   const handleAddPress = () => {
-    createDraft();
-    navigate('ObservationCategoryChooser');
+    // createDraft();
+    navigate('AppUsageSharingSuccess');
   };
 
   function handleLocationPress() {

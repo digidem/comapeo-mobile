@@ -8,7 +8,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import ExchangeIcon from '../../images/OrangeExchange.svg';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 
 const m = defineMessages({
   screenTitle: {
@@ -50,7 +50,7 @@ export function ExchangeSoloScreen({onGoBack}: ExchangeSoloScreenProps) {
   const {formatMessage: t} = useIntl();
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       dockContent={
         <SecondaryButton fullSize text={t(m.goBack)} onPress={onGoBack} />
       }>
@@ -73,7 +73,7 @@ export function ExchangeSoloScreen({onGoBack}: ExchangeSoloScreenProps) {
           {t(m.dataSecure)}
         </BodyText>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 }
 

@@ -15,7 +15,7 @@ import {
 } from '../contexts/QADeviceNameStoreContext';
 import {LIGHT_GREY, RED, DARK_GREY, WHITE} from '../lib/styles';
 import {PrimaryButton} from '../sharedComponents/Buttons';
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 
@@ -38,7 +38,7 @@ function QADeviceNameCommon({
   }
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       contentContainerStyle={styles.content}
       dockContent={
         <PrimaryButton
@@ -79,7 +79,7 @@ function QADeviceNameCommon({
           </BodyText>
         )}
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 }
 

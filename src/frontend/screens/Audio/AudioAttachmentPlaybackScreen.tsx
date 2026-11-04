@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Pressable} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {
   setAudioModeAsync,
@@ -143,7 +143,7 @@ export const AudioAttachmentPlaybackScreen = ({
   }, [localUri]);
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       contentContainerStyle={styles.container}
       dockContainerStyle={styles.dockContainer}
       dockContent={
@@ -195,7 +195,7 @@ export const AudioAttachmentPlaybackScreen = ({
           </BodyText>
         )}
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

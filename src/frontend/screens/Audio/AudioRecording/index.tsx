@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, View, AppState, Text} from 'react-native';
 import {useKeepAwake} from 'expo-keep-awake';
 import {BLUE_GREY, DARK_GREY, WHITE} from '../../../lib/styles';
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {AnimatedBackground} from './AnimatedBackground';
 import {useAudioRecording} from './useAudioRecording';
 import {usePreventBackButtonWhileRecording} from './usePreventBackButtonWhileRecording';
@@ -109,7 +109,7 @@ export function AudioRecording({
     <View style={styles.background}>
       {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
       {!isE2E && <AnimatedBackground timeElapsed={timeElapsed} />}
-      <ScreenContentWithDock
+      <ScreenContentWithButtonDock
         contentContainerStyle={[styles.contentContainer, {paddingTop: top}]}
         dockContainerStyle={styles.dockContainer}
         dockContent={
@@ -143,7 +143,7 @@ export function AudioRecording({
             </BodyText>
           </View>
         </View>
-      </ScreenContentWithDock>
+      </ScreenContentWithButtonDock>
     </View>
   );
 }

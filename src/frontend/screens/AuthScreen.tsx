@@ -11,7 +11,7 @@ import ClockIcon from '../images/ClockOutlined.svg';
 import {RED, BLACK} from '../lib/styles';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {usePasscodeLockout} from '../hooks/usePasscodeLockout';
 import {useSecurityState} from '../contexts/SecurityStoreContext';
 
@@ -72,7 +72,7 @@ export const AuthScreen = () => {
   const window = useWindowDimensions();
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       contentContainerStyle={[
         styles.contentContainer,
         {paddingTop: top + 20, paddingBottom: 20},
@@ -107,7 +107,7 @@ export const AuthScreen = () => {
           editable={lockedOutMinutes <= 0}
         />
       )}
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

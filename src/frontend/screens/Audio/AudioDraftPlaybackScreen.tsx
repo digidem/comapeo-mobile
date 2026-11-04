@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {
   DestructiveButton,
@@ -88,7 +88,7 @@ export const AudioDraftPlaybackScreen = ({
   const progress = duration ? currentPosition / duration : 0;
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       contentContainerStyle={[styles.container, {paddingTop: top}]}
       dockContainerStyle={{gap: 20, backgroundColor: WHITE}}
       dockContent={
@@ -154,7 +154,7 @@ export const AudioDraftPlaybackScreen = ({
           />
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

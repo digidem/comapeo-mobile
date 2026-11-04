@@ -7,7 +7,6 @@ import PuzzlePieceIcon from '../images/PuzzlePiece.svg';
 import RedOutlinedExIcon from '../images/RedOutlinedEx.svg';
 import SwitchIcon from '../images/Switch.svg';
 
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
@@ -16,6 +15,7 @@ import {NEW_DARK_GREY} from '../lib/styles';
 
 import {useAppUsageStatsActions} from '../contexts/AppUsageStatsContext';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {ScreenContentWithNoHeaderAndTopPadding} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithNoHeaderAndTopPadding';
 const m = defineMessages({
   screenTitle: {
     id: 'screens.AppUsagePrompt.screenTitle',
@@ -55,7 +55,7 @@ export const AppUsagePromptInterstitial = ({
   const {setOptedIn} = useAppUsageStatsActions();
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithNoHeaderAndTopPadding
       dockContent={
         <View style={styles.buttonsContainer}>
           <PrimaryButton
@@ -90,7 +90,7 @@ export const AppUsagePromptInterstitial = ({
           <InfoListItem Icon={SwitchIcon} text={t(m.turnOffAnytime)} />
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithNoHeaderAndTopPadding>
   );
 };
 
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     gap: 30,
-    paddingTop: 30,
     flexWrap: 'wrap',
   },
   title: {

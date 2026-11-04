@@ -6,7 +6,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {ObservationCreateSaveButton} from './ObservationCreateSaveButton';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {StyleSheet, View} from 'react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
@@ -68,7 +68,7 @@ export const ObservationCreate = ({
   const presetName = preset ? preset.name : formatMessage(m.observation);
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       testID="OBS.create-obs"
       dockContainerStyle={{padding: 0}}
       dockContent={
@@ -197,7 +197,7 @@ export const ObservationCreate = ({
           )}
         />
       )}
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

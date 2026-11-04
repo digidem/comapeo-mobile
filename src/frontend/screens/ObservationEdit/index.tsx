@@ -4,7 +4,7 @@ import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {StyleSheet, View} from 'react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
@@ -71,7 +71,7 @@ export const ObservationEdit = ({
   const presetName = preset ? preset.name : formatMessage(m.observation);
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       dockContainerStyle={{padding: 0}}
       dockContent={
         <ActionsRow
@@ -248,7 +248,7 @@ export const ObservationEdit = ({
           )}
         />
       )}
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

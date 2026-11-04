@@ -11,7 +11,7 @@ import {
   useEarlyAccessState,
 } from '../../contexts/EarlyAccessContext';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 
 const m = defineMessages({
   navTitle: {
@@ -59,7 +59,7 @@ export const EarlyAccess = ({
   }
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       dockContent={
         <SecondaryButton
           fullSize
@@ -107,7 +107,7 @@ export const EarlyAccess = ({
           </Pressable>
         </View>
       ) : null}
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

@@ -33,7 +33,7 @@ import {
 } from '../../lib/sync';
 import {DoneIcon, StopIcon, SyncIcon} from '../../sharedComponents/icons';
 import {Circle} from '../../sharedComponents/icons/Circle';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
@@ -355,7 +355,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   }
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       contentContainerStyle={styles.contentContainer}
       dockContent={dockContent}>
       <WifiCard ssid={ssid} />
@@ -410,7 +410,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
           />
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

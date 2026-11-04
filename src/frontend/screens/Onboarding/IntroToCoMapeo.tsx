@@ -7,7 +7,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {LIGHT_BLUE} from '../../lib/styles';
 
 const m = defineMessages({
@@ -26,7 +26,7 @@ export const IntroToCoMapeo = ({
   const {formatMessage} = useIntl();
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       backgroundColor={LIGHT_BLUE}
       contentContainerStyle={{
         flexGrow: 1,
@@ -60,7 +60,7 @@ export const IntroToCoMapeo = ({
       <HeaderText variant="header3" style={styles.mainText}>
         {formatMessage(m.mapWorldTogether)}
       </HeaderText>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

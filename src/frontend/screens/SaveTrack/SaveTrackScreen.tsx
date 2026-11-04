@@ -11,7 +11,7 @@ import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import TrackIcon from '../../images/Track.svg';
 import {getTrackDurationAndDistance} from '../../utils/trackMetrics';
 import {usePresetsQuery} from '../../hooks/server/presets';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {LIGHT_GREY} from '../../lib/styles';
 import {PresetView} from '../../sharedComponents/PresetView';
 import {Divider} from '../../sharedComponents/Divider';
@@ -49,7 +49,7 @@ export const SaveTrackScreen = () => {
   );
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       dockContainerStyle={{padding: 0}}
       dockContent={undefined}>
       <View style={styles.container}>
@@ -88,7 +88,7 @@ export const SaveTrackScreen = () => {
         <TrackStats distance={distance} durationMs={durationMs} />
       </View>
       <TrackDescriptionField />
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

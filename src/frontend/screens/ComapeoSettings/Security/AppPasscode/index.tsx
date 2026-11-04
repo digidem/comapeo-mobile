@@ -3,7 +3,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {StyleSheet} from 'react-native';
 
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {PrimaryButton} from '../../../../sharedComponents/Buttons';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
@@ -39,7 +39,7 @@ export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = () => {
   const {navigate} = useNavigationFromRoot();
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       dockContent={
         <PrimaryButton
           fullSize
@@ -64,7 +64,7 @@ export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = () => {
           }}
         />
       </BodyText>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

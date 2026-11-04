@@ -20,7 +20,7 @@ import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
 import {ObservationList} from './ObservationList.tsx';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock.tsx';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock.tsx';
 import {TrackHeaderRight} from './TrackHeaderRight';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 import {
@@ -72,7 +72,7 @@ export const TrackScreen = ({
   }
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       contentContainerStyle={{padding: 0}}
       dockContainerStyle={{padding: 0}}
       dockContent={
@@ -121,7 +121,7 @@ export const TrackScreen = ({
           {track.tags.notes}
         </HeaderText>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 export function createNavigationOptions({

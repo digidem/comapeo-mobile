@@ -7,7 +7,7 @@ import {HookFormTextInput} from '../../sharedComponents/HookFormTextInput';
 import {Control, FieldErrors, useForm} from 'react-hook-form';
 import {useFindRemoteArchive} from '../../hooks/server/projects';
 import {Bar} from 'react-native-progress';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {Button} from '../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../utils/normalizeRemoteArchiveUrl';
@@ -222,7 +222,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   }, [setOptions]);
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       dockContent={
         status === 'pending' ? (
           <LoadingIndicator style={{marginBottom: 20}} />
@@ -254,7 +254,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
           </HeaderText>
         </TouchableOpacity>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

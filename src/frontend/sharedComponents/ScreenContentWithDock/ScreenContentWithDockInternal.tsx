@@ -3,28 +3,35 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 
 import {ViewStyleProp} from '../../sharedTypes';
 import {WHITE} from '../../lib/styles';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
-export type SharedScreenContentProps = {
+export type ScreenContentWithDockedButtonSharedProps = {
   children: ReactNode;
-  dockContent: ReactNode;
-  dockContainerStyle?: ViewStyleProp;
-  contentContainerStyle?: ViewStyleProp;
+  dockContainerStyle?: Omit<
+    ViewStyleProp,
+    'paddingBottom' | 'alignItems' | 'gap' | 'flex'
+  >;
+  contentContainerStyle?: Omit<ViewStyleProp, 'backgroundColor' | 'flex'>;
   testID?: string;
   backgroundColor?: string;
+  topButton?: ReactNode;
+  bottomButton: ReactNode;
 };
 
 /**
  *
  * DO NOT USE. Used for internal purposes. Use ScreenContentWithDock or
  */
-export const ScreenContentWithDockInternal = ({
+export const ScreenContentWithDockedButtonInternal = ({
   children,
   contentContainerStyle,
   dockContainerStyle,
-  dockContent,
+  bottomButton,
+  topButton,
   backgroundColor = WHITE,
   testID,
-}: SharedScreenContentProps) => {
+}: ScreenContentWithDockedButtonSharedProps) => {
+  const paddingBottom = useBottomPaddingWithSafeArea();
   return (
     <View style={{backgroundColor, flex: 1}} testID={testID}>
       <ScrollView
@@ -33,8 +40,13 @@ export const ScreenContentWithDockInternal = ({
         contentContainerStyle={[contentContainerStyle]}>
         {children}
       </ScrollView>
-      <View style={[styles.dockedContentContainer, dockContainerStyle]}>
-        {dockContent}
+      <View
+        style={[
+          dockContainerStyle,
+          {paddingBottom, flex: 0, alignItems: 'center', gap: 20},
+        ]}>
+        {topButton}
+        {bottomButton}
       </View>
     </View>
   );
@@ -42,8 +54,4 @@ export const ScreenContentWithDockInternal = ({
 
 const styles = StyleSheet.create({
   scrollViewRoot: {flex: 1},
-  dockedContentContainer: {
-    flex: 0,
-    alignItems: 'center',
-  },
 });

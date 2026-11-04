@@ -14,7 +14,7 @@ import {
   CELL_COUNT,
   PasscodeInput,
 } from '../../../../sharedComponents/PasscodeInput';
-import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 
@@ -77,7 +77,7 @@ export const InputPasscode = ({
 
   return (
     <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
-      <ScreenContentWithDock
+      <ScreenContentWithButtonDock
         contentContainerStyle={styles.contentContainer}
         dockContent={
           <View style={styles.buttonsContainer}>
@@ -123,7 +123,7 @@ export const InputPasscode = ({
             {errorMessage}
           </HeaderText>
         )}
-      </ScreenContentWithDock>
+      </ScreenContentWithButtonDock>
     </KeyboardAvoidingView>
   );
 };

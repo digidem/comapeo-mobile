@@ -2,8 +2,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 import {WHITE} from '../../lib/styles';
 import {
-  ScreenContentWithDockInternal,
-  SharedScreenContentProps,
+  ScreenContentWithDockedButtonInternal,
+  ScreenContentWithDockedButtonSharedProps,
 } from './ScreenContentWithDockInternal';
 
 /**
@@ -17,17 +17,17 @@ export const ScreenContentWithNoHeaderAndTopPadding = ({
   dockContent,
   backgroundColor = WHITE,
   testID,
-}: SharedScreenContentProps) => {
+}: ScreenContentWithDockedButtonSharedProps) => {
   const paddingBottom = useBottomPaddingWithSafeArea();
   const {top} = useSafeAreaInsets();
   return (
-    <ScreenContentWithDockInternal
+    <ScreenContentWithDockedButtonInternal
       testID={testID}
       backgroundColor={backgroundColor}
       contentContainerStyle={[contentContainerStyle, {paddingTop: top + 80}]}
       dockContainerStyle={[dockContainerStyle, {paddingBottom}]}
       dockContent={dockContent}>
       {children}
-    </ScreenContentWithDockInternal>
+    </ScreenContentWithDockedButtonInternal>
   );
 };

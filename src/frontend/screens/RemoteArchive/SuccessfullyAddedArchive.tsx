@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {Button} from '../../sharedComponents/Button';
 import GreenCheck from '../../images/Success.svg';
 import {MEDIUM_GREY} from '../../lib/styles';
@@ -32,7 +32,7 @@ export const SuccessfullyAddedArchive = ({
   const {formatMessage} = useIntl();
   const {archiveName, url} = route.params;
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       dockContent={
         <Button
           fullWidth
@@ -55,6 +55,6 @@ export const SuccessfullyAddedArchive = ({
       <BodyText variant="smallMeta" style={{color: MEDIUM_GREY}}>
         {url}
       </BodyText>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };

@@ -10,7 +10,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 import {SvgProps} from 'react-native-svg';
 import {NEW_DARK_GREY, DARK_ORANGE} from '../../lib/styles';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -61,7 +61,7 @@ export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
   }
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDock
       contentContainerStyle={{paddingTop: top}}
       dockContent={
         <View style={styles.buttonsContainer}>
@@ -93,7 +93,7 @@ export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
           <InfoListItem Icon={Checkmark} text={t(m.manageControl)} />
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 

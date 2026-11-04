@@ -6,7 +6,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
-import {NEW_DARK_GREY, WHITE} from '../../lib/styles';
+import {NEW_DARK_GREY} from '../../lib/styles';
 import ExchangeIcon from '../../images/OrangeExchange.svg';
 import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 
@@ -51,7 +51,7 @@ export function ExchangeSoloScreen({onGoBack}: ExchangeSoloScreenProps) {
 
   return (
     <ScreenContentWithButtonDock
-      dockContent={
+      bottomButton={
         <SecondaryButton fullSize text={t(m.goBack)} onPress={onGoBack} />
       }>
       <View style={styles.container}>
@@ -98,8 +98,6 @@ function ListItem({text}: {text: string}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: WHITE,
-    padding: 20,
     gap: 10,
     alignItems: 'center',
   },

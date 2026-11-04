@@ -208,6 +208,7 @@ export function createAppProvidersWrapper({
   };
 
   const teardown = () => {
+    persistedDraftObservationStore.actions.clearDraft();
     localDiscoveryController.stop();
     appDiagnosticMetrics.setEnabled(false);
     deviceDiagnosticMetrics.setEnabled(false);

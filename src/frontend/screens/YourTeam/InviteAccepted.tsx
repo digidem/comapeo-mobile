@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import GreenCheck from '../../images/Success.svg';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import React from 'react';
@@ -8,8 +8,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {BLACK} from '../../lib/styles';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   inviteAccepted: {
@@ -36,33 +35,13 @@ export const InviteAccepted = ({
 }: NativeRootNavigationProps<'InviteAccepted'>) => {
   const {formatMessage: t} = useIntl();
   const {name} = route.params;
-  const {top} = useSafeAreaInsets();
-  const paddingBottom = useBottomPaddingWithSafeArea();
 
   usePreventBackNavigation();
 
   return (
-    <View style={[styles.container, {paddingTop: top + 80, paddingBottom}]}>
-      <View style={{alignItems: 'center', gap: 30}}>
-        <GreenCheck width="80" height="80" />
-        <HeaderText variant="header1" style={{color: BLACK}}>
-          {t(m.inviteAccepted)}
-        </HeaderText>
-        <BodyText style={{textAlign: 'center', paddingHorizontal: 40}}>
-          <FormattedMessage
-            {...m.partOfProject}
-            values={{
-              deviceName: name,
-              bold: (chunks: React.ReactNode) => (
-                <BodyText key="bold" weight={700}>
-                  {chunks}
-                </BodyText>
-              ),
-            }}
-          />
-        </BodyText>
-      </View>
-      <View style={{alignItems: 'center', gap: 12}}>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.content}
+      topButton={
         <PrimaryButton
           fullSize
           text={t(m.addAnotherDevice)}
@@ -70,21 +49,42 @@ export const InviteAccepted = ({
             navigation.popTo('SelectDevice');
           }}
         />
+      }
+      bottomButton={
         <SecondaryButton
           fullSize
           text={t(m.done)}
           onPress={() => navigation.popToTop()}
         />
-      </View>
-    </View>
+      }>
+      <GreenCheck width="80" height="80" />
+      <HeaderText variant="header1" style={{color: BLACK}}>
+        {t(m.inviteAccepted)}
+      </HeaderText>
+      <BodyText style={styles.description}>
+        <FormattedMessage
+          {...m.partOfProject}
+          values={{
+            deviceName: name,
+            bold: (chunks: React.ReactNode) => (
+              <BodyText key="bold" weight={700}>
+                {chunks}
+              </BodyText>
+            ),
+          }}
+        />
+      </BodyText>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
+  content: {
     alignItems: 'center',
-    justifyContent: 'space-between',
-    flex: 1,
+    gap: 30,
+  },
+  description: {
+    textAlign: 'center',
+    paddingHorizontal: 40,
   },
 });

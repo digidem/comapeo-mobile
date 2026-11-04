@@ -11,6 +11,7 @@ import {createOnboardingScreens} from './OnboardingScreens';
 import {createAppScreens} from './AppScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {PendingMapSharesListener} from '../../sharedComponents/PendingMapSharesListener';
+import {PendingJoinRequestsListener} from '../../sharedComponents/PendingJoinRequestsListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {AuthScreen} from '../../screens/AuthScreen';
@@ -20,8 +21,12 @@ import {RootStack} from './RootStack';
 import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {InviteReceived} from '../../screens/Invites/InviteReceived';
+import {RequestToJoin} from '../../screens/Invites/RequestToJoin';
+import {JoinProject} from '../../screens/Invites/JoinProject';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
+import type {ReceivedInviteLink} from '../../lib/inviteLinks';
+import type {ReceivedJoinRequest} from '../../hooks/useInviteLinks';
 import {CommonActions, StackActions} from '@react-navigation/native';
 import {RUBIK} from '../../lib/fonts';
 
@@ -64,8 +69,18 @@ type LayoutProps = Parameters<NavigatorLayout>[0];
 // match the screen above it: white like the tabs, except on these screens.
 function openSheetAction(
   {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
-  name: 'InviteReceived' | 'MapReceivedBottomSheet',
-  params: {inviteId: string} | {shareId: string},
+  name:
+    | 'ErrorBottomSheet'
+    | 'InviteReceived'
+    | 'MapReceivedBottomSheet'
+    | 'RequestToJoin'
+    | 'ReviewJoinRequest',
+  params:
+    | {error: Error}
+    | {inviteId: string}
+    | {shareId: string}
+    | ReceivedInviteLink
+    | ReceivedJoinRequest,
 ) {
   const currentRoute = state.routes[state.index];
   const presentation = currentRoute
@@ -138,14 +153,31 @@ export const RootStackNavigator = () => {
             )
           }
         />
+        <PendingJoinRequestsListener
+          currentRouteName={state.routes[state.index]?.name}
+          navigateToJoinRequestScreen={request =>
+            navigation.dispatch(
+              openSheetAction(
+                {state, descriptors},
+                'ReviewJoinRequest',
+                request,
+              ),
+            )
+          }
+          navigateToJoinRequestError={error =>
+            navigation.dispatch(
+              openSheetAction({state, descriptors}, 'ErrorBottomSheet', {
+                error,
+              }),
+            )
+          }
+        />
         {!isNotReadyForInvite && (
           <DeepLinkListener
             currentRouteName={state.routes[state.index]?.name}
-            navigateToInviteScreen={inviteId =>
+            navigateToRequestToJoin={invite =>
               navigation.dispatch(
-                openSheetAction({state, descriptors}, 'InviteReceived', {
-                  inviteId,
-                }),
+                openSheetAction({state, descriptors}, 'RequestToJoin', invite),
               )
             }
           />
@@ -215,6 +247,15 @@ export const RootStackNavigator = () => {
             <RootStack.Screen
               name="InviteReceived"
               component={InviteReceived}
+            />
+            <RootStack.Screen name="RequestToJoin" component={RequestToJoin} />
+            <RootStack.Screen
+              name="JoinProject"
+              component={JoinProject}
+              options={{
+                presentation: 'card',
+                contentStyle: {backgroundColor: WHITE},
+              }}
             />
             <RootStack.Screen
               name="InviteSuccessfullyAccepted"

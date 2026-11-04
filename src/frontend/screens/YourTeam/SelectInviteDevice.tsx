@@ -11,7 +11,9 @@ import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {LIGHT_GREY} from '../../lib/styles';
+import {BLACK, LIGHT_GREY, NEW_DARK_GREY} from '../../lib/styles';
+import {LinkIcon} from '../../sharedComponents/LinkIcon';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {
@@ -20,6 +22,7 @@ import {
   MEMBER_ROLE_ID,
 } from '../../sharedTypes';
 import {useInitiallyConnectedPeers} from './useInitiallyConnectedPeers';
+import {Divider} from '../../sharedComponents/Divider';
 
 type PublicPeerInfo = Awaited<
   ReturnType<ComapeoCoreClientApi['listLocalPeers']>
@@ -46,9 +49,21 @@ export function getSelectableDevicesForInvite({
 }
 
 const m = defineMessages({
+  additionalOptions: {
+    id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.additionalOptions',
+    defaultMessage: 'Additional Options',
+  },
+  createInviteLink: {
+    id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.createInviteLink',
+    defaultMessage: 'Create Invite Link',
+  },
   title: {
     id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.title',
-    defaultMessage: 'Select Device to Invite',
+    defaultMessage: 'Invite Device',
+  },
+  connected: {
+    id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.connected',
+    defaultMessage: 'Connected:',
   },
   notSeeingDevice: {
     id: '$1screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice',
@@ -84,9 +99,14 @@ export const SelectInviteDevice = ({
     <ScrollView
       style={styles.container}
       testID="PROJECT.select-invite-device-scrn">
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <WifiIcon style={{marginRight: 10}} width={30} height={30} />
-        <BodyText>{ssid}</BodyText>
+      <View style={styles.connectedRow}>
+        <WifiIcon width={20} height={20} />
+        <BodyText>
+          <BodyText style={styles.connectedLabel} weight={500}>
+            {t(m.connected)}
+          </BodyText>{' '}
+          <BodyText style={styles.ssid}>{ssid}</BodyText>
+        </BodyText>
       </View>
       <HeaderText variant="header6" style={{marginTop: 10}}>
         {t(m.notSeeingDevice)}
@@ -115,6 +135,7 @@ export const SelectInviteDevice = ({
 
           const handlePress = () => {
             navigation.navigate('SelectInviteeRole', {
+              invitee: 'device',
               name: name || '',
               deviceId: deviceId,
               deviceType: deviceType,
@@ -140,6 +161,26 @@ export const SelectInviteDevice = ({
           );
         })}
       </View>
+      <Divider />
+      <View style={styles.additionalOptions}>
+        <BodyText
+          variant="tinyMeta"
+          weight={500}
+          style={styles.additionalOptionsLabel}>
+          {t(m.additionalOptions)}
+        </BodyText>
+        <View style={{alignItems: 'center'}}>
+          <SecondaryButton
+            fullSize
+            testID="PROJECT.create-invite-link-btn"
+            text={t(m.createInviteLink)}
+            onPress={() => navigation.navigate('InviteLinkIntro')}
+            renderIcon={({color, size}) => (
+              <LinkIcon size={size} color={color} />
+            )}
+          />
+        </View>
+      </View>
     </ScrollView>
   );
 };
@@ -150,6 +191,27 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     paddingTop: 40,
+  },
+  connectedRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  connectedLabel: {
+    textTransform: 'uppercase',
+    color: BLACK,
+  },
+  ssid: {
+    color: NEW_DARK_GREY,
+  },
+  additionalOptions: {
+    marginTop: 40,
+    marginBottom: 40,
+    gap: 15,
+  },
+  additionalOptionsLabel: {
+    textTransform: 'uppercase',
+    color: BLACK,
   },
   deviceListContainer: {
     gap: 10,

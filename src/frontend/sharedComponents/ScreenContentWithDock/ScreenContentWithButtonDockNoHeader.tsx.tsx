@@ -18,7 +18,7 @@ export const ScreenContentWithButtonDockNoHeader = ({
   backgroundColor = WHITE,
   testID,
 }: ScreenContentWithDockedButtonSharedProps & {
-  contentContainerStyle: Omit<
+  contentContainerStyle?: Omit<
     ScreenContentWithDockedButtonSharedProps['contentContainerStyle'],
     'topPadding'
   >;

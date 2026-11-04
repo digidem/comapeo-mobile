@@ -9,7 +9,7 @@ export type ScreenContentWithDockedButtonSharedProps = {
   children: ReactNode;
   dockContainerStyle?: Omit<
     ViewStyleProp,
-    'paddingBottom' | 'alignItems' | 'gap' | 'flex'
+    'paddingBottom' | 'alignItems' | 'gap' | 'flex' | 'paddingTop'
   >;
   contentContainerStyle?: Omit<ViewStyleProp, 'backgroundColor' | 'flex'>;
   testID?: string;
@@ -43,7 +43,13 @@ export const ScreenContentWithDockedButtonInternal = ({
       <View
         style={[
           dockContainerStyle,
-          {paddingBottom, flex: 0, alignItems: 'center', gap: 20},
+          {
+            paddingBottom,
+            flex: 0,
+            alignItems: 'center',
+            gap: 20,
+            paddingTop: 20,
+          },
         ]}>
         {topButton}
         {bottomButton}

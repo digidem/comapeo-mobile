@@ -15,11 +15,13 @@ export const ScreenContentWithButtonDock = ({
   topButton,
   bottomButton,
   backgroundColor = WHITE,
+  loading,
   testID,
 }: ScreenContentWithDockedButtonSharedProps) => {
   return (
     <ScreenContentWithDockedButtonInternal
       testID={testID}
+      loading={loading}
       backgroundColor={backgroundColor}
       contentContainerStyle={[contentContainerStyle, {paddingTop: 20}]}
       dockContainerStyle={[dockContainerStyle]}

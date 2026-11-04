@@ -16,6 +16,7 @@ export const ScreenContentWithButtonDockNoHeader = ({
   topButton,
   bottomButton,
   backgroundColor = WHITE,
+  loading,
   testID,
 }: ScreenContentWithDockedButtonSharedProps & {
   contentContainerStyle?: Omit<
@@ -26,6 +27,7 @@ export const ScreenContentWithButtonDockNoHeader = ({
   const {top} = useSafeAreaInsets();
   return (
     <ScreenContentWithDockedButtonInternal
+      loading={loading}
       testID={testID}
       backgroundColor={backgroundColor}
       contentContainerStyle={[contentContainerStyle, {paddingTop: top + 80}]}

@@ -4,6 +4,7 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import {ViewStyleProp} from '../../sharedTypes';
 import {WHITE} from '../../lib/styles';
 import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
+import {LoadingIndicator} from '../LoadingIndicator';
 
 export type ScreenContentWithDockedButtonSharedProps = {
   children: ReactNode;
@@ -16,6 +17,7 @@ export type ScreenContentWithDockedButtonSharedProps = {
   backgroundColor?: string;
   topButton?: ReactNode;
   bottomButton: ReactNode;
+  loading?: boolean;
 };
 
 /**
@@ -29,6 +31,7 @@ export const ScreenContentWithDockedButtonInternal = ({
   bottomButton,
   topButton,
   backgroundColor = WHITE,
+  loading,
   testID,
 }: ScreenContentWithDockedButtonSharedProps) => {
   const paddingBottom = useBottomPaddingWithSafeArea();
@@ -51,8 +54,14 @@ export const ScreenContentWithDockedButtonInternal = ({
             paddingTop: 20,
           },
         ]}>
-        {topButton}
-        {bottomButton}
+        {loading ? (
+          <LoadingIndicator />
+        ) : (
+          <>
+            {topButton}
+            {bottomButton}
+          </>
+        )}
       </View>
     </View>
   );

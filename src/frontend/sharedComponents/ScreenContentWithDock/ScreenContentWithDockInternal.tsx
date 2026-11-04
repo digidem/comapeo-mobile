@@ -42,7 +42,7 @@ export const ScreenContentWithDockedButtonInternal = ({
         style={styles.scrollViewRoot}
         contentContainerStyle={[
           // these are general patterns, but can be overwritten when neccessary
-          {paddingHorizontal: 20, alignItems: 'center'},
+          {paddingHorizontal: 20, alignItems: 'center', paddingTop: 20},
           contentContainerStyle,
         ]}>
         {children}

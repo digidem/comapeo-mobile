@@ -1,15 +1,7 @@
 import * as React from 'react';
 import {useForm} from 'react-hook-form';
 import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  ScrollView,
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-} from 'react-native';
-import {LoadingIndicator} from '../../../sharedComponents/LoadingIndicator';
+import {StyleSheet, View} from 'react-native';
 import {useCreateProject, useUpdateProjectSettings} from '@comapeo/core-react';
 import {HookFormTextInput} from '../../../sharedComponents/HookFormTextInput';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
@@ -26,7 +18,7 @@ import SpeechBubbleIcon from '../../../images/SpeechBubble.svg';
 import {BLUE_GREY, NEW_DARK_GREY} from '../../../lib/styles';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
-import {useBottomPaddingWithSafeArea} from '../../../hooks/useBottomPaddingWithSafeArea';
+import {ScreenContentWithButtonDock} from '../../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 
 const m = defineMessages({
   title: {
@@ -80,7 +72,6 @@ export const CreateOrNameSoloProject = ({
   const isSolo = route.name === 'NameSoloProject';
 
   const {formatMessage: t} = useIntl();
-  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const {setActiveProjectId} = useActiveProjectIdActions();
   const createProjectMutation = useCreateProject();
@@ -162,61 +153,40 @@ export const CreateOrNameSoloProject = ({
   };
 
   return (
-    <KeyboardAvoidingView style={{flex: 1}}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <View style={[styles.container, {paddingBottom}]}>
-            <View>
-              <HeaderText variant="header5" style={{marginHorizontal: 20}}>
-                {t(m.enterName)}
-              </HeaderText>
-              <View style={{marginHorizontal: 20, marginTop: 10}}>
-                <HookFormTextInput
-                  testID="PROJECT.name-inp"
-                  control={control}
-                  name="projectName"
-                  rules={{maxLength: 60, required: true, minLength: 1}}
-                  showCharacterCount
-                />
-              </View>
-              <View style={styles.divider} />
-              <View style={styles.infoBox}>
-                <HeaderText variant="header6" style={styles.infoHeading}>
-                  {t(m.keepInMind)}
-                </HeaderText>
+    <ScreenContentWithButtonDock
+      loading={mutationIsPending}
+      contentContainerStyle={{gap: 20}}
+      bottomButton={
+        <PrimaryButton
+          testID="PROJECT.create-btn"
+          fullSize={true}
+          text={isSolo ? t(m.saveProjectButton) : t(m.createProjectButton)}
+          onPress={handleSubmit(handleCreateOrUpdateProject)}
+        />
+      }>
+      <HeaderText style={{alignSelf: 'flex-start'}} variant="header5">
+        {t(m.enterName)}
+      </HeaderText>
+      <View style={{alignSelf: 'stretch'}}>
+        <HookFormTextInput
+          testID="PROJECT.name-inp"
+          control={control}
+          name="projectName"
+          rules={{maxLength: 60, required: true, minLength: 1}}
+          showCharacterCount
+        />
+      </View>
+      <View style={styles.divider} />
+      <View style={styles.infoBox}>
+        <HeaderText variant="header6" style={styles.infoHeading}>
+          {t(m.keepInMind)}
+        </HeaderText>
 
-                <InfoRow Icon={UniqueProjectIcon} text={t(m.projectUnique)} />
-                <InfoRow
-                  Icon={NameMismatchIcon}
-                  text={t(m.existingProjectName)}
-                />
-                <InfoRow Icon={SpeechBubbleIcon} text={t(m.requestInvites)} />
-              </View>
-            </View>
-
-            <View
-              style={{
-                paddingHorizontal: 20,
-                alignItems: 'center',
-                paddingTop: 10,
-              }}>
-              {mutationIsPending ? (
-                <LoadingIndicator size="large" />
-              ) : (
-                <PrimaryButton
-                  testID="PROJECT.create-btn"
-                  fullSize={true}
-                  text={
-                    isSolo ? t(m.saveProjectButton) : t(m.createProjectButton)
-                  }
-                  onPress={handleSubmit(handleCreateOrUpdateProject)}
-                />
-              )}
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        <InfoRow Icon={UniqueProjectIcon} text={t(m.projectUnique)} />
+        <InfoRow Icon={NameMismatchIcon} text={t(m.existingProjectName)} />
+        <InfoRow Icon={SpeechBubbleIcon} text={t(m.requestInvites)} />
+      </View>
+    </ScreenContentWithButtonDock>
   );
 };
 
@@ -255,23 +225,15 @@ function InfoRow({Icon, text}: InfoRowProps) {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    flexGrow: 1,
-  },
-  container: {
-    paddingTop: 40,
-    paddingBottom: 20,
-    minHeight: '100%',
-    justifyContent: 'space-between',
+    flex: 1,
   },
   divider: {
+    alignSelf: 'stretch',
     height: 1,
     backgroundColor: BLUE_GREY,
-    marginHorizontal: 20,
-    marginTop: 30,
-    marginBottom: 20,
   },
   infoBox: {
-    marginHorizontal: 20,
+    alignSelf: 'stretch',
     padding: 15,
     borderWidth: 1,
     borderColor: BLUE_GREY,

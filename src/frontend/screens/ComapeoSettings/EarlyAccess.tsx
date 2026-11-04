@@ -60,7 +60,7 @@ export const EarlyAccess = ({
 
   return (
     <ScreenContentWithButtonDock
-      dockContent={
+      bottomButton={
         <SecondaryButton
           fullSize
           text={formatMessage(m.updates)}
@@ -70,9 +70,7 @@ export const EarlyAccess = ({
         />
       }
       contentContainerStyle={styles.contentContainer}>
-      <View style={styles.section}>
-        <BodyText>{formatMessage(m.intro)}</BodyText>
-      </View>
+      <BodyText>{formatMessage(m.intro)}</BodyText>
 
       {isEarlyEnabled ? (
         <View style={styles.infoBox}>
@@ -115,10 +113,7 @@ EarlyAccess.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
   contentContainer: {
-    padding: 20,
     gap: 30,
-  },
-  section: {
     paddingTop: 40,
   },
   infoBox: {

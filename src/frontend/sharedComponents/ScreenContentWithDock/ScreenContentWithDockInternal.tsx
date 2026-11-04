@@ -41,6 +41,7 @@ export const ScreenContentWithDockedButtonInternal = ({
         bounces={false}
         style={styles.scrollViewRoot}
         contentContainerStyle={[
+          // these are general patterns, but can be overwritten when neccessary
           {paddingHorizontal: 20, alignItems: 'center'},
           contentContainerStyle,
         ]}>
@@ -49,6 +50,7 @@ export const ScreenContentWithDockedButtonInternal = ({
       <View
         style={[
           dockContainerStyle,
+          //these intentionally cannot be overwritted as the spacing and padding is opinionated here
           {
             paddingBottom,
             flex: 0,

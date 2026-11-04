@@ -23,8 +23,8 @@ export const ScreenContentWithButtonDock = ({
       testID={testID}
       loading={loading}
       backgroundColor={backgroundColor}
-      contentContainerStyle={[contentContainerStyle, {paddingTop: 20}]}
-      dockContainerStyle={[dockContainerStyle]}
+      contentContainerStyle={contentContainerStyle}
+      dockContainerStyle={dockContainerStyle}
       topButton={topButton}
       bottomButton={bottomButton}>
       {children}

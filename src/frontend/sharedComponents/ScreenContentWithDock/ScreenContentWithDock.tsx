@@ -1,10 +1,14 @@
-import {ReactNode, type PropsWithChildren} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-
-import {ViewStyleProp} from '../../sharedTypes';
 import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 import {WHITE} from '../../lib/styles';
+import {
+  ScreenContentWithDockInternal,
+  SharedScreenContentProps,
+} from './ScreenContentWithDockInternal';
 
+/**
+ *
+ * @desc This is an opionated component and should only be used for screens with a header
+ */
 export const ScreenContentWithDock = ({
   children,
   contentContainerStyle,
@@ -12,38 +16,16 @@ export const ScreenContentWithDock = ({
   dockContent,
   backgroundColor = WHITE,
   testID,
-}: PropsWithChildren<{
-  dockContent: ReactNode;
-  dockContainerStyle?: ViewStyleProp;
-  contentContainerStyle?: ViewStyleProp;
-  testID?: string;
-  backgroundColor?: string;
-}>) => {
+}: SharedScreenContentProps) => {
   const paddingBottom = useBottomPaddingWithSafeArea();
   return (
-    <View style={{backgroundColor, flex: 1}} testID={testID}>
-      <ScrollView
-        bounces={false}
-        style={styles.scrollViewRoot}
-        contentContainerStyle={[{paddingTop: 20}, contentContainerStyle]}>
-        {children}
-      </ScrollView>
-      <View
-        style={[
-          styles.dockedContentContainer,
-          {paddingBottom},
-          dockContainerStyle,
-        ]}>
-        {dockContent}
-      </View>
-    </View>
+    <ScreenContentWithDockInternal
+      testID={testID}
+      backgroundColor={backgroundColor}
+      contentContainerStyle={[contentContainerStyle, {paddingTop: 20}]}
+      dockContainerStyle={[dockContainerStyle, {paddingBottom}]}
+      dockContent={dockContent}>
+      {children}
+    </ScreenContentWithDockInternal>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollViewRoot: {flex: 1},
-  dockedContentContainer: {
-    flex: 0,
-    alignItems: 'center',
-  },
-});

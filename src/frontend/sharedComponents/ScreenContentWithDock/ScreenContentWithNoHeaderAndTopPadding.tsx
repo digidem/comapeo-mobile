@@ -1,10 +1,15 @@
-import {ReactNode, type PropsWithChildren} from 'react';
-
-import {ViewStyleProp} from '../../sharedTypes';
-import {WHITE} from '../../lib/styles';
-import {ScreenContentWithDock} from './ScreenContentWithDock';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
+import {WHITE} from '../../lib/styles';
+import {
+  ScreenContentWithDockInternal,
+  SharedScreenContentProps,
+} from './ScreenContentWithDockInternal';
 
+/**
+ *
+ * @desc This is an opionated component and should only be used for screens no navigation header.
+ */
 export const ScreenContentWithNoHeaderAndTopPadding = ({
   children,
   contentContainerStyle,
@@ -12,22 +17,17 @@ export const ScreenContentWithNoHeaderAndTopPadding = ({
   dockContent,
   backgroundColor = WHITE,
   testID,
-}: PropsWithChildren<{
-  dockContent: ReactNode;
-  dockContainerStyle?: ViewStyleProp;
-  contentContainerStyle?: ViewStyleProp;
-  testID?: string;
-  backgroundColor?: string;
-}>) => {
+}: SharedScreenContentProps) => {
+  const paddingBottom = useBottomPaddingWithSafeArea();
   const {top} = useSafeAreaInsets();
   return (
-    <ScreenContentWithDock
-      dockContent={dockContent}
-      dockContainerStyle={dockContainerStyle}
-      backgroundColor={backgroundColor}
+    <ScreenContentWithDockInternal
       testID={testID}
-      contentContainerStyle={{...contentContainerStyle, paddingTop: top + 80}}>
+      backgroundColor={backgroundColor}
+      contentContainerStyle={[contentContainerStyle, {paddingTop: top + 80}]}
+      dockContainerStyle={[dockContainerStyle, {paddingBottom}]}
+      dockContent={dockContent}>
       {children}
-    </ScreenContentWithDock>
+    </ScreenContentWithDockInternal>
   );
 };

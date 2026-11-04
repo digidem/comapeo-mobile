@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {StyleSheet} from 'react-native';
 
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {ScreenContentWithButtonDock} from '../../../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
@@ -40,15 +39,15 @@ export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = () => {
 
   return (
     <ScreenContentWithButtonDock
-      dockContent={
+      bottomButton={
         <PrimaryButton
           fullSize
           onPress={() => navigate('SetPasscode')}
           text={t(m.continue)}
         />
       }
-      contentContainerStyle={styles.contentContainer}>
-      <HeaderText variant="header1" style={styles.title}>
+      contentContainerStyle={{gap: 20}}>
+      <HeaderText variant="header1" style={{textAlign: 'center'}}>
         {t(m.title)}
       </HeaderText>
       <BodyText>{t(m.passcodeDescription)}</BodyText>
@@ -69,12 +68,3 @@ export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = () => {
 };
 
 AppPasscode.navTitle = m.navTitle;
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    gap: 20,
-  },
-  title: {
-    textAlign: 'center',
-  },
-});

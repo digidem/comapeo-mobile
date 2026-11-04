@@ -43,7 +43,7 @@ export const DeviceRemovedSuccess = ({
 
   return (
     <ScreenContentWithButtonDock
-      dockContent={
+      bottomButton={
         <PrimaryButton
           fullSize
           text={t(m.returnToTeam)}

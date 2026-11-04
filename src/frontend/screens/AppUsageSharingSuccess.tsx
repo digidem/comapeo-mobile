@@ -40,7 +40,7 @@ export const AppUsageSharingSuccess = ({
 
   return (
     <ScreenContentWithButtonDockNoHeader
-      dockContent={
+      bottomButton={
         <SecondaryButton
           fullSize
           text={formatMessage(m.done)}

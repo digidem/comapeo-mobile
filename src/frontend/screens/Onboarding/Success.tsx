@@ -16,7 +16,6 @@ import AntDesign from '@react-native-vector-icons/ant-design';
 import TracksIcon from '../../images/Tracks.svg';
 import {usePreventRemove} from '@react-navigation/native';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
-import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 const m = defineMessages({
   deviceReady: {
@@ -70,21 +69,18 @@ export const Success = ({
   return (
     <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={{alignItems: 'center', gap: 20}}
-      dockContent={
-        status === 'pending' ? (
-          <LoadingIndicator />
-        ) : (
-          <PrimaryButton
-            testID="ONBOARDING.navigate-to-map-btn"
-            fullSize
-            text={formatMessage(m.startMapping)}
-            iconPosition="left"
-            renderIcon={({size, color}) => (
-              <MaterialIcon name="map" size={size} color={color} />
-            )}
-            onPress={handleGoToMap}
-          />
-        )
+      loading={status === 'pending'}
+      bottomButton={
+        <PrimaryButton
+          testID="ONBOARDING.navigate-to-map-btn"
+          fullSize
+          text={formatMessage(m.startMapping)}
+          iconPosition="left"
+          renderIcon={({size, color}) => (
+            <MaterialIcon name="map" size={size} color={color} />
+          )}
+          onPress={handleGoToMap}
+        />
       }>
       <View style={styles.iconContainer}>
         <DeviceIcon width={40} height={60} />

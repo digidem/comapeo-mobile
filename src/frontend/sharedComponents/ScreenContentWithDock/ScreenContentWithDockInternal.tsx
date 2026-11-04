@@ -40,7 +40,10 @@ export const ScreenContentWithDockedButtonInternal = ({
       <ScrollView
         bounces={false}
         style={styles.scrollViewRoot}
-        contentContainerStyle={[contentContainerStyle]}>
+        contentContainerStyle={[
+          {paddingHorizontal: 20, alignItems: 'center'},
+          contentContainerStyle,
+        ]}>
         {children}
       </ScrollView>
       <View

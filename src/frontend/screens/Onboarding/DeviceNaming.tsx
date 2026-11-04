@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   Keyboard,
-  KeyboardAvoidingView,
   StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
@@ -26,9 +25,10 @@ import {
 import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   header: {
@@ -57,6 +57,8 @@ export const DeviceNaming = ({
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const {formatMessage: t} = useIntl();
   const {mutate, status} = useSetOwnDeviceInfo();
+  const paddingBottom = useBottomPaddingWithSafeArea();
+  const {top} = useSafeAreaInsets();
 
   function setNameWithValidation(nameValue: string) {
     if (nameValue.length > 60) {
@@ -88,31 +90,16 @@ export const DeviceNaming = ({
   }
 
   return (
-    <ScreenContentWithButtonDockNoHeader
-      dockContainerStyle={styles.buttonContainer}
-      dockContent={
-        <KeyboardAvoidingView behavior="padding">
-          {status === 'pending' ? (
-            <LoadingIndicator size="large" style={{flex: 0}} />
-          ) : (
-            <PrimaryButton
-              testID="ONBOARDING.add-name-btn"
-              fullSize
-              onPress={handleSavePress}
-              text={t(m.save)}
-              renderIcon={({color, size}) => (
-                <Ionicons
-                  name="checkmark-circle-outline"
-                  color={color}
-                  size={size}
-                />
-              )}
-            />
-          )}
-        </KeyboardAvoidingView>
-      }>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: 20,
+          justifyContent: 'space-between',
+          paddingTop: top + 80,
+          alignItems: 'center',
+        }}>
+        <View>
           <View style={styles.headerArea}>
             <DeviceIcon width={39} height={60} />
             <HeaderText variant="header2" style={styles.title}>
@@ -146,8 +133,27 @@ export const DeviceNaming = ({
             </View>
           </View>
         </View>
-      </TouchableWithoutFeedback>
-    </ScreenContentWithButtonDockNoHeader>
+        <View style={{alignItems: 'center', paddingBottom}}>
+          {status === 'pending' ? (
+            <LoadingIndicator size="large" style={{flex: 0}} />
+          ) : (
+            <PrimaryButton
+              testID="ONBOARDING.add-name-btn"
+              fullSize
+              onPress={handleSavePress}
+              text={t(m.save)}
+              renderIcon={({color, size}) => (
+                <Ionicons
+                  name="checkmark-circle-outline"
+                  color={color}
+                  size={size}
+                />
+              )}
+            />
+          )}
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

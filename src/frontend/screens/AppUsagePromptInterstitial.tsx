@@ -56,25 +56,25 @@ export const AppUsagePromptInterstitial = ({
 
   return (
     <ScreenContentWithButtonDockNoHeader
-      dockContent={
-        <View style={styles.buttonsContainer}>
-          <PrimaryButton
-            fullSize
-            text={t(m.countIn)}
-            onPress={() => {
-              setOptedIn(true);
-              navigation.replace('AppUsageSharingSuccess');
-            }}
-          />
-          <SecondaryButton
-            fullSize
-            text={t(m.notNow)}
-            onPress={() => {
-              setOptedIn(false);
-              navigation.pop();
-            }}
-          />
-        </View>
+      topButton={
+        <PrimaryButton
+          fullSize
+          text={t(m.countIn)}
+          onPress={() => {
+            setOptedIn(true);
+            navigation.replace('AppUsageSharingSuccess');
+          }}
+        />
+      }
+      bottomButton={
+        <SecondaryButton
+          fullSize
+          text={t(m.notNow)}
+          onPress={() => {
+            setOptedIn(false);
+            navigation.pop();
+          }}
+        />
       }>
       <View style={styles.headerArea}>
         <FingerPressingIcon width={60} height={110} />
@@ -138,8 +138,5 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     flexShrink: 1,
     color: NEW_DARK_GREY,
-  },
-  buttonsContainer: {
-    gap: 15,
   },
 });

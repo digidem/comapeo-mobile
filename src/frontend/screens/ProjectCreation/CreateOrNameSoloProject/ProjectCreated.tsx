@@ -55,49 +55,44 @@ export const ProjectCreated = ({
 
   return (
     <ScreenContentWithButtonDockNoHeader
-      dockContainerStyle={{gap: 12}}
-      contentContainerStyle={{alignItems: 'center', gap: 30}}
-      dockContent={
-        <>
-          <PrimaryButton
-            fullSize
-            onPress={handleGoToInviteScreen}
-            text={t(m.inviteDevice)}
-          />
-          <SecondaryButton fullSize text={t(m.done)} onPress={handleGoToMap} />
-        </>
+      contentContainerStyle={{gap: 30}}
+      topButton={
+        <PrimaryButton
+          fullSize
+          onPress={handleGoToInviteScreen}
+          text={t(m.inviteDevice)}
+        />
+      }
+      bottomButton={
+        <SecondaryButton fullSize text={t(m.done)} onPress={handleGoToMap} />
       }>
-      <>
-        <GreenCheck />
-        <HeaderText
-          variant="header1"
-          style={{textAlign: 'center', color: BLACK}}>
-          {t(m.success)}
-        </HeaderText>
-        <View style={{gap: 30}}>
-          <BodyText style={{color: NEW_DARK_GREY, paddingHorizontal: 20}}>
-            <FormattedMessage
-              {...m.projectReady}
-              values={{
-                projectName: <HeaderText variant="header5">{name}</HeaderText>,
-              }}
-            />
-          </BodyText>
+      <GreenCheck />
+      <HeaderText variant="header1" style={{textAlign: 'center', color: BLACK}}>
+        {t(m.success)}
+      </HeaderText>
+      <View style={{gap: 30}}>
+        <BodyText style={{color: NEW_DARK_GREY, paddingHorizontal: 20}}>
+          <FormattedMessage
+            {...m.projectReady}
+            values={{
+              projectName: <HeaderText variant="header5">{name}</HeaderText>,
+            }}
+          />
+        </BodyText>
 
-          {statsShared ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 10,
-                paddingHorizontal: 30,
-              }}>
-              <GraphIcon width={20} height={20} color={NEW_DARK_GREY} />
-              <BodyText>{t(m.sharedLine)}</BodyText>
-            </View>
-          ) : null}
-        </View>
-      </>
+        {statsShared ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 10,
+              paddingHorizontal: 30,
+            }}>
+            <GraphIcon width={20} height={20} color={NEW_DARK_GREY} />
+            <BodyText>{t(m.sharedLine)}</BodyText>
+          </View>
+        ) : null}
+      </View>
     </ScreenContentWithButtonDockNoHeader>
   );
 };

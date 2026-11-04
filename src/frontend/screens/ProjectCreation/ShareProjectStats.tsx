@@ -9,14 +9,12 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
-import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {toError} from '../../utils/errors';
 import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   shareProjectStats: {
@@ -55,7 +53,6 @@ export const ShareProjectStats = ({
 
   const {projectId} = useActiveProject();
   const updateSettings = useUpdateProjectSettings({projectId});
-  const {top} = useSafeAreaInsets();
 
   usePreventBackNavigation();
 
@@ -96,27 +93,21 @@ export const ShareProjectStats = ({
 
   return (
     <ScreenContentWithButtonDockNoHeader
-      contentContainerStyle={[styles.content, {paddingTop: top}]}
-      dockContainerStyle={styles.dock}
-      dockContent={
-        isSubmitting ? (
-          <View style={styles.loading}>
-            <FullScreenCenteredLoader />
-          </View>
-        ) : (
-          <View style={styles.buttons}>
-            <PrimaryButton
-              fullSize
-              onPress={handleShare}
-              text={formatMessage(m.yesShare)}
-            />
-            <SecondaryButton
-              fullSize
-              onPress={handleSkip}
-              text={formatMessage(m.skip)}
-            />
-          </View>
-        )
+      contentContainerStyle={styles.content}
+      loading={isSubmitting}
+      topButton={
+        <PrimaryButton
+          fullSize
+          onPress={handleShare}
+          text={formatMessage(m.yesShare)}
+        />
+      }
+      bottomButton={
+        <SecondaryButton
+          fullSize
+          onPress={handleSkip}
+          text={formatMessage(m.skip)}
+        />
       }>
       <View style={styles.headerBlock}>
         <GraphIcon color={DARK_ORANGE} />
@@ -158,7 +149,6 @@ export const ShareProjectStats = ({
 
 const styles = StyleSheet.create({
   content: {
-    alignItems: 'center',
     gap: 30,
   },
   headerBlock: {
@@ -185,9 +175,6 @@ const styles = StyleSheet.create({
   bulletText: {
     color: NEW_DARK_GREY,
     flex: 1,
-  },
-  dock: {
-    alignItems: 'center',
   },
   buttons: {
     gap: 10,

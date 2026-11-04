@@ -25,32 +25,32 @@ export const DataPrivacy = ({
 
   return (
     <ScreenContentWithButtonDockNoHeader
-      dockContent={
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('OnboardingPrivacyPolicy');
-            }}>
-            <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
-              {t(m.learnMore)}
-            </HeaderText>
-          </TouchableOpacity>
-          <PrimaryButton
-            fullSize
-            text={t(m.next)}
-            iconPosition="right"
-            renderIcon={({color, size}) => (
-              <Ionicons
-                name="arrow-forward-circle-outline"
-                color={color}
-                size={size}
-              />
-            )}
-            onPress={() => {
-              navigation.replace('DeviceNaming');
-            }}
-          />
-        </View>
+      topButton={
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('OnboardingPrivacyPolicy');
+          }}>
+          <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
+            {t(m.learnMore)}
+          </HeaderText>
+        </TouchableOpacity>
+      }
+      bottomButton={
+        <PrimaryButton
+          fullSize
+          text={t(m.next)}
+          iconPosition="right"
+          renderIcon={({color, size}) => (
+            <Ionicons
+              name="arrow-forward-circle-outline"
+              color={color}
+              size={size}
+            />
+          )}
+          onPress={() => {
+            navigation.replace('DeviceNaming');
+          }}
+        />
       }>
       <View style={styles.headerArea}>
         <CoMapeoShield width={60} height={60} />
@@ -116,9 +116,5 @@ const styles = StyleSheet.create({
   bulletText: {
     flexShrink: 1,
     color: NEW_DARK_GREY,
-  },
-  buttonsContainer: {
-    gap: 30,
-    alignItems: 'center',
   },
 });

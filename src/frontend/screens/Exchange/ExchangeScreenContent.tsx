@@ -194,11 +194,11 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
     ]),
   );
 
-  let dockContent: React.ReactNode;
+  let bottomButton: React.ReactNode;
   let syncInfoContent: React.ReactNode;
 
   if (syncStage.name === 'complete-full' && !syncState.data.isSyncEnabled) {
-    dockContent = (
+    bottomButton = (
       <SecondaryButton fullSize text={t(m.close)} onPress={navigation.goBack} />
     );
 
@@ -214,7 +214,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
       case 'idle': {
         const hasConnectedPeers = syncStage.connectedPeersCount > 0;
 
-        dockContent = (
+        bottomButton = (
           <PrimaryButton
             fullSize
             text={t(m.start)}
@@ -240,7 +240,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
         break;
       }
       case 'waiting': {
-        dockContent = (
+        bottomButton = (
           <SecondaryButton
             fullSize={true}
             onPress={() => {
@@ -266,7 +266,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
         break;
       }
       case 'syncing': {
-        dockContent = (
+        bottomButton = (
           <SecondaryButton
             fullSize={true}
             onPress={() => {
@@ -294,7 +294,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
         break;
       }
       case 'complete-partial': {
-        dockContent = (
+        bottomButton = (
           <SecondaryButton
             fullSize={true}
             onPress={() => {
@@ -320,7 +320,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
         break;
       }
       case 'complete-full': {
-        dockContent = syncState.data.isSyncEnabled ? (
+        bottomButton = syncState.data.isSyncEnabled ? (
           <SecondaryButton
             fullSize={true}
             onPress={() => {
@@ -357,7 +357,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   return (
     <ScreenContentWithButtonDock
       contentContainerStyle={styles.contentContainer}
-      dockContent={dockContent}>
+      bottomButton={bottomButton}>
       <WifiCard ssid={ssid} />
       <View style={styles.contentWrapper}>
         <View style={styles.projectInfoContainer}>
@@ -381,7 +381,11 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
             </View>
           )}
         </View>
-        <View style={{flexGrow: 1, justifyContent: 'space-between'}}>
+        <View
+          style={{
+            flexGrow: 1,
+            justifyContent: 'space-between',
+          }}>
           {syncInfoContent}
           <ExchangeSettingsCard
             title={t(
@@ -458,9 +462,7 @@ function SyncProgress({
 }
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingVertical: 20,
     gap: 10,
-    flexGrow: 1,
   },
   projectInfoContainer: {
     alignItems: 'center',
@@ -495,7 +497,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   contentWrapper: {
-    flexGrow: 1,
+    flex: 1,
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 10,

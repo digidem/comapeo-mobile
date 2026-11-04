@@ -8,10 +8,8 @@ import {Control, FieldErrors, useForm} from 'react-hook-form';
 import {useFindRemoteArchive} from '../../hooks/server/projects';
 import {Bar} from 'react-native-progress';
 import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
-import {Button} from '../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../utils/normalizeRemoteArchiveUrl';
-import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useAddServerPeer} from '@comapeo/core-react';
@@ -19,6 +17,8 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
 import SaveCheck from '../../images/CheckMark.svg';
 import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   navTitle: {
@@ -133,7 +133,7 @@ const SearchUrl = ({control, errors}: SearchUrlProp) => {
     navigation.setOptions({headerShown: true});
   }, [navigation]);
   return (
-    <View style={styles.container}>
+    <View style={{padding: 20}}>
       <View style={{flexDirection: 'row', marginBottom: 10}}>
         <HeaderText variant="header5">{formatMessage(m.url)}</HeaderText>
         <HeaderText variant="header5" style={{color: RED}}>
@@ -158,13 +158,14 @@ const SearchUrl = ({control, errors}: SearchUrlProp) => {
 const FindingRemoteArchive = () => {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
+  const {top} = useSafeAreaInsets();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
   return (
-    <View style={[styles.container, {marginTop: 80}]}>
+    <View style={{padding: 20, paddingTop: top + 80}}>
       <HeaderText style={styles.title}>{formatMessage(m.looking)}</HeaderText>
       <Bar
         style={{borderWidth: 0, marginTop: 30}}
@@ -223,16 +224,13 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
 
   return (
     <ScreenContentWithButtonDock
-      dockContent={
-        status === 'pending' ? (
-          <LoadingIndicator style={{marginBottom: 20}} />
-        ) : (
-          <Button
-            fullWidth
-            onPress={
-              handleAddRemoteArchive
-            }>{`+ ${formatMessage(m.navTitle)}`}</Button>
-        )
+      loading={status === 'pending'}
+      bottomButton={
+        <PrimaryButton
+          onPress={() => handleAddRemoteArchive()}
+          fullSize
+          text={formatMessage(m.navTitle)}
+        />
       }>
       <HeaderText variant="header4" style={styles.title}>
         {formatMessage(m.youAreAdding)}
@@ -261,10 +259,6 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
 AddRemoteArchive.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingTop: 40,
-  },
   title: {
     marginBottom: 20,
     textAlign: 'center',

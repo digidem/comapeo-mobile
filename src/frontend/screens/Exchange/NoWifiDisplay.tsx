@@ -30,8 +30,8 @@ export const NoWifiDisplay = ({onGoBack}: {onGoBack: () => void}) => {
 
   return (
     <ScreenContentWithButtonDock
-      contentContainerStyle={styles.contentContainer}
-      dockContent={
+      contentContainerStyle={{gap: 10}}
+      bottomButton={
         <SecondaryButton
           fullSize
           text={t(m.buttonText)}
@@ -49,41 +49,50 @@ export const NoWifiDisplay = ({onGoBack}: {onGoBack: () => void}) => {
         </View>
       </View>
 
-      <View style={styles.contentWrapper}>
-        <View style={styles.projectInfoContainer}>
-          <View style={styles.syncStatusIconWrapper}>
-            <View style={styles.syncStatusCircleOffline}>
-              <WifiOffIcon size={28} color={BLACK} />
+      <View
+        style={{
+          borderWidth: 1,
+          borderColor: BLUE_GREY,
+          borderRadius: 10,
+          paddingTop: 40,
+          paddingBottom: 40,
+          flex: 1,
+          paddingHorizontal: 20,
+          justifyContent: 'space-between',
+        }}>
+        <View>
+          <View style={styles.projectInfoContainer}>
+            <View style={styles.syncStatusIconWrapper}>
+              <View style={styles.syncStatusCircleOffline}>
+                <WifiOffIcon size={28} color={BLACK} />
+              </View>
+              <MaterialIcon
+                name="error"
+                size={28}
+                color={WARNING_RED}
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  bottom: 0,
+                  borderRadius: 14,
+                }}
+              />
             </View>
-            <MaterialIcon
-              name="error"
-              size={28}
-              color={WARNING_RED}
-              style={{
-                position: 'absolute',
-                right: 0,
-                bottom: 0,
-                borderRadius: 14,
-              }}
-            />
           </View>
-        </View>
-
-        <View style={styles.exchangeSettingsCard}>
-          <HeaderText variant="header2" style={{textAlign: 'center'}}>
+          <HeaderText
+            variant="header2"
+            style={{textAlign: 'center', marginTop: 34}}>
             {t(m.title)}
           </HeaderText>
-          <View style={{height: 165}} />
-          <HeaderText
-            variant="header6"
-            style={{
-              textAlign: 'center',
-              marginBottom: 40,
-              paddingHorizontal: 30,
-            }}>
-            {t(m.description)}
-          </HeaderText>
         </View>
+        <HeaderText
+          variant="header6"
+          style={{
+            textAlign: 'center',
+            paddingHorizontal: 30,
+          }}>
+          {t(m.description)}
+        </HeaderText>
       </View>
     </ScreenContentWithButtonDock>
   );
@@ -91,7 +100,6 @@ export const NoWifiDisplay = ({onGoBack}: {onGoBack: () => void}) => {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingVertical: 20,
     gap: 10,
   },
   wifiCard: {
@@ -119,8 +127,6 @@ const styles = StyleSheet.create({
   projectInfoContainer: {
     alignItems: 'center',
     gap: 8,
-    paddingTop: 35,
-    paddingBottom: 40,
   },
   signalIndicator: {
     elevation: 0,
@@ -146,13 +152,5 @@ const styles = StyleSheet.create({
   exchangeSettingsCard: {
     marginTop: 25,
     alignItems: 'center',
-  },
-  contentWrapper: {
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    borderRadius: 10,
-    paddingTop: 20,
-    paddingBottom: 40,
-    paddingHorizontal: 20,
   },
 });

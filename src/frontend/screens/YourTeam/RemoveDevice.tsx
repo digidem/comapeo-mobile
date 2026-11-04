@@ -74,7 +74,7 @@ export const RemoveDevice: NativeNavigationComponent<'RemoveDevice'> = ({
 
   return (
     <ScreenContentWithButtonDock
-      dockContent={
+      bottomButton={
         <DestructiveButton
           fullSize
           text={t(m.removeAndNotifyButton)}

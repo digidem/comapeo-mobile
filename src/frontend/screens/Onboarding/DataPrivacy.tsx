@@ -16,7 +16,7 @@ import {SvgProps} from 'react-native-svg';
 import {COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {m} from './DataPrivacyMessages';
-import {ScreenContentWithNoHeaderAndTopPadding} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithNoHeaderAndTopPadding';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 export const DataPrivacy = ({
   navigation,
@@ -24,7 +24,7 @@ export const DataPrivacy = ({
   const {formatMessage: t} = useIntl();
 
   return (
-    <ScreenContentWithNoHeaderAndTopPadding
+    <ScreenContentWithButtonDockNoHeader
       dockContent={
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
@@ -70,7 +70,7 @@ export const DataPrivacy = ({
           <InfoListItem Icon={SafetyIcon} text={t(m.dataPrivacyDiagnostic)} />
         </View>
       </View>
-    </ScreenContentWithNoHeaderAndTopPadding>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 

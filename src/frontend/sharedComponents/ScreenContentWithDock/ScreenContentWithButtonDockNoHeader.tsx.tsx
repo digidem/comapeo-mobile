@@ -1,5 +1,4 @@
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 import {WHITE} from '../../lib/styles';
 import {
   ScreenContentWithDockedButtonInternal,
@@ -10,23 +9,29 @@ import {
  *
  * @desc This is an opionated component and should only be used for screens no navigation header.
  */
-export const ScreenContentWithNoHeaderAndTopPadding = ({
+export const ScreenContentWithButtonDockNoHeader = ({
   children,
   contentContainerStyle,
   dockContainerStyle,
-  dockContent,
+  topButton,
+  bottomButton,
   backgroundColor = WHITE,
   testID,
-}: ScreenContentWithDockedButtonSharedProps) => {
-  const paddingBottom = useBottomPaddingWithSafeArea();
+}: ScreenContentWithDockedButtonSharedProps & {
+  contentContainerStyle: Omit<
+    ScreenContentWithDockedButtonSharedProps['contentContainerStyle'],
+    'topPadding'
+  >;
+}) => {
   const {top} = useSafeAreaInsets();
   return (
     <ScreenContentWithDockedButtonInternal
       testID={testID}
       backgroundColor={backgroundColor}
       contentContainerStyle={[contentContainerStyle, {paddingTop: top + 80}]}
-      dockContainerStyle={[dockContainerStyle, {paddingBottom}]}
-      dockContent={dockContent}>
+      dockContainerStyle={dockContainerStyle}
+      topButton={topButton}
+      bottomButton={bottomButton}>
       {children}
     </ScreenContentWithDockedButtonInternal>
   );

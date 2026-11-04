@@ -17,7 +17,7 @@ import TracksIcon from '../../images/Tracks.svg';
 import {usePreventRemove} from '@react-navigation/native';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import {ScreenContentWithNoHeaderAndTopPadding} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithNoHeaderAndTopPadding';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 const m = defineMessages({
   deviceReady: {
     id: '$1screens.DeviceNaming.Success.deviceReady',
@@ -68,7 +68,7 @@ export const Success = ({
   }
 
   return (
-    <ScreenContentWithNoHeaderAndTopPadding
+    <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={{alignItems: 'center', gap: 20}}
       dockContent={
         status === 'pending' ? (
@@ -116,7 +116,7 @@ export const Success = ({
           Icon={<TracksIcon height={26} />}
         />
       </View>
-    </ScreenContentWithNoHeaderAndTopPadding>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 

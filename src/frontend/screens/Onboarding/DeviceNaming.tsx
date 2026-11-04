@@ -26,7 +26,7 @@ import {
 import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import {ScreenContentWithNoHeaderAndTopPadding} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithNoHeaderAndTopPadding';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 
@@ -88,7 +88,7 @@ export const DeviceNaming = ({
   }
 
   return (
-    <ScreenContentWithNoHeaderAndTopPadding
+    <ScreenContentWithButtonDockNoHeader
       dockContainerStyle={styles.buttonContainer}
       dockContent={
         <KeyboardAvoidingView behavior="padding">
@@ -147,7 +147,7 @@ export const DeviceNaming = ({
           </View>
         </View>
       </TouchableWithoutFeedback>
-    </ScreenContentWithNoHeaderAndTopPadding>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 

@@ -9,7 +9,7 @@ import {SecondaryButton} from '../sharedComponents/Buttons';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {ScreenContentWithNoHeaderAndTopPadding} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithNoHeaderAndTopPadding';
+import {ScreenContentWithButtonDockNoHeader} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   success: {
@@ -39,7 +39,7 @@ export const AppUsageSharingSuccess = ({
   const deviceName = data?.name;
 
   return (
-    <ScreenContentWithNoHeaderAndTopPadding
+    <ScreenContentWithButtonDockNoHeader
       dockContent={
         <SecondaryButton
           fullSize
@@ -64,7 +64,7 @@ export const AppUsageSharingSuccess = ({
           {formatMessage(m.removeAnytime)}
         </BodyText>
       </View>
-    </ScreenContentWithNoHeaderAndTopPadding>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 

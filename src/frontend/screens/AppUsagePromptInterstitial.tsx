@@ -15,7 +15,7 @@ import {NEW_DARK_GREY} from '../lib/styles';
 
 import {useAppUsageStatsActions} from '../contexts/AppUsageStatsContext';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {ScreenContentWithNoHeaderAndTopPadding} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithNoHeaderAndTopPadding';
+import {ScreenContentWithButtonDockNoHeader} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 const m = defineMessages({
   screenTitle: {
     id: 'screens.AppUsagePrompt.screenTitle',
@@ -55,7 +55,7 @@ export const AppUsagePromptInterstitial = ({
   const {setOptedIn} = useAppUsageStatsActions();
 
   return (
-    <ScreenContentWithNoHeaderAndTopPadding
+    <ScreenContentWithButtonDockNoHeader
       dockContent={
         <View style={styles.buttonsContainer}>
           <PrimaryButton
@@ -90,7 +90,7 @@ export const AppUsagePromptInterstitial = ({
           <InfoListItem Icon={SwitchIcon} text={t(m.turnOffAnytime)} />
         </View>
       </View>
-    </ScreenContentWithNoHeaderAndTopPadding>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 

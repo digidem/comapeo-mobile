@@ -15,7 +15,7 @@ import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {toError} from '../../utils/errors';
-import {ScreenContentWithNoHeaderAndTopPadding} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithNoHeaderAndTopPadding';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
@@ -95,7 +95,7 @@ export const ShareProjectStats = ({
   const isSubmitting = updateSettings.status === 'pending';
 
   return (
-    <ScreenContentWithNoHeaderAndTopPadding
+    <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={[styles.content, {paddingTop: top}]}
       dockContainerStyle={styles.dock}
       dockContent={
@@ -152,7 +152,7 @@ export const ShareProjectStats = ({
           </BodyText>
         </View>
       </View>
-    </ScreenContentWithNoHeaderAndTopPadding>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 

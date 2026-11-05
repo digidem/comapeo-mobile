@@ -123,7 +123,7 @@ export function createAppProvidersWrapper({
   };
 
   const persistedDraftObservationStore = createDraftObservationStore({
-    persist: true,
+    persist: false,
   });
 
   const persistedTrackStore = createTrackStore({

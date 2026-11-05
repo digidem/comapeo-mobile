@@ -155,17 +155,12 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   });
 
   // Cutting the server websocket mid-sync leaves it with partial data.
-  const shouldDisconnectServersWhenLeavingScreen =
-    !syncState.data.isSyncEnabled || syncStage.name === 'complete-full';
-
   // Ref, not a dependency: re-running the focus effect would reconnect servers.
-  const shouldDisconnectServersRef = React.useRef(
-    shouldDisconnectServersWhenLeavingScreen,
-  );
+  const shouldDisconnectServersRef = React.useRef(true);
   React.useEffect(() => {
     shouldDisconnectServersRef.current =
-      shouldDisconnectServersWhenLeavingScreen;
-  }, [shouldDisconnectServersWhenLeavingScreen]);
+      !syncState.data.isSyncEnabled || syncStage.name === 'complete-full';
+  });
 
   useFocusEffect(
     React.useCallback(() => {

@@ -69,6 +69,7 @@ export const ObservationCreate = ({
 
   return (
     <View
+      testID="OBS.create-obs"
       style={{
         flex: 1,
         justifyContent: 'space-between',

@@ -9,13 +9,13 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {DownloadIcon} from '../sharedComponents/icons';
 import {useState} from 'react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
-import {LoadingIndicator} from '../sharedComponents/LoadingIndicator';
 import {useObservations} from '../hooks/server/observations';
 import {useTracks} from '../hooks/server/track';
 import * as Sentry from '@sentry/react-native';
 import {useExportObservations} from '../hooks/server/projects';
 import {errorCodes, isErrorWithCode} from '@react-native-documents/picker';
 import {toError} from '../utils/errors';
+import {ScreenContentWithButtonDock} from '../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 
 const m = defineMessages({
   download: {
@@ -95,81 +95,69 @@ export const ExportObservations = ({
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.optionsContainer}>
-          {observations.length > 0 && (
-            <>
-              <ExportOptionCard
-                title={formatMessage(m.allObservations)}
-                description={formatMessage(m.allObservationsDescription)}
-                isSelected={typeToExport === 'Observation'}
-                showError={showError && !typeToExport}
-                onPress={() => {
-                  setTypeToExport('Observation');
-                  if (showError) {
-                    setShowError(false);
-                  }
-                }}
-              />
-              <ExportOptionCard
-                title={formatMessage(m.allObservationsAndMedia)}
-                description={formatMessage(
-                  m.allObservationsAndMediaDescription,
-                )}
-                isSelected={typeToExport === 'ObservationsWithMedia'}
-                showError={showError && !typeToExport}
-                onPress={() => {
-                  setTypeToExport('ObservationsWithMedia');
-                  if (showError) {
-                    setShowError(false);
-                  }
-                }}
-              />
-            </>
+    <ScreenContentWithButtonDock
+      contentContainerStyle={styles.content}
+      loading={exportAndShare.isPending}
+      bottomButton={
+        <PrimaryButton
+          fullSize={true}
+          onPress={handlePressDownload}
+          text={formatMessage(m.download)}
+          renderIcon={({color, size}) => (
+            <DownloadIcon color={color} size={size} />
           )}
-          {tracks.length > 0 && (
+        />
+      }>
+      <View style={styles.optionsContainer}>
+        {observations.length > 0 && (
+          <>
             <ExportOptionCard
-              title={formatMessage(m.tracks)}
-              description={formatMessage(m.tracksDescription)}
-              isSelected={typeToExport === 'Tracks'}
+              title={formatMessage(m.allObservations)}
+              description={formatMessage(m.allObservationsDescription)}
+              isSelected={typeToExport === 'Observation'}
               showError={showError && !typeToExport}
               onPress={() => {
-                setTypeToExport('Tracks');
+                setTypeToExport('Observation');
                 if (showError) {
                   setShowError(false);
                 }
               }}
             />
-          )}
-        </View>
-        {showError && (
-          <HeaderText
-            variant="header5"
-            style={{
-              color: WARNING_RED,
-              marginTop: 20,
-              textAlign: 'center',
-            }}>
-            {formatMessage(m.errorMessage)}
-          </HeaderText>
+            <ExportOptionCard
+              title={formatMessage(m.allObservationsAndMedia)}
+              description={formatMessage(m.allObservationsAndMediaDescription)}
+              isSelected={typeToExport === 'ObservationsWithMedia'}
+              showError={showError && !typeToExport}
+              onPress={() => {
+                setTypeToExport('ObservationsWithMedia');
+                if (showError) {
+                  setShowError(false);
+                }
+              }}
+            />
+          </>
         )}
-      </View>
-      <View style={styles.buttonContainer}>
-        {!exportAndShare.isPending ? (
-          <PrimaryButton
-            fullSize={true}
-            onPress={handlePressDownload}
-            text={formatMessage(m.download)}
-            renderIcon={({color, size}) => (
-              <DownloadIcon color={color} size={size} />
-            )}
+        {tracks.length > 0 && (
+          <ExportOptionCard
+            title={formatMessage(m.tracks)}
+            description={formatMessage(m.tracksDescription)}
+            isSelected={typeToExport === 'Tracks'}
+            showError={showError && !typeToExport}
+            onPress={() => {
+              setTypeToExport('Tracks');
+              if (showError) {
+                setShowError(false);
+              }
+            }}
           />
-        ) : (
-          <LoadingIndicator />
         )}
       </View>
-    </View>
+      {showError && (
+        <HeaderText variant="header5" style={styles.errorText}>
+          {formatMessage(m.errorMessage)}
+        </HeaderText>
+      )}
+    </ScreenContentWithButtonDock>
   );
 };
 
@@ -207,21 +195,16 @@ export const ExportOptionCard = ({
 ExportObservations.navTitle = m.downloadObservations;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
   content: {
-    flex: 1,
-    padding: 20,
     gap: 20,
   },
   optionsContainer: {
     gap: 15,
   },
-  buttonContainer: {
-    padding: 20,
-    alignItems: 'center',
+  errorText: {
+    color: WARNING_RED,
+    marginTop: 20,
+    textAlign: 'center',
   },
   cardButton: {
     alignItems: 'center',

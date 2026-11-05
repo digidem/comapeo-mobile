@@ -1,15 +1,15 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
+import {View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {
   AllowPermissionButton,
   OpenSettingsButton,
 } from '../../../sharedComponents/PermissionButtons';
 import {DARK_ORANGE} from '../../../lib/styles';
 import HikingIcon from '../../../images/Hiking.svg';
+import {useHeaderHeight} from '@react-navigation/elements';
 
 const m = defineMessages({
   title: {
@@ -39,13 +39,30 @@ export const TrackPermissionScreen = ({
   onOpenSettings: () => void;
 }) => {
   const {formatMessage} = useIntl();
-
+  const headerHeight = useHeaderHeight();
   return (
-    <ScreenContentWithDock
-      testID="TRACK.permission"
-      contentContainerStyle={styles.content}
-      dockContent={
-        canAskAgain ? (
+    <>
+      <View
+        testID="MAP.location-permission"
+        style={{
+          flexGrow: 1,
+          justifyContent: 'center',
+          marginTop: headerHeight,
+        }}>
+        <IconTitleDescription
+          icon={
+            <HikingIcon
+              color={DARK_ORANGE}
+              width={ICON_SIZE}
+              height={ICON_SIZE}
+            />
+          }
+          title={formatMessage(m.title)}
+          description={formatMessage(m.locationRequired)}
+        />
+      </View>
+      <View style={{flex: 0, alignItems: 'center'}}>
+        {canAskAgain ? (
           <AllowPermissionButton
             testID="TRACK.permission-allow-btn"
             onPress={onAllow}
@@ -55,27 +72,8 @@ export const TrackPermissionScreen = ({
             testID="TRACK.permission-settings-btn"
             onPress={onOpenSettings}
           />
-        )
-      }>
-      <IconTitleDescription
-        icon={
-          <HikingIcon
-            color={DARK_ORANGE}
-            width={ICON_SIZE}
-            height={ICON_SIZE}
-          />
-        }
-        title={formatMessage(m.title)}
-        description={formatMessage(m.locationRequired)}
-      />
-    </ScreenContentWithDock>
+        )}
+      </View>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  content: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 80,
-  },
-});

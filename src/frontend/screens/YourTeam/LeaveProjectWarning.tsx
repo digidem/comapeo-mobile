@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {
@@ -8,18 +8,14 @@ import {
 } from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {
-  BLUE_GREY,
-  WARNING_RED,
-  WHITE,
-  BLACK,
-  NEW_DARK_GREY,
-} from '../../lib/styles';
+import {BLUE_GREY, WARNING_RED, BLACK, NEW_DARK_GREY} from '../../lib/styles';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 import MobilePhoneArrowIcon from '../../images/MobilePhoneArrow.svg';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
+
 const m = defineMessages({
   lastCoordinatorTitle: {
     id: '$1screens.LeaveProjectWarning.lastCoordinatorTitle',
@@ -73,50 +69,9 @@ export const LeaveProjectWarning = ({
   }
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.content}>
-        <View style={styles.iconContainer}>
-          <DeviceIcon deviceType={deviceType} size={80} />
-          <View style={styles.warningBadge}>
-            <MaterialIcon name="error" size={30} color={WARNING_RED} />
-          </View>
-        </View>
-
-        <HeaderText variant="header2" style={styles.title}>
-          {formatMessage(
-            isLastCoordinator ? m.lastCoordinatorTitle : m.lastDeviceTitle,
-          )}
-        </HeaderText>
-
-        <BodyText style={styles.description}>
-          {formatMessage(
-            isLastCoordinator
-              ? m.lastCoordinatorDescription
-              : m.lastDeviceDescription,
-          )}
-        </BodyText>
-
-        <View style={styles.warningCard}>
-          {isLastCoordinator && (
-            <View style={styles.bulletRow}>
-              <MobilePhoneArrowIcon width={24} height={24} />
-              <BodyText style={styles.bulletText}>
-                {formatMessage(m.inviteRecommendation)}
-              </BodyText>
-            </View>
-          )}
-          <View style={styles.bulletRow}>
-            <MaterialDesignIcons name="download" size={24} color={BLACK} />
-            <BodyText variant="smallMeta" style={styles.bulletText}>
-              {formatMessage(m.exportRecommendation)}
-            </BodyText>
-          </View>
-        </View>
-      </ScrollView>
-
-      <View style={styles.actions}>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.content}
+      topButton={
         <DestructiveButton
           fullSize
           onPress={handleContinue}
@@ -130,27 +85,58 @@ export const LeaveProjectWarning = ({
           )}
           iconPosition="right"
         />
+      }
+      bottomButton={
         <SecondaryButton
           fullSize
           onPress={() => navigation.goBack()}
           text={formatMessage(m.cancel)}
         />
+      }>
+      <View style={styles.iconContainer}>
+        <DeviceIcon deviceType={deviceType} size={80} />
+        <View style={styles.warningBadge}>
+          <MaterialIcon name="error" size={30} color={WARNING_RED} />
+        </View>
       </View>
-    </View>
+
+      <HeaderText variant="header2" style={styles.title}>
+        {formatMessage(
+          isLastCoordinator ? m.lastCoordinatorTitle : m.lastDeviceTitle,
+        )}
+      </HeaderText>
+
+      <BodyText style={styles.description}>
+        {formatMessage(
+          isLastCoordinator
+            ? m.lastCoordinatorDescription
+            : m.lastDeviceDescription,
+        )}
+      </BodyText>
+
+      <View style={styles.warningCard}>
+        {isLastCoordinator && (
+          <View style={styles.bulletRow}>
+            <MobilePhoneArrowIcon width={24} height={24} />
+            <BodyText style={styles.bulletText}>
+              {formatMessage(m.inviteRecommendation)}
+            </BodyText>
+          </View>
+        )}
+        <View style={styles.bulletRow}>
+          <MaterialDesignIcons name="download" size={24} color={BLACK} />
+          <BodyText variant="smallMeta" style={styles.bulletText}>
+            {formatMessage(m.exportRecommendation)}
+          </BodyText>
+        </View>
+      </View>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: WHITE,
-  },
-  scrollView: {
-    flex: 1,
-  },
   content: {
-    flexGrow: 1,
-    padding: 20,
+    paddingBottom: 20,
     gap: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -159,7 +145,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: 80,
     height: 80,
-    marginTop: 40,
   },
   warningBadge: {
     position: 'absolute',
@@ -201,10 +186,5 @@ const styles = StyleSheet.create({
   bulletText: {
     flex: 1,
     color: NEW_DARK_GREY,
-  },
-  actions: {
-    paddingVertical: 20,
-    gap: 12,
-    alignItems: 'center',
   },
 });

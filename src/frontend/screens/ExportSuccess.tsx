@@ -10,7 +10,7 @@ import {
   type NativeRootNavigationProps,
 } from '../sharedTypes/navigation';
 import {BLACK, NEW_DARK_GREY} from '../lib/styles';
-import {ScreenContentWithButtonDockNoHeader} from '../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   title: {id: 'ExportSuccess.title', defaultMessage: 'Success!'},

@@ -11,7 +11,7 @@ import {useProjectSettings} from '../../../hooks/server/projects';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {resetToYourTeam} from '../../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../../sharedComponents/Buttons';
-import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   unableToCancel: {

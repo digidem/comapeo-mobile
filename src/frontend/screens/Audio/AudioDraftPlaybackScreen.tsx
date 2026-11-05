@@ -25,7 +25,7 @@ import {audioStyles} from './shared';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   recordingSaved: {

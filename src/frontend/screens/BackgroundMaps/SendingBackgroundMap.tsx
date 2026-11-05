@@ -36,7 +36,7 @@ import {
 import {useCurrentTime} from '../../hooks/useCurrentTime';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   waitingMessage: {

@@ -14,7 +14,7 @@ import {useDraftObservationActions} from '../../../contexts/DraftObservationCont
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../../utils/errors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   lessThan5: {

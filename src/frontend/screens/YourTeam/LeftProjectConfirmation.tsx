@@ -9,7 +9,7 @@ import MaterialDesignIcons from '@react-native-vector-icons/material-design-icon
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   youveLeftProject: {

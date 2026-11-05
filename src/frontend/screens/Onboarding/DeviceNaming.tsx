@@ -24,11 +24,9 @@ import {
 } from '../../lib/styles';
 import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
-import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
-import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   header: {
@@ -57,8 +55,6 @@ export const DeviceNaming = ({
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const {formatMessage: t} = useIntl();
   const {mutate, status} = useSetOwnDeviceInfo();
-  const paddingBottom = useBottomPaddingWithSafeArea();
-  const {top} = useSafeAreaInsets();
 
   function setNameWithValidation(nameValue: string) {
     if (nameValue.length > 60) {
@@ -91,68 +87,57 @@ export const DeviceNaming = ({
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View
-        style={{
-          flex: 1,
-          paddingHorizontal: 20,
-          justifyContent: 'space-between',
-          paddingTop: top + 80,
-          alignItems: 'center',
-        }}>
-        <View>
-          <View style={styles.headerArea}>
-            <DeviceIcon width={39} height={60} />
-            <HeaderText variant="header2" style={styles.title}>
-              {t(m.header)}
-            </HeaderText>
-            <View style={styles.nameForm}>
-              <TextInput
-                testID="ONBOARDING.device-name-inp"
-                style={[
-                  styles.textInput,
-                  {borderColor: errorTimeout ? RED : LIGHT_GREY},
-                ]}
-                value={name}
-                onChangeText={setNameWithValidation}
-                placeholderTextColor={LIGHT_GREY}
-                placeholder={t(m.placeholder)}
+      <ScreenContentWithButtonDockNoHeader
+        loading={status === 'pending'}
+        contentContainerStyle={{alignItems: 'center'}}
+        bottomButton={
+          <PrimaryButton
+            testID="ONBOARDING.add-name-btn"
+            fullSize
+            onPress={handleSavePress}
+            text={t(m.save)}
+            renderIcon={({color, size}) => (
+              <Ionicons
+                name="checkmark-circle-outline"
+                color={color}
+                size={size}
               />
-              <BodyText
-                variant="smallMeta"
-                style={RNStyleSheet.flatten([
-                  styles.counterText,
-                  {color: errorTimeout ? RED : NEW_DARK_GREY},
-                ])}>
-                {`${name.length}/60`}
+            )}
+          />
+        }>
+        <View style={styles.headerArea}>
+          <DeviceIcon width={39} height={60} />
+          <HeaderText variant="header2" style={styles.title}>
+            {t(m.header)}
+          </HeaderText>
+          <View style={styles.nameForm}>
+            <TextInput
+              testID="ONBOARDING.device-name-inp"
+              style={[
+                styles.textInput,
+                {borderColor: errorTimeout ? RED : LIGHT_GREY},
+              ]}
+              value={name}
+              onChangeText={setNameWithValidation}
+              placeholderTextColor={LIGHT_GREY}
+              placeholder={t(m.placeholder)}
+            />
+            <BodyText
+              variant="smallMeta"
+              style={RNStyleSheet.flatten([
+                styles.counterText,
+                {color: errorTimeout ? RED : NEW_DARK_GREY},
+              ])}>
+              {`${name.length}/60`}
+            </BodyText>
+            <View style={styles.infoBox}>
+              <BodyText variant="smallMeta" style={styles.infoText}>
+                {t(m.description)}
               </BodyText>
-              <View style={styles.infoBox}>
-                <BodyText variant="smallMeta" style={styles.infoText}>
-                  {t(m.description)}
-                </BodyText>
-              </View>
             </View>
           </View>
         </View>
-        <View style={{alignItems: 'center', paddingBottom}}>
-          {status === 'pending' ? (
-            <LoadingIndicator size="large" style={{flex: 0}} />
-          ) : (
-            <PrimaryButton
-              testID="ONBOARDING.add-name-btn"
-              fullSize
-              onPress={handleSavePress}
-              text={t(m.save)}
-              renderIcon={({color, size}) => (
-                <Ionicons
-                  name="checkmark-circle-outline"
-                  color={color}
-                  size={size}
-                />
-              )}
-            />
-          )}
-        </View>
-      </View>
+      </ScreenContentWithButtonDockNoHeader>
     </TouchableWithoutFeedback>
   );
 };
@@ -184,12 +169,6 @@ function useTemporaryError() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   headerArea: {
     alignItems: 'center',
     gap: 10,
@@ -223,8 +202,5 @@ const styles = StyleSheet.create({
   },
   infoText: {
     textAlign: 'center',
-  },
-  buttonContainer: {
-    alignItems: 'center',
   },
 });

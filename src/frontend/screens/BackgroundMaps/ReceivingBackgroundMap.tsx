@@ -25,6 +25,7 @@ import {ReceivingMapProgressBar} from './ReceivingMapProgressBar';
 import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {VERY_LIGHT_GREY, NEW_DARK_GREY, COMAPEO_BLUE} from '../../lib/styles';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
@@ -69,6 +70,7 @@ export function ReceivingBackgroundMap({
     useAbortReceivedMapShareDownload();
   const mapShare = useSingleReceivedMapShare({shareId});
   const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   usePreventBackNavigation();
   useKeepAwake();
@@ -150,7 +152,7 @@ export function ReceivingBackgroundMap({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom}]}>
       <View style={[styles.topSection, {marginTop: top + 120}]}>
         <View style={styles.iconBackground}>
           <StackSvg width={47} height={50} color={NEW_DARK_GREY} />

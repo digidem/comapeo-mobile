@@ -246,9 +246,10 @@ function SendingMap({
 }) {
   const {formatMessage: t} = useIntl();
   const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={[styles.baseContainer, {alignItems: 'center'}]}>
+    <View style={[styles.baseContainer, {alignItems: 'center', paddingBottom}]}>
       <View style={[styles.sendingTopSection, {marginTop: top + 120}]}>
         <View style={styles.iconBackground}>
           <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
@@ -278,20 +279,15 @@ function SendingMap({
 
 function MapSent({onDone}: {onDone: () => void}) {
   const {formatMessage: t} = useIntl();
-  const {top} = useSafeAreaInsets();
-  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={[styles.baseContainer, {justifyContent: 'space-between'}]}>
-      <IconTitleDescription
-        style={{paddingTop: top + 180}}
-        icon={<SuccessIcon />}
-        title={t(m.mapSent)}
-      />
-      <View style={[styles.buttonContainer, {paddingBottom}]}>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.centeredContent}
+      bottomButton={
         <SecondaryButton fullSize text={t(m.done)} onPress={onDone} />
-      </View>
-    </View>
+      }>
+      <IconTitleDescription icon={<SuccessIcon />} title={t(m.mapSent)} />
+    </ScreenContentWithButtonDockNoHeader>
   );
 }
 
@@ -338,9 +334,6 @@ const styles = StyleSheet.create({
   },
   syncIcon: {
     alignSelf: 'flex-start',
-  },
-  buttonContainer: {
-    alignItems: 'center',
   },
   cancelButton: {
     marginTop: 80,

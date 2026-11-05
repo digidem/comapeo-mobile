@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {DARK_ORANGE} from '../../lib/styles';
@@ -7,7 +6,7 @@ import {PrimaryButton} from '../../sharedComponents/Buttons';
 import AddPerson from '../../images/AddPerson.svg';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
-import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
 
 const m = defineMessages({
   title: {
@@ -33,18 +32,11 @@ export const NameDefaultProjectIntro: NativeNavigationComponent<
   'NameDefaultProjectIntro'
 > = ({navigation}) => {
   const {formatMessage} = useIntl();
-  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={{flex: 1}}>
-      <View style={{flex: 1, paddingHorizontal: 20, justifyContent: 'center'}}>
-        <IconTitleDescription
-          icon={<AddPerson width={64} height={60} color={DARK_ORANGE} />}
-          title={formatMessage(m.heading)}
-          description={formatMessage(m.description)}
-        />
-      </View>
-      <View style={{alignItems: 'center', paddingTop: 20, paddingBottom}}>
+    <ScreenContentWithButtonDock
+      contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+      bottomButton={
         <PrimaryButton
           fullSize
           text={formatMessage(m.nextButton)}
@@ -60,8 +52,13 @@ export const NameDefaultProjectIntro: NativeNavigationComponent<
             />
           )}
         />
-      </View>
-    </View>
+      }>
+      <IconTitleDescription
+        icon={<AddPerson width={64} height={60} color={DARK_ORANGE} />}
+        title={formatMessage(m.heading)}
+        description={formatMessage(m.description)}
+      />
+    </ScreenContentWithButtonDock>
   );
 };
 

@@ -36,6 +36,7 @@ import {
 import {useCurrentTime} from '../../hooks/useCurrentTime';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   waitingMessage: {
@@ -211,31 +212,28 @@ function MapDeclined({
   onClose: () => void;
 }) {
   const {formatMessage: t} = useIntl();
-  const paddingBottom = useBottomPaddingWithSafeArea();
   const isDiskSpaceIssue = reason === 'disk_full';
   const headerText = isDiskSpaceIssue ? t(m.deviceNoSpace) : t(m.mapDeclined);
 
   return (
-    <View style={styles.baseContainer}>
-      <View style={styles.centeredContent}>
-        <View>
-          <View style={styles.iconBackground}>
-            <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
-          </View>
-          <View style={styles.warningBadge}>
-            <MaterialIcon name="error" size={30} color={RED} />
-          </View>
-        </View>
-
-        <HeaderText variant="header2" style={styles.declinedHeaderText}>
-          {headerText}
-        </HeaderText>
-      </View>
-
-      <View style={[styles.buttonContainer, {paddingBottom}]}>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.centeredContent}
+      bottomButton={
         <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
+      }>
+      <View>
+        <View style={styles.iconBackground}>
+          <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
+        </View>
+        <View style={styles.warningBadge}>
+          <MaterialIcon name="error" size={30} color={RED} />
+        </View>
       </View>
-    </View>
+
+      <HeaderText variant="header2" style={styles.declinedHeaderText}>
+        {headerText}
+      </HeaderText>
+    </ScreenContentWithButtonDockNoHeader>
   );
 }
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {DARK_ORANGE} from '../../lib/styles';
@@ -7,7 +7,8 @@ import {PrimaryButton} from '../../sharedComponents/Buttons';
 import ProjectCoordinator from '../../images/ProjectCoordinator.svg';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
-import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+
 const m = defineMessages({
   title: {
     id: '$1screens.Settings.StartNewProjectIntro.title',
@@ -31,20 +32,11 @@ export const StartNewProjectIntro: NativeNavigationComponent<
   'StartNewProjectIntro'
 > = ({navigation}) => {
   const {formatMessage} = useIntl();
-  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={[styles.container, {paddingBottom}]}>
-      <View style={styles.content}>
-        <IconTitleDescription
-          icon={
-            <ProjectCoordinator width={70} height={60} color={DARK_ORANGE} />
-          }
-          title={formatMessage(m.heading)}
-          description={formatMessage(m.description)}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
+    <ScreenContentWithButtonDock
+      contentContainerStyle={styles.content}
+      bottomButton={
         <PrimaryButton
           fullSize
           text={formatMessage(m.nextButton)}
@@ -60,24 +52,21 @@ export const StartNewProjectIntro: NativeNavigationComponent<
             />
           )}
         />
-      </View>
-    </View>
+      }>
+      <IconTitleDescription
+        icon={<ProjectCoordinator width={70} height={60} color={DARK_ORANGE} />}
+        title={formatMessage(m.heading)}
+        description={formatMessage(m.description)}
+      />
+    </ScreenContentWithButtonDock>
   );
 };
 
 StartNewProjectIntro.navTitle = m.title;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
   content: {
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonContainer: {
     alignItems: 'center',
   },
 });

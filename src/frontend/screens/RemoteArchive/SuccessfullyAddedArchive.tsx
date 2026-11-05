@@ -48,10 +48,14 @@ export const SuccessfullyAddedArchive = ({
         title={formatMessage(m.archiveAdded)}
         description={formatMessage(m.canSyncOnInternet)}
       />
-      <HeaderText variant="header5" style={{marginTop: 40}}>
+      <HeaderText
+        variant="header5"
+        style={{marginTop: 40, textAlign: 'center'}}>
         {archiveName}
       </HeaderText>
-      <BodyText variant="smallMeta" style={{color: MEDIUM_GREY}}>
+      <BodyText
+        variant="smallMeta"
+        style={{color: MEDIUM_GREY, textAlign: 'center'}}>
         {url}
       </BodyText>
     </ScreenContentWithButtonDockNoHeader>

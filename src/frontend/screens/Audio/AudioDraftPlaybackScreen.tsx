@@ -86,7 +86,7 @@ export const AudioDraftPlaybackScreen = ({
 
   return (
     <ScreenContentWithButtonDockNoHeader
-      contentContainerStyle={{gap: 30}}
+      contentContainerStyle={{gap: 30, alignItems: 'center'}}
       topButton={
         <DestructiveButton
           fullSize

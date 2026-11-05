@@ -57,7 +57,7 @@ export const InviteAccepted = ({
           onPress={() => navigation.popToTop()}
         />
       }>
-      <GreenCheck width="80" height="80" />
+      <GreenCheck style={{alignSelf: 'center'}} width="80" height="80" />
       <HeaderText variant="header1" style={{color: BLACK}}>
         {t(m.inviteAccepted)}
       </HeaderText>

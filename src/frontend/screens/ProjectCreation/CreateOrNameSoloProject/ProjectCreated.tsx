@@ -66,12 +66,17 @@ export const ProjectCreated = ({
       bottomButton={
         <SecondaryButton fullSize text={t(m.done)} onPress={handleGoToMap} />
       }>
-      <GreenCheck />
+      <GreenCheck style={{alignSelf: 'center'}} />
       <HeaderText variant="header1" style={{textAlign: 'center', color: BLACK}}>
         {t(m.success)}
       </HeaderText>
       <View style={{gap: 30}}>
-        <BodyText style={{color: NEW_DARK_GREY, paddingHorizontal: 20}}>
+        <BodyText
+          style={{
+            textAlign: 'center',
+            color: NEW_DARK_GREY,
+            paddingHorizontal: 20,
+          }}>
           <FormattedMessage
             {...m.projectReady}
             values={{

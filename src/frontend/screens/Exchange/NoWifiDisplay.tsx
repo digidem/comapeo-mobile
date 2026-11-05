@@ -2,7 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {BLACK, BLUE_GREY, WARNING_RED, WHITE} from '../../lib/styles';
-import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {Circle} from '../../sharedComponents/icons/Circle';
 import {WifiIcon, WifiOffIcon} from '../../sharedComponents/icons';

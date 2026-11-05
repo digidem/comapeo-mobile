@@ -16,7 +16,7 @@ import AntDesign from '@react-native-vector-icons/ant-design';
 import TracksIcon from '../../images/Tracks.svg';
 import {usePreventRemove} from '@react-navigation/native';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
 const m = defineMessages({
   deviceReady: {
     id: '$1screens.DeviceNaming.Success.deviceReady',

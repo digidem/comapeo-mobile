@@ -6,7 +6,7 @@ import {useForm} from 'react-hook-form';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {BLUE_GREY} from '../../lib/styles';
 import {DestructiveButton} from '../../sharedComponents/Buttons';
-import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectSettings, useRemoveMember} from '@comapeo/core-react';

@@ -9,7 +9,7 @@ import {SecondaryButton} from '../sharedComponents/Buttons';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {ScreenContentWithButtonDockNoHeader} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
 
 const m = defineMessages({
   success: {

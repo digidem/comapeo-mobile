@@ -14,7 +14,7 @@ import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {toError} from '../../utils/errors';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
 
 const m = defineMessages({
   shareProjectStats: {

@@ -15,7 +15,7 @@ import {
 } from '../contexts/QADeviceNameStoreContext';
 import {LIGHT_GREY, RED, DARK_GREY, WHITE} from '../lib/styles';
 import {PrimaryButton} from '../sharedComponents/Buttons';
-import {ScreenContentWithButtonDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDock} from '../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 

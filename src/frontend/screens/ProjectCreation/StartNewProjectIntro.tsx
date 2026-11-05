@@ -7,7 +7,7 @@ import {PrimaryButton} from '../../sharedComponents/Buttons';
 import ProjectCoordinator from '../../images/ProjectCoordinator.svg';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
-import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 
 const m = defineMessages({
   title: {

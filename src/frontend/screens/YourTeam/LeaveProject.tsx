@@ -17,7 +17,7 @@ import {useProjectSettings} from '../../hooks/server/projects';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
 
 const m = defineMessages({
   leaveProjectTitle: {

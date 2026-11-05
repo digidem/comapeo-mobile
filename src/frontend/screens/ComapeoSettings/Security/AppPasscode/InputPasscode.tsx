@@ -13,7 +13,7 @@ import {
   CELL_COUNT,
   PasscodeInput,
 } from '../../../../sharedComponents/PasscodeInput';
-import {ScreenContentWithButtonDock} from '../../../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDock} from '../../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 

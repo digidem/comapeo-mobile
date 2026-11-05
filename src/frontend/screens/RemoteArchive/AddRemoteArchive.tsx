@@ -7,7 +7,7 @@ import {HookFormTextInput} from '../../sharedComponents/HookFormTextInput';
 import {Control, FieldErrors, useForm} from 'react-hook-form';
 import {useFindRemoteArchive} from '../../hooks/server/projects';
 import {Bar} from 'react-native-progress';
-import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../utils/normalizeRemoteArchiveUrl';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';

@@ -18,7 +18,7 @@ import SpeechBubbleIcon from '../../../images/SpeechBubble.svg';
 import {BLUE_GREY, NEW_DARK_GREY} from '../../../lib/styles';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
-import {ScreenContentWithButtonDock} from '../../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDock} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 
 const m = defineMessages({
   title: {

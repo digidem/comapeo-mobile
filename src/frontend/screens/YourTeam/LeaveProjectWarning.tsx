@@ -14,7 +14,7 @@ import MaterialIcon from '@react-native-vector-icons/material-icons';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
 import MobilePhoneArrowIcon from '../../images/MobilePhoneArrow.svg';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
 
 const m = defineMessages({
   lastCoordinatorTitle: {

@@ -7,7 +7,7 @@ import {MEDIUM_GREY} from '../../lib/styles';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
 import {SecondaryButton} from '../../sharedComponents/Buttons.tsx';
 
 const m = defineMessages({

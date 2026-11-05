@@ -12,7 +12,7 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BLACK, NEW_DARK_GREY} from '../../../lib/styles';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
-import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
 
 const m = defineMessages({
   success: {

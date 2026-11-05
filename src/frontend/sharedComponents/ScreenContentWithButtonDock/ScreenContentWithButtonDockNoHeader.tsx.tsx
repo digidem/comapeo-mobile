@@ -3,7 +3,7 @@ import {WHITE} from '../../lib/styles';
 import {
   ScreenContentWithDockedButtonInternal,
   ScreenContentWithDockedButtonSharedProps,
-} from './ScreenContentWithDockInternal';
+} from './ScreenContentWithButtonDockInternal';
 
 /**
  *

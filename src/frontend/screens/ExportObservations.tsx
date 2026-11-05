@@ -15,7 +15,7 @@ import * as Sentry from '@sentry/react-native';
 import {useExportObservations} from '../hooks/server/projects';
 import {errorCodes, isErrorWithCode} from '@react-native-documents/picker';
 import {toError} from '../utils/errors';
-import {ScreenContentWithButtonDock} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDock} from '../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 
 const m = defineMessages({
   download: {

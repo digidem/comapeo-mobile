@@ -19,7 +19,7 @@ import {
 } from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
 
 const m = defineMessages({
   replaceMapTitle: {

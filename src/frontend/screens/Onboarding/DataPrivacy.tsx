@@ -16,7 +16,7 @@ import {SvgProps} from 'react-native-svg';
 import {COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {m} from './DataPrivacyMessages';
-import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
 
 export const DataPrivacy = ({
   navigation,

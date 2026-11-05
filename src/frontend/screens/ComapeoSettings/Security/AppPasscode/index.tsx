@@ -2,7 +2,7 @@ import * as React from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {ScreenContentWithButtonDock} from '../../../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDock} from '../../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {PrimaryButton} from '../../../../sharedComponents/Buttons';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';

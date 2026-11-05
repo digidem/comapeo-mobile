@@ -33,7 +33,7 @@ import {
 } from '../../lib/sync';
 import {DoneIcon, StopIcon, SyncIcon} from '../../sharedComponents/icons';
 import {Circle} from '../../sharedComponents/icons/Circle';
-import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';

@@ -15,7 +15,7 @@ import {NEW_DARK_GREY} from '../lib/styles';
 
 import {useAppUsageStatsActions} from '../contexts/AppUsageStatsContext';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {ScreenContentWithButtonDockNoHeader} from '../sharedComponents/ScreenContentWithDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {ScreenContentWithButtonDockNoHeader} from '../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx.tsx';
 const m = defineMessages({
   screenTitle: {
     id: 'screens.AppUsagePrompt.screenTitle',

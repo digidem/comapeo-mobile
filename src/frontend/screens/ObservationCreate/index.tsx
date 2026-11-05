@@ -108,6 +108,7 @@ export const ObservationCreate = ({
           <LiveLocationView />
         </View>
         <DescriptionField
+          containerStyle={{marginTop: 20}}
           notes={typeof notes !== 'string' ? '' : notes}
           updateNotes={newVal => {
             updateTag('notes', newVal);
@@ -115,6 +116,7 @@ export const ObservationCreate = ({
         />
         {attachments && (
           <HorizontalScrollView
+            containerStyle={{marginTop: 20}}
             shouldShowLastItems={true}
             minItemWidth={MIN_WIDTH}
             gap={GAP}

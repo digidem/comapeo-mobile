@@ -4,6 +4,7 @@ import {StyleSheet, TextInput, View} from 'react-native';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../lib/styles';
 import {useKeyboardListener} from '../hooks/useKeyboardListener';
 import {BodyText} from './Text/BodyText';
+import {ViewStyleProp} from '../sharedTypes';
 
 const m = defineMessages({
   descriptionPlaceholder: {
@@ -16,15 +17,17 @@ const m = defineMessages({
 export const DescriptionField = ({
   notes,
   updateNotes,
+  containerStyle,
 }: {
   notes?: string;
   updateNotes?: (newNotes: string) => void;
+  containerStyle?: ViewStyleProp;
 }) => {
   const {formatMessage: t} = useIntl();
   const {keyboardVisible} = useKeyboardListener();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       {keyboardVisible && (
         <View style={styles.labelContainer}>
           <BodyText variant="smallMeta" style={styles.labelText}>
@@ -49,7 +52,6 @@ const styles = StyleSheet.create({
   container: {
     minHeight: 56,
     position: 'relative',
-    marginTop: 20,
   },
   labelContainer: {
     position: 'absolute',

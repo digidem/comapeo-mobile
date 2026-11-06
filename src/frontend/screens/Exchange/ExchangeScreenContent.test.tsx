@@ -1,34 +1,36 @@
 import * as React from 'react';
 import type {SyncState} from '@comapeo/core-react';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  createNavigationContainerRef,
+  NavigationContainer,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {render, screen} from '@testing-library/react-native';
+import {act, render, screen} from '@testing-library/react-native';
 import {IntlProvider} from 'react-intl';
+import {Text} from 'react-native';
 
 import {ExchangeScreenContent} from './ExchangeScreenContent';
 
-let mockDataSyncProgress: number | null = null;
-
-const mockSync = {
-  connectServers: jest.fn(),
-  disconnectServers: jest.fn(),
-  setAutostopDataSyncTimeout: jest.fn(),
-  stop: jest.fn(),
-};
+const mockConnectServers = jest.fn();
+const mockDisconnectServers = jest.fn();
+const mockSetAutostopDataSyncTimeout = jest.fn();
 
 jest.mock('@comapeo/core-react', () => ({
   ...jest.requireActual('@comapeo/core-react'),
-  useDataSyncProgress: () => mockDataSyncProgress,
+  useDataSyncProgress: () => null,
   useIsArchiveDevice: () => ({data: false}),
   useStartSync: () => ({mutate: jest.fn()}),
+  useStopSync: () => ({mutate: jest.fn()}),
+  useConnectSyncServers: () => ({mutate: mockConnectServers}),
+  useDisconnectSyncServers: () => ({mutate: mockDisconnectServers}),
+  useSetAutostopDataSyncTimeout: () => ({
+    mutate: mockSetAutostopDataSyncTimeout,
+  }),
 }));
 
 jest.mock('../../contexts/ActiveProjectContext', () => ({
-  useActiveProject: () => ({
-    projectId: 'project-id',
-    projectApi: {$sync: mockSync},
-  }),
+  useActiveProject: () => ({projectId: 'project-id'}),
 }));
 
 jest.mock('../../hooks/server/projects', () => ({
@@ -39,18 +41,15 @@ jest.mock('../../hooks/useLocalDiscoveryState', () => ({
   useLocalDiscoveryState: () => 'CoMapeo Test Wi-Fi',
 }));
 
-const serverPeerSyncState = {
-  initial: {isSyncEnabled: true, want: 0, wanted: 0},
-  data: {isSyncEnabled: true, want: 5, wanted: 0},
-};
-
-const syncingWithServer = {
+const syncState = {
   initial: {isSyncEnabled: true},
-  data: {isSyncEnabled: true},
-  remoteDeviceSyncState: {server: serverPeerSyncState},
+  data: {isSyncEnabled: false},
+  remoteDeviceSyncState: {},
 } satisfies SyncState;
 
-const Stack = createNativeStackNavigator<{Sync: undefined}>();
+type StackParams = {Sync: undefined; Other: undefined};
+
+const Stack = createNativeStackNavigator<StackParams>();
 
 const queryClient = new QueryClient();
 
@@ -60,61 +59,36 @@ const Wrapper = ({children}: {children: React.ReactNode}) => (
   </QueryClientProvider>
 );
 
-async function renderExchangeScreen(syncState: SyncState) {
-  const {unmount} = await render(
+test('connects servers on focus and disconnects them on blur', async () => {
+  const navigationRef = createNavigationContainerRef<StackParams>();
+
+  await render(
     <React.Suspense fallback={null}>
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <Stack.Navigator>
           <Stack.Screen name="Sync">
             {() => <ExchangeScreenContent syncState={syncState} />}
           </Stack.Screen>
+          <Stack.Screen name="Other">{() => <Text>Other</Text>}</Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </React.Suspense>,
     {wrapper: Wrapper},
   );
-  return unmount;
-}
 
-describe('ExchangeScreenContent server connection on leaving the screen', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+  await expect(screen.findByText('No devices found.')).resolves.toBeVisible();
+
+  expect(mockSetAutostopDataSyncTimeout).toHaveBeenCalledTimes(1);
+  expect(mockSetAutostopDataSyncTimeout).toHaveBeenCalledWith({after: null});
+  expect(mockConnectServers).toHaveBeenCalledTimes(1);
+  expect(mockDisconnectServers).not.toHaveBeenCalled();
+
+  await act(async () => {
+    navigationRef.navigate('Other');
   });
 
-  test('keeps the server connected while data sync is still in progress', async () => {
-    mockDataSyncProgress = 0.4;
-    const unmount = await renderExchangeScreen(syncingWithServer);
+  await expect(screen.findByText('Other')).resolves.toBeVisible();
 
-    await expect(screen.findByText('Exchanging...')).resolves.toBeVisible();
-    expect(mockSync.connectServers).toHaveBeenCalled();
-
-    await unmount();
-
-    expect(mockSync.disconnectServers).not.toHaveBeenCalled();
-  });
-
-  test('disconnects the server once data sync is complete', async () => {
-    mockDataSyncProgress = 1;
-    const unmount = await renderExchangeScreen(syncingWithServer);
-
-    await expect(screen.findByText('Complete!')).resolves.toBeVisible();
-
-    await unmount();
-
-    expect(mockSync.disconnectServers).toHaveBeenCalledTimes(1);
-  });
-
-  test('disconnects the server when data sync is not enabled', async () => {
-    mockDataSyncProgress = null;
-    const unmount = await renderExchangeScreen({
-      ...syncingWithServer,
-      data: {isSyncEnabled: false},
-    });
-
-    await expect(screen.findByText('Devices found.')).resolves.toBeVisible();
-
-    await unmount();
-
-    expect(mockSync.disconnectServers).toHaveBeenCalledTimes(1);
-  });
+  expect(mockDisconnectServers).toHaveBeenCalledTimes(1);
+  expect(mockConnectServers).toHaveBeenCalledTimes(1);
 });

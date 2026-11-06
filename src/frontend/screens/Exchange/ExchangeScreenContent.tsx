@@ -1,8 +1,12 @@
 import * as React from 'react';
 import {
+  useConnectSyncServers,
   useDataSyncProgress,
+  useDisconnectSyncServers,
   useIsArchiveDevice,
+  useSetAutostopDataSyncTimeout,
   useStartSync,
+  useStopSync,
   type SyncState,
 } from '@comapeo/core-react';
 import {useFocusEffect} from '@react-navigation/native';
@@ -128,9 +132,15 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   const {formatMessage: t} = useIntl();
   const queryClient = useQueryClient();
   const navigation = useNavigationFromRoot();
-  const {projectApi, projectId} = useActiveProject();
+  const {projectId} = useActiveProject();
   const progress = useDataSyncProgress({projectId});
   const startSync = useStartSync({projectId});
+  const stopSync = useStopSync({projectId});
+  const {mutate: connectServers} = useConnectSyncServers({projectId});
+  const {mutate: disconnectServers} = useDisconnectSyncServers({projectId});
+  const {mutate: setAutostopDataSyncTimeout} = useSetAutostopDataSyncTimeout({
+    projectId,
+  });
   const {data: isArchive} = useIsArchiveDevice();
 
   const currentMediaSetting = isArchive ? 'everything' : 'previews';
@@ -154,26 +164,16 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
     dataSyncEnabled: syncState.data.isSyncEnabled,
   });
 
-  // Cutting the server websocket mid-sync leaves it with partial data.
-  // Ref, not a dependency: re-running the focus effect would reconnect servers.
-  const shouldDisconnectServersRef = React.useRef(true);
-  React.useEffect(() => {
-    shouldDisconnectServersRef.current =
-      !syncState.data.isSyncEnabled || syncStage.name === 'complete-full';
-  });
-
   useFocusEffect(
     React.useCallback(() => {
       // Unset sync autostop when screen mounts
-      projectApi.$sync.setAutostopDataSyncTimeout(null);
+      setAutostopDataSyncTimeout({after: null});
       // Connects to Servers
-      projectApi.$sync.connectServers();
+      connectServers();
       return () => {
-        if (shouldDisconnectServersRef.current) {
-          projectApi.$sync.disconnectServers();
-        }
+        disconnectServers();
       };
-    }, [projectApi]),
+    }, [connectServers, disconnectServers, setAutostopDataSyncTimeout]),
   );
 
   const shouldAutostopSyncWhenLeavingScreen =
@@ -184,7 +184,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
     React.useCallback(() => {
       const unsubscribe = navigation.addListener('beforeRemove', () => {
         if (shouldAutostopSyncWhenLeavingScreen) {
-          projectApi.$sync.setAutostopDataSyncTimeout(30_000);
+          setAutostopDataSyncTimeout({after: 30_000});
         }
         queryClient.invalidateQueries({
           queryKey: [ROOT_QUERY_KEY, 'projects', projectId],
@@ -197,7 +197,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
       };
     }, [
       navigation,
-      projectApi,
+      setAutostopDataSyncTimeout,
       queryClient,
       projectId,
       shouldAutostopSyncWhenLeavingScreen,
@@ -255,7 +255,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
             fullSize={true}
             onPress={() => {
               // TODO: Catch/surface error
-              projectApi.$sync.stop();
+              stopSync.mutate(undefined);
             }}
             text={t(m.stop)}
             renderIcon={({size, color}) => (
@@ -281,7 +281,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
             fullSize={true}
             onPress={() => {
               // TODO: Catch/surface error
-              projectApi.$sync.stop();
+              stopSync.mutate(undefined);
             }}
             text={t(m.stop)}
             renderIcon={({size, color}) => (
@@ -309,7 +309,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
             fullSize={true}
             onPress={() => {
               // TODO: Catch/surface error
-              projectApi.$sync.stop();
+              stopSync.mutate(undefined);
             }}
             text={t(m.stop)}
             renderIcon={({size, color}) => (
@@ -335,7 +335,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
             fullSize={true}
             onPress={() => {
               // TODO: Catch/surface error
-              projectApi.$sync.stop();
+              stopSync.mutate(undefined);
             }}
             text={t(m.stop)}
             renderIcon={({size, color}) => (

@@ -7,8 +7,8 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {LIGHT_BLUE} from '../../lib/styles';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   start: {
@@ -24,33 +24,16 @@ export const IntroToCoMapeo = ({
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'IntroToCoMapeo'>) => {
   const {formatMessage} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={{
-        flexGrow: 1,
-        justifyContent: 'center',
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'space-between',
+        paddingBottom,
         backgroundColor: LIGHT_BLUE,
-      }}
-      dockContainerStyle={{backgroundColor: LIGHT_BLUE}}
-      dockContent={
-        <PrimaryButton
-          testID="ONBOARDING.navigate-to-privacy-policy-btn"
-          fullSize
-          text={formatMessage(m.start)}
-          onPress={() => {
-            navigation.replace('DataPrivacy');
-          }}
-          iconPosition="left"
-          renderIcon={({color, size}) => (
-            <Ionicons
-              name="arrow-forward-circle-outline"
-              color={color}
-              size={size}
-            />
-          )}
-        />
-      }>
+      }}>
       <View style={styles.image}>
         <ComapeoIntro
           width="100%"
@@ -61,7 +44,24 @@ export const IntroToCoMapeo = ({
       <HeaderText variant="header3" style={styles.mainText}>
         {formatMessage(m.mapWorldTogether)}
       </HeaderText>
-    </ScreenContentWithDock>
+      <PrimaryButton
+        style={{alignSelf: 'center'}}
+        testID="ONBOARDING.navigate-to-privacy-policy-btn"
+        fullSize
+        text={formatMessage(m.start)}
+        onPress={() => {
+          navigation.replace('DataPrivacy');
+        }}
+        iconPosition="left"
+        renderIcon={({color, size}) => (
+          <Ionicons
+            name="arrow-forward-circle-outline"
+            color={color}
+            size={size}
+          />
+        )}
+      />
+    </View>
   );
 };
 
@@ -73,5 +73,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     paddingHorizontal: 40,
+    marginBottom: 20,
   },
 });

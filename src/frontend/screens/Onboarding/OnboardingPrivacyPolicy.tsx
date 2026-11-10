@@ -5,6 +5,7 @@ import {PrivacyPolicy} from '../PrivacyPolicy';
 import {BLUE_GREY, WHITE} from '../../lib/styles';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {MetricsDiagnosticsPermissionToggle} from '../../sharedComponents/MetricsDiagnosticsPermissionToggle';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   navTitle: {
@@ -19,9 +20,10 @@ const m = defineMessages({
 
 export const OnboardingPrivacyPolicy = () => {
   const {formatMessage} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContent}>
+    <ScrollView contentContainerStyle={[styles.scrollContent, {paddingBottom}]}>
       <PrivacyPolicy />
       <View style={styles.horizontalLine} />
       <HeaderText variant="header2" style={styles.header}>

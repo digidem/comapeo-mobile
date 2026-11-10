@@ -148,7 +148,7 @@ export const CameraView = ({onAddPress}: Props) => {
           backgroundColor: DARK_GREY,
         }}>
         <View
-          testID="MAP.location-permission"
+          testID="MAIN.camera-permission"
           style={{
             flexGrow: 1,
             justifyContent: 'center',

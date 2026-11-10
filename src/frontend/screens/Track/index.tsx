@@ -74,11 +74,8 @@ export const TrackScreen = ({
 
   return (
     <View style={{flex: 1, paddingBottom}}>
-      <ScrollView
-        bounces={false}
-        style={{flex: 1}}
-        contentContainerStyle={{flex: 1}}>
-        <View style={{flex: 1}}>
+      <ScrollView bounces={false} style={{flex: 1}}>
+        <View>
           <MapPreview
             locationHistory={track.locations.map(({timestamp, coords}) => ({
               latitude: coords.latitude,

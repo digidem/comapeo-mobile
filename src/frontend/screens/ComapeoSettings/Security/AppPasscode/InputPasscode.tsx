@@ -75,7 +75,10 @@ export const InputPasscode = ({
   const {popTo, navigate} = useNavigationFromRoot();
 
   return (
-    <KeyboardAvoidingView style={{flex: 1}} behavior="padding">
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior="padding"
+      keyboardVerticalOffset={100}>
       <ScreenContentWithButtonDock
         contentContainerStyle={{gap: 20}}
         topButton={

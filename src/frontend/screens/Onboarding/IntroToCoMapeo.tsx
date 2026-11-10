@@ -73,5 +73,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     paddingHorizontal: 40,
+    marginBottom: 20,
   },
 });

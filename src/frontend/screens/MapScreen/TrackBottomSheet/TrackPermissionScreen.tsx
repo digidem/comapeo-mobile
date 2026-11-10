@@ -43,7 +43,7 @@ export const TrackPermissionScreen = ({
   return (
     <>
       <View
-        testID="MAP.location-permission"
+        testID="TRACK.permission"
         style={{
           flexGrow: 1,
           justifyContent: 'center',

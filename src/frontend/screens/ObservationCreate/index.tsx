@@ -6,7 +6,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {ObservationCreateSaveButton} from './ObservationCreateSaveButton';
-import {View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -72,10 +72,9 @@ export const ObservationCreate = ({
       testID="OBS.create-obs"
       style={{
         flex: 1,
-        justifyContent: 'space-between',
         paddingBottom,
       }}>
-      <View style={{padding: 20}}>
+      <ScrollView style={{flex: 1}} contentContainerStyle={{padding: 20}}>
         <View
           style={{borderRadius: 12, borderWidth: 1, borderColor: LIGHT_GREY}}>
           <View
@@ -200,7 +199,7 @@ export const ObservationCreate = ({
             )}
           />
         )}
-      </View>
+      </ScrollView>
       <ActionsRow
         fieldIds={preset ? preset.fieldRefs.map(val => val.docId) : undefined}
       />

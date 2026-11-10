@@ -137,7 +137,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           ) : null}
           {attachments.length > 0 && (
             <HorizontalScrollView
-              containerStyle={{paddingHorizontal: 20}}
+              containerStyle={{marginHorizontal: 20}}
               shouldShowLastItems={false}
               minItemWidth={MIN_WIDTH}
               gap={GAP}

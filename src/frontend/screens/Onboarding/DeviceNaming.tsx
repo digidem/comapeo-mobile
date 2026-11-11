@@ -79,7 +79,7 @@ export const DeviceNaming = ({
       {
         onSuccess: () => {
           // Reset so that someone can't go back to the onboarding screens after saving the device name
-          navigation.reset({index: 0, routes: [{name: 'Success'}]});
+          navigation.reset({index: 0, routes: [{name: 'AlwaysStayNotified'}]});
         },
       },
     );

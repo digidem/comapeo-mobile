@@ -98,6 +98,8 @@ jest.mock('../../hooks/server/presets', () => ({
 
 let mockLocationGranted = true;
 let mockLocationCanAskAgain = true;
+let mockNotificationGranted = true;
+let mockNotificationCanAskAgain = true;
 
 jest.mock('../../hooks/useLocationPermissionTracker', () => ({
   useLocationPermissionQuery: () => ({
@@ -109,6 +111,18 @@ jest.mock('../../hooks/useLocationPermissionTracker', () => ({
   useInvalidateLocationPermission: () => jest.fn(),
   requestLocationPermission: jest.fn(),
   useLocationPermissionWithoutPasscode: () => ({mutate: jest.fn()}),
+}));
+
+jest.mock('../../hooks/useNotificationPermissionTracker', () => ({
+  useNotificationPermissionQuery: () => ({
+    data: {
+      granted: mockNotificationGranted,
+      canAskAgain: mockNotificationCanAskAgain,
+    },
+  }),
+  useInvalidateNotificationPermission: () => jest.fn(),
+  requestNotificationPermission: jest.fn(),
+  useNotificationPermissionWithoutPasscode: () => ({mutate: jest.fn()}),
 }));
 
 process.env.MAPBOX_ACCESS_TOKEN = 'test-token';
@@ -144,6 +158,8 @@ describe('MapScreen', () => {
     mockFreeBytes = null;
     mockLocationGranted = true;
     mockLocationCanAskAgain = true;
+    mockNotificationGranted = true;
+    mockNotificationCanAskAgain = true;
   });
 
   afterEach(async () => {
@@ -194,6 +210,43 @@ describe('MapScreen', () => {
     expect(await screen.findByText('Record Tracks')).toBeTruthy();
     // the map's own location card would only compete with the sheet's request
     expect(screen.queryByTestId('MAP.location-permission')).toBeNull();
+  });
+
+  it('asks for location and notifications together when both are missing', async () => {
+    mockFreeBytes = 600 * 1024 * 1024;
+    mockLocationGranted = false;
+    mockNotificationGranted = false;
+
+    await renderMap({trackingOpen: true});
+
+    expect(
+      await screen.findByText('Location & Notifications required to use.'),
+    ).toBeTruthy();
+  });
+
+  it('asks only for notifications once location is granted', async () => {
+    mockFreeBytes = 600 * 1024 * 1024;
+    mockNotificationGranted = false;
+
+    await renderMap({trackingOpen: true});
+
+    expect(
+      await screen.findByTestId('TRACK.notification-permission'),
+    ).toBeTruthy();
+    expect(screen.queryByTestId('TRACK.permission')).toBeNull();
+  });
+
+  it('sends a permanent notification refusal to Settings', async () => {
+    mockFreeBytes = 600 * 1024 * 1024;
+    mockNotificationGranted = false;
+    mockNotificationCanAskAgain = false;
+
+    await renderMap({trackingOpen: true});
+
+    expect(
+      await screen.findByTestId('TRACK.notification-settings-btn'),
+    ).toBeTruthy();
+    expect(screen.queryByTestId('TRACK.notification-allow-btn')).toBeNull();
   });
 
   it('shows the map location request when the track sheet is closed', async () => {

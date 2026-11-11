@@ -26,9 +26,9 @@ Verifies the flow for starting a GPS track and expected UI changes when tracking
 ### Test Objectives
 
 - Verify that the bottom sheet modal appears when the **Tracks** tab is tapped
-- Verify the **Start Tracks** button is visible
-- After tapping **Start Tracks**, confirms that the recording UI updates:
-  - **Stop Tracks** button appears
+- Verify the **Start** button is visible
+- After tapping **Start**, confirms that the recording UI updates:
+  - **End** button appears
   - Message: "You’ve been recording for [HH:MM:SS]" is displayed
 
 ### Special Considerations
@@ -43,7 +43,7 @@ Covers stopping a track, handling the discard modal, entering a description, and
 
 ### Test Objectives
 
-- Checks that tapping the **Tracks** button again while recording, after observations have been created displays the **Stop Tracks** button
+- Checks that tapping the **Tracks** button again while recording, after observations have been created displays the **End** button
 - Confirm the discard modal appears when the X in the top left is pressed
 - When **Continue Editing** is chosen from the modal, confirms that user can continue editing.
 - Confirms a description can be entered.
@@ -85,8 +85,8 @@ This test validates the warning and recovery flow when a user attempts to stop t
 - Verify track can be started from Tracks tab
 - Confirm stopping track immediately (without movement) triggers warning modal
 - Verify "No Track Recorded" warning message is displayed
-- Confirm explanatory text appears: "You didn't move beyond one meter."
-- Verify "Continue Recording" button allows user to resume tracking
+- Confirm explanatory text appears: "This device didn't move."
+- Verify "Keep Recording" button allows user to resume tracking
 - Confirm user can exit tracks normally after continuing recording
 
 ### Special Considerations

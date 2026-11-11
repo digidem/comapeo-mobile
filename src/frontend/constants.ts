@@ -85,6 +85,9 @@ export const projectColors: projectColor[] = [
 
 export const DEFAULT_PROJECT_COLOR = '#FFF5EB';
 
+// The width of a `fullSize` button, and of anything that stands in for one.
+export const FULL_SIZE_BUTTON_WIDTH = 280;
+
 // iOS 26 draws a glass capsule around the button ("liquid glass"),
 // in order to match the header buttons on the right, we need to set the width explicitly on iOS.
 export const HEADER_LIQUID_GLASS_WIDTH = 60;

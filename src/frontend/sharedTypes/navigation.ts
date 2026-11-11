@@ -213,6 +213,7 @@ export type OnboardingParamsList = {
   DataPrivacy: undefined;
   DeviceNaming: undefined;
   OnboardingPrivacyPolicy: undefined;
+  AlwaysStayNotified: undefined;
   Success: undefined;
   ErrorBottomSheet: {error: Error};
 };

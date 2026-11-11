@@ -120,10 +120,12 @@ export function BackgroundMapsScreen() {
     mutationFn: async () => {
       // iOS doesn't match files the same way as Android, so 'application/*' greys out
       // every file. For iOS this object resolves to the .smp UTI that app.json exports.
+      // Need to have no filter on Android: some devices report .smp as a different MIME type (e.g. audio),
+      // and the picker greys out anything that doesn't match.
       const picked = await File.pickFileAsync({
         mimeTypes: Platform.select({
           ios: 'application/vnd.digidem.smp',
-          android: 'application/*',
+          android: '*/*',
         }),
       });
       if (picked.canceled) return {canceled: true} as const;

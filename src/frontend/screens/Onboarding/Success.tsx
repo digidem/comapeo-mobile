@@ -11,14 +11,13 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {BLACK, WHITE, DARK_GREEN, NEW_DARK_GREY} from '../../lib/styles';
 import {useCreateProject, useOwnDeviceInfo} from '@comapeo/core-react';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import AntDesign from '@react-native-vector-icons/ant-design';
 import TracksIcon from '../../images/Tracks.svg';
 import {usePreventRemove} from '@react-navigation/native';
 import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
-import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 const m = defineMessages({
   deviceReady: {
     id: '$1screens.DeviceNaming.Success.deviceReady',
@@ -70,23 +69,20 @@ export const Success = ({
   }
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={{paddingTop: 85, alignItems: 'center', gap: 20}}
-      dockContent={
-        status === 'pending' ? (
-          <LoadingIndicator />
-        ) : (
-          <PrimaryButton
-            testID="ONBOARDING.navigate-to-map-btn"
-            fullSize
-            text={formatMessage(m.startMapping)}
-            iconPosition="left"
-            renderIcon={({size, color}) => (
-              <MaterialIcon name="map" size={size} color={color} />
-            )}
-            onPress={handleGoToMap}
-          />
-        )
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={{alignItems: 'center', gap: 20}}
+      loading={status === 'pending'}
+      bottomButton={
+        <PrimaryButton
+          testID="ONBOARDING.navigate-to-map-btn"
+          fullSize
+          text={formatMessage(m.startMapping)}
+          iconPosition="left"
+          renderIcon={({size, color}) => (
+            <MaterialIcon name="map" size={size} color={color} />
+          )}
+          onPress={handleGoToMap}
+        />
       }>
       <View style={styles.iconContainer}>
         <DeviceIcon width={40} height={60} />
@@ -118,7 +114,7 @@ export const Success = ({
           Icon={<TracksIcon fill={BLACK} height={26} />}
         />
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 

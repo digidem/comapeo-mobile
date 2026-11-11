@@ -34,6 +34,9 @@ import {
   COMAPEO_BLUE,
 } from '../../lib/styles';
 import {useCurrentTime} from '../../hooks/useCurrentTime';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   waitingMessage: {
@@ -213,26 +216,24 @@ function MapDeclined({
   const headerText = isDiskSpaceIssue ? t(m.deviceNoSpace) : t(m.mapDeclined);
 
   return (
-    <View style={styles.baseContainer}>
-      <View style={styles.centeredContent}>
-        <View>
-          <View style={styles.iconBackground}>
-            <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
-          </View>
-          <View style={styles.warningBadge}>
-            <MaterialIcon name="error" size={30} color={RED} />
-          </View>
-        </View>
-
-        <HeaderText variant="header2" style={styles.declinedHeaderText}>
-          {headerText}
-        </HeaderText>
-      </View>
-
-      <View style={styles.buttonContainer}>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.centeredContent}
+      bottomButton={
         <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
+      }>
+      <View>
+        <View style={styles.iconBackground}>
+          <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
+        </View>
+        <View style={styles.warningBadge}>
+          <MaterialIcon name="error" size={30} color={RED} />
+        </View>
       </View>
-    </View>
+
+      <HeaderText variant="header2" style={styles.declinedHeaderText}>
+        {headerText}
+      </HeaderText>
+    </ScreenContentWithButtonDockNoHeader>
   );
 }
 
@@ -244,10 +245,12 @@ function SendingMap({
   onCancel: () => void;
 }) {
   const {formatMessage: t} = useIntl();
+  const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={[styles.baseContainer, {alignItems: 'center'}]}>
-      <View style={styles.sendingTopSection}>
+    <View style={[styles.baseContainer, {alignItems: 'center', paddingBottom}]}>
+      <View style={[styles.sendingTopSection, {marginTop: top + 120}]}>
         <View style={styles.iconBackground}>
           <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
         </View>
@@ -278,16 +281,13 @@ function MapSent({onDone}: {onDone: () => void}) {
   const {formatMessage: t} = useIntl();
 
   return (
-    <View style={[styles.baseContainer, {justifyContent: 'space-between'}]}>
-      <IconTitleDescription
-        style={styles.sentContent}
-        icon={<SuccessIcon />}
-        title={t(m.mapSent)}
-      />
-      <View style={styles.buttonContainer}>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.centeredContent}
+      bottomButton={
         <SecondaryButton fullSize text={t(m.done)} onPress={onDone} />
-      </View>
-    </View>
+      }>
+      <IconTitleDescription icon={<SuccessIcon />} title={t(m.mapSent)} />
+    </ScreenContentWithButtonDockNoHeader>
   );
 }
 
@@ -328,7 +328,6 @@ const styles = StyleSheet.create({
   sendingTopSection: {
     alignItems: 'center',
     gap: 20,
-    marginTop: 120,
   },
   progressContainer: {
     gap: 15,
@@ -336,16 +335,10 @@ const styles = StyleSheet.create({
   syncIcon: {
     alignSelf: 'flex-start',
   },
-  buttonContainer: {
-    alignItems: 'center',
-  },
   cancelButton: {
     marginTop: 80,
   },
   cancelText: {
     color: COMAPEO_BLUE,
-  },
-  sentContent: {
-    paddingTop: 180,
   },
 });

@@ -19,6 +19,7 @@ import {
 } from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   replaceMapTitle: {
@@ -115,16 +116,9 @@ export function ReplaceBackgroundMap({
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <IconTitleDescription
-          icon={icon}
-          title={t(m.replaceMapTitle)}
-          description={t(m.replaceMapDescription)}
-        />
-      </View>
-
-      <View style={styles.buttonContainer}>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.content}
+      topButton={
         <DestructiveButton
           fullSize
           text={t(m.yesReplace)}
@@ -133,20 +127,22 @@ export function ReplaceBackgroundMap({
             <StackSvg width={size * 0.75} height={size * 0.8} color={color} />
           )}
         />
+      }
+      bottomButton={
         <SecondaryButton fullSize text={t(m.cancel)} onPress={handleCancel} />
-      </View>
-    </View>
+      }>
+      <IconTitleDescription
+        icon={icon}
+        title={t(m.replaceMapTitle)}
+        description={t(m.replaceMapDescription)}
+      />
+    </ScreenContentWithButtonDockNoHeader>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 40,
-    paddingVertical: 20,
-  },
   content: {
-    flex: 1,
+    paddingHorizontal: 40,
     justifyContent: 'center',
   },
   iconBackground: {
@@ -161,9 +157,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -5,
     bottom: -5,
-  },
-  buttonContainer: {
-    gap: 12,
-    alignItems: 'center',
   },
 });

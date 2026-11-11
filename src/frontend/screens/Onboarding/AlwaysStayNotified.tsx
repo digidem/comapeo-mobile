@@ -12,8 +12,7 @@ import PhoneNotification from '../../images/PhoneNotification.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
-import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader';
 import {
   requestNotificationPermission,
   useInvalidateNotificationPermission,
@@ -72,36 +71,32 @@ export const AlwaysStayNotified = ({
   );
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={styles.content}
-      dockContainerStyle={styles.actions}
-      dockContent={
-        askNotificationPermission.status === 'pending' ? (
-          <LoadingIndicator size="large" />
-        ) : (
-          <>
-            <Pressable
-              testID="ONBOARDING.notifications-not-now-btn"
-              style={styles.notNowButton}
-              onPress={() => navigation.replace('Success')}
-              hitSlop={{top: 12, bottom: 12, left: 12, right: 12}}>
-              <BodyText style={styles.notNow}>{t(m.notNow)}</BodyText>
-            </Pressable>
-            <PrimaryButton
-              testID="ONBOARDING.notifications-allow-btn"
-              fullSize
-              text={t(m.allow)}
-              onPress={() => askNotificationPermission.mutate()}
-              renderIcon={({color, size}) => (
-                <MaterialIcons
-                  name="check-circle-outline"
-                  color={color}
-                  size={size}
-                />
-              )}
+      loading={askNotificationPermission.status === 'pending'}
+      topButton={
+        <Pressable
+          testID="ONBOARDING.notifications-not-now-btn"
+          style={styles.notNowButton}
+          onPress={() => navigation.replace('Success')}
+          hitSlop={{top: 12, bottom: 12, left: 12, right: 12}}>
+          <BodyText style={styles.notNow}>{t(m.notNow)}</BodyText>
+        </Pressable>
+      }
+      bottomButton={
+        <PrimaryButton
+          testID="ONBOARDING.notifications-allow-btn"
+          fullSize
+          text={t(m.allow)}
+          onPress={() => askNotificationPermission.mutate()}
+          renderIcon={({color, size}) => (
+            <MaterialIcons
+              name="check-circle-outline"
+              color={color}
+              size={size}
             />
-          </>
-        )
+          )}
+        />
       }>
       <View style={styles.titleSection}>
         <NotifiedIcon width={ICON_SIZE} height={ICON_SIZE} />
@@ -120,7 +115,7 @@ export const AlwaysStayNotified = ({
           <InfoListItem Icon={Refresh} text={t(m.securelySync)} />
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 
@@ -168,9 +163,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     color: NEW_DARK_GREY,
     lineHeight: 18,
-  },
-  actions: {
-    gap: 10,
   },
   notNowButton: {
     height: 50,

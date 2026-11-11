@@ -19,6 +19,7 @@ import {COMAPEO_BLUE} from '../../lib/styles';
 import {usePreventRemove} from '@react-navigation/native';
 import {DatePicker} from './Date';
 import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   nextQuestion: {
@@ -52,6 +53,7 @@ export const ObservationFields = ({
 
   const {updateTag} = useDraftObservationActions();
   const tags = useDraftObservationState(state => state.value?.tags);
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   usePreventRemove(current !== 1, ({data}) => {
     if (current === fieldIds.length && data.action.type === 'POP_TO') {
@@ -103,7 +105,10 @@ export const ObservationFields = ({
   const tagValue = tags?.[tagKey];
 
   return (
-    <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
+    <ScrollView
+      style={{flex: 1}}
+      contentContainerStyle={{paddingBottom}}
+      testID="OBS.add-details-scrn">
       <View style={styles.labelContainer}>
         <HeaderText variant="header3">{field.label}</HeaderText>
         {field.helperText && (

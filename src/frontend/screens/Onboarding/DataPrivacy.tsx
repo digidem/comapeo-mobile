@@ -9,7 +9,6 @@ import LockedWithKeyIcon from '../../images/LockedWithKey.svg';
 import HandshakeMediumMediumDarkIcon from '../../images/HandshakeMediumMediumDark.svg';
 import SafetyIcon from '../../images/Safety.svg';
 
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -17,6 +16,7 @@ import {SvgProps} from 'react-native-svg';
 import {COMAPEO_BLUE, NEW_DARK_GREY} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {m} from './DataPrivacyMessages';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 export const DataPrivacy = ({
   navigation,
@@ -24,33 +24,33 @@ export const DataPrivacy = ({
   const {formatMessage: t} = useIntl();
 
   return (
-    <ScreenContentWithDock
-      dockContent={
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('OnboardingPrivacyPolicy');
-            }}>
-            <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
-              {t(m.learnMore)}
-            </HeaderText>
-          </TouchableOpacity>
-          <PrimaryButton
-            fullSize
-            text={t(m.next)}
-            iconPosition="right"
-            renderIcon={({color, size}) => (
-              <Ionicons
-                name="arrow-forward-circle-outline"
-                color={color}
-                size={size}
-              />
-            )}
-            onPress={() => {
-              navigation.replace('DeviceNaming');
-            }}
-          />
-        </View>
+    <ScreenContentWithButtonDockNoHeader
+      topButton={
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('OnboardingPrivacyPolicy');
+          }}>
+          <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
+            {t(m.learnMore)}
+          </HeaderText>
+        </TouchableOpacity>
+      }
+      bottomButton={
+        <PrimaryButton
+          fullSize
+          text={t(m.next)}
+          iconPosition="right"
+          renderIcon={({color, size}) => (
+            <Ionicons
+              name="arrow-forward-circle-outline"
+              color={color}
+              size={size}
+            />
+          )}
+          onPress={() => {
+            navigation.replace('DeviceNaming');
+          }}
+        />
       }>
       <View style={styles.headerArea}>
         <CoMapeoShield width={60} height={60} />
@@ -70,7 +70,7 @@ export const DataPrivacy = ({
           <InfoListItem Icon={SafetyIcon} text={t(m.dataPrivacyDiagnostic)} />
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     gap: 10,
-    paddingTop: 60,
   },
   title: {
     textAlign: 'center',
@@ -117,9 +116,5 @@ const styles = StyleSheet.create({
   bulletText: {
     flexShrink: 1,
     color: NEW_DARK_GREY,
-  },
-  buttonsContainer: {
-    gap: 30,
-    alignItems: 'center',
   },
 });

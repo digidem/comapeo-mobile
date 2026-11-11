@@ -7,6 +7,7 @@ import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   waitingMessage: {
@@ -31,6 +32,7 @@ export const WaitingForInviteAccept = ({
   const {formatMessage: t} = useIntl();
   const [time, setTime] = React.useState(0);
   const navigation = useNavigationFromRoot();
+  const {top} = useSafeAreaInsets();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({headerShown: false});
@@ -56,7 +58,7 @@ export const WaitingForInviteAccept = ({
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: top + 80}]}>
       <SendingIcon />
       <HeaderText style={{marginTop: 10, textAlign: 'center'}}>
         {t(m.waitingMessage)}
@@ -72,7 +74,6 @@ export const WaitingForInviteAccept = ({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 80,
     alignItems: 'center',
   },
 });

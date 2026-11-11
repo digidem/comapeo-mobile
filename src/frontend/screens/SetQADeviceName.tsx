@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {
   useQADeviceName,
@@ -15,7 +15,7 @@ import {
 } from '../contexts/QADeviceNameStoreContext';
 import {LIGHT_GREY, RED, DARK_GREY, WHITE} from '../lib/styles';
 import {PrimaryButton} from '../sharedComponents/Buttons';
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 
@@ -28,6 +28,8 @@ function QADeviceNameCommon({
 }) {
   const [name, setName] = useState(initialName);
   const [submitted, setSubmitted] = useState(false);
+  // This component is outside of React navigation, so there is no header bar, so we need to account for the notch manually
+  const {top} = useSafeAreaInsets();
 
   const hasError = submitted && name.trim().length === 0;
 
@@ -38,9 +40,10 @@ function QADeviceNameCommon({
   }
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={styles.content}
-      dockContent={
+    <ScreenContentWithButtonDock
+      contentContainerStyle={{gap: 24, paddingTop: top + 20}}
+
+      bottomButton={
         <PrimaryButton
           testID="SET_QA_DEVICE_NAME.save-btn"
           fullSize
@@ -79,7 +82,7 @@ function QADeviceNameCommon({
           </BodyText>
         )}
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 }
 

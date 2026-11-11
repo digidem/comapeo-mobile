@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
     minHeight: 400,
     paddingTop: 20,
     paddingHorizontal: 20,
-    paddingBottom: 30,
     alignItems: 'center',
   },
   icon: {

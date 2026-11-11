@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   buttonContainer: {
-    paddingVertical: 20,
+    paddingTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },

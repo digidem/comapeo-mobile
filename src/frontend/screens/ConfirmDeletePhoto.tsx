@@ -1,4 +1,3 @@
-import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import * as Sentry from '@sentry/react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {View} from 'react-native';
@@ -62,7 +61,7 @@ export function ConfirmDeletePhoto({
                 deleteUnsavedAttachment(photoId);
               } catch (reason) {
                 Sentry.captureException(reason);
-                navigation.navigate('ErrorBottomSheet', {
+                navigation.replace('ErrorBottomSheet', {
                   error: toError(reason, 'Error deleting photo'),
                 });
                 return;
@@ -84,12 +83,3 @@ export function ConfirmDeletePhoto({
     </BottomSheetWrapper>
   );
 }
-
-export const navigationOptions: NativeStackNavigationOptions = {
-  animation: 'none',
-  contentStyle: {
-    backgroundColor: 'transparent',
-  },
-  headerShown: false,
-  presentation: 'transparentModal',
-};

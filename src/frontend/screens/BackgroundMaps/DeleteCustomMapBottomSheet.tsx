@@ -81,7 +81,7 @@ export const DeleteCustomMapBottomSheet = () => {
                   },
                   onError: err => {
                     Sentry.captureException(err);
-                    navigation.navigate('ErrorBottomSheet', {error: err});
+                    navigation.replace('ErrorBottomSheet', {error: err});
                   },
                 });
               }}

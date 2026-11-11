@@ -79,7 +79,7 @@ export const InviteReceived = ({
 
   function accept() {
     if (isTracking) {
-      navigation.navigate('TrackRecordingActive');
+      navigation.replace('TrackRecordingActive');
       return;
     }
 
@@ -100,7 +100,7 @@ export const InviteReceived = ({
 
           const isInOnboarding = navigation
             .getState()
-            .routes.find(route => route.name === 'JoinProjectIntro');
+            .routes.find(route => route.name === 'Success');
 
           // If the user is on the onboarding screen, simply show the invites accepted modal
           if (isInOnboarding) {
@@ -149,7 +149,7 @@ export const InviteReceived = ({
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
-        <BodyText variant="tinyMeta" style={styles.invitedLabel}>
+        <BodyText weight={500} variant="tinyMeta" style={styles.invitedLabel}>
           {formatMessage(m.invitedToJoin)}
         </BodyText>
 
@@ -211,7 +211,6 @@ const styles = StyleSheet.create({
   },
   invitedLabel: {
     textTransform: 'uppercase',
-    fontWeight: '500',
     alignSelf: 'stretch',
     color: BLACK,
   },

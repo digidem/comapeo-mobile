@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text} from '../../../sharedComponents/Text';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BLACK} from '../../../lib/styles';
 
 export const FieldRow = ({
   label,
@@ -8,7 +9,9 @@ export const FieldRow = ({
 }: React.PropsWithChildren<{label: string}>) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <HeaderText weight={700} variant="header5" style={styles.label}>
+        {label}
+      </HeaderText>
       <View>{children}</View>
     </View>
   );
@@ -20,6 +23,6 @@ const styles = StyleSheet.create({
     rowGap: 10,
   },
   label: {
-    fontWeight: 'bold',
+    color: BLACK,
   },
 });

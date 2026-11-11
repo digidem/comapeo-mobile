@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   Keyboard,
-  KeyboardAvoidingView,
   StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
@@ -25,13 +24,14 @@ import {
 } from '../../lib/styles';
 import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
-import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
-import RNRestart from 'react-native-restart';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {OnboardingParamsList} from '../../sharedTypes/navigation';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   header: {
     id: '$1screens.DeviceNaming.header',
-    defaultMessage: 'Name Your Device',
+    defaultMessage: 'Name This Device',
   },
   description: {
     id: '$1screens.DeviceNaming.description',
@@ -48,7 +48,9 @@ const m = defineMessages({
   },
 });
 
-export const DeviceNaming = () => {
+export const DeviceNaming = ({
+  navigation,
+}: NativeStackScreenProps<OnboardingParamsList, 'DeviceNaming'>) => {
   const [name, setName] = React.useState('');
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const {formatMessage: t} = useIntl();
@@ -76,76 +78,67 @@ export const DeviceNaming = () => {
       },
       {
         onSuccess: () => {
-          // Always restart the app here
-          // If the user has toggled off diagnosticEnabled in `OnboardingPrivacyPolicy`
-          // the app need to restart for sending diagnostic to be disabled in the backend.
-          // This guarantees that app restart, while still navigating the user to the
-          // `Success` screen after it has restart - as the navigation sets
-          // the default screen to the success screen when the user has a name set
-          RNRestart.restart();
+          // Reset so that someone can't go back to the onboarding screens after saving the device name
+          navigation.reset({index: 0, routes: [{name: 'Success'}]});
         },
       },
     );
   }
 
   return (
-    <KeyboardAvoidingView style={{width: '100%', height: '100%'}}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <View style={styles.headerArea}>
-            <DeviceIcon width={39} height={60} />
-            <HeaderText variant="header2" style={styles.title}>
-              {t(m.header)}
-            </HeaderText>
-            <View style={styles.nameForm}>
-              <TextInput
-                testID="ONBOARDING.device-name-inp"
-                style={[
-                  styles.textInput,
-                  {borderColor: errorTimeout ? RED : LIGHT_GREY},
-                ]}
-                value={name}
-                onChangeText={setNameWithValidation}
-                placeholderTextColor={LIGHT_GREY}
-                placeholder={t(m.placeholder)}
-              />
-              <BodyText
-                variant="smallMeta"
-                style={RNStyleSheet.flatten([
-                  styles.counterText,
-                  {color: errorTimeout ? RED : NEW_DARK_GREY},
-                ])}>
-                {`${name.length}/60`}
-              </BodyText>
-              <View style={styles.infoBox}>
-                <BodyText variant="smallMeta" style={styles.infoText}>
-                  {t(m.description)}
-                </BodyText>
-              </View>
-            </View>
-          </View>
-          <View style={styles.buttonContainer}>
-            {status === 'pending' ? (
-              <LoadingIndicator size="large" style={{flex: 0}} />
-            ) : (
-              <PrimaryButton
-                testID="ONBOARDING.add-name-btn"
-                fullSize
-                onPress={handleSavePress}
-                text={t(m.save)}
-                renderIcon={({color, size}) => (
-                  <Ionicons
-                    name="checkmark-circle-outline"
-                    color={color}
-                    size={size}
-                  />
-                )}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ScreenContentWithButtonDockNoHeader
+        loading={status === 'pending'}
+        contentContainerStyle={{alignItems: 'center'}}
+        bottomButton={
+          <PrimaryButton
+            testID="ONBOARDING.add-name-btn"
+            fullSize
+            onPress={handleSavePress}
+            text={t(m.save)}
+            renderIcon={({color, size}) => (
+              <Ionicons
+                name="checkmark-circle-outline"
+                color={color}
+                size={size}
               />
             )}
+          />
+        }>
+        <View style={styles.headerArea}>
+          <DeviceIcon width={39} height={60} />
+          <HeaderText variant="header2" style={styles.title}>
+            {t(m.header)}
+          </HeaderText>
+          <View style={styles.nameForm}>
+            <TextInput
+              testID="ONBOARDING.device-name-inp"
+              style={[
+                styles.textInput,
+                {borderColor: errorTimeout ? RED : LIGHT_GREY},
+              ]}
+              value={name}
+              onChangeText={setNameWithValidation}
+              placeholderTextColor={LIGHT_GREY}
+              placeholder={t(m.placeholder)}
+            />
+            <BodyText
+              variant="smallMeta"
+              style={RNStyleSheet.flatten([
+                styles.counterText,
+                {color: errorTimeout ? RED : NEW_DARK_GREY},
+              ])}>
+              {`${name.length}/60`}
+            </BodyText>
+            <View style={styles.infoBox}>
+              <BodyText variant="smallMeta" style={styles.infoText}>
+                {t(m.description)}
+              </BodyText>
+            </View>
           </View>
         </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+      </ScreenContentWithButtonDockNoHeader>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -176,13 +169,6 @@ function useTemporaryError() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 60,
-    paddingHorizontal: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   headerArea: {
     alignItems: 'center',
     gap: 10,
@@ -200,6 +186,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     color: BLACK,
     fontSize: 16,
+    minHeight: 56,
     paddingHorizontal: 16,
   },
   counterText: {
@@ -215,9 +202,5 @@ const styles = StyleSheet.create({
   },
   infoText: {
     textAlign: 'center',
-  },
-  buttonContainer: {
-    paddingVertical: 20,
-    alignItems: 'center',
   },
 });

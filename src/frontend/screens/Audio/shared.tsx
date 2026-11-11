@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {WHITE, BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
+import {RUBIK} from '../../lib/fonts';
 
 export const PRIMARY_CONTROL_DIAMETER = 96;
 export const SIDE_ICON_BUTTON_WIDTH = 60;
@@ -42,7 +43,7 @@ export const audioStyles = StyleSheet.create({
     color: WHITE,
     textAlign: 'center',
     fontSize: 96,
-    fontFamily: 'Rubik_500Medium',
+    fontFamily: RUBIK[500],
   },
   textStyle: {
     color: NEW_DARK_GREY,

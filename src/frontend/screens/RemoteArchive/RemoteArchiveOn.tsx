@@ -6,6 +6,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {LIGHT_GREY, MAGENTA, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   remoteArchiveOn: {
@@ -73,9 +74,10 @@ export function RemoteArchiveOn({
   onRemove: () => void;
 }) {
   const {formatMessage: t} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={[styles.container, {paddingBottom}]}>
       <HeaderText variant="header2" style={styles.title}>
         {t(m.remoteArchiveOn)}
       </HeaderText>
@@ -87,7 +89,7 @@ export function RemoteArchiveOn({
 
       {isCoordinator ? (
         <View>
-          <BodyText variant="smallMeta" style={{fontWeight: 'bold'}}>
+          <BodyText variant="smallMeta" weight={700}>
             {t(m.thisIncludes)}
           </BodyText>
           <BodyText variant="smallMeta">{t(m.observations)}</BodyText>
@@ -126,7 +128,8 @@ export function RemoteArchiveOn({
                   onRemove();
                 }}>
                 <BodyText
-                  style={{color: MAGENTA, fontWeight: 'bold'}}
+                  style={{color: MAGENTA}}
+                  weight={700}
                   variant="smallMeta">
                   {t(m.removeServer)}
                 </BodyText>
@@ -159,7 +162,7 @@ export function RemoteArchiveOn({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingVertical: 40,
+    paddingTop: 40,
     gap: 20,
   },
   title: {

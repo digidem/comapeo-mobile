@@ -4,8 +4,7 @@ import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -37,6 +36,8 @@ import {
   isUnsavedAudioAttachment,
   isUnsavedPhotoAttachment,
 } from '../../lib/attachmentTypeChecks';
+import {RUBIK} from '../../lib/fonts';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   observation: {
@@ -66,190 +67,196 @@ export const ObservationEdit = ({
   const attachments = useDraftObservationState(
     store => store.unsavedAttachments,
   );
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const presetName = preset ? preset.name : formatMessage(m.observation);
 
   return (
-    <ScreenContentWithDock
-      dockContainerStyle={{padding: 0}}
-      dockContent={
-        <ActionsRow
-          fieldIds={preset ? preset.fieldRefs.map(val => val.docId) : undefined}
-        />
-      }>
-      <View style={styles.container}>
-        <View
-          style={{
-            backgroundColor: projectDetails.projectColor,
-            paddingVertical: 10,
-            // without this the parent container border does not properly show
-            borderTopLeftRadius: 12,
-            borderTopRightRadius: 12,
-            paddingHorizontal: 20,
-          }}>
-          <HeaderText variant="header6">
-            {projectDetails.projectHeader}
-          </HeaderText>
+    <View style={{flex: 1, paddingBottom}}>
+      <ScrollView
+        contentContainerStyle={{paddingTop: 20, paddingHorizontal: 20}}
+        style={{flex: 1}}>
+        <View style={styles.container}>
+          <View
+            style={{
+              backgroundColor: projectDetails.projectColor,
+              paddingVertical: 10,
+              // without this the parent container border does not properly show
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
+              paddingHorizontal: 20,
+            }}>
+            <HeaderText variant="header6">
+              {projectDetails.projectHeader}
+            </HeaderText>
+          </View>
+          <PresetView
+            onPressPreset={() =>
+              navigation.navigate('ObservationCategoryChooser')
+            }
+            PresetIcon={
+              <PresetCircleIcon
+                size="medium"
+                iconId={preset?.iconRef?.docId}
+                testID={`OBS.${preset?.name}-icon`}
+                color={preset?.color}
+              />
+            }
+            presetName={presetName}
+          />
         </View>
-        <PresetView
-          onPressPreset={() =>
-            navigation.navigate('ObservationCategoryChooser')
-          }
-          PresetIcon={
-            <PresetCircleIcon
-              size="medium"
-              iconId={preset?.iconRef?.docId}
-              testID={`OBS.${preset?.name}-icon`}
-              color={preset?.color}
-            />
-          }
-          presetName={presetName}
+        <DescriptionField
+          containerStyle={{marginTop: 20}}
+          notes={typeof notes !== 'string' ? '' : notes}
+          updateNotes={newVal => {
+            updateTag('notes', newVal);
+          }}
         />
-      </View>
-      <DescriptionField
-        notes={typeof notes !== 'string' ? '' : notes}
-        updateNotes={newVal => {
-          updateTag('notes', newVal);
-        }}
-      />
-      {(savedAttachments || attachments) && (
-        <HorizontalScrollView
-          shouldShowLastItems={true}
-          minItemWidth={MIN_WIDTH}
-          gap={GAP}
-          renderChildren={size => (
-            <>
-              {savedAttachments &&
-                savedAttachments.map(att => {
-                  if (observationId && att.type === 'photo') {
-                    return (
-                      <React.Suspense
-                        key={att.driveDiscoveryId + att.hash + att.type}
-                        fallback={<ThumbnailLoader size={size} />}>
-                        <SavedPhotoThumbnailImage
-                          size={size}
-                          photo={att}
-                          onPress={() => {
-                            navigation.navigate('AttachedPhotoPreviewModal', {
-                              photo: att,
-                              observationDocId: observationId.docId,
-                            });
-                          }}
-                        />
-                      </React.Suspense>
-                    );
-                  }
-
-                  if (att.type === 'audio' && observationId) {
-                    return (
-                      <ThumbnailContainer
-                        key={att.hash}
-                        size={size}
-                        onPress={() =>
-                          navigation.navigate('AudioAttachmentPlaybackScreen', {
-                            driveDiscoveryId: att.driveDiscoveryId,
-                            name: att.name,
-                            type: 'audio',
-                            createdAt: att.createdAt,
-                          })
-                        }
-                        containerStyle={styles.container}
-                        accessibilityLabel="Play audio recording.">
-                        <PlayArrow width={48} height={48} />
-                        {att.createdAt && (
-                          <DateDistance
-                            date={new Date(att.createdAt)}
-                            style={{
-                              fontSize: 12,
-                              fontWeight: 400,
-                              color: DARK_GREY,
+        {(savedAttachments || attachments) && (
+          <HorizontalScrollView
+            containerStyle={{marginTop: 20}}
+            shouldShowLastItems={true}
+            minItemWidth={MIN_WIDTH}
+            gap={GAP}
+            renderChildren={size => (
+              <>
+                {savedAttachments &&
+                  savedAttachments.map(att => {
+                    if (observationId && att.type === 'photo') {
+                      return (
+                        <React.Suspense
+                          key={att.driveDiscoveryId + att.hash + att.type}
+                          fallback={<ThumbnailLoader size={size} />}>
+                          <SavedPhotoThumbnailImage
+                            size={size}
+                            photo={att}
+                            onPress={() => {
+                              navigation.navigate('AttachedPhotoPreviewModal', {
+                                photo: att,
+                                observationDocId: observationId.docId,
+                              });
                             }}
                           />
-                        )}
-                      </ThumbnailContainer>
-                    );
-                  }
-                })}
-              {attachments &&
-                attachments.map(att => {
-                  if (isUnsavedPhotoAttachment(att)) {
-                    // if the original and thumbnail are not ready, show loader
-                    if (
-                      att.original.processingState !== 'complete' ||
-                      att.thumbnail.processingState !== 'complete'
-                    ) {
-                      return <ThumbnailLoader size={size} key={att.id} />;
-                    } else {
+                        </React.Suspense>
+                      );
+                    }
+
+                    if (att.type === 'audio' && observationId) {
                       return (
                         <ThumbnailContainer
-                          key={att.id}
-                          accessibilityLabel="View draft photo."
+                          key={att.hash}
                           size={size}
                           onPress={() =>
-                            navigation.navigate('DraftPhotoPreviewModal', {
-                              photoId: att.id,
-                              photoExif: att.photoExif,
-                              // We check for null above, so here it is safe to assert non-null
-                              uri: att.original.uri!,
-                              photoMetadata: {
-                                timestamp: att.timestamp,
-                                location: att.location,
-                                accelerometer: att.accelerometer,
+                            navigation.navigate(
+                              'AudioAttachmentPlaybackScreen',
+                              {
+                                driveDiscoveryId: att.driveDiscoveryId,
+                                name: att.name,
+                                type: 'audio',
+                                createdAt: att.createdAt,
                               },
-                            })
-                          }>
-                          <ThumbnailImage uri={att.thumbnail.uri} />
+                            )
+                          }
+                          containerStyle={styles.container}
+                          accessibilityLabel="Play audio recording.">
+                          <PlayArrow width={48} height={48} />
+                          {att.createdAt && (
+                            <DateDistance
+                              date={new Date(att.createdAt)}
+                              style={{
+                                fontSize: 12,
+                                fontFamily: RUBIK[400],
+                                color: DARK_GREY,
+                              }}
+                            />
+                          )}
                         </ThumbnailContainer>
                       );
                     }
-                  }
+                  })}
+                {attachments &&
+                  attachments.map(att => {
+                    if (isUnsavedPhotoAttachment(att)) {
+                      // if the original and thumbnail are not ready, show loader
+                      if (
+                        att.original.processingState !== 'complete' ||
+                        att.thumbnail.processingState !== 'complete'
+                      ) {
+                        return <ThumbnailLoader size={size} key={att.id} />;
+                      } else {
+                        return (
+                          <ThumbnailContainer
+                            key={att.id}
+                            accessibilityLabel="View draft photo."
+                            size={size}
+                            onPress={() =>
+                              navigation.navigate('DraftPhotoPreviewModal', {
+                                photoId: att.id,
+                                photoExif: att.photoExif,
+                                // We check for null above, so here it is safe to assert non-null
+                                uri: att.original.uri!,
+                                photoMetadata: {
+                                  timestamp: att.timestamp,
+                                  location: att.location,
+                                  accelerometer: att.accelerometer,
+                                },
+                              })
+                            }>
+                            <ThumbnailImage uri={att.thumbnail.uri} />
+                          </ThumbnailContainer>
+                        );
+                      }
+                    }
 
-                  if (
-                    isUnsavedAudioAttachment(att) &&
-                    att.original.uri !== null
-                  ) {
-                    return (
-                      <ThumbnailContainer
-                        key={att.id}
-                        size={size}
-                        onPress={() =>
-                          navigation.navigate('AudioDraftPlaybackScreen', {
-                            uri: att.original.uri!,
-                            audioId: att.id,
-                            createdAt: att.timestamp,
-                            showRecordingSavedText: false,
-                          })
-                        }
-                        containerStyle={{
-                          backgroundColor: WHITE,
-                          borderColor: COMAPEO_BLUE,
-                          borderWidth: 2,
-                          paddingVertical: 8,
-                        }}
-                        accessibilityLabel="Play audio recording.">
-                        <PlayArrow width={48} height={48} />
-                        <BodyText
-                          variant="tinyMeta"
-                          style={{fontWeight: '500'}}>
-                          {millisecondsToMMSS(att.duration)}
-                        </BodyText>
-                        <DateDistance
-                          date={new Date(att.timestamp)}
-                          style={{
-                            fontSize: 12,
-                            fontWeight: '400',
-                            color: DARK_GREY,
+                    if (
+                      isUnsavedAudioAttachment(att) &&
+                      att.original.uri !== null
+                    ) {
+                      return (
+                        <ThumbnailContainer
+                          key={att.id}
+                          size={size}
+                          onPress={() =>
+                            navigation.navigate('AudioDraftPlaybackScreen', {
+                              uri: att.original.uri!,
+                              audioId: att.id,
+                              createdAt: att.timestamp,
+                              showRecordingSavedText: false,
+                            })
+                          }
+                          containerStyle={{
+                            backgroundColor: WHITE,
+                            borderColor: COMAPEO_BLUE,
+                            borderWidth: 2,
+                            paddingVertical: 8,
                           }}
-                        />
-                      </ThumbnailContainer>
-                    );
-                  }
-                })}
-            </>
-          )}
-        />
-      )}
-    </ScreenContentWithDock>
+                          accessibilityLabel="Play audio recording.">
+                          <PlayArrow width={48} height={48} />
+                          <BodyText variant="tinyMeta" weight={500}>
+                            {millisecondsToMMSS(att.duration)}
+                          </BodyText>
+                          <DateDistance
+                            date={new Date(att.timestamp)}
+                            style={{
+                              fontSize: 12,
+                              fontFamily: RUBIK[400],
+                              color: DARK_GREY,
+                            }}
+                          />
+                        </ThumbnailContainer>
+                      );
+                    }
+                  })}
+              </>
+            )}
+          />
+        )}
+      </ScrollView>
+
+      <ActionsRow
+        fieldIds={preset ? preset.fieldRefs.map(val => val.docId) : undefined}
+      />
+    </View>
   );
 };
 

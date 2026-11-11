@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Text as RNText, TextProps, TextStyle} from 'react-native';
 import {DARK_GREY} from '../../lib/styles';
+import {RUBIK, type RubikWeight} from '../../lib/fonts';
 
 type Variant =
   'header1' | 'header2' | 'header3' | 'header4' | 'header5' | 'header6';
@@ -8,10 +9,14 @@ type Variant =
 interface HeaderProps extends Omit<TextProps, 'style'> {
   style?: Omit<TextStyle, 'fontSize' | 'fontFamily' | 'fontWeight'>;
   variant?: Variant;
+  weight?: RubikWeight;
 }
 
 /**
  * HeaderText should be used for all headers, form labels, and buttons. HeaderText uses rubik font at font weight 500
+ *
+ * `weight` picks the Rubik face (500 default, 400, 700). `fontWeight` cannot
+ * select a face — see `lib/fonts`.
  *
  * Different `variant` types (default to `header1`):
  *
@@ -32,13 +37,14 @@ export const HeaderText = ({
   children,
   style,
   variant,
+  weight = 500,
   ...otherTextProps
 }: React.PropsWithChildren<HeaderProps>) => {
   return (
     <RNText
       style={[
         {
-          fontFamily: 'Rubik_500Medium',
+          fontFamily: RUBIK[weight],
           color: DARK_GREY,
           fontSize: fontSizeMap[variant || 'header1'],
         },

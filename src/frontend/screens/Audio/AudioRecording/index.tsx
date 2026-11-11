@@ -2,19 +2,19 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, View, AppState, Text} from 'react-native';
 import {useKeepAwake} from 'expo-keep-awake';
 import {BLUE_GREY, DARK_GREY, WHITE} from '../../../lib/styles';
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {AnimatedBackground} from './AnimatedBackground';
 import {useAudioRecording} from './useAudioRecording';
 import {usePreventBackButtonWhileRecording} from './usePreventBackButtonWhileRecording';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {audioStyles, MAX_RECORDING_DURATION_MS} from '../shared';
-import {LoadingIndicator} from '../../../sharedComponents/LoadingIndicator';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {useDraftObservationActions} from '../../../contexts/DraftObservationContext';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../../utils/errors';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   lessThan5: {
@@ -40,6 +40,7 @@ export function AudioRecording({
   const timeElapsed = status.durationMillis;
   const [isLoading, setIsLoading] = React.useState(true);
   const {addAudio} = useDraftObservationActions();
+  const {top} = useSafeAreaInsets();
 
   const {formatMessage} = useIntl();
 
@@ -49,17 +50,17 @@ export function AudioRecording({
 
   React.useEffect(() => {
     const start = async () => {
-      await startRecording();
-      setIsLoading(false);
+      try {
+        await startRecording();
+        setIsLoading(false);
+      } catch (error) {
+        Sentry.captureException(error);
+        navigation.replace('ErrorBottomSheet', {
+          error: toError(error, 'Error starting recording'),
+        });
+      }
     };
-    try {
-      start();
-    } catch (error) {
-      Sentry.captureException(error);
-      navigation.replace('ErrorBottomSheet', {
-        error: toError(error, 'Error starting recording'),
-      });
-    }
+    start();
   }, [startRecording, navigation]);
 
   const finishRecording = React.useCallback(async () => {
@@ -107,22 +108,19 @@ export function AudioRecording({
     <View style={styles.background}>
       {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
       {!isE2E && <AnimatedBackground timeElapsed={timeElapsed} />}
-      <ScreenContentWithDock
-        contentContainerStyle={styles.contentContainer}
+      <ScreenContentWithButtonDockNoHeader
+        // parent/animated background should be visible here, hence setting a translucent bgcolor
+        backgroundColor={'translucent'}
+        contentContainerStyle={[styles.contentContainer, {paddingTop: top}]}
         dockContainerStyle={styles.dockContainer}
-        dockContent={
-          isLoading ? (
-            <View style={styles.center}>
-              <LoadingIndicator color={WHITE} size="large" />
-            </View>
-          ) : (
-            <TouchableOpacity
-              onPress={finishRecording}
-              style={audioStyles.basePressable}
-              accessibilityLabel="Stop recording audio.">
-              <View style={audioStyles.stop} />
-            </TouchableOpacity>
-          )
+        loading={isLoading}
+        bottomButton={
+          <TouchableOpacity
+            onPress={finishRecording}
+            style={audioStyles.basePressable}
+            accessibilityLabel="Stop recording audio.">
+            <View style={audioStyles.stop} />
+          </TouchableOpacity>
         }>
         <View style={styles.timerContainer}>
           <View>
@@ -141,7 +139,7 @@ export function AudioRecording({
             </BodyText>
           </View>
         </View>
-      </ScreenContentWithDock>
+      </ScreenContentWithButtonDockNoHeader>
     </View>
   );
 }
@@ -156,7 +154,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   dockContainer: {
-    paddingVertical: 24,
     backgroundColor: 'transparent',
   },
   center: {
@@ -169,7 +166,6 @@ const styles = StyleSheet.create({
   recordingText: {
     color: WHITE,
     textAlign: 'center',
-    paddingTop: 65,
   },
   messageText: {
     color: BLUE_GREY,

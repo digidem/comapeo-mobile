@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {WHITE, MEDIUM_GREY} from '../../lib/styles';
+import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useAuthContext} from '../../contexts/AuthContext';
@@ -21,6 +20,8 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
 import {DeepLinkListener} from './DeepLinkListener';
+import {CommonActions, StackActions} from '@react-navigation/native';
+import {RUBIK} from '../../lib/fonts';
 
 export type NavigatorLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['layout']
@@ -33,11 +34,28 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
   contentStyle: {backgroundColor: WHITE},
   headerStyle: {backgroundColor: WHITE},
-  headerTitleStyle: {fontFamily: 'Rubik_500Medium'},
+  headerTitleStyle: {fontFamily: RUBIK[500]},
   headerLeft: props => <CustomHeaderLeft headerBackButtonProps={props} />,
   headerBackVisible: false,
   statusBarStyle: 'dark',
 };
+
+type LayoutProps = Parameters<NavigatorLayout>[0];
+
+function openSheetAction(
+  {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
+  name: 'InviteReceived' | 'MapReceivedBottomSheet',
+  params: {inviteId: string} | {shareId: string},
+) {
+  const currentRoute = state.routes[state.index];
+  const presentation = currentRoute
+    ? descriptors[currentRoute.key]?.options.presentation
+    : undefined;
+
+  return presentation && presentation !== 'card'
+    ? StackActions.replace(name, params)
+    : CommonActions.navigate(name, params);
+}
 
 function getInitialRoute(
   authState: 'authenticated' | 'unauthenticated' | 'obscured',
@@ -66,39 +84,55 @@ export const RootStackNavigator = () => {
     !deviceInfo.name ||
     !activeProjectId;
 
-  const layout: NavigatorLayout = ({children, state, navigation}) => (
-    <SafeAreaView
-      edges={['bottom']}
-      style={{flex: 1, backgroundColor: MEDIUM_GREY}}>
-      <React.Suspense fallback={<FullScreenCenteredLoader />}>
-        <PendingInvitesListener
+  const layout: NavigatorLayout = ({
+    children,
+    state,
+    navigation,
+    descriptors,
+  }) => (
+    <React.Suspense fallback={<FullScreenCenteredLoader />}>
+      <PendingInvitesListener
+        currentRouteName={state.routes[state.index]?.name}
+        navigateToInviteScreen={inviteId =>
+          navigation.dispatch(
+            openSheetAction({state, descriptors}, 'InviteReceived', {
+              inviteId,
+            }),
+          )
+        }
+      />
+      <PendingMapSharesListener
+        currentRouteName={state.routes[state.index]?.name}
+        navigateToMapShareScreen={shareId =>
+          navigation.dispatch(
+            openSheetAction({state, descriptors}, 'MapReceivedBottomSheet', {
+              shareId,
+            }),
+          )
+        }
+      />
+      {!isNotReadyForInvite && (
+        <DeepLinkListener
           currentRouteName={state.routes[state.index]?.name}
           navigateToInviteScreen={inviteId =>
-            navigation.navigate('InviteReceived', {inviteId})
+            navigation.dispatch(
+              openSheetAction({state, descriptors}, 'InviteReceived', {
+                inviteId,
+              }),
+            )
           }
         />
-        <PendingMapSharesListener
-          currentRouteName={state.routes[state.index]?.name}
-          navigateToMapShareScreen={shareId =>
-            navigation.navigate('MapReceivedBottomSheet', {shareId})
-          }
-        />
-        {!isNotReadyForInvite && (
-          <DeepLinkListener
-            currentRouteName={state.routes[state.index]?.name}
-          />
-        )}
-        {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.
+      )}
+      {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.
             activeProjectId is always set before any app screen renders. */}
-        {activeProjectId ? (
-          <ActiveProjectProvider activeProjectId={activeProjectId}>
-            {children}
-          </ActiveProjectProvider>
-        ) : (
-          children
-        )}
-      </React.Suspense>
-    </SafeAreaView>
+      {activeProjectId ? (
+        <ActiveProjectProvider activeProjectId={activeProjectId}>
+          {children}
+        </ActiveProjectProvider>
+      ) : (
+        children
+      )}
+    </React.Suspense>
   );
 
   const screenLayout: NavigatorScreenLayout = ({children}) => (

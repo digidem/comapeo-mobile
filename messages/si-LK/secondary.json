@@ -297,18 +297,8 @@
   "screens.ObservationMetadataVerified.longitude": {
     "message": "දේශාංශ"
   },
-  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "ඔබගේ පළමු නිරීක්ෂණය වාර්තා කිරීමට සිතියමෙන් හෝ කැමරා දර්ශනයෙන් ආරම්භ කරන්න.",
-    "description": "Description of observation list view when the user has not yet recorded observations"
-  },
   "screens.ObservationsList.filter.all": {
     "message": "සියල්ල"
-  },
-  "screens.Onboarding.JoinProjectIntro.close": {
-    "message": "වසන්න"
-  },
-  "screens.Onboarding.JoinProjectIntro.title": {
-    "message": "ව්යාපෘතියකට සම්බන්ධ වන්න"
   },
   "screens.ProjectStatisticsTurnedOff.close": {
     "message": "වසන්න"
@@ -337,9 +327,6 @@
     "message": "වෙනස් කරන්න"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "ආපසු යන්න"
-  },
-  "soloProject.startNewProject.goBack": {
     "message": "ආපසු යන්න"
   }
 }

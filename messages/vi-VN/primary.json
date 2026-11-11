@@ -85,9 +85,6 @@
   "$1screens.DataPrivacy.next": {
     "message": "Tiếp theo"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Tham gia một dự án"
-  },
   "$1screens.DeviceNaming.placeholder": {
     "message": "Tên thiết bị"
   },
@@ -99,9 +96,6 @@
   },
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "Print"
-  },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Từ chối lời mời"
   },
   "$1screens.InviteSuccess.done": {
     "message": "Hoàn thành"
@@ -178,17 +172,6 @@
   "$1screens.ObservationEdit.navTitle": {
     "message": "Chỉnh sửa quan sát",
     "description": "screen title for edit observation screen"
-  },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "Đến Bản đồ",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
-  "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "Thêm Quan sát",
-    "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Đóng"
   },
   "$1screens.RemovedFromProjectBottomSheet.close": {
     "message": "Đóng"

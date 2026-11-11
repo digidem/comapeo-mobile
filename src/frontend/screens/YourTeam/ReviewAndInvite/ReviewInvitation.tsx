@@ -1,14 +1,15 @@
 import {StyleSheet, View} from 'react-native';
-import {Text} from '../../../sharedComponents/Text';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import React from 'react';
-import {WHITE} from '../../../lib/styles';
+import {BLACK, WHITE} from '../../../lib/styles';
 import {Button} from '../../../sharedComponents/Button';
 import {DeviceNameWithIcon} from '../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
 import {DeviceType, MEMBER_ROLE_ID} from '../../../sharedTypes';
 import {DeviceRole} from '../../../sharedTypes';
+import {useBottomPaddingWithSafeArea} from '../../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -41,18 +42,19 @@ export const ReviewInvitation = ({
   deviceType,
 }: ReviewInvitationProps) => {
   const {formatMessage: t} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom}]}>
       <View
         style={{
           width: '100%',
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+        <BodyText variant="medium" weight={700} style={{color: BLACK}}>
           {t(m.youAreInviting)}
-        </Text>
+        </BodyText>
         <DeviceNameWithIcon
           name={name}
           deviceId={deviceId}
@@ -67,9 +69,9 @@ export const ReviewInvitation = ({
       <Button fullWidth onPress={sendInvite}>
         <View style={styles.flexRow}>
           <MaterialIcon name="send" size={25} color={WHITE} />
-          <Text style={{color: WHITE, fontWeight: 'bold', marginLeft: 10}}>
+          <BodyText weight={700} style={{color: WHITE, marginLeft: 10}}>
             {t(m.sendInvite)}
-          </Text>
+          </BodyText>
         </View>
       </Button>
     </View>
@@ -82,8 +84,8 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20,
-    paddingTop: 80,
+    paddingHorizontal: 20,
+    paddingTop: 30,
     flex: 1,
   },
   flexRow: {

@@ -1,13 +1,15 @@
 import * as React from 'react';
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import ErrorIcon from '../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../sharedComponents/Text';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {BLACK} from '../../lib/styles';
 import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {useFocusEffect} from '@react-navigation/native';
 import {resetToYourTeam} from '../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   inviteDeclined: {
@@ -32,50 +34,49 @@ export const InviteDeclined = ({
   const {formatMessage} = useIntl();
   const {name, deviceType, deviceId} = route.params;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        () => true,
-      );
-
-      return () => subscription.remove();
-    }, []),
-  );
+  usePreventBackNavigation();
 
   return (
-    <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
-        <ErrorIcon />
-        <Text style={{marginTop: 20, fontSize: 20, fontWeight: 'bold'}}>
-          {formatMessage(m.inviteDeclined)}
-        </Text>
-        <Text style={{marginTop: 10, textAlign: 'center'}}>
-          {formatMessage(m.inviteDeclinedDes)}
-        </Text>
-        <DeviceNameWithIcon
-          name={name}
-          deviceType={deviceType}
-          deviceId={deviceId}
-          style={{marginTop: 20}}
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.content}
+      bottomButton={
+        <PrimaryButton
+          fullSize
+          text={formatMessage(m.close)}
+          onPress={() => resetToYourTeam(navigation.dispatch)}
         />
-      </View>
-      <PrimaryButton
-        style={{marginTop: 10}}
-        fullSize
-        text={formatMessage(m.close)}
-        onPress={() => resetToYourTeam(navigation.dispatch)}
+      }>
+      <ErrorIcon />
+      <BodyText variant="large" weight={700} style={styles.title}>
+        {formatMessage(m.inviteDeclined)}
+      </BodyText>
+      <BodyText style={styles.description}>
+        {formatMessage(m.inviteDeclinedDes)}
+      </BodyText>
+      <DeviceNameWithIcon
+        name={name}
+        deviceType={deviceType}
+        deviceId={deviceId}
+        style={styles.deviceName}
       />
-    </View>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingTop: 80,
+  content: {
     alignItems: 'center',
-    justifyContent: 'space-between',
-    flex: 1,
+  },
+  title: {
+    marginTop: 20,
+    color: BLACK,
+  },
+  description: {
+    marginTop: 10,
+    textAlign: 'center',
+    color: BLACK,
+  },
+  deviceName: {
+    marginTop: 20,
   },
 });

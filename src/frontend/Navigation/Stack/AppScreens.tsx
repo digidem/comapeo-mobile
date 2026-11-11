@@ -72,7 +72,7 @@ import {MetricsResetWarningBottomSheet} from '../../screens/ComapeoSettings/Data
 import {TrackEdit} from '../../screens/TrackEdit';
 import {HeaderLeft as HeaderLeftTrackEdit} from '../../screens/TrackEdit/HeaderLeft';
 import {Categories} from '../../screens/Categories.tsx';
-import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
+import SaveCheck from '../../images/CheckMark.svg';
 import {AddRemoteArchive} from '../../screens/RemoteArchive/AddRemoteArchive.tsx';
 import {SuccessfullyAddedArchive} from '../../screens/RemoteArchive/SuccessfullyAddedArchive.tsx';
 import {
@@ -85,7 +85,6 @@ import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
 import {RemovedFromProjectBottomSheet} from '../../screens/RemovedFromProjectBottomSheet.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/BackgroundMaps/ErrorBottomSheet.tsx';
-import {InviteCollaboratorsScreen} from '../../screens/YourTeam/InviteCollaborators.tsx';
 import {EditProjectDetails} from '../../screens/ProjectSettings/EditProjectDetails.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
 import {TrackRecordingActive} from '../../screens/TrackRecordingActive.tsx';
@@ -93,15 +92,9 @@ import {
   RemoteArchiveScreen,
   createNavigationOptions as createRemoteArchiveNavigationOptions,
 } from '../../screens/RemoteArchive/index.tsx';
-import {
-  RemoveRemoteArchive,
-  navigationOptions as removeRemoteArchiveNavigationOptions,
-} from '../../screens/RemoteArchive/RemoveRemoteArchive.tsx';
+import {RemoveRemoteArchive} from '../../screens/RemoteArchive/RemoveRemoteArchive.tsx';
 import {ExportObservations} from '../../screens/ExportObservations.tsx';
-import {
-  ConfirmDeletePhoto,
-  navigationOptions as confirmDeletePhotoNavigationOptions,
-} from '../../screens/ConfirmDeletePhoto.tsx';
+import {ConfirmDeletePhoto} from '../../screens/ConfirmDeletePhoto.tsx';
 import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackScreen.tsx';
 import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
 import {DidNotMoveBottomSheet} from '../../screens/MapScreen/TrackBottomSheet/DidNotMoveBottomSheet.tsx';
@@ -148,6 +141,7 @@ import {MapShareCanceledBottomSheet} from '../../screens/BackgroundMaps/MapShare
 import {EditQADeviceNameScreen} from '../../screens/SetQADeviceName.tsx';
 import {isQABuild} from '../../lib/appVariant';
 import {RootStack} from './RootStack.ts';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -180,11 +174,6 @@ export const createAppScreens = ({
         name="AttachedPhotoPreviewModal"
         component={AttachedPhotoPreviewModal}
         options={sharedPhotoPreviewNavOptions({intl})}
-      />
-      <RootStack.Screen
-        name="ConfirmDeletePhoto"
-        component={ConfirmDeletePhoto}
-        options={confirmDeletePhotoNavigationOptions}
       />
       <RootStack.Screen
         name="Security"
@@ -461,7 +450,9 @@ export const createAppScreens = ({
         options={{
           headerTitle: intl(AddRemoteArchive.navTitle),
           headerRight: () => (
-            <SaveButton onPress={() => {}} isLoading={false} />
+            <HeaderRightContainerButton onPress={() => {}} loading={false}>
+              <SaveCheck />
+            </HeaderRightContainerButton>
           ),
         }}
       />
@@ -469,11 +460,6 @@ export const createAppScreens = ({
         name="SuccessfullyAddedArchive"
         component={SuccessfullyAddedArchive}
         options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="RemoveRemoteArchive"
-        component={RemoveRemoteArchive}
-        options={removeRemoteArchiveNavigationOptions}
       />
       <RootStack.Screen
         name="AudioRecording"
@@ -496,19 +482,14 @@ export const createAppScreens = ({
         options={{headerTitle: intl(ObservationMetadata.navTitle)}}
       />
       <RootStack.Screen
-        name="InviteCollaborators"
-        component={InviteCollaboratorsScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <RootStack.Screen
         name="EditProjectDetails"
         component={EditProjectDetails}
         options={{
           headerTitle: intl(EditProjectDetails.navTitle),
           headerRight: () => (
-            <SaveButton onPress={() => {}} isLoading={false} />
+            <HeaderRightContainerButton onPress={() => {}} loading={false}>
+              <SaveCheck />
+            </HeaderRightContainerButton>
           ),
         }}
       />
@@ -659,6 +640,14 @@ export const createAppScreens = ({
       <RootStack.Screen
         name="WhatsIncludedBottomSheet"
         component={WhatsIncludedBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmDeletePhoto"
+        component={ConfirmDeletePhoto}
+      />
+      <RootStack.Screen
+        name="RemoveRemoteArchive"
+        component={RemoveRemoteArchive}
       />
       <RootStack.Screen
         name="ConfirmDiscardObservationBottomSheet"

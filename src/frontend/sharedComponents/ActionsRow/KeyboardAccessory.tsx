@@ -1,8 +1,9 @@
 import React, {FC} from 'react';
-import {View, Text, Pressable, StyleSheet} from 'react-native';
+import {View, Pressable, StyleSheet} from 'react-native';
 import {NEW_DARK_GREY} from '../../lib/styles';
 import Plus from '../../images/observationEdit/Plus.svg';
 import {defineMessages, FormattedMessage} from 'react-intl';
+import {BodyText} from '../Text/BodyText';
 
 const m = defineMessages({
   showOptions: {
@@ -39,9 +40,9 @@ export const KeyboardAccessory: FC<KeyboardAccessory> = ({
       ]}>
       <View style={[styles.flexRow, styles.accessoryMainWrapper]}>
         <Plus style={{marginRight: 10}} />
-        <Text style={styles.text} numberOfLines={1}>
+        <BodyText variant="large" style={styles.text} numberOfLines={1}>
           <FormattedMessage {...m.showOptions} />
-        </Text>
+        </BodyText>
       </View>
       <View style={styles.flexRow}>
         {items.map(item => (
@@ -64,9 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontSize: 20,
     flex: 1,
-    fontFamily: 'Rubik',
     color: NEW_DARK_GREY,
   },
   containerPadding: {

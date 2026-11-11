@@ -58,7 +58,7 @@ export const ConfirmPasscodeBottomSheet = ({
       navigation.popTo('Security');
     } catch (e) {
       Sentry.captureException(e);
-      navigation.navigate('ErrorBottomSheet', {
+      navigation.replace('ErrorBottomSheet', {
         error: toError(e, 'Error setting passcode'),
       });
     } finally {
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
     minHeight: 400,
     paddingTop: 20,
     paddingHorizontal: 20,
-    paddingBottom: 30,
     alignItems: 'center',
   },
   icon: {

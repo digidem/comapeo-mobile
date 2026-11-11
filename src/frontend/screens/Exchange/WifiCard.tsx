@@ -33,11 +33,11 @@ export const WifiCard = ({ssid}: Props) => {
         </Circle>
         <View style={styles.textContainer}>
           {ssid ? (
-            <BodyText style={styles.wifiName}>{ssid}</BodyText>
+            <BodyText weight={500}>{ssid}</BodyText>
           ) : (
             <>
               <BodyText>--</BodyText>
-              <BodyText style={styles.wifiName}>{t(m.noWifi)}</BodyText>
+              <BodyText weight={500}>{t(m.noWifi)}</BodyText>
             </>
           )}
         </View>
@@ -71,9 +71,6 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     flexBasis: 'auto',
     maxWidth: '80%',
-  },
-  wifiName: {
-    fontWeight: '500',
   },
   signalIndicator: {
     elevation: 0,

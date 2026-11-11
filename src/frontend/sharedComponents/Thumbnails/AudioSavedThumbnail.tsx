@@ -7,6 +7,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {COMAPEO_BLUE, DARK_GREY, WHITE} from '../../lib/styles';
 import {DateDistance} from '../DateDistance';
+import {RUBIK} from '../../lib/fonts';
 
 type Props = {
   size: number;
@@ -33,7 +34,7 @@ export const AudioSavedThumbnail = ({audio, observationId, size}: Props) => {
       <PlayArrow width={48} height={48} />
       <DateDistance
         date={new Date(audio.createdAt || observation.createdAt)}
-        style={{fontSize: 12, fontWeight: 400, color: DARK_GREY}}
+        style={{fontSize: 12, fontFamily: RUBIK[400], color: DARK_GREY}}
       />
     </ThumbnailContainer>
   );

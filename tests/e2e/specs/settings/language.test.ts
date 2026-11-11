@@ -44,7 +44,7 @@ describe('Settings - Language Settings Flow', () => {
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
-    await expect($(byText('Añadir observaciones'))).toBeDisplayed();
+    await expect($(byText('Comienza a mapear tu mundo.'))).toBeDisplayed();
     await $('~Go to map.').click();
   });
 

@@ -368,12 +368,9 @@ export const ObservationMetadata: NativeNavigationComponent<
                 <View style={styles.flexRow}>
                   {item[key]!.icon}
                   <BodyText
-                    style={{
-                      textAlign: 'left',
-                      marginLeft: 5,
-                      fontWeight: '700',
-                    }}
-                    variant="smallMeta">
+                    style={{textAlign: 'left', marginLeft: 5}}
+                    variant="smallMeta"
+                    weight={700}>
                     {item[key]!.label}{' '}
                   </BodyText>
                 </View>

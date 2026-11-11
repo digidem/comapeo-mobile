@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Logger, setConnected} from '@maplibre/maplibre-react-native';
+import {LogManager, NetworkManager} from '@maplibre/maplibre-react-native';
 
 // Maplibre logs when tile requests are cancelled, which is often.
 // this turns off the unneccessary noise in the console logs
-Logger.setLogCallback(log => {
+LogManager.onLog(log => {
   if (
     log.tag === 'Mbgl-HttpRequest' &&
     log.message.startsWith('Request failed due to a permanent error: Canceled')
@@ -13,26 +13,27 @@ Logger.setLogCallback(log => {
   return false;
 });
 
-// All styles are served via localhost and we need to bypass the internal connectivity manager in MapLibre React Native
-// in order for things to work while the app is offline.
 // https://github.com/maplibre/maplibre-react-native/blob/6f99de530eec2e06de485ef86f4be61f941e0e09/docs/content/modules/mlrn-module.md#setconnectedconnected
 // `setConnected` is backed by the Android-only MLRNModule.setConnected; it's
 // undefined on iOS (no equivalent connectivity manager), so guard the call.
-setConnected?.(true);
+NetworkManager.setConnected(true);
 
 import {
   QueryClient,
   QueryClientProvider,
   focusManager,
 } from '@tanstack/react-query';
+import {createIntl, createIntlCache, defineMessages} from 'react-intl';
 import {AppNavigator} from './AppNavigator';
 import {
   comapeo as mapeoApi,
   comapeoServicesClient,
+  setServiceNotification,
 } from '@comapeo/core-react-native';
-import {PermissionsAndroid, Platform, AppState} from 'react-native';
-import {requestForegroundPermissionsAsync} from 'expo-location';
+import {localeImports} from '../../translations/index';
+import {AppState} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
+import NetInfo from '@react-native-community/netinfo';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
@@ -90,18 +91,56 @@ const persistedLocaleStore = createLocaleStore({
   persist: true,
 });
 
+const serviceNotificationMessages = defineMessages({
+  title: {
+    id: '$1App.serviceNotification.title',
+    defaultMessage: 'Running in the background',
+  },
+  body: {
+    id: '$1App.serviceNotification.body',
+    defaultMessage: 'Sync with connected devices continues in the background',
+  },
+});
+
+// Sets the Android foreground-service notification's wording to match the
+// app's in-app language, instead of the native module's own en/es/pt
+// defaults (which follow the OS locale, not this app's language picker).
+// Deliberately a one-shot startup call rather than reactive to later in-app
+// language changes — those take effect on the next cold start.
+const {languageTag: initialLanguageTag} =
+  persistedLocaleStore.instance.getState();
+localeImports[initialLanguageTag]()
+  .then(({default: messages}) => {
+    const intl = createIntl(
+      {locale: initialLanguageTag, messages},
+      createIntlCache(),
+    );
+    return setServiceNotification({
+      title: intl.formatMessage(serviceNotificationMessages.title),
+      body: intl.formatMessage(serviceNotificationMessages.body),
+    });
+  })
+  .catch(err => {
+    Sentry.captureException(err);
+  });
+
 const mapServerApi = {
   async getBaseUrl() {
     return new URL(await comapeoServicesClient.mapServer.getBaseUrl());
   },
 };
+// iOS only reads the wifi SSID when this is set. Must run before local discovery
+// starts (see below), because configure() drops listeners added before it.
+NetInfo.configure({
+  shouldFetchWiFiSSID: true,
+  // Prevents polling an external URL on iOS since it has no native reachability.
+  reachabilityShouldRun: () => false,
+});
+
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 
 SplashScreen.setOptions({fade: true});
-SplashScreen.preventAutoHideAsync().catch(err => {
-  console.log(err);
-});
 
 const persistedDraftObservationStore = createDraftObservationStore({
   persist: true,
@@ -167,7 +206,8 @@ const appUsageData = new AppUsageData({
   },
 });
 
-// App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
+// The backend only picks up a change to this after a force close and reopen,
+// so on app launch we set the front end to match what the backend is actually doing.
 appUsageData.setEnabled(backendAppUsageDataEnabled);
 
 const appUsagePromptStore = createAppUsageStatsStore({
@@ -175,7 +215,7 @@ const appUsagePromptStore = createAppUsageStatsStore({
   appUsageMetricsOptIn: () => {
     postHog.optIn();
     appUsageData.setEnabled(true);
-    // Restart-to-activate: takes effect next launch, not this session.
+    // Won't take effect in the backend until a force close and reopen.
     setApplicationUsageData(true).catch(err => {
       Sentry.captureException(err);
     });
@@ -191,7 +231,8 @@ const appUsagePromptStore = createAppUsageStatsStore({
 
 const deviceDiagnostics = new DeviceDiagnostics();
 const backendDiagnosticsEnabled = getDiagnosticsEnabled();
-// App must be restart for the diagnostics to be turned on/off in the backend so this keeps it in sync
+// Same here: only changes in the backend after a force close and reopen,
+// so match it on app launch.
 deviceDiagnostics.setEnabled(backendDiagnosticsEnabled);
 
 const queryClient = new QueryClient();
@@ -201,32 +242,6 @@ AppState.addEventListener('change', status => {
 });
 
 const App = () => {
-  const [permissionsAsked, setPermissionsAsked] = React.useState(false);
-  React.useEffect(() => {
-    // PermissionsAndroid is Android-only (no-op on iOS), so iOS needs its own
-    // path or location is never requested. Camera on iOS is requested on
-    // demand by the camera screen, so the eager ask is location-only there.
-    const askStartupPermissions =
-      Platform.OS === 'android'
-        ? PermissionsAndroid.requestMultiple([
-            'android.permission.CAMERA',
-            'android.permission.ACCESS_FINE_LOCATION',
-            'android.permission.ACCESS_COARSE_LOCATION',
-          ])
-        : requestForegroundPermissionsAsync();
-
-    Promise.resolve(askStartupPermissions)
-      .catch(err => {
-        // Rejects when no Activity is attached (e.g. launched in the
-        // background)
-        Sentry.captureException(err);
-      })
-      // Always dismiss the splash, regardless of outcome — this startup ask
-      // is only an eager prompt; each feature re-requests its own permission
-      // on demand. Never gate splash dismissal on the request succeeding.
-      .finally(() => setPermissionsAsked(true));
-  }, []);
-
   return (
     <Sentry.ErrorBoundary fallback={<FatalErrorUntranslated />}>
       <QueryClientProvider client={queryClient}>
@@ -258,7 +273,6 @@ const App = () => {
                     unitSystemStore={persistedUnitSystemStore}
                     qaDeviceNameStore={qaDeviceNameStore}>
                     <AppNavigator
-                      permissionAsked={permissionsAsked}
                       navigationIntegration={navigationIntegration}
                     />
                   </AppProviders>

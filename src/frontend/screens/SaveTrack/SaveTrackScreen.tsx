@@ -1,18 +1,16 @@
 import React, {useCallback, useMemo} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useFocusEffect} from '@react-navigation/native';
 import {SaveTrackButton} from './SaveTrackButton';
 import {TrackDescriptionField} from './TrackDescriptionField';
 import {HeaderLeft} from './HeaderLeft';
-import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {useTrackState} from '../../contexts/TrackStoreContext';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import TrackIcon from '../../images/Track.svg';
 import {getTrackDurationAndDistance} from '../../utils/trackMetrics';
 import {usePresetsQuery} from '../../hooks/server/presets';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {LIGHT_GREY} from '../../lib/styles';
 import {PresetView} from '../../sharedComponents/PresetView';
 import {Divider} from '../../sharedComponents/Divider';
@@ -20,12 +18,12 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {TrackStats} from '../../sharedComponents/TrackStats';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
   const preset = useTrackState(state => state.preset);
-  usePreventAndroidBackButton();
   const locationHistory = useTrackState(state => state.locationHistory);
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
   const {data: presets} = usePresetsQuery();
@@ -39,6 +37,7 @@ export const SaveTrackScreen = () => {
   const canChoosePreset = trackPresets.length > 0;
 
   const presetName = preset ? preset.name : t(m.newTitle);
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   useFocusEffect(
     useCallback(() => {
@@ -51,9 +50,9 @@ export const SaveTrackScreen = () => {
   );
 
   return (
-    <ScreenContentWithDock
-      dockContainerStyle={{padding: 0}}
-      dockContent={undefined}>
+    <ScrollView
+      style={{flex: 1, paddingHorizontal: 20, paddingTop: 20}}
+      contentContainerStyle={{paddingBottom}}>
       <View style={styles.container}>
         <View
           style={{
@@ -90,7 +89,7 @@ export const SaveTrackScreen = () => {
         <TrackStats distance={distance} durationMs={durationMs} />
       </View>
       <TrackDescriptionField />
-    </ScreenContentWithDock>
+    </ScrollView>
   );
 };
 

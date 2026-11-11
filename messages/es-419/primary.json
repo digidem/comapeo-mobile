@@ -1,6 +1,6 @@
 {
   "$1Modal.GPSEnable.button.default": {
-    "message": "Iniciar Trayecto"
+    "message": "Iniciar Trayectos"
   },
   "$1Modal.GPSEnable.button.stop": {
     "message": "Detener Trayectos"
@@ -19,6 +19,12 @@
   },
   "$1Navigation.Menu.coordinatorTools": {
     "message": "Herramientas de Coordinador"
+  },
+  "$1Navigation.Menu.earlyAccessOn": {
+    "message": "Acceso anticipado está ACTIVADO"
+  },
+  "$1Navigation.Menu.earlyAccessTurnOff": {
+    "message": "Desactivar"
   },
   "$1Navigation.Menu.exchange": {
     "message": "Intercambiar"
@@ -94,6 +100,10 @@
     "message": "¿Quieres descartar el Trayecto?",
     "description": "Title of dialog that shows when cancelling track edits"
   },
+  "$1SaveTrack.HeaderLeft.discardTrackButton": {
+    "message": "Descartar",
+    "description": "Button to confirm discarding the track"
+  },
   "$1SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Tu Trayecto no se guardará. Esto no se puede deshacer."
   },
@@ -118,8 +128,65 @@
   "$1Screens.Settings.AppSettings.aboutCoMapeo": {
     "message": "Acerca de CoMapeo"
   },
+  "$1Screens.Settings.AppSettings.coordinateDd": {
+    "message": "DD (Grados decimales)"
+  },
+  "$1Screens.Settings.AppSettings.coordinateDms": {
+    "message": "Grados/Min/seg"
+  },
+  "$1Screens.Settings.AppSettings.coordinateSystem": {
+    "message": "Sistema de coordenadas"
+  },
+  "$1Screens.Settings.AppSettings.coordinateUtm": {
+    "message": "Coordenadas UTM"
+  },
+  "$1Screens.Settings.AppSettings.dataAndPrivacy": {
+    "message": "Datos y privacidad"
+  },
+  "$1Screens.Settings.AppSettings.deviceName": {
+    "message": "Nombre del dispositivo"
+  },
+  "$1Screens.Settings.AppSettings.earlyAccess": {
+    "message": "Modo de acceso anticipado"
+  },
+  "$1Screens.Settings.AppSettings.earlyAccessOff": {
+    "message": "Acceso anticipado está DESACTIVADO"
+  },
+  "$1Screens.Settings.AppSettings.earlyAccessOn": {
+    "message": "Acceso anticipado está ACTIVADO"
+  },
+  "$1Screens.Settings.AppSettings.edit": {
+    "message": "Editar"
+  },
+  "$1Screens.Settings.AppSettings.imperial": {
+    "message": "Imperial"
+  },
+  "$1Screens.Settings.AppSettings.language": {
+    "message": "Idioma"
+  },
+  "$1Screens.Settings.AppSettings.learnMore": {
+    "message": "Aprende más"
+  },
+  "$1Screens.Settings.AppSettings.metric": {
+    "message": "Métrico"
+  },
+  "$1Screens.Settings.AppSettings.noPasscode": {
+    "message": "Sin contraseña"
+  },
+  "$1Screens.Settings.AppSettings.passcode": {
+    "message": "Contraseña"
+  },
   "$1Screens.Settings.AppSettings.title": {
     "message": "Ajustes de CoMapeo"
+  },
+  "$1Screens.Settings.AppSettings.turnOff": {
+    "message": "Desactivar"
+  },
+  "$1Screens.Settings.AppSettings.turnOn": {
+    "message": "Activar"
+  },
+  "$1Screens.Settings.AppSettings.unitSystem": {
+    "message": "Sistema de unidades"
   },
   "$1TrackBottomSheet.DidNotMove.delete": {
     "message": "Salir de trayectos"
@@ -258,17 +325,23 @@
     "message": "Grabando audio con CoMapeo",
     "description": "Screen title for audio permission screen"
   },
-  "$1screens.AudioPlaybackNew.backToEditing": {
-    "message": "Volver a edición"
-  },
   "$1screens.AudioPlaybackNew.delete": {
     "message": "Borrar"
+  },
+  "$1screens.AudioPlaybackNew.done": {
+    "message": "Listo"
   },
   "$1screens.AudioPlaybackNew.recordingSaved": {
     "message": "¡Grabación guardada!"
   },
   "$1screens.AudioRecording.nowRecording": {
     "message": "Ahora estás grabando..."
+  },
+  "$1screens.CameraScreen.cameraPermissionTitle": {
+    "message": "Documento con fotos"
+  },
+  "$1screens.CameraScreen.cameraUnavailable": {
+    "message": "Cámara no disponible. Por favor, cierra y vuelve a abrir CoMapeo para intentarlo de nuevo."
   },
   "$1screens.CollaboratorInfo.navTitle": {
     "message": "Información del Colaborador"
@@ -310,17 +383,11 @@
   "$1screens.DataPrivacy.title": {
     "message": "CoMapeo es privado por defecto."
   },
-  "$1screens.DeviceNaming.Success.chooseProject": {
-    "message": "Elige de abajo para iniciar su primer proyecto."
-  },
   "$1screens.DeviceNaming.Success.deviceReady": {
     "message": "¡{deviceName} está listo!"
   },
-  "$1screens.DeviceNaming.Success.joinProject": {
-    "message": "Unirse a un proyecto"
-  },
-  "$1screens.DeviceNaming.Success.mapOnYourOwn": {
-    "message": "Mapea por tu cuenta"
+  "$1screens.DeviceNaming.Success.startMapping": {
+    "message": "Comienza a mapear"
   },
   "$1screens.DeviceNaming.description": {
     "message": "Los nombres distintivos ayudan a los colaboradores que utilizan CoMapeo a reconocerte."
@@ -346,32 +413,20 @@
   "$1screens.ExchangeSettingsBottomSheet.save": {
     "message": "Guardar"
   },
-  "$1screens.IntroToCoMapeo.collaborate": {
-    "message": "Compartir de forma segura con los colaboradores"
-  },
-  "$1screens.IntroToCoMapeo.designedFor": {
-    "message": "Codiseñado con y para mapeadores y monitores de territorio indígena."
-  },
-  "$1screens.IntroToCoMapeo.getStarted": {
-    "message": "¡Comienza ya!"
-  },
-  "$1screens.IntroToCoMapeo.mapAnywhere": {
-    "message": "Mapea en cualquier lugar y en todas partes"
-  },
   "$1screens.IntroToCoMapeo.mapWorldTogether": {
     "message": "Mapea tu mundo, en colectivo."
   },
-  "$1screens.IntroToCoMapeo.ownData": {
-    "message": "Siempre posea y controle sus datos"
+  "$1screens.IntroToCoMapeo.start": {
+    "message": "Comenzar"
   },
-  "$1screens.InviteReceived.declineInvite": {
-    "message": "Rechazar invitación"
+  "$1screens.InviteReceived.decline": {
+    "message": "Rechazar"
+  },
+  "$1screens.InviteReceived.join": {
+    "message": "Unirse"
   },
   "$1screens.InviteReceived.joinAsRole": {
     "message": "¿Unirse como {role}?"
-  },
-  "$1screens.InviteReceived.joinProject": {
-    "message": "Unirse a un Proyecto"
   },
   "$1screens.InviteSuccess.done": {
     "message": "Listo"
@@ -379,9 +434,15 @@
   "$1screens.InviteSuccess.success": {
     "message": "Éxito"
   },
+  "$1screens.LanguageSettings.currentLang": {
+    "message": "Idioma actual"
+  },
   "$1screens.LanguageSettings.followSystemPreferences": {
     "message": "Seguir las preferencias del sistema",
     "description": "Label for language option to follow system preferences"
+  },
+  "$1screens.LanguageSettings.otherLang": {
+    "message": "Otros idiomas"
   },
   "$1screens.LanguageSettings.title": {
     "message": "Idioma",
@@ -438,11 +499,11 @@
     "message": "Sí",
     "description": "if a location sensor is active yes/no"
   },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Activar ubicación"
+  "$1screens.MapScreen.TrackBottomSheet.permissionTitle": {
+    "message": "Registra Trayectos"
   },
-  "$1screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "¿Usar tu ubicación?"
+  "$1screens.MapScreen.locationPermissionTitle": {
+    "message": "Registra puntos GPS"
   },
   "$1screens.Observation.ObservationView.delete": {
     "message": "Borrar",
@@ -464,6 +525,15 @@
   },
   "$1screens.Observation.defaultProjectName": {
     "message": "Mi proyecto"
+  },
+  "$1screens.Observation.deleteButton": {
+    "message": "Eliminar"
+  },
+  "$1screens.Observation.deleteCancel": {
+    "message": "Cancelar"
+  },
+  "$1screens.Observation.deleteDescription": {
+    "message": "Tu observación se eliminará Esto no se puede deshacer."
   },
   "$1screens.Observation.deleteTitle": {
     "message": "¿Quieres borrar la observación?"
@@ -527,34 +597,9 @@
   "$1screens.ObservationMetadataVerified.navTitle": {
     "message": "Metadatos de observación"
   },
-  "$1screens.ObservationsList.ObservationsEmptyView.backButton": {
-    "message": "Ir al mapa",
-    "description": "Back button on observation list screen when no observations are yet recorded"
-  },
   "$1screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
-    "message": "Añadir observaciones",
+    "message": "Comienza a mapear tu mundo.",
     "description": "Title of observation list view when the user has not yet recorded observations"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.addAudio": {
-    "message": "Añade grabaciones de audio."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.close": {
-    "message": "Cerrar"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.description": {
-    "message": "Explora CoMapeo—invita a colaboradores en cualquier momento."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.goToMap": {
-    "message": "Ir al mapa"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.snapPhotos": {
-    "message": "Toma fotos en movimiento."
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.title": {
-    "message": "Mapea por tu cuenta"
-  },
-  "$1screens.Onboarding.MapOnYourOwnIntro.trackPaths": {
-    "message": "Senderos recorridos."
   },
   "$1screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Comparte información de diagnóstico"
@@ -800,6 +845,15 @@
   "$1screens.Track.ObservationList.observations": {
     "message": "Observaciones"
   },
+  "$1screens.Track.deleteButton": {
+    "message": "Eliminar"
+  },
+  "$1screens.Track.deleteCancel": {
+    "message": "Cancelar"
+  },
+  "$1screens.Track.deleteDescription": {
+    "message": "Tu trayecto se eliminará. Esto no se puede deshacer."
+  },
   "$1screens.Track.deleteTitle": {
     "message": "¿Eliminar trayecto?"
   },
@@ -810,19 +864,37 @@
   "$1screens.TrackCategoryChooser.title": {
     "message": "Elige una categoría"
   },
+  "$1screens.UnitSystemSettings.imperial": {
+    "message": "Imperial",
+    "description": "Label for imperial unit system option"
+  },
+  "$1screens.UnitSystemSettings.imperialSubtitle": {
+    "message": "Mostrar información (ft, mi)"
+  },
+  "$1screens.UnitSystemSettings.metric": {
+    "message": "Métrico",
+    "description": "Label for metric unit system option"
+  },
+  "$1screens.UnitSystemSettings.metricSubtitle": {
+    "message": "Mostrar información (km, mi)"
+  },
+  "$1screens.UnitSystemSettings.title": {
+    "message": "Sistema de unidades",
+    "description": "Title for unit system settings screen"
+  },
   "$1screens.YourTeam.RemoveDevice.removeAndNotifyButton": {
     "message": "Eliminar y notificar"
   },
   "$1screens.YourTeam.RemoveDevice.title": {
     "message": "Eliminar dispositivo"
   },
+  "$1screens.obsDetail.date": {
+    "message": "Fecha"
+  },
   "$1sharedComponents.ErrorBottomSheet.close": {
     "message": "Cerrar"
   },
   "$1sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Algo salió mal"
-  },
-  "$1soloProject.startNewProject.title": {
-    "message": "Empezar nuevo proyecto"
   }
 }

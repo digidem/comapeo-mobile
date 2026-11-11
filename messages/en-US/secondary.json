@@ -32,15 +32,6 @@
   "MapManagement.ErrorBottomSheet.goBack": {
     "message": "Go Back"
   },
-  "Modal.GPSDisable.button": {
-    "message": "Enable GPS"
-  },
-  "Modal.GPSDisable.description": {
-    "message": "GPS and location needed to record tracks."
-  },
-  "Modal.GPSDisable.title": {
-    "message": "GPS Disabled"
-  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "When project participants exchange their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
   },
@@ -450,6 +441,9 @@
   "screens.AudioRecording.lessThan5": {
     "message": "Less than 5 minutes left"
   },
+  "screens.CameraScreen.cameraPermissionDescription": {
+    "message": "Camera required to use."
+  },
   "screens.CollaboratorInfo.addedOn": {
     "message": "Added on {date}"
   },
@@ -512,6 +506,18 @@
   },
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respects Your Privacy & Autonomy"
+  },
+  "screens.DeviceNaming.Success.addAudio": {
+    "message": "Add audio recordings."
+  },
+  "screens.DeviceNaming.Success.coordinateOrMap": {
+    "message": "Coordinate with team to start or map on your own."
+  },
+  "screens.DeviceNaming.Success.snapPhotos": {
+    "message": "Snap photos on-the-go."
+  },
+  "screens.DeviceNaming.Success.tracks": {
+    "message": "Track paths walked."
   },
   "screens.EarlyAccess.feedbackPrefix": {
     "message": "Have feedback? Share it at"
@@ -784,6 +790,12 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone Number"
   },
+  "screens.MapScreen.TrackBottomSheet.locationRequired": {
+    "message": "Location required to use."
+  },
+  "screens.MapScreen.locationPermissionDescription": {
+    "message": "Location required to use."
+  },
   "screens.MetricsResetWarning.desc": {
     "message": "This will only go into effect when CoMapeo resets."
   },
@@ -919,7 +931,7 @@
     "message": "Sent and Validated by CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
-    "message": "Start from map or camera view to record your first observation.",
+    "message": "All observations and tracks will be listed here.",
     "description": "Description of observation list view when the user has not yet recorded observations"
   },
   "screens.ObservationsList.filter.all": {
@@ -1409,31 +1421,16 @@
   "sharedComponents.ErrorBottomSheet.advanced": {
     "message": "Advanced"
   },
+  "sharedComponents.PermissionButtons.allow": {
+    "message": "Allow"
+  },
+  "sharedComponents.PermissionButtons.openSettings": {
+    "message": "Open Settings"
+  },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participant"
-  },
-  "soloProject.inviteCollaborators.goBack": {
-    "message": "Go Back"
-  },
-  "soloProject.inviteCollaborators.introText": {
-    "message": "Share observations with others using CoMapeo."
-  },
-  "soloProject.inviteCollaborators.inviteOnly": {
-    "message": "Only devices invited to this project can contribute."
-  },
-  "soloProject.inviteCollaborators.manageControl": {
-    "message": "Easily manage project contributors and settings."
-  },
-  "soloProject.inviteCollaborators.nameProject": {
-    "message": "Name My Project"
-  },
-  "soloProject.inviteCollaborators.nameProjectDescription": {
-    "message": "Name your project to start collaborating."
-  },
-  "soloProject.inviteCollaborators.title": {
-    "message": "Invite Collaborators"
   }
 }

@@ -1,8 +1,10 @@
 import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {IconButton} from '../../sharedComponents/IconButton';
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons';
+import {
+  HeaderRightContainer,
+  HeaderRightContainerButton,
+} from '../../sharedComponents/HeaderRightContainer';
 
 type ObservationHeaderRightProps =
   | {canEdit: false}
@@ -10,24 +12,15 @@ type ObservationHeaderRightProps =
 
 export const ObservationHeaderRight = (props: ObservationHeaderRightProps) => {
   return props.canEdit ? (
-    <IconButton
+    <HeaderRightContainerButton
+      loading={false}
       onPress={props.setObservationToStoreAndNavigateToEdit}
       testID="editButton">
       <EditIcon />
-    </IconButton>
+    </HeaderRightContainerButton>
   ) : (
-    <View style={styles.syncIconContainer}>
+    <HeaderRightContainer>
       <SyncIcon color="#3C69F6" />
-    </View>
+    </HeaderRightContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  syncIconContainer: {
-    width: 60,
-    height: 60,
-    flex: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

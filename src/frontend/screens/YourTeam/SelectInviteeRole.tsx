@@ -1,15 +1,15 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
-import {LIGHT_GREY, MEDIUM_GREY} from '../../lib/styles';
+import {BLACK, LIGHT_GREY, MEDIUM_GREY} from '../../lib/styles';
 import {DeviceNameWithIcon} from '../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../sharedComponents/RoleWithIcon';
-import {Text} from '../../sharedComponents/Text';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -36,10 +36,14 @@ export const SelectInviteeRole: NativeNavigationComponent<
   'SelectInviteeRole'
 > = ({route, navigation}) => {
   const {formatMessage: t} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <ScrollView contentContainerStyle={styles.contentContainer}>
-      <Text style={styles.descriptionText}>{t(m.selectingDevice)}</Text>
+    <ScrollView
+      contentContainerStyle={[styles.contentContainer, {paddingBottom}]}>
+      <BodyText weight={700} variant="medium" style={styles.descriptionText}>
+        {t(m.selectingDevice)}
+      </BodyText>
 
       <DeviceNameWithIcon {...route.params} />
 
@@ -80,13 +84,13 @@ const RoleCard = ({role, onPress}: RoleCardProps) => {
         <MaterialIcon name="radio-button-off" size={24} color={MEDIUM_GREY} />
         <View style={styles.flex}>
           <RoleWithIcon role={role} />
-          <Text>
+          <BodyText style={{color: BLACK}}>
             {formatMessage(
               role === 'coordinator'
                 ? m.coordinatorDescription
                 : m.participantDescription,
             )}
-          </Text>
+          </BodyText>
         </View>
       </View>
     </TouchableOpacity>
@@ -102,8 +106,7 @@ const styles = StyleSheet.create({
     gap: 40,
   },
   descriptionText: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    color: BLACK,
   },
   roleOptionsContainer: {
     gap: 20,

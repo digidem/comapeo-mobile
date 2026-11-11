@@ -44,12 +44,10 @@ export const EDITING_SCREEN_NAMES: (
   'DataPrivacy',
   'DeviceNaming',
   'OnboardingPrivacyPolicy',
-  'Success',
   'AuthScreen',
   'ErrorBottomSheet',
   'ConfirmDiscardObservationBottomSheet',
   'ConfirmDiscardObservationEditBottomSheet',
-  'MapOnYourOwnIntro',
 ];
 
 export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [
@@ -86,3 +84,11 @@ export const projectColors: projectColor[] = [
 ];
 
 export const DEFAULT_PROJECT_COLOR = '#FFF5EB';
+
+// iOS 26 draws a glass capsule around the button ("liquid glass"),
+// in order to match the header buttons on the right, we need to set the width explicitly on iOS.
+export const HEADER_LIQUID_GLASS_WIDTH = 60;
+
+// 44pt is the height of the iOS navigation bar on an iPhone in portrait mode.
+// React Navigation hardcodes it as the defualt, but it is resized base on the size of the content
+export const HEADER_LIQUID_GLASS_HEIGHT = 44;

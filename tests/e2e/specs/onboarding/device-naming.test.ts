@@ -40,14 +40,9 @@ describe('Onboarding - Device Naming Test', () => {
     );
     await expect(deviceReadyMessage).toBeDisplayed();
 
-    const joinProjectButton = await $(
-      byResourceId('ONBOARDING.join-project-btn'),
+    const startMappingButton = await $(
+      byResourceId('ONBOARDING.navigate-to-map-btn'),
     );
-    await expect(joinProjectButton).toBeDisplayed();
-
-    const mapOnYourOwnButton = await $(
-      byResourceId('ONBOARDING.map-on-your-own-btn'),
-    );
-    await expect(mapOnYourOwnButton).toBeDisplayed();
+    await expect(startMappingButton).toBeDisplayed();
   });
 });

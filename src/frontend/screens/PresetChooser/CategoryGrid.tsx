@@ -3,13 +3,14 @@ import {
   FlatList,
   Dimensions,
   View,
-  Text,
   StyleSheet,
   TouchableHighlight,
 } from 'react-native';
 import {Preset} from '@comapeo/schema';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {FormattedMessage} from 'react-intl';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const ROW_HEIGHT = 120;
 const MIN_COL_WIDTH = 100;
@@ -42,12 +43,15 @@ const Item = React.memo(
           size="medium"
           color={item.color}
         />
-        <Text numberOfLines={3} style={styles.categoryName}>
+        <BodyText
+          variant="smallMeta"
+          numberOfLines={3}
+          style={styles.categoryName}>
           <DynFormattedMessage
             id={`presets.${item.docId}.name`}
             defaultMessage={item.name}
           />
-        </Text>
+        </BodyText>
       </View>
     </TouchableHighlight>
   ),
@@ -63,6 +67,7 @@ export const CategoryGrid = ({
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / ROW_HEIGHT,
   );
+  const paddingBottom = useBottomPaddingWithSafeArea();
   const numColumns = Math.floor(Dimensions.get('window').width / MIN_COL_WIDTH);
 
   return (
@@ -73,6 +78,8 @@ export const CategoryGrid = ({
       windowSize={1}
       maxToRenderPerBatch={numColumns}
       removeClippedSubviews
+      // Each <Item/> has a bottomPadding of 5 already, hence the "-5"
+      contentContainerStyle={{paddingBottom: paddingBottom - 5, paddingTop: 15}}
       style={{width: Dimensions.get('window').width}}
       renderItem={({item}) => (
         <Item key={item.docId} item={item} onSelect={onSelect} />
@@ -102,7 +109,6 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     color: 'black',
-    fontWeight: '400',
     textAlign: 'center',
     marginTop: 5,
     paddingLeft: 5,

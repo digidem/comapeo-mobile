@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {PrimaryButton} from '../../sharedComponents/Buttons';
@@ -8,7 +8,8 @@ import {DARK_ORANGE} from '../../lib/styles';
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
-import {useFocusEffect} from '@react-navigation/native';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   youveLeftProject: {
@@ -30,35 +31,16 @@ export const LeftProjectConfirmation = ({
   const {data} = useOwnDeviceInfo();
   const deviceName = data?.name;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        () => true,
-      );
-
-      return () => subscription.remove();
-    }, []),
-  );
+  usePreventBackNavigation();
 
   function handleOpenDefaultProject() {
     navigation.popToTop();
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.mainCard}>
-        <MaterialDesignIcons
-          name="hand-wave-outline"
-          size={80}
-          color={DARK_ORANGE}
-        />
-        <HeaderText variant="header2" style={styles.title}>
-          {formatMessage(m.youveLeftProject, {projectName})}
-        </HeaderText>
-      </View>
-
-      <View style={styles.button}>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.content}
+      bottomButton={
         <PrimaryButton
           fullSize
           onPress={handleOpenDefaultProject}
@@ -69,28 +51,28 @@ export const LeftProjectConfirmation = ({
             <MaterialIcons name="phone-android" size={size} color={color} />
           )}
         />
-      </View>
-    </View>
+      }>
+      <MaterialDesignIcons
+        name="hand-wave-outline"
+        size={80}
+        color={DARK_ORANGE}
+      />
+      <HeaderText variant="header2" style={styles.title}>
+        {formatMessage(m.youveLeftProject, {projectName})}
+      </HeaderText>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  mainCard: {
-    flex: 1,
-    padding: 40,
+  content: {
     gap: 20,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 40,
+    paddingBottom: 40,
   },
   title: {
     textAlign: 'center',
-  },
-  button: {
-    alignItems: 'center',
-    paddingBottom: 20,
   },
 });

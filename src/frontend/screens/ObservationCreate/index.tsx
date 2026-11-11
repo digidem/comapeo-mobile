@@ -6,8 +6,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {ObservationCreateSaveButton} from './ObservationCreateSaveButton';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -36,6 +35,7 @@ import {
   isUnsavedPhotoAttachment,
 } from '../../lib/attachmentTypeChecks';
 import {RUBIK} from '../../lib/fonts';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   observation: {
@@ -55,7 +55,7 @@ export const ObservationCreate = ({
 }: NativeRootNavigationProps<'ObservationCreate'>) => {
   const {formatMessage} = useIntl();
   const preset = useDraftObservationState(state => state.value?.presetRef);
-
+  const paddingBottom = useBottomPaddingWithSafeArea();
   const attachments = useDraftObservationState(
     store => store.unsavedAttachments,
   );
@@ -68,146 +68,144 @@ export const ObservationCreate = ({
   const presetName = preset ? preset.name : formatMessage(m.observation);
 
   return (
-    <ScreenContentWithDock
+    <View
       testID="OBS.create-obs"
-      dockContainerStyle={{padding: 0}}
-      dockContent={
-        <ActionsRow
-          fieldIds={preset ? preset.fieldRefs.map(val => val.docId) : undefined}
-        />
-      }>
-      <View style={styles.container}>
+      style={{
+        flex: 1,
+        paddingBottom,
+      }}>
+      <ScrollView style={{flex: 1}} contentContainerStyle={{padding: 20}}>
         <View
-          style={{
-            backgroundColor: projectDetails.projectColor,
-            paddingVertical: 10,
-            // without this the parent container border does not properly show
-            borderTopLeftRadius: 12,
-            borderTopRightRadius: 12,
-            paddingHorizontal: 20,
-          }}>
-          <HeaderText variant="header6">
-            {projectDetails.projectHeader}
-          </HeaderText>
-        </View>
-        <PresetView
-          onPressPreset={() =>
-            navigation.navigate('ObservationCategoryChooser')
-          }
-          PresetIcon={
-            <PresetCircleIcon
-              size="medium"
-              iconId={preset?.iconRef?.docId}
-              testID={`OBS.${preset?.name}-icon`}
-              color={preset?.color}
-            />
-          }
-          presetName={presetName}
-        />
+          style={{borderRadius: 12, borderWidth: 1, borderColor: LIGHT_GREY}}>
+          <View
+            style={{
+              backgroundColor: projectDetails.projectColor,
+              paddingVertical: 10,
+              // without this the parent container border does not properly show
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
+              paddingHorizontal: 20,
+            }}>
+            <HeaderText variant="header6">
+              {projectDetails.projectHeader}
+            </HeaderText>
+          </View>
+          <PresetView
+            onPressPreset={() =>
+              navigation.navigate('ObservationCategoryChooser')
+            }
+            PresetIcon={
+              <PresetCircleIcon
+                size="medium"
+                iconId={preset?.iconRef?.docId}
+                testID={`OBS.${preset?.name}-icon`}
+                color={preset?.color}
+              />
+            }
+            presetName={presetName}
+          />
 
-        <LiveLocationView />
-      </View>
-      <DescriptionField
-        notes={typeof notes !== 'string' ? '' : notes}
-        updateNotes={newVal => {
-          updateTag('notes', newVal);
-        }}
-      />
-      {attachments && (
-        <HorizontalScrollView
-          shouldShowLastItems={true}
-          minItemWidth={MIN_WIDTH}
-          gap={GAP}
-          renderChildren={size => (
-            <>
-              {attachments.map(att => {
-                if (isUnsavedPhotoAttachment(att)) {
-                  // if the preview and thumbnail are not ready, show loader
+          <LiveLocationView />
+        </View>
+        <DescriptionField
+          containerStyle={{marginTop: 20}}
+          notes={typeof notes !== 'string' ? '' : notes}
+          updateNotes={newVal => {
+            updateTag('notes', newVal);
+          }}
+        />
+        {attachments && (
+          <HorizontalScrollView
+            containerStyle={{marginTop: 20}}
+            shouldShowLastItems={true}
+            minItemWidth={MIN_WIDTH}
+            gap={GAP}
+            renderChildren={size => (
+              <>
+                {attachments.map(att => {
+                  if (isUnsavedPhotoAttachment(att)) {
+                    // if the preview and thumbnail are not ready, show loader
+                    if (
+                      att.original.uri === null ||
+                      att.preview.processingState !== 'complete' ||
+                      att.thumbnail.processingState !== 'complete'
+                    ) {
+                      return <ThumbnailLoader size={size} key={att.id} />;
+                    } else {
+                      return (
+                        <ThumbnailContainer
+                          key={att.id}
+                          accessibilityLabel="View draft photo."
+                          size={size}
+                          onPress={() =>
+                            navigation.navigate('DraftPhotoPreviewModal', {
+                              photoId: att.id,
+                              photoExif: att.photoExif,
+                              // We check for null above, so here it is safe to assert non-null
+                              uri: att.original.uri!,
+                              photoMetadata: {
+                                timestamp: att.timestamp,
+                                location: att.location,
+                                accelerometer: att.accelerometer,
+                              },
+                            })
+                          }>
+                          <ThumbnailImage uri={att.preview.uri} />
+                        </ThumbnailContainer>
+                      );
+                    }
+                  }
+
                   if (
-                    att.original.uri === null ||
-                    att.preview.processingState !== 'complete' ||
-                    att.thumbnail.processingState !== 'complete'
+                    isUnsavedAudioAttachment(att) &&
+                    att.original.uri !== null
                   ) {
-                    return <ThumbnailLoader size={size} key={att.id} />;
-                  } else {
                     return (
                       <ThumbnailContainer
                         key={att.id}
-                        accessibilityLabel="View draft photo."
                         size={size}
                         onPress={() =>
-                          navigation.navigate('DraftPhotoPreviewModal', {
-                            photoId: att.id,
-                            photoExif: att.photoExif,
-                            // We check for null above, so here it is safe to assert non-null
+                          navigation.navigate('AudioDraftPlaybackScreen', {
                             uri: att.original.uri!,
-                            photoMetadata: {
-                              timestamp: att.timestamp,
-                              location: att.location,
-                              accelerometer: att.accelerometer,
-                            },
+                            audioId: att.id,
+                            createdAt: att.timestamp,
+                            showRecordingSavedText: false,
                           })
-                        }>
-                        <ThumbnailImage uri={att.preview.uri} />
+                        }
+                        containerStyle={{
+                          backgroundColor: WHITE,
+                          borderColor: COMAPEO_BLUE,
+                          borderWidth: 2,
+                          paddingVertical: 8,
+                        }}
+                        accessibilityLabel="Play audio recording.">
+                        <PlayArrow width={48} height={48} />
+                        <BodyText variant="tinyMeta" weight={500}>
+                          {millisecondsToMMSS(att.duration)}
+                        </BodyText>
+                        <DateDistance
+                          date={new Date(att.timestamp)}
+                          style={{
+                            fontSize: 12,
+                            fontFamily: RUBIK[400],
+                            color: DARK_GREY,
+                          }}
+                        />
                       </ThumbnailContainer>
                     );
                   }
-                }
-
-                if (
-                  isUnsavedAudioAttachment(att) &&
-                  att.original.uri !== null
-                ) {
-                  return (
-                    <ThumbnailContainer
-                      key={att.id}
-                      size={size}
-                      onPress={() =>
-                        navigation.navigate('AudioDraftPlaybackScreen', {
-                          uri: att.original.uri!,
-                          audioId: att.id,
-                          createdAt: att.timestamp,
-                          showRecordingSavedText: false,
-                        })
-                      }
-                      containerStyle={{
-                        backgroundColor: WHITE,
-                        borderColor: COMAPEO_BLUE,
-                        borderWidth: 2,
-                        paddingVertical: 8,
-                      }}
-                      accessibilityLabel="Play audio recording.">
-                      <PlayArrow width={48} height={48} />
-                      <BodyText variant="tinyMeta" weight={500}>
-                        {millisecondsToMMSS(att.duration)}
-                      </BodyText>
-                      <DateDistance
-                        date={new Date(att.timestamp)}
-                        style={{
-                          fontSize: 12,
-                          fontFamily: RUBIK[400],
-                          color: DARK_GREY,
-                        }}
-                      />
-                    </ThumbnailContainer>
-                  );
-                }
-              })}
-            </>
-          )}
-        />
-      )}
-    </ScreenContentWithDock>
+                })}
+              </>
+            )}
+          />
+        )}
+      </ScrollView>
+      <ActionsRow
+        fieldIds={preset ? preset.fieldRefs.map(val => val.docId) : undefined}
+      />
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: LIGHT_GREY,
-  },
-});
 
 export function createNavigationOptions({
   intl,

@@ -19,13 +19,15 @@ import {HeaderText} from './Text/HeaderText';
 export const IconTitleDescription = ({
   icon,
   title,
+  titleVariant = 'header2',
   description,
   color,
   style,
 }: {
   icon: React.ReactNode;
   title: string;
-  description?: string;
+  titleVariant?: 'header1' | 'header2';
+  description?: React.ReactNode;
   /** for use on a dark screen. */
   color?: string;
   style?: ViewStyleProp;
@@ -33,7 +35,7 @@ export const IconTitleDescription = ({
   return (
     <View style={[styles.container, style]}>
       {icon}
-      <HeaderText style={{...styles.title, color}} variant="header2">
+      <HeaderText style={{...styles.title, color}} variant={titleVariant}>
         {title}
       </HeaderText>
       {description && (

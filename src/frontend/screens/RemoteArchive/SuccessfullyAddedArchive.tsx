@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {Button} from '../../sharedComponents/Button';
+
 import GreenCheck from '../../images/Success.svg';
 import {MEDIUM_GREY} from '../../lib/styles';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
+import {SecondaryButton} from '../../sharedComponents/Buttons.tsx';
 
 const m = defineMessages({
   archiveAdded: {
@@ -32,29 +33,31 @@ export const SuccessfullyAddedArchive = ({
   const {formatMessage} = useIntl();
   const {archiveName, url} = route.params;
   return (
-    <ScreenContentWithDock
-      dockContent={
-        <Button
-          fullWidth
-          variant="outlined"
+    <ScreenContentWithButtonDockNoHeader
+      bottomButton={
+        <SecondaryButton
+          text={formatMessage(m.close)}
           onPress={() => {
             navigation.popTo('RemoteArchive');
-          }}>
-          {formatMessage(m.close)}
-        </Button>
-      }
-      contentContainerStyle={{marginTop: 80}}>
+          }}
+          fullSize
+        />
+      }>
       <IconTitleDescription
         icon={<GreenCheck />}
         title={formatMessage(m.archiveAdded)}
         description={formatMessage(m.canSyncOnInternet)}
       />
-      <HeaderText variant="header5" style={{marginTop: 40}}>
+      <HeaderText
+        variant="header5"
+        style={{marginTop: 40, textAlign: 'center'}}>
         {archiveName}
       </HeaderText>
-      <BodyText variant="smallMeta" style={{color: MEDIUM_GREY}}>
+      <BodyText
+        variant="smallMeta"
+        style={{color: MEDIUM_GREY, textAlign: 'center'}}>
         {url}
       </BodyText>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };

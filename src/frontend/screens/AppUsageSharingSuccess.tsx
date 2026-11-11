@@ -6,10 +6,10 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {NEW_DARK_GREY} from '../lib/styles';
 import {SecondaryButton} from '../sharedComponents/Buttons';
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {ScreenContentWithButtonDockNoHeader} from '../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   success: {
@@ -39,8 +39,8 @@ export const AppUsageSharingSuccess = ({
   const deviceName = data?.name;
 
   return (
-    <ScreenContentWithDock
-      dockContent={
+    <ScreenContentWithButtonDockNoHeader
+      bottomButton={
         <SecondaryButton
           fullSize
           text={formatMessage(m.done)}
@@ -48,8 +48,7 @@ export const AppUsageSharingSuccess = ({
             navigation.goBack();
           }}
         />
-      }
-      contentContainerStyle={{marginTop: 80}}>
+      }>
       <View style={{alignItems: 'center'}}>
         <SuccessIcon />
         <HeaderText variant="header1" style={styles.headerText}>
@@ -65,7 +64,7 @@ export const AppUsageSharingSuccess = ({
           {formatMessage(m.removeAnytime)}
         </BodyText>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 

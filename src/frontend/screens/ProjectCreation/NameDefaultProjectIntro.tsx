@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {DARK_ORANGE} from '../../lib/styles';
@@ -7,6 +6,7 @@ import {PrimaryButton} from '../../sharedComponents/Buttons';
 import AddPerson from '../../images/AddPerson.svg';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 
 const m = defineMessages({
   title: {
@@ -34,15 +34,9 @@ export const NameDefaultProjectIntro: NativeNavigationComponent<
   const {formatMessage} = useIntl();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <IconTitleDescription
-          icon={<AddPerson width={64} height={60} color={DARK_ORANGE} />}
-          title={formatMessage(m.heading)}
-          description={formatMessage(m.description)}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
+    <ScreenContentWithButtonDock
+      contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+      bottomButton={
         <PrimaryButton
           fullSize
           text={formatMessage(m.nextButton)}
@@ -58,25 +52,14 @@ export const NameDefaultProjectIntro: NativeNavigationComponent<
             />
           )}
         />
-      </View>
-    </View>
+      }>
+      <IconTitleDescription
+        icon={<AddPerson width={64} height={60} color={DARK_ORANGE} />}
+        title={formatMessage(m.heading)}
+        description={formatMessage(m.description)}
+      />
+    </ScreenContentWithButtonDock>
   );
 };
 
 NameDefaultProjectIntro.navTitle = m.title;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 40,
-  },
-  buttonContainer: {
-    alignItems: 'center',
-  },
-});

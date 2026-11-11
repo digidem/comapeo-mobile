@@ -1,7 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {
   DestructiveButton,
@@ -14,7 +13,7 @@ import {
 } from 'expo-audio';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {Bar} from 'react-native-progress';
-import {COMAPEO_BLUE, WHITE, VERY_LIGHT_GREY, BLACK} from '../../lib/styles';
+import {COMAPEO_BLUE, VERY_LIGHT_GREY, BLACK} from '../../lib/styles';
 import {StopIcon} from '../../sharedComponents/icons';
 import PlayArrow from '../../images/PlayArrow.svg';
 import Ionicons from '@react-native-vector-icons/ionicons';
@@ -26,6 +25,7 @@ import {audioStyles} from './shared';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext';
 import * as Sentry from '@sentry/react-native';
 import {toError} from '../../utils/errors';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   recordingSaved: {
@@ -85,43 +85,41 @@ export const AudioDraftPlaybackScreen = ({
   const progress = duration ? currentPosition / duration : 0;
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={styles.container}
-      dockContainerStyle={{gap: 20, backgroundColor: WHITE}}
-      dockContent={
-        <>
-          <DestructiveButton
-            fullSize
-            text={formatMessage(m.delete)}
-            onPress={() => {
-              deleteUnsavedAttachment(audioId);
-              navigation.goBack();
-            }}
-            renderIcon={({color, size}) => (
-              <MaterialIcons name="delete" size={size} color={color} />
-            )}
-          />
-          <SecondaryButton
-            fullSize
-            text={formatMessage(m.done)}
-            onPress={() => navigation.goBack()}
-            renderIcon={({color, size}) => (
-              <Ionicons
-                name="checkmark-circle-outline"
-                color={color}
-                size={size}
-              />
-            )}
-          />
-        </>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={{gap: 30, alignItems: 'center'}}
+      topButton={
+        <DestructiveButton
+          fullSize
+          text={formatMessage(m.delete)}
+          onPress={() => {
+            deleteUnsavedAttachment(audioId);
+            navigation.goBack();
+          }}
+          renderIcon={({color, size}) => (
+            <MaterialIcons name="delete" size={size} color={color} />
+          )}
+        />
+      }
+      bottomButton={
+        <SecondaryButton
+          fullSize
+          text={formatMessage(m.done)}
+          onPress={() => navigation.goBack()}
+          renderIcon={({color, size}) => (
+            <Ionicons
+              name="checkmark-circle-outline"
+              color={color}
+              size={size}
+            />
+          )}
+        />
       }>
-      <View style={{paddingTop: 65}}>
-        {showRecordingSavedText && (
-          <BodyText variant="large" style={audioStyles.textStyle}>
-            {formatMessage(m.recordingSaved)}
-          </BodyText>
-        )}
-      </View>
+      {showRecordingSavedText && (
+        <BodyText variant="large" style={audioStyles.textStyle}>
+          {formatMessage(m.recordingSaved)}
+        </BodyText>
+      )}
+
       <View style={audioStyles.audioBox}>
         <TouchableOpacity
           onPress={handlePlayPause}
@@ -152,15 +150,6 @@ export const AudioDraftPlaybackScreen = ({
           />
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: WHITE,
-    alignItems: 'center',
-    gap: 30,
-    flex: 1,
-  },
-});

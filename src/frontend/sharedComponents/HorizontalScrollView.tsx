@@ -2,12 +2,14 @@ import {useFocusEffect} from '@react-navigation/native';
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {calculateItemWidthForScrollView} from '../lib/calculateItemWidthForScrollView';
+import {ViewStyleProp} from '../sharedTypes';
 
 type HorizontalMediaScrollViewProps = {
   renderChildren: (itemWidth: number) => React.ReactNode;
   minItemWidth: number;
   gap: number;
   shouldShowLastItems: boolean;
+  containerStyle?: ViewStyleProp;
 };
 
 export const HorizontalScrollView = ({
@@ -15,6 +17,7 @@ export const HorizontalScrollView = ({
   gap,
   renderChildren,
   shouldShowLastItems,
+  containerStyle,
 }: HorizontalMediaScrollViewProps) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
   const [containerWidth, setContainerWidth] = React.useState<number | null>(
@@ -46,8 +49,7 @@ export const HorizontalScrollView = ({
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{gap}}
-      contentInset={{top: 5, right: 5, bottom: 5, left: 5}}
-      style={styles.mediaContainer}>
+      style={[styles.mediaContainer, containerStyle]}>
       {renderChildren(itemWidth)}
     </ScrollView>
   );
@@ -55,6 +57,6 @@ export const HorizontalScrollView = ({
 
 const styles = StyleSheet.create({
   mediaContainer: {
-    margin: 10,
+    gap: 10,
   },
 });

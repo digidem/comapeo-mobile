@@ -36,6 +36,7 @@ import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioSavedT
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 import {useDraftObservationActions} from '../../contexts/DraftObservationContext.tsx';
 import {SavedPhoto} from '../../sharedTypes/index.ts';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea.tsx';
 
 const m = defineMessages({
   title: {
@@ -56,6 +57,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   const {data: fieldsData} = useFieldsQuery();
   const {lat, lon, metadata} = observation;
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const fields = preset
     ? (preset.fieldRefs
@@ -92,8 +94,9 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   return (
     <ScrollView
+      bounces={false}
       style={styles.root}
-      contentContainerStyle={styles.scrollContent}>
+      contentContainerStyle={{paddingBottom}}>
       <>
         {/* check lat and lon are undefined. We cannot do `!lat && !lon` as 0 is a valid number but a falsy value */}
         {lat !== undefined && lon !== undefined && (
@@ -134,6 +137,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           ) : null}
           {attachments.length > 0 && (
             <HorizontalScrollView
+              containerStyle={{marginHorizontal: 20}}
               shouldShowLastItems={false}
               minItemWidth={MIN_WIDTH}
               gap={GAP}
@@ -197,9 +201,7 @@ ObservationScreen.navTitle = m.title;
 const styles = StyleSheet.create({
   root: {
     backgroundColor: WHITE,
-    flexDirection: 'column',
   },
-  scrollContent: {minHeight: '100%'},
   divider: {
     backgroundColor: BLUE_GREY,
     paddingVertical: 15,

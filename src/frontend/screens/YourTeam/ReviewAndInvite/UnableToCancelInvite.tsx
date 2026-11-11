@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import ErrorIcon from '../../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../../sharedComponents/Text';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {BLACK} from '../../../lib/styles';
 import {DeviceNameWithIcon} from '../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
 import {COORDINATOR_ROLE_ID} from '../../../sharedTypes';
@@ -10,6 +11,7 @@ import {useProjectSettings} from '../../../hooks/server/projects';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {resetToYourTeam} from '../../../lib/resetToYourTeam';
 import {PrimaryButton} from '../../../sharedComponents/Buttons';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   unableToCancel: {
@@ -35,39 +37,49 @@ export const UnableToCancelInvite = ({
   const {data} = useProjectSettings();
 
   return (
-    <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
-        <ErrorIcon />
-        <Text style={{marginTop: 20, fontSize: 20, fontWeight: 'bold'}}>
-          {formatMessage(m.unableToCancel)}
-        </Text>
-        {data?.name && (
-          <Text style={{marginTop: 10}}>
-            {formatMessage(m.deviceHasJoined, {projectName: data.name})}
-          </Text>
-        )}
-        <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />
-        <RoleWithIcon
-          style={{marginTop: 20}}
-          role={role === COORDINATOR_ROLE_ID ? 'coordinator' : 'participant'}
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.content}
+      bottomButton={
+        <PrimaryButton
+          fullSize
+          text={formatMessage(m.close)}
+          onPress={() => resetToYourTeam(navigation.dispatch)}
         />
-      </View>
-      <PrimaryButton
-        style={{marginTop: 10}}
-        fullSize
-        text={formatMessage(m.close)}
-        onPress={() => resetToYourTeam(navigation.dispatch)}
+      }>
+      <ErrorIcon />
+      <BodyText variant="large" weight={700} style={styles.title}>
+        {formatMessage(m.unableToCancel)}
+      </BodyText>
+      {data?.name && (
+        <BodyText style={styles.subtitle}>
+          {formatMessage(m.deviceHasJoined, {projectName: data.name})}
+        </BodyText>
+      )}
+      <DeviceNameWithIcon {...deviceInfo} style={styles.deviceName} />
+      <RoleWithIcon
+        style={styles.role}
+        role={role === COORDINATOR_ROLE_ID ? 'coordinator' : 'participant'}
       />
-    </View>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingTop: 80,
+  content: {
     alignItems: 'center',
-    justifyContent: 'space-between',
-    flex: 1,
+  },
+  title: {
+    marginTop: 20,
+    color: BLACK,
+  },
+  subtitle: {
+    marginTop: 10,
+    color: BLACK,
+  },
+  deviceName: {
+    marginTop: 10,
+  },
+  role: {
+    marginTop: 20,
   },
 });

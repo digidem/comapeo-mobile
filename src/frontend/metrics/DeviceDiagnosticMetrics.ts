@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/react-native';
 import {AppState, Dimensions, PixelRatio, Platform} from 'react-native';
 import * as NetInfo from '@react-native-community/netinfo';
+import {getInternetStatus} from '../lib/internetStatus';
 import * as Application from 'expo-application';
 import * as Device from 'expo-device';
 import {getMonthlyHash} from './getMonthlyHash';
@@ -116,7 +117,7 @@ export class DeviceDiagnostics {
 
     subscriptionCleanupFns.push(
       NetInfo.addEventListener(state => {
-        this.#isOnline = Boolean(state.isInternetReachable);
+        this.#isOnline = getInternetStatus(state) === 'online';
         this.#update();
       }),
     );

@@ -18,12 +18,15 @@ import SuccessIcon from '../../images/Success.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {toError} from '../../utils/errors';
-import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {ReceivingMapProgressBar} from './ReceivingMapProgressBar';
 import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {VERY_LIGHT_GREY, NEW_DARK_GREY, COMAPEO_BLUE} from '../../lib/styles';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   updating: {
@@ -66,8 +69,10 @@ export function ReceivingBackgroundMap({
   const {mutate: abortDownload, status: abortStatus} =
     useAbortReceivedMapShareDownload();
   const mapShare = useSingleReceivedMapShare({shareId});
+  const {top} = useSafeAreaInsets();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
-  usePreventAndroidBackButton();
+  usePreventBackNavigation();
   useKeepAwake();
 
   const handleCancel = React.useCallback(() => {
@@ -147,8 +152,8 @@ export function ReceivingBackgroundMap({
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.topSection}>
+    <View style={[styles.container, {paddingBottom}]}>
+      <View style={[styles.topSection, {marginTop: top + 120}]}>
         <View style={styles.iconBackground}>
           <StackSvg width={47} height={50} color={NEW_DARK_GREY} />
         </View>
@@ -179,14 +184,13 @@ function MapUpdated({onDone}: {onDone: () => void}) {
   const {formatMessage: t} = useIntl();
 
   return (
-    <View style={styles.successContainer}>
-      <View style={styles.successContent}>
-        <IconTitleDescription icon={<SuccessIcon />} title={t(m.mapUpdated)} />
-      </View>
-      <View style={styles.buttonContainer}>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.successContent}
+      bottomButton={
         <SecondaryButton fullSize text={t(m.done)} onPress={onDone} />
-      </View>
-    </View>
+      }>
+      <IconTitleDescription icon={<SuccessIcon />} title={t(m.mapUpdated)} />
+    </ScreenContentWithButtonDockNoHeader>
   );
 }
 
@@ -199,7 +203,6 @@ const styles = StyleSheet.create({
   topSection: {
     alignItems: 'center',
     gap: 20,
-    marginTop: 120,
   },
   iconBackground: {
     width: 80,
@@ -221,16 +224,8 @@ const styles = StyleSheet.create({
   cancelText: {
     color: COMAPEO_BLUE,
   },
-  successContainer: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'space-between',
-  },
   successContent: {
     flex: 1,
     justifyContent: 'center',
-  },
-  buttonContainer: {
-    alignItems: 'center',
   },
 });

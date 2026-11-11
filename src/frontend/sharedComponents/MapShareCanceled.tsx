@@ -4,6 +4,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import ErrorIcon from '../images/Error.svg';
 import {IconTitleDescription} from './IconTitleDescription';
 import {SecondaryButton} from './Buttons';
+import {useBottomPaddingWithSafeArea} from '../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -22,9 +23,10 @@ const m = defineMessages({
 
 export function MapShareCanceled({onClose}: {onClose: () => void}) {
   const {formatMessage: t} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom}]}>
       <View style={styles.contentContainer}>
         <IconTitleDescription
           icon={<ErrorIcon width={100} height={100} />}
@@ -41,7 +43,8 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
   contentContainer: {
     flex: 1,

@@ -25,10 +25,8 @@ export type LocalDiscoveryState = {
   error?: Error;
   /** Name of WiFi SSID currently connected */
   ssid: string | null;
-  /** Is the device WiFi turned on or off? */
+  /** Is the device joined to a WiFi network? Discovery can only run when 'on' */
   wifiStatus: 'unknown' | 'on' | 'off';
-  /** Is the device connected to a WiFi network? */
-  wifiConnection: 'unknown' | 'connected' | 'disconnected';
   /** Speed in Mbps of the WiFi connection (affects speed) */
   wifiLinkSpeed: number | null;
 };
@@ -90,7 +88,6 @@ export function createLocalDiscoveryController(mapeoApi: ComapeoCoreClientApi) {
     status: 'stopped',
     ssid: null,
     wifiStatus: 'unknown',
-    wifiConnection: 'unknown',
     wifiLinkSpeed: null,
   };
   let cancelNetInfoFetch: undefined | (() => void);
@@ -235,8 +232,8 @@ export function createLocalDiscoveryController(mapeoApi: ComapeoCoreClientApi) {
     // Don't do anything if the app is not active (starting and stopping
     // discovery based on appState is handled below in onAppState)
     if (appState !== 'active') return;
-    const nextIpAddress = nextNetInfo.details.ipAddress;
-    const prevIpAddress = netInfo?.details ? netInfo.details.ipAddress : null;
+    const nextIpAddress = getWifiIpAddress(nextNetInfo);
+    const prevIpAddress = getWifiIpAddress(netInfo);
     // netInfo.isConnected is true (I think) only if the wifi network has
     // internet access. We use the presence of an IP address to detect if wifi
     // is connected to a local network.
@@ -274,8 +271,7 @@ export function createLocalDiscoveryController(mapeoApi: ComapeoCoreClientApi) {
     }
     netInfo = nextNetInfo;
     updateState({
-      wifiStatus: nextNetInfo.isWifiEnabled ? 'on' : 'off',
-      wifiConnection: isLocalWifiConnected ? 'connected' : 'disconnected',
+      wifiStatus: isLocalWifiConnected ? 'on' : 'off',
       wifiLinkSpeed: nextNetInfo.details.linkSpeed,
       ssid: nextNetInfo.details.ssid,
     });
@@ -432,6 +428,17 @@ function zeroconfServiceToMapeoPeer({
   // remove the suffix when connecting to the peer.
   const name = serviceName.replace(/[^a-fA-F0-9].*/g, '');
   return address ? {address, port, name} : null;
+}
+
+// Both platforms report the wifi interface's IP address as '0.0.0.0' when the
+// device is not associated with a network
+const UNASSIGNED_IP_ADDRESS = '0.0.0.0';
+
+function getWifiIpAddress(
+  netInfoState: NetInfoWifiState | NetInfoDisconnectedStates | null,
+) {
+  const ipAddress = netInfoState?.details?.ipAddress;
+  return !ipAddress || ipAddress === UNASSIGNED_IP_ADDRESS ? null : ipAddress;
 }
 
 function shallowPartialEqual<T extends {[k: string]: unknown}>(

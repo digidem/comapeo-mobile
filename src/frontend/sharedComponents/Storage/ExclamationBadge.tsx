@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {DARK_ORANGE, WHITE} from '../../lib/styles';
+import {RUBIK} from '../../lib/fonts';
 
 type Props = {
   testID: string;
@@ -29,8 +30,8 @@ const styles = StyleSheet.create({
   },
   mark: {
     color: WHITE,
+    fontFamily: RUBIK[700],
     fontSize: 7,
-    fontWeight: '700',
     includeFontPadding: false,
     textAlign: 'center',
   },

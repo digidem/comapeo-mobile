@@ -1,4 +1,5 @@
 import {deleteItemAsync, getItem, setItem} from 'expo-secure-store';
+import * as Sentry from '@sentry/react-native';
 import {createContext, useContext} from 'react';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
@@ -15,6 +16,7 @@ import {
   StoredPasscodeSchema,
 } from '../lib/security';
 import {FullScreenCenteredLoader} from '../sharedComponents/FullScreenCenteredLoader';
+import {storage} from '../hooks/persistedState/createPersistedState';
 
 const SecurityStateSchema = v.variant('passcode', [
   v.object({
@@ -37,6 +39,14 @@ export type SecurityState = v.InferOutput<typeof SecurityStateSchema>;
 
 // NOTE: Do not change!
 const STORAGE_KEY = 'security' as const;
+
+// iOS keeps Keychain items when an app is deleted, but MMKV gets emptied when the app does.
+// So an empty MMKV means this container is new and any passcode still in the
+// Keychain belongs to a previous install. A passcode can't exist without a
+// project having been created first, which writes to MMKV, so a real one is
+// never missed. This runs once when the file is first loaded, which is before
+// any store exists to write to MMKV and make it look used.
+const isFreshInstall = storage.length === 0;
 
 function createInitialState(): SecurityState {
   return {
@@ -97,7 +107,17 @@ export function createSecurityStore({persist} = {persist: false}) {
         version: 1,
         migrate,
         storage: createJSONStorage((): StateStorage => ({
-          getItem: key => getItem(key),
+          getItem: key => {
+            // On iOS a passcode from a previous install is still in the keychain,
+            // so it would show up before onboarding. Returning null starts the
+            // store with no passcode, and deleting it means the next launch
+            // finds nothing.
+            if (isFreshInstall) {
+              deleteItemAsync(key).catch(err => Sentry.captureException(err));
+              return null;
+            }
+            return getItem(key);
+          },
           setItem: (key, value) => setItem(key, value),
           removeItem: key => deleteItemAsync(key),
         })),

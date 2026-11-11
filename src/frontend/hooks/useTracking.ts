@@ -1,5 +1,6 @@
 import * as Location from 'expo-location';
 import {useCallback} from 'react';
+import {defineMessages, useIntl} from 'react-intl';
 import {
   useTrackActions,
   useTrackState,
@@ -10,9 +11,21 @@ import * as Sentry from '@sentry/react-native';
 import {useLocationContext} from '../contexts/LocationContext';
 import {toError} from '../utils/errors';
 
+const m = defineMessages({
+  notificationTitle: {
+    id: '$1hooks.useTracking.notificationTitle',
+    defaultMessage: 'Recording a track',
+  },
+  notificationBody: {
+    id: '$1hooks.useTracking.notificationBody',
+    defaultMessage: 'Location saved on this device. Open app to end track.',
+  },
+});
+
 export function useTracking() {
   const {setTracking, addNewLocations, clearCurrentTrack} = useTrackActions();
   const navigation = useNavigation();
+  const {formatMessage} = useIntl();
   const isTracking = useTrackState(state => state.isTracking);
   // TODO: Once use() is available, we can put this in the cancel tracking function
   const locationContext = useLocationContext();
@@ -28,8 +41,8 @@ export function useTracking() {
       activityType: Location.LocationActivityType.Fitness,
       distanceInterval: 1,
       foregroundService: {
-        notificationTitle: 'CoMapeo is tracking your location',
-        notificationBody: 'Open CoMapeo to stop tracking at any time.',
+        notificationTitle: formatMessage(m.notificationTitle),
+        notificationBody: formatMessage(m.notificationBody),
       },
     }).catch(err => {
       Sentry.captureException(err);
@@ -39,7 +52,7 @@ export function useTracking() {
         error: toError(err, 'Tracking failed'),
       });
     });
-  }, [isTracking, setTracking, navigation]);
+  }, [isTracking, setTracking, navigation, formatMessage]);
 
   /**
    * Stops location tracking and finalizes the track.

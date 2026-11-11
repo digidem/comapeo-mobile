@@ -1,14 +1,16 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, Pressable} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio';
+import {
+  setAudioModeAsync,
+  useAudioPlayer,
+  useAudioPlayerStatus,
+} from 'expo-audio';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {Bar} from 'react-native-progress';
 import {
   COMAPEO_BLUE,
-  WHITE,
   VERY_LIGHT_GREY,
   BLACK,
   BLUE_GREY,
@@ -17,9 +19,8 @@ import {StopIcon} from '../../sharedComponents/icons';
 import PlayArrow from '../../images/PlayArrow.svg';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import * as FileSystem from 'expo-file-system/legacy';
-import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {useOpenShareDialog} from '../../hooks/share';
-import {audioStyles, SIDE_ICON_BUTTON_WIDTH} from '../../screens/Audio/shared';
+import {audioStyles} from '../../screens/Audio/shared';
 import * as Sentry from '@sentry/react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -27,6 +28,8 @@ import {toError} from '../../utils/errors';
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {useAttachmentUrl} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea.tsx';
+import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator.tsx';
 
 const m = defineMessages({
   navTitle: {
@@ -46,7 +49,7 @@ export const AudioAttachmentPlaybackScreen = ({
   const {driveDiscoveryId, name, type, createdAt} = route.params;
 
   const {projectId} = useActiveProject();
-
+  const paddingBottom = useBottomPaddingWithSafeArea();
   const {data: uri} = useAttachmentUrl({
     projectId,
     blobId: {
@@ -58,6 +61,14 @@ export const AudioAttachmentPlaybackScreen = ({
   });
   const player = useAudioPlayer({uri});
   const status = useAudioPlayerStatus(player);
+
+  // needed for iOS to ensure audio plays even when the silent switch is on
+  React.useEffect(() => {
+    setAudioModeAsync({playsInSilentMode: true}).catch(err => {
+      Sentry.captureException(err);
+    });
+  }, []);
+
   const {formatMessage} = useIntl();
   const [localUri, setLocalUri] = React.useState<string | null>(null);
   const {mutate: openShareDialog, isPending: shareLoading} =
@@ -131,16 +142,44 @@ export const AudioAttachmentPlaybackScreen = ({
   }, [localUri]);
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={styles.container}
-      dockContainerStyle={styles.dockContainer}
-      dockContent={
-        shareLoading ? (
-          <LoadingIndicator
-            style={{maxHeight: SIDE_ICON_BUTTON_WIDTH}}
-            size="large"
-            color={WHITE}
+    <View style={{flex: 1, justifyContent: 'space-between'}}>
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <View style={audioStyles.audioBox}>
+          <TouchableOpacity
+            testID="audio-play-toggle"
+            onPress={handlePlayPause}
+            style={styles.playButton}>
+            {isPlaying ? <StopIcon size={60} color={BLACK} /> : <PlayArrow />}
+          </TouchableOpacity>
+
+          <Bar
+            progress={progress > 0 ? progress : 0.00000001}
+            width={200}
+            height={6}
+            color={COMAPEO_BLUE}
+            unfilledColor={VERY_LIGHT_GREY}
+            borderRadius={20}
+            borderWidth={0}
           />
+
+          <HeaderText style={{textAlign: 'center'}} variant="header3">
+            {millisecondsToMMSS(currentPosition)} /{' '}
+            {millisecondsToMMSS(duration)}
+          </HeaderText>
+
+          {createdAt && (
+            <BodyText variant="smallMeta" style={audioStyles.textStyle}>
+              <FormattedObservationDate
+                createdDate={createdAt}
+                variant="long"
+              />
+            </BodyText>
+          )}
+        </View>
+      </View>
+      <View style={{paddingTop: 20, paddingBottom, alignItems: 'center'}}>
+        {shareLoading ? (
+          <LoadingIndicator />
         ) : (
           <Pressable
             accessibilityLabel="Share audio."
@@ -153,52 +192,13 @@ export const AudioAttachmentPlaybackScreen = ({
               {formatMessage(m.share)}
             </BodyText>
           </Pressable>
-        )
-      }>
-      <View style={audioStyles.audioBox}>
-        <TouchableOpacity
-          testID="audio-play-toggle"
-          onPress={handlePlayPause}
-          style={styles.playButton}>
-          {isPlaying ? <StopIcon size={60} color={BLACK} /> : <PlayArrow />}
-        </TouchableOpacity>
-
-        <Bar
-          progress={progress > 0 ? progress : 0.00000001}
-          width={200}
-          height={6}
-          color={COMAPEO_BLUE}
-          unfilledColor={VERY_LIGHT_GREY}
-          borderRadius={20}
-          borderWidth={0}
-        />
-
-        <HeaderText style={{textAlign: 'center'}} variant="header3">
-          {millisecondsToMMSS(currentPosition)} / {millisecondsToMMSS(duration)}
-        </HeaderText>
-
-        {createdAt && (
-          <BodyText variant="smallMeta" style={audioStyles.textStyle}>
-            <FormattedObservationDate createdDate={createdAt} variant="long" />
-          </BodyText>
         )}
       </View>
-    </ScreenContentWithDock>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: WHITE,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 30,
-    flex: 1,
-  },
-  dockContainer: {
-    backgroundColor: WHITE,
-    paddingBottom: 20,
-  },
   playButton: {
     flex: 1,
     justifyContent: 'flex-end',

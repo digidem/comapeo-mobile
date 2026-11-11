@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 
@@ -18,6 +18,8 @@ import {
 import {COMAPEO_BLUE} from '../../lib/styles';
 import {usePreventRemove} from '@react-navigation/native';
 import {DatePicker} from './Date';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   nextQuestion: {
@@ -51,6 +53,7 @@ export const ObservationFields = ({
 
   const {updateTag} = useDraftObservationActions();
   const tags = useDraftObservationState(state => state.value?.tags);
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   usePreventRemove(current !== 1, ({data}) => {
     if (current === fieldIds.length && data.action.type === 'POP_TO') {
@@ -65,7 +68,8 @@ export const ObservationFields = ({
     navigation.setOptions({
       headerTitle: formatMessage(m.title, {current, total: fieldIds.length}),
       headerRight: () => (
-        <TouchableOpacity
+        <HeaderRightContainerButton
+          loading={false}
           onPress={() => {
             if (current === fieldIds.length) {
               if (observationId) {
@@ -78,14 +82,12 @@ export const ObservationFields = ({
             }
             setCurrent(current + 1);
           }}>
-          <HeaderText
-            variant="header5"
-            style={{color: COMAPEO_BLUE, marginRight: 10}}>
+          <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
             {current === fieldIds.length
               ? formatMessage(m.done)
               : formatMessage(m.nextQuestion)}
           </HeaderText>
-        </TouchableOpacity>
+        </HeaderRightContainerButton>
       ),
     });
   }, [navigation, current, formatMessage, fieldIds.length, observationId]);
@@ -103,7 +105,10 @@ export const ObservationFields = ({
   const tagValue = tags?.[tagKey];
 
   return (
-    <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
+    <ScrollView
+      style={{flex: 1}}
+      contentContainerStyle={{paddingBottom}}
+      testID="OBS.add-details-scrn">
       <View style={styles.labelContainer}>
         <HeaderText variant="header3">{field.label}</HeaderText>
         {field.helperText && (

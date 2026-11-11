@@ -8,6 +8,8 @@ import {useDraftObservationActions} from '../contexts/DraftObservationContext';
 import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import type {PhotoFile} from 'react-native-vision-camera';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {DARK_GREY, RED} from '../lib/styles';
 
 const m = defineMessages({
   cancel: {
@@ -33,8 +35,17 @@ export const AddPhotoScreen = ({
     navigation.pop();
   };
 
+  const {bottom} = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          paddingBottom: bottom,
+          backgroundColor: DARK_GREY,
+        },
+      ]}>
       <CameraView onAddPress={handleAddPress} />
       <TouchableNativeFeedback onPress={handleCancelPress}>
         <View style={styles.cancelButton}>
@@ -57,7 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'red',
+    backgroundColor: RED,
   },
   cancelButtonLabel: {
     color: 'white',

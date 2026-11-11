@@ -5,17 +5,16 @@ import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 
 import GraphIcon from '../../images/Graph.svg';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
-import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
+import {usePreventBackNavigation} from '../../hooks/usePreventBackNavigation';
 import {toError} from '../../utils/errors';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   shareProjectStats: {
@@ -55,7 +54,7 @@ export const ShareProjectStats = ({
   const {projectId} = useActiveProject();
   const updateSettings = useUpdateProjectSettings({projectId});
 
-  usePreventAndroidBackButton();
+  usePreventBackNavigation();
 
   const goToSuccess = React.useCallback(
     (statsShared: boolean) => {
@@ -93,28 +92,22 @@ export const ShareProjectStats = ({
   const isSubmitting = updateSettings.status === 'pending';
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={styles.content}
-      dockContainerStyle={styles.dock}
-      dockContent={
-        isSubmitting ? (
-          <View style={styles.loading}>
-            <FullScreenCenteredLoader />
-          </View>
-        ) : (
-          <View style={styles.buttons}>
-            <PrimaryButton
-              fullSize
-              onPress={handleShare}
-              text={formatMessage(m.yesShare)}
-            />
-            <SecondaryButton
-              fullSize
-              onPress={handleSkip}
-              text={formatMessage(m.skip)}
-            />
-          </View>
-        )
+      loading={isSubmitting}
+      topButton={
+        <PrimaryButton
+          fullSize
+          onPress={handleShare}
+          text={formatMessage(m.yesShare)}
+        />
+      }
+      bottomButton={
+        <SecondaryButton
+          fullSize
+          onPress={handleSkip}
+          text={formatMessage(m.skip)}
+        />
       }>
       <View style={styles.headerBlock}>
         <GraphIcon color={DARK_ORANGE} />
@@ -150,14 +143,12 @@ export const ShareProjectStats = ({
           </BodyText>
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 
 const styles = StyleSheet.create({
   content: {
-    alignItems: 'center',
-    paddingTop: 40,
     gap: 30,
   },
   headerBlock: {
@@ -184,10 +175,6 @@ const styles = StyleSheet.create({
   bulletText: {
     color: NEW_DARK_GREY,
     flex: 1,
-  },
-  dock: {
-    alignItems: 'center',
-    paddingBottom: 20,
   },
   buttons: {
     gap: 10,

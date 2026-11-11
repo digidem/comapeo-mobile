@@ -12,7 +12,6 @@ import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {useEarlyAccessState} from '../../contexts/EarlyAccessContext';
 import {ObservationFilterToggle} from './ObservationFilterToggle';
 
 const m = defineMessages({
@@ -35,7 +34,6 @@ export const ObservationsList: React.FC<
   const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
   const {authState} = useAuthContext();
-  const isEarlyAccessEnabled = useEarlyAccessState(s => s.isEarlyAccessEnabled);
   const {data: deviceInfo} = useOwnDeviceInfo();
 
   const [filterMode, setFilterMode] = React.useState<'all' | 'mine'>('all');
@@ -61,7 +59,7 @@ export const ObservationsList: React.FC<
   const filteredData = React.useMemo(() => {
     const allData = [...observations, ...tracks];
 
-    if (!isEarlyAccessEnabled || filterMode === 'all') {
+    if (filterMode === 'all') {
       return allData.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
     }
 
@@ -71,30 +69,18 @@ export const ObservationsList: React.FC<
     );
 
     return filtered.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-  }, [
-    observations,
-    tracks,
-    isEarlyAccessEnabled,
-    filterMode,
-    deviceInfo?.deviceId,
-  ]);
+  }, [observations, tracks, filterMode, deviceInfo?.deviceId]);
 
   if ((!observations.length && !tracks.length) || authState === 'obscured') {
-    return (
-      <ObservationEmptyView
-        onPressBack={() => navigation.popTo('Home', {screen: 'Map'})}
-      />
-    );
+    return <ObservationEmptyView />;
   }
 
   return (
     <View style={styles.container} testID="OBS.list-scrn">
-      {isEarlyAccessEnabled && (
-        <ObservationFilterToggle
-          filterMode={filterMode}
-          onFilterModeChange={handleFilterModeChange}
-        />
-      )}
+      <ObservationFilterToggle
+        filterMode={filterMode}
+        onFilterModeChange={handleFilterModeChange}
+      />
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
       <FlatList
         keyExtractor={keyExtractor}

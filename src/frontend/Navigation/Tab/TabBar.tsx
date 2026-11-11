@@ -8,6 +8,7 @@ import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useTracking} from '../../hooks/useTracking';
 import {useTrackTimer} from '../../hooks/useTrackTimer.ts';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea.tsx';
 
 const BUTTON_SIZE = 25;
 const HIT_SLOP = 20;
@@ -15,6 +16,7 @@ const HIT_SLOP = 20;
 export const TabBar = ({navigation, state}: BottomTabBarProps) => {
   const currentIndex = state.index;
   const currentTab = state.routes[currentIndex];
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   function onPressMap() {
     navigation.navigate('Map', {trackingOpen: false});
@@ -24,7 +26,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
     navigation.navigate('Map', {trackingOpen: true});
   }
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom}]}>
       <TouchableOpacity
         hitSlop={HIT_SLOP}
         testID="tabBarButtonObservationsList"
@@ -75,7 +77,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
         hitSlop={HIT_SLOP}
         testID="tabBarButtonTracking"
         accessibilityLabel="Go to tracking."
-        style={styles.trackContainer}
+        style={styles.buttonStyle}
         onPress={onPressTracks}>
         <TrackButtonContent
           isSelected={
@@ -100,15 +102,16 @@ const TrackButtonContent = ({isSelected}: {isSelected: boolean}) => {
       {isTracking && (
         <View style={styles.runtimeWrapper}>
           <View style={styles.indicator} />
-          <BodyText variant="tinyMeta" style={styles.timer}>
+          <BodyText
+            variant="tinyMeta"
+            numberOfLines={1}
+            maxFontSizeMultiplier={1.15}
+            style={styles.timer}>
             {timer}
           </BodyText>
         </View>
       )}
-      <TracksIcon
-        color={isSelected ? COMAPEO_BLUE : MEDIUM_GREY}
-        height={BUTTON_SIZE}
-      />
+      <TracksIcon fill={isSelected ? COMAPEO_BLUE : MEDIUM_GREY} height={20} />
     </>
   );
 };
@@ -121,7 +124,6 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     marginTop: 25,
-    marginBottom: 25,
     flex: 1,
     alignItems: 'center',
   },
@@ -131,7 +133,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   indicator: {
-    marginRight: 5,
     height: 10,
     width: 10,
     borderRadius: 99,
@@ -139,9 +140,7 @@ const styles = StyleSheet.create({
   },
   timer: {
     marginLeft: 5,
-  },
-  trackContainer: {
-    flex: 1,
-    alignItems: 'center',
+    // the clock redraws the numbers every second without fixed-width digits
+    fontVariant: ['tabular-nums'],
   },
 });

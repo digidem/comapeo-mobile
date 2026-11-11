@@ -57,6 +57,7 @@ export function RemoteArchiveOff({
         </BodyText>
         {isCoordinator && (
           <SecondaryButton
+            style={{alignSelf: 'center'}}
             fullSize
             renderIcon={({color, size}) => (
               <MaterialIcons size={size} name="plus" color={color} />

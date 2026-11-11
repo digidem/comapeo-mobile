@@ -12,6 +12,7 @@ import {NoWifiDisplay} from './NoWifiDisplay';
 import {ExchangeScreenContent} from './ExchangeScreenContent';
 import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
 import {useNetInfo} from '@react-native-community/netinfo';
+import {getInternetStatus} from '../../lib/internetStatus';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {defineMessages} from 'react-intl';
 
@@ -25,7 +26,7 @@ const m = defineMessages({
 export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   const wifiStatus = useLocalDiscoveryState(state => state.wifiStatus);
 
-  const hasInternetAccess = useNetInfo().isConnected;
+  const internetStatus = getInternetStatus(useNetInfo());
 
   const {projectId} = useActiveProject();
   const syncState = useSyncState({projectId});
@@ -48,7 +49,7 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
     }
     // Case 2: Remote archive exists, but no general internet connection.
     // If a user has a remote archive they can sync on NON-wifi internet connections
-    if (hasRemoteArchive && !hasInternetAccess) {
+    if (hasRemoteArchive && internetStatus === 'offline') {
       return true;
     }
     return false;

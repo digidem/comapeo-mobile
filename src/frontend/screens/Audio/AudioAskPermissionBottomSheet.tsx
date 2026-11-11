@@ -16,6 +16,7 @@ import {openSettingsAndWait} from '../../utils/linking';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {useAudioPermissionModalMutation} from '../../hooks/useAudioPermissionTracker';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   title: {
@@ -58,6 +59,8 @@ export const AudioAskPermissionBottomSheet = ({
   );
   const hasNavigatedRef = React.useRef(false);
   const {passcode} = useSecurityState();
+  // this screen has no header, so we need to push the content down below the notch.
+  const {top} = useSafeAreaInsets();
 
   // Re-check microphone permission in case it was granted via system settings,
   // and navigate to AudioRecording if so.
@@ -114,7 +117,10 @@ export const AudioAskPermissionBottomSheet = ({
 
   return (
     <BottomSheetWrapper>
-      <View style={styles.container}>
+      {/* This padding is a litte weird. this should have a padding of 80 from the top
+        40 of the padding comes from bottom sheet wrapper, plus this 40, plus the 
+        inset for th top notch */}
+      <View style={[styles.container, {paddingTop: top + 40}]}>
         <View style={{alignItems: 'center'}}>
           <AudioPermission />
           <HeaderText
@@ -127,7 +133,7 @@ export const AudioAskPermissionBottomSheet = ({
           </BodyText>
         </View>
         <View
-          style={{width: '100%', gap: 20, alignItems: 'center', marginTop: 30}}>
+          style={{width: '100%', gap: 15, alignItems: 'center', marginTop: 30}}>
           {permission.canAskAgain ? (
             <PrimaryButton
               fullSize

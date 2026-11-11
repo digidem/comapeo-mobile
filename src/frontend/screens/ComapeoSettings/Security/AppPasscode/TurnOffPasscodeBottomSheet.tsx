@@ -46,7 +46,7 @@ export const TurnOffPasscodeBottomSheet = ({
       })
       .catch(err => {
         setIsLoading(false);
-        navigation.navigate('ErrorBottomSheet', {
+        navigation.replace('ErrorBottomSheet', {
           error: toError(err, 'Failed to turn off passcode'),
         });
       });

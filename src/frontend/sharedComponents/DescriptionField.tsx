@@ -1,8 +1,10 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../lib/styles';
 import {useKeyboardListener} from '../hooks/useKeyboardListener';
+import {BodyText} from './Text/BodyText';
+import {ViewStyleProp} from '../sharedTypes';
 
 const m = defineMessages({
   descriptionPlaceholder: {
@@ -15,18 +17,22 @@ const m = defineMessages({
 export const DescriptionField = ({
   notes,
   updateNotes,
+  containerStyle,
 }: {
   notes?: string;
   updateNotes?: (newNotes: string) => void;
+  containerStyle?: ViewStyleProp;
 }) => {
   const {formatMessage: t} = useIntl();
   const {keyboardVisible} = useKeyboardListener();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       {keyboardVisible && (
         <View style={styles.labelContainer}>
-          <Text style={styles.labelText}>{t(m.descriptionPlaceholder)}</Text>
+          <BodyText variant="smallMeta" style={styles.labelText}>
+            {t(m.descriptionPlaceholder)}
+          </BodyText>
         </View>
       )}
       <TextInput
@@ -46,7 +52,6 @@ const styles = StyleSheet.create({
   container: {
     minHeight: 56,
     position: 'relative',
-    marginTop: 20,
   },
   labelContainer: {
     position: 'absolute',
@@ -56,8 +61,6 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   labelText: {
-    fontSize: 14,
-    fontFamily: 'Rubik',
     color: NEW_DARK_GREY,
   },
 

@@ -7,7 +7,6 @@ import PuzzlePieceIcon from '../images/PuzzlePiece.svg';
 import RedOutlinedExIcon from '../images/RedOutlinedEx.svg';
 import SwitchIcon from '../images/Switch.svg';
 
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
@@ -16,6 +15,7 @@ import {NEW_DARK_GREY} from '../lib/styles';
 
 import {useAppUsageStatsActions} from '../contexts/AppUsageStatsContext';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {ScreenContentWithButtonDockNoHeader} from '../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 const m = defineMessages({
   screenTitle: {
     id: 'screens.AppUsagePrompt.screenTitle',
@@ -55,26 +55,26 @@ export const AppUsagePromptInterstitial = ({
   const {setOptedIn} = useAppUsageStatsActions();
 
   return (
-    <ScreenContentWithDock
-      dockContent={
-        <View style={styles.buttonsContainer}>
-          <PrimaryButton
-            fullSize
-            text={t(m.countIn)}
-            onPress={() => {
-              setOptedIn(true);
-              navigation.replace('AppUsageSharingSuccess');
-            }}
-          />
-          <SecondaryButton
-            fullSize
-            text={t(m.notNow)}
-            onPress={() => {
-              setOptedIn(false);
-              navigation.pop();
-            }}
-          />
-        </View>
+    <ScreenContentWithButtonDockNoHeader
+      topButton={
+        <PrimaryButton
+          fullSize
+          text={t(m.countIn)}
+          onPress={() => {
+            setOptedIn(true);
+            navigation.replace('AppUsageSharingSuccess');
+          }}
+        />
+      }
+      bottomButton={
+        <SecondaryButton
+          fullSize
+          text={t(m.notNow)}
+          onPress={() => {
+            setOptedIn(false);
+            navigation.pop();
+          }}
+        />
       }>
       <View style={styles.headerArea}>
         <FingerPressingIcon width={60} height={110} />
@@ -90,7 +90,7 @@ export const AppUsagePromptInterstitial = ({
           <InfoListItem Icon={SwitchIcon} text={t(m.turnOffAnytime)} />
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     gap: 30,
-    paddingTop: 30,
     flexWrap: 'wrap',
   },
   title: {
@@ -139,8 +138,5 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     flexShrink: 1,
     color: NEW_DARK_GREY,
-  },
-  buttonsContainer: {
-    gap: 15,
   },
 });

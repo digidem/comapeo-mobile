@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {
   getDiagnosticsEnabled,
@@ -7,6 +7,7 @@ import {
 } from '@comapeo/core-react-native/sentry';
 import {WHITE, BLACK} from '../lib/styles';
 import {Checkbox} from './Checkbox';
+import {BodyText} from './Text/BodyText';
 
 const m = defineMessages({
   shareDiagnostics: {
@@ -24,9 +25,9 @@ export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.permissionText}>
+      <BodyText style={styles.permissionText}>
         {formatMessage(m.shareDiagnostics)}
-      </Text>
+      </BodyText>
       <Checkbox
         value={reactiveDiagnosticsEnabled}
         error={false}
@@ -48,7 +49,6 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
   permissionText: {
-    fontSize: 16,
     color: BLACK,
     flex: 1,
   },

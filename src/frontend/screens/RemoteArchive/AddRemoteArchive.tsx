@@ -5,19 +5,20 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {COMAPEO_BLUE, BLUE_GREY, RED, VERY_LIGHT_GREY} from '../../lib/styles';
 import {HookFormTextInput} from '../../sharedComponents/HookFormTextInput';
 import {Control, FieldErrors, useForm} from 'react-hook-form';
-import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useFindRemoteArchive} from '../../hooks/server/projects';
 import {Bar} from 'react-native-progress';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {Button} from '../../sharedComponents/Button';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../utils/normalizeRemoteArchiveUrl';
-import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useAddServerPeer} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
+import SaveCheck from '../../images/CheckMark.svg';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const m = defineMessages({
   navTitle: {
@@ -99,10 +100,11 @@ export const AddRemoteArchive: NativeNavigationComponent<
     navigation.setOptions({
       headerRight: () =>
         !archiveName ? (
-          <SaveButton
+          <HeaderRightContainerButton
             onPress={handleSubmit(handleFindRemoteArchive)}
-            isLoading={false}
-          />
+            loading={false}>
+            <SaveCheck />
+          </HeaderRightContainerButton>
         ) : null,
     });
   }, [handleFindRemoteArchive, handleSubmit, navigation, archiveName]);
@@ -131,7 +133,7 @@ const SearchUrl = ({control, errors}: SearchUrlProp) => {
     navigation.setOptions({headerShown: true});
   }, [navigation]);
   return (
-    <View style={styles.container}>
+    <View style={{padding: 20}}>
       <View style={{flexDirection: 'row', marginBottom: 10}}>
         <HeaderText variant="header5">{formatMessage(m.url)}</HeaderText>
         <HeaderText variant="header5" style={{color: RED}}>
@@ -156,13 +158,14 @@ const SearchUrl = ({control, errors}: SearchUrlProp) => {
 const FindingRemoteArchive = () => {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
+  const {top} = useSafeAreaInsets();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
   return (
-    <View style={[styles.container, {marginTop: 80}]}>
+    <View style={{padding: 20, paddingTop: top + 80}}>
       <HeaderText style={styles.title}>{formatMessage(m.looking)}</HeaderText>
       <Bar
         style={{borderWidth: 0, marginTop: 30}}
@@ -220,17 +223,14 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   }, [setOptions]);
 
   return (
-    <ScreenContentWithDock
-      dockContent={
-        status === 'pending' ? (
-          <LoadingIndicator style={{marginBottom: 20}} />
-        ) : (
-          <Button
-            fullWidth
-            onPress={
-              handleAddRemoteArchive
-            }>{`+ ${formatMessage(m.navTitle)}`}</Button>
-        )
+    <ScreenContentWithButtonDock
+      loading={status === 'pending'}
+      bottomButton={
+        <PrimaryButton
+          onPress={() => handleAddRemoteArchive()}
+          fullSize
+          text={formatMessage(m.navTitle)}
+        />
       }>
       <HeaderText variant="header4" style={styles.title}>
         {formatMessage(m.youAreAdding)}
@@ -252,17 +252,13 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
           </HeaderText>
         </TouchableOpacity>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 
 AddRemoteArchive.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingTop: 40,
-  },
   title: {
     marginBottom: 20,
     textAlign: 'center',

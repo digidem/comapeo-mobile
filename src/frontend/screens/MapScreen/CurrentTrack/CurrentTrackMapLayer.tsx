@@ -1,11 +1,12 @@
-import {LineLayer, ShapeSource} from '@maplibre/maplibre-react-native';
+import {Layer, GeoJSONSource} from '@maplibre/maplibre-react-native';
 import * as React from 'react';
 
 import {useTrackState} from '../../../contexts/TrackStoreContext';
 import {convertToLineString} from '../../../lib/utils';
 import {
-  BASE_TRACK_LINE_STYLE,
-  OVERLAY_TRACK_LINE_STYLE,
+  BASE_TRACK_LINE_PAINT,
+  LINE_LAYOUT_ROUND,
+  OVERLAY_TRACK_LINE_PAINT,
 } from '../../../lib/trackMapStyles';
 import {LocationObject} from 'expo-location';
 
@@ -27,9 +28,9 @@ export const CurrentTrackMapLayer = ({
     : locationHistory;
 
   return (
-    <ShapeSource
+    <GeoJSONSource
       id="routeSource"
-      shape={
+      data={
         // conditionally rendering shape source (aka only rendering it when there are 2 locations cause a race condition between mapbox and react, causing a error to be thrown. Doing it this way avoids that race condition.)
         finalLocationHistory.length >= 2
           ? convertToLineString(finalLocationHistory)
@@ -38,17 +39,21 @@ export const CurrentTrackMapLayer = ({
               features: [],
             }
       }>
-      <LineLayer
+      <Layer
+        type="line"
         id="currentTrackBase"
-        // map libre's bottom-most user location layer
-        belowLayerID="mlrn-user-location-puck-pulse"
-        style={BASE_TRACK_LINE_STYLE}
+        // render below maplibre's user location puck
+        beforeId="mlrn-user-location-puck-white"
+        paint={BASE_TRACK_LINE_PAINT}
+        layout={LINE_LAYOUT_ROUND}
       />
-      <LineLayer
+      <Layer
+        type="line"
         id="currentTrackOverlay"
-        belowLayerID="mlrn-user-location-puck-pulse"
-        style={OVERLAY_TRACK_LINE_STYLE}
+        beforeId="mlrn-user-location-puck-white"
+        paint={OVERLAY_TRACK_LINE_PAINT}
+        layout={LINE_LAYOUT_ROUND}
       />
-    </ShapeSource>
+    </GeoJSONSource>
   );
 };

@@ -21,6 +21,18 @@ export const getForegroundPermissionsAsync = () =>
     canAskAgain: true,
   });
 
+export const useForegroundPermissions = () =>
+  [
+    {
+      status: PermissionStatus.GRANTED,
+      expires: 'never' as const,
+      granted: true,
+      canAskAgain: true,
+    },
+    () => getForegroundPermissionsAsync(),
+    () => getForegroundPermissionsAsync(),
+  ] as const;
+
 export const getProviderStatusAsync = () =>
   Promise.resolve({
     locationServicesEnabled: true,

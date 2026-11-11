@@ -6,9 +6,9 @@ import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {Text} from '../../../sharedComponents/Text';
-import {IconButton} from '../../../sharedComponents/IconButton';
 import {EditIcon} from '../../../sharedComponents/icons';
 import {FieldRow} from './FieldRow';
+import {HeaderRightContainerButton} from '../../../sharedComponents/HeaderRightContainer';
 
 const m = defineMessages({
   title: {
@@ -32,9 +32,12 @@ export function createNavigationOptions({
     return {
       headerTitle: intl(m.title),
       headerRight: () => (
-        <IconButton onPress={() => navigation.navigate('DeviceNameEdit')}>
-          <EditIcon testID="edit-icon" />
-        </IconButton>
+        <HeaderRightContainerButton
+          testID="edit-icon"
+          loading={false}
+          onPress={() => navigation.navigate('DeviceNameEdit')}>
+          <EditIcon />
+        </HeaderRightContainerButton>
       ),
     };
   };

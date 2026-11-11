@@ -2,7 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {BLACK, BLUE_GREY, WARNING_RED, WHITE} from '../../lib/styles';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {Circle} from '../../sharedComponents/icons/Circle';
 import {WifiIcon, WifiOffIcon} from '../../sharedComponents/icons';
@@ -29,9 +29,9 @@ export const NoWifiDisplay = ({onGoBack}: {onGoBack: () => void}) => {
   const {formatMessage: t} = useIntl();
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={styles.contentContainer}
-      dockContent={
+    <ScreenContentWithButtonDock
+      contentContainerStyle={{gap: 10}}
+      bottomButton={
         <SecondaryButton
           fullSize
           text={t(m.buttonText)}
@@ -44,54 +44,62 @@ export const NoWifiDisplay = ({onGoBack}: {onGoBack: () => void}) => {
             <WifiIcon size={16} color={WHITE} />
           </Circle>
           <View style={styles.wifiCardTextContainer}>
-            <BodyText style={styles.wifiName}>--</BodyText>
+            <BodyText weight={500}>--</BodyText>
           </View>
         </View>
       </View>
 
-      <View style={styles.contentWrapper}>
-        <View style={styles.projectInfoContainer}>
-          <View style={styles.syncStatusIconWrapper}>
-            <View style={styles.syncStatusCircleOffline}>
-              <WifiOffIcon size={28} color={BLACK} />
+      <View
+        style={{
+          borderWidth: 1,
+          borderColor: BLUE_GREY,
+          borderRadius: 10,
+          paddingTop: 40,
+          paddingBottom: 40,
+          flex: 1,
+          paddingHorizontal: 20,
+          justifyContent: 'space-between',
+        }}>
+        <View>
+          <View style={styles.projectInfoContainer}>
+            <View style={styles.syncStatusIconWrapper}>
+              <View style={styles.syncStatusCircleOffline}>
+                <WifiOffIcon size={28} color={BLACK} />
+              </View>
+              <MaterialIcon
+                name="error"
+                size={28}
+                color={WARNING_RED}
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  bottom: 0,
+                  borderRadius: 14,
+                }}
+              />
             </View>
-            <MaterialIcon
-              name="error"
-              size={28}
-              color={WARNING_RED}
-              style={{
-                position: 'absolute',
-                right: 0,
-                bottom: 0,
-                borderRadius: 14,
-              }}
-            />
           </View>
-        </View>
-
-        <View style={styles.exchangeSettingsCard}>
-          <HeaderText variant="header2" style={{textAlign: 'center'}}>
+          <HeaderText
+            variant="header2"
+            style={{textAlign: 'center', marginTop: 34}}>
             {t(m.title)}
           </HeaderText>
-          <View style={{height: 165}} />
-          <HeaderText
-            variant="header6"
-            style={{
-              textAlign: 'center',
-              marginBottom: 40,
-              paddingHorizontal: 30,
-            }}>
-            {t(m.description)}
-          </HeaderText>
         </View>
+        <HeaderText
+          variant="header6"
+          style={{
+            textAlign: 'center',
+            paddingHorizontal: 30,
+          }}>
+          {t(m.description)}
+        </HeaderText>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingVertical: 20,
     gap: 10,
   },
   wifiCard: {
@@ -116,14 +124,9 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 40,
   },
-  wifiName: {
-    fontWeight: '500',
-  },
   projectInfoContainer: {
     alignItems: 'center',
     gap: 8,
-    paddingTop: 35,
-    paddingBottom: 40,
   },
   signalIndicator: {
     elevation: 0,
@@ -149,13 +152,5 @@ const styles = StyleSheet.create({
   exchangeSettingsCard: {
     marginTop: 25,
     alignItems: 'center',
-  },
-  contentWrapper: {
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    borderRadius: 10,
-    paddingTop: 20,
-    paddingBottom: 40,
-    paddingHorizontal: 20,
   },
 });

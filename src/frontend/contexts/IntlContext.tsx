@@ -15,6 +15,7 @@ import {
 } from '../lib/intl';
 import {FullScreenCenteredLoader} from '../sharedComponents/FullScreenCenteredLoader';
 import {useLanguageQueries} from '../hooks/useLanguageQueries';
+import {RUBIK} from '../lib/fonts';
 
 export const formats: CustomFormats = {
   date: {
@@ -103,6 +104,6 @@ function onError(e: Error) {
 
 const styles = StyleSheet.create({
   bold: {
-    fontWeight: 'bold',
+    fontFamily: RUBIK[700],
   },
 });

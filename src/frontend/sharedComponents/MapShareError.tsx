@@ -5,6 +5,7 @@ import ErrorIcon from '../images/Error.svg';
 import {HeaderText} from './Text/HeaderText';
 import {BodyText} from './Text/BodyText';
 import {SecondaryButton} from './Buttons';
+import {useBottomPaddingWithSafeArea} from '../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   goBack: {
@@ -23,9 +24,10 @@ export function MapShareError({
   onClose: () => void;
 }) {
   const {formatMessage} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom}]}>
       <View style={{alignItems: 'center'}}>
         <ErrorIcon width={160} height={160} style={styles.icon} />
         <HeaderText style={styles.header}>{title}</HeaderText>

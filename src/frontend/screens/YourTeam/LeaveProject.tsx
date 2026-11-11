@@ -16,8 +16,8 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectSettings} from '../../hooks/server/projects';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
-import {LoadingIndicator} from '../../sharedComponents/LoadingIndicator';
 import {toError} from '../../utils/errors';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   leaveProjectTitle: {
@@ -100,57 +100,46 @@ export const LeaveProject = ({
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.deviceInfo}>
-          <MaterialDesignIcons name="export" size={60} color={BLUE_GREY} />
-          <HeaderText variant="header2" style={styles.title}>
-            {formatMessage(m.leaveProjectTitle)}
-          </HeaderText>
-          <BodyText style={styles.description}>
-            {formatMessage(
-              isCoordinator
-                ? m.leaveProjectDescriptionCoordinator
-                : m.leaveProjectDescriptionParticipant,
-              {projectName: projectSettings.name ?? ''},
-            )}
-          </BodyText>
-        </View>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={styles.content}
+      loading={leaveProject.status === 'pending'}
+      topButton={
+        <DestructiveButton
+          fullSize
+          onPress={handleLeaveProject}
+          text={formatMessage(m.yesLeave)}
+          renderIcon={({color, size}) => (
+            <MaterialDesignIcons name="export" size={size} color={color} />
+          )}
+        />
+      }
+      bottomButton={
+        <SecondaryButton
+          fullSize
+          onPress={() => navigation.goBack()}
+          text={formatMessage(m.cancel)}
+        />
+      }>
+      <View style={styles.deviceInfo}>
+        <MaterialDesignIcons name="export" size={60} color={BLUE_GREY} />
+        <HeaderText variant="header2" style={styles.title}>
+          {formatMessage(m.leaveProjectTitle)}
+        </HeaderText>
+        <BodyText style={styles.description}>
+          {formatMessage(
+            isCoordinator
+              ? m.leaveProjectDescriptionCoordinator
+              : m.leaveProjectDescriptionParticipant,
+            {projectName: projectSettings.name ?? ''},
+          )}
+        </BodyText>
       </View>
-
-      <View style={styles.buttons}>
-        {leaveProject.status === 'pending' ? (
-          <LoadingIndicator style={{marginVertical: 20}} />
-        ) : (
-          <>
-            <DestructiveButton
-              fullSize
-              onPress={handleLeaveProject}
-              text={formatMessage(m.yesLeave)}
-              renderIcon={({color, size}) => (
-                <MaterialDesignIcons name="export" size={size} color={color} />
-              )}
-            />
-            <SecondaryButton
-              fullSize
-              onPress={() => navigation.goBack()}
-              text={formatMessage(m.cancel)}
-            />
-          </>
-        )}
-      </View>
-    </View>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
   content: {
-    flex: 1,
-    padding: 20,
     justifyContent: 'center',
   },
   deviceInfo: {
@@ -163,10 +152,5 @@ const styles = StyleSheet.create({
   },
   description: {
     textAlign: 'center',
-  },
-  buttons: {
-    alignItems: 'center',
-    gap: 12,
-    paddingBottom: 20,
   },
 });

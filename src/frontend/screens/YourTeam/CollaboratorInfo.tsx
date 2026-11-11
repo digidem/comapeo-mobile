@@ -19,6 +19,7 @@ import MaterialDesignIcons from '@react-native-vector-icons/material-design-icon
 import {useIsLastCoordinator} from '../../hooks/useIsLastCoordinator';
 import {useIsLastMember} from '../../hooks/useIsLastMember';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   navTitle: {
@@ -79,6 +80,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
   });
   const {name, joinedAt, deviceType} = member;
   const isArchiveServer = deviceType === 'selfHostedServer';
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const {data: ownRole} = useOwnRoleInProject({projectId});
 
@@ -97,7 +99,7 @@ export const CollaboratorInfo: NativeNavigationComponent<
   const canShowActionButton = !isArchiveServer && !isDesktop;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom}]}>
       <View style={styles.innerBox}>
         <DeviceIcon deviceType={deviceType} size={80} />
         {name && (

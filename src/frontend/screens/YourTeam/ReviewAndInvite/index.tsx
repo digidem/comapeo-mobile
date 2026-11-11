@@ -39,16 +39,16 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
             val === 'ACCEPT' &&
             requestCancelInviteMutation.status === 'pending'
           ) {
-            navigation.navigate('UnableToCancelInvite', {...route.params});
+            navigation.replace('UnableToCancelInvite', {...route.params});
             return;
           }
           if (val === 'ACCEPT') {
-            navigation.navigate('InviteAccepted', {name});
+            navigation.replace('InviteAccepted', {name});
             return;
           }
 
           if (val === 'REJECT') {
-            navigation.navigate('InviteDeclined', route.params);
+            navigation.replace('InviteDeclined', route.params);
             return;
           }
         },

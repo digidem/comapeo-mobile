@@ -3,9 +3,9 @@ import type {MapeoManager} from '@comapeo/core';
 import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 import {createManager, setUpIPC} from './core';
 import {createAppProvidersWrapper} from './react';
-import {MockedAppNavigator} from './navigation';
 import {sleep} from '../../../src/frontend/lib/sleep';
 import React from 'react';
+import {AppNavigator} from '../../../src/frontend/AppNavigator';
 
 export function setupIntegrationTest() {
   let manager: MapeoManager;
@@ -48,9 +48,12 @@ export function setupIntegrationTest() {
     });
     onTeardown.push(appProviders.teardown);
 
-    const {unmount} = await render(<MockedAppNavigator />, {
-      wrapper: appProviders.wrapper,
-    });
+    const {unmount} = await render(
+      <AppNavigator navigationIntegration={undefined} />,
+      {
+        wrapper: appProviders.wrapper,
+      },
+    );
     const actualTeardown = async () => {
       await unmount();
       await sleep(0);
@@ -116,9 +119,12 @@ export function setupIntegrationTestWithoutProject() {
     });
     onTeardown.push(appProviders.teardown);
 
-    const {unmount} = await render(<MockedAppNavigator />, {
-      wrapper: appProviders.wrapper,
-    });
+    const {unmount} = await render(
+      <AppNavigator navigationIntegration={undefined} />,
+      {
+        wrapper: appProviders.wrapper,
+      },
+    );
     const actualTeardown = async () => {
       await unmount();
     };

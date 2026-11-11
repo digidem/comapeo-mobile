@@ -59,7 +59,7 @@ export const ConfirmDeleteTrackBottomSheet = ({
             return;
           }
           Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet', {error: err});
+          navigation.replace('ErrorBottomSheet', {error: err});
         },
       },
     );

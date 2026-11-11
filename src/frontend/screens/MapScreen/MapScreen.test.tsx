@@ -96,13 +96,30 @@ jest.mock('../../hooks/server/presets', () => ({
   usePresetsQuery: () => ({data: []}),
 }));
 
+let mockLocationGranted = true;
+let mockLocationCanAskAgain = true;
+
+jest.mock('../../hooks/useLocationPermissionTracker', () => ({
+  useLocationPermissionQuery: () => ({
+    data: {
+      granted: mockLocationGranted,
+      canAskAgain: mockLocationCanAskAgain,
+    },
+  }),
+  useInvalidateLocationPermission: () => jest.fn(),
+  requestLocationPermission: jest.fn(),
+  useLocationPermissionWithoutPasscode: () => ({mutate: jest.fn()}),
+}));
+
 process.env.MAPBOX_ACCESS_TOKEN = 'test-token';
 
 import {MapScreen} from '.';
 
-const Stack = createNativeStackNavigator<{Map: undefined}>();
+const Stack = createNativeStackNavigator<{
+  Map: undefined | {trackingOpen: boolean};
+}>();
 
-describe('MapScreen low-storage banner', () => {
+describe('MapScreen', () => {
   let manager: MapeoManager;
   let client: ComapeoCoreClientApi;
   let onTeardown: Array<() => unknown> = [];
@@ -125,6 +142,8 @@ describe('MapScreen low-storage banner', () => {
 
     mockTotalBytes = 64 * 1024 * 1024 * 1024;
     mockFreeBytes = null;
+    mockLocationGranted = true;
+    mockLocationCanAskAgain = true;
   });
 
   afterEach(async () => {
@@ -133,7 +152,8 @@ describe('MapScreen low-storage banner', () => {
 
   const renderMap = async ({
     isOnline = true,
-  }: Readonly<{isOnline?: boolean}> = {}) => {
+    trackingOpen = false,
+  }: Readonly<{isOnline?: boolean; trackingOpen?: boolean}> = {}) => {
     const app = createAppProvidersWrapper({
       mapeoApi: client,
       isOnline,
@@ -144,7 +164,11 @@ describe('MapScreen low-storage banner', () => {
       <NavigationContainer>
         <React.Suspense fallback={null}>
           <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="Map" component={MapScreen} />
+            <Stack.Screen
+              name="Map"
+              component={MapScreen}
+              initialParams={{trackingOpen}}
+            />
           </Stack.Navigator>
         </React.Suspense>
       </NavigationContainer>,
@@ -159,6 +183,27 @@ describe('MapScreen low-storage banner', () => {
 
     return tree;
   };
+
+  it('still reaches the track sheet when location is denied', async () => {
+    mockFreeBytes = 600 * 1024 * 1024;
+    mockLocationGranted = false;
+
+    await renderMap({trackingOpen: true});
+
+    // both screens share the same body copy, so the title is what tells them apart
+    expect(await screen.findByText('Record Tracks')).toBeTruthy();
+    // the map's own location card would only compete with the sheet's request
+    expect(screen.queryByTestId('MAP.location-permission')).toBeNull();
+  });
+
+  it('shows the map location request when the track sheet is closed', async () => {
+    mockFreeBytes = 600 * 1024 * 1024;
+    mockLocationGranted = false;
+
+    await renderMap();
+
+    expect(await screen.findByTestId('MAP.location-permission')).toBeTruthy();
+  });
 
   it('shows banner when isLow is true and not dismissed', async () => {
     mockFreeBytes = 100 * 1024 * 1024;

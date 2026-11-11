@@ -1124,26 +1124,5 @@
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Deelnemer"
-  },
-  "soloProject.inviteCollaborators.goBack": {
-    "message": "Ga terug"
-  },
-  "soloProject.inviteCollaborators.introText": {
-    "message": "Deel waarnemingen met anderen met behulp van CoMapeo."
-  },
-  "soloProject.inviteCollaborators.inviteOnly": {
-    "message": "Alleen apparaten die voor dit project zijn uitgenodigd, kunnen bijdragen."
-  },
-  "soloProject.inviteCollaborators.manageControl": {
-    "message": "Beheer projectbijdragers en instellingen eenvoudig."
-  },
-  "soloProject.inviteCollaborators.nameProject": {
-    "message": "Benoem mijn project"
-  },
-  "soloProject.inviteCollaborators.nameProjectDescription": {
-    "message": "Noem uw project om samen te werken."
-  },
-  "soloProject.inviteCollaborators.title": {
-    "message": "Nodig samenwerkers uit"
   }
 }

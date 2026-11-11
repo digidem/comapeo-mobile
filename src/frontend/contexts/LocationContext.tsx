@@ -114,60 +114,45 @@ function LocationProviderInitialized({
   useCheckPermissionOnAppStateChange(store);
 
   React.useEffect(() => {
-    let unsub: (() => void) | null = null;
+    let isWatching = false;
     let locationSubscription: LocationSubscription | null = null;
-    let isMounted = true;
 
-    const handleCheckAndStartWatchPosition = () => {
-      if (!isMounted || locationSubscription) return;
+    const startWatchingIfAllowed = () => {
+      const {locationPermission, providerStatus} = store.getState();
+      const isAllowed =
+        locationPermission === 'granted' &&
+        providerStatus.locationServicesEnabled;
 
-      startWatchPosition(store)
-        .then(sub => {
-          if (isMounted) {
-            locationSubscription = sub;
+      if (isWatching || !isAllowed) return;
+
+      isWatching = true;
+      startWatchPosition(store, stopWatching)
+        .then(subscription => {
+          if (isWatching) {
+            locationSubscription = subscription;
           } else {
-            // If unmounted before promise resolves, clean up immediately
-            sub.remove();
+            // Stopped before the promise resolved, so clean up immediately
+            subscription.remove();
           }
         })
-        .catch(Sentry.captureException);
+        .catch(err => {
+          Sentry.captureException(err);
+          isWatching = false;
+        });
     };
 
-    const initialPermissionGranted =
-      store.getState().locationPermission === 'granted';
+    const stopWatching = () => {
+      isWatching = false;
+      locationSubscription?.remove();
+      locationSubscription = null;
+    };
 
-    const initialGPSEnabled =
-      store.getState().providerStatus.locationServicesEnabled;
-
-    // if we have permission and GPS enabled, start watching position immediately
-    if (initialPermissionGranted && initialGPSEnabled) {
-      handleCheckAndStartWatchPosition();
-    }
-    // otherwise, subscribe to store updates to check when permission is granted and GPS is enabled to start watching position
-    else {
-      unsub = store.subscribe(() => {
-        const currentState = store.getState();
-        if (
-          currentState.locationPermission === 'granted' &&
-          currentState.providerStatus.locationServicesEnabled
-        ) {
-          handleCheckAndStartWatchPosition();
-        }
-      });
-    }
+    startWatchingIfAllowed();
+    const unsubscribe = store.subscribe(startWatchingIfAllowed);
 
     return () => {
-      isMounted = false;
-
-      if (unsub) {
-        unsub();
-        unsub = null;
-      }
-
-      if (locationSubscription) {
-        locationSubscription.remove();
-        locationSubscription = null;
-      }
+      unsubscribe();
+      stopWatching();
     };
   }, [store]);
 
@@ -182,7 +167,10 @@ export function useLocationContext() {
   return context;
 }
 
-function startWatchPosition(store: StoreApi<LocationState>) {
+function startWatchPosition(
+  store: StoreApi<LocationState>,
+  onWatchEnded: () => void,
+) {
   return watchPositionAsync(
     {
       accuracy: Accuracy.BestForNavigation,
@@ -220,6 +208,9 @@ function startWatchPosition(store: StoreApi<LocationState>) {
         return;
       }
     },
+    // iOS ends the watch for good on errors such as Location Services being
+    // turned off or the network dropping, and never resumes it by itself.
+    onWatchEnded,
   );
 }
 

@@ -23,6 +23,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {DeviceIcon} from '../../sharedComponents/DeviceIcon';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 import {LinkIcon} from '../../sharedComponents/LinkIcon';
 import {InviteLinkCard} from './InviteLinks/InviteLinkCard';
 
@@ -78,6 +79,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const membersQuery = useManyMembers({projectId, includeLeft: true});
   const {data: inviteLinks} = useManyInviteLinks({projectId});
   const {data: deviceInfo} = useOwnDeviceInfo();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const coordinators = membersQuery.data.filter(member =>
     COORDINATOR_ROLES.has(member.role.roleId),
@@ -92,7 +94,9 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   );
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={[styles.content, {paddingBottom}]}>
       {!deviceInfo ||
       !coordinators.some(
         coordinator => coordinator.deviceId === deviceInfo.deviceId,

@@ -185,7 +185,6 @@ export type RootStackParamsList = {
   ErrorBottomSheet: {error: Error};
   BackgroundMapErrorBottomSheet: {title: string; description: string};
   AllProjects: undefined;
-  InviteCollaborators: undefined;
   EditProjectDetails: undefined;
   TrackRecordingActive: undefined;
   RemoteArchive: undefined;

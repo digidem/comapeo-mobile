@@ -92,7 +92,6 @@ import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
 import {RemovedFromProjectBottomSheet} from '../../screens/RemovedFromProjectBottomSheet.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/BackgroundMaps/ErrorBottomSheet.tsx';
-import {InviteCollaboratorsScreen} from '../../screens/YourTeam/InviteCollaborators.tsx';
 import {EditProjectDetails} from '../../screens/ProjectSettings/EditProjectDetails.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
 import {TrackRecordingActive} from '../../screens/TrackRecordingActive.tsx';
@@ -521,13 +520,6 @@ export const createAppScreens = ({
         name="ObservationMetadata"
         component={ObservationMetadata}
         options={{headerTitle: intl(ObservationMetadata.navTitle)}}
-      />
-      <RootStack.Screen
-        name="InviteCollaborators"
-        component={InviteCollaboratorsScreen}
-        options={{
-          headerShown: false,
-        }}
       />
       <RootStack.Screen
         name="EditProjectDetails"

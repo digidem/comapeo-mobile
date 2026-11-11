@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import GreenCheck from '../../../images/Success.svg';
 import GraphIcon from '../../../images/Graph.svg';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
@@ -12,6 +12,7 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BLACK, NEW_DARK_GREY} from '../../../lib/styles';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {usePreventBackNavigation} from '../../../hooks/usePreventBackNavigation';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
 
 const m = defineMessages({
   success: {
@@ -58,57 +59,50 @@ export const ProjectCreated = ({
   }
 
   return (
-    <View style={styles.container}>
-      <View style={{alignItems: 'center', gap: 30}}>
-        <GreenCheck />
-        <HeaderText
-          variant="header1"
-          style={{textAlign: 'center', color: BLACK}}>
-          {t(m.success)}
-        </HeaderText>
-        <View style={{gap: 30}}>
-          <BodyText style={{color: NEW_DARK_GREY, paddingHorizontal: 20}}>
-            <FormattedMessage
-              {...m.projectReady}
-              values={{
-                projectName: <HeaderText variant="header5">{name}</HeaderText>,
-              }}
-            />
-          </BodyText>
-
-          {statsShared ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 10,
-                paddingHorizontal: 30,
-              }}>
-              <GraphIcon width={20} height={20} color={NEW_DARK_GREY} />
-              <BodyText>{t(m.sharedLine)}</BodyText>
-            </View>
-          ) : null}
-        </View>
-      </View>
-
-      <View style={{gap: 12}}>
+    <ScreenContentWithButtonDockNoHeader
+      contentContainerStyle={{gap: 30}}
+      topButton={
         <PrimaryButton
           fullSize
           onPress={handleGoToInviteScreen}
           text={t(m.inviteDevice)}
         />
+      }
+      bottomButton={
         <SecondaryButton fullSize text={t(m.done)} onPress={handleGoToMap} />
+      }>
+      <GreenCheck style={{alignSelf: 'center'}} />
+      <HeaderText variant="header1" style={{textAlign: 'center', color: BLACK}}>
+        {t(m.success)}
+      </HeaderText>
+      <View style={{gap: 30}}>
+        <BodyText
+          style={{
+            textAlign: 'center',
+            color: NEW_DARK_GREY,
+            paddingHorizontal: 20,
+          }}>
+          <FormattedMessage
+            {...m.projectReady}
+            values={{
+              projectName: <HeaderText variant="header5">{name}</HeaderText>,
+            }}
+          />
+        </BodyText>
+
+        {statsShared ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 10,
+              paddingHorizontal: 30,
+            }}>
+            <GraphIcon width={20} height={20} color={NEW_DARK_GREY} />
+            <BodyText>{t(m.sharedLine)}</BodyText>
+          </View>
+        ) : null}
       </View>
-    </View>
+    </ScreenContentWithButtonDockNoHeader>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingTop: 80,
-    alignItems: 'center',
-    height: '100%',
-    justifyContent: 'space-between',
-  },
-});

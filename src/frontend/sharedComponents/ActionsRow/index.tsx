@@ -89,33 +89,35 @@ export function ActionsRow({fieldIds}: {fieldIds?: string[]}) {
   }
 
   return (
-    <>
-      <Divider />
-      {keyboardVisible ? (
-        <KeyboardAccessory
-          items={bottomSheetItems}
-          onPress={() => Keyboard.dismiss()}
-          keyboardHeight={keyboardHeight}
-        />
-      ) : (
-        <View style={[styles.container, styles.containerPadding]}>
-          {bottomSheetItems.map(item => (
-            <TouchableOpacity
-              onPress={item.onPress}
-              style={styles.itemContainer}
-              key={item.testID}
-              testID={item.testID}>
-              <View style={styles.itemIcon}>
-                <CustomCircleIcon icon={item.icon} />
-              </View>
-              <HeaderText variant="header6" numberOfLines={1}>
-                {item.label}
-              </HeaderText>
-            </TouchableOpacity>
-          ))}
-        </View>
-      )}
-    </>
+    <View>
+      <View>
+        <Divider />
+        {keyboardVisible ? (
+          <KeyboardAccessory
+            items={bottomSheetItems}
+            onPress={() => Keyboard.dismiss()}
+            keyboardHeight={keyboardHeight}
+          />
+        ) : (
+          <View style={styles.container}>
+            {bottomSheetItems.map(item => (
+              <TouchableOpacity
+                onPress={item.onPress}
+                style={styles.itemContainer}
+                key={item.testID}
+                testID={item.testID}>
+                <View style={styles.itemIcon}>
+                  <CustomCircleIcon icon={item.icon} />
+                </View>
+                <HeaderText variant="header6" numberOfLines={1}>
+                  {item.label}
+                </HeaderText>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+      </View>
+    </View>
   );
 }
 
@@ -123,10 +125,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     flexDirection: 'row',
-  },
-  containerPadding: {
-    paddingHorizontal: 20,
-    paddingVertical: 18,
+    paddingTop: 20,
   },
   itemContainer: {
     flex: 1,

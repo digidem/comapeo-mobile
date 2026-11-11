@@ -129,6 +129,7 @@ export const EditProjectDetails: NativeNavigationComponent<
         </HeaderText>
       </View>
       <HorizontalScrollView
+        containerStyle={{margin: 10}}
         minItemWidth={60}
         gap={16}
         shouldShowLastItems={false}

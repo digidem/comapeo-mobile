@@ -9,6 +9,7 @@ import {DeviceNameWithIcon} from '../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
 import {DeviceType, MEMBER_ROLE_ID} from '../../../sharedTypes';
 import {DeviceRole} from '../../../sharedTypes';
+import {useBottomPaddingWithSafeArea} from '../../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -41,9 +42,10 @@ export const ReviewInvitation = ({
   deviceType,
 }: ReviewInvitationProps) => {
   const {formatMessage: t} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingBottom}]}>
       <View
         style={{
           width: '100%',
@@ -82,8 +84,8 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20,
-    paddingTop: 80,
+    paddingHorizontal: 20,
+    paddingTop: 30,
     flex: 1,
   },
   flexRow: {

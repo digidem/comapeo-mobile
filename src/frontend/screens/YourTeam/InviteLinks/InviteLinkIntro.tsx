@@ -9,7 +9,7 @@ import {
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {LinkIcon} from '../../../sharedComponents/LinkIcon';
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader';
 import {DARK_ORANGE, NEW_DARK_GREY} from '../../../lib/styles';
 import SafetyIcon from '../../../images/Safety.svg';
 import StopwatchIcon from '../../../images/Stopwatch.svg';
@@ -55,23 +55,23 @@ export function InviteLinkIntro({
   const {formatMessage: t} = useIntl();
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={styles.content}
-      dockContent={
-        <View style={styles.dock}>
-          <PrimaryButton
-            fullSize
-            text={t(m.continue)}
-            onPress={() =>
-              navigation.navigate('SelectInviteeRole', {invitee: 'link'})
-            }
-          />
-          <SecondaryButton
-            fullSize
-            text={t(m.close)}
-            onPress={() => navigation.goBack()}
-          />
-        </View>
+      topButton={
+        <PrimaryButton
+          fullSize
+          text={t(m.continue)}
+          onPress={() =>
+            navigation.navigate('SelectInviteeRole', {invitee: 'link'})
+          }
+        />
+      }
+      bottomButton={
+        <SecondaryButton
+          fullSize
+          text={t(m.close)}
+          onPress={() => navigation.goBack()}
+        />
       }>
       <View style={styles.header}>
         <LinkIcon size={90} color={DARK_ORANGE} />
@@ -107,7 +107,7 @@ export function InviteLinkIntro({
           />
         </View>
       </View>
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 }
 
@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
     gap: 15,
-    paddingTop: 64,
   },
   header: {
     alignItems: 'center',
@@ -160,8 +159,5 @@ const styles = StyleSheet.create({
   pointText: {
     flex: 1,
     color: NEW_DARK_GREY,
-  },
-  dock: {
-    gap: 15,
   },
 });

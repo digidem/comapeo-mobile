@@ -15,6 +15,7 @@ import {toError} from '../../utils/errors';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../sharedTypes';
 import type {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 
 const m = defineMessages({
   title: {
@@ -48,6 +49,7 @@ export const SelectInviteeRole: NativeNavigationComponent<
   const params = route.params;
   const createInviteLink = useCreateInviteLink();
   const {projectId} = useActiveProject();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   function showError(error: unknown) {
     navigation.navigate('ErrorBottomSheet', {
@@ -97,7 +99,8 @@ export const SelectInviteeRole: NativeNavigationComponent<
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.contentContainer}>
+    <ScrollView
+      contentContainerStyle={[styles.contentContainer, {paddingBottom}]}>
       {params.invitee === 'link' ? (
         <BodyText variant="medium" style={styles.linkPrompt}>
           {t(m.selectingForLink)}

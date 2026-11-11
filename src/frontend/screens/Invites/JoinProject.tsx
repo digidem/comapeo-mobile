@@ -12,7 +12,7 @@ import {
   type JoinFailureCode,
 } from './joinFailure';
 import {getEventErrorCode} from '../../utils/errors';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader';
 import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
 import {ProjectCard} from '../../sharedComponents/ProjectCard';
 import {InviteRoleRow} from '../../sharedComponents/InviteRoleRow';
@@ -136,18 +136,17 @@ function JoinRequestStatus({
 
   if (status === 'completed' && projectId) {
     return (
-      <ScreenContentWithDock
+      <ScreenContentWithButtonDockNoHeader
         contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-        dockContainerStyle={styles.buttonContainer}
-        dockContent={
-          <>
-            <PrimaryButton
-              fullSize
-              text={t(m.viewProject)}
-              onPress={() => setActiveProjectId(projectId)}
-            />
-            <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
-          </>
+        topButton={
+          <PrimaryButton
+            fullSize
+            text={t(m.viewProject)}
+            onPress={() => setActiveProjectId(projectId)}
+          />
+        }
+        bottomButton={
+          <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
         }>
         <IconTitleDescription
           icon={
@@ -170,7 +169,7 @@ function JoinRequestStatus({
             />
           }
         />
-      </ScreenContentWithDock>
+      </ScreenContentWithButtonDockNoHeader>
     );
   }
 
@@ -210,9 +209,9 @@ function JoinFailure({
   const copy = getJoinFailureCopy(code);
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-      dockContent={
+      bottomButton={
         <SecondaryButton fullSize text={t(m.close)} onPress={onClose} />
       }>
       <IconTitleDescription
@@ -226,7 +225,7 @@ function JoinFailure({
         title={t(copy.title)}
         description={copy.description && t(copy.description)}
       />
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 }
 
@@ -322,11 +321,6 @@ const styles = StyleSheet.create({
   },
   syncIcon: {
     alignSelf: 'flex-start',
-  },
-  buttonContainer: {
-    alignSelf: 'stretch',
-    alignItems: 'center',
-    gap: 12,
   },
   keepOpen: {
     textAlign: 'center',

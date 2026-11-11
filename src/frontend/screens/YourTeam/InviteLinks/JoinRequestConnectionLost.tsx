@@ -1,6 +1,6 @@
 import {defineMessages, useIntl} from 'react-intl';
 
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader';
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {SecondaryButton} from '../../../sharedComponents/Buttons';
 import {StatusCircleIcon} from '../../../sharedComponents/StatusCircleIcon';
@@ -33,9 +33,9 @@ export function JoinRequestConnectionLost({
   usePreventBackNavigation();
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-      dockContent={
+      bottomButton={
         <SecondaryButton
           fullSize
           text={t(m.close)}
@@ -53,6 +53,6 @@ export function JoinRequestConnectionLost({
         title={t(m.connectionLost)}
         description={t(m.requestAgain)}
       />
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 }

@@ -11,7 +11,7 @@ import {
   useEarlyAccessState,
 } from '../../contexts/EarlyAccessContext';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
 
 const m = defineMessages({
   navTitle: {
@@ -59,8 +59,8 @@ export const EarlyAccess = ({
   }
 
   return (
-    <ScreenContentWithDock
-      dockContent={
+    <ScreenContentWithButtonDock
+      bottomButton={
         <SecondaryButton
           fullSize
           text={formatMessage(m.updates)}
@@ -70,9 +70,7 @@ export const EarlyAccess = ({
         />
       }
       contentContainerStyle={styles.contentContainer}>
-      <View style={styles.section}>
-        <BodyText>{formatMessage(m.intro)}</BodyText>
-      </View>
+      <BodyText>{formatMessage(m.intro)}</BodyText>
 
       {isEarlyEnabled ? (
         <View style={styles.infoBox}>
@@ -107,7 +105,7 @@ export const EarlyAccess = ({
           </Pressable>
         </View>
       ) : null}
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDock>
   );
 };
 
@@ -115,10 +113,7 @@ EarlyAccess.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
   contentContainer: {
-    padding: 20,
     gap: 30,
-  },
-  section: {
     paddingTop: 40,
   },
   infoBox: {

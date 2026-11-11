@@ -22,6 +22,7 @@ import {
   MEMBER_ROLE_ID,
 } from '../../sharedTypes';
 import {useInitiallyConnectedPeers} from './useInitiallyConnectedPeers';
+import {useBottomPaddingWithSafeArea} from '../../hooks/useBottomPaddingWithSafeArea';
 import {Divider} from '../../sharedComponents/Divider';
 
 type PublicPeerInfo = Awaited<
@@ -84,6 +85,7 @@ export const SelectInviteDevice = ({
 }: NativeRootNavigationProps<'SelectDevice'>) => {
   const ssid = useLocalDiscoveryState(state => state.ssid);
   const {formatMessage: t} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const availablePeers = useInitiallyConnectedPeers();
   const {projectId} = useActiveProject();
@@ -97,7 +99,7 @@ export const SelectInviteDevice = ({
 
   return (
     <ScrollView
-      style={styles.container}
+      contentContainerStyle={[styles.container, {paddingBottom}]}
       testID="PROJECT.select-invite-device-scrn">
       <View style={styles.connectedRow}>
         <WifiIcon width={20} height={20} />

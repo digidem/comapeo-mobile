@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader';
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {SecondaryButton} from '../../../sharedComponents/Buttons';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
@@ -36,9 +36,9 @@ export function JoinRequestAccepted({
   const {deviceName, projectName} = route.params;
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-      dockContent={
+      bottomButton={
         <SecondaryButton
           fullSize
           text={t(m.close)}
@@ -62,6 +62,6 @@ export function JoinRequestAccepted({
           />
         }
       />
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 }

@@ -12,7 +12,8 @@ import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import WarningYellow from '../../../images/WarningYellow.svg';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDock} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader';
 import {useOpenShareDialog} from '../../../hooks/share';
 import {useTimeRemaining} from '../../../hooks/useTimeRemaining';
 import {COORDINATOR_ROLE_ID} from '../../../sharedTypes';
@@ -61,31 +62,35 @@ export function InviteLinkReady({
   const {url, inviteId, roleId, expiresAt, openedFrom} = route.params;
   const openShare = useOpenShareDialog();
   const timeRemaining = useTimeRemaining(expiresAt);
+  const ScreenContent =
+    openedFrom === 'team'
+      ? ScreenContentWithButtonDock
+      : ScreenContentWithButtonDockNoHeader;
 
   return (
-    <ScreenContentWithDock
+    <ScreenContent
       contentContainerStyle={styles.content}
-      dockContent={
-        <View style={styles.dock}>
-          <PrimaryButton
+      topButton={
+        <PrimaryButton
+          fullSize
+          text={t(m.share)}
+          onPress={() => openShare.mutate({message: url})}
+          renderIcon={({color, size}) => (
+            <MaterialIcon name="share" size={size} color={color} />
+          )}
+        />
+      }
+      bottomButton={
+        openedFrom === 'create' ? (
+          <SecondaryButton
             fullSize
-            text={t(m.share)}
-            onPress={() => openShare.mutate({message: url})}
+            text={t(m.returnToTeam)}
+            onPress={() => navigation.popTo('YourTeam')}
             renderIcon={({color, size}) => (
-              <MaterialIcon name="share" size={size} color={color} />
+              <MaterialIcon name="people" size={size} color={color} />
             )}
           />
-          {openedFrom === 'create' ? (
-            <SecondaryButton
-              fullSize
-              text={t(m.returnToTeam)}
-              onPress={() => navigation.popTo('YourTeam')}
-              renderIcon={({color, size}) => (
-                <MaterialIcon name="people" size={size} color={color} />
-              )}
-            />
-          ) : null}
-        </View>
+        ) : null
       }>
       <View style={styles.warningBanner}>
         <WarningYellow width={26} height={26} />
@@ -115,7 +120,7 @@ export function InviteLinkReady({
           {t(m.deleteLink)}
         </HeaderText>
       </Pressable>
-    </ScreenContentWithDock>
+    </ScreenContent>
   );
 }
 
@@ -152,8 +157,5 @@ const styles = StyleSheet.create({
   },
   deleteLink: {
     color: COMAPEO_BLUE,
-  },
-  dock: {
-    gap: 12,
   },
 });

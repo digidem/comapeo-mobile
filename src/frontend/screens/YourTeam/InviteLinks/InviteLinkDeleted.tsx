@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader';
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {SecondaryButton} from '../../../sharedComponents/Buttons';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
@@ -40,9 +40,9 @@ export function InviteLinkDeleted({
   const shortId = route.params.inviteId.slice(0, SHORT_ID_LENGTH);
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-      dockContent={
+      bottomButton={
         <SecondaryButton
           fullSize
           text={t(m.returnToTeam)}
@@ -75,7 +75,7 @@ export function InviteLinkDeleted({
           />
         }
       />
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 }
 

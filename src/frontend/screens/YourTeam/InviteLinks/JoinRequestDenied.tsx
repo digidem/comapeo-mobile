@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 
-import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader';
 import {IconTitleDescription} from '../../../sharedComponents/IconTitleDescription';
 import {SecondaryButton} from '../../../sharedComponents/Buttons';
 import {DARK_GREEN, DARK_ORANGE, WHITE} from '../../../lib/styles';
@@ -35,9 +35,9 @@ export function JoinRequestDenied({
   usePreventBackNavigation();
 
   return (
-    <ScreenContentWithDock
+    <ScreenContentWithButtonDockNoHeader
       contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-      dockContent={
+      bottomButton={
         <SecondaryButton
           fullSize
           text={t(m.close)}
@@ -60,7 +60,7 @@ export function JoinRequestDenied({
         title={t(m.denied)}
         description={t(m.createNewLink)}
       />
-    </ScreenContentWithDock>
+    </ScreenContentWithButtonDockNoHeader>
   );
 }
 

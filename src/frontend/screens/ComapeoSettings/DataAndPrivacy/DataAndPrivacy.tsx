@@ -20,6 +20,7 @@ import {
   useAppUsageStatsActions,
   useAppUsageStatsState,
 } from '../../../contexts/AppUsageStatsContext';
+import {useBottomPaddingWithSafeArea} from '../../../hooks/useBottomPaddingWithSafeArea';
 const m = defineMessages({
   navTitle: {
     id: 'screens.DataAndPrivacy.navTitle',
@@ -84,9 +85,10 @@ export const DataAndPrivacy = ({
   const {setOptedIn} = useAppUsageStatsActions();
 
   const appUsageOptedIn = !!optInStartedAt;
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={[styles.container, {paddingBottom}]}>
       <View style={styles.shieldContainer}>
         <CoMapeoShield width={24} height={30} />
         <View style={styles.shieldTextContainer}>

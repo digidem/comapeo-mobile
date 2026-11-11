@@ -35,14 +35,7 @@ describe('Onboarding - Device Naming Test', () => {
     // tap lands. Safe no-op when no keyboard is shown (e.g. Android).
     await driver.hideKeyboard().catch(() => {});
     await addNameButton.click();
-    const deviceReadyMessage = await $(
-      byTextMatches(`${output.names.device} is ready`),
-    );
-    await expect(deviceReadyMessage).toBeDisplayed();
-
-    const startMappingButton = await $(
-      byResourceId('ONBOARDING.navigate-to-map-btn'),
-    );
-    await expect(startMappingButton).toBeDisplayed();
+    const stayNotified = await $(byTextMatches('Always Stay Notified'));
+    await expect(stayNotified).toBeDisplayed();
   });
 });

@@ -18,7 +18,9 @@ import ScaleBar from 'react-native-scale-bar';
 import {useHeaderHeight} from '@react-navigation/elements';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
+import {StartStopTrack} from './TrackBottomSheet/StartStopTrack';
 import {TrackPermissionScreen} from './TrackBottomSheet/TrackPermissionScreen';
+import {TrackNotificationPermission} from './TrackBottomSheet/TrackNotificationPermission';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
@@ -56,6 +58,12 @@ import {
   useLocationPermissionWithoutPasscode,
   useLocationPermissionQuery,
 } from '../../hooks/useLocationPermissionTracker';
+import {
+  requestNotificationPermission,
+  useInvalidateNotificationPermission,
+  useNotificationPermissionWithoutPasscode,
+  useNotificationPermissionQuery,
+} from '../../hooks/useNotificationPermissionTracker';
 import {openSettingsAndWait} from '../../utils/linking';
 import {
   AllowPermissionButton,
@@ -125,7 +133,10 @@ export const MapScreen = ({
   const BANNER_TOP = insets.top + 75;
   const {formatMessage} = useIntl();
   const {data: locationPermission} = useLocationPermissionQuery();
+  const {data: notificationPermission} = useNotificationPermissionQuery();
   const invalidateLocationPermission = useInvalidateLocationPermission();
+  const invalidateNotificationPermission =
+    useInvalidateNotificationPermission();
 
   const askLocationPermission = useLocationPermissionWithoutPasscode(
     async () => {
@@ -138,6 +149,30 @@ export const MapScreen = ({
     async () => {
       await openSettingsAndWait();
       await invalidateLocationPermission();
+    },
+  );
+
+  const askLocationAndNotificationPermissions =
+    useLocationPermissionWithoutPasscode(async () => {
+      await requestLocationPermission();
+      if (!notificationPermission.granted) {
+        await requestNotificationPermission();
+      }
+      await invalidateLocationPermission();
+      await invalidateNotificationPermission();
+    });
+
+  const askNotificationPermission = useNotificationPermissionWithoutPasscode(
+    async () => {
+      await requestNotificationPermission();
+      await invalidateNotificationPermission();
+    },
+  );
+
+  const goToNotificationSettings = useNotificationPermissionWithoutPasscode(
+    async () => {
+      await openSettingsAndWait();
+      await invalidateNotificationPermission();
     },
   );
 
@@ -181,8 +216,13 @@ export const MapScreen = ({
         }}>
         {trackBottomSheetOpen ? (
           <TrackPermissionScreen
+            missing={
+              notificationPermission.granted
+                ? 'location'
+                : 'locationAndNotifications'
+            }
             canAskAgain={locationPermission.canAskAgain}
-            onAllow={() => askLocationPermission.mutate()}
+            onAllow={() => askLocationAndNotificationPermissions.mutate()}
             onOpenSettings={() => goToLocationSettings.mutate()}
           />
         ) : (
@@ -319,7 +359,17 @@ export const MapScreen = ({
         bottom={20}
       />
 
-      <TrackBottomSheet isOpen={!!trackBottomSheetOpen} />
+      <TrackBottomSheet isOpen={!!trackBottomSheetOpen}>
+        {notificationPermission.granted ? (
+          <StartStopTrack />
+        ) : (
+          <TrackNotificationPermission
+            canAskAgain={notificationPermission.canAskAgain}
+            onAllow={() => askNotificationPermission.mutate()}
+            onOpenSettings={() => goToNotificationSettings.mutate()}
+          />
+        )}
+      </TrackBottomSheet>
     </View>
   );
 };

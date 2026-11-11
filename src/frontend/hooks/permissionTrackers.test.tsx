@@ -4,6 +4,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import {useCameraPermissionWithoutPasscode} from './useCameraPermissionTracker';
 import {useLocationPermissionWithoutPasscode} from './useLocationPermissionTracker';
+import {useNotificationPermissionWithoutPasscode} from './useNotificationPermissionTracker';
 
 // Android reports a never-asked permission as "denied", exactly like a
 // permanently denied one, so the "have we asked" flag is what
@@ -64,6 +65,7 @@ test('permission requests hide the passcode screen', async () => {
     () => ({
       camera: useCameraPermissionWithoutPasscode(neverResolves),
       location: useLocationPermissionWithoutPasscode(neverResolves),
+      notification: useNotificationPermissionWithoutPasscode(neverResolves),
     }),
     {wrapper},
   );
@@ -78,7 +80,8 @@ test('permission requests hide the passcode screen', async () => {
   act(() => {
     result.current.camera.mutate();
     result.current.location.mutate();
+    result.current.notification.mutate();
   });
 
-  await waitFor(() => expect(pending()).toHaveLength(2));
+  await waitFor(() => expect(pending()).toHaveLength(3));
 });

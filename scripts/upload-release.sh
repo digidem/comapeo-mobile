@@ -66,12 +66,18 @@ METADATA_UPLOAD_PATH="${BASE_PATH}/latest.json"
 
 echo "{ \"version_name\": \"${APP_VERSION_NAME}\", \"file_path\": \"${APK_UPLOAD_PATH}\" }" > latest.json
 
-wget https://dl.min.io/client/mc/release/linux-amd64/mc
-chmod +x mc
-./mc alias set cf "${AWS_ENDPOINT_URL}" "${AWS_ACCESS_KEY_ID}" "${AWS_SECRET_ACCESS_KEY}"
+upload() {
+  # RC and pre-release file names contain "+", which S3 only reads literally when encoded
+  curl --fail --silent --show-error \
+    --aws-sigv4 "aws:amz:auto:s3" \
+    --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" \
+    --header "Content-Type: $3" \
+    --upload-file "$1" \
+    "${AWS_ENDPOINT_URL%/}/${S3_BUCKET_NAME}${2//+/%2B}"
+}
 
 echo "Uploading to ${APK_UPLOAD_PATH}"
-./mc cp "$APK_FILE" "cf/${S3_BUCKET_NAME}${APK_UPLOAD_PATH}"
+upload "$APK_FILE" "$APK_UPLOAD_PATH" "application/vnd.android.package-archive"
 echo "Uploading to ${METADATA_UPLOAD_PATH}"
-./mc cp latest.json "cf/${S3_BUCKET_NAME}${METADATA_UPLOAD_PATH}"
+upload latest.json "$METADATA_UPLOAD_PATH" "application/json"
 echo "Upload complete"

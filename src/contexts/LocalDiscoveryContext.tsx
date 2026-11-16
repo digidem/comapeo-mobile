@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode, createContext, useContext} from 'react';
 import {AppState, AppStateStatus} from 'react-native';
 import NetInfo, {
   type NetInfoWifiState,
@@ -38,13 +38,13 @@ const ZEROCONF_PROTOCOL = 'tcp';
 const ZEROCONF_DOMAIN = 'local.';
 const DISCOVERY_STOP_TIMEOUT_MS = 1000; // Stopping publishing and discovery should be fast
 
-const LocalDiscoveryContext = React.createContext<
+const LocalDiscoveryContext = createContext<
   LocalDiscoveryController | undefined
 >(undefined);
 
 export type LocalDiscoveryProviderProps = {
   value: LocalDiscoveryController;
-  children?: React.ReactNode;
+  children?: ReactNode;
 };
 
 export const LocalDiscoveryProvider = ({
@@ -57,7 +57,7 @@ export const LocalDiscoveryProvider = ({
 };
 
 export function useLocalDiscoveryController() {
-  const value = React.useContext(LocalDiscoveryContext);
+  const value = useContext(LocalDiscoveryContext);
   if (!value) {
     throw new Error(
       'No LocalDiscoveryController set, use LocalDiscoveryProvider to set one',

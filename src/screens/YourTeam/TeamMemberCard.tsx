@@ -1,4 +1,4 @@
-import React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {BLUE_GREY, BLACK, MEDIUM_GREY} from '../../lib/styles';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -14,7 +14,7 @@ const m = defineMessages({
 });
 
 type TeamMemberCardProps = {
-  Icon: React.ReactNode;
+  Icon: ReactNode;
   name: string;
   onPress: () => void;
   thisDevice: boolean;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import {BLACK, COMAPEO_BLUE} from '../lib/styles';
 import {BodyText} from './Text/BodyText';
@@ -15,7 +15,7 @@ const m = defineMessages({
 type PresetViewProps = {
   onPressPreset?: () => void;
   presetName: string;
-  PresetIcon: React.ReactNode;
+  PresetIcon: ReactNode;
   presetDisabled?: boolean;
 };
 

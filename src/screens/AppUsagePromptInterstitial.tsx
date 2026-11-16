@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
@@ -94,7 +94,7 @@ export const AppUsagePromptInterstitial = ({
   );
 };
 
-function InfoListItem({text, Icon}: {text: string; Icon: React.FC<SvgProps>}) {
+function InfoListItem({text, Icon}: {text: string; Icon: FC<SvgProps>}) {
   return (
     <View style={styles.bulletItem}>
       <Icon width={26} height={26} />

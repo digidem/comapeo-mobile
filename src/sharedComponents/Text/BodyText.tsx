@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type PropsWithChildren} from 'react';
 import {Text as RNText, TextProps, TextStyle} from 'react-native';
 import {DARK_GREY} from '../../lib/styles';
 import {RUBIK, type RubikWeight} from '../../lib/fonts';
@@ -35,7 +35,7 @@ export const BodyText = ({
   variant,
   weight = 400,
   ...otherTextProps
-}: React.PropsWithChildren<BodyProps>) => {
+}: PropsWithChildren<BodyProps>) => {
   return (
     <RNText
       style={[

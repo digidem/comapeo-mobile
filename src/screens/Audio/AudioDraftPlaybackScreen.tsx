@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect} from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -51,7 +51,7 @@ export const AudioDraftPlaybackScreen = ({
   const status = useAudioPlayerStatus(player);
 
   // needed for iOS to ensure audio plays even when the silent switch is on
-  React.useEffect(() => {
+  useEffect(() => {
     setAudioModeAsync({playsInSilentMode: true}).catch(err => {
       Sentry.captureException(err);
     });

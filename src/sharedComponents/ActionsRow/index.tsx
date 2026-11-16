@@ -1,4 +1,4 @@
-import React from 'react';
+import {useCallback, useState} from 'react';
 import {Keyboard, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Divider} from '../Divider';
 import {KeyboardAccessory} from './KeyboardAccessory';
@@ -36,13 +36,13 @@ export function ActionsRow({fieldIds}: {fieldIds?: string[]}) {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const [audioPermission, setAudioPermission] =
-    React.useState<PermissionResponse | null>(null);
+    useState<PermissionResponse | null>(null);
 
   // Audio permissions are granted on a different page. Since this page stays in the navigation stack,
   // it does not remount when permissions change, leading to stale permission data.
   // To ensure we always have the latest permission status, we check it whenever the page comes into focus.
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       (async () => {
         const permission = await getRecordingPermissionsAsync();
         setAudioPermission(permission);

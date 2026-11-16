@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect} from 'react';
 import {useLinkingURL} from 'expo-linking';
 import {parseInviteUrl} from '../../lib/deepLinkConfig';
 import {isInviteScreen, isEditingScreen} from '../../lib/screenNameChecks';
@@ -13,7 +13,7 @@ export const DeepLinkListener = ({
   const url = useLinkingURL();
   const pendingInviteId = url ? parseInviteUrl(url) : null;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!pendingInviteId || !currentRouteName) return;
     if (isInviteScreen(currentRouteName)) return;
     if (isEditingScreen(currentRouteName)) return;

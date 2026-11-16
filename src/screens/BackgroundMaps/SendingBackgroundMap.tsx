@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback, useEffect} from 'react';
 import {AppState, StyleSheet, View, Pressable} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
@@ -96,7 +96,7 @@ export function SendingBackgroundMap({
     ? Math.floor((currentTime.getTime() - mapShare.mapShareCreatedAt) / 1000)
     : 0;
 
-  const cancelShare = React.useCallback(() => {
+  const cancelShare = useCallback(() => {
     cancelMapShare(
       {shareId},
       {
@@ -123,7 +123,7 @@ export function SendingBackgroundMap({
     );
   }, [navigation, cancelMapShare, shareId]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = AppState.addEventListener('change', nextState => {
       if (nextState === 'background') {
         cancelShare();

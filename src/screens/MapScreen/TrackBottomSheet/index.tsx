@@ -1,4 +1,4 @@
-import React from 'react';
+import {memo, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -15,18 +15,18 @@ import {StartStopTrack} from './StartStopTrack';
 
 const ANIMATION_DURATION = 250;
 
-export const TrackBottomSheet = React.memo(({isOpen}: {isOpen: boolean}) => {
+export const TrackBottomSheet = memo(({isOpen}: {isOpen: boolean}) => {
   const {height} = useWindowDimensions();
 
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
 
-  const measuredHeight = React.useRef(height);
+  const measuredHeight = useRef(height);
   // translateY moves the object down and the sheet is pinned to the bottom of the screen
   // By setting the initial value to the height of the screen, it will be moved completely off the screen
   // This means that it is NOT shown at first, which is desired
   const translateY = useSharedValue(height);
 
-  React.useEffect(() => {
+  useEffect(() => {
     translateY.value = withTiming(isOpen ? 0 : measuredHeight.current, {
       duration: ANIMATION_DURATION,
     });

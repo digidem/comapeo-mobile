@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons';
 import {

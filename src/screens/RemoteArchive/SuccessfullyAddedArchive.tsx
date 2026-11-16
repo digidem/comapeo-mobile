@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -65,10 +65,10 @@ export const DeviceRemovedSuccess = ({
             values={{
               deviceName,
               projectName,
-              boldDevice: (chunks: React.ReactNode) => (
+              boldDevice: (chunks: ReactNode) => (
                 <HeaderText variant="header5">{chunks}</HeaderText>
               ),
-              boldProject: (chunks: React.ReactNode) => (
+              boldProject: (chunks: ReactNode) => (
                 <HeaderText variant="header5">{chunks}</HeaderText>
               ),
             }}

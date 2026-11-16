@@ -103,7 +103,7 @@ The app should be maintainable for a long time, easily, by people who didn't ori
 - A screen is a nav screen — it must be navigable to.
 - As much logic as possible is included here (as opposed to its components)
 - All hooks at the top level
-- Very occasionally an exception might have to be made for a hook that causes a lot of rerenders, eg. the [`<SendingMapProgressBar />`](../src/frontend/screens/BackgroundMaps/SendingMapProgressBar.tsx)
+- Very occasionally an exception might have to be made for a hook that causes a lot of rerenders, eg. the [`<SendingMapProgressBar />`](../src/screens/BackgroundMaps/SendingMapProgressBar.tsx)
 
 ### Shared Components
 

@@ -1,10 +1,10 @@
 import path from 'path';
 import {screen, userEvent, fireEvent} from '@testing-library/react-native';
-import {setupIntegrationTest} from '../../../../tests/integration/helpers/setupIntegrationTest';
+import {setupIntegrationTest} from '../../../tests/integration/helpers/setupIntegrationTest';
 
 const DEFAULT_CONFIG_PATH = path.join(
   __dirname,
-  '../../../../tests/assets/comapeo-categories-devtest.comapeocat',
+  '../../../tests/assets/comapeo-categories-devtest.comapeocat',
 );
 
 describe('Observation Fields', () => {

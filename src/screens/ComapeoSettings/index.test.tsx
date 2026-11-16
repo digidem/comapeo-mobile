@@ -1,5 +1,5 @@
 import {screen, userEvent} from '@testing-library/react-native';
-import {setupIntegrationTest} from '../../../../tests/integration/helpers/setupIntegrationTest';
+import {setupIntegrationTest} from '../../../tests/integration/helpers/setupIntegrationTest';
 
 describe('CoMapeo Settings Screen', () => {
   const integrationSetup = setupIntegrationTest();

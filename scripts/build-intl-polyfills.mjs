@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 
-import languages from '../src/frontend/languages.json' with {type: 'json'};
+import languages from '../src/languages.json' with {type: 'json'};
 
 const TRANSLATIONS_DIR = fileURLToPath(
   new URL('../translations/', import.meta.url),
@@ -48,7 +48,7 @@ function build() {
   const locales = getPolyfillableLocales();
 
   const outputPath = new URL(
-    '../src/frontend/polyfills/intl.ts',
+    '../src/polyfills/intl.ts',
     import.meta.url,
   ).pathname;
 

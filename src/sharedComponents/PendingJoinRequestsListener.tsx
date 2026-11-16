@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useRef} from 'react';
 import {UnknownInviteIDRedeemAttemptError} from '@comapeo/core/errors.js';
 import {
   useJoinRequestFailed,
@@ -23,10 +23,10 @@ export const PendingJoinRequestsListener = ({
 }) => {
   const inviteArrival = useJoinRequestReceived();
   const failureArrival = useJoinRequestFailed();
-  const handled = React.useRef<JoinRequestArrival | null>(null);
-  const handledFailure = React.useRef<FailedJoinRequestArrival | null>(null);
+  const handled = useRef<JoinRequestArrival | null>(null);
+  const handledFailure = useRef<FailedJoinRequestArrival | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       !inviteArrival ||
       inviteArrival === handled.current ||
@@ -40,7 +40,7 @@ export const PendingJoinRequestsListener = ({
     navigateToJoinRequestScreen(inviteArrival.request);
   }, [inviteArrival, currentRouteName, navigateToJoinRequestScreen]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       !failureArrival ||
       failureArrival === handledFailure.current ||

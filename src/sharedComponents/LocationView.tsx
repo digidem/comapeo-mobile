@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Fragment} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {BLACK} from '../lib/styles';
 import {FormattedMessage, defineMessages} from 'react-intl';
@@ -34,7 +34,7 @@ export const LocationView = ({lat, lon, accuracy}: LocationViewProps) => {
           <FormattedMessage {...m.searching} />
         </BodyText>
       ) : (
-        <React.Fragment>
+        <Fragment>
           <LocationIcon style={{marginRight: 10}} />
           <BodyText variant="tinyMeta" style={styles.locationText}>
             <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
@@ -51,7 +51,7 @@ export const LocationView = ({lat, lon, accuracy}: LocationViewProps) => {
                     }>{` ±${Math.round(value)} ${unit}`}</BodyText>
                 );
               })()}
-        </React.Fragment>
+        </Fragment>
       )}
     </View>
   );

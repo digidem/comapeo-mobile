@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
@@ -111,7 +111,7 @@ export function InviteLinkIntro({
   );
 }
 
-function Point({icon, text}: {icon: React.ReactNode; text: string}) {
+function Point({icon, text}: {icon: ReactNode; text: string}) {
   return (
     <View style={styles.point}>
       {icon}

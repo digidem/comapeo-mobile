@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {View} from 'react-native';
 import GreenCheck from '../../../images/Success.svg';

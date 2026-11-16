@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode, useCallback} from 'react';
 import {
   useDataSyncProgress,
   useIsArchiveDevice,
@@ -155,7 +155,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   });
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       // Unset sync autostop when screen mounts
       projectApi.$sync.setAutostopDataSyncTimeout(null);
       // Connects to Servers
@@ -171,7 +171,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
   // Set up listener for autostopping sync (if applicable) and invalidating queries when navigating away from screen
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const unsubscribe = navigation.addListener('beforeRemove', () => {
         if (shouldAutostopSyncWhenLeavingScreen) {
           projectApi.$sync.setAutostopDataSyncTimeout(30_000);
@@ -194,8 +194,8 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
     ]),
   );
 
-  let bottomButton: React.ReactNode;
-  let syncInfoContent: React.ReactNode;
+  let bottomButton: ReactNode;
+  let syncInfoContent: ReactNode;
 
   if (syncStage.name === 'complete-full' && !syncState.data.isSyncEnabled) {
     bottomButton = (

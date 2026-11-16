@@ -1,9 +1,9 @@
-import * as React from 'react';
+import {type ComponentProps} from 'react';
 import {StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {NEW_DARK_GREY, VERY_LIGHT_GREY, WHITE} from '../lib/styles';
 
-type MaterialIconName = React.ComponentProps<typeof MaterialIcon>['name'];
+type MaterialIconName = ComponentProps<typeof MaterialIcon>['name'];
 
 export type CircleIcon = {
   name: MaterialIconName;

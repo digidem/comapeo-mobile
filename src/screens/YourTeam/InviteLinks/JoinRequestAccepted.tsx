@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
 import {ScreenContentWithButtonDockNoHeader} from '../../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader';
@@ -55,7 +55,7 @@ export function JoinRequestAccepted({
             values={{
               deviceName,
               projectName,
-              bold: (chunks: React.ReactNode) => (
+              bold: (chunks: ReactNode) => (
                 <HeaderText variant="header5">{chunks}</HeaderText>
               ),
             }}

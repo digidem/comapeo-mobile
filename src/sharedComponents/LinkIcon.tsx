@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import type {TextStyleProp} from '../sharedTypes';

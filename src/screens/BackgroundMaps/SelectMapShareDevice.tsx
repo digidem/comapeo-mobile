@@ -1,4 +1,3 @@
-import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import * as Sentry from '@sentry/react-native';

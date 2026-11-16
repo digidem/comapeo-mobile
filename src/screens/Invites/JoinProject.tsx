@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {useKeepAwake} from 'expo-keep-awake';
@@ -162,7 +162,7 @@ function JoinRequestStatus({
               {...m.joinedProject}
               values={{
                 projectName: invite.projectName,
-                bold: (chunks: React.ReactNode) => (
+                bold: (chunks: ReactNode) => (
                   <HeaderText variant="header5">{chunks}</HeaderText>
                 ),
               }}

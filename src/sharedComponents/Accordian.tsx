@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState, type ReactNode} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import Animated, {
   Easing,
@@ -11,8 +11,8 @@ import ChevrondownDefault from '../images/chevrondown-expanded.svg';
 import {ViewStyleProp} from '../sharedTypes';
 
 interface AccordianProps {
-  title: React.ReactNode;
-  innerAccordianDetails: React.ReactNode;
+  title: ReactNode;
+  innerAccordianDetails: ReactNode;
   style?: ViewStyleProp;
 }
 

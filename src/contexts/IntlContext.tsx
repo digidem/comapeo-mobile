@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ComponentProps, type ReactNode, useEffect, useMemo} from 'react';
 import {
   IntlProvider as ReactIntlProvider,
   CustomFormats,
@@ -30,16 +30,16 @@ export const formats: CustomFormats = {
 };
 
 const DEFAULT_RICH_TEXT_MAPPINGS: NonNullable<
-  React.ComponentProps<typeof ReactIntlProvider>['defaultRichTextElements']
+  ComponentProps<typeof ReactIntlProvider>['defaultRichTextElements']
 > = {
   bold: chunk => <Text style={styles.bold}>{chunk}</Text>,
 };
 
-export const IntlProvider = ({children}: {children: React.ReactNode}) => {
+export const IntlProvider = ({children}: {children: ReactNode}) => {
   const languageTag = useLocaleState(s => s.languageTag);
   const systemLocales = useLocales();
 
-  const languageCodes = React.useMemo(() => {
+  const languageCodes = useMemo(() => {
     const usableSystemLanguageTags = systemLocales
       .map(l => getUsableLanguageTag(l.languageTag))
       .filter((tag): tag is AvailableLanguageTag => tag !== undefined);
@@ -55,7 +55,7 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
 
   // reduceRight means the highest priority languages (start of the array)
   // get merged last and overwrite the lower priority languages
-  const messagesToUse = React.useMemo(
+  const messagesToUse = useMemo(
     () =>
       messages.reduceRight<Record<string, MessageFormatElement[]>>(
         (merged, queryResult) => ({...merged, ...queryResult.data}),
@@ -64,7 +64,7 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
     [messages],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isPending) {
       configureCalendarLocale(
         // Don't use the `messagesToUse`.

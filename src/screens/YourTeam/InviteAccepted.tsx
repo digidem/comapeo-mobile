@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import GreenCheck from '../../images/Success.svg';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import React from 'react';
+import {type ReactNode} from 'react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {SecondaryButton, PrimaryButton} from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -66,7 +66,7 @@ export const InviteAccepted = ({
           {...m.partOfProject}
           values={{
             deviceName: name,
-            bold: (chunks: React.ReactNode) => (
+            bold: (chunks: ReactNode) => (
               <BodyText key="bold" weight={700}>
                 {chunks}
               </BodyText>

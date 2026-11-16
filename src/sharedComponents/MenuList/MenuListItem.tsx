@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {
   DimensionValue,
   StyleProp,
@@ -15,13 +15,13 @@ import type {MaterialIconsIconName} from '@react-native-vector-icons/material-ic
 export type MenuListItemType = {
   primaryText: string;
   onPress: () => void;
-  secondaryText?: string | React.ReactNode;
+  secondaryText?: string | ReactNode;
   testID?: string;
   disabled?: boolean;
   accessibilityLabel?: string;
 } & (
   | {materialIconName: MaterialIconsIconName; icon?: never} // Has materialIconName but no icon
-  | {icon: React.ReactNode; materialIconName?: never} // Has icon but no materialIconName
+  | {icon: ReactNode; materialIconName?: never} // Has icon but no materialIconName
   | {materialIconName?: never; icon?: never} // Has neither
 );
 

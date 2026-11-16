@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -43,7 +43,7 @@ export function DeleteInviteLink({
   const {inviteId} = route.params;
   const cancelInviteLink = useCancelInviteLink();
   const {projectId} = useActiveProject();
-  const [isDeleting, setIsDeleting] = React.useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   async function confirmDelete() {
     setIsDeleting(true);

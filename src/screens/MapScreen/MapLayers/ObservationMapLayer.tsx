@@ -1,4 +1,4 @@
-import React from 'react';
+import {useMemo} from 'react';
 import {GeoJSONSource, Layer} from '@maplibre/maplibre-react-native';
 import {useObservations} from '../../../hooks/server/observations';
 import {usePresetsQuery} from '../../../hooks/server/presets';
@@ -14,13 +14,13 @@ export const ObservationMapLayer = () => {
 
   const {data: presets} = usePresetsQuery();
 
-  const displayedFeatures = React.useMemo(() => {
+  const displayedFeatures = useMemo(() => {
     return observationsToFeatureCollection(observations, presets);
   }, [observations, presets]);
 
   // Based on example implementation:
   // https://github.com/rnmapbox/maps/blob/0c37ee88bd4b16efac93417a47ab4b474396b318/example/src/examples/SymbolCircleLayer/DataDrivenCircleColors.js
-  const layerStyles = React.useMemo(() => {
+  const layerStyles = useMemo(() => {
     return createObservationMapLayerStyle(presets);
   }, [presets]);
 

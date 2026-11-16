@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode, useCallback} from 'react';
 import {
   NativeSyntheticEvent,
   StyleSheet,
@@ -50,7 +50,7 @@ interface Props {
   cardinalityOptions: {label: string; value: string}[];
   coordinate: DmsData;
   inputAccessibilityLabelPrefix: string;
-  label: React.ReactNode;
+  label: ReactNode;
   selectedCardinality: string;
   selectCardinaltiyAccessibilityLabel: string;
   selectTestID: string;
@@ -71,7 +71,7 @@ export const DmsInputGroup = ({
 }: Props) => {
   const {formatMessage: t} = useIntl();
 
-  const updateCoordinateCallback = React.useCallback(
+  const updateCoordinateCallback = useCallback(
     (unit: DmsUnit) => (value: string) => {
       if (value.length === 0) {
         updateCoordinate(unit, value);

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import {ColorCard} from './ColorCard';
@@ -21,7 +21,7 @@ export function ProjectCard({
   color?: string;
   /** Set to draw attention to the card, e.g. once a join is under way. */
   borderColor?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }) {
   return (
     <View style={styles.wrapper}>

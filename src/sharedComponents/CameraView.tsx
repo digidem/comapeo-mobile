@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import {useRef, useEffect, useState} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -58,10 +58,11 @@ type Props = {
 };
 
 export const CameraView = ({onAddPress}: Props) => {
-  const [capturing, setCapturing] = React.useState(false);
-  const [cameraReady, setCameraReady] = React.useState(false);
-  const accelerometerMeasurement =
-    React.useRef<AccelerometerMeasurement | null>(null);
+  const [capturing, setCapturing] = useState(false);
+  const [cameraReady, setCameraReady] = useState(false);
+  const accelerometerMeasurement = useRef<AccelerometerMeasurement | null>(
+    null,
+  );
   const {data: permission} = useCameraPermissionQuery();
   const {formatMessage} = useIntl();
   const camera = useRef<Camera>(null);
@@ -70,7 +71,7 @@ export const CameraView = ({onAddPress}: Props) => {
   const device = useCameraDevice('back');
   const headerHeight = useHeaderHeight();
 
-  React.useEffect(() => {
+  useEffect(() => {
     let isCancelled = false;
     let deviceMotionSub: Subscription;
     (async () => {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useRef, useState} from 'react';
 import * as Linking from 'expo-linking';
 import {parseInviteLink, type ReceivedInviteLink} from '../../lib/inviteLinks';
 import {isInviteScreen, isEditingScreen} from '../../lib/screenNameChecks';
@@ -22,10 +22,10 @@ export const DeepLinkListener = ({
   currentRouteName: string | undefined;
   navigateToRequestToJoin: (invite: ReceivedInviteLink) => void;
 }) => {
-  const [arrival, setArrival] = React.useState(initialArrival);
-  const handled = React.useRef<LinkArrival | null>(null);
+  const [arrival, setArrival] = useState(initialArrival);
+  const handled = useRef<LinkArrival | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     function onUrl({url}: {url: string}) {
       setArrival({url});
     }
@@ -37,7 +37,7 @@ export const DeepLinkListener = ({
     return () => subscription.remove();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!arrival || arrival === handled.current || !currentRouteName) return;
     if (isInviteScreen(currentRouteName)) return;
     if (isEditingScreen(currentRouteName)) return;

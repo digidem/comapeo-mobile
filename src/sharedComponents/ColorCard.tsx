@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {BLACK, VERY_LIGHT_GREY} from '../lib/styles';
 
@@ -7,7 +7,7 @@ export type ColorCardProps = {
   testID?: string;
   borderColor?: string;
   borderWidth?: number;
-  children: React.ReactNode;
+  children: ReactNode;
   backgroundColor: string;
 };
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {useClientApi} from '@comapeo/core-react';
 
 /** What core tells us when someone redeems one of our invite links. */
@@ -17,9 +17,9 @@ export type JoinRequestArrival = {request: ReceivedJoinRequest};
 
 export function useJoinRequestReceived(): JoinRequestArrival | null {
   const clientApi = useClientApi();
-  const [arrival, setArrival] = React.useState<JoinRequestArrival | null>(null);
+  const [arrival, setArrival] = useState<JoinRequestArrival | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     function onJoinRequest(
       projectId: string,
       deviceId: string,
@@ -58,11 +58,9 @@ export type FailedJoinRequestArrival = {failure: FailedJoinRequest};
  */
 export function useJoinRequestFailed(): FailedJoinRequestArrival | null {
   const clientApi = useClientApi();
-  const [arrival, setArrival] = React.useState<FailedJoinRequestArrival | null>(
-    null,
-  );
+  const [arrival, setArrival] = useState<FailedJoinRequestArrival | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     function onFailed(error: Error, deviceId: string, inviteId: string) {
       setArrival({failure: {error, deviceId, inviteId}});
     }

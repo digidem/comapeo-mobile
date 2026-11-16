@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -68,7 +68,7 @@ export function InviteLinkDeleted({
             {...m.hasBeenDeleted}
             values={{
               shortId,
-              bold: (chunks: React.ReactNode) => (
+              bold: (chunks: ReactNode) => (
                 <HeaderText variant="header5">{chunks}</HeaderText>
               ),
             }}

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ComponentProps} from 'react';
 import CheckBoxSelected from '../images/checkbox/CheckboxSelected.svg';
 import CheckBoxUnSelected from '../images/checkbox/CheckboxUnselected.svg';
 import CheckBoxError from '../images/checkbox/CheckboxError.svg';
@@ -10,7 +10,7 @@ type CheckboxProps = {
   testID?: string;
   disabled?: boolean;
   error?: boolean;
-  hitSlop: React.ComponentProps<typeof TouchableOpacity>['hitSlop'];
+  hitSlop: ComponentProps<typeof TouchableOpacity>['hitSlop'];
 };
 
 export const Checkbox = ({

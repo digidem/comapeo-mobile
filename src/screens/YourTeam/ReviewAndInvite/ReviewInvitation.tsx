@@ -2,7 +2,6 @@ import {StyleSheet, View} from 'react-native';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
-import React from 'react';
 import {BLACK, WHITE} from '../../../lib/styles';
 import {Button} from '../../../sharedComponents/Button';
 import {DeviceNameWithIcon} from '../../../sharedComponents/DeviceNameWithIcon';

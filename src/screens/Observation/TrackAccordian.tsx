@@ -1,4 +1,3 @@
-import React from 'react';
 import ChainIcon from '../../images/Chain.svg';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {defineMessages, useIntl} from 'react-intl';

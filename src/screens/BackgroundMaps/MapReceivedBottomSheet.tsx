@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useMemo} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import bboxPolygon from '@turf/bbox-polygon';
@@ -85,7 +85,7 @@ export function MapReceivedBottomSheet({
 
   const currentLocation = useLocationState(state => state.location);
 
-  const warningInfo = React.useMemo(() => {
+  const warningInfo = useMemo(() => {
     if (freeBytes < mapShare.estimatedSizeBytes) {
       const mbNeeded = Math.ceil(
         (mapShare.estimatedSizeBytes - freeBytes) / (1024 * 1024),

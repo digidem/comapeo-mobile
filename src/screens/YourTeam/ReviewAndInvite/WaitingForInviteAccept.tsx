@@ -1,7 +1,7 @@
 import {AppState, StyleSheet, View} from 'react-native';
 import SendingIcon from '../../../images/SendingIcon.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import React from 'react';
+import {useEffect, useLayoutEffect, useState} from 'react';
 import {TextButton} from '../../../sharedComponents/TextButton';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
@@ -30,17 +30,17 @@ export const WaitingForInviteAccept = ({
   cancelInvite: () => void;
 }) => {
   const {formatMessage: t} = useIntl();
-  const [time, setTime] = React.useState(0);
+  const [time, setTime] = useState(0);
   const navigation = useNavigationFromRoot();
   const {top} = useSafeAreaInsets();
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
   usePreventBackNavigation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     // cancels invite if app goes into background
     const subscription = AppState.addEventListener('change', nextState => {
       if (nextState === 'background') {
@@ -51,7 +51,7 @@ export const WaitingForInviteAccept = ({
     return () => subscription.remove();
   }, [cancelInvite]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => setTime(prev => prev + 1), 1000);
 
     return () => clearInterval(interval);

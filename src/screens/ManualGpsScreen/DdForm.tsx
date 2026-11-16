@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {
   NativeSyntheticEvent,
   StyleSheet,
@@ -94,14 +94,14 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     },
   ];
 
-  const [latitudeDegrees, setLatitudeDegrees] = React.useState<string>('');
-  const [longitudeDegrees, setLongitudeDegrees] = React.useState<string>('');
+  const [latitudeDegrees, setLatitudeDegrees] = useState<string>('');
+  const [longitudeDegrees, setLongitudeDegrees] = useState<string>('');
 
-  const [selectedLatCardinality, setSelectedLatCardinality] = React.useState(
-    () => getInitialCardinality('lat', initialCoordinates),
+  const [selectedLatCardinality, setSelectedLatCardinality] = useState(() =>
+    getInitialCardinality('lat', initialCoordinates),
   );
-  const [selectedLonCardinality, setSelectedLonCardinality] = React.useState(
-    () => getInitialCardinality('lon', initialCoordinates),
+  const [selectedLonCardinality, setSelectedLonCardinality] = useState(() =>
+    getInitialCardinality('lon', initialCoordinates),
   );
 
   const parsedLat = parseNumber(latitudeDegrees);
@@ -116,7 +116,7 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
       ? parsedLon * (selectedLonCardinality === 'E' ? 1 : -1)
       : undefined;
 
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       const latIsValidRange =
         signedLat !== undefined && latitudeIsValid(signedLat);

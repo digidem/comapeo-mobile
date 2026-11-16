@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type FC} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useIntl} from 'react-intl';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -74,7 +74,7 @@ export const DataPrivacy = ({
   );
 };
 
-function InfoListItem({text, Icon}: {text: string; Icon: React.FC<SvgProps>}) {
+function InfoListItem({text, Icon}: {text: string; Icon: FC<SvgProps>}) {
   return (
     <View style={styles.bulletItem}>
       <Icon width={26} height={26} />

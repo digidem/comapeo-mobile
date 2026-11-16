@@ -1,4 +1,3 @@
-import React from 'react';
 import {BLACK} from '../lib/styles';
 import {HeaderCloseIcon} from './CustomHeaderLeftClose';
 import {CustomHeaderLeftStyles} from './CustomHeaderLeft';

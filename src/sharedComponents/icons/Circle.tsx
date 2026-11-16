@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type PropsWithChildren} from 'react';
 import {StyleSheet, View} from 'react-native';
 import validateColor from 'validate-color';
 
@@ -14,7 +14,7 @@ export const Circle = ({
   color,
   radius = 25,
   style,
-}: React.PropsWithChildren<{
+}: PropsWithChildren<{
   color?: string;
   radius?: number;
   style?: ViewStyleProp;

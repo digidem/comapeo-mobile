@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {
   GestureResponderEvent,
   StyleSheet,
@@ -12,7 +12,7 @@ import {
 } from '../constants';
 
 type HeaderRightContainerButtonProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   onPress: ((event: GestureResponderEvent) => void) | (() => void);
   testID?: string;
   loading: boolean;
@@ -41,7 +41,7 @@ export const HeaderRightContainer = ({
   children,
   testID,
 }: {
-  children?: React.ReactNode;
+  children?: ReactNode;
   testID?: string;
 }) => {
   return (

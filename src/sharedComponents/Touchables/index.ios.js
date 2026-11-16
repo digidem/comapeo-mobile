@@ -1,4 +1,3 @@
-import React from 'react';
 import {TouchableHighlight} from 'react-native';
 
 export {Touchable, TouchableHighlight, TouchableOpacity} from 'react-native';

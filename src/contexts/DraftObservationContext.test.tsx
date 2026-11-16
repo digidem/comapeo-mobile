@@ -1,5 +1,4 @@
 import {act, renderHook} from '@testing-library/react-native';
-import * as React from 'react';
 import {type ReactNode} from 'react';
 import {createStore} from 'zustand';
 

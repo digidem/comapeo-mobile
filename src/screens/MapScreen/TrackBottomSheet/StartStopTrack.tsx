@@ -1,4 +1,4 @@
-import React from 'react';
+import {useMemo} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
@@ -39,7 +39,7 @@ export const StartStopTrack = () => {
   const {data: presets} = usePresetsQuery();
   const distance = useTrackState(store => store.distance);
 
-  const trackPresets = React.useMemo(
+  const trackPresets = useMemo(
     () => presets?.filter(p => p.geometry.includes('line')) ?? [],
     [presets],
   );

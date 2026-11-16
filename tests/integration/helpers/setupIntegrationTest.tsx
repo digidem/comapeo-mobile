@@ -4,7 +4,6 @@ import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 import {createManager, setUpIPC} from './core';
 import {createAppProvidersWrapper} from './react';
 import {sleep} from '../../../src/lib/sleep';
-import React from 'react';
 import {AppNavigator} from '../../../src/AppNavigator';
 
 export function setupIntegrationTest() {

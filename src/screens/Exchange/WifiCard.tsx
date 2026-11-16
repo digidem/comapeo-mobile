@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {Circle} from '../../sharedComponents/icons/Circle';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode, createContext, useContext, useEffect} from 'react';
 
 import {useStore} from 'zustand';
 import CheapRuler from 'cheap-ruler';
@@ -27,11 +27,12 @@ export function useDraftObservationActions() {
   return actions;
 }
 
-const DraftObservationContext =
-  React.createContext<DraftObservationStore | null>(null);
+const DraftObservationContext = createContext<DraftObservationStore | null>(
+  null,
+);
 
 type DraftObservationProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   draftObservationStore: DraftObservationStore;
 };
 
@@ -42,7 +43,7 @@ export const DraftObservationProvider = ({
 }: DraftObservationProviderProps) => {
   const locationStore = useLocationContext();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const cleanup = createDraftObservationLocationUpdator({
       draftObservationStore,
       locationStore,
@@ -60,7 +61,7 @@ export const DraftObservationProvider = ({
 };
 
 function useDraftObservationContext() {
-  const value = React.useContext(DraftObservationContext);
+  const value = useContext(DraftObservationContext);
 
   if (!value) {
     throw new Error('Must set up the DraftObservationContext first');

@@ -1,4 +1,4 @@
-import React from 'react';
+import {memo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData.tsx';
 import {Track} from '@comapeo/schema';
@@ -69,7 +69,7 @@ const TrackObservationItemNotMemoized = ({
   );
 };
 
-export const TrackListItem = React.memo<TrackListItemProps>(
+export const TrackListItem = memo<TrackListItemProps>(
   TrackObservationItemNotMemoized,
 );
 

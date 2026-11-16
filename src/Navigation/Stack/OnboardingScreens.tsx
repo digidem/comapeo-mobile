@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {IntroToCoMapeo} from '../../screens/Onboarding/IntroToCoMapeo';
 import {DataPrivacy} from '../../screens/Onboarding/DataPrivacy';
 import {OnboardingPrivacyPolicy} from '../../screens/Onboarding/OnboardingPrivacyPolicy';

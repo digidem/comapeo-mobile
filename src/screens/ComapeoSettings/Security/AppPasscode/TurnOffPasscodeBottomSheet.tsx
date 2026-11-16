@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {LoadingIndicator} from '../../../../sharedComponents/LoadingIndicator';
@@ -35,7 +35,7 @@ export const TurnOffPasscodeBottomSheet = ({
 }: NativeRootNavigationProps<'TurnOffPasscodeBottomSheet'>) => {
   const {formatMessage: t} = useIntl();
   const {setPasscode} = useSecurityActions();
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function unsetAppPasscode() {
     setIsLoading(true);

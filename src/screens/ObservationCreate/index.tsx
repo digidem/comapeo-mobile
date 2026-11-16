@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';

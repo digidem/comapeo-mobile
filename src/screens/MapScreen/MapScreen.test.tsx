@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Suspense} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
@@ -175,7 +175,7 @@ describe('MapScreen', () => {
 
     const tree = await render(
       <NavigationContainer>
-        <React.Suspense fallback={null}>
+        <Suspense fallback={null}>
           <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen
               name="Map"
@@ -183,7 +183,7 @@ describe('MapScreen', () => {
               initialParams={{trackingOpen}}
             />
           </Stack.Navigator>
-        </React.Suspense>
+        </Suspense>
       </NavigationContainer>,
       {wrapper: app.wrapper},
     );

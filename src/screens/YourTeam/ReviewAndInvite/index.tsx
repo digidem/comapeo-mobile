@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {defineMessages} from 'react-intl';
 import {ReviewInvitation} from './ReviewInvitation';

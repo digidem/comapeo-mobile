@@ -1,3 +1,4 @@
+import {type ReactNode} from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -11,7 +12,7 @@ export const GAP = 10;
 
 type ThumbnailContainerProps = {
   onPress: (() => void) | undefined;
-  children: React.ReactNode;
+  children: ReactNode;
   size: number;
   accessibilityLabel?: string;
   containerStyle?: ViewStyle;

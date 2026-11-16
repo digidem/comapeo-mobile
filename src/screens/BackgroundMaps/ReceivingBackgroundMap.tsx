@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback, useEffect} from 'react';
 import {StyleSheet, View, Pressable, AppState} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -75,7 +75,7 @@ export function ReceivingBackgroundMap({
   usePreventBackNavigation();
   useKeepAwake();
 
-  const handleCancel = React.useCallback(() => {
+  const handleCancel = useCallback(() => {
     abortDownload(
       {shareId},
       {
@@ -103,7 +103,7 @@ export function ReceivingBackgroundMap({
     );
   }, [abortDownload, shareId, navigation]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = AppState.addEventListener('change', nextState => {
       if (nextState === 'background') {
         handleCancel();

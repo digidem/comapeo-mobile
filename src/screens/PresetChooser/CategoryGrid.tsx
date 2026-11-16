@@ -1,4 +1,4 @@
-import React from 'react';
+import {memo} from 'react';
 import {
   FlatList,
   Dimensions,
@@ -30,7 +30,7 @@ function getItemLayout(_data: unknown, index: number) {
 // Used to skip static message extraction for messages without a static ID
 const DynFormattedMessage = FormattedMessage;
 
-const Item = React.memo(
+const Item = memo(
   ({item, onSelect}: {item: Preset; onSelect: (preset: Preset) => void}) => (
     <TouchableHighlight
       style={styles.cellTouchable}

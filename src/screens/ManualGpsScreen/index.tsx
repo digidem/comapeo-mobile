@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {
   View,
   ScrollView,
@@ -73,10 +73,11 @@ export const ManualGpsScreen = ({
 }: NativeRootNavigationProps<'ManualGpsScreen'>) => {
   const {formatMessage: t} = useIntl();
 
-  const [convertedData, setConvertedData] =
-    React.useState<ConvertedCoordinateData>({});
+  const [convertedData, setConvertedData] = useState<ConvertedCoordinateData>(
+    {},
+  );
 
-  const ENTRY_FORMAT_OPTIONS = React.useMemo(
+  const ENTRY_FORMAT_OPTIONS = useMemo(
     () => [
       {label: t(m.decimalDegrees), value: 'dd'},
       {label: t(m.degreesMinutesSeconds), value: 'dms'},
@@ -92,7 +93,7 @@ export const ManualGpsScreen = ({
   const {setFormat} = useManualEntryCoordinateFormatActions();
   const {updatePosition} = useDraftObservationActions();
 
-  React.useEffect(() => {
+  useEffect(() => {
     function handleSavePress() {
       if (convertedData.error) {
         return ToastAndroid.showWithGravity(

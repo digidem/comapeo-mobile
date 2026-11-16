@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import SimpleTrackIcon from '../images/SimpleTrack.svg';
 import {millisecondsToHHMMSS} from '../lib/millisecondsToFormattedTime';

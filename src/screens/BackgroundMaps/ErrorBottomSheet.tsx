@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useMemo} from 'react';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {StyleSheet, View} from 'react-native';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
@@ -34,7 +34,7 @@ function formatUTCTimestamp(date: Date): string {
 
 function QAInfoSection() {
   const qaDeviceName = useQADeviceName();
-  const timestamp = React.useMemo(() => formatUTCTimestamp(new Date()), []);
+  const timestamp = useMemo(() => formatUTCTimestamp(new Date()), []);
 
   return (
     <View style={styles.qaInfoSection}>

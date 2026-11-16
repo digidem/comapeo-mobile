@@ -1,11 +1,11 @@
-import React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {HeaderText} from './Text/HeaderText';
 import {BLUE_GREY, COMAPEO_BLUE, WARNING_RED, WHITE} from '../lib/styles';
 import {ViewStyleProp} from '../sharedTypes';
 
 type ButtonProps = {
-  renderIcon?: (props: {color: string; size: number}) => React.ReactNode;
+  renderIcon?: (props: {color: string; size: number}) => ReactNode;
   iconPosition?: 'left' | 'right';
   fullSize: boolean;
   text: string;

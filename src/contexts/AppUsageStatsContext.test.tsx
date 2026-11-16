@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import {ReactNode} from 'react';
 import {renderHook, act} from '@testing-library/react-native';
 import {
   createAppUsageStatsStore,

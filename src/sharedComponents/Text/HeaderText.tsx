@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type PropsWithChildren} from 'react';
 import {Text as RNText, TextProps, TextStyle} from 'react-native';
 import {DARK_GREY} from '../../lib/styles';
 import {RUBIK, type RubikWeight} from '../../lib/fonts';
@@ -39,7 +39,7 @@ export const HeaderText = ({
   variant,
   weight = 500,
   ...otherTextProps
-}: React.PropsWithChildren<HeaderProps>) => {
+}: PropsWithChildren<HeaderProps>) => {
   return (
     <RNText
       style={[

@@ -1,4 +1,3 @@
-import React from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 

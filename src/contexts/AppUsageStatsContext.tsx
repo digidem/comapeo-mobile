@@ -1,4 +1,4 @@
-import {createContext, use} from 'react';
+import {type ReactNode, createContext, use} from 'react';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
@@ -113,7 +113,7 @@ export const AppUsageStatsProvider = ({
   value,
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   value: AppUsageStatsStore;
 }) => {
   return <AppUsageStatsContext value={value}>{children}</AppUsageStatsContext>;

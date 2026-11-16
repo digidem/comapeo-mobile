@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import MaterialIcons from '@react-native-vector-icons/material-icons';

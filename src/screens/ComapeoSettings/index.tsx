@@ -1,4 +1,4 @@
-import React from 'react';
+import {type ReactNode} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -353,8 +353,8 @@ function SettingsRow({
   onPress: () => void;
   testID?: string;
   labelTestID?: string;
-  Icon: React.ReactNode;
-  EndContent: React.ReactNode;
+  Icon: ReactNode;
+  EndContent: ReactNode;
 }) {
   return (
     <TouchableOpacity testID={testID} onPress={onPress} style={styles.row}>

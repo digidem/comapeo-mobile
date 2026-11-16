@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 
@@ -116,7 +116,7 @@ export const Success = ({
   );
 };
 
-function BulletListItem({text, Icon}: {text: string; Icon: React.ReactNode}) {
+function BulletListItem({text, Icon}: {text: string; Icon: ReactNode}) {
   return (
     <View style={styles.bulletItem}>
       {Icon}

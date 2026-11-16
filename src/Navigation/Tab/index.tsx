@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Suspense} from 'react';
 import {TouchableOpacity, useWindowDimensions} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {CameraScreen} from '../../screens/CameraScreen';
@@ -71,21 +71,21 @@ export const HomeTabs = ({navigation}: NativeRootNavigationProps<'Home'>) => {
             tabBarShowLabel: false,
             headerTransparent: true,
             header: props => (
-              <React.Suspense fallback={null}>
+              <Suspense fallback={null}>
                 <HomeHeader
                   {...props}
                   onPress={() => setDrawerOpen(val => !val)}
                   backgroundColor="transparent"
                   showBottomBorder={false}
                 />
-              </React.Suspense>
+              </Suspense>
             ),
           }}
           initialRouteName={'Map'}
           screenLayout={({children}) => (
-            <React.Suspense fallback={<FullScreenCenteredLoader />}>
+            <Suspense fallback={<FullScreenCenteredLoader />}>
               {children}
-            </React.Suspense>
+            </Suspense>
           )}
           backBehavior="initialRoute">
           <Tab.Screen
@@ -99,14 +99,14 @@ export const HomeTabs = ({navigation}: NativeRootNavigationProps<'Home'>) => {
                 />
               ),
               header: props => (
-                <React.Suspense fallback={null}>
+                <Suspense fallback={null}>
                   <HomeHeader
                     {...props}
                     backgroundColor={WHITE}
                     showBottomBorder={true}
                     onPress={() => setDrawerOpen(val => !val)}
                   />
-                </React.Suspense>
+                </Suspense>
               ),
             }}
           />

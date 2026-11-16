@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import CoMapeoShield from '../../../images/CoMapeoShield.svg';
 import {

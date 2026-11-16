@@ -1,5 +1,5 @@
 import * as FileSystem from 'expo-file-system/legacy';
-import * as React from 'react';
+import {useEffect} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {useImportProjectCategories} from '@comapeo/core-react';
 import {Alert, StyleSheet, View} from 'react-native';
@@ -67,7 +67,7 @@ export const Categories: NativeNavigationComponent<'Categories'> = ({
     selectFileMutation.status === 'pending' ||
     importProjectConfigMutation.status === 'pending';
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
     const unsubscribe = navigation.addListener('beforeRemove', event => {
       if (!configImportIsPending) {

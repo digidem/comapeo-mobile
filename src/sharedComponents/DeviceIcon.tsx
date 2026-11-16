@@ -1,4 +1,3 @@
-import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import ShieldIcon from '../images/BlackShield.svg';

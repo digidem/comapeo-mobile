@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useMemo, useState} from 'react';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {StyleSheet, View, TouchableOpacity, ScrollView} from 'react-native';
 import {BottomSheetWrapper} from './BottomSheetWrapper';
@@ -44,7 +44,7 @@ function formatUTCTimestamp(date: Date): string {
 
 function QAInfoSection() {
   const qaDeviceName = useQADeviceName();
-  const timestamp = React.useMemo(() => formatUTCTimestamp(new Date()), []);
+  const timestamp = useMemo(() => formatUTCTimestamp(new Date()), []);
 
   return (
     <View style={styles.qaInfoSection} testID="EBS.qa-info-section">
@@ -65,7 +65,7 @@ export const ErrorBottomSheet = ({
   route,
 }: NativeRootNavigationProps<'ErrorBottomSheet'>) => {
   const {formatMessage} = useIntl();
-  const [advancedExpanded, setAdvancedExpanded] = React.useState(false);
+  const [advancedExpanded, setAdvancedExpanded] = useState(false);
   const error = route.params.error as Error & {code?: string};
 
   const errorCode = error?.code;

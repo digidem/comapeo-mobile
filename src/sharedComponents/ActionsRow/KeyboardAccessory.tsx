@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import {FC, type ReactNode} from 'react';
 import {View, Pressable, StyleSheet} from 'react-native';
 import {NEW_DARK_GREY} from '../../lib/styles';
 import Plus from '../../images/observationEdit/Plus.svg';
@@ -14,7 +14,7 @@ const m = defineMessages({
 });
 
 type ActionTabItems = {
-  icon: React.ReactNode;
+  icon: ReactNode;
   label: string;
   onPress: () => void;
   testID?: string;

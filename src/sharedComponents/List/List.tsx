@@ -1,9 +1,9 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {Text} from '../Text';
 
 interface ListProp {
-  children: React.ReactNode;
+  children: ReactNode;
   style?: StyleProp<ViewStyle>;
   disablePadding?: boolean;
   subheader?: string;

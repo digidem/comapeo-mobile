@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {memo} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 
 import {AlertIcon} from './icons';
@@ -35,7 +35,7 @@ const PhotoViewComponent = ({
   );
 };
 
-export const PhotoAttachmentView = React.memo<Props>(PhotoViewComponent);
+export const PhotoAttachmentView = memo<Props>(PhotoViewComponent);
 
 const styles = StyleSheet.create({
   container: {

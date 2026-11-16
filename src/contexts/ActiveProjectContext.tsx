@@ -1,20 +1,20 @@
-import * as React from 'react';
+import {type ReactNode, createContext, useContext, useMemo} from 'react';
 import {useSingleProject} from '@comapeo/core-react';
 import {type ComapeoProjectClientApi} from '@comapeo/ipc';
 
-const ActiveProjectContext = React.createContext<
+const ActiveProjectContext = createContext<
   {projectId: string; projectApi: ComapeoProjectClientApi} | undefined
 >(undefined);
 
 type Props = {
   activeProjectId: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function ActiveProjectProvider({activeProjectId, children}: Props) {
   const {data: projectApi} = useSingleProject({projectId: activeProjectId});
 
-  const dataValue = React.useMemo(
+  const dataValue = useMemo(
     () => ({projectId: activeProjectId, projectApi}),
     [activeProjectId, projectApi],
   );
@@ -25,7 +25,7 @@ export function ActiveProjectProvider({activeProjectId, children}: Props) {
 }
 
 export function useActiveProject() {
-  const projectContext = React.useContext(ActiveProjectContext);
+  const projectContext = useContext(ActiveProjectContext);
   if (!projectContext) {
     throw new Error('Undefined project context, use ActiveProjectProvider');
   }

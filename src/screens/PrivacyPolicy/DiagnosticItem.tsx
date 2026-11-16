@@ -1,4 +1,4 @@
-import React from 'react';
+import {type FC} from 'react';
 import {View, Text} from 'react-native';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -10,7 +10,7 @@ interface DiagnosticItemProps {
   description: string;
 }
 
-export const DiagnosticItem: React.FC<DiagnosticItemProps> = ({
+export const DiagnosticItem: FC<DiagnosticItemProps> = ({
   title,
   description,
 }) => {

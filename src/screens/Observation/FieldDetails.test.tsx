@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ComponentProps} from 'react';
 import {render, screen} from '@testing-library/react-native';
 import {IntlProvider} from 'react-intl';
 import {Field} from '@comapeo/schema';
@@ -29,7 +29,7 @@ function makeField(overrides: Partial<Field> = {}): Field {
 
 // render is async in @testing-library/react-native v14; this helper returns
 // the render promise, so callers must await it.
-function renderFieldDetails(props: React.ComponentProps<typeof FieldDetails>) {
+function renderFieldDetails(props: ComponentProps<typeof FieldDetails>) {
   return render(
     <IntlProvider locale="en" messages={{}}>
       <FieldDetails {...props} />

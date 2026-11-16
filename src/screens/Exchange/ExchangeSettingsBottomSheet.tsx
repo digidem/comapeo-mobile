@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState, type ReactElement} from 'react';
 import {View, StyleSheet, Pressable, ScrollView} from 'react-native';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -117,7 +117,7 @@ const OptionCard = ({
   testID,
 }: {
   setting: MediaSyncSetting;
-  icon: React.ReactElement;
+  icon: ReactElement;
   title: string;
   description: string;
   isSelected: boolean;

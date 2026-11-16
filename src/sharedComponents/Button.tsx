@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ComponentType, type ReactNode} from 'react';
 import {GestureResponderEvent, StyleSheet, View, ViewStyle} from 'react-native';
 
 import {BLACK, COMAPEO_BLUE, VERY_LIGHT_BLUE} from '../lib/styles';
@@ -17,8 +17,8 @@ interface SharedTouchableProps {
 }
 
 interface Props {
-  TouchableComponent?: React.ComponentType<Partial<SharedTouchableProps>>;
-  children: React.ReactNode;
+  TouchableComponent?: ComponentType<Partial<SharedTouchableProps>>;
+  children: ReactNode;
   color?: ColorScheme;
   disabled?: boolean;
   fullWidth?: boolean;

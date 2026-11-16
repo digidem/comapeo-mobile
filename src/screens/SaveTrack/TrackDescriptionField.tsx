@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type FC} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, TextInput} from 'react-native';
 
@@ -12,7 +12,7 @@ const m = defineMessages({
   },
 });
 
-export const TrackDescriptionField: React.FC = () => {
+export const TrackDescriptionField: FC = () => {
   const {formatMessage: t} = useIntl();
   const description = useTrackState(state => state.description);
   const {setDescription} = useTrackActions();

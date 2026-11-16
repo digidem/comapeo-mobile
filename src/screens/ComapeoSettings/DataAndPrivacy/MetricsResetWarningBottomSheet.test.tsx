@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {render, screen} from '@testing-library/react-native';
@@ -8,7 +8,7 @@ import {MetricsResetWarningBottomSheet} from './MetricsResetWarningBottomSheet';
 import type {AppStackParamsList} from '../../../sharedTypes/navigation';
 
 jest.mock('../../../sharedComponents/BottomSheetWrapper', () => ({
-  BottomSheetWrapper: ({children}: {children: React.ReactNode}) => children,
+  BottomSheetWrapper: ({children}: {children: ReactNode}) => children,
 }));
 
 const Stack = createNativeStackNavigator<AppStackParamsList>();

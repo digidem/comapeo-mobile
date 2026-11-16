@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode, useEffect, useState} from 'react';
 import {View} from 'react-native';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
 import {WHITE} from '../lib/styles';
@@ -16,7 +16,7 @@ export const BottomSheetWrapper = ({
   children,
   closeOnBackButtonPress,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   closeOnBackButtonPress?: boolean;
 }) => {
   if (!closeOnBackButtonPress) {
@@ -28,27 +28,19 @@ export const BottomSheetWrapper = ({
   return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
 };
 
-const BottomSheetWrapperPreventBack = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+const BottomSheetWrapperPreventBack = ({children}: {children: ReactNode}) => {
   usePreventBackNavigation();
   return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
 };
 
-const AnimateBottomSheetContainer = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+const AnimateBottomSheetContainer = ({children}: {children: ReactNode}) => {
   const navigation = useNavigation();
   const paddingBottom = useBottomPaddingWithSafeArea();
 
-  const [displayContent, setDisplayContent] = React.useState(true);
+  const [displayContent, setDisplayContent] = useState(true);
 
   // This effect is used to prevent the bottom sheet from being removed before the animation is complete
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
       e.preventDefault();
       setDisplayContent(false);

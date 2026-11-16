@@ -1,5 +1,5 @@
 import {useManyProjects} from '@comapeo/core-react';
-import * as React from 'react';
+import {Suspense, useCallback, useMemo} from 'react';
 import {ListRenderItem, View} from 'react-native';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
 import {defineMessages, useIntl} from 'react-intl';
@@ -40,7 +40,7 @@ export const AllProjects = () => {
   const {formatMessage} = useIntl();
   const {isTracking} = useTracking();
 
-  const dataWithCurrentProjOnTop = React.useMemo(
+  const dataWithCurrentProjOnTop = useMemo(
     () =>
       [...data].sort((a, b) => {
         if (a.projectId === currentProjectId) return -1;
@@ -50,7 +50,7 @@ export const AllProjects = () => {
     [currentProjectId, data],
   );
 
-  const handlePressId = React.useCallback(
+  const handlePressId = useCallback(
     (targetProjectId: string) => {
       if (currentProjectId === targetProjectId) {
         goBack();
@@ -66,17 +66,17 @@ export const AllProjects = () => {
     [currentProjectId, isTracking, goBack, replace, setActiveProjectId],
   );
 
-  const renderItem = React.useCallback<ListRenderItem<ProjectListItem>>(
+  const renderItem = useCallback<ListRenderItem<ProjectListItem>>(
     ({item}) => {
       const isSelected = item.projectId === currentProjectId;
       return (
-        <React.Suspense fallback={<ProjectCardLoader />}>
+        <Suspense fallback={<ProjectCardLoader />}>
           <ProjectListItem
             isSelected={isSelected}
             projectId={item.projectId}
             onPress={() => handlePressId(item.projectId)}
           />
-        </React.Suspense>
+        </Suspense>
       );
     },
     [handlePressId, currentProjectId],

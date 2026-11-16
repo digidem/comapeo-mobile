@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {MEDIUM_GREY} from '../../lib/styles';
 import {Field, Observation} from '@comapeo/schema';

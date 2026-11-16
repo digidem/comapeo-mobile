@@ -1,5 +1,4 @@
 import {Layer, GeoJSONSource} from '@maplibre/maplibre-react-native';
-import * as React from 'react';
 
 import {FeatureCollection} from 'geojson';
 import {useTracks} from '../../../hooks/server/track';

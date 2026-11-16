@@ -85,7 +85,7 @@ const config = {
     '/node_modules/react-native-reanimated/plugin/',
   ],
   moduleNameMapper: {
-    '\\.svg$': '<rootDir>/src/frontend/__mocks__/svg.tsx',
+    '\\.svg$': '<rootDir>/src/__mocks__/svg.tsx',
     '^@comapeo/core/package\\.json$':
       '<rootDir>/node_modules/@comapeo/core/package.json',
     '^@comapeo/ipc$': '<rootDir>/node_modules/@comapeo/ipc/dist/index.js',

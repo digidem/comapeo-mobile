@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {OBSCURE_PASSCODE} from '../../../../constants';
@@ -45,12 +45,12 @@ type SetPasswordError =
 
 export const SetPasscode: NativeNavigationComponent<'SetPasscode'> = () => {
   const {formatMessage: t} = useIntl();
-  const [error, setError] = React.useState<SetPasswordError>({
+  const [error, setError] = useState<SetPasswordError>({
     error: false,
     isObscurePassword: false,
   });
-  const [initialPass, setInitialPass] = React.useState('');
-  const [isConfirming, setIsConfirming] = React.useState(false);
+  const [initialPass, setInitialPass] = useState('');
+  const [isConfirming, setIsConfirming] = useState(false);
 
   function hideError() {
     setError({error: false, isObscurePassword: false});
@@ -96,7 +96,7 @@ SetPasscode.navTitle = m.title;
 const SetPasswordConfirm = ({initialPass}: {initialPass: string}) => {
   const {formatMessage: t} = useIntl();
 
-  const [error, setError] = React.useState(false);
+  const [error, setError] = useState(false);
 
   function validate(inputVal: string) {
     if (inputVal === initialPass) {

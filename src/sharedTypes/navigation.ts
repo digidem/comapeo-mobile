@@ -1,3 +1,4 @@
+import {type FC} from 'react';
 import {
   CompositeScreenProps,
   NavigatorScreenParams,
@@ -226,7 +227,7 @@ export type NativeRootNavigationProps<
 
 export type NativeNavigationComponent<
   ScreenName extends keyof AppStackParamsList,
-> = React.FC<NativeRootNavigationProps<ScreenName>> & {
+> = FC<NativeRootNavigationProps<ScreenName>> & {
   navTitle: MessageDescriptor;
 };
 

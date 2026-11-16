@@ -1,4 +1,3 @@
-import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, TextInput, View} from 'react-native';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../lib/styles';

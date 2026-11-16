@@ -1,4 +1,4 @@
-import React from 'react';
+import {Fragment, type ReactNode} from 'react';
 import {StyleSheet, Pressable} from 'react-native';
 
 import {VERY_LIGHT_BLUE} from '../../lib/styles';
@@ -6,7 +6,7 @@ import {ViewStyleProp} from '../../sharedTypes';
 
 interface ListItemProp {
   alignItems?: 'flex-start' | 'center';
-  children: React.ReactNode;
+  children: ReactNode;
   style?: ViewStyleProp;
   disabled?: boolean;
   disableGutters?: boolean;
@@ -69,7 +69,7 @@ export const ListDivider = ({
         },
         style,
       ]}>
-      <React.Fragment></React.Fragment>
+      <Fragment></Fragment>
     </ListItem>
   );
 };

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useRef, useState} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -33,12 +33,12 @@ const m = defineMessages({
 
 export const AuthScreen = () => {
   const {formatMessage: t} = useIntl();
-  const [error, setError] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {authenticate} = useAuthContext();
   const lockUntil = useSecurityState(store => store.lockUntil);
-  const [inputtedPass, setInputtedPass] = React.useState('');
-  const scrollViewRef = React.useRef<ScrollView>(null);
+  const [inputtedPass, setInputtedPass] = useState('');
+  const scrollViewRef = useRef<ScrollView>(null);
   const lockedOutMinutes = usePasscodeLockout({
     lockUntil,
     clearError: () => setError(false),

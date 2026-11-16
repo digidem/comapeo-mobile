@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type FC, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {
@@ -16,12 +16,13 @@ const m = defineMessages({
   },
 });
 
-export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
+export const MetricsDiagnosticsPermissionToggle: FC = () => {
   const {formatMessage} = useIntl();
   // this value is not reactive
   const nonReactiveDiagnosticsEnabled = getDiagnosticsEnabled();
-  const [reactiveDiagnosticsEnabled, setReactiveDiagnosticsEnabled] =
-    React.useState(nonReactiveDiagnosticsEnabled);
+  const [reactiveDiagnosticsEnabled, setReactiveDiagnosticsEnabled] = useState(
+    nonReactiveDiagnosticsEnabled,
+  );
 
   return (
     <View style={styles.container}>

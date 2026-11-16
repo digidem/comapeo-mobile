@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useLayoutEffect, useState} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
@@ -30,11 +30,11 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
 > = ({navigation}) => {
   const {formatMessage: t} = useIntl();
   const passcode = useSecurityState(state => state.passcode);
-  const [error, setError] = React.useState(false);
+  const [error, setError] = useState(false);
   const {navigate} = navigation;
 
   // Stops user from accessing this page if no password is set
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (passcode === null) {
       navigate('Security');
     }

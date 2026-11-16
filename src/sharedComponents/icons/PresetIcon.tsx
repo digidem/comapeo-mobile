@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Image} from 'expo-image';
 import {Circle} from './Circle';
 import {type IconSize} from '../../sharedTypes';
@@ -30,7 +30,7 @@ const LoadedPresetIcon = ({
   testID,
 }: PresetIconProps & {iconId: string}) => {
   const iconSize = iconSizes[size];
-  const [iconType, setIconType] = React.useState<'svg' | 'png'>('svg');
+  const [iconType, setIconType] = useState<'svg' | 'png'>('svg');
 
   const {
     data: iconUrl,

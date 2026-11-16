@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {PrivacyPolicy} from '../../PrivacyPolicy';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
@@ -55,7 +55,7 @@ export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = () => {
         <FormattedMessage
           {...m.warning}
           values={{
-            bold: (chunks: React.ReactNode) => (
+            bold: (chunks: ReactNode) => (
               <BodyText key={chunks?.toString()} weight={700}>
                 {chunks}
               </BodyText>

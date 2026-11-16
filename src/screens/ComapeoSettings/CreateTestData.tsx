@@ -4,7 +4,7 @@ import {lengthToDegrees} from '@turf/helpers';
 import {randomPosition} from '@turf/random';
 import {LocationObject} from 'expo-location';
 import {type BBox} from 'geojson';
-import React from 'react';
+import {type Ref} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
   ScrollView,
@@ -223,7 +223,7 @@ const NumberInput = ({
   onBlur?: () => void;
   onChange?: (value: number | undefined) => void;
   value?: number;
-  ref?: React.Ref<TextInput>;
+  ref?: Ref<TextInput>;
 }) => {
   return (
     <TextInput

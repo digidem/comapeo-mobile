@@ -1,4 +1,4 @@
-import React from 'react';
+import {Suspense} from 'react';
 import {
   render,
   screen,
@@ -60,9 +60,9 @@ describe('On QA Device require existence of a QA Device name', () => {
     onTeardown.push(app.teardown);
 
     const {unmount} = await render(
-      <React.Suspense fallback={null}>
+      <Suspense fallback={null}>
         <AppNavigator navigationIntegration={undefined} />
-      </React.Suspense>,
+      </Suspense>,
       {wrapper: app.wrapper},
     );
     onTeardown.unshift(unmount);
@@ -83,9 +83,9 @@ describe('On QA Device require existence of a QA Device name', () => {
     onTeardown.push(app.teardown);
 
     const {unmount} = await render(
-      <React.Suspense fallback={null}>
+      <Suspense fallback={null}>
         <AppNavigator navigationIntegration={undefined} />
-      </React.Suspense>,
+      </Suspense>,
       {wrapper: app.wrapper},
     );
     onTeardown.unshift(unmount);
@@ -100,9 +100,9 @@ describe('On QA Device require existence of a QA Device name', () => {
     onTeardown.push(app.teardown);
 
     const {unmount} = await render(
-      <React.Suspense fallback={null}>
+      <Suspense fallback={null}>
         <AppNavigator navigationIntegration={undefined} />
-      </React.Suspense>,
+      </Suspense>,
       {wrapper: app.wrapper},
     );
     onTeardown.unshift(unmount);

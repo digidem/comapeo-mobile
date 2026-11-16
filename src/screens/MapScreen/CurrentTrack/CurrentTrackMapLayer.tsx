@@ -1,5 +1,4 @@
 import {Layer, GeoJSONSource} from '@maplibre/maplibre-react-native';
-import * as React from 'react';
 
 import {useTrackState} from '../../../contexts/TrackStoreContext';
 import {convertToLineString} from '../../../lib/utils';

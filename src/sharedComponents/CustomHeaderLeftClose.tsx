@@ -1,4 +1,4 @@
-import React from 'react';
+import {useCallback, useEffect} from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {CustomHeaderLeftStyles} from './CustomHeaderLeft';
@@ -37,7 +37,7 @@ export const CustomHeaderLeftClose = ({
 }: CustomHeaderLeftCloseProps) => {
   const navigation = useNavigationFromRoot();
 
-  const openBottomSheet = React.useCallback(() => {
+  const openBottomSheet = useCallback(() => {
     if (observationId) {
       navigation.navigate('ConfirmDiscardObservationEditBottomSheet');
     } else {
@@ -95,7 +95,7 @@ const HeaderBackEditObservation = ({
   );
   const draftObservation = useDraftObservationState(store => store.value);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
       if (
         checkEqual(observation, {

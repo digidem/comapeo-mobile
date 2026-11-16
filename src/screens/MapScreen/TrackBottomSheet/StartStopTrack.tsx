@@ -1,4 +1,4 @@
-import React from 'react';
+import {useMemo} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {View} from 'react-native';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -42,7 +42,7 @@ export const StartStopTrack = () => {
     store => store.locationHistory.length > 1,
   );
 
-  const trackPresets = React.useMemo(
+  const trackPresets = useMemo(
     () => presets?.filter(p => p.geometry.includes('line')) ?? [],
     [presets],
   );

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Suspense} from 'react';
 import {LogManager, NetworkManager} from '@maplibre/maplibre-react-native';
 
 // Maplibre logs when tile requests are cancelled, which is often.
@@ -60,7 +60,6 @@ import {TrackingNotification} from './TrackingNotification';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
-import {Suspense} from 'react';
 import {FullScreenCenteredLoader} from './sharedComponents/FullScreenCenteredLoader.tsx';
 import {createEarlyAccessStore} from './contexts/EarlyAccessContext.tsx';
 import {createQADeviceNameStore} from './contexts/QADeviceNameStoreContext.tsx';

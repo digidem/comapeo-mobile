@@ -104,6 +104,19 @@ const frontendConfig = pluginTs.config(
       'react-hooks/exhaustive-deps': 'error',
       // We want to strictly adhere
       'react-hooks/rules-of-hooks': 'error',
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'react',
+              importNames: ['default'],
+              message:
+                "Use named imports, e.g. import {useState} from 'react'.",
+            },
+          ],
+        },
+      ],
     },
     languageOptions: {
       parser: tsParser,

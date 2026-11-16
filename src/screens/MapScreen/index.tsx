@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback, useRef, useState} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {
   Camera,
@@ -108,7 +108,7 @@ export const MapScreen = ({
   navigation,
 }: NativeHomeTabsNavigationProps<'Map'>) => {
   const trackBottomSheetOpen = route.params?.trackingOpen;
-  const [zoomForScaleBar, setZoomForScaleBar] = React.useState(DEFAULT_ZOOM);
+  const [zoomForScaleBar, setZoomForScaleBar] = useState(DEFAULT_ZOOM);
   const {dimensions, mapKey, onLayout} = useResetMapLayout();
   const {createDraft} = useDraftObservationActions();
   const {navigate} = useNavigationFromHomeTabs();
@@ -123,9 +123,9 @@ export const MapScreen = ({
   );
   const isWaitingForPosition =
     !!trackBottomSheetOpen && !isTracking && !hasPosition;
-  const [following, setFollowing] = React.useState(true);
+  const [following, setFollowing] = useState(true);
   const appUsageStore = useAppUsageStatsStore();
-  const cameraRef = React.useRef<CameraRef>(null);
+  const cameraRef = useRef<CameraRef>(null);
 
   const {data: styleUrl} = useMapStyleJsonUrl();
 
@@ -201,7 +201,7 @@ export const MapScreen = ({
   // This closes the track bottom sheet whenever the user is navigated away.
   // This prevents the closing animation from happening when the map screen is being reopened
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       return () => {
         navigation.setParams({trackingOpen: false});
       };
@@ -403,7 +403,7 @@ function useCheckDraftObservationAndNavigate({
   const id = useDraftObservationState(store => store.id);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       // if no exisiting observation, stay home
       if (!existingObservation || authState === 'obscured') {
         return;
@@ -430,7 +430,7 @@ function useCheckUnsavedTrackAndNavigate({authState}: {authState: AuthState}) {
   const trackPreset = useTrackState(state => state.preset);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       // if no unsaved track or auth is obscured, stay home
       if (!hasUnsavedTrack || authState === 'obscured') {
         return;

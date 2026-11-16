@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import {StyleSheet, TextInput} from 'react-native';
 import {Observation} from '@comapeo/schema';
 
@@ -8,7 +8,7 @@ type NumberProps = {
 };
 
 export const Number = ({updateTag, tagValue}: NumberProps) => {
-  const [text, setText] = React.useState(() => {
+  const [text, setText] = useState(() => {
     if (typeof tagValue === 'number') return String(tagValue);
     if (typeof tagValue === 'string' && !isNaN(parseFloat(tagValue)))
       return tagValue;

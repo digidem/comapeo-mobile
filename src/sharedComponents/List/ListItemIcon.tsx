@@ -1,4 +1,4 @@
-import React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {ViewStyleProp} from '../../sharedTypes';
@@ -8,7 +8,7 @@ type ListItemIconProps = {style?: ViewStyleProp; color?: string} & (
   | {
       iconName: MaterialIconsIconName;
     }
-  | {icon: React.ReactNode}
+  | {icon: ReactNode}
 );
 
 /**

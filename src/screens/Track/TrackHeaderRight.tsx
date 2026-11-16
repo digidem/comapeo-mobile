@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {useSingleDocByDocId} from '@comapeo/core-react';
 import {EditIcon} from '../../sharedComponents/icons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';

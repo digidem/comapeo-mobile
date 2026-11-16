@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Fragment} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 
@@ -60,7 +60,7 @@ export const ObscurePasscode: NativeNavigationComponent<
       <TouchableOpacity
         style={styles.switch}
         onPress={() => enableObscureCode(!obscureCodeEnabled)}>
-        <React.Fragment>
+        <Fragment>
           <BodyText>{t(m.toggleMessage)}</BodyText>
 
           <MaterialIcon
@@ -69,7 +69,7 @@ export const ObscurePasscode: NativeNavigationComponent<
             color="rgba(0, 0, 0, 0.54)"
             accessibilityLabel="Enable or Disable Obscure Passcode"
           />
-        </React.Fragment>
+        </Fragment>
       </TouchableOpacity>
 
       {obscureCodeEnabled && (

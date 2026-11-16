@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
@@ -69,7 +69,7 @@ export const AddRemoteArchive: NativeNavigationComponent<
     setError,
     formState: {errors},
   } = useForm<URLInput>();
-  const [normalizedUrl, setNormalizedUrl] = React.useState<string>('');
+  const [normalizedUrl, setNormalizedUrl] = useState<string>('');
 
   const {
     isLoading: urlSearching,
@@ -79,13 +79,13 @@ export const AddRemoteArchive: NativeNavigationComponent<
     url: normalizedUrl ? new URL('/info', normalizedUrl).toString() : undefined,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isError) {
       setError('url', {type: 'required'});
     }
   }, [isError, setError]);
 
-  const handleFindRemoteArchive = React.useCallback(
+  const handleFindRemoteArchive = useCallback(
     ({url}: URLInput) => {
       try {
         setNormalizedUrl(normalizeRemoteArchiveUrl(url));
@@ -96,7 +96,7 @@ export const AddRemoteArchive: NativeNavigationComponent<
     [setNormalizedUrl, setError],
   );
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () =>
         !archiveName ? (
@@ -129,7 +129,7 @@ const SearchUrl = ({control, errors}: SearchUrlProp) => {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({headerShown: true});
   }, [navigation]);
   return (
@@ -160,7 +160,7 @@ const FindingRemoteArchive = () => {
   const navigation = useNavigationFromRoot();
   const {top} = useSafeAreaInsets();
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
@@ -203,7 +203,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
     );
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = addListener('beforeRemove', e => {
       if (status !== 'pending') {
         // If user is not actively adding server
@@ -218,7 +218,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
     };
   }, [addListener, status]);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     setOptions({headerShown: true});
   }, [setOptions]);
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect} from 'react';
 import {AppState} from 'react-native';
 import {useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
@@ -14,7 +14,7 @@ export const TrackingNotification = () => {
   const {formatMessage} = useIntl();
   const isTracking = useTrackState(state => state.isTracking);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isTracking) return;
 
     const subscription = AppState.addEventListener('change', status => {

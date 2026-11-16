@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {Linking, Pressable, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {BodyText} from '../../sharedComponents/Text/BodyText';

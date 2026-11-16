@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback, useEffect} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -71,7 +71,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
     },
   });
 
-  const saveTrack = React.useCallback(() => {
+  const saveTrack = useCallback(() => {
     handleSubmit(({notes}) => {
       mutate(
         {
@@ -95,7 +95,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
     })();
   }, [handleSubmit, preset, mutate, track, navigation]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightContainerButton

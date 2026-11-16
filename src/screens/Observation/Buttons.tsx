@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Field} from '@comapeo/schema';
 import {DARK_GREY} from '../../lib/styles';

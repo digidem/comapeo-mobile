@@ -1,11 +1,11 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React from 'react';
+import {type ReactNode, useCallback, useRef, useState} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {calculateItemWidthForScrollView} from '../lib/calculateItemWidthForScrollView';
 import {ViewStyleProp} from '../sharedTypes';
 
 type HorizontalMediaScrollViewProps = {
-  renderChildren: (itemWidth: number) => React.ReactNode;
+  renderChildren: (itemWidth: number) => ReactNode;
   minItemWidth: number;
   gap: number;
   shouldShowLastItems: boolean;
@@ -19,13 +19,11 @@ export const HorizontalScrollView = ({
   shouldShowLastItems,
   containerStyle,
 }: HorizontalMediaScrollViewProps) => {
-  const scrollViewRef = React.useRef<ScrollView>(null);
-  const [containerWidth, setContainerWidth] = React.useState<number | null>(
-    null,
-  );
+  const scrollViewRef = useRef<ScrollView>(null);
+  const [containerWidth, setContainerWidth] = useState<number | null>(null);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (scrollViewRef.current && shouldShowLastItems) {
         scrollViewRef.current.scrollToEnd();
       }

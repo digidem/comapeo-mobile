@@ -1,4 +1,3 @@
-import React from 'react';
 import {StyleSheet} from 'react-native';
 import PlayArrow from '../../images/PlayArrow.svg';
 import {ThumbnailContainer} from './ThumbnailContainer';

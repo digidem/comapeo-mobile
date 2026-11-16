@@ -2,7 +2,7 @@ import {
   NavigationContainer,
   type NavigationContainerRef,
 } from '@react-navigation/native';
-import * as React from 'react';
+import {Suspense, useRef} from 'react';
 import {type AppStackParamsList} from './sharedTypes/navigation';
 
 import {RootStackNavigator} from './Navigation/Stack';
@@ -20,8 +20,7 @@ export const AppNavigator = ({
   navigationIntegration:
     ReturnType<(typeof Sentry)['reactNavigationIntegration']> | undefined;
 }) => {
-  const containerRef =
-    React.useRef<NavigationContainerRef<AppStackParamsList>>(null);
+  const containerRef = useRef<NavigationContainerRef<AppStackParamsList>>(null);
   const qaDeviceName = useQADeviceName();
 
   if (isQABuild && !qaDeviceName) {
@@ -53,9 +52,9 @@ export const AppNavigator = ({
       <PostHogProvider
         client={postHog}
         autocapture={{captureScreens: false, captureTouches: true}}>
-        <React.Suspense fallback={null}>
+        <Suspense fallback={null}>
           <RootStackNavigator />
-        </React.Suspense>
+        </Suspense>
       </PostHogProvider>
     </NavigationContainer>
   );

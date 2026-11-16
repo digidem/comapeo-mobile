@@ -16,7 +16,7 @@ import {sleep} from '../../lib/sleep';
 import type {AppStackParamsList} from '../../sharedTypes/navigation';
 import {SyncScreen} from '.';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
-import React from 'react';
+import {Suspense} from 'react';
 
 jest.mock('../../hooks/useCurrentTime');
 
@@ -64,7 +64,7 @@ describe('Exchange screen', () => {
     onTeardown.push(appProviders.teardown);
 
     const {unmount} = await render(
-      <React.Suspense fallback={null}>
+      <Suspense fallback={null}>
         <ActiveProjectProvider activeProjectId={activeProjectId}>
           <NavigationContainer>
             <Stack.Navigator>
@@ -72,7 +72,7 @@ describe('Exchange screen', () => {
             </Stack.Navigator>
           </NavigationContainer>
         </ActiveProjectProvider>
-      </React.Suspense>,
+      </Suspense>,
       {
         wrapper: appProviders.wrapper,
       },

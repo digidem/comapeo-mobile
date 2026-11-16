@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useMemo} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 
@@ -51,7 +51,7 @@ export const LanguageSettings: NativeNavigationComponent<
   const {setLanguageTag} = useLocaleActions();
   const paddingBottom = useBottomPaddingWithSafeArea();
 
-  const options = React.useMemo(() => {
+  const options = useMemo(() => {
     return [
       {
         value: 'SystemPreference' as const,

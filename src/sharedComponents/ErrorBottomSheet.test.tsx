@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {
   NavigationContainer,
   createNavigationContainerRef,
@@ -20,7 +20,7 @@ jest.mock('../images/Error.svg', () => 'ErrorIcon');
 jest.mock('../images/chevrondown.svg', () => 'ChevronDown');
 jest.mock('../images/chevrondown-expanded.svg', () => 'ChevronUp');
 jest.mock('./BottomSheetWrapper', () => ({
-  BottomSheetWrapper: ({children}: {children: React.ReactNode}) => children,
+  BottomSheetWrapper: ({children}: {children: ReactNode}) => children,
 }));
 jest.mock('../lib/appVariant', () => ({
   APP_VARIANT: 'production' as AppVariant,

@@ -1,5 +1,4 @@
 import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import React from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';

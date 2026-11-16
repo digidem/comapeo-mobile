@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import {Image} from 'react-native';
 import {AlertIcon} from '../icons';
 import {useAttachmentUrlQuery} from '../../hooks/server/media';
@@ -6,7 +6,7 @@ import {ThumbnailContainer} from './ThumbnailContainer';
 import {Attachment} from '../../sharedTypes';
 
 export const ThumbnailImage = ({error, uri}: {error?: Error; uri: string}) => {
-  const [nativeImageError, setNativeImageError] = React.useState(false);
+  const [nativeImageError, setNativeImageError] = useState(false);
 
   function handleImageError() {
     setNativeImageError(true);

@@ -1,4 +1,4 @@
-import React from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity, Pressable} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -63,14 +63,14 @@ export const AudioAttachmentPlaybackScreen = ({
   const status = useAudioPlayerStatus(player);
 
   // needed for iOS to ensure audio plays even when the silent switch is on
-  React.useEffect(() => {
+  useEffect(() => {
     setAudioModeAsync({playsInSilentMode: true}).catch(err => {
       Sentry.captureException(err);
     });
   }, []);
 
   const {formatMessage} = useIntl();
-  const [localUri, setLocalUri] = React.useState<string | null>(null);
+  const [localUri, setLocalUri] = useState<string | null>(null);
   const {mutate: openShareDialog, isPending: shareLoading} =
     useOpenShareDialog();
 
@@ -98,7 +98,7 @@ export const AudioAttachmentPlaybackScreen = ({
 
   const progress = duration ? currentPosition / duration : 0;
 
-  const handleShare = React.useCallback(async () => {
+  const handleShare = useCallback(async () => {
     try {
       let fileUri = localUri;
 
@@ -133,7 +133,7 @@ export const AudioAttachmentPlaybackScreen = ({
     }
   }, [uri, localUri, navigation, openShareDialog]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (localUri) {
         FileSystem.deleteAsync(localUri, {idempotent: true}).catch(() => {});

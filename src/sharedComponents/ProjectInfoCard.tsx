@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
 import {FrontendRole} from '../hooks/useProjectRoleAndDetails';
@@ -29,7 +29,7 @@ export type ProjectInfoCardProps = {
   role: FrontendRole;
   projectDescription?: string;
   backgroundColor: string;
-  ButtonsRow?: React.ReactNode;
+  ButtonsRow?: ReactNode;
   onPress?: () => void;
   style?: ViewStyleProp;
   testID?: string;

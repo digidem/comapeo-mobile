@@ -13,7 +13,7 @@ import {
 import {
   localeImports,
   type AvailableLanguageTag,
-} from '../../../translations/index';
+} from '../../translations/index';
 
 export type {AvailableLanguageTag};
 

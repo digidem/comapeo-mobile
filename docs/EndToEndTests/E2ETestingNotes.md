@@ -8,17 +8,17 @@ The environment variable `EXPO_PUBLIC_E2E_TEST=true` is used in CI and for the b
 
 ### Auth Flow (Passcode Input)
 
-- `src/frontend/contexts/AuthContext.tsx`: Disables `FlagSecureModule` during E2E tests to allow screen recording on BrowserStack.
-- `src/frontend/screens/AuthScreen.tsx`: Hides the `CoMapeoLogoSvg`, which was delaying input responsiveness.
+- `src/contexts/AuthContext.tsx`: Disables `FlagSecureModule` during E2E tests to allow screen recording on BrowserStack.
+- `src/screens/AuthScreen.tsx`: Hides the `CoMapeoLogoSvg`, which was delaying input responsiveness.
 
 ### Map Style Fallback
 
-- `src/frontend/hooks/server/maps.ts`: Switches to a public Mapbox style instead of fetching from the internal map server, which can fail with 502 errors in CI (issue #1008).
+- `src/hooks/server/maps.ts`: Switches to a public Mapbox style instead of fetching from the internal map server, which can fail with 502 errors in CI (issue #1008).
 
 ### Audio Recording
 
-- `src/frontend/screens/Audio/AudioRecording/index.tsx`: Replaces the `AnimatedBackground` with a blank `<View />` in E2E mode. This animation was causing unnecessary Appium rendering delays that seem to happen with animations.
+- `src/screens/Audio/AudioRecording/index.tsx`: Replaces the `AnimatedBackground` with a blank `<View />` in E2E mode. This animation was causing unnecessary Appium rendering delays that seem to happen with animations.
 
 ### GPS Pill
 
-- `src/frontend/sharedComponents/GPSPill.tsx`: Replaces the `UIActivityIndicator` spinner with text (`...`) during E2E tests to eliminate rendering delays that seem to happen with animations when checking for GPS status.
+- `src/sharedComponents/GPSPill.tsx`: Replaces the `UIActivityIndicator` spinner with text (`...`) during E2E tests to eliminate rendering delays that seem to happen with animations when checking for GPS status.

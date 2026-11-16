@@ -9,7 +9,7 @@
       "*": ["./node_modules/@digidem/types/vendor/*/index.d.ts"]
     }
   },
-  "include": ["src/frontend/**/*", "app.config.js"],
+  "include": ["src/**/*", "app.config.js"],
   "exclude": [
     "node_modules",
     "metro.config.js",

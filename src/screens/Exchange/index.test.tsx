@@ -10,8 +10,8 @@ import {
   createTestServer,
   inviteToProject,
   setUpIPC,
-} from '../../../../tests/integration/helpers/core';
-import {createAppProvidersWrapper} from '../../../../tests/integration/helpers/react';
+} from '../../../tests/integration/helpers/core';
+import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
 import {sleep} from '../../lib/sleep';
 import type {AppStackParamsList} from '../../sharedTypes/navigation';
 import {SyncScreen} from '.';

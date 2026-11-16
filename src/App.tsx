@@ -30,7 +30,7 @@ import {
   comapeoServicesClient,
   setServiceNotification,
 } from '@comapeo/core-react-native';
-import {localeImports} from '../../translations/index';
+import {localeImports} from '../translations/index';
 import {AppState} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import NetInfo from '@react-native-community/netinfo';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Suspense} from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -124,7 +124,7 @@ export const ObservationEdit = ({
                   savedAttachments.map(att => {
                     if (observationId && att.type === 'photo') {
                       return (
-                        <React.Suspense
+                        <Suspense
                           key={att.driveDiscoveryId + att.hash + att.type}
                           fallback={<ThumbnailLoader size={size} />}>
                           <SavedPhotoThumbnailImage
@@ -137,7 +137,7 @@ export const ObservationEdit = ({
                               });
                             }}
                           />
-                        </React.Suspense>
+                        </Suspense>
                       );
                     }
 

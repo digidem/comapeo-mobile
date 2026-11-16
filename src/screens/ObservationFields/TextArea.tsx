@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {StyleSheet, TextInput} from 'react-native';
 import {Observation} from '@comapeo/schema';
 

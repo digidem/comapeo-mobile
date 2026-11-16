@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
@@ -66,7 +66,7 @@ export const ExportSuccess = ({
         <FormattedMessage
           {...bodyMsg}
           values={{
-            bold: (chunks: React.ReactNode) => (
+            bold: (chunks: ReactNode) => (
               <HeaderText key={chunks?.toString()} variant="header5">
                 {chunks}
               </HeaderText>

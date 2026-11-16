@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import ErrorIcon from '../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';

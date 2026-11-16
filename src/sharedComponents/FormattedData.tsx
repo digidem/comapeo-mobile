@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Fragment, memo} from 'react';
 import {
   CustomFormatConfig,
   FormattedDate,
@@ -40,7 +40,7 @@ export const FormattedCoords = ({
 
 // Format the created_at date of an observation as either a datetime, or a
 // relative datetime (e.g. "3 minutes ago")
-export const FormattedObservationDate = React.memo(
+export const FormattedObservationDate = memo(
   ({
     createdDate,
     variant,
@@ -71,7 +71,7 @@ export const FormattedPresetName = ({preset}: {preset?: Preset}) => {
   const {formatMessage: t} = useIntl();
   const name = preset ? preset.name : t(m.observation);
 
-  return <React.Fragment>{name}</React.Fragment>;
+  return <Fragment>{name}</Fragment>;
 };
 
 /**

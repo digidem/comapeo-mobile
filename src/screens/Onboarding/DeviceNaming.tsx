@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {
   Keyboard,
   StyleSheet,
@@ -51,7 +51,7 @@ const m = defineMessages({
 export const DeviceNaming = ({
   navigation,
 }: NativeStackScreenProps<OnboardingParamsList, 'DeviceNaming'>) => {
-  const [name, setName] = React.useState('');
+  const [name, setName] = useState('');
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const {formatMessage: t} = useIntl();
   const {mutate, status} = useSetOwnDeviceInfo();
@@ -145,10 +145,10 @@ export const DeviceNaming = ({
 };
 
 function useTemporaryError() {
-  const [errorTimeout, setErrorTimeout] = React.useState(false);
-  const timer = React.useRef<NodeJS.Timeout | undefined>(undefined);
+  const [errorTimeout, setErrorTimeout] = useState(false);
+  const timer = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (errorTimeout && !timer.current) {
       timer.current = setTimeout(() => {
         setErrorTimeout(false);

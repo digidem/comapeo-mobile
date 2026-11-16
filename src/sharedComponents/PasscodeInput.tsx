@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type Ref} from 'react';
 import {Text, StyleSheet, StyleProp, ViewStyle, TextInput} from 'react-native';
 
 import {
@@ -21,7 +21,7 @@ interface PasscodeInputProps {
   error: boolean;
   testID?: string;
   editable?: boolean;
-  ref?: React.Ref<TextInput | null>;
+  ref?: Ref<TextInput | null>;
 }
 
 export const PasscodeInput = ({

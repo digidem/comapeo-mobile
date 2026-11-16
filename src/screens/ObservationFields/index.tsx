@@ -1,4 +1,4 @@
-import React from 'react';
+import {useLayoutEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
@@ -44,7 +44,7 @@ export const ObservationFields = ({
   navigation,
   route,
 }: NativeRootNavigationProps<'ObservationFields'>) => {
-  const [current, setCurrent] = React.useState(1);
+  const [current, setCurrent] = useState(1);
   const {fieldIds} = route.params;
   const {formatMessage} = useIntl();
   const observationId = useDraftObservationState(store => store.id?.docId);
@@ -64,7 +64,7 @@ export const ObservationFields = ({
     setCurrent(val => val - 1);
   });
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: formatMessage(m.title, {current, total: fieldIds.length}),
       headerRight: () => (

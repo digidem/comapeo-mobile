@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ComponentProps} from 'react';
 import {ScrollView} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
@@ -51,7 +51,7 @@ export const CoordinateFormat: NativeNavigationComponent<
   const lat = location.data?.coords.latitude || EXAMPLE_LOCATION.latitude;
   const lon = location.data?.coords.longitude || EXAMPLE_LOCATION.longitude;
 
-  const options: React.ComponentProps<
+  const options: ComponentProps<
     typeof SelectOne<CoordinateFormatType>
   >['options'] = [
     {

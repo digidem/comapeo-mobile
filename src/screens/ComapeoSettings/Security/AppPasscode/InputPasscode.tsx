@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {KeyboardAvoidingView} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
@@ -50,14 +50,14 @@ export const InputPasscode = ({
   showNext = true,
 }: InputPasscodeProps) => {
   const {formatMessage: t} = useIntl();
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = useState('');
 
   const inputRef = useBlurOnFulfill({
     value: inputValue,
     cellCount: CELL_COUNT,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (error) {
       inputRef.current?.focus();
     }

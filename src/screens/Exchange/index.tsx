@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useSyncState} from '@comapeo/core-react';
 
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';

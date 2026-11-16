@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback} from 'react';
 import {HeaderLeftClose} from '../../sharedComponents/HeaderLeftClose';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
@@ -11,7 +11,7 @@ type HeaderLeftProps = {
 export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   const navigation = useNavigationFromRoot();
 
-  const handlePress = React.useCallback(() => {
+  const handlePress = useCallback(() => {
     navigation.navigate('ConfirmDiscardObservationEditBottomSheet');
   }, [navigation]);
 

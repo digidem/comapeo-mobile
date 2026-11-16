@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import BadgeWithCheck from '../images/VerifiedBadgeWithCheck.svg';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {
@@ -139,7 +139,7 @@ export const ObservationMetadata: NativeNavigationComponent<
       label: string;
       value: number | undefined | string;
       unit: string;
-      icon: React.ReactNode;
+      icon: ReactNode;
     };
   }[] = [
     {
@@ -246,7 +246,7 @@ export const ObservationMetadata: NativeNavigationComponent<
         label: string;
         value: number | string;
         unit: string;
-        icon: React.ReactNode;
+        icon: ReactNode;
       }
     > => {
       const key = Object.keys(item)[0] as keyof typeof item;

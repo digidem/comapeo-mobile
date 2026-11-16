@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';

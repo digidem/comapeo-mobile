@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
@@ -44,7 +44,7 @@ export const Security: NativeNavigationComponent<'Security'> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const passcodeSet = useSecurityState(state => state.passcode !== null);
-  const [highlight, setHighlight] = React.useState(false);
+  const [highlight, setHighlight] = useState(false);
 
   function highlightError() {
     setHighlight(true);

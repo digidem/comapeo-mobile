@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type FC, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
@@ -84,7 +84,7 @@ export const CreateOrNameSoloProject = ({
     createProjectMutation.status === 'pending' ||
     updateSettingsMutation.status === 'pending';
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
     const unsubscribe = navigation.addListener('beforeRemove', event => {
       if (!mutationIsPending) {
@@ -208,7 +208,7 @@ export function createNavigationOptions({
 }
 
 type InfoRowProps = {
-  Icon: React.FC<SvgProps>;
+  Icon: FC<SvgProps>;
   text: string;
 };
 

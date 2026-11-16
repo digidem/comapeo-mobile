@@ -1,4 +1,4 @@
-import React from 'react';
+import {type ReactNode} from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import Fontisto from '@react-native-vector-icons/fontisto';
@@ -133,7 +133,7 @@ export const ProjectSettings = () => {
 };
 
 type SettingsCardRowProps = {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   subtitle?: string;
   buttonText: string;

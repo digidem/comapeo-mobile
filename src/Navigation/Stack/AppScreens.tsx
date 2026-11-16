@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {MessageDescriptor} from 'react-intl';
 import {
   ObservationEdit,

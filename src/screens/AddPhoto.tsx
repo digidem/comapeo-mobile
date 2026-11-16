@@ -1,4 +1,3 @@
-import React from 'react';
 import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {defineMessages, FormattedMessage} from 'react-intl';
 

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {CommonActions} from '@react-navigation/native';
 import {defineMessages, useIntl} from 'react-intl';

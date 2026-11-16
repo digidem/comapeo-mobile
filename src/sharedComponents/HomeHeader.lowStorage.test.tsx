@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Suspense} from 'react';
 import {
   NavigationContainer,
   ParamListBase,
@@ -100,7 +100,7 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
     onTeardown.push(appProviders.teardown);
 
     const utils = await render(
-      <React.Suspense fallback={null}>
+      <Suspense fallback={null}>
         <ActiveProjectProvider activeProjectId={activeProjectId}>
           <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -111,7 +111,7 @@ describe('HomeHeader low storage badge (navigator + AppProviders)', () => {
             </Stack.Navigator>
           </NavigationContainer>
         </ActiveProjectProvider>
-      </React.Suspense>,
+      </Suspense>,
       {wrapper: appProviders.wrapper},
     );
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Suspense, memo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
@@ -29,7 +29,7 @@ type PhotoAttachment = Omit<Attachment, 'type'> & {type: 'photo'};
 
 const photoOverlap = 10;
 
-export const ObservationListItem = React.memo<ObservationListItemProps>(
+export const ObservationListItem = memo<ObservationListItemProps>(
   ObservationListItemNotMemoized,
 );
 
@@ -45,7 +45,7 @@ function ObservationListItemNotMemoized({
       onPress={() => onPress(observation.docId)}
       testID={testID}
       style={{flex: 1, minHeight: 80}}>
-      <React.Suspense
+      <Suspense
         fallback={
           <View style={[styles.container, style]}>
             <LoadingIndicator />
@@ -56,7 +56,7 @@ function ObservationListItemNotMemoized({
           showSyncedIndicator={showSyncedIndicator}
           style={style}
         />
-      </React.Suspense>
+      </Suspense>
     </TouchableOpacity>
   );
 }

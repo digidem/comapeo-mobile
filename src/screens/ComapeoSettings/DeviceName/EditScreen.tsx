@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useMemo} from 'react';
 import {Alert, ScrollView, StyleSheet} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
@@ -77,7 +77,7 @@ export const EditScreen = ({
     formState,
   );
 
-  React.useEffect(
+  useEffect(
     function showDiscardChangesAlert() {
       const unsubscribe = navigation.addListener('beforeRemove', event => {
         // Ignore cases where navigation after successful submission occurs
@@ -106,7 +106,7 @@ export const EditScreen = ({
     [t, navigation, getValues, nameHasChanges],
   );
 
-  const onSubmit = React.useMemo(() => {
+  const onSubmit = useMemo(() => {
     return handleSubmit(value => {
       if (!nameHasChanges) {
         navigation.popTo('DeviceNameDisplay');
@@ -130,7 +130,7 @@ export const EditScreen = ({
     });
   }, [handleSubmit, mutate, nameHasChanges, navigation]);
 
-  React.useEffect(
+  useEffect(
     function updateNavigationOptions() {
       navigation.setOptions({
         headerRight: () => {

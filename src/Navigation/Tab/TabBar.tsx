@@ -1,5 +1,4 @@
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import * as React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import NotebookPenIcon from '../../images/NotebookPen.svg';
 import TracksIcon from '../../images/Tracks.svg';

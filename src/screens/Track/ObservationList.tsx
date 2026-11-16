@@ -1,4 +1,3 @@
-import React from 'react';
 import ChainIcon from '../../images/Chain.svg';
 
 import {Observation} from '@comapeo/schema';

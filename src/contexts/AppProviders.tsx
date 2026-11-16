@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {ComapeoCoreProvider} from '@comapeo/core-react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient} from '@tanstack/react-query';
@@ -54,7 +54,7 @@ import {
 } from './QADeviceNameStoreContext';
 
 type AppProvidersProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   localDiscoveryController: ReturnType<typeof createLocalDiscoveryController>;
   mapeoApi: ComapeoCoreClientApi;
   mapServerApi: {getBaseUrl: () => Promise<URL>};

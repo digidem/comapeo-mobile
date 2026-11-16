@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback, useLayoutEffect} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -51,12 +51,12 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
   const {formatMessage: t} = useIntl();
 
   // These next three function forces the user to go back to the setting page instead of the "EnterPassToTurnOff" screen
-  const backPress = React.useCallback(() => {
+  const backPress = useCallback(() => {
     const popAction = StackActions.pop(2);
     navigation.dispatch(popAction);
   }, [navigation]);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: (props: HeaderBackButtonProps) => (
         <CustomHeaderLeft headerBackButtonProps={props} onPress={backPress} />

@@ -1,14 +1,14 @@
-import * as React from 'react';
+import {type PropsWithChildren, useEffect, useState} from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
 import {state, type ComapeoState} from '@comapeo/core-react-native';
 
-export const ServerLoading = ({children}: React.PropsWithChildren) => {
-  const [serverState, setServerState] = React.useState<ComapeoState>(() =>
+export const ServerLoading = ({children}: PropsWithChildren) => {
+  const [serverState, setServerState] = useState<ComapeoState>(() =>
     state.getState(),
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const sub = state.addListener('stateChange', next => setServerState(next));
     return () => sub.remove();
   }, []);

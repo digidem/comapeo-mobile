@@ -1,10 +1,10 @@
-import * as React from 'react';
+import {type ComponentProps} from 'react';
 import QuestionIconCircle from '../../images/QuestionIconCircle.svg';
 
 export const QuestionMarkWithShadow = ({
   style,
   ...props
-}: React.ComponentProps<typeof QuestionIconCircle>) => (
+}: ComponentProps<typeof QuestionIconCircle>) => (
   <QuestionIconCircle
     style={[
       {

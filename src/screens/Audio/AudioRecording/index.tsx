@@ -1,4 +1,4 @@
-import React from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View, AppState, Text} from 'react-native';
 import {useKeepAwake} from 'expo-keep-awake';
 import {BLUE_GREY, DARK_GREY, WHITE} from '../../../lib/styles';
@@ -38,7 +38,7 @@ export function AudioRecording({
   useKeepAwake();
   const {startRecording, stopRecording, status} = useAudioRecording();
   const timeElapsed = status.durationMillis;
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const {addAudio} = useDraftObservationActions();
   const {top} = useSafeAreaInsets();
 
@@ -48,7 +48,7 @@ export function AudioRecording({
     shouldPrevent: !isLoading,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const start = async () => {
       try {
         await startRecording();
@@ -63,7 +63,7 @@ export function AudioRecording({
     start();
   }, [startRecording, navigation]);
 
-  const finishRecording = React.useCallback(async () => {
+  const finishRecording = useCallback(async () => {
     setIsLoading(true);
     try {
       const result = await stopRecording();
@@ -88,14 +88,14 @@ export function AudioRecording({
     }
   }, [stopRecording, navigation, addAudio]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (timeElapsed >= MAX_RECORDING_DURATION_MS && !isLoading) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       finishRecording();
     }
   }, [timeElapsed, isLoading, finishRecording]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const sub = AppState.addEventListener('change', state => {
       if (state !== 'active' && !isLoading) {
         finishRecording();

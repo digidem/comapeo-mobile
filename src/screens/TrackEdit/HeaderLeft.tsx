@@ -1,5 +1,5 @@
 import {HeaderBackButtonProps} from '@react-navigation/elements';
-import * as React from 'react';
+import {useCallback} from 'react';
 
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useReplaceBackNavigation} from '../../hooks/useReplaceBackNavigation';
@@ -16,7 +16,7 @@ export const HeaderLeft = ({
 }: HeaderLeftProps) => {
   const navigation = useNavigationFromRoot();
 
-  const navigateToBottomSheet = React.useCallback(() => {
+  const navigateToBottomSheet = useCallback(() => {
     navigation.navigate('ConfirmTrackDiscardBottomSheet', {trackId});
   }, [navigation, trackId]);
 

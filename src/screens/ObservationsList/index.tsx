@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type FC, useCallback, useMemo, useRef, useState} from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
@@ -26,7 +26,7 @@ const ONE_HOUR = 60 * 60 * 1000;
 
 const keyExtractor = (item: Observation | Track) => item.docId;
 
-export const ObservationsList: React.FC<
+export const ObservationsList: FC<
   NativeHomeTabsNavigationProps<'ObservationsList'>
 > & {
   navTitle: MessageDescriptor;
@@ -36,11 +36,11 @@ export const ObservationsList: React.FC<
   const {authState} = useAuthContext();
   const {data: deviceInfo} = useOwnDeviceInfo();
 
-  const [filterMode, setFilterMode] = React.useState<'all' | 'mine'>('all');
-  const lastInteractionRef = React.useRef<number | null>(null);
+  const [filterMode, setFilterMode] = useState<'all' | 'mine'>('all');
+  const lastInteractionRef = useRef<number | null>(null);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (
         lastInteractionRef.current !== null &&
         Date.now() - lastInteractionRef.current > ONE_HOUR
@@ -56,7 +56,7 @@ export const ObservationsList: React.FC<
     lastInteractionRef.current = mode === 'mine' ? Date.now() : null;
   }
 
-  const filteredData = React.useMemo(() => {
+  const filteredData = useMemo(() => {
     const allData = [...observations, ...tracks];
 
     if (filterMode === 'all') {

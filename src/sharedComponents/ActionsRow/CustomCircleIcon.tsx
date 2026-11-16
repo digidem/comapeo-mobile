@@ -1,10 +1,10 @@
-import React, {FC} from 'react';
+import {FC, type ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Plus from '../../images/observationEdit/Plus.svg';
 import {BLUE_GREY} from '../../lib/styles';
 
 interface CustomCircleIcon {
-  icon: React.ReactNode;
+  icon: ReactNode;
 }
 export const CustomCircleIcon: FC<CustomCircleIcon> = ({icon}) => {
   return (

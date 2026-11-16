@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback, useEffect} from 'react';
 import {CommonActions, useNavigationState} from '@react-navigation/native';
 import {
   useOwnRoleInProject,
@@ -22,7 +22,7 @@ export const ProjectRemovalListener = () => {
   const index = useNavigationState(val => val.index);
   const currentRouteName = routes[index]?.name;
 
-  const dispatchToRemovedProjectBottomSheet = React.useCallback(() => {
+  const dispatchToRemovedProjectBottomSheet = useCallback(() => {
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
@@ -32,7 +32,7 @@ export const ProjectRemovalListener = () => {
   }, [navigation]);
 
   //checks on first open of project that the user has not been blocked
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       roleId === BLOCKED_ROLE_ID &&
       !isRoleRefetching &&
@@ -51,7 +51,7 @@ export const ProjectRemovalListener = () => {
 
   const {data: projectApi} = useSingleProject({projectId});
 
-  React.useEffect(() => {
+  useEffect(() => {
     function handleRoleChange(event: RoleChangeEvent) {
       if (event.role.roleId === BLOCKED_ROLE_ID) {
         dispatchToRemovedProjectBottomSheet();

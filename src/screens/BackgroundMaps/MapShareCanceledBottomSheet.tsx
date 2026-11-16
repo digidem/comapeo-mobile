@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
 import {MapShareCanceled} from '../../sharedComponents/MapShareCanceled';
 import {type NativeRootNavigationProps} from '../../sharedTypes/navigation';

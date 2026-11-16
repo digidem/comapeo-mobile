@@ -1,4 +1,4 @@
-import React from 'react';
+import {type FC} from 'react';
 import {View} from 'react-native';
 import {SvgProps} from 'react-native-svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -7,12 +7,12 @@ import {styles} from './styles';
 import {BLACK, NEW_DARK_GREY} from '../../lib/styles';
 
 interface PointContainerProps {
-  icon: React.FC<SvgProps>;
+  icon: FC<SvgProps>;
   title: string;
   description: string;
 }
 
-export const PointContainer: React.FC<PointContainerProps> = ({
+export const PointContainer: FC<PointContainerProps> = ({
   icon: IconComponent,
   title,
   description,

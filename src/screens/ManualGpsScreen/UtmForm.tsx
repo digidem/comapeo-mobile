@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import {toLatLon as origToLatLon, fromLatLon} from 'utm';
 import {View, TextInput, StyleSheet} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -38,7 +38,7 @@ const m = defineMessages({
 export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
   const {formatMessage: t} = useIntl();
 
-  const [zoneNum, setZoneNum] = React.useState(() => {
+  const [zoneNum, setZoneNum] = useState(() => {
     if (
       typeof initialCoordinates?.lat === 'number' &&
       typeof initialCoordinates?.lon === 'number'
@@ -56,7 +56,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     }
   });
 
-  const [zoneLetter, setZoneLetter] = React.useState<string>(() => {
+  const [zoneLetter, setZoneLetter] = useState<string>(() => {
     if (
       typeof initialCoordinates?.lat === 'number' &&
       typeof initialCoordinates?.lon === 'number'
@@ -72,10 +72,10 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     }
   });
 
-  const [easting, setEasting] = React.useState('');
-  const [northing, setNorthing] = React.useState('');
+  const [easting, setEasting] = useState('');
+  const [northing, setNorthing] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       const {latitude, longitude} = toLatLon({
         easting,

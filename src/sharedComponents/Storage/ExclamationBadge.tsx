@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {DARK_ORANGE, WHITE} from '../../lib/styles';
 import {RUBIK} from '../../lib/fonts';

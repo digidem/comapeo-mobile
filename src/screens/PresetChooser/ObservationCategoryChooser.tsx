@@ -1,4 +1,4 @@
-import React from 'react';
+import {useCallback, useLayoutEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {usePresetsSelection} from '@comapeo/core-react';
@@ -49,11 +49,11 @@ export const ObservationCategoryChooser: NativeNavigationComponent<
     }
   };
 
-  const handleGoBack = React.useCallback(() => {
+  const handleGoBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       title: m.title.defaultMessage,
       headerLeft: props =>

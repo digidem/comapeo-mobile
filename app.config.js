@@ -3,7 +3,7 @@ const {execSync} = require('child_process');
 const semverParse = require('semver/functions/parse');
 
 /** @import {ExpoConfig} from '@expo/config-types' */
-/** @import {AppVariant} from './src/frontend/lib/appVariant' */
+/** @import {AppVariant} from './src/lib/appVariant' */
 
 const EAS_PROJECT_ID = '2d5b8137-12ec-45aa-9c23-56b6a1c522b7';
 const EAS_UPDATES_URL = 'https://u.expo.dev/' + EAS_PROJECT_ID;

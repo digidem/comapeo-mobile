@@ -3,7 +3,7 @@ import * as v from 'valibot';
 import {AvailableLanguageTag} from '../lib/intl';
 
 import LANGUAGES from '../languages.json';
-import {localeImports} from '../../../translations/index';
+import {localeImports} from '../../translations/index';
 
 // // from v0 schema definition
 type LegacySupportedLanguageTag = keyof typeof LANGUAGES;

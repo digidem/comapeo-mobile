@@ -10,8 +10,8 @@ import type {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 import type {MapeoManager} from '@comapeo/core';
 import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 
-import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
-import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
+import {createManager, setUpIPC} from '../../tests/integration/helpers/core';
+import {createAppProvidersWrapper} from '../../tests/integration/helpers/react';
 import {ActiveProjectProvider} from '../contexts/ActiveProjectContext';
 
 import {HomeHeader} from './HomeHeader';

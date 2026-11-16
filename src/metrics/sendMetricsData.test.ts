@@ -1,7 +1,7 @@
 import * as http from 'node:http';
 import {buffer} from 'node:stream/consumers';
 import {promisify} from 'node:util';
-import {useRealFetch} from '../../../tests/integration/helpers/core';
+import {useRealFetch} from '../../tests/integration/helpers/core';
 import {sendMetricsData} from './sendMetricsData';
 
 describe('sendMetricsReport', () => {

@@ -8,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {compile} from '@formatjs/cli-lib';
 import {includeKeys} from 'filter-obj';
 
-import LANGUAGE_NAME_TRANSLATIONS from '../src/frontend/languages.json' with {type: 'json'};
+import LANGUAGE_NAME_TRANSLATIONS from '../src/languages.json' with {type: 'json'};
 
 const PROJECT_ROOT = fileURLToPath(new URL('..', import.meta.url));
 const MESSAGES_DIR = path.join(PROJECT_ROOT, 'messages');
@@ -34,7 +34,7 @@ await Promise.all(
     const languageCode = directory.name;
 
     if (!(languageCode in LANGUAGE_NAME_TRANSLATIONS)) {
-      console.warn(`Locale '${languageCode}' has no language name defined in \`src/frontend/languages.json\`,
+      console.warn(`Locale '${languageCode}' has no language name defined in \`src/languages.json\`,
 so it will not appear as a language option in CoMapeo.
 Add the language name in English and the native language to \`languages.json\`
 in order to allow users to select '${languageCode}' in CoMapeo`);

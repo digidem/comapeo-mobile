@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import {ViewStyleProp} from '../sharedTypes';
@@ -23,7 +23,7 @@ export const IconTitleDescription = ({
   color,
   style,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   description?: string;
   /** for use on a dark screen. */

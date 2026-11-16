@@ -1,4 +1,12 @@
-import * as React from 'react';
+import {
+  type ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {AppState, AppStateStatus, NativeModules} from 'react-native';
 const {FlagSecureModule} = NativeModules;
 
@@ -15,10 +23,10 @@ type AuthContextType = {
   authState: AuthState;
 };
 
-const AuthContext = React.createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType | null>(null);
 
 export const useAuthContext = () => {
-  const value = React.useContext(AuthContext);
+  const value = useContext(AuthContext);
 
   if (!value) {
     throw new Error('Must set up AuthContextProvider first');
@@ -27,7 +35,7 @@ export const useAuthContext = () => {
   return value;
 };
 
-export const AuthProvider = ({children}: {children: React.ReactNode}) => {
+export const AuthProvider = ({children}: {children: ReactNode}) => {
   const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState(
     useShallow(state => ({
       passcode: state.passcode,
@@ -37,14 +45,14 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   );
   const {incrementAndGetAttempts, resetFailedAttempts, setLockUntil} =
     useSecurityActions();
-  const [authState, setAuthState] = React.useState<AuthState>(
+  const [authState, setAuthState] = useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
   // If E2E test mode is enabled, disable FlagSecure to allow screen recordings on BrowserStack
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const queryClient = useQueryClient();
 
-  React.useEffect(() => {
+  useEffect(() => {
     // FlagSecure is an Android-only native module (screen-capture blocking);
     // it's absent on iOS, so guard every call.
     if (passcode !== null && !isE2E) {
@@ -54,7 +62,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     }
   }, [passcode, isE2E]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const appStateListener = AppState.addEventListener(
       'change',
       (nextAppState: AppStateStatus) => {
@@ -78,7 +86,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     return () => appStateListener.remove();
   }, [passcode, queryClient]);
 
-  const authenticate: AuthContextType['authenticate'] = React.useCallback(
+  const authenticate: AuthContextType['authenticate'] = useCallback(
     async passcodeValue => {
       const isLockedOut = Date.now() < lockUntil;
       if (isLockedOut) {
@@ -120,7 +128,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     ],
   );
 
-  const contextValue: AuthContextType = React.useMemo(
+  const contextValue: AuthContextType = useMemo(
     () => ({authenticate, authState}),
     [authenticate, authState],
   );

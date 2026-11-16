@@ -1,4 +1,3 @@
-import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {View, StyleSheet, Linking} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';

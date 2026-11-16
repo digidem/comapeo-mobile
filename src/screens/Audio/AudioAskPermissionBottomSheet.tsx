@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
 import {AppState, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
@@ -54,17 +54,17 @@ export const AudioAskPermissionBottomSheet = ({
 }: NativeRootNavigationProps<'AudioAskPermissionBottomSheet'>) => {
   const {formatMessage} = useIntl();
   const {goBack, replace} = navigation;
-  const [permission, setPermission] = React.useState<PermissionResponse>(
+  const [permission, setPermission] = useState<PermissionResponse>(
     route.params.audioPermission,
   );
-  const hasNavigatedRef = React.useRef(false);
+  const hasNavigatedRef = useRef(false);
   const {passcode} = useSecurityState();
   // this screen has no header, so we need to push the content down below the notch.
   const {top} = useSafeAreaInsets();
 
   // Re-check microphone permission in case it was granted via system settings,
   // and navigate to AudioRecording if so.
-  const checkAndNavigateIfGranted = React.useCallback(() => {
+  const checkAndNavigateIfGranted = useCallback(() => {
     getRecordingPermissionsAsync().then((newPermission: PermissionResponse) => {
       setPermission(newPermission);
       if (newPermission.status === 'granted' && !hasNavigatedRef.current) {
@@ -86,7 +86,7 @@ export const AudioAskPermissionBottomSheet = ({
 
   // Covers re-entering from Auth screen (passcode is active flow)
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (passcode && permission.status !== 'granted') {
         checkAndNavigateIfGranted();
       }
@@ -94,7 +94,7 @@ export const AudioAskPermissionBottomSheet = ({
   );
 
   // Covers non-passcode flow from system settings
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = AppState.addEventListener('change', state => {
       if (!passcode && state === 'active') checkAndNavigateIfGranted();
     });

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type FC, useState} from 'react';
 import {View, ScrollView, TouchableOpacity} from 'react-native';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -23,10 +23,10 @@ type PrivacyPolicyProps = Partial<
   NativeStackScreenProps<OnboardingParamsList, 'OnboardingPrivacyPolicy'>
 >;
 
-export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {
+export const PrivacyPolicy: FC<PrivacyPolicyProps> = () => {
   const {formatMessage} = useIntl();
-  const [awanaExpanded, setAwanaExpanded] = React.useState(false);
-  const [openSourceExpanded, setOpenSourceExpanded] = React.useState(false);
+  const [awanaExpanded, setAwanaExpanded] = useState(false);
+  const [openSourceExpanded, setOpenSourceExpanded] = useState(false);
 
   return (
     <ScrollView>

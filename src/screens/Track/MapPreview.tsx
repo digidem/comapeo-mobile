@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import {FC, useMemo} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {
   Map,
@@ -66,11 +66,11 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
 function ObservationMapLayer({observations}: {observations: Observation[]}) {
   const {data: presets} = usePresetsQuery();
 
-  const displayedFeatures = React.useMemo(() => {
+  const displayedFeatures = useMemo(() => {
     return observationsToFeatureCollection(observations, presets);
   }, [observations, presets]);
 
-  const layerStyles = React.useMemo(() => {
+  const layerStyles = useMemo(() => {
     return createObservationMapLayerStyle(presets);
   }, [presets]);
 

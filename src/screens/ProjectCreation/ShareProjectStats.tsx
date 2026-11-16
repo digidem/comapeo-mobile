@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useCallback} from 'react';
 import {StyleSheet, View} from 'react-native';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {defineMessages, useIntl} from 'react-intl';
@@ -56,7 +56,7 @@ export const ShareProjectStats = ({
 
   usePreventBackNavigation();
 
-  const goToSuccess = React.useCallback(
+  const goToSuccess = useCallback(
     (statsShared: boolean) => {
       navigation.replace('ProjectCreated', {
         name: projectName,

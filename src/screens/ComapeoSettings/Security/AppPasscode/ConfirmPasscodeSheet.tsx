@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {BottomSheetWrapper} from '../../../../sharedComponents/BottomSheetWrapper';
 import {useSecurityActions} from '../../../../contexts/SecurityStoreContext';
@@ -49,7 +49,7 @@ export const ConfirmPasscodeBottomSheet = ({
   const {formatMessage: t} = useIntl();
   const {setPasscode} = useSecurityActions();
   const navigation = useNavigationFromRoot();
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
     try {

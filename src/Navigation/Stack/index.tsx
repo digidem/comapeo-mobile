@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ComponentProps, Suspense} from 'react';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
@@ -24,10 +24,10 @@ import {CommonActions, StackActions} from '@react-navigation/native';
 import {RUBIK} from '../../lib/fonts';
 
 export type NavigatorLayout = NonNullable<
-  React.ComponentProps<typeof RootStack.Navigator>['layout']
+  ComponentProps<typeof RootStack.Navigator>['layout']
 >;
 export type NavigatorScreenLayout = NonNullable<
-  React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
+  ComponentProps<typeof RootStack.Navigator>['screenLayout']
 >;
 
 const NavigatorScreenOptions: NativeStackNavigationOptions = {
@@ -90,7 +90,7 @@ export const RootStackNavigator = () => {
     navigation,
     descriptors,
   }) => (
-    <React.Suspense fallback={<FullScreenCenteredLoader />}>
+    <Suspense fallback={<FullScreenCenteredLoader />}>
       <PendingInvitesListener
         currentRouteName={state.routes[state.index]?.name}
         navigateToInviteScreen={inviteId =>
@@ -132,13 +132,11 @@ export const RootStackNavigator = () => {
       ) : (
         children
       )}
-    </React.Suspense>
+    </Suspense>
   );
 
   const screenLayout: NavigatorScreenLayout = ({children}) => (
-    <React.Suspense fallback={<FullScreenCenteredLoader />}>
-      {children}
-    </React.Suspense>
+    <Suspense fallback={<FullScreenCenteredLoader />}>{children}</Suspense>
   );
 
   const commonNavigatorProps = {

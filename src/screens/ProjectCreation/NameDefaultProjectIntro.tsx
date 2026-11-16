@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {DARK_ORANGE} from '../../lib/styles';

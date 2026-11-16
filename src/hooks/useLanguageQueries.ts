@@ -1,5 +1,5 @@
 import {useQueries, keepPreviousData} from '@tanstack/react-query';
-import {AvailableLanguageTag, localeImports} from '../../../translations/index';
+import {AvailableLanguageTag, localeImports} from '../../translations/index';
 
 /**
  *

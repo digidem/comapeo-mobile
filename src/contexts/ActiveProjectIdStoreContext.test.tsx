@@ -10,8 +10,8 @@ import {
   useActiveProjectId,
   type ActiveProjectIdStore,
 } from './ActiveProjectIdStoreContext';
-import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
-import {MapeoApiWrapper} from '../../../tests/integration/helpers/MapeoApiWrapper';
+import {createManager, setUpIPC} from '../../tests/integration/helpers/core';
+import {MapeoApiWrapper} from '../../tests/integration/helpers/MapeoApiWrapper';
 
 function createWrapper(
   store: ActiveProjectIdStore,

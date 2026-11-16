@@ -2,32 +2,32 @@ import {type ComapeoCoreClientApi} from '@comapeo/ipc';
 import {getLocales} from 'expo-localization';
 import {Component, type ComponentPropsWithoutRef, type ReactNode} from 'react';
 
-import {createActiveProjectIdStore} from '../../../src/frontend/contexts/ActiveProjectIdStoreContext';
-import {AppProviders} from '../../../src/frontend/contexts/AppProviders';
-import {createCoordinateFormatStore} from '../../../src/frontend/contexts/CoordinateFormatStoreContext';
+import {createActiveProjectIdStore} from '../../../src/contexts/ActiveProjectIdStoreContext';
+import {AppProviders} from '../../../src/contexts/AppProviders';
+import {createCoordinateFormatStore} from '../../../src/contexts/CoordinateFormatStoreContext';
 import type {
   createLocalDiscoveryController,
   LocalDiscoveryState,
-} from '../../../src/frontend/contexts/LocalDiscoveryContext';
+} from '../../../src/contexts/LocalDiscoveryContext';
 import {
   createLocaleStore,
   LocaleContext,
   LocaleStore,
-} from '../../../src/frontend/contexts/LocaleStoreContext';
-import {createManualEntryCoordinateFormatStore} from '../../../src/frontend/contexts/ManualEntryCoordinateFormatStoreContext';
-import {createDraftObservationStore} from '../../../src/frontend/contexts/PersistedStores/DraftObservationStore';
-import {createSecurityStore} from '../../../src/frontend/contexts/SecurityStoreContext';
-import {createTrackStore} from '../../../src/frontend/contexts/TrackStoreContext';
-import {AppUsageData} from '../../../src/frontend/metrics/AppUsageData';
-import {DeviceDiagnostics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
-import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
+} from '../../../src/contexts/LocaleStoreContext';
+import {createManualEntryCoordinateFormatStore} from '../../../src/contexts/ManualEntryCoordinateFormatStoreContext';
+import {createDraftObservationStore} from '../../../src/contexts/PersistedStores/DraftObservationStore';
+import {createSecurityStore} from '../../../src/contexts/SecurityStoreContext';
+import {createTrackStore} from '../../../src/contexts/TrackStoreContext';
+import {AppUsageData} from '../../../src/metrics/AppUsageData';
+import {DeviceDiagnostics} from '../../../src/metrics/DeviceDiagnosticMetrics';
+import {IntlProvider} from '../../../src/contexts/IntlContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
-import {createLowStorageBannerStore} from '../../../src/frontend/contexts/LowStorageBannerContext';
-import {createEarlyAccessStore} from '../../../src/frontend/contexts/EarlyAccessContext';
-import {createAppUsageStatsStore} from '../../../src/frontend/contexts/AppUsageStatsContext';
-import {createUnitSystemStore} from '../../../src/frontend/contexts/UnitSystemStoreContext';
-import {createQADeviceNameStore} from '../../../src/frontend/contexts/QADeviceNameStoreContext';
+import {createSavedLocationStore} from '../../../src/contexts/SavedLocationContext';
+import {createLowStorageBannerStore} from '../../../src/contexts/LowStorageBannerContext';
+import {createEarlyAccessStore} from '../../../src/contexts/EarlyAccessContext';
+import {createAppUsageStatsStore} from '../../../src/contexts/AppUsageStatsContext';
+import {createUnitSystemStore} from '../../../src/contexts/UnitSystemStoreContext';
+import {createQADeviceNameStore} from '../../../src/contexts/QADeviceNameStoreContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',

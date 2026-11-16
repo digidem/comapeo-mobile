@@ -9,8 +9,8 @@ import {
 import type {MapeoManager} from '@comapeo/core';
 import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 
-import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
-import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
+import {createManager, setUpIPC} from '../../tests/integration/helpers/core';
+import {createAppProvidersWrapper} from '../../tests/integration/helpers/react';
 import {AppNavigator} from '../AppNavigator';
 
 // Simulate a QA build so the SetQADeviceName gate is active

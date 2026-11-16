@@ -6,7 +6,7 @@ describe('frontend package.json', () => {
   let allFrontendDependencies: Record<string, string>;
 
   beforeAll(async () => {
-    const rootPath = path.resolve(__dirname, '..', '..');
+    const rootPath = path.resolve(__dirname, '..');
     const frontendPackageJsonPath = path.join(rootPath, 'package.json');
     allFrontendDependencies = await readAllDependencies(
       frontendPackageJsonPath,

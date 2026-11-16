@@ -63,7 +63,7 @@ const backendConfig = pluginTs.config({
 const frontendConfig = pluginTs.config(
   {
     name: 'frontend',
-    files: ['src/frontend/**/*.{js,jsx,ts,tsx}'],
+    files: ['src/**/*.{js,jsx,ts,tsx}'],
     extends: [
       pluginTs.configs.recommended,
       pluginQuery.configs['flat/recommended'],
@@ -111,10 +111,7 @@ const frontendConfig = pluginTs.config(
   },
   {
     name: 'tests',
-    files: [
-      'src/frontend/**/*.test.{js,jsx,mts,ts,tsx}',
-      'src/frontend/**/__mocks__/**',
-    ],
+    files: ['src/**/*.test.{js,jsx,mts,ts,tsx}', 'src/**/__mocks__/**'],
     extends: [
       pluginJest.configs['flat/recommended'],
       pluginTestingLibrary.configs['flat/react'],

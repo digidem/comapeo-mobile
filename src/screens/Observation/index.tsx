@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Suspense, useEffect} from 'react';
 
 import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {defineMessages} from 'react-intl';
@@ -72,7 +72,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   const canEdit = useCanEditOrDelete(observation.createdBy);
 
-  React.useEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       headerRight: () => {
         if (canEdit) {
@@ -127,9 +127,9 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
         <View style={styles.section}>
           <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
-          <React.Suspense fallback={<FullScreenCenteredLoader />}>
+          <Suspense fallback={<FullScreenCenteredLoader />}>
             <TrackAccordian observationId={observationId} />
-          </React.Suspense>
+          </Suspense>
           {observation?.tags?.notes ? (
             <BodyText variant="large" style={styles.textNotes}>
               {observation.tags.notes}
@@ -146,7 +146,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                   {attachments.map(att => {
                     if (isSavedPhoto(att)) {
                       return (
-                        <React.Suspense
+                        <Suspense
                           key={att.driveDiscoveryId + att.hash + att.type}
                           fallback={<ThumbnailLoader size={size} />}>
                           <SavedPhotoThumbnailImage
@@ -159,7 +159,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                               });
                             }}
                           />
-                        </React.Suspense>
+                        </Suspense>
                       );
                     }
 

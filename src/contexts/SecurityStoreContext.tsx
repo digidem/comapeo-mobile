@@ -1,6 +1,6 @@
 import {deleteItemAsync, getItem, setItem} from 'expo-secure-store';
 import * as Sentry from '@sentry/react-native';
-import {createContext, useContext} from 'react';
+import {type ReactNode, createContext, useContext} from 'react';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
@@ -199,7 +199,7 @@ export const SecurityStoreProvider = ({
   children,
 }: {
   value: SecurityStore;
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   const hasHydrated = useStore(value.instance, state => state._hasHydrated);
 

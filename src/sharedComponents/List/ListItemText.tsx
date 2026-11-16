@@ -1,4 +1,4 @@
-import React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from '../Text';
 import {TextStyleProp} from '../../sharedTypes';
@@ -6,8 +6,8 @@ import {TextStyleProp} from '../../sharedTypes';
 interface ListItemTextProp {
   style?: TextStyleProp;
   inset?: boolean;
-  primary: string | React.ReactNode;
-  secondary?: string | React.ReactNode;
+  primary: string | ReactNode;
+  secondary?: string | ReactNode;
 }
 
 export const ListItemText = ({

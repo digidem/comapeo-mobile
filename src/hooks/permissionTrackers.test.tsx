@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {renderHook, act, waitFor} from '@testing-library/react-native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
@@ -55,7 +55,7 @@ test('camera: falls back to Settings once denied for good', async () => {
 // ['background', ...] is pending.
 test('permission requests hide the passcode screen', async () => {
   const queryClient = new QueryClient();
-  const wrapper = ({children}: {children: React.ReactNode}) => (
+  const wrapper = ({children}: {children: ReactNode}) => (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 

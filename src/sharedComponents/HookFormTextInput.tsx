@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ComponentProps} from 'react';
 import {
   Control,
   Controller,
@@ -20,10 +20,7 @@ type TextInputProps<InputFields extends FieldValues> = {
   containerStyle?: ViewStyleProp;
   showCharacterCount?: boolean;
   control: Control<InputFields>;
-} & Omit<
-  React.ComponentProps<typeof RNTextInput>,
-  'value' | 'onBlur' | 'onChange'
-> &
+} & Omit<ComponentProps<typeof RNTextInput>, 'value' | 'onBlur' | 'onChange'> &
   Omit<UseControllerProps<InputFields>, 'control'>;
 
 type CounterProps<InputFields extends FieldValues> = {

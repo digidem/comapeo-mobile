@@ -1,5 +1,4 @@
 import {ErrorBoundary} from '@sentry/react-native';
-import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, View} from 'react-native';
 import {getAttachmentPhotoInfo} from '../../lib/photos.ts';

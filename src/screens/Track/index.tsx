@@ -1,4 +1,3 @@
-import React from 'react';
 import {StyleSheet, View, TouchableOpacity, ScrollView} from 'react-native';
 import {
   BLUE_GREY,

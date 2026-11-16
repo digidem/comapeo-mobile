@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet} from 'react-native';
 
 import {List, ListItem, ListItemText, ListItemIcon} from './List';
@@ -9,7 +9,7 @@ type SelectOneProps<T> = {
   options: Array<{
     value: T;
     label: string;
-    hint?: React.ReactNode;
+    hint?: ReactNode;
   }>;
   radioButtonPosition?: 'left' | 'right';
   color?: string;

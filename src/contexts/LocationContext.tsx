@@ -5,7 +5,13 @@ import {
   getProviderStatusAsync,
   getForegroundPermissionsAsync,
 } from 'expo-location';
-import React, {createContext, useContext} from 'react';
+import {
+  createContext,
+  useContext,
+  type ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 import CheapRuler from 'cheap-ruler';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {AppState, AppStateStatus} from 'react-native';
@@ -43,7 +49,7 @@ const POLL_PROVIDER_STATUS_INTERVAL = 10000;
 const MIN_MS_BETWEEN_UPDATE = 1000;
 const MIN_METERS_BETWEEN_UPDATE = 5;
 
-export function LocationProvider({children}: {children: React.ReactNode}) {
+export function LocationProvider({children}: {children: ReactNode}) {
   const {
     data: permissions,
     isPending: permissionsPending,
@@ -94,11 +100,11 @@ function LocationProviderInitialized({
   initialLocationPermission,
   initialProviderStatus,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   initialLocationPermission: PermissionStatus;
   initialProviderStatus: LocationProviderStatus;
 }) {
-  const [store] = React.useState(() =>
+  const [store] = useState(() =>
     createStore<LocationState>()(() => {
       return {
         location: undefined,
@@ -113,7 +119,7 @@ function LocationProviderInitialized({
 
   useCheckPermissionOnAppStateChange(store);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let unsub: (() => void) | null = null;
     let locationSubscription: LocationSubscription | null = null;
     let isMounted = true;
@@ -226,7 +232,7 @@ function startWatchPosition(store: StoreApi<LocationState>) {
 function useCheckPermissionOnAppStateChange(store: StoreApi<LocationState>) {
   const {setSavedLocation} = useSavedLocationActions();
 
-  React.useEffect(() => {
+  useEffect(() => {
     let isCancelled = false;
 
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
@@ -280,7 +286,7 @@ function usePollProviderStatus(store: StoreApi<LocationState>) {
   const queryClient = useQueryClient();
   const {setSavedLocation} = useSavedLocationActions();
 
-  React.useEffect(() => {
+  useEffect(() => {
     let ignore = false;
 
     const checkProviderStatus = async () => {

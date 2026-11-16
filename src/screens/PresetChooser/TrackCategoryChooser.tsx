@@ -1,4 +1,4 @@
-import React from 'react';
+import {useLayoutEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {useTrackActions} from '../../contexts/TrackStoreContext';
@@ -36,7 +36,7 @@ export const TrackCategoryChooser: NativeNavigationComponent<
     });
   };
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: props =>
         route.params.trackAction === 'editExisting' ? (

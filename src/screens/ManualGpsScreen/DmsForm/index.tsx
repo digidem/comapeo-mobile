@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {View} from 'react-native';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 
@@ -62,7 +62,7 @@ const m = defineMessages({
 export const DmsForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
   const {formatMessage: t} = useIntl();
 
-  const DIRECTION_OPTIONS_NORTH_SOUTH = React.useMemo(
+  const DIRECTION_OPTIONS_NORTH_SOUTH = useMemo(
     () => [
       {
         value: 'N',
@@ -76,7 +76,7 @@ export const DmsForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     [t],
   );
 
-  const DIRECTION_OPTIONS_EAST_WEST = React.useMemo(
+  const DIRECTION_OPTIONS_EAST_WEST = useMemo(
     () => [
       {
         value: 'E',
@@ -90,14 +90,13 @@ export const DmsForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
     [t],
   );
 
-  const [latitude, setLatitude] = React.useState<DmsData>(INITIAL_UNIT_VALUES);
-  const [longitude, setLongitude] =
-    React.useState<DmsData>(INITIAL_UNIT_VALUES);
+  const [latitude, setLatitude] = useState<DmsData>(INITIAL_UNIT_VALUES);
+  const [longitude, setLongitude] = useState<DmsData>(INITIAL_UNIT_VALUES);
 
-  const [latCardinality, setLatCardinality] = React.useState(() =>
+  const [latCardinality, setLatCardinality] = useState(() =>
     getInitialCardinality('lat', initialCoordinates),
   );
-  const [lonCardinality, setLonCardinality] = React.useState(() =>
+  const [lonCardinality, setLonCardinality] = useState(() =>
     getInitialCardinality('lon', initialCoordinates),
   );
 
@@ -110,7 +109,7 @@ export const DmsForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
   const updateCardinality = (field: CoordinateField) => (value: string) =>
     field === 'lat' ? setLatCardinality(value) : setLonCardinality(value);
 
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       if (
         dmsValuesAreValid('lat', latitude) &&

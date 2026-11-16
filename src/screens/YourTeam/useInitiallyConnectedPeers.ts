@@ -1,9 +1,9 @@
-import React from 'react';
+import {useState} from 'react';
 import {useLocalPeers} from '../../hooks/useLocalPeers';
 
 export function useInitiallyConnectedPeers() {
   const peers = useLocalPeers();
-  const [relevantDeviceIds, setRelevantDeviceIds] = React.useState<Set<string>>(
+  const [relevantDeviceIds, setRelevantDeviceIds] = useState<Set<string>>(
     () =>
       new Set(peers.filter(p => p.status === 'connected').map(p => p.deviceId)),
   );

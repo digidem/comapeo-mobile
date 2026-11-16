@@ -1,12 +1,10 @@
-import * as React from 'react';
+import {type ComponentProps} from 'react';
 import {render, screen, fireEvent} from '@testing-library/react-native';
 import {IntlProvider} from 'react-intl';
 
 import {DatePicker} from './Date';
 
-async function renderDatePicker(
-  props: React.ComponentProps<typeof DatePicker>,
-) {
+async function renderDatePicker(props: ComponentProps<typeof DatePicker>) {
   return await render(
     <IntlProvider locale="en" messages={{}}>
       <DatePicker {...props} />

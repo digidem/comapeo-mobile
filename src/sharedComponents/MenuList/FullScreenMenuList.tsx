@@ -1,8 +1,8 @@
-import * as React from 'react';
+import {type ComponentProps} from 'react';
 import {FlatList} from 'react-native';
 import {MenuListItem, MenuListItemType} from './MenuListItem';
 
-type FlatListProps = React.ComponentProps<typeof FlatList<MenuListItemType>>;
+type FlatListProps = ComponentProps<typeof FlatList<MenuListItemType>>;
 
 type MenuListProps = Omit<FlatListProps, 'renderItem'>;
 

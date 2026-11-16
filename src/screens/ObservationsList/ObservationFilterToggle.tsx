@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcon from '@react-native-vector-icons/material-icons';

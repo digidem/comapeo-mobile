@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -86,7 +86,7 @@ export const Collaborate: NativeNavigationComponent<'Collaborate'> = ({
 Collaborate.navTitle = m.title;
 
 type OptionCardProps = {
-  icon: React.ReactNode;
+  icon: ReactNode;
   text: string;
   onPress: () => void;
 };

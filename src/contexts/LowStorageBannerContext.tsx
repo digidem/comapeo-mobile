@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {type ReactNode, createContext, useContext} from 'react';
 import {createStore, useStore, type StoreApi} from 'zustand';
 
 type LowStorageBannerState = {
@@ -33,14 +33,14 @@ export function createLowStorageBannerStore(): LowStorageBannerStore {
 }
 
 const LowStorageBannerStoreContext =
-  React.createContext<LowStorageBannerStore | null>(null);
+  createContext<LowStorageBannerStore | null>(null);
 
 export function LowStorageBannerStoreProvider({
   value,
   children,
 }: {
   value: LowStorageBannerStore;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <LowStorageBannerStoreContext value={value}>
@@ -50,7 +50,7 @@ export function LowStorageBannerStoreProvider({
 }
 
 function useLowStorageBannerStoreContext() {
-  const ctx = React.useContext(LowStorageBannerStoreContext);
+  const ctx = useContext(LowStorageBannerStoreContext);
   if (!ctx) throw new Error('Must wrap with LowStorageBannerStoreProvider');
   return ctx;
 }

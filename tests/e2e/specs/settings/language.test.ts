@@ -39,6 +39,8 @@ describe('Settings - Language Settings Flow', () => {
     await expect(languageHeader).toHaveText('Español');
 
     await $(byResourceId('MAIN.header-back-btn')).click();
+    // A second tap during the transition hits the old screen's back button
+    await expect($(byResourceId('settingsCoodinatesButton'))).toBeDisplayed();
     await $(byResourceId('MAIN.header-back-btn')).click();
     await $(byResourceId('MAIN.map-screen')).click();
     const obsListTab = await $('~Go to observations list.');
@@ -64,6 +66,7 @@ describe('Settings - Language Settings Flow', () => {
 
     await expect($(byResourceId('currentLanguageLabel'))).toHaveText('English');
     await $(byResourceId('MAIN.header-back-btn')).click();
+    await expect($(byResourceId('settingsCoodinatesButton'))).toBeDisplayed();
     await $(byResourceId('MAIN.header-back-btn')).click();
     await $(byResourceId('MAIN.map-screen')).click();
   });

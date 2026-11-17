@@ -28,6 +28,7 @@ import {
 } from '../lib/unitConversion';
 import {useOpenShareDialog} from '../hooks/share';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
+import {useBottomPaddingWithSafeArea} from '../hooks/useBottomPaddingWithSafeArea';
 import {formatCoords} from '../lib/coordinateFormat';
 
 const m = defineMessages({
@@ -125,6 +126,7 @@ export const ObservationMetadata: NativeNavigationComponent<
   const coordinateFormat = useCoordinateFormat();
   const unitSystem = useUnitSystem();
   const openShare = useOpenShareDialog();
+  const paddingBottom = useBottomPaddingWithSafeArea();
 
   const manualLocation = metadata?.manualLocation;
   const lengthUnit = getLengthUnit(unitSystem);
@@ -390,7 +392,7 @@ export const ObservationMetadata: NativeNavigationComponent<
       </ScrollView>
       <TouchableOpacity
         onPress={handlePressShare}
-        style={styles.shareContainer}>
+        style={[styles.shareContainer, {paddingBottom}]}>
         <MaterialIcons name="share" size={25} />
         <BodyText>Share</BodyText>
       </TouchableOpacity>
@@ -465,7 +467,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderTopColor: VERY_LIGHT_GREY,
     borderTopWidth: 1,
-    paddingBottom: 20,
     paddingTop: 20,
   },
 });

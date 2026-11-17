@@ -1,0 +1,30 @@
+appId: com.comapeo.rc
+---
+- launchApp:
+    clearState: true
+- runFlow:
+    when:
+      visible:
+        id: SET_QA_DEVICE_NAME.name-input
+    commands:
+      - tapOn:
+          id: SET_QA_DEVICE_NAME.name-input
+      - inputText: e2e device
+      - hideKeyboard
+      - tapOn:
+          id: SET_QA_DEVICE_NAME.save-btn
+- tapOn:
+    id: ONBOARDING.navigate-to-privacy-policy-btn
+- assertVisible: .*CoMapeo is private by default.*
+- tapOn: Next
+- tapOn:
+    id: ONBOARDING.device-name-inp
+- inputText: test phone
+- hideKeyboard
+- tapOn:
+    id: ONBOARDING.add-name-btn
+- assertVisible: .*test phone is ready.*
+- tapOn:
+    id: ONBOARDING.navigate-to-map-btn
+- assertVisible:
+    id: MAIN.map-screen

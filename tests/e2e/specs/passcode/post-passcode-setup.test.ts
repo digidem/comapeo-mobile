@@ -43,6 +43,7 @@ describe('Passcode - Post Passcode Setup Flow', () => {
     const passcodeField = await $(byResourceId('SETTINGS.passcode-inp'));
     await passcodeField.click();
     await driver.keys(output.newpasscode.split(''));
+    await driver.hideKeyboard();
     await expect($(byText('Incorrect Passcode'))).toBeDisplayed();
 
     await passcodeField.click();

@@ -98,7 +98,8 @@ jobs:
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
   run-e2e-tests:
-    runs-on: ubuntu-latest
+    # ubuntu-26.04 crashes when building the APK
+    runs-on: ubuntu-24.04
     needs: build-apk
     concurrency:
       group: browserstack-devices

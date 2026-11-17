@@ -135,7 +135,10 @@ export const EditScreen = ({
       navigation.setOptions({
         headerRight: () => {
           return (
-            <HeaderRightContainerButton onPress={onSubmit} loading={isPending}>
+            <HeaderRightContainerButton
+              testID="save-icon"
+              onPress={onSubmit}
+              loading={isPending}>
               <SaveIcon />
             </HeaderRightContainerButton>
           );

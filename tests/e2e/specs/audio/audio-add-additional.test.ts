@@ -31,8 +31,13 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
     await $('~Stop recording audio.').click();
     await $(byTextMatches('Done')).click();
 
-    const thumbnails = await $$('~Play audio recording.');
-    expect(thumbnails.length).toBeGreaterThanOrEqual(2);
+    await browser.waitUntil(
+      async () => (await $$('~Play audio recording.').length) >= 2,
+      {
+        timeout: 5000,
+        timeoutMsg: 'Expected at least two audio thumbnails to appear',
+      },
+    );
 
     const durations = await $$(byTextMatches('0[0-4]:[0-5][0-9]'));
     expect(durations.length).toBeGreaterThanOrEqual(1);

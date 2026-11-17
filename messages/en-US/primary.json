@@ -5,12 +5,6 @@
   "$1App.serviceNotification.title": {
     "message": "Running in the background"
   },
-  "$1Modal.GPSEnable.button.default": {
-    "message": "Start Tracks"
-  },
-  "$1Modal.GPSEnable.button.stop": {
-    "message": "Stop Tracks"
-  },
   "$1Navigation.Menu.Settings": {
     "message": "CoMapeo Settings"
   },
@@ -194,20 +188,20 @@
   "$1Screens.Settings.AppSettings.unitSystem": {
     "message": "Unit System"
   },
-  "$1TrackBottomSheet.DidNotMove.delete": {
-    "message": "Exit Tracks"
-  },
-  "$1TrackBottomSheet.DidNotMove.didNotMove": {
-    "message": "You didn't move beyond one meter."
-  },
-  "$1TrackBottomSheet.DidNotMove.keepRecording": {
-    "message": "Continue Recording"
-  },
   "$1TrackBottomSheet.DidNotMove.noTrackRecorded": {
     "message": "No Track Recorded"
   },
-  "$1TrackBottomSheet.StartStopTrack.trackingRequirement": {
-    "message": "Move one meter to see track."
+  "$1TrackBottomSheet.StartStopTrack.end": {
+    "message": "End"
+  },
+  "$1TrackBottomSheet.StartStopTrack.recording": {
+    "message": "Recording…"
+  },
+  "$1TrackBottomSheet.StartStopTrack.start": {
+    "message": "Start"
+  },
+  "$1TrackBottomSheet.WaitingForPosition.waitingForPosition": {
+    "message": "Waiting for position…"
   },
   "$1allProjects.close": {
     "message": "Close"
@@ -820,6 +814,9 @@
   },
   "$1screens.ShareProjectStats.yesShare": {
     "message": "Yes, Share Stats"
+  },
+  "$1screens.StayNotified.StayNotified": {
+    "message": "Always Stay Notified"
   },
   "$1screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Close"

@@ -59,7 +59,7 @@ function useSavedLocationContext() {
 
 /**
  *
- * This hook provides the last saved location but is NOT reactive to state. Currently it is only being used once when the map is initially loading, so the consuming component does not need it to be reactive.
+ * This hook provides the last saved location but is NOT reactive to state. The map uses it when initially loading, and for its last known location dot, and neither needs it to be reactive.
  */
 export function useNonReactiveSavedLocation() {
   const {instance} = useSavedLocationContext();

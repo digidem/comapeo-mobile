@@ -17,16 +17,16 @@ const m = defineMessages({
     defaultMessage: 'No Track Recorded',
   },
   didNotMove: {
-    id: '$1TrackBottomSheet.DidNotMove.didNotMove',
-    defaultMessage: "You didn't move beyond one meter.",
+    id: 'TrackBottomSheet.DidNotMove.didNotMove',
+    defaultMessage: "This device didn't move.",
   },
-  delete: {
-    id: '$1TrackBottomSheet.DidNotMove.delete',
-    defaultMessage: 'Exit Tracks',
+  discard: {
+    id: 'TrackBottomSheet.DidNotMove.discard',
+    defaultMessage: 'Discard',
   },
   keepRecording: {
-    id: '$1TrackBottomSheet.DidNotMove.keepRecording',
-    defaultMessage: 'Continue Recording',
+    id: 'TrackBottomSheet.DidNotMove.keepRecording',
+    defaultMessage: 'Keep Recording',
   },
 });
 
@@ -52,7 +52,7 @@ export const DidNotMoveBottomSheet = ({
         <View style={styles.buttonContainer}>
           <DestructiveButton
             fullSize
-            text={formatMessage(m.delete)}
+            text={formatMessage(m.discard)}
             onPress={clearAndDismiss}
             renderIcon={({color, size}) => (
               <MaterialIcons name="delete" size={size} color={color} />
@@ -68,6 +68,9 @@ export const DidNotMoveBottomSheet = ({
                 params: {trackingOpen: true},
               });
             }}
+            renderIcon={({color, size}) => (
+              <MaterialIcons name="directions-walk" size={size} color={color} />
+            )}
           />
         </View>
       </View>

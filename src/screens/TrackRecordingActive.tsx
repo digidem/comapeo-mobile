@@ -30,16 +30,18 @@ export const TrackRecordingActive = ({
   navigation,
 }: NativeRootNavigationProps<'TrackRecordingActive'>) => {
   const {formatMessage} = useIntl();
-  const {endTracking} = useTracking();
-  const distance = useTrackState(store => store.distance);
+  const {endTracking, cancelTracking} = useTracking();
+  const hasSecondPoint = useTrackState(
+    store => store.locationHistory.length > 1,
+  );
 
   function handleStopTracks() {
-    endTracking();
-    const hasMovedEnough = distance > 0.001;
-    if (hasMovedEnough) {
+    if (hasSecondPoint) {
+      endTracking();
       navigation.replace('TrackCategoryChooser', {trackAction: 'saveNew'});
       return;
     } else {
+      cancelTracking();
       navigation.goBack();
     }
   }

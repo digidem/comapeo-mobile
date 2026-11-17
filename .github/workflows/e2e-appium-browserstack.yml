@@ -16,7 +16,8 @@ on:
 
 jobs:
   build-apk:
-    runs-on: ubuntu-latest
+    # ubuntu-26.04 (ubuntu-latest from Nov 2026) fails when building the APK
+    runs-on: ubuntu-24.04
     outputs:
       app_url: ${{ steps.upload.outputs.app_url }}
 

@@ -66,6 +66,7 @@ export const EditProjectDetails: NativeNavigationComponent<
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightContainerButton
+          testID="OBS.edit-save-btn"
           loading={status === 'pending'}
           onPress={handleSubmit(details => {
             if (!details.projectName.trim()) {

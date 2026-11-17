@@ -27,9 +27,7 @@ Verifies the flow for starting a GPS track and expected UI changes when tracking
 
 - Verify that the bottom sheet modal appears when the **Tracks** tab is tapped
 - Verify the **Start** button is visible
-- After tapping **Start**, confirms that the recording UI updates:
-  - **End** button appears
-  - Message: "You’ve been recording for [HH:MM:SS]" is displayed
+- After tapping **Start**, confirms that the **End** button appears
 
 ### Special Considerations
 

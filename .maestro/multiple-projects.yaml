@@ -1,0 +1,114 @@
+appId: ${APP_ID || "com.comapeo.rc"}
+name: Multiple projects
+---
+- runFlow: helpers/onboarding.yaml
+
+# create-and-switch
+- tapOn: Open Menu
+- tapOn: Collaborate
+- runFlow:
+    file: helpers/new-project.yaml
+    env:
+      PROJECT_NAME: second project
+- assertVisible: .*second project.*
+- assertVisible: .*Coordinator.*
+- assertVisible: Switch Project
+- assertVisible: .*Exchange.*
+- tapOn: Switch Project
+- tapOn: .*test phone.*
+- tapOn: Close drawer
+- assertVisible:
+    id: HOME.header-title
+- assertVisible: test phone
+
+# project-retention
+- tapOn: Open Menu
+- tapOn: Switch Project
+- tapOn: .*second project.*
+- tapOn: Close drawer
+- tapOn: Add Observation
+- tapOn: .*Cave.*
+- tapOn:
+    id: OBS.description-inp
+- inputText: Cave test obs for second project
+- tapOn:
+    id: OBS.edit-save-btn
+- tapOn:
+    text: SAVE
+    optional: true
+- tapOn: Go to observations list.
+- tapOn: Cave
+- assertVisible: Cave test obs for second project
+- tapOn:
+    id: MAIN.header-back-btn
+- tapOn: Open Menu
+- tapOn: Switch Project
+- tapOn: New Collaboration
+- runFlow:
+    file: helpers/new-project.yaml
+    env:
+      PROJECT_NAME: third project
+- tapOn: Close drawer
+- tapOn: Go to observations list.
+- tapOn:
+    id: observationsEmptyView
+- assertVisible:
+    id: HOME.header-title
+- assertVisible: third project
+- assertNotVisible: Cave
+- tapOn: Open Menu
+- tapOn: Switch Project
+- tapOn: .*second project.*
+- tapOn: Close drawer
+- tapOn: Go to observations list.
+- tapOn: Cave
+- assertVisible: Cave test obs for second project
+- tapOn:
+    id: MAIN.header-back-btn
+
+# all-projects-screen (Maestro can't compare the order, so only their presence is checked)
+- tapOn: Open Menu
+- tapOn: Switch Project
+- tapOn:
+    id: project_card_test_phone
+- tapOn: Switch Project
+- assertVisible:
+    id: project_card_test_phone
+- assertVisible:
+    id: project_card_second_project
+- assertVisible:
+    id: project_card_third_project
+- tapOn:
+    id: project_card_second_project
+- tapOn: Switch Project
+- assertVisible:
+    id: project_card_second_project
+- assertVisible:
+    id: project_card_test_phone
+- assertVisible:
+    id: project_card_third_project
+
+# edit-project-details
+- tapOn: .*third project.*
+- tapOn: .*Coordinator Tools.*
+- tapOn: Edit Info
+- tapOn:
+    id: edit-project-name
+- eraseText
+- inputText: Updated Project Name for Last Project
+- tapOn:
+    id: edit-project-description
+- inputText: Updated description here for the last project.
+- tapOn:
+    id: OBS.edit-save-btn
+- assertVisible: .*Updated Project Name for Last Project.*
+- assertVisible: .*Updated description here for the last project.*
+- assertNotVisible: third project
+- tapOn:
+    id: MAIN.header-back-btn
+- tapOn:
+    id: observationsEmptyView
+- tapOn: Go to map.
+- assertVisible: .*Updated Project Name for Last Project.*
+- tapOn: Go to observations list.
+- assertVisible: .*Updated Project Name for Last Project.*

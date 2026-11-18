@@ -1,0 +1,15 @@
+appId: ${APP_ID || "com.comapeo.rc"}
+---
+- tapOn: .*Start New Project.*
+- tapOn: Next.*
+- tapOn:
+    id: PROJECT.name-inp
+- inputText: ${PROJECT_NAME}
+- hideKeyboard
+- tapOn:
+    id: PROJECT.create-btn
+- assertVisible: .*Share Project Statistics.*
+- tapOn: .*No, Skip for Now.*
+- assertVisible: .*${PROJECT_NAME}.*
+- assertVisible: Invite a Device
+- tapOn: .*Done.*

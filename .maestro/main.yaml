@@ -1,0 +1,6 @@
+appId: ${APP_ID || "com.comapeo.rc"}
+name: All flows
+---
+- runFlow: create-project.yaml
+- runFlow: multiple-projects.yaml
+- runFlow: tracks.yaml

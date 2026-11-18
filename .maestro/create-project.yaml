@@ -1,21 +1,14 @@
-appId: com.comapeo.rc
+appId: ${APP_ID || "com.comapeo.rc"}
 name: Create a project from the menu
 ---
 - runFlow: helpers/onboarding.yaml
 - tapOn: Open Menu
 - tapOn: Collaborate
-- tapOn: Start New Project
-- tapOn: Next
-- tapOn:
-    id: PROJECT.name-inp
-- inputText: second project
-- hideKeyboard
-- tapOn:
-    id: PROJECT.create-btn
-- assertVisible: .*Share Project Statistics.*
-- tapOn: .*No, Skip for Now.*
-- assertVisible: .*second project.*
-- assertVisible: Invite a Device
-- tapOn: .*Done.*
+- runFlow:
+    file: helpers/new-project.yaml
+    env:
+      PROJECT_NAME: second project
+- tapOn: Close drawer
+- assertVisible:
+    id: HOME.header-title
 - assertVisible: second project
-- assertVisible: Coordinator

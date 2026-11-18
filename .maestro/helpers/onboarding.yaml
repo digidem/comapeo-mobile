@@ -1,7 +1,13 @@
-appId: com.comapeo.rc
+appId: ${APP_ID || "com.comapeo.rc"}
 ---
 - launchApp:
     clearState: true
+    permissions:
+      all: allow
+# The same location BrowserStack gives the Appium runs (wdio.ci.config.js)
+- setLocation:
+    latitude: 0.198214
+    longitude: 78.472225
 - runFlow:
     when:
       visible:
@@ -10,13 +16,13 @@ appId: com.comapeo.rc
       - tapOn:
           id: SET_QA_DEVICE_NAME.name-input
       - inputText: e2e device
-      - hideKeyboard
+      - pressKey: Enter
       - tapOn:
           id: SET_QA_DEVICE_NAME.save-btn
 - tapOn:
     id: ONBOARDING.navigate-to-privacy-policy-btn
 - assertVisible: .*CoMapeo is private by default.*
-- tapOn: Next
+- tapOn: Next.*
 - tapOn:
     id: ONBOARDING.device-name-inp
 - inputText: test phone

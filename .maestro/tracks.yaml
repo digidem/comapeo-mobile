@@ -1,0 +1,22 @@
+appId: ${APP_ID || "com.comapeo.rc"}
+name: Tracks
+---
+- runFlow: helpers/onboarding.yaml
+
+# start-track
+- tapOn: Go to map.
+- tapOn: Go to tracking.
+- tapOn: .*Start Tracks.*
+- assertVisible:
+    id: MAIN.map-screen
+
+# no-movement-track
+- tapOn: Go to tracking.
+- tapOn: .*Stop Tracks.*
+- assertVisible: .*No Track Recorded.*
+- assertVisible: ".*You didn't move beyond one meter.*"
+- tapOn: .*Continue Recording.*
+- tapOn: .*Stop Tracks.*
+- tapOn: .*Exit Tracks.*
+- assertVisible:
+    id: MAIN.mapbox-map-view

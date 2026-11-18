@@ -1,0 +1,141 @@
+name: Maestro E2E Tests on BrowserStack
+
+on:
+  push:
+    branches:
+      - test/maestro-experiment
+  workflow_dispatch:
+    inputs:
+      app_url:
+        description: 'bs:// URL of an APK already uploaded to BrowserStack Maestro (skips the build)'
+        required: false
+        default: ''
+
+jobs:
+  build-apk:
+    if: ${{ !inputs.app_url }}
+    # ubuntu-26.04 (ubuntu-latest from Nov 2026) fails when building the APK
+    runs-on: ubuntu-24.04
+    outputs:
+      app_url: ${{ steps.upload.outputs.app_url }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO }}
+
+      - name: Free Up Space
+        run: |
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo apt-get clean
+
+      - name: Cache Dependencies
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches/
+            ~/.gradle/wrapper/
+            ~/.gradle/daemon/
+            node_modules
+          key: dependencies-cache-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            dependencies-cache-
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build APK
+        env:
+          SENTRY_DISABLE_AUTO_UPLOAD: 'true'
+          EXPO_PUBLIC_E2E_TEST: 'true'
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          COMAPEO_METRICS_URL: ${{ vars.COMAPEO_METRICS_URL }}
+          COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
+        run: |
+          npm run extract-messages
+          npx expo prebuild -p android
+          eas build --platform android --profile test --local
+
+      - name: Upload APK to BrowserStack Maestro
+        id: upload
+        run: |
+          APK_PATH=$(ls -t build-*.apk | head -n 1)
+          APP_URL=$(curl -sf -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
+            -X POST "https://api-cloud.browserstack.com/app-automate/maestro/v2/app" \
+            -F "file=@$APK_PATH" | jq -r '.app_url')
+          echo "app_url=$APP_URL" >> $GITHUB_OUTPUT
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+  run-maestro-tests:
+    needs: build-apk
+    if: ${{ !cancelled() && (needs.build-apk.result == 'success' || needs.build-apk.result == 'skipped') }}
+    runs-on: ubuntu-24.04
+    # Shared with the Appium workflow so the two never exceed BrowserStack's parallel session limit
+    concurrency:
+      group: browserstack-devices
+      cancel-in-progress: false
+    env:
+      AUTH: ${{ secrets.BROWSERSTACK_USERNAME }}:${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      APP_URL: ${{ inputs.app_url || needs.build-apk.outputs.app_url }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # BrowserStack needs every flow inside a single parent folder in the zip
+      - name: Upload Maestro flows
+        run: |
+          mkdir suite && cp -R .maestro suite/flows
+          (cd suite && zip -r flows.zip flows)
+          SUITE_URL=$(curl -sf -u "$AUTH" \
+            -X POST "https://api-cloud.browserstack.com/app-automate/maestro/v2/test-suite" \
+            -F "file=@suite/flows.zip" | jq -r '.test_suite_url')
+          echo "SUITE_URL=$SUITE_URL" >> $GITHUB_ENV
+
+      - name: Start build
+        run: |
+          BUILD_ID=$(jq -n --arg app "$APP_URL" --arg suite "$SUITE_URL" '{
+              app: $app,
+              testSuite: $suite,
+              project: "CoMapeo",
+              devices: ["Samsung Galaxy S23-13.0"],
+              deviceLogs: "true",
+              execute: ["create-project.yaml", "multiple-projects.yaml", "tracks.yaml"]
+            }' | curl -sf -u "$AUTH" \
+              -X POST "https://api-cloud.browserstack.com/app-automate/maestro/v2/android/build" \
+              -H "Content-Type: application/json" -d @- | jq -r '.build_id')
+          echo "BrowserStack build: $BUILD_ID"
+          echo "BUILD_ID=$BUILD_ID" >> $GITHUB_ENV
+
+      - name: Wait for results
+        timeout-minutes: 60
+        run: |
+          while true; do
+            STATUS=$(curl -sf -u "$AUTH" \
+              "https://api-cloud.browserstack.com/app-automate/maestro/v2/builds/$BUILD_ID" | jq -r '.status')
+            echo "Status: $STATUS"
+            case "$STATUS" in
+              queued|running) sleep 30 ;;
+              passed) exit 0 ;;
+              *) exit 1 ;;
+            esac
+          done

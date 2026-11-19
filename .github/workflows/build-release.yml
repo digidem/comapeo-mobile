@@ -129,6 +129,11 @@ jobs:
         run: |
           git config --global user.name 'awana-release-bot[bot]'
           git config --global user.email '${{ vars.RELEASE_BOT_USER_ID }}+awana-release-bot[bot]@users.noreply.github.com'
+          # An additional merge into the same release branch keeps the version, and v* tags can't be moved
+          if git ls-remote --exit-code --tags origin v${{ steps.version.outputs.release_version_short }}; then
+            echo "Tag v${{ steps.version.outputs.release_version_short }} already exists"
+            exit 0
+          fi
           git tag v${{ steps.version.outputs.release_version_short }}
           git push origin v${{ steps.version.outputs.release_version_short }}
 

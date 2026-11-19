@@ -13,12 +13,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup EAS
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO }}
-
       - name: Free Up Space
         run: |
           sudo rm -rf /usr/local/.ghcup
@@ -39,20 +33,22 @@ jobs:
 
       - name: Build x86_64 APK
         env:
-          ORG_GRADLE_PROJECT_reactNativeArchitectures: x86_64
-          SENTRY_DISABLE_AUTO_UPLOAD: 'true'
+          APP_VARIANT: releaseCandidate
           EXPO_PUBLIC_E2E_TEST: 'true'
+          SENTRY_DISABLE_AUTO_UPLOAD: 'true'
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           COMAPEO_METRICS_URL: ${{ vars.COMAPEO_METRICS_URL }}
           COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
         run: |
           npm run extract-messages
           npx expo prebuild -p android
-          eas build --platform android --profile test --local
-          mv "$(ls -t build-*.apk | head -n 1)" app.apk
+          (cd android && ./gradlew assembleRelease -PreactNativeArchitectures=x86_64)
+          mv android/app/build/outputs/apk/release/app-release.apk app.apk
 
-      - name: Show the APK's native architectures
-        run: unzip -l app.apk | grep -oE 'lib/[^/]+/' | sort | uniq -c
+      - name: Check the APK's native architectures
+        run: |
+          unzip -l app.apk | grep -oE 'lib/[^/]+/' | sort | uniq -c
+          unzip -l app.apk | grep -q 'lib/x86_64/'
 
       - uses: actions/upload-artifact@v4
         with:

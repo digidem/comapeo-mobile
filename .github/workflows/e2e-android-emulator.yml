@@ -41,6 +41,7 @@ jobs:
           COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
         run: |
           npm run extract-messages
+          npm run eas-build-post-install
           npx expo prebuild -p android
           (cd android && ./gradlew assembleRelease -PreactNativeArchitectures=x86_64)
           mv android/app/build/outputs/apk/release/app-release.apk app.apk

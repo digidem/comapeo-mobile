@@ -59,7 +59,29 @@ jobs:
   e2e-tests:
     needs: build-apk
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 60
+    # Each shard boots its own emulator; the groups are balanced by suite duration
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shard: 1
+            specs: >-
+              --spec tests/e2e/specs/passcode/index.test.ts
+              --spec tests/e2e/specs/team/index.test.ts
+              --spec tests/e2e/specs/onboarding/index.test.ts
+          - shard: 2
+            specs: >-
+              --spec tests/e2e/specs/observations/index.test.ts
+              --spec tests/e2e/specs/multiple-projects/index.test.ts
+              --spec tests/e2e/specs/tracks/index.test.ts
+          - shard: 3
+            specs: >-
+              --spec tests/e2e/specs/settings/index.test.ts
+              --spec tests/e2e/specs/audio/index.test.ts
+              --spec tests/e2e/specs/solo-project/index.tsx
+              --spec tests/e2e/specs/menu/index.test.ts
+              --spec tests/e2e/specs/exchange/index.test.ts
 
     steps:
       - name: Checkout Repository
@@ -111,7 +133,7 @@ jobs:
             nohup appium --log appium.log > /dev/null 2>&1 &
             timeout 60 sh -c 'until curl -sf http://127.0.0.1:4723/status > /dev/null; do sleep 1; done'
             mkdir -p test-results
-            npx wdio run wdio.emulator.config.js > test-results/spec-log.txt 2>&1; s=$?; cat test-results/spec-log.txt; adb logcat -d > logcat.txt; adb exec-out screencap -p > screen.png; exit $s
+            npx wdio run wdio.emulator.config.js ${{ matrix.specs }} > test-results/spec-log.txt 2>&1; s=$?; cat test-results/spec-log.txt; adb logcat -d > logcat.txt; adb exec-out screencap -p > screen.png; exit $s
 
       - name: Show crashes
         if: always()
@@ -120,7 +142,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: emulator-results
+          name: emulator-results-${{ matrix.shard }}
           path: |
             logcat.txt
             screen.png

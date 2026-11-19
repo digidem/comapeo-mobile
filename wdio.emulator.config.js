@@ -1,5 +1,6 @@
 // @ts-check
 const path = require('path');
+const {browser} = require('@wdio/globals');
 
 /** @type {WebdriverIO.Config} */
 
@@ -50,6 +51,11 @@ const config = {
     ],
   ],
   outputDir: './test-results',
+  afterTest: async (test, _context, {passed}) => {
+    if (passed) return;
+    const name = `${test.parent} - ${test.title}`.replace(/[^\w-]+/g, '_');
+    await browser.saveScreenshot(`./test-results/${name}.png`);
+  },
 };
 
 module.exports = {

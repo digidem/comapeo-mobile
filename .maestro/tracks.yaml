@@ -10,13 +10,31 @@ name: Tracks
 - assertVisible:
     id: MAIN.map-screen
 
-# no-movement-track
+# BrowserStack can't pin the location for Maestro, so the phone may report movement
 - tapOn: Go to tracking.
 - tapOn: .*Stop Tracks.*
-- assertVisible: .*No Track Recorded.*
-- assertVisible: ".*You didn't move beyond one meter.*"
-- tapOn: .*Continue Recording.*
-- tapOn: .*Stop Tracks.*
-- tapOn: .*Exit Tracks.*
-- assertVisible:
-    id: MAIN.mapbox-map-view
+- extendedWaitUntil:
+    visible: (.*No Track Recorded.*|Choose a category)
+    timeout: 10000
+
+# no-movement-track
+- runFlow:
+    when:
+      visible: .*No Track Recorded.*
+    commands:
+      - assertVisible: ".*You didn't move beyond one meter.*"
+      - tapOn: .*Continue Recording.*
+      - tapOn: .*Stop Tracks.*
+      - tapOn: .*Exit Tracks.*
+      - assertVisible:
+          id: MAIN.mapbox-map-view
+
+# moved-track (the save button has no testID, so this stops at the save screen)
+- runFlow:
+    when:
+      visible: Choose a category
+    commands:
+      - tapOn: .*Path / Trail.*
+      - assertVisible: New Track
+      - assertVisible:
+          id: trackDescriptionField

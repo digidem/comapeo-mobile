@@ -56,14 +56,33 @@ jobs:
           name: apk
           path: app.apk
 
-  smoke-test:
+  e2e-tests:
     needs: build-apk
     runs-on: ubuntu-24.04
+    timeout-minutes: 60
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
           name: apk
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # The Appium version BrowserStack runs (wdio.ci.config.js)
+      - name: Install Appium
+        run: |
+          npm install -g appium@2.12.1
+          appium driver install uiautomator2@3.10.0
 
       - name: Enable KVM
         run: |
@@ -71,8 +90,9 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      # Each line of `script` runs as its own shell command
-      - name: Install and launch on the emulator
+      # Each line of `script` runs as its own shell command.
+      # geo fix takes longitude first; this is the location BrowserStack gives the Appium runs.
+      - name: Run Appium tests on the emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 33
@@ -84,20 +104,15 @@ jobs:
           disable-animations: true
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: |
-            adb install app.apk
-            adb logcat -c
-            adb shell monkey -p com.comapeo.rc -c android.intent.category.LAUNCHER 1
-            sleep 90
-            adb logcat -d > logcat.txt
-            adb exec-out screencap -p > screen.png
-            adb shell uiautomator dump /sdcard/ui.xml
-            adb pull /sdcard/ui.xml ui.xml
-            adb shell pidof com.comapeo.rc
-            grep -q "Set QA Device Name" ui.xml
+            adb emu geo fix 78.472225 0.198214
+            nohup appium --log appium.log > /dev/null 2>&1 &
+            timeout 60 sh -c 'until curl -sf http://127.0.0.1:4723/status > /dev/null; do sleep 1; done'
+            mkdir -p test-results
+            npx wdio run wdio.emulator.config.js > test-results/spec-log.txt 2>&1; s=$?; cat test-results/spec-log.txt; adb logcat -d > logcat.txt; exit $s
 
       - name: Show crashes
         if: always()
-        run: grep -E "FATAL EXCEPTION|Caused by|UnsatisfiedLinkError|dlopen failed" -A3 logcat.txt | head -60 || true
+        run: grep -E "FATAL EXCEPTION|UnsatisfiedLinkError|dlopen failed" -A15 logcat.txt | head -80 || true
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -105,5 +120,5 @@ jobs:
           name: emulator-results
           path: |
             logcat.txt
-            screen.png
-            ui.xml
+            appium.log
+            test-results/

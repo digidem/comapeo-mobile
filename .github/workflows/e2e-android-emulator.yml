@@ -106,6 +106,7 @@ jobs:
           script: |
             adb shell settings put global hide_error_dialogs 1
             adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS
+            adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton
             adb emu geo fix 78.472225 0.198214
             nohup appium --log appium.log > /dev/null 2>&1 &
             timeout 60 sh -c 'until curl -sf http://127.0.0.1:4723/status > /dev/null; do sleep 1; done'

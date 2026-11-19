@@ -86,7 +86,9 @@ export const DeviceNaming = ({
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    // accessible={false} keeps iOS from collapsing the whole form into a
+    // single accessibility element, which hides the input and button.
+    <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
       <ScreenContentWithButtonDockNoHeader
         loading={status === 'pending'}
         contentContainerStyle={{alignItems: 'center'}}

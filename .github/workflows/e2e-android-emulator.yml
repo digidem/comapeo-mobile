@@ -1,0 +1,112 @@
+name: Android Emulator Smoke Test
+
+on:
+  push:
+    branches:
+      - test/appium-on-github
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO }}
+
+      - name: Free Up Space
+        run: |
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo apt-get clean
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build x86_64 APK
+        env:
+          ORG_GRADLE_PROJECT_reactNativeArchitectures: x86_64
+          SENTRY_DISABLE_AUTO_UPLOAD: 'true'
+          EXPO_PUBLIC_E2E_TEST: 'true'
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          COMAPEO_METRICS_URL: ${{ vars.COMAPEO_METRICS_URL }}
+          COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
+        run: |
+          npm run extract-messages
+          npx expo prebuild -p android
+          eas build --platform android --profile test --local
+          mv "$(ls -t build-*.apk | head -n 1)" app.apk
+
+      - name: Show the APK's native architectures
+        run: unzip -l app.apk | grep -oE 'lib/[^/]+/' | sort | uniq -c
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: app.apk
+
+  smoke-test:
+    needs: build-apk
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: apk
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      # Each line of `script` runs as its own shell command
+      - name: Install and launch on the emulator
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          cores: 4
+          ram-size: 4096M
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: |
+            adb install app.apk
+            adb logcat -c
+            adb shell monkey -p com.comapeo.rc -c android.intent.category.LAUNCHER 1
+            sleep 90
+            adb logcat -d > logcat.txt
+            adb exec-out screencap -p > screen.png
+            adb shell uiautomator dump /sdcard/ui.xml
+            adb pull /sdcard/ui.xml ui.xml
+            adb shell pidof com.comapeo.rc
+            grep -q "Set QA Device Name" ui.xml
+
+      - name: Show crashes
+        if: always()
+        run: grep -E "FATAL EXCEPTION|Caused by|UnsatisfiedLinkError|dlopen failed" -A3 logcat.txt | head -60 || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: emulator-results
+          path: |
+            logcat.txt
+            screen.png
+            ui.xml

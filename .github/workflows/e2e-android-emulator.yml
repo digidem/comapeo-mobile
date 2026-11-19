@@ -104,11 +104,13 @@ jobs:
           disable-animations: true
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: |
+            adb shell settings put global hide_error_dialogs 1
+            adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS
             adb emu geo fix 78.472225 0.198214
             nohup appium --log appium.log > /dev/null 2>&1 &
             timeout 60 sh -c 'until curl -sf http://127.0.0.1:4723/status > /dev/null; do sleep 1; done'
             mkdir -p test-results
-            npx wdio run wdio.emulator.config.js > test-results/spec-log.txt 2>&1; s=$?; cat test-results/spec-log.txt; adb logcat -d > logcat.txt; exit $s
+            npx wdio run wdio.emulator.config.js > test-results/spec-log.txt 2>&1; s=$?; cat test-results/spec-log.txt; adb logcat -d > logcat.txt; adb exec-out screencap -p > screen.png; exit $s
 
       - name: Show crashes
         if: always()
@@ -120,5 +122,6 @@ jobs:
           name: emulator-results
           path: |
             logcat.txt
+            screen.png
             appium.log
             test-results/

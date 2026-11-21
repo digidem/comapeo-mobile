@@ -1,4 +1,4 @@
-import {memo, useEffect, useRef} from 'react';
+import {type ReactNode, memo, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -11,57 +11,56 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {WHITE} from '../../../lib/styles';
-import {StartStopTrack} from './StartStopTrack';
 
 const ANIMATION_DURATION = 250;
 
-export const TrackBottomSheet = memo(({isOpen}: {isOpen: boolean}) => {
-  const {height} = useWindowDimensions();
+export const TrackBottomSheet = memo(
+  ({isOpen, children}: {isOpen: boolean; children: ReactNode}) => {
+    const {height} = useWindowDimensions();
 
-  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
+    const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
 
-  const measuredHeight = useRef(height);
-  // translateY moves the object down and the sheet is pinned to the bottom of the screen
-  // By setting the initial value to the height of the screen, it will be moved completely off the screen
-  // This means that it is NOT shown at first, which is desired
-  const translateY = useSharedValue(height);
+    const measuredHeight = useRef(height);
+    // translateY moves the object down and the sheet is pinned to the bottom of the screen
+    // By setting the initial value to the height of the screen, it will be moved completely off the screen
+    // This means that it is NOT shown at first, which is desired
+    const translateY = useSharedValue(height);
 
-  useEffect(() => {
-    translateY.value = withTiming(isOpen ? 0 : measuredHeight.current, {
-      duration: ANIMATION_DURATION,
-    });
-  }, [isOpen, translateY]);
+    useEffect(() => {
+      translateY.value = withTiming(isOpen ? 0 : measuredHeight.current, {
+        duration: ANIMATION_DURATION,
+      });
+    }, [isOpen, translateY]);
 
-  const onLayoutSheet = (event: LayoutChangeEvent) => {
-    measuredHeight.current = event.nativeEvent.layout.height;
-  };
+    const onLayoutSheet = (event: LayoutChangeEvent) => {
+      measuredHeight.current = event.nativeEvent.layout.height;
+    };
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{translateY: translateY.value}],
-  }));
+    const animatedStyle = useAnimatedStyle(() => ({
+      transform: [{translateY: translateY.value}],
+    }));
 
-  if (isE2E) {
-    if (!isOpen) {
-      return null;
-    }
-    return (
-      <View style={styles.container}>
-        <View style={styles.animatedBackground}>
-          <StartStopTrack />
+    if (isE2E) {
+      if (!isOpen) {
+        return null;
+      }
+      return (
+        <View style={styles.container}>
+          <View style={styles.animatedBackground}>{children}</View>
         </View>
-      </View>
-    );
-  }
+      );
+    }
 
-  return (
-    <Animated.View
-      style={[styles.animatedBackground, animatedStyle]}
-      onLayout={onLayoutSheet}
-      pointerEvents={isOpen ? 'auto' : 'none'}>
-      <StartStopTrack />
-    </Animated.View>
-  );
-});
+    return (
+      <Animated.View
+        style={[styles.animatedBackground, animatedStyle]}
+        onLayout={onLayoutSheet}
+        pointerEvents={isOpen ? 'auto' : 'none'}>
+        {children}
+      </Animated.View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

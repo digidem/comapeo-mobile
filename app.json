@@ -115,7 +115,8 @@
           "data": [
             {
               "scheme": "https",
-              "host": "app.comapeo.org"
+              "host": "a.comapeo.app",
+              "pathPrefix": "/invite"
             }
           ],
           "category": ["BROWSABLE", "DEFAULT"]
@@ -135,6 +136,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.comapeo",
+      "associatedDomains": ["applinks:a.comapeo.app"],
       "icon": "./assets/icon-ios.png",
       "entitlements": {
         "com.apple.developer.networking.wifi-info": true

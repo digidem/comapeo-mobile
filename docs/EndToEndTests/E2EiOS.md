@@ -172,9 +172,15 @@ Things that cost time, so they don't cost it again.
 - **Close the drawer with `$('~Close drawer').click()`**, the drawer's own
   overlay button. iOS hides everything behind an open drawer from
   accessibility, so tapping the map or list underneath only works on Android.
-- **`autoAcceptAlerts` doesn't answer the location prompt on BrowserStack.**
-  `waitForMapScreen()` taps the app's Allow button and then accepts the system
-  prompt itself.
+- **Pin `appiumVersion` in `bstack:options`.** Without it BrowserStack runs
+  iOS on Appium 1.21, which lacks `mobile: hideKeyboard` and more.
+- **`autoAcceptAlerts` is off on BrowserStack.** It answered the app's weak-GPS
+  alert with "Manual Coords". The specs answer alerts themselves:
+  `handleGPSAlert()` taps Save, and `waitForMapScreen()` taps the app's Allow
+  button and then accepts the system location prompt.
+- **A tappable wrapper merges everything inside it** into one element, labels
+  and `testID`s included. Put the `testID` on the touchable itself, and don't
+  make a container touchable unless it has an `onPress`.
 
 **Roadmap corrections** — these are listed as work but are already fine:
 

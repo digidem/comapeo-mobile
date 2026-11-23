@@ -109,6 +109,7 @@ export const AllProjects = () => {
       <SecondaryButton
         fullSize={true}
         style={{alignSelf: 'center'}}
+        testID="ALL_PROJECTS.close-btn"
         text={formatMessage(m.close)}
         onPress={() => {
           goBack();

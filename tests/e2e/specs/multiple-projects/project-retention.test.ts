@@ -4,6 +4,7 @@ import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 import {checkForElementGone} from '../../utils/checkForGone';
 import {handleGPSAlert} from '../../utils/alerts';
+import {dismissKeyboard} from '../../utils/touchActions';
 
 const UNIQUE_DESCRIPTION = 'Cave test obs for second project';
 
@@ -47,6 +48,7 @@ describe('Multiple Projects - Project Data Retention', () => {
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.thirdProject);
+    await dismissKeyboard();
     await $(byResourceId('PROJECT.create-btn')).click();
     await $(byTextMatches('No, Skip for Now')).click();
     await browser.waitUntil(

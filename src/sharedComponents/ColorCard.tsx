@@ -20,6 +20,7 @@ export const ColorCard = ({
   return (
     <TouchableOpacity
       disabled={!onPress}
+      accessible={!!onPress}
       onPress={onPress}
       testID={testID}
       style={[

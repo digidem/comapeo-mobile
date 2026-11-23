@@ -38,9 +38,11 @@ const config = {
       'appium:deviceName': 'iPhone 17',
       'appium:automationName': 'XCUITest',
       'appium:app': app,
-      'appium:autoAcceptAlerts': true,
+      'appium:autoAcceptAlerts': false,
       'appium:newCommandTimeout': 150,
       'bstack:options': {
+        // BrowserStack defaults iOS to Appium 1.21; match the Android runs
+        appiumVersion: '2.12.1',
         projectName: 'CoMapeo iOS',
         buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
         sessionName: `E2E iOS: ${shortSha}`,

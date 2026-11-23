@@ -2,6 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../../utils/selectors';
 import {output} from '../../../utils/naming';
+import {dismissKeyboard} from '../../../utils/touchActions';
 
 describe('Create Project and land on map screen', () => {
   it('should create a project from menu', async () => {
@@ -12,6 +13,7 @@ describe('Create Project and land on map screen', () => {
     await $(byText('Next')).click();
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.secondProject);
+    await dismissKeyboard();
     await $(byResourceId('PROJECT.create-btn')).click();
     await $(byTextMatches('No, Skip for Now')).click();
     await expect($(byTextMatches(output.names.secondProject))).toBeDisplayed();

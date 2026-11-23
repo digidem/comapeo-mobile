@@ -2,6 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
+import {dismissKeyboard} from '../../utils/touchActions';
 
 describe('Multiple Projects - Create and Switch Between Projects', () => {
   it('should create a second project from the All Projects screen', async () => {
@@ -12,6 +13,7 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
     await $(byText('Next')).click();
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.secondProject);
+    await dismissKeyboard();
     await $(byResourceId('PROJECT.create-btn')).click();
   });
 

@@ -3,6 +3,7 @@ import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 import {handleGPSAlert} from '../../utils/alerts';
+import {dismissKeyboard} from '../../utils/touchActions';
 
 describe('Project - Rename Project from Drawer while perserving observations', () => {
   it('should create initial observation while in solo project', async () => {
@@ -63,6 +64,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.project);
+    await dismissKeyboard();
     await createBtn.click();
   });
 
@@ -96,7 +98,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await $(byText('Switch Project')).click();
     await expect($(byTextMatches(output.names.project))).toBeDisplayed();
     await expect($(byText(output.names.device))).toBeDisplayed();
-    await driver.back();
+    await $(byResourceId('ALL_PROJECTS.close-btn')).click();
     await $('~Close drawer').click();
   });
 });

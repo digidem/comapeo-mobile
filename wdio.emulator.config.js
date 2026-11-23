@@ -51,6 +51,15 @@ const config = {
     ],
   ],
   outputDir: './test-results',
+  before: () => {
+    browser.overwriteCommand(
+      'scrollIntoView',
+      async function (origScrollIntoView, options) {
+        return origScrollIntoView(options ?? {percent: 0.5});
+      },
+      true,
+    );
+  },
   afterTest: async (test, _context, {passed}) => {
     if (passed) return;
     const name = `${test.parent} - ${test.title}`.replace(/[^\w-]+/g, '_');

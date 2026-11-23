@@ -13,7 +13,7 @@ describe('Multiple Projects - Project Data Retention', () => {
     await driver.pause(1000);
     await $(byText('Switch Project')).click();
     await $(byText(output.names.secondProject)).click();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
 
     await $('~Add Observation').click();
     const caveCategory = await $(byTextMatches('Cave'));
@@ -60,7 +60,7 @@ describe('Multiple Projects - Project Data Retention', () => {
     );
     const doneBtn = await $(byText('Done'));
     await doneBtn.click();
-    await driver.back();
+    await $('~Close drawer').click();
     await $('~Go to observations list.').click();
     await $(byResourceId('observationsEmptyView')).click();
 
@@ -73,7 +73,7 @@ describe('Multiple Projects - Project Data Retention', () => {
     await $('~Open Menu').click();
     await $(byText('Switch Project')).click();
     await $(byTextMatches(output.names.secondProject)).click();
-    await driver.back();
+    await $('~Close drawer').click();
     await $('~Go to observations list.').click();
 
     const cave = await $(byText('Cave'));

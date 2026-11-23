@@ -42,7 +42,7 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
   it('should switch back to the Solo project and update headers accordingly', async () => {
     await $(byText('Switch Project')).click();
     await $(byTextMatches(output.names.device)).click();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
 
     const soloHeader = await $(byResourceId('HOME.header-title'));
     await expect(soloHeader).toHaveText(output.names.device);

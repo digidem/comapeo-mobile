@@ -33,7 +33,7 @@ describe('Settings - Coordinates Settings Flow', () => {
     await expect($(byTextMatches('CoMapeo Settings'))).toBeDisplayed();
 
     await $(byResourceId('MAIN.header-back-btn')).click();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

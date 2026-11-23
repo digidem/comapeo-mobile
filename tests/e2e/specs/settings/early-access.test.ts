@@ -76,6 +76,6 @@ describe('Settings - Early Access Mode', () => {
     await $(byResourceId('earlyAccessFlagLabel')).scrollIntoView();
     await expect($(byTextMatches('Early Access OFF'))).toBeDisplayed();
     await backBtn.click();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
   });
 });

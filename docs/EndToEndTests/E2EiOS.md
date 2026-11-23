@@ -169,6 +169,9 @@ Things that cost time, so they don't cost it again.
   parent, whose corner is the back arrow.
 - **Don't call `driver.releaseActions()`.** BrowserStack's iOS devices reject it
   ("unknown command").
+- **Close the drawer with `$('~Close drawer').click()`**, the drawer's own
+  overlay button. iOS hides everything behind an open drawer from
+  accessibility, so tapping the map or list underneath only works on Android.
 - **`autoAcceptAlerts` doesn't answer the location prompt on BrowserStack.**
   `waitForMapScreen()` taps the app's Allow button and then accepts the system
   prompt itself.

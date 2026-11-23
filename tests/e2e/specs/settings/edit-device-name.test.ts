@@ -45,7 +45,7 @@ describe('Project - Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
 
     await $('~Open Menu').tap();
     await $('~Go to app settings screen.').click();
@@ -55,6 +55,6 @@ describe('Project - Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
   });
 });

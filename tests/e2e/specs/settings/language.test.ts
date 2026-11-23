@@ -42,7 +42,7 @@ describe('Settings - Language Settings Flow', () => {
     // A second tap during the transition hits the old screen's back button
     await expect($(byResourceId('settingsCoodinatesButton'))).toBeDisplayed();
     await $(byResourceId('MAIN.header-back-btn')).click();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
@@ -68,6 +68,6 @@ describe('Settings - Language Settings Flow', () => {
     await $(byResourceId('MAIN.header-back-btn')).click();
     await expect($(byResourceId('settingsCoodinatesButton'))).toBeDisplayed();
     await $(byResourceId('MAIN.header-back-btn')).click();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
   });
 });

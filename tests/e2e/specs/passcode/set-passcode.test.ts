@@ -136,8 +136,8 @@ describe('Passcode - setPasscode', () => {
     if (await $(byResourceId('MAIN.header-back-btn')).isDisplayed()) {
       await $(byResourceId('MAIN.header-back-btn')).click();
     }
-    if (await $(byResourceId('MAIN.map-screen')).isDisplayed()) {
-      await $(byResourceId('MAIN.map-screen')).click();
+    if (await $('~Close drawer').isDisplayed()) {
+      await $('~Close drawer').click();
     }
   });
 });

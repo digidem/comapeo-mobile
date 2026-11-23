@@ -79,7 +79,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await expect($(byText('Invite a Device'))).toBeDisplayed();
     const doneButton = await $(byText('Done'));
     await doneButton.click();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
   });
 
   it('should leave observations in place with a renamed project', async () => {
@@ -97,6 +97,6 @@ describe('Project - Rename Project from Drawer while perserving observations', (
     await expect($(byTextMatches(output.names.project))).toBeDisplayed();
     await expect($(byText(output.names.device))).toBeDisplayed();
     await driver.back();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
   });
 });

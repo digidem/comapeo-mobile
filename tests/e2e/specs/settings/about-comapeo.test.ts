@@ -35,7 +35,7 @@ describe('Settings - About CoMapeo Flow', () => {
     await backBtn.click();
     const backBtnAgain = await $(byResourceId('MAIN.header-back-btn'));
     await backBtnAgain.click();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

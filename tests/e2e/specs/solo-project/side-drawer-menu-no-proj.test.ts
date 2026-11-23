@@ -19,7 +19,7 @@ describe('Main - Side Drawer Menu - No Project', () => {
     await expect($('~Go to background maps screen.')).toBeDisplayed();
     await expect($('~Go to map screen.')).toBeDisplayed();
 
-    await $(byResourceId('observationsEmptyView')).click();
+    await $('~Close drawer').click();
     const mapTab = await $('~Go to map.');
     await mapTab.click();
   });

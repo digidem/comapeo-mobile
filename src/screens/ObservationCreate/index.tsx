@@ -93,11 +93,11 @@ export const ObservationCreate = ({
             onPressPreset={() =>
               navigation.navigate('ObservationCategoryChooser')
             }
+            testID={`OBS.${preset?.name}-icon`}
             PresetIcon={
               <PresetCircleIcon
                 size="medium"
                 iconId={preset?.iconRef?.docId}
-                testID={`OBS.${preset?.name}-icon`}
                 color={preset?.color}
               />
             }

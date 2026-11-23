@@ -25,11 +25,14 @@ export const HeaderRightContainerButton = ({
   loading,
 }: HeaderRightContainerButtonProps) => {
   return (
-    <View style={styles.container} testID={testID}>
+    <View style={styles.container}>
       {loading ? (
-        <LoadingIndicator size="large" />
+        <LoadingIndicator size="large" testID={testID} />
       ) : (
-        <TouchableOpacity style={styles.container} onPress={onPress}>
+        <TouchableOpacity
+          style={styles.container}
+          onPress={onPress}
+          testID={testID}>
           {children}
         </TouchableOpacity>
       )}

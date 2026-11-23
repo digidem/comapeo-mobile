@@ -32,7 +32,7 @@ describe('Multiple Projects - Edit Project Details', () => {
     await expect($(byTextMatches(UPDATED_PROJECT_DESCRIPTION))).toBeDisplayed();
     await checkForElementGone(byText(output.names.thirdProject));
     await $(byResourceId('MAIN.header-back-btn')).click();
-    await $(byResourceId('observationsEmptyView')).click();
+    await $('~Close drawer').click();
     const mapTab = await $('~Go to map.');
     await mapTab.click();
     await expect($(byTextMatches(UPDATED_PROJECT_NAME))).toBeDisplayed();

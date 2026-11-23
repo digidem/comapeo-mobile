@@ -69,6 +69,6 @@ describe('Project - Project Settings Named Project', () => {
   it('should navigate back to map', async () => {
     const backButton = $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
-    await $(byResourceId('MAIN.map-screen')).click();
+    await $('~Close drawer').click();
   });
 });

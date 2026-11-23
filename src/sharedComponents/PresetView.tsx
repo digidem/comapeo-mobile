@@ -17,6 +17,7 @@ type PresetViewProps = {
   presetName: string;
   PresetIcon: ReactNode;
   presetDisabled?: boolean;
+  testID?: string;
 };
 
 export const PresetView = ({
@@ -24,13 +25,15 @@ export const PresetView = ({
   presetName,
   PresetIcon,
   presetDisabled = false,
+  testID,
 }: PresetViewProps) => {
   const {formatMessage} = useIntl();
   return (
     <TouchableOpacity
       disabled={presetDisabled}
       onPress={presetDisabled ? undefined : onPressPreset}
-      style={styles.preset}>
+      style={styles.preset}
+      testID={testID}>
       <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
         {PresetIcon}
         <BodyText weight={700} variant="large" style={styles.categoryName}>

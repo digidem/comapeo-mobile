@@ -1,9 +1,7 @@
-name: Android Emulator Smoke Test
+name: Appium E2E Tests on GitHub Emulator
 
 on:
-  push:
-    branches:
-      - test/appium-on-github
+  workflow_dispatch:
 
 jobs:
   build-apk:

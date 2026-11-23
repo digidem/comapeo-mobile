@@ -13,6 +13,10 @@ describe('Multiple Projects - All Projects Screen', () => {
 
     await firstCard.click();
 
+    await $(byResourceId('project_card_third_project')).waitForDisplayed({
+      reverse: true,
+    });
+
     await $(byText('Switch Project')).click();
 
     await expect(firstCard).toBeDisplayed();
@@ -29,6 +33,10 @@ describe('Multiple Projects - All Projects Screen', () => {
 
   it('should show the selected project on top', async () => {
     await $(byResourceId('project_card_second_project')).click();
+
+    await $(byResourceId('project_card_third_project')).waitForDisplayed({
+      reverse: true,
+    });
 
     await $(byText('Switch Project')).click();
 

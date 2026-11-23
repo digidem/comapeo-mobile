@@ -88,27 +88,58 @@ Suggested order — easiest first:
 
 ---
 
-## To do: iOS on BrowserStack
+## iOS on BrowserStack
 
-Not possible yet. In order:
+The onboarding suite passes on a BrowserStack iPhone 17 (iOS 26), run from a
+Mac with `wdio.ios.ci.config.js`.
 
-- [ ] **Get a signed `.ipa`.** Simulator builds cannot run on BrowserStack.
-      Needs Apple credentials and a new `eas.json` profile with
-      `"ios": { "simulator": false }` and the `test` env.
-- [ ] **Upload it** — same command as Android, with the `.ipa` (see below).
-- [ ] **Add `wdio.ios.ci.config.js`** — copy `wdio.ci.config.js`, swap the
-      capabilities for an iOS device.
-- [ ] **Add it to CI** only once suites pass locally. Note the existing
-      `browserstack-devices` concurrency group — iOS runs will compete with
-      Android for the 5-session limit.
+### Run it
 
-Upload command:
+1. Build a signed device app (not a simulator build) from this branch. Use your
+   own team ID (see `docs/iOSDeviceBuilds.md`):
 
-```sh
-curl -u "<user>:<key>" -X POST \
-  "https://api-cloud.browserstack.com/app-automate/upload" \
-  -F "file=@/path/to/app.ipa" -F "custom_id=Local_CoMapeo_iOS"
-```
+   ```sh
+   npm run prebuild:ios:e2e
+   cd ios
+   APP_VARIANT=releaseCandidate EXPO_PUBLIC_E2E_TEST=true xcodebuild \
+     -workspace CoMapeoRC.xcworkspace -scheme CoMapeoRC -configuration Release \
+     -destination 'generic/platform=iOS' -derivedDataPath ./build \
+     -allowProvisioningUpdates DEVELOPMENT_TEAM=<YOUR_TEAM_ID> \
+     CODE_SIGN_STYLE=Automatic build
+   cd ..
+   ```
+
+2. Zip it into an `.ipa` and upload it. BrowserStack re-signs it, so a
+   development-signed build is fine:
+
+   ```sh
+   mkdir -p /tmp/ipa/Payload
+   cp -R ios/build/Build/Products/Release-iphoneos/CoMapeoRC.app /tmp/ipa/Payload/
+   (cd /tmp/ipa && zip -qr CoMapeoRC.ipa Payload)
+   curl -u "<user>:<key>" -X POST \
+     "https://api-cloud.browserstack.com/app-automate/upload" \
+     -F "file=@/tmp/ipa/CoMapeoRC.ipa" -F "custom_id=CoMapeo_iOS_branch"
+   ```
+
+3. Run it (reads the BrowserStack credentials from `.env`):
+
+   ```sh
+   set -a; source .env; set +a
+   BROWSERSTACK_IOS_APP_URL=CoMapeo_iOS_branch npx wdio run wdio.ios.ci.config.js
+   ```
+
+### To do
+
+- [ ] Enable the other suites in `wdio.ios.ci.config.js`, one at a time.
+- [ ] **CI needs an `.ipa` built without a Mac**, i.e. EAS. The Apple
+      credentials already exist: EAS has built signed release-candidate `.ipa`s
+      since Sep 2026. But those use bundle id `app.comapeo.rc` (changed on
+      `release/v14.x`), while develop still builds `com.comapeo.rc`. Merge
+      that change back before trying `eas build --platform ios --profile test`.
+- [ ] Specs hardcode `com.comapeo.rc` for `terminateApp`/`activateApp`
+      (`obscure-mode`, `remote-archive`); iOS will need `app.comapeo.rc`.
+- [ ] Add it to CI. Note the `browserstack-devices` concurrency group: iOS
+      runs will compete with Android for the 5-session limit.
 
 ---
 
@@ -133,6 +164,14 @@ Things that cost time, so they don't cost it again.
 - **Don't use `driver.pause()` to wait for something.** Wait for the thing
   itself. Pauses pass locally and fail on slower BrowserStack devices.
 - **Verify shared helpers on both platforms.**
+- **Use `.click()`, not `.tap()`.** On iOS, wdio's `.tap()` taps the
+  element's top-left corner. With a `CONTAINS` selector that can be a large
+  parent, whose corner is the back arrow.
+- **Don't call `driver.releaseActions()`.** BrowserStack's iOS devices reject it
+  ("unknown command").
+- **`autoAcceptAlerts` doesn't answer the location prompt on BrowserStack.**
+  `waitForMapScreen()` taps the app's Allow button and then accepts the system
+  prompt itself.
 
 **Roadmap corrections** — these are listed as work but are already fine:
 

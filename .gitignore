@@ -97,3 +97,5 @@ logs/*.log
 logs/*.json
 local.log
 test-results/
+# BrowserStack SDK logs from local wdio runs
+/log/

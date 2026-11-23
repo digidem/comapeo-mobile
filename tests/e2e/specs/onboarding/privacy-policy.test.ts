@@ -13,7 +13,7 @@ describe('Onboarding - Privacy Policy Screen', () => {
 
   it('should toggle "About Awana Digital" section', async () => {
     const aboutAwana = await $(byText('About Awana Digital'));
-    await aboutAwana.tap();
+    await aboutAwana.click();
 
     const aboutAwanaContent = await $(
       byTextMatches('Awana Digital, a 501c3 non-profit'),

@@ -13,7 +13,6 @@ async function tapPoint(x: number, y: number) {
       ],
     },
   ]);
-  await driver.releaseActions();
   await driver.pause(300);
 }
 

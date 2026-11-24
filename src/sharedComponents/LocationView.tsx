@@ -1,0 +1,75 @@
+import {Fragment} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {BLACK} from '../lib/styles';
+import {FormattedMessage, defineMessages} from 'react-intl';
+import LocationIcon from '../images/Location.svg';
+import {FormattedCoords} from './FormattedData';
+import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
+import {useUnitSystem} from '../contexts/UnitSystemStoreContext';
+import {metersOrConversion} from '../lib/unitConversion';
+import {BodyText} from './Text/BodyText';
+
+const m = defineMessages({
+  searching: {
+    id: 'sharedComponents.EditScreen.PresetAndLocationView.seaching',
+    defaultMessage: 'Searching…',
+    description: 'Shown in new observation screen whilst looking for GPS',
+  },
+});
+
+type LocationViewProps = {
+  lat: number | undefined;
+  lon: number | undefined;
+  accuracy: number | undefined;
+};
+
+export const LocationView = ({lat, lon, accuracy}: LocationViewProps) => {
+  const coordinateFormat = useCoordinateFormat();
+  const unitSystem = useUnitSystem();
+
+  return (
+    <View style={styles.locationContainer}>
+      {lat === undefined || lon === undefined ? (
+        <BodyText>
+          <FormattedMessage {...m.searching} />
+        </BodyText>
+      ) : (
+        <Fragment>
+          <LocationIcon style={{marginRight: 10}} />
+          <BodyText variant="tinyMeta" style={styles.locationText}>
+            <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
+          </BodyText>
+          {accuracy === undefined
+            ? null
+            : (() => {
+                const {value, unit} = metersOrConversion(accuracy, unitSystem);
+                return (
+                  <BodyText
+                    variant="tinyMeta"
+                    style={
+                      styles.accuracy
+                    }>{` ±${Math.round(value)} ${unit}`}</BodyText>
+                );
+              })()}
+        </Fragment>
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  locationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    padding: 10,
+    paddingHorizontal: 20,
+  },
+  locationText: {
+    color: BLACK,
+    flex: 1,
+  },
+  accuracy: {
+    color: BLACK,
+  },
+});

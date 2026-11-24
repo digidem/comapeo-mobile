@@ -1,0 +1,202 @@
+import {type ComponentProps, Suspense} from 'react';
+import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {WHITE} from '../../lib/styles';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {AppStackParamsList} from '../../sharedTypes/navigation';
+import {useAuthContext} from '../../contexts/AuthContext';
+import {FullScreenCenteredLoader} from '../../sharedComponents/FullScreenCenteredLoader';
+import {createOnboardingScreens} from './OnboardingScreens';
+import {createAppScreens} from './AppScreens';
+import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
+import {PendingMapSharesListener} from '../../sharedComponents/PendingMapSharesListener';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
+import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
+import {AuthScreen} from '../../screens/AuthScreen';
+import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
+import {useIntl} from 'react-intl';
+import {RootStack} from './RootStack';
+import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {InviteReceived} from '../../screens/Invites/InviteReceived';
+import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
+import {DeepLinkListener} from './DeepLinkListener';
+import {CommonActions, StackActions} from '@react-navigation/native';
+import {RUBIK} from '../../lib/fonts';
+
+export type NavigatorLayout = NonNullable<
+  ComponentProps<typeof RootStack.Navigator>['layout']
+>;
+export type NavigatorScreenLayout = NonNullable<
+  ComponentProps<typeof RootStack.Navigator>['screenLayout']
+>;
+
+const NavigatorScreenOptions: NativeStackNavigationOptions = {
+  presentation: 'card',
+  contentStyle: {backgroundColor: WHITE},
+  headerStyle: {backgroundColor: WHITE},
+  headerTitleStyle: {fontFamily: RUBIK[500]},
+  headerLeft: props => <CustomHeaderLeft headerBackButtonProps={props} />,
+  headerBackVisible: false,
+  statusBarStyle: 'dark',
+};
+
+type LayoutProps = Parameters<NavigatorLayout>[0];
+
+function openSheetAction(
+  {state, descriptors}: Pick<LayoutProps, 'state' | 'descriptors'>,
+  name: 'InviteReceived' | 'MapReceivedBottomSheet',
+  params: {inviteId: string} | {shareId: string},
+) {
+  const currentRoute = state.routes[state.index];
+  const presentation = currentRoute
+    ? descriptors[currentRoute.key]?.options.presentation
+    : undefined;
+
+  return presentation && presentation !== 'card'
+    ? StackActions.replace(name, params)
+    : CommonActions.navigate(name, params);
+}
+
+function getInitialRoute(
+  authState: 'authenticated' | 'unauthenticated' | 'obscured',
+  deviceName: string | undefined,
+  projectId: string | undefined,
+): keyof AppStackParamsList {
+  if (authState === 'unauthenticated') {
+    return 'AuthScreen';
+  }
+  if (!deviceName) {
+    return 'IntroToCoMapeo';
+  }
+  if (!projectId) {
+    return 'Success';
+  }
+  return 'Home';
+}
+
+export const RootStackNavigator = () => {
+  const security = useAuthContext();
+  const {data: deviceInfo} = useOwnDeviceInfo();
+  const activeProjectId = useActiveProjectId();
+  const {formatMessage} = useIntl();
+  const isNotReadyForInvite =
+    security.authState !== 'authenticated' ||
+    !deviceInfo.name ||
+    !activeProjectId;
+
+  const layout: NavigatorLayout = ({
+    children,
+    state,
+    navigation,
+    descriptors,
+  }) => (
+    <Suspense fallback={<FullScreenCenteredLoader />}>
+      <PendingInvitesListener
+        currentRouteName={state.routes[state.index]?.name}
+        navigateToInviteScreen={inviteId =>
+          navigation.dispatch(
+            openSheetAction({state, descriptors}, 'InviteReceived', {
+              inviteId,
+            }),
+          )
+        }
+      />
+      <PendingMapSharesListener
+        currentRouteName={state.routes[state.index]?.name}
+        navigateToMapShareScreen={shareId =>
+          navigation.dispatch(
+            openSheetAction({state, descriptors}, 'MapReceivedBottomSheet', {
+              shareId,
+            }),
+          )
+        }
+      />
+      {!isNotReadyForInvite && (
+        <DeepLinkListener
+          currentRouteName={state.routes[state.index]?.name}
+          navigateToInviteScreen={inviteId =>
+            navigation.dispatch(
+              openSheetAction({state, descriptors}, 'InviteReceived', {
+                inviteId,
+              }),
+            )
+          }
+        />
+      )}
+      {/* Wrap here so app screens get ActiveProjectProvider without a separate navigator.
+            activeProjectId is always set before any app screen renders. */}
+      {activeProjectId ? (
+        <ActiveProjectProvider activeProjectId={activeProjectId}>
+          {children}
+        </ActiveProjectProvider>
+      ) : (
+        children
+      )}
+    </Suspense>
+  );
+
+  const screenLayout: NavigatorScreenLayout = ({children}) => (
+    <Suspense fallback={<FullScreenCenteredLoader />}>{children}</Suspense>
+  );
+
+  const commonNavigatorProps = {
+    layout,
+    screenLayout,
+    screenOptions: NavigatorScreenOptions,
+  } as const;
+
+  const initialRouteName = getInitialRoute(
+    security.authState,
+    deviceInfo.name,
+    activeProjectId,
+  );
+
+  return (
+    <RootStack.Navigator
+      {...commonNavigatorProps}
+      initialRouteName={initialRouteName}>
+      {security.authState === 'unauthenticated' ? (
+        <RootStack.Screen
+          name="AuthScreen"
+          component={AuthScreen}
+          options={{
+            headerShown: false,
+            animation: 'fade',
+          }}
+        />
+      ) : (
+        <>
+          {!deviceInfo.name || !activeProjectId
+            ? createOnboardingScreens({intl: formatMessage})
+            : createAppScreens({intl: formatMessage})}
+          {/* Shared screen */}
+          <RootStack.Group
+            navigationKey={activeProjectId}
+            screenOptions={{
+              presentation: 'transparentModal',
+              headerShown: false,
+              animation: 'none',
+              contentStyle: {backgroundColor: 'transparent'},
+            }}>
+            <RootStack.Screen
+              name="ErrorBottomSheet"
+              component={ErrorBottomSheet}
+            />
+            <RootStack.Screen
+              name="InviteReceived"
+              component={InviteReceived}
+            />
+            <RootStack.Screen
+              name="InviteSuccessfullyAccepted"
+              component={InviteSuccessfullyAccepted}
+            />
+            <RootStack.Screen
+              name="InviteCanceled"
+              component={InviteCanceled}
+            />
+          </RootStack.Group>
+        </>
+      )}
+    </RootStack.Navigator>
+  );
+};

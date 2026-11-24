@@ -1,0 +1,82 @@
+import {type ReactNode, useEffect, useState} from 'react';
+import {View} from 'react-native';
+import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
+import {WHITE} from '../lib/styles';
+import {useNavigation} from '@react-navigation/native';
+import {usePreventBackNavigation} from '../hooks/usePreventBackNavigation';
+import {useBottomPaddingWithSafeArea} from '../hooks/useBottomPaddingWithSafeArea';
+
+/**
+ *
+ * @description A wrapper component that should be used for bottom sheets. It will handle the animation and prevent the back button from closing the bottom sheet.
+ *
+ * When pushing a bottom sheet ontop of another bottom sheet use `navigation.replace`, to close the original bottom sheet first.
+ */
+export const BottomSheetWrapper = ({
+  children,
+  closeOnBackButtonPress,
+}: {
+  children: ReactNode;
+  closeOnBackButtonPress?: boolean;
+}) => {
+  if (!closeOnBackButtonPress) {
+    return (
+      <BottomSheetWrapperPreventBack>{children}</BottomSheetWrapperPreventBack>
+    );
+  }
+
+  return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
+};
+
+const BottomSheetWrapperPreventBack = ({children}: {children: ReactNode}) => {
+  usePreventBackNavigation();
+  return <AnimateBottomSheetContainer>{children}</AnimateBottomSheetContainer>;
+};
+
+const AnimateBottomSheetContainer = ({children}: {children: ReactNode}) => {
+  const navigation = useNavigation();
+  const paddingBottom = useBottomPaddingWithSafeArea();
+
+  const [displayContent, setDisplayContent] = useState(true);
+
+  // This effect is used to prevent the bottom sheet from being removed before the animation is complete
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', e => {
+      e.preventDefault();
+      setDisplayContent(false);
+      setTimeout(() => {
+        navigation.dispatch(e.data.action);
+      }, 140);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [navigation]);
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'flex-end',
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+      }}>
+      {displayContent && (
+        <Animated.View
+          style={{
+            backgroundColor: WHITE,
+            paddingHorizontal: 20,
+            paddingTop: 40,
+            paddingBottom: paddingBottom,
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+            flexShrink: 1,
+          }}
+          entering={SlideInDown.duration(150)}
+          exiting={SlideOutDown.duration(150)}>
+          {children}
+        </Animated.View>
+      )}
+    </View>
+  );
+};

@@ -16,7 +16,7 @@ const {
 //
 // The channel id must exactly match what expo-location computes:
 // `${applicationId}:${taskName}`. See LOCATION_TASK_NAME in
-// src/frontend/sharedTypes/location.ts and expo-location's
+// src/sharedTypes/location.ts and expo-location's
 // android/.../services/LocationTaskService.kt (prepareChannel).
 const LOCATION_TASK_NAME = 'background-location-task';
 

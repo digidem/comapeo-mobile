@@ -1,0 +1,397 @@
+import {useCallback, useRef, useState} from 'react';
+import {defineMessages, useIntl} from 'react-intl';
+import {
+  Camera,
+  CameraRef,
+  Map,
+  UserLocation,
+} from '@maplibre/maplibre-react-native';
+import {
+  LocationFollowingIcon,
+  LocationNoFollowIcon,
+} from '../../sharedComponents/icons';
+
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
+import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
+import ScaleBar from 'react-native-scale-bar';
+import {useHeaderHeight} from '@react-navigation/elements';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {TrackBottomSheet} from './TrackBottomSheet';
+import {TrackPermissionScreen} from './TrackBottomSheet/TrackPermissionScreen';
+import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
+
+import {useMapStyleJsonUrl} from '../../hooks/server/maps';
+import {TracksMapLayer} from './MapLayers/TracksMapLayer';
+import {assert} from '../../lib/assert';
+import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
+import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
+import {useFocusEffect} from '@react-navigation/native';
+import {GPSPill} from '../../sharedComponents/GPSPill';
+import AddButtonSVG from '../../images/AddButton.svg';
+import {AuthState, useAuthContext} from '../../contexts/AuthContext';
+import {useLocationState} from '../../contexts/LocationContext';
+import {getCoords} from '../../lib/coordinateFormat';
+import {useTracking} from '../../hooks/useTracking';
+import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
+import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
+import {useResetMapLayout} from '../../hooks/useResetMapLayout';
+import {
+  useLowStorageBannerActions,
+  useLowStorageBannerState,
+} from '../../contexts/LowStorageBannerContext';
+import {useStorageReadingQuery} from '../../hooks/useStorageReadingQuery';
+import {isLowStorage} from '../../lib/storage';
+import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
+import {useAppUsageStatsStore} from '../../contexts/AppUsageStatsContext';
+import {useShouldShowAppUsagePrompt} from '../../hooks/useShouldShowAppUsagePrompt';
+import {useTrackState} from '../../contexts/TrackStoreContext';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
+import {
+  requestLocationPermission,
+  useInvalidateLocationPermission,
+  useLocationPermissionWithoutPasscode,
+  useLocationPermissionQuery,
+} from '../../hooks/useLocationPermissionTracker';
+import {openSettingsAndWait} from '../../utils/linking';
+import {
+  AllowPermissionButton,
+  OpenSettingsButton,
+} from '../../sharedComponents/PermissionButtons';
+import {IconTitleDescription} from '../../sharedComponents/IconTitleDescription';
+import LocationOnIcon from '../../images/LocationOn.svg';
+import {DARK_ORANGE, WHITE} from '../../lib/styles';
+
+const PERMISSION_ICON_SIZE = 80;
+
+const m = defineMessages({
+  locationPermissionTitle: {
+    id: '$1screens.MapScreen.locationPermissionTitle',
+    defaultMessage: 'Record GPS Points',
+  },
+  locationPermissionDescription: {
+    id: 'screens.MapScreen.locationPermissionDescription',
+    defaultMessage: 'Location required to use.',
+  },
+});
+
+// This is the default zoom used when the map first loads, and also the zoom
+// that the map will zoom to if the user clicks the "Locate" button and the
+// current zoom is < 12.
+const DEFAULT_ZOOM = 12;
+
+// Where Peru, Columbia, and Brazil Meet
+const FALLBACK_COORDINATE: [number, number] = [-69.945, -4.231944];
+
+assert(
+  process.env.MAPBOX_ACCESS_TOKEN,
+  'MAPBOX_ACCESS_TOKEN environment variable should be set',
+);
+const MIN_DISPLACEMENT = 3;
+
+export const MapScreen = ({
+  route,
+  navigation,
+}: NativeHomeTabsNavigationProps<'Map'>) => {
+  const trackBottomSheetOpen = route.params?.trackingOpen;
+  const [zoomForScaleBar, setZoomForScaleBar] = useState(DEFAULT_ZOOM);
+  const {dimensions, mapKey, onLayout} = useResetMapLayout();
+  const {createDraft} = useDraftObservationActions();
+  const {navigate} = useNavigationFromHomeTabs();
+  const {isTracking} = useTracking();
+  const location = useLocationState(store =>
+    isTracking ? store.location : store.throttledMapLocation,
+  );
+  const coords = location && getCoords(location);
+  const [following, setFollowing] = useState(true);
+  const appUsageStore = useAppUsageStatsStore();
+  const cameraRef = useRef<CameraRef>(null);
+
+  const {data: styleUrl} = useMapStyleJsonUrl();
+
+  const {authState} = useAuthContext();
+  const {savedLocation} = useNonReactiveSavedLocation();
+  const dismissedMapBannerSession = useLowStorageBannerState(
+    s => s.dismissedMapBannerSession,
+  );
+  const {setDismissedMapBannerSession} = useLowStorageBannerActions();
+  const {data} = useStorageReadingQuery();
+  const isLow = isLowStorage(data.freeBytes);
+  const insets = useSafeAreaInsets();
+  const headerHeight = useHeaderHeight();
+  const BANNER_TOP = insets.top + 75;
+  const {formatMessage} = useIntl();
+  const {data: locationPermission} = useLocationPermissionQuery();
+  const invalidateLocationPermission = useInvalidateLocationPermission();
+
+  const askLocationPermission = useLocationPermissionWithoutPasscode(
+    async () => {
+      await requestLocationPermission();
+      await invalidateLocationPermission();
+    },
+  );
+
+  const goToLocationSettings = useLocationPermissionWithoutPasscode(
+    async () => {
+      await openSettingsAndWait();
+      await invalidateLocationPermission();
+    },
+  );
+
+  useCheckDraftObservationAndNavigate({authState});
+  useCheckUnsavedTrackAndNavigate({authState});
+
+  useShouldShowAppUsagePrompt();
+
+  // if the user is on the map screen onboarding is not completed, record that they have completed it (this is because the app usage stats was added after the user already onboarded)
+  //using the store as this value does not need to be reactive
+  if (!appUsageStore.instance.getState().completedOnboardingAt) {
+    appUsageStore.actions.recordCompleteOnboarding();
+  }
+
+  // This closes the track bottom sheet whenever the user is navigated away.
+  // This prevents the closing animation from happening when the map screen is being reopened
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        navigation.setParams({trackingOpen: false});
+      };
+    }, [navigation]),
+  );
+
+  const handleAddPress = () => {
+    createDraft();
+    navigate('ObservationCategoryChooser');
+  };
+
+  function handleLocationPress() {
+    setFollowing(prev => !prev);
+  }
+
+  if (!locationPermission.granted) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: WHITE,
+          paddingBottom: 30,
+        }}>
+        {trackBottomSheetOpen ? (
+          <TrackPermissionScreen
+            canAskAgain={locationPermission.canAskAgain}
+            onAllow={() => askLocationPermission.mutate()}
+            onOpenSettings={() => goToLocationSettings.mutate()}
+          />
+        ) : (
+          <>
+            <View
+              testID="MAP.location-permission"
+              style={{
+                flexGrow: 1,
+                justifyContent: 'center',
+                marginTop: headerHeight,
+              }}>
+              <IconTitleDescription
+                icon={
+                  <LocationOnIcon
+                    color={DARK_ORANGE}
+                    width={PERMISSION_ICON_SIZE}
+                    height={PERMISSION_ICON_SIZE}
+                  />
+                }
+                title={formatMessage(m.locationPermissionTitle)}
+                description={formatMessage(m.locationPermissionDescription)}
+              />
+            </View>
+            <View style={{flex: 0, alignItems: 'center'}}>
+              {locationPermission.canAskAgain ? (
+                <AllowPermissionButton
+                  testID="MAP.location-allow-btn"
+                  onPress={() => askLocationPermission.mutate()}
+                />
+              ) : (
+                <OpenSettingsButton
+                  testID="MAP.location-settings-btn"
+                  onPress={() => goToLocationSettings.mutate()}
+                />
+              )}
+            </View>
+          </>
+        )}
+      </View>
+    );
+  }
+
+  return (
+    <View style={{flex: 1}} onLayout={onLayout} testID="MAIN.map-screen">
+      <View
+        pointerEvents="box-none"
+        style={[styles.lowStorageBanner, {top: BANNER_TOP}]}>
+        {isLow && !dismissedMapBannerSession && (
+          <LowStorageBanner
+            onDismiss={() => setDismissedMapBannerSession(true)}
+            testID="MAP:low-storage-banner"
+          />
+        )}
+      </View>
+      {dimensions && (
+        <Map
+          key={mapKey}
+          testID="MAIN.mapbox-map-view"
+          style={{width: dimensions.width, height: dimensions.height}}
+          logo={false}
+          touchPitch={false}
+          touchRotate={false}
+          attributionPosition={{right: 8, bottom: 8}}
+          compass={false}
+          mapStyle={styleUrl}
+          onRegionWillChange={event => {
+            if (event.nativeEvent.userInteraction && following) {
+              setFollowing(false);
+            }
+          }}
+
+          onRegionDidChange={event => {
+            if (following) {
+              if (event.nativeEvent.zoom < DEFAULT_ZOOM)
+                cameraRef.current?.zoomTo(DEFAULT_ZOOM);
+            }
+            setZoomForScaleBar(event.nativeEvent.zoom);
+          }}>
+          <Camera
+            ref={ref => {
+              cameraRef.current = ref;
+            }}
+            initialViewState={{
+              center: coords
+                ? coords
+                : savedLocation
+                  ? getCoords(savedLocation)
+                  : FALLBACK_COORDINATE,
+              zoom: DEFAULT_ZOOM,
+            }}
+            trackUserLocation={following && coords ? 'default' : undefined}
+          />
+
+          {coords && (
+            <UserLocation minDisplacement={isTracking ? 0 : MIN_DISPLACEMENT} />
+          )}
+
+          {authState !== 'obscured' && (
+            <>
+              <RemoteDetectionAlertsMapLayer />
+              <CurrentTrackMapLayer location={location} />
+              {isTracking && <UserTooltipMarker />}
+              <TracksMapLayer />
+              <ObservationMapLayer />
+            </>
+          )}
+        </Map>
+      )}
+      <View style={styles.bottomContainer}>
+        <View style={{flex: 1, alignItems: 'center'}}>
+          <GPSPill onPress={() => navigation.navigate('GpsModal')} />
+        </View>
+
+        <TouchableOpacity
+          testID="MAIN.add-observation-btn"
+          accessibilityLabel="Add Observation"
+          onPress={handleAddPress}>
+          <AddButtonSVG />
+        </TouchableOpacity>
+
+        {coords ? (
+          <TouchableOpacity
+            style={{flex: 1, alignItems: 'center'}}
+            onPress={handleLocationPress}>
+            {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}
+          </TouchableOpacity>
+        ) : (
+          <View style={{width: 0, height: 0, flex: 1}} />
+        )}
+      </View>
+      <ScaleBar
+        zoom={zoomForScaleBar}
+        latitude={coords ? coords[1] : undefined}
+        bottom={20}
+      />
+
+      <TrackBottomSheet isOpen={!!trackBottomSheetOpen} />
+    </View>
+  );
+};
+
+function useCheckDraftObservationAndNavigate({
+  authState,
+}: {
+  authState: AuthState;
+}) {
+  const {navigate} = useNavigationFromHomeTabs();
+  const existingObservation = useDraftObservationState(store => store.value);
+  const id = useDraftObservationState(store => store.id);
+
+  useFocusEffect(
+    useCallback(() => {
+      // if no exisiting observation, stay home
+      if (!existingObservation || authState === 'obscured') {
+        return;
+      }
+      // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
+      if (!existingObservation.presetRef) {
+        navigate('ObservationCategoryChooser');
+
+        // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
+      } else if (id?.docId) {
+        navigate('ObservationEdit');
+      } else {
+        navigate('ObservationCreate');
+      }
+    }, [existingObservation, navigate, authState, id]),
+  );
+}
+
+function useCheckUnsavedTrackAndNavigate({authState}: {authState: AuthState}) {
+  const {navigate} = useNavigationFromHomeTabs();
+  const hasUnsavedTrack = useTrackState(
+    state => !state.isTracking && state.locationHistory.length > 0,
+  );
+  const trackPreset = useTrackState(state => state.preset);
+
+  useFocusEffect(
+    useCallback(() => {
+      // if no unsaved track or auth is obscured, stay home
+      if (!hasUnsavedTrack || authState === 'obscured') {
+        return;
+      }
+
+      // if no preset chosen, navigate to category chooser
+      if (!trackPreset) {
+        navigate('TrackCategoryChooser', {trackAction: 'saveNew'});
+      } else {
+        // if preset chosen, navigate to save track screen
+        navigate('SaveTrack');
+      }
+    }, [hasUnsavedTrack, trackPreset, navigate, authState]),
+  );
+}
+
+const styles = StyleSheet.create({
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 25,
+    width: '100%',
+  },
+  lowStorageBanner: {
+    position: 'absolute',
+    left: 20,
+    right: 20,
+    zIndex: 2,
+    elevation: 2,
+  },
+});

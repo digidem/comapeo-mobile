@@ -1,0 +1,273 @@
+import {useCallback, useEffect, useLayoutEffect, useState} from 'react';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {defineMessages, useIntl} from 'react-intl';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {COMAPEO_BLUE, BLUE_GREY, RED, VERY_LIGHT_GREY} from '../../lib/styles';
+import {HookFormTextInput} from '../../sharedComponents/HookFormTextInput';
+import {Control, FieldErrors, useForm} from 'react-hook-form';
+import {useFindRemoteArchive} from '../../hooks/server/projects';
+import {Bar} from 'react-native-progress';
+import {ScreenContentWithButtonDock} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDock';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {normalizeRemoteArchiveUrl} from '../../utils/normalizeRemoteArchiveUrl';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {useAddServerPeer} from '@comapeo/core-react';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import * as Sentry from '@sentry/react-native';
+import SaveCheck from '../../images/CheckMark.svg';
+import {HeaderRightContainerButton} from '../../sharedComponents/HeaderRightContainer';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+const m = defineMessages({
+  navTitle: {
+    id: '$1ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle',
+    defaultMessage: 'Add Remote Archive',
+  },
+  url: {
+    id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.url',
+    defaultMessage: 'Url',
+  },
+  invalidUrl: {
+    id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl',
+    defaultMessage: 'Invalid URL',
+  },
+  looking: {
+    id: '$1ProjectSettings.RemoteArchive.AddRemoteArchive.looking',
+    defaultMessage: 'Looking for Remote Archive...',
+  },
+  youAreAdding: {
+    id: '$1ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding',
+    defaultMessage: 'You are adding:',
+  },
+  archiveInfo: {
+    id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo',
+    defaultMessage:
+      'When project participants exchange their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data.',
+  },
+  permission: {
+    id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.permission',
+    defaultMessage: 'Only a Project Coordinator can turn off Remote Archive.',
+  },
+  whatsIncluded: {
+    id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded',
+    defaultMessage: 'See What is Included',
+  },
+});
+
+type URLInput = {
+  url: string;
+};
+
+export const AddRemoteArchive: NativeNavigationComponent<
+  'AddRemoteArchive'
+> = ({navigation}) => {
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: {errors},
+  } = useForm<URLInput>();
+  const [normalizedUrl, setNormalizedUrl] = useState<string>('');
+
+  const {
+    isLoading: urlSearching,
+    data: archiveName,
+    isError,
+  } = useFindRemoteArchive({
+    url: normalizedUrl ? new URL('/info', normalizedUrl).toString() : undefined,
+  });
+
+  useEffect(() => {
+    if (isError) {
+      setError('url', {type: 'required'});
+    }
+  }, [isError, setError]);
+
+  const handleFindRemoteArchive = useCallback(
+    ({url}: URLInput) => {
+      try {
+        setNormalizedUrl(normalizeRemoteArchiveUrl(url));
+      } catch {
+        setError('url', {type: 'required'});
+      }
+    },
+    [setNormalizedUrl, setError],
+  );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () =>
+        !archiveName ? (
+          <HeaderRightContainerButton
+            onPress={handleSubmit(handleFindRemoteArchive)}
+            loading={false}>
+            <SaveCheck />
+          </HeaderRightContainerButton>
+        ) : null,
+    });
+  }, [handleFindRemoteArchive, handleSubmit, navigation, archiveName]);
+
+  if (urlSearching) {
+    return <FindingRemoteArchive />;
+  }
+
+  if (archiveName) {
+    return <AddFoundArchive name={archiveName} url={normalizedUrl} />;
+  }
+
+  return <SearchUrl control={control} errors={errors} />;
+};
+
+type SearchUrlProp = {
+  control: Control<URLInput>;
+  errors: FieldErrors<URLInput>;
+};
+
+const SearchUrl = ({control, errors}: SearchUrlProp) => {
+  const {formatMessage} = useIntl();
+  const navigation = useNavigationFromRoot();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({headerShown: true});
+  }, [navigation]);
+  return (
+    <View style={{padding: 20}}>
+      <View style={{flexDirection: 'row', marginBottom: 10}}>
+        <HeaderText variant="header5">{formatMessage(m.url)}</HeaderText>
+        <HeaderText variant="header5" style={{color: RED}}>
+          *
+        </HeaderText>
+      </View>
+      <HookFormTextInput
+        testID={'RA.url-inp'}
+        control={control}
+        name="url"
+        rules={{required: true, minLength: 1}}
+      />
+      {(errors.url || errors.root) && (
+        <HeaderText variant="header6" style={{color: RED, marginTop: 10}}>
+          {formatMessage(m.invalidUrl)}
+        </HeaderText>
+      )}
+    </View>
+  );
+};
+
+const FindingRemoteArchive = () => {
+  const {formatMessage} = useIntl();
+  const navigation = useNavigationFromRoot();
+  const {top} = useSafeAreaInsets();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({headerShown: false});
+  }, [navigation]);
+
+  return (
+    <View style={{padding: 20, paddingTop: top + 80}}>
+      <HeaderText style={styles.title}>{formatMessage(m.looking)}</HeaderText>
+      <Bar
+        style={{borderWidth: 0, marginTop: 30}}
+        indeterminate
+        color={COMAPEO_BLUE}
+        width={null}
+        height={10}
+      />
+    </View>
+  );
+};
+
+type AddFoundArchiveProps = {
+  name: string;
+  url: string;
+};
+
+const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
+  const {formatMessage} = useIntl();
+  const {projectId} = useActiveProject();
+  const {mutate, status} = useAddServerPeer({projectId});
+  const {navigate, setOptions, addListener} = useNavigationFromRoot();
+  function handleAddRemoteArchive() {
+    mutate(
+      {baseUrl: url},
+      {
+        onSuccess: () => {
+          navigate('SuccessfullyAddedArchive', {archiveName: name, url});
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigate('ErrorBottomSheet', {error: err});
+        },
+      },
+    );
+  }
+
+  useEffect(() => {
+    const unsubscribe = addListener('beforeRemove', e => {
+      if (status !== 'pending') {
+        // If user is not actively adding server
+        return;
+      }
+
+      // Prevent default behavior of leaving the screen
+      e.preventDefault();
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [addListener, status]);
+
+  useLayoutEffect(() => {
+    setOptions({headerShown: true});
+  }, [setOptions]);
+
+  return (
+    <ScreenContentWithButtonDock
+      loading={status === 'pending'}
+      bottomButton={
+        <PrimaryButton
+          onPress={() => handleAddRemoteArchive()}
+          fullSize
+          text={formatMessage(m.navTitle)}
+        />
+      }>
+      <HeaderText variant="header4" style={styles.title}>
+        {formatMessage(m.youAreAdding)}
+      </HeaderText>
+      <View style={{alignSelf: 'center', marginBottom: 20}}>
+        <HeaderText variant="header5">{name}</HeaderText>
+        <BodyText variant="smallMeta">{url}</BodyText>
+      </View>
+      <View style={styles.greyBox}>
+        <BodyText variant="smallMeta">{formatMessage(m.archiveInfo)}</BodyText>
+        <BodyText style={{marginTop: 5}} variant="smallMeta">
+          {formatMessage(m.permission)}
+        </BodyText>
+        <TouchableOpacity onPress={() => navigate('WhatsIncludedBottomSheet')}>
+          <HeaderText
+            variant="header5"
+            style={{color: COMAPEO_BLUE, marginTop: 10}}>
+            {formatMessage(m.whatsIncluded)}
+          </HeaderText>
+        </TouchableOpacity>
+      </View>
+    </ScreenContentWithButtonDock>
+  );
+};
+
+AddRemoteArchive.navTitle = m.navTitle;
+
+const styles = StyleSheet.create({
+  title: {
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  greyBox: {
+    backgroundColor: VERY_LIGHT_GREY,
+    padding: 20,
+    borderColor: BLUE_GREY,
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+});

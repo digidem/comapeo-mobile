@@ -14,7 +14,7 @@ import {randomBytes} from 'node:crypto';
 import {pEvent} from 'p-event';
 import pEvery from 'p-every';
 import RAM from 'random-access-memory';
-import {MEMBER_ROLE_ID} from '../../../src/frontend/sharedTypes';
+import {MEMBER_ROLE_ID} from '../../../src/sharedTypes';
 
 const COMAPEO_CORE_PKG_FOLDER = path.dirname(
   require.resolve('@comapeo/core/package.json'),

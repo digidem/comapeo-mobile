@@ -1,0 +1,65 @@
+import {ScrollView, StyleSheet} from 'react-native';
+import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+
+import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
+import {Text} from '../../../sharedComponents/Text';
+import {EditIcon} from '../../../sharedComponents/icons';
+import {FieldRow} from './FieldRow';
+import {HeaderRightContainerButton} from '../../../sharedComponents/HeaderRightContainer';
+
+const m = defineMessages({
+  title: {
+    id: '$1screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title',
+    defaultMessage: 'Device Name',
+  },
+  deviceNameLabel: {
+    id: '$1screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel',
+    defaultMessage: 'Your Device Name',
+  },
+});
+
+export function createNavigationOptions({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}) {
+  return ({
+    navigation,
+  }: NativeRootNavigationProps<'DeviceNameDisplay'>): NativeStackNavigationOptions => {
+    return {
+      headerTitle: intl(m.title),
+      headerRight: () => (
+        <HeaderRightContainerButton
+          testID="edit-icon"
+          loading={false}
+          onPress={() => navigation.navigate('DeviceNameEdit')}>
+          <EditIcon />
+        </HeaderRightContainerButton>
+      ),
+    };
+  };
+}
+
+export const DisplayScreen = () => {
+  const {formatMessage: t} = useIntl();
+  const {data} = useOwnDeviceInfo();
+
+  const deviceName = data?.name;
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <FieldRow label={t(m.deviceNameLabel)}>
+        <Text>{deviceName}</Text>
+      </FieldRow>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+  },
+});

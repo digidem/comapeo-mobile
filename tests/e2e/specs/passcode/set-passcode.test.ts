@@ -20,6 +20,9 @@ describe('Passcode - setPasscode', () => {
 
     await continueBtn.click();
 
+    // The open keyboard scrolls the title out of view
+    await browser.waitUntil(() => driver.isKeyboardShown());
+    await driver.hideKeyboard();
     await expect($(byTextMatches('Set App Passcode'))).toBeDisplayed();
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
@@ -45,7 +48,7 @@ describe('Passcode - setPasscode', () => {
   });
 
   it('should verify keyboard, handle passcode errors, then get to Re-enter screen', async () => {
-    await expect(driver.isKeyboardShown());
+    expect(await driver.isKeyboardShown()).toBe(true);
 
     const nextBtn = await $(byText('Next'));
     await nextBtn.click();
@@ -71,6 +74,8 @@ describe('Passcode - setPasscode', () => {
 
     await passcodeInp.setValue(output.passcode);
     await nextBtn.click();
+    await browser.waitUntil(() => driver.isKeyboardShown());
+    await driver.hideKeyboard();
     await expect($(byTextMatches('Re-enter Passcode'))).toBeDisplayed();
 
     await passcodeInp.setValue('54321');

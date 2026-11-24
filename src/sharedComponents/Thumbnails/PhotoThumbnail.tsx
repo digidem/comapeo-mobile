@@ -1,0 +1,47 @@
+import {useState} from 'react';
+import {Image} from 'react-native';
+import {AlertIcon} from '../icons';
+import {useAttachmentUrlQuery} from '../../hooks/server/media';
+import {ThumbnailContainer} from './ThumbnailContainer';
+import {Attachment} from '../../sharedTypes';
+
+export const ThumbnailImage = ({error, uri}: {error?: Error; uri: string}) => {
+  const [nativeImageError, setNativeImageError] = useState(false);
+
+  function handleImageError() {
+    setNativeImageError(true);
+  }
+
+  if (error || nativeImageError) {
+    return <AlertIcon />;
+  }
+
+  return (
+    <Image
+      onError={handleImageError}
+      source={{uri}}
+      style={{width: '100%', height: '100%'}}
+    />
+  );
+};
+
+export const SavedPhotoThumbnailImage = ({
+  onPress,
+  photo,
+  size,
+}: {
+  onPress?: () => void;
+  photo: Attachment;
+  size: number;
+}) => {
+  const image = useAttachmentUrlQuery(photo, 'thumbnail');
+
+  return (
+    <ThumbnailContainer
+      accessibilityLabel="View saved photo."
+      size={size}
+      onPress={image.error ? undefined : onPress}>
+      <ThumbnailImage error={image.error || undefined} uri={image.url} />
+    </ThumbnailContainer>
+  );
+};

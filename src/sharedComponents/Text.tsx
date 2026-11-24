@@ -1,0 +1,20 @@
+import {type PropsWithChildren} from 'react';
+import {Text as RNText, TextProps} from 'react-native';
+import {BLACK} from '../lib/styles';
+import {RUBIK} from '../lib/fonts';
+
+/**
+ *
+ * @deprecated use `sharedComponent/Text/HeaderText` or `sharedComponent/Text/BodyText`  instead
+ */
+export const Text = ({
+  children,
+  style,
+  ...otherTextProps
+}: PropsWithChildren<TextProps>) => (
+  <RNText
+    style={[{fontFamily: RUBIK[400], color: BLACK, fontSize: 16}, style]}
+    {...otherTextProps}>
+    {children}
+  </RNText>
+);

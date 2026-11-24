@@ -22,7 +22,7 @@ describe('Passcode - Post Passcode Setup Flow', () => {
     await expect($(byTextMatches('Enter Passcode'))).toBeDisplayed();
     await expect($(byResourceId('SETTINGS.passcode-inp'))).toBeDisplayed();
 
-    await expect(driver.isKeyboardShown());
+    expect(await driver.isKeyboardShown()).toBe(true);
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
@@ -43,6 +43,7 @@ describe('Passcode - Post Passcode Setup Flow', () => {
     const passcodeField = await $(byResourceId('SETTINGS.passcode-inp'));
     await passcodeField.click();
     await driver.keys(output.newpasscode.split(''));
+    await driver.hideKeyboard();
     await expect($(byText('Incorrect Passcode'))).toBeDisplayed();
 
     await passcodeField.click();

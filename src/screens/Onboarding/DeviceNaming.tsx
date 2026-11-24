@@ -1,0 +1,208 @@
+import {useEffect, useRef, useState} from 'react';
+import {
+  Keyboard,
+  StyleSheet,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+  StyleSheet as RNStyleSheet,
+} from 'react-native';
+import {defineMessages, useIntl} from 'react-intl';
+import Ionicons from '@react-native-vector-icons/ionicons';
+import {deviceType} from 'expo-device';
+import DeviceIcon from '../../images/Device.svg';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {
+  BLACK,
+  BLUE_GREY,
+  LIGHT_GREY,
+  NEW_DARK_GREY,
+  RED,
+  VERY_LIGHT_GREY,
+} from '../../lib/styles';
+import {useSetOwnDeviceInfo} from '@comapeo/core-react';
+import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {OnboardingParamsList} from '../../sharedTypes/navigation';
+import {ScreenContentWithButtonDockNoHeader} from '../../sharedComponents/ScreenContentWithButtonDock/ScreenContentWithButtonDockNoHeader.tsx';
+
+const m = defineMessages({
+  header: {
+    id: '$1screens.DeviceNaming.header',
+    defaultMessage: 'Name This Device',
+  },
+  description: {
+    id: '$1screens.DeviceNaming.description',
+    defaultMessage:
+      'Distinct names help collaborators using CoMapeo to recognize you.',
+  },
+  save: {
+    id: '$1screens.DeviceNaming.save',
+    defaultMessage: 'Save',
+  },
+  placeholder: {
+    id: '$1screens.DeviceNaming.placeholder',
+    defaultMessage: 'Device Name',
+  },
+});
+
+export const DeviceNaming = ({
+  navigation,
+}: NativeStackScreenProps<OnboardingParamsList, 'DeviceNaming'>) => {
+  const [name, setName] = useState('');
+  const [errorTimeout, setErrorTimeout] = useTemporaryError();
+  const {formatMessage: t} = useIntl();
+  const {mutate, status} = useSetOwnDeviceInfo();
+
+  function setNameWithValidation(nameValue: string) {
+    if (nameValue.length > 60) {
+      setErrorTimeout();
+      return;
+    }
+    setName(nameValue);
+  }
+
+  function handleSavePress() {
+    const trimmedName = name.trim();
+    if (trimmedName.length === 0 || trimmedName.length > 60) {
+      setErrorTimeout();
+      return;
+    }
+
+    mutate(
+      {
+        name: trimmedName,
+        deviceType: expoToCoreDeviceType(deviceType),
+      },
+      {
+        onSuccess: () => {
+          // Reset so that someone can't go back to the onboarding screens after saving the device name
+          navigation.reset({index: 0, routes: [{name: 'Success'}]});
+        },
+      },
+    );
+  }
+
+  return (
+    // accessible={false} keeps iOS from collapsing the whole form into a
+    // single accessibility element, which hides the input and button.
+    <TouchableWithoutFeedback accessible={false} onPress={Keyboard.dismiss}>
+      <ScreenContentWithButtonDockNoHeader
+        loading={status === 'pending'}
+        contentContainerStyle={{alignItems: 'center'}}
+        bottomButton={
+          <PrimaryButton
+            testID="ONBOARDING.add-name-btn"
+            fullSize
+            onPress={handleSavePress}
+            text={t(m.save)}
+            renderIcon={({color, size}) => (
+              <Ionicons
+                name="checkmark-circle-outline"
+                color={color}
+                size={size}
+              />
+            )}
+          />
+        }>
+        <View style={styles.headerArea}>
+          <DeviceIcon width={39} height={60} />
+          <HeaderText variant="header2" style={styles.title}>
+            {t(m.header)}
+          </HeaderText>
+          <View style={styles.nameForm}>
+            <TextInput
+              testID="ONBOARDING.device-name-inp"
+              style={[
+                styles.textInput,
+                {borderColor: errorTimeout ? RED : LIGHT_GREY},
+              ]}
+              value={name}
+              onChangeText={setNameWithValidation}
+              placeholderTextColor={LIGHT_GREY}
+              placeholder={t(m.placeholder)}
+            />
+            <BodyText
+              variant="smallMeta"
+              style={RNStyleSheet.flatten([
+                styles.counterText,
+                {color: errorTimeout ? RED : NEW_DARK_GREY},
+              ])}>
+              {`${name.length}/60`}
+            </BodyText>
+            <View style={styles.infoBox}>
+              <BodyText variant="smallMeta" style={styles.infoText}>
+                {t(m.description)}
+              </BodyText>
+            </View>
+          </View>
+        </View>
+      </ScreenContentWithButtonDockNoHeader>
+    </TouchableWithoutFeedback>
+  );
+};
+
+function useTemporaryError() {
+  const [errorTimeout, setErrorTimeout] = useState(false);
+  const timer = useRef<NodeJS.Timeout | undefined>(undefined);
+
+  useEffect(() => {
+    if (errorTimeout && !timer.current) {
+      timer.current = setTimeout(() => {
+        setErrorTimeout(false);
+        timer.current = undefined;
+      }, 1500);
+    }
+
+    return () => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+        timer.current = undefined;
+      }
+    };
+  }, [errorTimeout]);
+
+  return [
+    errorTimeout,
+    () => setErrorTimeout(prevVal => (!prevVal ? true : prevVal)),
+  ] as const;
+}
+
+const styles = StyleSheet.create({
+  headerArea: {
+    alignItems: 'center',
+    gap: 10,
+    width: 280,
+  },
+  title: {
+    textAlign: 'center',
+  },
+  nameForm: {
+    gap: 10,
+    width: '100%',
+  },
+  textInput: {
+    borderWidth: 1,
+    borderRadius: 4,
+    color: BLACK,
+    fontSize: 16,
+    minHeight: 56,
+    paddingHorizontal: 16,
+  },
+  counterText: {
+    alignSelf: 'flex-end',
+  },
+  infoBox: {
+    backgroundColor: VERY_LIGHT_GREY,
+    borderColor: BLUE_GREY,
+    borderWidth: 1,
+    borderRadius: 6,
+    padding: 12,
+    alignItems: 'center',
+  },
+  infoText: {
+    textAlign: 'center',
+  },
+});

@@ -6,7 +6,7 @@ on:
       - 'release/**'
     types: [opened, synchronize, reopened, ready_for_review]
   schedule:
-    - cron: '0 4 * * 0-3'
+    - cron: '0 4 * * 1-5'
   workflow_dispatch:
     inputs:
       branch:
@@ -16,7 +16,8 @@ on:
 
 jobs:
   build-apk:
-    runs-on: ubuntu-latest
+    # ubuntu-26.04 (ubuntu-latest from Nov 2026) fails when building the APK
+    runs-on: ubuntu-24.04
     outputs:
       app_url: ${{ steps.upload.outputs.app_url }}
 
@@ -97,7 +98,8 @@ jobs:
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
   run-e2e-tests:
-    runs-on: ubuntu-latest
+    # ubuntu-26.04 crashes when building the APK
+    runs-on: ubuntu-24.04
     needs: build-apk
     concurrency:
       group: browserstack-devices

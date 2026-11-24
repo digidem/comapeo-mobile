@@ -3,9 +3,8 @@ import type {MapeoManager} from '@comapeo/core';
 import type {ComapeoCoreClientApi} from '@comapeo/ipc';
 import {createManager, setUpIPC} from './core';
 import {createAppProvidersWrapper} from './react';
-import {sleep} from '../../../src/frontend/lib/sleep';
-import React from 'react';
-import {AppNavigator} from '../../../src/frontend/AppNavigator';
+import {sleep} from '../../../src/lib/sleep';
+import {AppNavigator} from '../../../src/AppNavigator';
 
 export function setupIntegrationTest() {
   let manager: MapeoManager;

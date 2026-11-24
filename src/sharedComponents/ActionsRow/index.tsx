@@ -1,0 +1,139 @@
+import {useCallback, useState} from 'react';
+import {Keyboard, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Divider} from '../Divider';
+import {KeyboardAccessory} from './KeyboardAccessory';
+import {useKeyboardListener} from '../../hooks/useKeyboardListener';
+import {defineMessages, useIntl} from 'react-intl';
+import {getRecordingPermissionsAsync, PermissionResponse} from 'expo-audio';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import PhotoIcon from '../../images/observationEdit/Photo.svg';
+import AudioIcon from '../../images/observationEdit/Audio.svg';
+import DetailsIcon from '../../images/observationEdit/Details.svg';
+import {HeaderText} from '../Text/HeaderText';
+import {CustomCircleIcon} from './CustomCircleIcon';
+import {useFocusEffect} from '@react-navigation/native';
+
+const m = defineMessages({
+  audioButton: {
+    id: '$1screens.ObservationEdit.ObservationEditView.audioButton',
+    defaultMessage: 'Audio',
+    description: 'Button label for adding audio',
+  },
+  photoButton: {
+    id: '$1screens.ObservationEdit.ObservationEditView.photoButton',
+    defaultMessage: 'Photo',
+    description: 'Button label for adding photo',
+  },
+  detailsButton: {
+    id: '$1screens.ObservationEdit.ObservationEditView.detailsButton',
+    defaultMessage: 'Details',
+    description: 'Button label to add details',
+  },
+});
+
+export function ActionsRow({fieldIds}: {fieldIds?: string[]}) {
+  const {keyboardVisible, keyboardHeight} = useKeyboardListener();
+  const {formatMessage: t} = useIntl();
+  const navigation = useNavigationFromRoot();
+  const [audioPermission, setAudioPermission] =
+    useState<PermissionResponse | null>(null);
+
+  // Audio permissions are granted on a different page. Since this page stays in the navigation stack,
+  // it does not remount when permissions change, leading to stale permission data.
+  // To ensure we always have the latest permission status, we check it whenever the page comes into focus.
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const permission = await getRecordingPermissionsAsync();
+        setAudioPermission(permission);
+      })();
+    }, []),
+  );
+
+  const handleCameraPress = () => {
+    navigation.navigate('AddPhoto');
+  };
+
+  const handleAudioPress = () => {
+    if (audioPermission === null) return;
+    if (audioPermission.granted) {
+      navigation.navigate('AudioRecording');
+      return;
+    }
+    navigation.navigate('AudioAskPermissionBottomSheet', {audioPermission});
+  };
+
+  const bottomSheetItems = [
+    {
+      icon: <PhotoIcon width={30} height={30} />,
+      label: t(m.photoButton),
+      onPress: handleCameraPress,
+      testID: 'OBS.add-photo-btn',
+    },
+    {
+      icon: <AudioIcon width={30} height={30} />,
+      label: t(m.audioButton),
+      onPress: handleAudioPress,
+      testID: 'OBS.add-audio-btn',
+    },
+  ];
+
+  if (fieldIds) {
+    bottomSheetItems.unshift({
+      icon: <DetailsIcon width={30} height={30} />,
+      label: t(m.detailsButton),
+      onPress: () =>
+        navigation.navigate('ObservationFields', {fieldIds: fieldIds}),
+      testID: 'OBS.add-details-btn',
+    });
+  }
+
+  return (
+    <View>
+      <View>
+        <Divider />
+        {keyboardVisible ? (
+          <KeyboardAccessory
+            items={bottomSheetItems}
+            onPress={() => Keyboard.dismiss()}
+            keyboardHeight={keyboardHeight}
+          />
+        ) : (
+          <View style={styles.container}>
+            {bottomSheetItems.map(item => (
+              <TouchableOpacity
+                onPress={item.onPress}
+                style={styles.itemContainer}
+                key={item.testID}
+                testID={item.testID}>
+                <View style={styles.itemIcon}>
+                  <CustomCircleIcon icon={item.icon} />
+                </View>
+                <HeaderText variant="header6" numberOfLines={1}>
+                  {item.label}
+                </HeaderText>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    flexDirection: 'row',
+    paddingTop: 20,
+  },
+  itemContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  itemIcon: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

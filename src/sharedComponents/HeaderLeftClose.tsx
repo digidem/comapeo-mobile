@@ -1,0 +1,28 @@
+import {BLACK} from '../lib/styles';
+import {HeaderCloseIcon} from './CustomHeaderLeftClose';
+import {CustomHeaderLeftStyles} from './CustomHeaderLeft';
+import {HeaderBackButtonProps} from '@react-navigation/elements';
+import {HeaderBackButton} from '@react-navigation/elements';
+
+type HeaderLeftCloseProps = {
+  headerBackButtonProps: HeaderBackButtonProps;
+  onPress: () => void;
+  tintColor?: string;
+};
+
+export const HeaderLeftClose = ({
+  headerBackButtonProps,
+  onPress,
+  tintColor,
+}: HeaderLeftCloseProps) => {
+  return (
+    <HeaderBackButton
+      {...headerBackButtonProps}
+      displayMode="minimal"
+      testID="OBS.header-left-close"
+      style={CustomHeaderLeftStyles}
+      onPress={onPress}
+      backImage={() => <HeaderCloseIcon tintColor={tintColor || BLACK} />}
+    />
+  );
+};

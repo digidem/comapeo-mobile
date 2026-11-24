@@ -15,12 +15,23 @@
     },
     "plugins": [
       "expo-system-ui",
-      "expo-audio",
       "expo-localization",
       "expo-secure-store",
       "expo-document-picker",
       "react-native-vision-camera",
       ["@maplibre/maplibre-react-native"],
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "CoMapeo can add photos to observations made."
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "CoMapeo can record audio while using the app to add to observations made."
+        }
+      ],
       [
         "expo-splash-screen",
         {
@@ -40,7 +51,8 @@
         {
           "isAndroidForegroundServiceEnabled": true,
           "isIosBackgroundLocationEnabled": true,
-          "locationPermission": "Allow $(PRODUCT_NAME) to use location?"
+          "locationWhenInUsePermission": "CoMapeo records GPS location for each observation made to accurately display it on the map.",
+          "locationAlwaysAndWhenInUsePermission": "CoMapeo keeps recording GPS location in the background for each track started including when the screen is off."
         }
       ],
       [

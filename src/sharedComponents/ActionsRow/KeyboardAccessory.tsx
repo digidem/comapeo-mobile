@@ -1,0 +1,81 @@
+import {FC, type ReactNode} from 'react';
+import {View, Pressable, StyleSheet} from 'react-native';
+import {NEW_DARK_GREY} from '../../lib/styles';
+import Plus from '../../images/observationEdit/Plus.svg';
+import {defineMessages, FormattedMessage} from 'react-intl';
+import {BodyText} from '../Text/BodyText';
+
+const m = defineMessages({
+  showOptions: {
+    id: 'shareComponent.KeyboardAccessory.showOptions',
+    defaultMessage: 'Show Options',
+    description: 'title for observation options',
+  },
+});
+
+type ActionTabItems = {
+  icon: ReactNode;
+  label: string;
+  onPress: () => void;
+  testID?: string;
+};
+
+interface KeyboardAccessory {
+  items: ActionTabItems[];
+  onPress: () => unknown;
+  keyboardHeight: number;
+}
+
+export const KeyboardAccessory: FC<KeyboardAccessory> = ({
+  onPress,
+  items,
+  keyboardHeight,
+}) => {
+  return (
+    <View
+      style={[
+        styles.containerPadding,
+        styles.flexRow,
+        {marginBottom: keyboardHeight},
+      ]}>
+      <View style={[styles.flexRow, styles.accessoryMainWrapper]}>
+        <Plus style={{marginRight: 10}} />
+        <BodyText variant="large" style={styles.text} numberOfLines={1}>
+          <FormattedMessage {...m.showOptions} />
+        </BodyText>
+      </View>
+      <View style={styles.flexRow}>
+        {items.map(item => (
+          <Pressable
+            onPress={onPress}
+            key={item.testID || item.label}
+            style={styles.accessoryIcon}
+            testID={`${item.testID}-keyboard`}>
+            {item.icon}
+          </Pressable>
+        ))}
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  flexRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    flex: 1,
+    color: NEW_DARK_GREY,
+  },
+  containerPadding: {
+    paddingHorizontal: 20,
+    paddingVertical: 18,
+  },
+  accessoryMainWrapper: {
+    flex: 1,
+  },
+  accessoryIcon: {
+    paddingHorizontal: 10,
+  },
+});

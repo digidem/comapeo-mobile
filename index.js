@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import './src/frontend/polyfills/intl';
+import './src/polyfills/intl';
 import {registerRootComponent} from 'expo';
-import App from './src/frontend/App';
+import App from './src/App';
 
 registerRootComponent(App);

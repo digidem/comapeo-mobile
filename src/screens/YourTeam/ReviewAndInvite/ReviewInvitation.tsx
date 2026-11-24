@@ -1,0 +1,94 @@
+import {StyleSheet, View} from 'react-native';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {defineMessages, useIntl} from 'react-intl';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
+import {BLACK, WHITE} from '../../../lib/styles';
+import {Button} from '../../../sharedComponents/Button';
+import {DeviceNameWithIcon} from '../../../sharedComponents/DeviceNameWithIcon';
+import {RoleWithIcon} from '../../../sharedComponents/RoleWithIcon';
+import {DeviceType, MEMBER_ROLE_ID} from '../../../sharedTypes';
+import {DeviceRole} from '../../../sharedTypes';
+import {useBottomPaddingWithSafeArea} from '../../../hooks/useBottomPaddingWithSafeArea';
+
+const m = defineMessages({
+  title: {
+    id: 'screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title',
+    defaultMessage: 'Review Invitation',
+  },
+  youAreInviting: {
+    id: 'screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.youAreInviting',
+    defaultMessage: 'You are inviting:',
+  },
+  sendInvite: {
+    id: '$1screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite',
+    defaultMessage: 'Send Invite',
+  },
+});
+
+type ReviewInvitationProps = {
+  name: string;
+  role: DeviceRole;
+  deviceId: string;
+  deviceType: DeviceType;
+  sendInvite: () => void;
+};
+
+export const ReviewInvitation = ({
+  name,
+  role,
+  deviceId,
+  sendInvite,
+  deviceType,
+}: ReviewInvitationProps) => {
+  const {formatMessage: t} = useIntl();
+  const paddingBottom = useBottomPaddingWithSafeArea();
+
+  return (
+    <View style={[styles.container, {paddingBottom}]}>
+      <View
+        style={{
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <BodyText variant="medium" weight={700} style={{color: BLACK}}>
+          {t(m.youAreInviting)}
+        </BodyText>
+        <DeviceNameWithIcon
+          name={name}
+          deviceId={deviceId}
+          deviceType={deviceType}
+          style={{marginTop: 20}}
+        />
+        <RoleWithIcon
+          style={{marginTop: 20}}
+          role={role === MEMBER_ROLE_ID ? 'participant' : 'coordinator'}
+        />
+      </View>
+      <Button fullWidth onPress={sendInvite}>
+        <View style={styles.flexRow}>
+          <MaterialIcon name="send" size={25} color={WHITE} />
+          <BodyText weight={700} style={{color: WHITE, marginLeft: 10}}>
+            {t(m.sendInvite)}
+          </BodyText>
+        </View>
+      </Button>
+    </View>
+  );
+};
+
+ReviewInvitation.navTitle = m.title;
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 30,
+    flex: 1,
+  },
+  flexRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});

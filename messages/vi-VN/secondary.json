@@ -341,8 +341,5 @@
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Thay đổi"
-  },
-  "soloProject.inviteCollaborators.goBack": {
-    "message": "Quay trở lại"
   }
 }

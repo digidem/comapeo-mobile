@@ -31,7 +31,7 @@ import {
   setServiceNotification,
 } from '@comapeo/core-react-native';
 import {localeImports} from '../translations/index';
-import {AppState, Platform} from 'react-native';
+import {AppState} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import NetInfo from '@react-native-community/netinfo';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
@@ -56,7 +56,6 @@ import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext
 import {createLocaleStore, LocaleContext} from './contexts/LocaleStoreContext';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
-import {TrackingNotification} from './TrackingNotification';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createLowStorageBannerStore} from './contexts/LowStorageBannerContext.tsx';
 import {createAppUsageStatsStore} from './contexts/AppUsageStatsContext.tsx';
@@ -143,6 +142,9 @@ localDiscoveryController.start();
 
 SplashScreen.setOptions({fade: true});
 
+// Only iOS posts notifications through expo-notifications (the tracking one), and by
+// default iOS drops any that arrive while the app is open. This keeps it in the
+// notification list without a banner, since tracking starts from inside the app.
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowBanner: false,
@@ -282,7 +284,6 @@ const App = () => {
                     earlyAccessStore={earlyAccessStore}
                     unitSystemStore={persistedUnitSystemStore}
                     qaDeviceNameStore={qaDeviceNameStore}>
-                    {Platform.OS === 'ios' && <TrackingNotification />}
                     <AppNavigator
                       navigationIntegration={navigationIntegration}
                     />

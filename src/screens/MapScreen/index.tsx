@@ -84,6 +84,14 @@ const m = defineMessages({
     id: 'screens.MapScreen.locationPermissionDescription',
     defaultMessage: 'Location required to use.',
   },
+  trackLocationRequired: {
+    id: 'screens.MapScreen.TrackBottomSheet.locationRequired',
+    defaultMessage: 'Location required to use.',
+  },
+  trackLocationAndNotificationsRequired: {
+    id: 'screens.MapScreen.TrackBottomSheet.locationAndNotificationsRequired',
+    defaultMessage: 'Location & Notifications required to use.',
+  },
 });
 
 // This is the default zoom used when the map first loads, and also the zoom
@@ -216,11 +224,11 @@ export const MapScreen = ({
         }}>
         {trackBottomSheetOpen ? (
           <TrackPermissionScreen
-            missing={
+            description={formatMessage(
               notificationPermission.granted
-                ? 'location'
-                : 'locationAndNotifications'
-            }
+                ? m.trackLocationRequired
+                : m.trackLocationAndNotificationsRequired,
+            )}
             canAskAgain={locationPermission.canAskAgain}
             onAllow={() => askLocationAndNotificationPermissions.mutate()}
             onOpenSettings={() => goToLocationSettings.mutate()}

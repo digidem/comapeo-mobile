@@ -21,7 +21,11 @@ export const trackingNotificationMessages = defineMessages({
   },
 });
 
-export async function showTrackingNotification(
+/**
+ * Posts the tracking notification on iOS, unless it is already showing.
+ * No-op on Android, where the location foreground service posts its own (see `useTracking`).
+ */
+export async function showIOSTrackingNotification(
   formatMessage: IntlShape['formatMessage'],
 ) {
   if (Platform.OS !== 'ios') return;
@@ -36,6 +40,7 @@ export async function showTrackingNotification(
     return;
   }
 
+  // `trigger: null` posts it right away: expo has no separate "show now" function.
   await Notifications.scheduleNotificationAsync({
     identifier: TRACKING_NOTIFICATION_ID,
     content: {
@@ -47,7 +52,8 @@ export async function showTrackingNotification(
   });
 }
 
-export async function hideTrackingNotification() {
+/** Removes the iOS tracking notification. No-op on Android, as above. */
+export async function dismissTrackingNotification() {
   if (Platform.OS !== 'ios') return;
 
   await Notifications.dismissNotificationAsync(TRACKING_NOTIFICATION_ID);

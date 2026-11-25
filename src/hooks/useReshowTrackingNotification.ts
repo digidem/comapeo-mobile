@@ -3,14 +3,15 @@ import {AppState} from 'react-native';
 import {useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
 
-import {useTrackState} from './contexts/TrackStoreContext';
-import {showTrackingNotification} from './lib/trackingNotification';
+import {useTrackState} from '../contexts/TrackStoreContext';
+import {showIOSTrackingNotification} from '../lib/trackingNotification';
 
 /**
- * Puts the tracking notification back after it is removed (on iOS), which it does as
- * soon as the notification is tapped.
+ * iOS removes the tracking notification as soon as it is tapped, so this puts it back
+ * when the app goes to the background while still tracking. Does nothing on Android,
+ * where the foreground service keeps its own notification up.
  */
-export const TrackingNotification = () => {
+export function useReshowTrackingNotification() {
   const {formatMessage} = useIntl();
   const isTracking = useTrackState(state => state.isTracking);
 
@@ -20,13 +21,11 @@ export const TrackingNotification = () => {
     const subscription = AppState.addEventListener('change', status => {
       if (status !== 'background') return;
 
-      showTrackingNotification(formatMessage).catch(err =>
+      showIOSTrackingNotification(formatMessage).catch(err =>
         Sentry.captureException(err),
       );
     });
 
     return () => subscription.remove();
   }, [isTracking, formatMessage]);
-
-  return null;
-};
+}

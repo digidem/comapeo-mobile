@@ -11,8 +11,8 @@ import * as Sentry from '@sentry/react-native';
 import {useLocationContext} from '../contexts/LocationContext';
 import {toError} from '../utils/errors';
 import {
-  hideTrackingNotification,
-  showTrackingNotification,
+  dismissTrackingNotification,
+  showIOSTrackingNotification,
 } from '../lib/trackingNotification';
 
 const m = defineMessages({
@@ -44,14 +44,17 @@ export function useTracking() {
       accuracy: Location.Accuracy.Highest,
       activityType: Location.LocationActivityType.Fitness,
       distanceInterval: 1,
-      // Android requires this notification and keeps it up for as long as the foreground service runs
+      // Android only: it requires this notification and keeps it up for as long as the
+      // foreground service runs. iOS has no foreground service, so its notification is
+      // posted by showIOSTrackingNotification below.
       foregroundService: {
         notificationTitle: formatMessage(m.notificationTitle),
         notificationBody: formatMessage(m.notificationBody),
+        killServiceOnDestroy: false,
       },
     })
       .then(() => {
-        showTrackingNotification(formatMessage).catch(err =>
+        showIOSTrackingNotification(formatMessage).catch(err =>
           Sentry.captureException(err),
         );
       })
@@ -74,7 +77,7 @@ export function useTracking() {
     Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
       Sentry.captureException(err);
     });
-    hideTrackingNotification().catch(err => Sentry.captureException(err));
+    dismissTrackingNotification().catch(err => Sentry.captureException(err));
 
     const currentLocation = locationContext.getState().location;
 
@@ -99,7 +102,7 @@ export function useTracking() {
     Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
       Sentry.captureException(err);
     });
-    hideTrackingNotification().catch(err => Sentry.captureException(err));
+    dismissTrackingNotification().catch(err => Sentry.captureException(err));
 
     setTracking(false);
     clearCurrentTrack();

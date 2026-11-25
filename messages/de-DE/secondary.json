@@ -1121,26 +1121,5 @@
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Teilnehmer"
-  },
-  "soloProject.inviteCollaborators.goBack": {
-    "message": "Gehe zurück"
-  },
-  "soloProject.inviteCollaborators.introText": {
-    "message": "Teile Beobachtungen mit anderen mit CoMapeo."
-  },
-  "soloProject.inviteCollaborators.inviteOnly": {
-    "message": "Nur Geräte, die zu diesem Projekt eingeladen werden, können dazu beitragen."
-  },
-  "soloProject.inviteCollaborators.manageControl": {
-    "message": "Verwalten Sie einfach Projektmitarbeiter und -einstellungen."
-  },
-  "soloProject.inviteCollaborators.nameProject": {
-    "message": "Mein Projekt benennen"
-  },
-  "soloProject.inviteCollaborators.nameProjectDescription": {
-    "message": "Benennen Sie Ihr Projekt um mit der Zusammenarbeit zu beginnen."
-  },
-  "soloProject.inviteCollaborators.title": {
-    "message": "Mitarbeiter einladen"
   }
 }

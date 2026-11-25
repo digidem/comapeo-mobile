@@ -89,6 +89,7 @@ ios/
 
 # WebdriverIO local configuration
 wdio.local.config.js
+wdio.ios.local.config.js
 
 # WebdriverIO and BrowserStack logs
 logs/

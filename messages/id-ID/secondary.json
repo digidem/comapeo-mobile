@@ -1151,26 +1151,5 @@
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Peserta"
-  },
-  "soloProject.inviteCollaborators.goBack": {
-    "message": "Kembali"
-  },
-  "soloProject.inviteCollaborators.introText": {
-    "message": "Bagikan pengamatan dengan orang lain menggunakan CoMapeo."
-  },
-  "soloProject.inviteCollaborators.inviteOnly": {
-    "message": "Hanya perangkat yang diundang ke proyek ini yang dapat berkontribusi."
-  },
-  "soloProject.inviteCollaborators.manageControl": {
-    "message": "Kelola kontributor dan pengaturan proyek dengan mudah."
-  },
-  "soloProject.inviteCollaborators.nameProject": {
-    "message": "Beri Nama Proyek Saya"
-  },
-  "soloProject.inviteCollaborators.nameProjectDescription": {
-    "message": "Beri nama proyek Anda untuk mulai berkolaborasi."
-  },
-  "soloProject.inviteCollaborators.title": {
-    "message": "Undang Kolaborator"
   }
 }

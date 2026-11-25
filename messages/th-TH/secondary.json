@@ -326,8 +326,5 @@
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "แก้ไข"
-  },
-  "soloProject.inviteCollaborators.goBack": {
-    "message": "ย้อนกลับ"
   }
 }

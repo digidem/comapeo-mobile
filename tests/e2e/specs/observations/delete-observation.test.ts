@@ -10,7 +10,19 @@ describe('Observations - Delete Observation Flow', () => {
 
     await expect($(byTextMatches('Fungi'))).toBeDisplayed();
     const deleteBtn = await $(byText('Delete'));
-    await deleteBtn.scrollIntoView();
+    const observationScroll = await $(
+      'android=new UiSelector().scrollable(true)',
+    );
+    let canScrollMore = true;
+    while (canScrollMore) {
+      canScrollMore = Boolean(
+        await driver.execute('mobile: scrollGesture', {
+          elementId: observationScroll.elementId,
+          direction: 'down',
+          percent: 1.0,
+        }),
+      );
+    }
     await expect($(byText('Share'))).toBeDisplayed();
     await expect(deleteBtn).toBeDisplayed();
   });

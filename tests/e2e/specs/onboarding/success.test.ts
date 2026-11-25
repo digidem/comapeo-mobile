@@ -2,6 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
+import {waitForMapScreen} from '../../utils/readiness';
 
 describe('Onboarding - Success Screen', () => {
   it('should display device ready message and mapping options', async () => {
@@ -38,7 +39,6 @@ describe('Onboarding - Success Screen', () => {
     );
     await startMappingButton.click();
 
-    await driver.pause(2000);
-    await expect($(byResourceId('MAIN.map-screen'))).toBeDisplayed();
+    await waitForMapScreen();
   });
 });

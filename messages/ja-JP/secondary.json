@@ -1104,26 +1104,5 @@
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "参加者"
-  },
-  "soloProject.inviteCollaborators.goBack": {
-    "message": "戻る"
-  },
-  "soloProject.inviteCollaborators.introText": {
-    "message": "CoMapeoを使用して観察記録を他の人と共有します。"
-  },
-  "soloProject.inviteCollaborators.inviteOnly": {
-    "message": "このプロジェクトに招待されたデバイスのみが参加できます。"
-  },
-  "soloProject.inviteCollaborators.manageControl": {
-    "message": "プロジェクトのコントリビューターと設定を簡単に管理できます。"
-  },
-  "soloProject.inviteCollaborators.nameProject": {
-    "message": "プロジェクトの名前"
-  },
-  "soloProject.inviteCollaborators.nameProjectDescription": {
-    "message": "プロジェクトに名前を付けてコラボレーションを開始します。"
-  },
-  "soloProject.inviteCollaborators.title": {
-    "message": "コラボレーターを招待"
   }
 }

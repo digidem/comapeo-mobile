@@ -120,8 +120,17 @@ function LocationProviderInitialized({
   useCheckPermissionOnAppStateChange(store);
 
   useEffect(() => {
+    // Set before watchPositionAsync resolves, so the store updates that arrive
+    // while it is starting (e.g. the first provider status poll) don't start a
+    // second watch.
     let isWatching = false;
     let locationSubscription: LocationSubscription | null = null;
+
+    const stopWatching = () => {
+      isWatching = false;
+      locationSubscription?.remove();
+      locationSubscription = null;
+    };
 
     const startWatchingIfAllowed = () => {
       const {locationPermission, providerStatus} = store.getState();
@@ -147,12 +156,6 @@ function LocationProviderInitialized({
         });
     };
 
-    const stopWatching = () => {
-      isWatching = false;
-      locationSubscription?.remove();
-      locationSubscription = null;
-    };
-
     startWatchingIfAllowed();
     const unsubscribe = store.subscribe(startWatchingIfAllowed);
 
@@ -175,7 +178,7 @@ export function useLocationContext() {
 
 function startWatchPosition(
   store: StoreApi<LocationState>,
-  onWatchEnded: () => void,
+  onError: () => void,
 ) {
   return watchPositionAsync(
     {
@@ -216,7 +219,7 @@ function startWatchPosition(
     },
     // iOS ends the watch for good on errors such as Location Services being
     // turned off or the network dropping, and never resumes it by itself.
-    onWatchEnded,
+    onError,
   );
 }
 

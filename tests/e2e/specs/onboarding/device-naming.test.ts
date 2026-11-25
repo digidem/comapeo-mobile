@@ -36,14 +36,7 @@ describe('Onboarding - Device Naming Test', () => {
     // The keyboard overlays the Save button; dismiss it so the tap works.
     await dismissKeyboard();
     await addNameButton.click();
-    const deviceReadyMessage = await $(
-      byTextMatches(`${output.names.device} is ready`),
-    );
-    await expect(deviceReadyMessage).toBeDisplayed();
-
-    const startMappingButton = await $(
-      byResourceId('ONBOARDING.navigate-to-map-btn'),
-    );
-    await expect(startMappingButton).toBeDisplayed();
+    const stayNotified = await $(byTextMatches('Always Stay Notified'));
+    await expect(stayNotified).toBeDisplayed();
   });
 });

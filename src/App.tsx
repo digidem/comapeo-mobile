@@ -38,6 +38,7 @@ import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
+import * as Notifications from 'expo-notifications';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {
   initSentry,
@@ -140,6 +141,18 @@ const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 
 SplashScreen.setOptions({fade: true});
+
+// Only iOS posts notifications through expo-notifications (the tracking one), and by
+// default iOS drops any that arrive while the app is open. This keeps it in the
+// notification list without a banner, since tracking starts from inside the app.
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowBanner: false,
+    shouldShowList: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const persistedDraftObservationStore = createDraftObservationStore({
   persist: true,

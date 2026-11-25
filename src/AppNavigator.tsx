@@ -13,6 +13,7 @@ import {linking} from './lib/deepLinkConfig';
 import {useQADeviceName} from './contexts/QADeviceNameStoreContext';
 import {SetQADeviceNameScreen} from './screens/SetQADeviceName';
 import {isQABuild} from './lib/appVariant';
+import {useReshowTrackingNotification} from './hooks/useReshowTrackingNotification';
 
 export const AppNavigator = ({
   navigationIntegration,
@@ -22,6 +23,7 @@ export const AppNavigator = ({
 }) => {
   const containerRef = useRef<NavigationContainerRef<AppStackParamsList>>(null);
   const qaDeviceName = useQADeviceName();
+  useReshowTrackingNotification();
 
   if (isQABuild && !qaDeviceName) {
     return <SetQADeviceNameScreen />;

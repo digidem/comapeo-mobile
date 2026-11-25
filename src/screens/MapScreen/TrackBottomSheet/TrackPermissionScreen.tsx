@@ -15,13 +15,10 @@ const m = defineMessages({
     id: '$1screens.MapScreen.TrackBottomSheet.permissionTitle',
     defaultMessage: 'Record Tracks',
   },
-  locationRequired: {
-    id: 'screens.MapScreen.TrackBottomSheet.locationRequired',
-    defaultMessage: 'Location required to use.',
-  },
 });
 
-const ICON_SIZE = 80;
+// The hiker fills only part of its viewBox's width, so it needs a bigger box to match the look design specified
+const ICON_SIZE = 100;
 
 /**
  * For when location was denied and there is no map for the sheet to sit on.
@@ -29,10 +26,12 @@ const ICON_SIZE = 80;
  * can't disagree about it.
  */
 export const TrackPermissionScreen = ({
+  description,
   canAskAgain,
   onAllow,
   onOpenSettings,
 }: {
+  description: string;
   canAskAgain: boolean;
   onAllow: () => void;
   onOpenSettings: () => void;
@@ -57,7 +56,7 @@ export const TrackPermissionScreen = ({
             />
           }
           title={formatMessage(m.title)}
-          description={formatMessage(m.locationRequired)}
+          description={description}
         />
       </View>
       <View style={{flex: 0, alignItems: 'center'}}>

@@ -1,4 +1,4 @@
-import {memo, useEffect, useRef} from 'react';
+import {type ReactNode, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -11,11 +11,16 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {WHITE} from '../../../lib/styles';
-import {StartStopTrack} from './StartStopTrack';
 
 const ANIMATION_DURATION = 250;
 
-export const TrackBottomSheet = memo(({isOpen}: {isOpen: boolean}) => {
+export const TrackBottomSheet = ({
+  isOpen,
+  children,
+}: {
+  isOpen: boolean;
+  children: ReactNode;
+}) => {
   const {height} = useWindowDimensions();
 
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
@@ -46,9 +51,7 @@ export const TrackBottomSheet = memo(({isOpen}: {isOpen: boolean}) => {
     }
     return (
       <View style={styles.container}>
-        <View style={styles.animatedBackground}>
-          <StartStopTrack />
-        </View>
+        <View style={styles.animatedBackground}>{children}</View>
       </View>
     );
   }
@@ -58,10 +61,10 @@ export const TrackBottomSheet = memo(({isOpen}: {isOpen: boolean}) => {
       style={[styles.animatedBackground, animatedStyle]}
       onLayout={onLayoutSheet}
       pointerEvents={isOpen ? 'auto' : 'none'}>
-      <StartStopTrack />
+      {children}
     </Animated.View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {

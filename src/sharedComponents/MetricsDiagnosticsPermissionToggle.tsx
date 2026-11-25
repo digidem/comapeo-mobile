@@ -1,4 +1,4 @@
-import {type FC, useState} from 'react';
+import {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {
@@ -8,6 +8,7 @@ import {
 import {WHITE, BLACK} from '../lib/styles';
 import {Checkbox} from './Checkbox';
 import {BodyText} from './Text/BodyText';
+import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   shareDiagnostics: {
@@ -16,8 +17,9 @@ const m = defineMessages({
   },
 });
 
-export const MetricsDiagnosticsPermissionToggle: FC = () => {
+export const MetricsDiagnosticsPermissionToggle = () => {
   const {formatMessage} = useIntl();
+  const navigation = useNavigationFromRoot();
   // this value is not reactive
   const nonReactiveDiagnosticsEnabled = getDiagnosticsEnabled();
   const [reactiveDiagnosticsEnabled, setReactiveDiagnosticsEnabled] = useState(
@@ -36,6 +38,10 @@ export const MetricsDiagnosticsPermissionToggle: FC = () => {
           const newDiagnosticEnabledValue = !reactiveDiagnosticsEnabled;
           setDiagnosticsEnabled(newDiagnosticEnabledValue);
           setReactiveDiagnosticsEnabled(newDiagnosticEnabledValue);
+          navigation.navigate('MetricsResetWarning', {
+            metric: 'diagnostics',
+            sharing: newDiagnosticEnabledValue ? 'on' : 'off',
+          });
         }}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
       />

@@ -19,6 +19,7 @@ import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessful
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {InviteReceived} from '../../screens/Invites/InviteReceived';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled';
+import {MetricsResetWarningBottomSheet} from '../../screens/ComapeoSettings/DataAndPrivacy/MetricsResetWarningBottomSheet';
 import {DeepLinkListener} from './DeepLinkListener';
 import {CommonActions, StackActions} from '@react-navigation/native';
 import {RUBIK} from '../../lib/fonts';
@@ -193,6 +194,10 @@ export const RootStackNavigator = () => {
             <RootStack.Screen
               name="InviteCanceled"
               component={InviteCanceled}
+            />
+            <RootStack.Screen
+              name="MetricsResetWarning"
+              component={MetricsResetWarningBottomSheet}
             />
           </RootStack.Group>
         </>

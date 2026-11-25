@@ -133,14 +133,7 @@ export const DataAndPrivacy = ({
           </BodyText>
         </View>
         <View style={styles.horizontalLine} />
-        <MetricsDiagnosticsPermissionToggle
-          onChange={enabled =>
-            navigation.navigate('MetricsResetWarning', {
-              metric: 'diagnostics',
-              sharing: enabled ? 'on' : 'off',
-            })
-          }
-        />
+        <MetricsDiagnosticsPermissionToggle />
       </View>
 
       <View style={styles.itemContainer}>

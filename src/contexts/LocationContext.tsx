@@ -120,60 +120,48 @@ function LocationProviderInitialized({
   useCheckPermissionOnAppStateChange(store);
 
   useEffect(() => {
-    let unsub: (() => void) | null = null;
+    // Set before watchPositionAsync resolves, so the store updates that arrive
+    // while it is starting (e.g. the first provider status poll) don't start a
+    // second watch.
+    let isWatching = false;
     let locationSubscription: LocationSubscription | null = null;
-    let isMounted = true;
 
-    const handleCheckAndStartWatchPosition = () => {
-      if (!isMounted || locationSubscription) return;
-
-      startWatchPosition(store)
-        .then(sub => {
-          if (isMounted) {
-            locationSubscription = sub;
-          } else {
-            // If unmounted before promise resolves, clean up immediately
-            sub.remove();
-          }
-        })
-        .catch(Sentry.captureException);
+    const stopWatching = () => {
+      isWatching = false;
+      locationSubscription?.remove();
+      locationSubscription = null;
     };
 
-    const initialPermissionGranted =
-      store.getState().locationPermission === 'granted';
+    const startWatchingIfAllowed = () => {
+      const {locationPermission, providerStatus} = store.getState();
+      const isAllowed =
+        locationPermission === 'granted' &&
+        providerStatus.locationServicesEnabled;
 
-    const initialGPSEnabled =
-      store.getState().providerStatus.locationServicesEnabled;
+      if (isWatching || !isAllowed) return;
 
-    // if we have permission and GPS enabled, start watching position immediately
-    if (initialPermissionGranted && initialGPSEnabled) {
-      handleCheckAndStartWatchPosition();
-    }
-    // otherwise, subscribe to store updates to check when permission is granted and GPS is enabled to start watching position
-    else {
-      unsub = store.subscribe(() => {
-        const currentState = store.getState();
-        if (
-          currentState.locationPermission === 'granted' &&
-          currentState.providerStatus.locationServicesEnabled
-        ) {
-          handleCheckAndStartWatchPosition();
-        }
-      });
-    }
+      isWatching = true;
+      startWatchPosition(store, stopWatching)
+        .then(subscription => {
+          if (isWatching) {
+            locationSubscription = subscription;
+          } else {
+            // Stopped before the promise resolved, so clean up immediately
+            subscription.remove();
+          }
+        })
+        .catch(err => {
+          Sentry.captureException(err);
+          isWatching = false;
+        });
+    };
+
+    startWatchingIfAllowed();
+    const unsubscribe = store.subscribe(startWatchingIfAllowed);
 
     return () => {
-      isMounted = false;
-
-      if (unsub) {
-        unsub();
-        unsub = null;
-      }
-
-      if (locationSubscription) {
-        locationSubscription.remove();
-        locationSubscription = null;
-      }
+      unsubscribe();
+      stopWatching();
     };
   }, [store]);
 
@@ -188,7 +176,10 @@ export function useLocationContext() {
   return context;
 }
 
-function startWatchPosition(store: StoreApi<LocationState>) {
+function startWatchPosition(
+  store: StoreApi<LocationState>,
+  onError: () => void,
+) {
   return watchPositionAsync(
     {
       accuracy: Accuracy.BestForNavigation,
@@ -226,6 +217,9 @@ function startWatchPosition(store: StoreApi<LocationState>) {
         return;
       }
     },
+    // iOS ends the watch for good on errors such as Location Services being
+    // turned off or the network dropping, and never resumes it by itself.
+    onError,
   );
 }
 

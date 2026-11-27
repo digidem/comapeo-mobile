@@ -78,7 +78,10 @@
         "expo-build-properties",
         {
           "android": {
-            "usesCleartextTraffic": true
+            "usesCleartextTraffic": true,
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "extraProguardRules": "-keep class * implements expo.modules.apploader.HeadlessAppLoader { <init>(); }"
           }
         }
       ],

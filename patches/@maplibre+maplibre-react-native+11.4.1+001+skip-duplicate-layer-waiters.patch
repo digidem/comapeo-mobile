@@ -1,0 +1,21 @@
+diff --git a/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/layer/MLRNLayer.kt b/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/layer/MLRNLayer.kt
+--- a/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/layer/MLRNLayer.kt
++++ b/node_modules/@maplibre/maplibre-react-native/android/src/main/java/org/maplibre/reactnative/components/layer/MLRNLayer.kt
+@@ -280,6 +280,8 @@
+                     if (!hasInitialized()) return
+                     val style = this@MLRNLayer.style ?: return
+                     val l = mLayer ?: return
++                    // A re-added source can leave several waiters for this layer; only the first may add it.
++                    if (style.getLayer(l.id) != null) return
+                     style.addLayerAbove(l, aboveLayerID)
+                     mMapView!!.layerAdded(l)
+                 }
+@@ -295,6 +297,8 @@
+                     if (!hasInitialized()) return
+                     val style = this@MLRNLayer.style ?: return
+                     val l = mLayer ?: return
++                    // A re-added source can leave several waiters for this layer; only the first may add it.
++                    if (style.getLayer(l.id) != null) return
+                     style.addLayerBelow(l, belowLayerID)
+                     mMapView!!.layerAdded(l)
+                 }

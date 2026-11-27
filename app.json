@@ -61,7 +61,10 @@
           "url": "https://sentry.io/",
           "note": "Use SENTRY_AUTH_TOKEN env to authenticate with Sentry.",
           "project": "comapeo",
-          "organization": "awana-digital"
+          "organization": "awana-digital",
+          "experimental_android": {
+            "enableAndroidGradlePlugin": true
+          }
         }
       ],
       [

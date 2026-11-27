@@ -81,7 +81,7 @@
             "usesCleartextTraffic": true,
             "enableMinifyInReleaseBuilds": true,
             "enableShrinkResourcesInReleaseBuilds": true,
-            "extraProguardRules": "-keep class * implements expo.modules.apploader.HeadlessAppLoader { <init>(); }"
+            "extraProguardRules": "-keep class * implements expo.modules.apploader.HeadlessAppLoader { <init>(); }\n-keepnames class com.comapeo.core.**"
           }
         }
       ],
